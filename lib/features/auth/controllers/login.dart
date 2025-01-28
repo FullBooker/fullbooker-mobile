@@ -12,4 +12,68 @@ class LoginViewModel extends BaseViewModel<Token> {
   LoginViewModel() {
     repository = CRUDRepository<Token>("accounts", TokenSerializer());
   }
+
+  Future<String?> login(String email, String password) async {
+    try {
+      var data = {"phone_number": email, "password": password};
+      await _repository.post(data, "/accounts/signin/");
+    } catch (exception) {
+      return "Invalid credentials, please try again";
+    }
+
+    return null;
+  }
+
+  Future<String?> signup(
+      String email, String phonNumber, String name, String password) async {
+    var names = name.split(" ");
+    String firstName = names[0];
+    String lastName = name[1];
+    var data = {
+      "phone_number": phonNumber,
+      "email": email,
+      "first_name": firstName,
+      "last_name": lastName,
+      "password": password,
+    };
+    try {
+      await _repository.post(data, "/accounts/signup/");
+    } catch (exception) {
+      return "Please check that your password is not too common";
+    }
+    return null;
+  }
+
+  Future<String?> resetPassword(String phone) async {
+    var data = {"identifier": phone};
+    try {
+      await _repository.post(data, "/accounts/otp/request");
+    } catch (exception) {
+      return "Invalid phone number, please verify that the number you entered is correct";
+    }
+    return null;
+  }
+
+  Future<String?> validateOtp(String otp, String phone) async {
+    var data = {"identifier": phone, "otp": otp};
+
+    try {
+      await _repository.post(data, "/accounts/otp/verify");
+    } catch (exc) {
+      return "Invalid OTP, please try again";
+    }
+    return null;
+  }
+
+  Future<String?> changePassword(String newPassword, String phoneNumber) async {
+    var data = {"identifier": phoneNumber, "password": newPassword};
+
+    try {
+      await _repository.post(data, "/accounts/password/reset");
+    } catch (exc) {
+      return "Please verify that your password is not too common";
+    }
+
+    return null;
+  }
 }

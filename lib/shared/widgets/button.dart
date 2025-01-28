@@ -1,30 +1,116 @@
 import 'package:flutter/material.dart';
 
 class Button extends StatelessWidget {
-  final Widget child;
   final Function() onPressed;
   final Color color;
+  final String actionLabel;
+  final Widget? actionLabelPrefix;
+  final bool loading;
+  final Color actionLabelColor;
 
-  const Button(this.child, this.onPressed,
-      {super.key, this.color = const Color(0xfff55E00)});
+  const Button(
+    this.onPressed, {
+    super.key,
+    this.actionLabelPrefix,
+    this.color = const Color(0xfff55E00),
+    this.actionLabel = "",
+    this.actionLabelColor = Colors.white,
+    this.loading = false,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
         padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-        child: FilledButton(
+        child: Material(
+          borderRadius: BorderRadius.circular(10),
+          elevation: 2,
+          child: FilledButton(
+            style: ButtonStyle(
+                backgroundColor: WidgetStateProperty.resolveWith<Color?>(
+                  (Set<WidgetState> states) => color,
+                ),
+                minimumSize: const WidgetStatePropertyAll(Size.fromHeight(30)),
+                padding: const WidgetStatePropertyAll(
+                    EdgeInsets.symmetric(vertical: 14, horizontal: 0)),
+                shape: WidgetStatePropertyAll(RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)))),
+            onPressed: onPressed,
+            child: FractionallySizedBox(
+                widthFactor: .5,
+                child: Center(
+                    child: loading
+                        ? const CircularProgressIndicator(
+                            color: Colors.white, strokeWidth: 4)
+                        : actionLabelPrefix != null
+                            ? Row(children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 4.0),
+                                  child: SizedBox(
+                                      width: 16,
+                                      height: 16,
+                                      child: actionLabelPrefix),
+                                ),
+                                Text(actionLabel,
+                                    style: TextStyle(
+                                        fontSize: 16, color: actionLabelColor))
+                              ])
+                            : Text(actionLabel,
+                                style: TextStyle(
+                                    fontSize: 17, color: actionLabelColor)))),
+          ),
+        ));
+  }
+}
+
+class ExtendedTextButton extends StatelessWidget {
+  final Function() onPressed;
+  final Color color;
+  final String actionLabel;
+  final Widget? actionLabelPrefix;
+  final bool loading;
+
+  const ExtendedTextButton(
+    this.onPressed, {
+    super.key,
+    this.actionLabelPrefix,
+    this.color = const Color(0xfff55E00),
+    this.actionLabel = "",
+    this.loading = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+        child: TextButton(
           style: ButtonStyle(
               backgroundColor: WidgetStateProperty.resolveWith<Color?>(
-                (Set<WidgetState> states) => color,
+                (Set<WidgetState> states) => Colors.transparent,
               ),
               minimumSize: const WidgetStatePropertyAll(Size.fromHeight(30)),
               padding: const WidgetStatePropertyAll(
-                  EdgeInsets.symmetric(vertical: 10, horizontal: 0)),
-              shape: WidgetStatePropertyAll(RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)))),
+                  EdgeInsets.symmetric(vertical: 14, horizontal: 0))),
           onPressed: onPressed,
-          child: FractionallySizedBox(
-              widthFactor: .5, child: Center(child: child)),
+          child: Center(
+              child: loading
+                  ? CircularProgressIndicator(color: color, strokeWidth: 4)
+                  : actionLabelPrefix != null
+                      ? Row(children: [
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 4.0),
+                            child: SizedBox(
+                                width: 16,
+                                height: 16,
+                                child: actionLabelPrefix),
+                          ),
+                          Text(actionLabel,
+                              style: TextStyle(fontSize: 16, color: color))
+                        ])
+                      : Text(actionLabel,
+                          style: TextStyle(fontSize: 17, color: color))),
         ));
   }
 }

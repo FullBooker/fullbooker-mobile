@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:fullbooker/features/auth/pages/login.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
-import 'package:fullbooker/shared/widgets/divider.dart';
 import 'package:fullbooker/shared/widgets/simple_stepper.dart';
 
 class OverviewStep {
@@ -11,37 +9,19 @@ class OverviewStep {
   final String title;
   final String subTitle;
 
-  OverviewStep(this.images, this.title, this.subTitle) {
-    assert(images.length == 6);
-  }
+  OverviewStep(this.images, this.title, this.subTitle);
 }
 
 List<OverviewStep> defaultSteps = [
-  OverviewStep(const [
-    AssetImage("assets/images/overview1/rave2.png"),
-    AssetImage("assets/images/overview1/classic_cars.png"),
-    AssetImage("assets/images/overview1/gym.png"),
-    AssetImage("assets/images/overview1/rave.png"),
-    AssetImage("assets/images/overview1/bikes.png"),
-    AssetImage("assets/images/overview1/cars.png"),
-  ], "FIND YOUR FAVOURITE EVENTS HERE",
+  OverviewStep(
+      const [AssetImage("assets/images/overview1/overview.png")],
+      "FIND YOUR FAVOURITE EVENTS HERE",
       "Discover, Book, Enjoy\nYour Favorite Events Await!"),
-  OverviewStep(const [
-    AssetImage("assets/images/overview2/run.png"),
-    AssetImage("assets/images/overview2/rave.png"),
-    AssetImage("assets/images/overview2/color.png"),
-    AssetImage("assets/images/overview2/bike.png"),
-    AssetImage("assets/images/overview2/cars.png"),
-    AssetImage("assets/images/overview2/hike.png"),
-  ], "FIND NEARBY EVENTS", "Your Go-To App for\nNearby Events!"),
-  OverviewStep(const [
-    AssetImage("assets/images/overview3/soccer.png"),
-    AssetImage("assets/images/overview3/quads.png"),
-    AssetImage("assets/images/overview3/wine.png"),
-    AssetImage("assets/images/overview3/colors.png"),
-    AssetImage("assets/images/overview3/quads.png"),
-    AssetImage("assets/images/overview3/concert.png"),
-  ], "UPDATE YOUR UPCOMING EVENTS HERE",
+  OverviewStep(const [AssetImage("assets/images/overview2/overview.png")],
+      "FIND NEARBY EVENTS", "Your Go-To App for\nNearby Events!"),
+  OverviewStep(
+      const [AssetImage("assets/images/overview3/overview.png")],
+      "UPDATE YOUR UPCOMING EVENTS HERE",
       "Keep Your Events Fresh\nUpdate Here!"),
 ];
 
@@ -93,17 +73,7 @@ class OverviewState extends State<Overview> {
         Expanded(
             child: Padding(
                 padding: const EdgeInsets.only(bottom: 10),
-                child: MasonryGridView.count(
-                  crossAxisCount: 3,
-                  controller: gridScrollController,
-                  itemCount: 6,
-                  mainAxisSpacing: 8,
-                  crossAxisSpacing: 10,
-                  itemBuilder: (context, index) {
-                    return Image(
-                        image: widget.steps[currentStep].images[index]);
-                  },
-                ))),
+                child: Image(image: widget.steps[currentStep].images[0]))),
         Center(
             child: Padding(
                 padding: const EdgeInsets.only(bottom: 30),
@@ -127,12 +97,9 @@ class OverviewState extends State<Overview> {
                             height: 8, currentStep: currentStep)),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 30),
-                      child: Button(const Text("Next"),
-                          () => goToNextOverviewStep(context)),
-                    ),
-                    const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 40),
-                        child: RoundedDivider(height: 4, color: Colors.black))
+                      child: Button(() => goToNextOverviewStep(context),
+                          actionLabel: "Next"),
+                    )
                   ]),
                 )))
       ]),

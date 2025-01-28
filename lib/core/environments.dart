@@ -17,7 +17,7 @@ class Flavour {
   }
 }
 
-var development = Flavour.withDB("https://fullbooker-dev-be-sm.nbh4jqg707y8y."
+var development = Flavour.withDB("fullbooker-dev-be-sm.nbh4jqg707y8y."
     "eu-central-1.cs.amazonlightsail.com");
 
 late Flavour env;
