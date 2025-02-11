@@ -7,16 +7,18 @@ class Button extends StatelessWidget {
   final Widget? actionLabelPrefix;
   final bool loading;
   final Color actionLabelColor;
+  final double labelFontSize;
+  final double verticalPadding;
 
-  const Button(
-    this.onPressed, {
-    super.key,
-    this.actionLabelPrefix,
-    this.color = const Color(0xfff55E00),
-    this.actionLabel = "",
-    this.actionLabelColor = Colors.white,
-    this.loading = false,
-  });
+  const Button(this.onPressed,
+      {super.key,
+      this.actionLabelPrefix,
+      this.color = const Color(0xfff55E00),
+      this.actionLabel = "",
+      this.actionLabelColor = Colors.white,
+      this.loading = false,
+      this.labelFontSize = 17,
+      this.verticalPadding = 14});
 
   @override
   Widget build(BuildContext context) {
@@ -25,23 +27,28 @@ class Button extends StatelessWidget {
         child: Material(
           borderRadius: BorderRadius.circular(10),
           elevation: 2,
+          shadowColor: color,
           child: FilledButton(
             style: ButtonStyle(
                 backgroundColor: WidgetStateProperty.resolveWith<Color?>(
                   (Set<WidgetState> states) => color,
                 ),
                 minimumSize: const WidgetStatePropertyAll(Size.fromHeight(30)),
-                padding: const WidgetStatePropertyAll(
-                    EdgeInsets.symmetric(vertical: 14, horizontal: 0)),
+                padding: WidgetStatePropertyAll(EdgeInsets.symmetric(
+                    vertical: verticalPadding, horizontal: 0)),
                 shape: WidgetStatePropertyAll(RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10)))),
             onPressed: onPressed,
             child: FractionallySizedBox(
-                widthFactor: .5,
+                widthFactor: .6,
                 child: Center(
                     child: loading
-                        ? const CircularProgressIndicator(
-                            color: Colors.white, strokeWidth: 4)
+                        ? const SizedBox(
+                            height: 22,
+                            width: 22,
+                            child: CircularProgressIndicator(
+                                color: Colors.white, strokeWidth: 3),
+                          )
                         : actionLabelPrefix != null
                             ? Row(children: [
                                 Padding(
@@ -54,11 +61,13 @@ class Button extends StatelessWidget {
                                 ),
                                 Text(actionLabel,
                                     style: TextStyle(
-                                        fontSize: 16, color: actionLabelColor))
+                                        fontSize: labelFontSize,
+                                        color: actionLabelColor))
                               ])
                             : Text(actionLabel,
                                 style: TextStyle(
-                                    fontSize: 17, color: actionLabelColor)))),
+                                    fontSize: labelFontSize,
+                                    color: actionLabelColor)))),
           ),
         ));
   }

@@ -19,7 +19,7 @@ class UserSerializer implements Serializer<User> {
       json["first_name"] as String,
       json["last_name"] as String,
       json["email"] as String,
-      json["phoneNumber"] as String,
+      json["phone_number"] as String,
     );
   }
 

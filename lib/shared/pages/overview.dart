@@ -69,16 +69,14 @@ class OverviewState extends State<Overview> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(children: [
-        Expanded(
-            child: Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: Image(image: widget.steps[currentStep].images[0]))),
+      body: ListView(children: [
+        Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: Image(image: widget.steps[currentStep].images[0])),
         Center(
             child: Padding(
                 padding: const EdgeInsets.only(bottom: 30),
                 child: SizedBox(
-                  height: 280,
                   width: 280,
                   child: Column(children: [
                     Padding(

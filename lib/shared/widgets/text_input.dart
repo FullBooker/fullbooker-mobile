@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class StandardTextInput extends StatefulWidget {
   final String label;
@@ -73,5 +74,97 @@ class StandardTextInputState extends State<StandardTextInput> {
                 borderSide: BorderSide(color: Color(0xfff55E00), width: 2)),
           ),
         ));
+  }
+}
+
+class SimpleTextInput extends StatelessWidget {
+  final String? hintText;
+  final Widget? leading;
+  final TextEditingController controller;
+
+  const SimpleTextInput(
+      {super.key, required this.controller, this.hintText, this.leading});
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+        controller: controller,
+        decoration: InputDecoration(
+            prefixIcon: leading != null
+                ? Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: leading,
+                  )
+                : null,
+            hintText: hintText,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            contentPadding: const EdgeInsets.only(bottom: 12, left: 10)));
+  }
+}
+
+class SimpleDoubleInput extends StatelessWidget {
+  final String? hintText;
+  final Widget? leading;
+  final TextEditingController controller;
+  final Color fontColor;
+
+  const SimpleDoubleInput(
+      {super.key,
+      required this.controller,
+      this.hintText,
+      this.leading,
+      this.fontColor = Colors.black});
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+        controller: controller,
+        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+        inputFormatters: [
+          FilteringTextInputFormatter.allow(RegExp(r'(^\d*\.?\d*)'))
+        ],
+        decoration: InputDecoration(
+            prefixIcon: leading != null
+                ? Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: leading,
+                  )
+                : null,
+            hintText: hintText,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            contentPadding: const EdgeInsets.only(bottom: 12, left: 10)));
+  }
+}
+
+class SimpleIntInput extends StatelessWidget {
+  final String? hintText;
+  final Widget? leading;
+  final TextEditingController controller;
+
+  const SimpleIntInput(
+      {super.key, required this.controller, this.hintText, this.leading});
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+        controller: controller,
+        keyboardType: const TextInputType.numberWithOptions(decimal: false),
+        inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'(^\d*)'))],
+        decoration: InputDecoration(
+            prefixIcon: leading != null
+                ? Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: leading,
+                  )
+                : null,
+            hintText: hintText,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            contentPadding: const EdgeInsets.only(bottom: 12, left: 10)));
   }
 }

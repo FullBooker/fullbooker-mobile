@@ -11,7 +11,8 @@ import 'package:fullbooker/shared/validators.dart';
 import 'package:fullbooker/features/auth/controllers/login.dart';
 
 class Login extends StatefulWidget {
-  const Login({super.key});
+  final bool goBackToOrigin;
+  const Login({super.key, this.goBackToOrigin = false});
 
   @override
   State<StatefulWidget> createState() => LoginState();
@@ -37,6 +38,11 @@ class LoginState extends State<Login> {
   }
 
   void goToEventsSummary(BuildContext context) {
+    if (widget.goBackToOrigin) {
+      WidgetsBinding.instance
+          .addPostFrameCallback((_) => Navigator.pop(context));
+      return;
+    }
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (_) => const EventsSummary()));
@@ -104,10 +110,10 @@ class LoginState extends State<Login> {
                             child: RichText(
                                 text: TextSpan(children: [
                               const TextSpan(
-                                  text: "Forgot password ? Reset ",
+                                  text: "Forgot password ? ",
                                   style: TextStyle(color: Colors.black)),
                               TextSpan(
-                                  text: "here",
+                                  text: "Reset here",
                                   style:
                                       const TextStyle(color: Color(0xf015B9FF)),
                                   recognizer: TapGestureRecognizer()
@@ -143,16 +149,23 @@ class LoginState extends State<Login> {
                 ),
               ),
             ),
-            Expanded(
-                child: Column(children: [
-              const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 20),
-                  child: Text("Dont have an account ?")),
-              Button(
-                () => goToSignUp(context),
-                actionLabel: "Sign Up",
-              )
-            ]))
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 40),
+                child: RichText(
+                  text: TextSpan(children: [
+                    const TextSpan(
+                        text: "Dont have an account ? ",
+                        style: TextStyle(color: Colors.black)),
+                    TextSpan(
+                        text: "Sign Up",
+                        style: const TextStyle(color: Color(0xf015B9FF)),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () => goToSignUp(context))
+                  ]),
+                ),
+              ),
+            )
           ]),
         ));
   }
