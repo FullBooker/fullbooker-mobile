@@ -38,7 +38,7 @@ class CRUDRepository<T extends Model> {
 
   Future<List<T>> pullMultiple(int page, int pageSize,
       {bool processResponseAsPage = false,
-      Map<String, String> filters = const {}}) async {
+      Map<String, dynamic> filters = const {}}) async {
     if (pagesFetched.contains(page) && mode == RepositoryMode.offlineFirst) {
       var storedRecords = await store
           .fetchMultiple(Finder(filter: Filter.equals("page", page)));

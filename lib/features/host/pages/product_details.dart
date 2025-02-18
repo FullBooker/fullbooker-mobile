@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:fullbooker/features/events/controllers/product_controller.dart';
-import 'package:fullbooker/features/events/models/categories.dart';
-import 'package:fullbooker/features/events/pages/category_selection.dart';
-import 'package:fullbooker/features/events/pages/location_selection.dart';
+import 'package:fullbooker/features/host/controllers/product_controller.dart';
+import 'package:fullbooker/features/host/models/categories.dart';
+import 'package:fullbooker/features/host/pages/category_selection.dart';
+import 'package:fullbooker/features/host/pages/location_selection.dart';
 import 'package:fullbooker/shared/widgets/appbar.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';

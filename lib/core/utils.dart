@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:map_location_picker/map_location_picker.dart';
 
 String getFileExtension(String fileName) {
   try {
@@ -40,4 +41,13 @@ class ScaleSize {
     double val = (width / 1400) * maxTextScaleFactor;
     return min(val, maxTextScaleFactor);
   }
+}
+
+LatLng parseSRID(String srid) {
+  var cleanedSRID = RegExp(r"[\(][-?0-9.]+\s[-?0-9.]+[\)]")
+      .firstMatch(srid)!
+      .group(0)!
+      .replaceAll(RegExp(r"[\(\)]"), "")
+      .split(" ");
+  return LatLng(double.parse(cleanedSRID[1]), double.parse(cleanedSRID[0]));
 }

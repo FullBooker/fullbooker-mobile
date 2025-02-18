@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/utils.dart';
-import 'package:fullbooker/features/events/controllers/currency_controller.dart';
-import 'package:fullbooker/features/events/models/currency.dart';
-import 'package:fullbooker/features/events/models/product.dart';
-import 'package:fullbooker/features/events/pages/tickets_summary.dart';
+import 'package:fullbooker/features/host/controllers/currency_controller.dart';
+import 'package:fullbooker/features/host/models/currency.dart';
+import 'package:fullbooker/features/host/models/product.dart';
+import 'package:fullbooker/features/host/pages/tickets_summary.dart';
 import 'package:fullbooker/shared/widgets/appbar.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:fullbooker/shared/widgets/card.dart';

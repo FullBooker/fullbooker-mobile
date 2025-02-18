@@ -2,10 +2,10 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:fullbooker/features/events/controllers/product_controller.dart';
-import 'package:fullbooker/features/events/models/product.dart';
-import 'package:fullbooker/features/events/pages/category_selection.dart';
-import 'package:fullbooker/features/events/pages/video_selection.dart';
+import 'package:fullbooker/features/host/controllers/product_controller.dart';
+import 'package:fullbooker/features/host/models/product.dart';
+import 'package:fullbooker/features/host/pages/category_selection.dart';
+import 'package:fullbooker/features/host/pages/video_selection.dart';
 import 'package:fullbooker/shared/widgets/appbar.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:fullbooker/shared/widgets/card.dart';

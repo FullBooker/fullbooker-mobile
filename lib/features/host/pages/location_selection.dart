@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:fullbooker/features/events/controllers/product_controller.dart';
-import 'package:fullbooker/features/events/models/product.dart';
-import 'package:fullbooker/features/events/pages/activity_date_selection.dart';
-import 'package:fullbooker/features/events/pages/category_selection.dart';
-import 'package:fullbooker/features/events/pages/date_selection.dart';
+import 'package:fullbooker/features/host/controllers/product_controller.dart';
+import 'package:fullbooker/features/host/models/product.dart';
+import 'package:fullbooker/features/host/pages/activity_date_selection.dart';
+import 'package:fullbooker/features/host/pages/category_selection.dart';
+import 'package:fullbooker/features/host/pages/date_selection.dart';
 import 'package:fullbooker/shared/widgets/appbar.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
@@ -195,79 +195,97 @@ class _LocationSelectionState extends State<LocationSelection> {
                     pageTitleBottomPadding: 0,
                     pageHeaderFontSize: 20,
                     pageDescriptionTopPadding: 0),
-                SizedBox(
-                    height: height * 0.67,
-                    width: width,
-                    child: MapLocationPicker(
-                        apiKey: "AIzaSyDen5uldAkBcBPog8ajqpThWXGsiXmYSyU",
-                        popOnNextButtonTaped: true,
-                        currentLatLng: cameraPosition!.target,
-                        debounceDuration: const Duration(milliseconds: 500),
-                        hideBackButton: true,
-                        hideBottomCard: true,
-                        hideMoreOptions: true,
-                        searchHintText: "Where is the product located ?",
-                        mapType: MapType.hybrid,
-                        onNext: (GeocodingResult? result) {
-                          if (result != null) {
-                            var location = LatLng(result.geometry.location.lat,
-                                result.geometry.location.lng);
-                            if (!_inBounds(location)) {
-                              showSnackBar(
-                                  "Please select a location within Kenya");
-                              return;
-                            }
-                            setState(() {
-                              addressName = result.formattedAddress ?? "";
-                              selectedLocation = location;
-                            });
-                          }
-                        },
-                        onSuggestionSelected:
-                            (PlacesDetailsResponse? response) {
-                          setState(() {
-                            if (response != null) {
-                              addressName =
-                                  response.result.formattedAddress ?? "";
-                              selectedLocation = LatLng(
-                                  response.result.geometry!.location.lat,
-                                  response.result.geometry!.location.lng);
-                            }
-                          });
-                        },
-                        onLongPress: (LatLng latLng) {
-                          if (!_inBounds(latLng)) {
-                            showSnackBar(
-                                "Please select a location within Kenya");
-                            return;
-                          }
-                          setState(() => selectedLocation = latLng);
-                        },
-                        onDecodeAddress: (GeocodingResult? geocodingResult) {
-                          if (geocodingResult != null) {
-                            var location = LatLng(
-                                geocodingResult.geometry.location.lat,
-                                geocodingResult.geometry.location.lng);
-                            if (!_inBounds(location)) {
-                              showSnackBar(
-                                  "Please select a location within Kenya");
-                              return;
-                            }
-                            setState(() {
-                              selectedLocation = location;
-                            });
-                          }
-                        })),
+                Stack(
+                  children: [
+                    Center(
+                      child: SizedBox(
+                          height: height * 0.8,
+                          width: width,
+                          child: MapLocationPicker(
+                              apiKey: "AIzaSyDen5uldAkBcBPog8ajqpThWXGsiXmYSyU",
+                              popOnNextButtonTaped: true,
+                              currentLatLng: cameraPosition!.target,
+                              debounceDuration:
+                                  const Duration(milliseconds: 500),
+                              hideBackButton: true,
+                              hideBottomCard: true,
+                              hideMoreOptions: true,
+                              hideMapTypeButton: true,
+                              hideLocationButton: true,
+                              searchHintText: "Where is the product located ?",
+                              mapType: MapType.hybrid,
+                              onNext: (GeocodingResult? result) {
+                                if (result != null) {
+                                  var location = LatLng(
+                                      result.geometry.location.lat,
+                                      result.geometry.location.lng);
+                                  if (!_inBounds(location)) {
+                                    showSnackBar(
+                                        "Please select a location within Kenya");
+                                    return;
+                                  }
+                                  setState(() {
+                                    addressName = result.formattedAddress ?? "";
+                                    selectedLocation = location;
+                                  });
+                                }
+                              },
+                              onSuggestionSelected:
+                                  (PlacesDetailsResponse? response) {
+                                setState(() {
+                                  if (response != null) {
+                                    addressName =
+                                        response.result.formattedAddress ?? "";
+                                    selectedLocation = LatLng(
+                                        response.result.geometry!.location.lat,
+                                        response.result.geometry!.location.lng);
+                                  }
+                                });
+                              },
+                              onLongPress: (LatLng latLng) {
+                                if (!_inBounds(latLng)) {
+                                  showSnackBar(
+                                      "Please select a location within Kenya");
+                                  return;
+                                }
+                                setState(() => selectedLocation = latLng);
+                              },
+                              onDecodeAddress:
+                                  (GeocodingResult? geocodingResult) {
+                                if (geocodingResult != null) {
+                                  var location = LatLng(
+                                      geocodingResult.geometry.location.lat,
+                                      geocodingResult.geometry.location.lng);
+                                  if (!_inBounds(location)) {
+                                    showSnackBar(
+                                        "Please select a location within Kenya");
+                                    return;
+                                  }
+                                  setState(() {
+                                    selectedLocation = location;
+                                  });
+                                }
+                              })),
+                    ),
+                    Positioned.fill(
+                        child: Align(
+                            child: Align(
+                                alignment: Alignment.bottomCenter,
+                                child: SizedBox(
+                                  height: 100,
+                                  child: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: width / 8, vertical: 30),
+                                      child: Button(onContinueClick,
+                                          actionLabel: "Continue",
+                                          loading: isLoading,
+                                          verticalPadding: 0,
+                                          elevation: 0)),
+                                ))))
+                  ],
+                ),
               ]),
             ),
-            Align(
-                alignment: Alignment.bottomCenter,
-                child: Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: width / 8, vertical: 30),
-                  child: Button(onContinueClick,
-                      actionLabel: "Continue", loading: isLoading),
-                ))
           ],
         ));
   }

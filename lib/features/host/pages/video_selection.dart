@@ -3,11 +3,11 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/utils.dart';
-import 'package:fullbooker/features/events/controllers/product_controller.dart';
-import 'package:fullbooker/features/events/models/product.dart';
-import 'package:fullbooker/features/events/pages/activity_pricing.dart';
-import 'package:fullbooker/features/events/pages/category_selection.dart';
-import 'package:fullbooker/features/events/pages/event_category.dart';
+import 'package:fullbooker/features/host/controllers/product_controller.dart';
+import 'package:fullbooker/features/host/models/product.dart';
+import 'package:fullbooker/features/host/pages/activity_pricing.dart';
+import 'package:fullbooker/features/host/pages/category_selection.dart';
+import 'package:fullbooker/features/host/pages/event_category.dart';
 import 'package:fullbooker/shared/widgets/appbar.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:fullbooker/shared/widgets/card.dart';
@@ -154,8 +154,7 @@ class _VideoSelectionState extends State<VideoSelection> {
                               height: 180,
                               width: width * 0.9,
                               child: AspectRatio(
-                                  aspectRatio:
-                                      _controllers[idx].value.aspectRatio,
+                                  aspectRatio: (width * 0.9) / 180,
                                   child: VideoPlayer(_controllers[idx]))),
                           Positioned.fill(
                             child: Align(

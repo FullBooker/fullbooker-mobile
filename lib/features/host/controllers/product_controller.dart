@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/repository.dart';
 import 'package:fullbooker/core/view_model.dart';
-import 'package:fullbooker/features/events/models/product.dart';
-import 'package:fullbooker/features/events/pages/activity_day_pass.dart';
-import 'package:fullbooker/features/events/pages/date_selection.dart';
+import 'package:fullbooker/features/host/models/product.dart';
+import 'package:fullbooker/features/host/pages/activity_day_pass.dart';
+import 'package:fullbooker/features/host/pages/date_selection.dart';
 
 class ProductViewModel extends BaseViewModel<Product> {
   late CRUDRepository<Product> _repository;

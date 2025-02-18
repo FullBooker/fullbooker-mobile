@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/features/auth/pages/request_otp.dart';
 import 'package:fullbooker/features/auth/pages/signup.dart';
-import 'package:fullbooker/features/events/pages/summary.dart';
+import 'package:fullbooker/features/consumer/pages/landing.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:fullbooker/shared/widgets/divider.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
@@ -45,7 +45,7 @@ class LoginState extends State<Login> {
     }
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (_) => const EventsSummary()));
+          context, MaterialPageRoute(builder: (_) => const Landing()));
     });
   }
 

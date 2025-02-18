@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fullbooker/core/utils.dart';
 
 class Button extends StatelessWidget {
   final Function() onPressed;
@@ -9,6 +10,7 @@ class Button extends StatelessWidget {
   final Color actionLabelColor;
   final double labelFontSize;
   final double verticalPadding;
+  final double elevation;
 
   const Button(this.onPressed,
       {super.key,
@@ -18,7 +20,8 @@ class Button extends StatelessWidget {
       this.actionLabelColor = Colors.white,
       this.loading = false,
       this.labelFontSize = 17,
-      this.verticalPadding = 14});
+      this.verticalPadding = 14,
+      this.elevation = 2});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +29,7 @@ class Button extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
         child: Material(
           borderRadius: BorderRadius.circular(10),
-          elevation: 2,
+          elevation: elevation,
           shadowColor: color,
           child: FilledButton(
             style: ButtonStyle(
@@ -62,7 +65,10 @@ class Button extends StatelessWidget {
                                 Text(actionLabel,
                                     style: TextStyle(
                                         fontSize: labelFontSize,
-                                        color: actionLabelColor))
+                                        color: actionLabelColor),
+                                    textScaler: TextScaler.linear(
+                                        ScaleSize.textScaleFactor(context,
+                                            maxTextScaleFactor: 2.6)))
                               ])
                             : Text(actionLabel,
                                 style: TextStyle(

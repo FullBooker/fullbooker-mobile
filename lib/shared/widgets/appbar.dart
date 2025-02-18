@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fullbooker/core/utils.dart';
 
 enum ProductSteps { Overview, Products, Sales, Expenses, Goals }
 
@@ -54,5 +55,63 @@ class ProductSetupNavBar extends StatelessWidget
             child: Icon(Icons.menu, color: Colors.white))
       ],
     );
+  }
+}
+
+class StandardNavBar extends StatelessWidget {
+  const StandardNavBar({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    var height = MediaQuery.of(context).size.height;
+
+    return AppBar(
+        toolbarHeight: height * 0.1,
+        backgroundColor: Colors.transparent,
+        title: DecoratedBox(
+          decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(10))),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8),
+                child: SizedBox(
+                    width: 10,
+                    height: 50,
+                    child: Center(
+                        child: Icon(Icons.search, color: Color(0xf0808080)))),
+              ),
+              Flexible(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: SizedBox(
+                      height: 50,
+                      child: TextField(
+                          decoration: InputDecoration(
+                              filled: false,
+                              border: InputBorder.none,
+                              hintText: "Search for activities and events",
+                              hintStyle: TextStyle(
+                                  fontSize: ScaleSize.textScaleFactor(context,
+                                      maxTextScaleFactor: 48),
+                                  color: const Color(0xf0808080))))),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: GestureDetector(
+                    child: const Icon(Icons.app_registration_rounded,
+                        color: Color(0xf0808080))),
+              )
+            ],
+          ),
+        ),
+        actions: const [
+          Padding(
+              padding: EdgeInsets.only(right: 5),
+              child: Icon(Icons.menu, color: Colors.white, size: 36))
+        ]);
   }
 }

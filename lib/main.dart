@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/environments.dart';
 import 'package:fullbooker/features/auth/pages/login.dart';
-import 'package:fullbooker/features/events/pages/summary.dart';
+import 'package:fullbooker/features/host/pages/summary.dart';
 
 Future setupEnvironment() async {
   const envString = String.fromEnvironment("ENV");

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:fullbooker/features/events/controllers/category_controller.dart';
-import 'package:fullbooker/features/events/pages/product_details.dart';
+import 'package:fullbooker/features/host/controllers/category_controller.dart';
+import 'package:fullbooker/features/host/pages/product_details.dart';
 import 'package:fullbooker/shared/widgets/appbar.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
 import 'package:fullbooker/shared/widgets/titled_dropdown.dart';
-import 'package:fullbooker/features/events/models/categories.dart';
+import 'package:fullbooker/features/host/models/categories.dart';
 
 enum ProductTypes { Event, Activity }
 

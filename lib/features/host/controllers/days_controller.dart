@@ -1,6 +1,6 @@
 import 'package:fullbooker/core/repository.dart';
 import 'package:fullbooker/core/view_model.dart';
-import 'package:fullbooker/features/events/models/days.dart';
+import 'package:fullbooker/features/host/models/days.dart';
 
 class DaysViewModel extends BaseViewModel<Days> {
   late CRUDRepository<Days> _repository;

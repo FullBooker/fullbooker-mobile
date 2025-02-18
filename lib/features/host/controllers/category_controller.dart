@@ -1,4 +1,4 @@
-import 'package:fullbooker/features/events/models/categories.dart';
+import 'package:fullbooker/features/host/models/categories.dart';
 import 'package:fullbooker/core/repository.dart';
 import 'package:fullbooker/core/view_model.dart';
 

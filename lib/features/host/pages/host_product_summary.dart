@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:fullbooker/features/events/controllers/product_controller.dart';
-import 'package:fullbooker/features/events/models/product.dart';
-import 'package:fullbooker/features/events/pages/category_selection.dart';
+import 'package:fullbooker/features/host/controllers/product_controller.dart';
+import 'package:fullbooker/features/host/models/product.dart';
+import 'package:fullbooker/features/host/pages/category_selection.dart';
 import 'package:fullbooker/shared/widgets/appbar.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 
@@ -20,7 +20,7 @@ class ActivitiesTable extends StatelessWidget {
         DataColumn(label: Text('Product \nName')),
         DataColumn(label: Text('Price')),
         DataColumn(label: Text('Status')),
-        DataColumn(label: Flexible(child: Text('Next \nactions'))),
+        DataColumn(label: Flexible(child: Text('Next \nActions'))),
       ],
       rows: [
         for (var product in products)
