@@ -11,7 +11,7 @@ String? validateEmail(String? email, {isOptional = false}) {
 String? validatePhoneNumber(String? number, {isOptional = false}) {
   if (number == null && !isOptional) return null;
   if (number == null) return "Please enter your email";
-  bool emailValid = RegExp(r"^[\+254|0][7|1][0-9]{8}").hasMatch(number);
+  bool emailValid = RegExp(r"[\+254|0][7|1][0-9]{8}").hasMatch(number);
   if (!emailValid) return "Please enter a valid phone number";
   return null;
 }

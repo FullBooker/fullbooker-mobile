@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:fullbooker/features/auth/models/login.dart';
 import 'package:sembast/sembast_io.dart';
 import 'db.dart';
 
@@ -17,15 +19,24 @@ class Flavour {
   }
 }
 
-var development = Flavour.withDB("fullbooker-dev-be-sm.nbh4jqg707y8y."
-    "eu-central-1.cs.amazonlightsail.com");
+var development = Flavour.withDB("api.dev.fullbooker.co.ke");
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 late Flavour env;
+Token? currentToken;
 
 class BuildEnvironment {
   FlavourType type;
 
   BuildEnvironment(this.type);
+
+  Future setExistingToken() async {
+    var store = stringMapStoreFactory.store("$Token-store");
+    var record = await store.record("currentToken").get(env.db);
+    if (record != null) {
+      currentToken = TokenSerializer().fromJson(record);
+    }
+  }
 
   Future setEnv() async {
     switch (type) {
@@ -35,5 +46,6 @@ class BuildEnvironment {
       default:
         env = await development;
     }
+    await setExistingToken();
   }
 }

@@ -28,16 +28,28 @@ class CRUDRepository<T extends Model> {
     store = EntityStore<T>(env.db, serializer, serializer.getIdKeyName());
   }
 
-  Future<List<T>> pullMultiple(int page, int pageSize) async {
+  Map<String, String> setupHeaders() {
+    Map<String, String> headers = {};
+    if (currentToken != null) {
+      headers["Authorization"] = "Bearer ${currentToken!.accessToken}";
+    }
+    return headers;
+  }
+
+  Future<List<T>> pullMultiple(int page, int pageSize,
+      {bool processResponseAsPage = false,
+      Map<String, dynamic> filters = const {}}) async {
     if (pagesFetched.contains(page) && mode == RepositoryMode.offlineFirst) {
       var storedRecords = await store
           .fetchMultiple(Finder(filter: Filter.equals("page", page)));
       if (storedRecords.isNotEmpty) return storedRecords;
     }
-    var url = Uri.https(this.host, this.path);
-    var response = await http.get(url);
+    var url = Uri.https(this.host, this.path, filters);
+    var response = await http.get(url, headers: setupHeaders());
     handleResponse(response);
-    List<Map<String, Object?>> results = jsonDecode(response.body)[listDataKey];
+    List<dynamic> results = processResponseAsPage
+        ? jsonDecode(response.body)[listDataKey]
+        : jsonDecode(response.body);
     List<T> serializedResults = [];
     for (var result in results) {
       result["page"] = page;
@@ -89,14 +101,41 @@ class CRUDRepository<T extends Model> {
   }
 
   Future<dynamic> post(Map<String, Object?> data, String path,
-      {bool serialize = false}) async {
+      {bool serialize = false, bool withHeaders = true}) async {
     /**
-     * Antity agnostic posting to the API, still
+     * Entity agnostic posting to the API, still
      * benefits from unified error handling and serialization
      * if necessary.
      */
     var url = Uri.https(this.host, path);
-    var response = await http.post(url, body: data);
+    Map<String, String> headers = withHeaders ? setupHeaders() : {};
+    headers.addAll({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    });
+    var response =
+        await http.post(url, body: json.encode(data), headers: headers);
+    handleResponse(response);
+    var decodedJson = json.decode(response.body);
+    if (!serialize) return decodedJson;
+    return serializer.fromJson(decodedJson);
+  }
+
+  Future<dynamic> postWithImages(
+      Map<String, String> data, List<File> images, String path,
+      {bool serialize = false}) async {
+    var url = Uri.https(this.host, path);
+    var headers = setupHeaders();
+    headers["Content-Type"] = "multipart/form-data";
+    var request = http.MultipartRequest("POST", url)
+      ..headers.addAll(headers)
+      ..fields.addAll(data);
+    for (var image in images) {
+      var multiPartFile = await http.MultipartFile.fromPath("file", image.path);
+      request.files.add(multiPartFile);
+    }
+    var streamedResponse = await request.send();
+    var response = await http.Response.fromStream(streamedResponse);
     handleResponse(response);
     var decodedJson = json.decode(response.body);
     if (!serialize) return decodedJson;

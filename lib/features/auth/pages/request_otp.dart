@@ -33,8 +33,8 @@ class RequestOtpState extends State<RequestOtp> {
 
   void goToOTP(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (_) => ValidatedOtp(otpChannel)));
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => ValidatedOtp(otpChannel)));
     });
   }
 

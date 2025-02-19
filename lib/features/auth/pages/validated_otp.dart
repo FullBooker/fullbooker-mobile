@@ -59,8 +59,10 @@ class ValidatedOtpState extends State<ValidatedOtp> {
   }
 
   void goToRequestOtp(BuildContext context) {
-    Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (BuildContext context) => const RequestOtp()));
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (BuildContext context) => const RequestOtp()));
+    });
   }
 
   void validateOTP(BuildContext context) {
@@ -98,7 +100,15 @@ class ValidatedOtpState extends State<ValidatedOtp> {
   @override
   void initState() {
     super.initState();
-    startTimer();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      startTimer();
+    });
+  }
+
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
   }
 
   @override

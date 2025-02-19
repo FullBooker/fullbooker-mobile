@@ -73,8 +73,9 @@ class SignUpState extends State<SignUp> {
           padding: const EdgeInsets.all(20),
           child: ListView(children: [
             const Padding(
-                padding: EdgeInsets.symmetric(vertical: 20),
-                child: PageHeader("Welcome", "Sign Up")),
+                padding: EdgeInsets.only(bottom: 20),
+                child: PageHeader("", "Sign Up",
+                    withLogo: false, headerPadding: 10, headerTopPadding: 0)),
             Padding(
                 padding: const EdgeInsets.symmetric(vertical: 5),
                 child: SizedBox(
@@ -159,8 +160,7 @@ class SignUpState extends State<SignUp> {
                     ),
                   ),
                 )),
-            Expanded(
-                child: Column(children: [
+            Column(children: [
               Center(
                   child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 4),
@@ -175,7 +175,7 @@ class SignUpState extends State<SignUp> {
                             recognizer: TapGestureRecognizer()
                               ..onTap = () => goToLogIn(context))
                       ]))))
-            ]))
+            ])
           ]),
         ));
   }

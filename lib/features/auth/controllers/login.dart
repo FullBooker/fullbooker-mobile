@@ -1,3 +1,4 @@
+import 'package:fullbooker/core/environments.dart';
 import 'package:fullbooker/core/repository.dart';
 import 'package:fullbooker/core/view_model.dart';
 import 'package:fullbooker/features/auth/models/login.dart';
@@ -16,7 +17,17 @@ class LoginViewModel extends BaseViewModel<Token> {
   Future<String?> login(String email, String password) async {
     try {
       var data = {"phone_number": email, "password": password};
-      await _repository.post(data, "/accounts/signin/");
+      var res =
+          await _repository.post(data, "/accounts/signin/", withHeaders: false);
+      switch (res.runtimeType) {
+        case Token val:
+          await repository.store.set(res);
+          currentToken = val;
+        default:
+          await repository.store.setData(res, "access_token");
+          currentToken =
+              TokenSerializer().fromJson(res as Map<String, Object?>);
+      }
     } catch (exception) {
       return "Invalid credentials, please try again";
     }

@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:fullbooker/core/environments.dart';
+import 'package:fullbooker/features/auth/pages/login.dart';
 import 'package:http/http.dart' as http;
 
 class AuthenticationException implements Exception {
@@ -33,7 +36,12 @@ class NotFoundException implements Exception {
 void handleResponse(http.Response response) {
   switch (response.statusCode) {
     case 401:
-      throw AuthenticationException("Authentication Error: ");
+      if (response.request != null &&
+          !response.request!.url.toString().contains("signin")) {
+        navigatorKey.currentState!.push(MaterialPageRoute(
+            builder: (_) => const Login(goBackToOrigin: true)));
+      }
+      throw AuthenticationException("invalid token");
     case 403:
       throw PermissionsException("Permission denied: ");
     case 404:
@@ -42,7 +50,7 @@ void handleResponse(http.Response response) {
       throw UnprocessableEntity("Could not process entity");
     case >= 500:
       throw ServerError("Server error: ");
-    case >= 400 && <500:
+    case >= 400 && < 500:
       throw ClientError("Integration error: ");
     default:
       break;
