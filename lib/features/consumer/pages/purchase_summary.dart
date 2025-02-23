@@ -1,25 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:fullbooker/features/consumer/pages/checkout.dart';
 import 'package:fullbooker/features/host/models/product.dart';
 
 class CheckoutCard extends StatelessWidget {
-  final Product product;
+  final ProductPricing? pricing;
+  final int quantity;
   final String locationName;
+  final VoidCallback onProceedClick;
+
   const CheckoutCard(
-      {super.key, required this.product, required this.locationName});
+      {super.key,
+      this.pricing,
+      required this.quantity,
+      required this.locationName,
+      required this.onProceedClick});
 
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-
-    void goToCheckout() {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (_) => PaymentSummaryWidget(
-                product: product, locationName: locationName)));
-      });
-    }
 
     return Center(
       child: Padding(
@@ -57,7 +55,7 @@ class CheckoutCard extends StatelessWidget {
                         fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    "1.00",
+                    quantity.toString(),
                     style: TextStyle(
                         fontSize: screenWidth * 0.045,
                         fontWeight: FontWeight.bold),
@@ -78,7 +76,9 @@ class CheckoutCard extends StatelessWidget {
                         fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    "KES 20,000.00  X  1",
+                    pricing == null || quantity == 0
+                        ? "_"
+                        : "KES ${pricing!.cost}  X  $quantity",
                     style: TextStyle(
                         fontSize: screenWidth * 0.045,
                         fontWeight: FontWeight.bold),
@@ -100,12 +100,20 @@ class CheckoutCard extends StatelessWidget {
                       color: Colors.green,
                     ),
                   ),
-                  Text(
-                    "KES 20,000.00",
-                    style: TextStyle(
-                      fontSize: screenWidth * 0.05,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.green,
+                  Flexible(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Text(
+                        softWrap: true,
+                        quantity > 0 && pricing != null
+                            ? "KES ${pricing!.cost * quantity}"
+                            : "_",
+                        style: TextStyle(
+                          fontSize: screenWidth * 0.05,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green,
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -113,12 +121,11 @@ class CheckoutCard extends StatelessWidget {
 
               SizedBox(height: screenHeight * 0.03),
 
-              // Proceed to Checkout Button
               Center(
                 child: ElevatedButton(
-                  onPressed: () => goToCheckout(),
+                  onPressed: onProceedClick,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.orange,
+                    backgroundColor: const Color(0xf0F55E00),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),

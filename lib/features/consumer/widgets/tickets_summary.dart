@@ -1,0 +1,130 @@
+import 'package:flutter/material.dart';
+import 'package:fullbooker/features/consumer/widgets/ticket_booking.dart';
+import 'package:fullbooker/features/host/models/product.dart';
+
+class Ticket {
+  String name;
+  String id;
+  String phone;
+  String email;
+  ProductPricing pricing;
+  int quantity;
+
+  Ticket(
+      this.name, this.id, this.phone, this.email, this.pricing, this.quantity);
+}
+
+class TicketsSummary extends StatefulWidget {
+  final List<Ticket> tickets;
+  final BookingMode bookingMode;
+  final Function(List<Ticket>)? onRemove;
+
+  const TicketsSummary(
+      {super.key,
+      this.tickets = const [],
+      this.onRemove,
+      required this.bookingMode});
+
+  @override
+  State<StatefulWidget> createState() => _TicketsSummaryState();
+}
+
+class _TicketsSummaryState extends State<TicketsSummary> {
+  // Sample list of tickets (this could come from an API or user input)
+  late List<Ticket> tickets;
+
+  // Function to delete a ticket entry
+  void deleteTicket(int index) {
+    setState(() {
+      tickets.removeAt(index);
+      if (widget.onRemove != null) widget.onRemove!(tickets);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    tickets = widget.tickets;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+      child: Container(
+        width: MediaQuery.of(context).size.width - 20,
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.orange),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
+          // Title
+          const Text(
+            "Tickets Summary",
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 10),
+
+          // Table
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: DataTable(
+              border: TableBorder.all(color: Colors.grey.shade400),
+              headingRowHeight: 40,
+              columnSpacing: 20,
+              columns: const [
+                DataColumn(
+                    label: Text("Name",
+                        style: TextStyle(fontWeight: FontWeight.bold))),
+                DataColumn(
+                    label: Text("ID/PASSPORT",
+                        style: TextStyle(fontWeight: FontWeight.bold))),
+                DataColumn(
+                    label: Text("Phone number",
+                        style: TextStyle(fontWeight: FontWeight.bold))),
+                DataColumn(
+                    label: Text("Email",
+                        style: TextStyle(fontWeight: FontWeight.bold))),
+                DataColumn(
+                    label: Text("Quantity",
+                        style: TextStyle(fontWeight: FontWeight.bold))),
+                DataColumn(label: Text("")),
+              ],
+              rows: tickets.asMap().entries.map((entry) {
+                int index = entry.key;
+                Ticket ticket = entry.value;
+
+                var cells = [
+                  DataCell(Text(ticket.name)),
+                  DataCell(Text(ticket.id)),
+                  DataCell(Text(ticket.phone)),
+                  DataCell(Text(ticket.email)),
+                  DataCell(Text(ticket.quantity.toString())),
+                  DataCell(
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xf0F55E00),
+                          padding: const EdgeInsets.all(0),
+                          shape: const RoundedRectangleBorder(),
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          visualDensity:
+                              const VisualDensity(horizontal: 0, vertical: 0)),
+                      onPressed: () => deleteTicket(index),
+                      child: const Text("Delete",
+                          style: TextStyle(color: Colors.white)),
+                    ),
+                  ),
+                ];
+                return DataRow(cells: cells);
+              }).toList(),
+            ),
+          ),
+          tickets.isEmpty
+              ? const Center(
+                  child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 8.0),
+                  child: Text("Tickets will appear here when added"),
+                ))
+              : const SizedBox()
+        ]),
+      ),
+    );
+  }
+}

@@ -1,6 +1,78 @@
 import 'package:flutter/material.dart';
 import 'package:fullbooker/features/consumer/pages/payment_confirmation.dart';
+import 'package:fullbooker/features/consumer/widgets/payment_forms.dart';
+import 'package:fullbooker/features/consumer/widgets/tickets_summary.dart';
 import 'package:fullbooker/features/host/models/product.dart';
+import 'package:fullbooker/shared/widgets/appbar.dart';
+import 'package:fullbooker/shared/widgets/information_modal.dart';
+import 'package:intl/intl.dart';
+
+class MpesaCheckoutInstructions extends StatelessWidget {
+  final Ticket ticket;
+
+  const MpesaCheckoutInstructions({super.key, required this.ticket});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "MPESA Checkout sent to ${ticket.phone}",
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 10),
+            const Text(
+              "Payment Alert",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 10),
+            const Text(
+              "Follow the instructions below:",
+              style: TextStyle(fontSize: 16),
+            ),
+            const SizedBox(height: 10),
+            const Text(
+              "Instructions to Pay:",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
+            _buildBulletPoint("Check on a payment pop-up on your phone.",
+                isBold: true),
+            _buildBulletPoint("Input your MPESA PIN and click OK.",
+                isBold: true),
+            _buildBulletPoint("An MPESA confirmation SMS will be sent to you.",
+                isBold: true),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBulletPoint(String text, {bool isBold = false}) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 10, bottom: 6),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text("• ", style: TextStyle(fontSize: 16)),
+          Expanded(
+            child: Text(
+              text,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
 
 class InstructionText extends StatelessWidget {
   final String text;
@@ -25,86 +97,37 @@ class InstructionText extends StatelessWidget {
 class PaymentSummaryWidget extends StatelessWidget {
   final Product product;
   final String locationName;
+  final List<Ticket> tickets;
+  final DateTime selectedDateTime;
+
   const PaymentSummaryWidget(
-      {super.key, required this.product, required this.locationName});
+      {super.key,
+      required this.product,
+      required this.locationName,
+      required this.tickets,
+      required this.selectedDateTime});
 
-  void showMpesaModal(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-      ),
-      backgroundColor: Colors.white,
-      builder: (context) {
-        return Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // Green progress bar
-              Container(
-                width: 80,
-                height: 6,
-                decoration: BoxDecoration(
-                  color: Colors.green,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              const SizedBox(height: 20),
-
-              // Payment Instructions
-              const Text(
-                "MPESA Checkout sent to +254701176895",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 10),
-              const Text(
-                "Payment Alert",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 8),
-              const Text(
-                "Follow the instructions below:",
-                style: TextStyle(fontSize: 14),
-              ),
-              const SizedBox(height: 10),
-              const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  InstructionText("✔ Check on a payment pop-up on your phone.",
-                      isBold: true),
-                  InstructionText("✔ Input your MPESA PIN and click OK."),
-                  InstructionText(
-                      "✔ An MPESA confirmation SMS will be sent to you."),
-                ],
-              ),
-              const SizedBox(height: 20),
-
-              // Confirm Payment Button
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (_) => PaymentConfirmationScreen(
-                          product: product, locationName: locationName)));
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.orange,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 14, horizontal: 32),
-                ),
-                child: const Text("Confirm Payment",
-                    style: TextStyle(fontSize: 16, color: Colors.white)),
-              ),
-              const SizedBox(height: 20),
-            ],
-          ),
-        );
-      },
-    );
+  Future showMpesaModal(BuildContext context) async {
+    return showDialog<void>(
+        context: context,
+        builder: (BuildContext context) {
+          return InformationModal(
+            title: "",
+            message: MpesaCheckoutInstructions(ticket: tickets.first),
+            actionTitle: "Confirm Payment",
+            action: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (_) => PaymentConfirmationScreen(
+                      product: product,
+                      locationName: locationName,
+                      ticket: tickets[0])));
+            },
+            height: 330,
+            withSuccessTick: false,
+            topDividerColor: const Color(0xf02FBD6A),
+            topDividerHeight: 20,
+          );
+        });
   }
 
   @override
@@ -112,8 +135,16 @@ class PaymentSummaryWidget extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
 
+    double getGrandTotal() {
+      return tickets.fold<double>(0, (initial, ticket) {
+        return initial + (ticket.quantity * double.parse(ticket.pricing.cost));
+      });
+    }
+
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar:
+          const StandardNavBar(showSearchBar: false, iconsColor: Colors.black),
       body: SafeArea(
         child: Container(
           width: screenWidth,
@@ -129,11 +160,11 @@ class PaymentSummaryWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: screenHeight * 0.02),
-                Center(
+                const Center(
                   child: Text(
                     "Summary",
                     style: TextStyle(
-                        fontSize: screenWidth * 0.06,
+                        fontSize: 26,
                         fontWeight: FontWeight.bold,
                         color: Colors.black),
                   ),
@@ -142,26 +173,41 @@ class PaymentSummaryWidget extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.all(screenWidth * 0.03),
                   decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: Colors.grey)),
                   child: Center(
                     child: Text(
                       "${product.name}, $locationName",
-                      style: TextStyle(
-                          fontSize: screenWidth * 0.04,
+                      style: const TextStyle(
+                          fontSize: 22,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white),
+                          color: Colors.black),
                     ),
                   ),
                 ),
                 SizedBox(height: screenHeight * 0.02),
+                const Center(
+                  child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 15),
+                      child: Text("Ticket Details",
+                          style: TextStyle(
+                              fontSize: 26,
+                              fontWeight: FontWeight.bold,
+                              fontStyle: FontStyle.italic))),
+                ),
 
                 // Form fields
-                buildInputField("Name"),
-                buildInputField("Date & Time"),
-                buildInputField("No. of tickets"),
-                buildInputField("Total Hours"),
+                buildInputField("Name", tickets.first.name),
+                buildInputField("Date & Time",
+                    DateFormat("E dd MMMM").format(selectedDateTime)),
+                buildInputField(
+                    "No. of tickets",
+                    (tickets.length == 1
+                            ? tickets.first.quantity
+                            : tickets.length)
+                        .toString()),
+                buildInputField("Total Hours", "8 hours"),
 
                 // Grand total
                 Padding(
@@ -174,7 +220,7 @@ class PaymentSummaryWidget extends StatelessWidget {
                               fontSize: screenWidth * 0.05,
                               fontWeight: FontWeight.bold,
                               color: Colors.green)),
-                      Text("KES 20,000.00",
+                      Text("KES ${getGrandTotal()}",
                           style: TextStyle(
                               fontSize: screenWidth * 0.05,
                               fontWeight: FontWeight.bold,
@@ -206,63 +252,7 @@ class PaymentSummaryWidget extends StatelessWidget {
 
                 SizedBox(height: screenHeight * 0.02),
 
-                // Payment Options
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    paymentButton(
-                        "Mpesa", Colors.green, Colors.white, screenWidth),
-                    paymentButton(
-                        "Card", Colors.grey, Colors.black, screenWidth),
-                    paymentButton(
-                        "Bank", Colors.grey, Colors.black, screenWidth),
-                    paymentButton(
-                        "GPay", Colors.orange, Colors.black, screenWidth),
-                  ],
-                ),
-
-                SizedBox(height: screenHeight * 0.02),
-
-                // Mpesa Mobile Number Input
-                Container(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: screenWidth * 0.03,
-                      vertical: screenHeight * 0.015),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[200],
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.phone, color: Colors.orange),
-                      SizedBox(width: screenWidth * 0.02),
-                      const Expanded(
-                          child: Text("M-Pesa Mobile No",
-                              style: TextStyle(color: Colors.grey))),
-                    ],
-                  ),
-                ),
-
-                SizedBox(height: screenHeight * 0.03),
-
-                // Complete Payment Button
-                Center(
-                  child: ElevatedButton(
-                    onPressed: () => showMpesaModal(context),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.orange,
-                      padding: EdgeInsets.symmetric(
-                          vertical: screenHeight * 0.015,
-                          horizontal: screenWidth * 0.2),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8)),
-                    ),
-                    child: Text("Complete payment",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: screenWidth * 0.045)),
-                  ),
-                ),
+                PaymentForm(onCompleteClick: () => showMpesaModal(context))
               ],
             ),
           ),
@@ -272,32 +262,43 @@ class PaymentSummaryWidget extends StatelessWidget {
   }
 
   // Method to build input fields
-  Widget buildInputField(String hint) {
+  Widget buildInputField(String hint, String value) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
-      child: TextField(
-        decoration: InputDecoration(
-          hintText: hint,
-          hintStyle: const TextStyle(color: Colors.black),
-          enabledBorder: const UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.black)),
-          focusedBorder: const UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.orange)),
-        ),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(hint,
+                  style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w400)),
+              Text(value,
+                  style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600)),
+            ],
+          ),
+          const Divider()
+        ],
       ),
     );
   }
 
   // Payment Button Widget
   Widget paymentButton(
-      String text, Color bgColor, Color textColor, double screenWidth) {
+      String text, Color bgColor, Color textColor, double screenWidth,
+      {double borderSize = 1, Color borderColor = Colors.grey}) {
     return Container(
       padding: EdgeInsets.symmetric(
           vertical: screenWidth * 0.02, horizontal: screenWidth * 0.05),
       decoration: BoxDecoration(
-        color: bgColor,
-        borderRadius: BorderRadius.circular(8),
-      ),
+          color: bgColor,
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(color: borderColor, width: borderSize)),
       child: Text(text,
           style: TextStyle(color: textColor, fontWeight: FontWeight.bold)),
     );

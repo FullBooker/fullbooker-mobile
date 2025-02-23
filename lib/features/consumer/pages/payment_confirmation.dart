@@ -1,28 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:fullbooker/features/consumer/painters.dart';
+import 'package:fullbooker/features/consumer/widgets/tickets_summary.dart';
 import 'package:fullbooker/features/host/models/product.dart';
+import 'package:fullbooker/shared/widgets/appbar.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class PaymentConfirmationScreen extends StatelessWidget {
   final Product product;
   final String locationName;
+  final Ticket ticket;
 
   const PaymentConfirmationScreen(
-      {super.key, required this.product, required this.locationName});
+      {super.key,
+      required this.product,
+      required this.locationName,
+      required this.ticket});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.black),
-        actions: const [
-          Padding(
-            padding: EdgeInsets.only(right: 16),
-            child: Icon(Icons.menu, size: 28),
-          ),
-        ],
-      ),
+      appBar:
+          const StandardNavBar(showSearchBar: false, iconsColor: Colors.black),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -44,7 +43,8 @@ class PaymentConfirmationScreen extends StatelessWidget {
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.grey.shade300),
+                borderRadius: BorderRadius.circular(0),
                 boxShadow: const [
                   BoxShadow(color: Colors.black12, blurRadius: 5)
                 ],
@@ -65,9 +65,9 @@ class PaymentConfirmationScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: Colors.black12,
-                borderRadius: BorderRadius.circular(8),
-              ),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: Colors.grey.shade300)),
               child: Center(
                 child: Text(
                   "${product.name}, $locationName",
@@ -79,21 +79,21 @@ class PaymentConfirmationScreen extends StatelessWidget {
             const SizedBox(height: 10),
 
             // Email Info
-            const Text.rich(
+            Text.rich(
               TextSpan(
                 text: "Download ",
-                style: TextStyle(fontSize: 14),
+                style: const TextStyle(fontSize: 14),
                 children: [
-                  TextSpan(
+                  const TextSpan(
                     text: "your ticket below ",
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  TextSpan(
+                  const TextSpan(
                     text: "or check your email at ",
                   ),
                   TextSpan(
-                    text: "kel*****ena@gmail.com",
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    text: ticket.email,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
@@ -110,7 +110,7 @@ class PaymentConfirmationScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () {},
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.orange,
+                backgroundColor: const Color(0xf0F55E00),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8)),
                 padding:
@@ -144,58 +144,166 @@ class PaymentConfirmationScreen extends StatelessWidget {
   // Ticket Card Widget
   Widget _ticketCard() {
     return Container(
-      padding: const EdgeInsets.all(12),
+      width: 360,
+      height: 160,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 5)],
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: const [
+          BoxShadow(color: Colors.black26, blurRadius: 5, offset: Offset(2, 2)),
+        ],
       ),
-      child: Column(
+      child: Row(
         children: [
-          // Ticket Header
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text("Rock Concert",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-              Text("19TH February",
-                  style: TextStyle(fontWeight: FontWeight.bold)),
-            ],
-          ),
-          const Divider(),
-
-          // Ticket Details
-          Row(
-            children: [
-              // QR Code Placeholder
-              Container(
-                width: 60,
-                height: 60,
-                color: Colors.black12,
-                child:
-                    const Icon(Icons.qr_code, size: 40, color: Colors.black54),
+          // Right Label "REGULAR"
+          Container(
+            width: 24,
+            decoration: BoxDecoration(
+              color: Colors.grey[400],
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(12),
+                bottomLeft: Radius.circular(12),
               ),
-              const SizedBox(width: 10),
-
-              // Ticket Info
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text("Confirmation Number: FB25/01/001Rt",
-                        style: TextStyle(fontSize: 14)),
-                    const Text("Name: Kelvin Kinoti Laichena",
-                        style: TextStyle(fontSize: 14)),
-                    const Text("ID: 35617888", style: TextStyle(fontSize: 14)),
-                    Text(locationName, style: const TextStyle(fontSize: 14)),
-                  ],
+            ),
+            child: const Center(
+              child: RotatedBox(
+                quarterTurns: 3,
+                child: Text(
+                  "FullBooker",
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
                 ),
               ),
-            ],
+            ),
           ),
-          const Divider(),
-          const Text("Emergency contact: +254701176895",
-              style: TextStyle(fontSize: 14, fontStyle: FontStyle.italic)),
+
+          // Left Section (QR Code & User Info)
+          Container(
+            width: 100,
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            decoration: BoxDecoration(color: Colors.grey[200]),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  product.name,
+                  style: const TextStyle(
+                      fontSize: 12, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 5),
+                Text(
+                  "Name: ${ticket.name}\nID: ${ticket.id}",
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 10),
+                ),
+                const SizedBox(height: 8),
+                QrImageView(
+                  data: "FB25/01/001Rt",
+                  version: QrVersions.auto,
+                  size: 80,
+                ),
+                const SizedBox(height: 5)
+              ],
+            ),
+          ),
+
+          SizedBox(
+            width: 10,
+            child: CustomPaint(
+              size: const Size(1.5, 140),
+              painter: DashedLinePainter(),
+            ),
+          ),
+
+          // Right Section (Event Info)
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    product.name,
+                    style: const TextStyle(
+                        fontSize: 14, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 3),
+                  const Text(
+                    "Confirmation Number: FB25/01/001Rt",
+                    style: TextStyle(fontSize: 11),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Text(
+                    "Name: ${ticket.name}",
+                    style: const TextStyle(fontSize: 11),
+                  ),
+                  Text(
+                    "ID: ${ticket.id}",
+                    style: const TextStyle(fontSize: 11),
+                  ),
+                  const SizedBox(height: 3),
+                  Text(
+                    "Location: $locationName",
+                    style: const TextStyle(fontSize: 11),
+                  ),
+                  const Spacer(),
+                  const Row(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "19TH February",
+                            style: TextStyle(
+                                fontSize: 13, fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            "5PM - 1AM",
+                            style: TextStyle(fontSize: 11),
+                          ),
+                        ],
+                      ),
+                      Spacer(),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            "Emergency contact",
+                            style: TextStyle(
+                                fontSize: 10, fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            "+254701176895",
+                            style: TextStyle(fontSize: 11),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          // Right Label "REGULAR"
+          Container(
+            width: 24,
+            decoration: BoxDecoration(
+              color: Colors.grey[400],
+              borderRadius: const BorderRadius.only(
+                topRight: Radius.circular(12),
+                bottomRight: Radius.circular(12),
+              ),
+            ),
+            child: const Center(
+              child: RotatedBox(
+                quarterTurns: 3,
+                child: Text(
+                  "REGULAR",
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );

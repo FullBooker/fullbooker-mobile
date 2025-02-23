@@ -11,6 +11,7 @@ class CategoryViewModel extends BaseViewModel<Category> {
       _repository = repository;
 
   CategoryViewModel() {
-    repository = CRUDRepository<Category>("categories", CategorySerializer());
+    repository = CRUDRepository<Category>("categories", CategorySerializer(),
+        listDataKey: "results");
   }
 }

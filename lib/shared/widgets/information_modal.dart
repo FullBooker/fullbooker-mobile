@@ -4,22 +4,30 @@ import 'package:fullbooker/shared/widgets/divider.dart';
 
 class InformationModal extends StatelessWidget {
   final String title;
-  final String message;
+  final Widget message;
   final String actionTitle;
   final Function()? action;
+  final double height;
+  final bool withSuccessTick;
+  final Color topDividerColor;
+  final double topDividerHeight;
 
   const InformationModal(
       {super.key,
       this.action,
       this.title = "",
-      this.message = "",
-      this.actionTitle = ""});
+      this.message = const SizedBox(),
+      this.actionTitle = "",
+      this.height = 230,
+      this.withSuccessTick = true,
+      this.topDividerColor = const Color(0xfff55E00),
+      this.topDividerHeight = 3});
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
         content: SizedBox(
-          height: 230,
+          height: height,
           width: 380,
           child: Center(
               child: Column(children: [
@@ -27,21 +35,21 @@ class InformationModal extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 5),
                 child: SizedBox(
                     width: MediaQuery.of(context).size.width * .5,
-                    child: const RoundedDivider(
-                        height: 3, color: Color(0xfff55E00)))),
-            Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child:
-                    Image.asset("assets/icons/ok.png", width: 70, height: 70)),
+                    child: RoundedDivider(
+                        height: topDividerHeight, color: topDividerColor))),
+            withSuccessTick
+                ? Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Image.asset("assets/icons/ok.png",
+                        width: 70, height: 70))
+                : const SizedBox(),
             Padding(
                 padding: const EdgeInsets.only(bottom: 20),
                 child: Text(title,
                     style: const TextStyle(
                         fontSize: 20, fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center)),
-            Text(message,
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 16)),
+            message
           ])),
         ),
         actions: [

@@ -2,12 +2,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/utils.dart';
-import 'package:fullbooker/features/consumer/pages/purchase_summary.dart';
+import 'package:fullbooker/features/consumer/widgets/date_picker.dart';
 import 'package:fullbooker/features/consumer/widgets/event_carousel.dart';
 import 'package:fullbooker/features/consumer/widgets/host_details.dart';
 import 'package:fullbooker/features/consumer/widgets/ratings.dart';
 import 'package:fullbooker/features/consumer/widgets/ticket_booking.dart';
 import 'package:fullbooker/features/host/models/product.dart';
+import 'package:fullbooker/shared/widgets/appbar.dart';
 import 'package:map_location_picker/map_location_picker.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -27,6 +28,9 @@ class _EventDetailsState extends State<EventDetails> {
   Polyline? routePolyline;
   Position? currentPosition;
   LatLng? eventLocation;
+  DateTime? selectedDate;
+
+  var mapKey = GlobalKey();
 
   Widget _buildShimmerEffect(double width) {
     return Shimmer.fromColors(
@@ -142,76 +146,74 @@ class _EventDetailsState extends State<EventDetails> {
     ];
 
     return Scaffold(
+        backgroundColor: Colors.white,
         body: SafeArea(
-      child: Column(children: [
-        Stack(children: [
-          EventCarousel(
-              product: widget.event,
-              actionLabel: "View Map",
-              onActionClick: (_) {}),
-          Row(children: [
-            Align(
-              alignment: Alignment.centerRight,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: GestureDetector(
-                    child: const Icon(Icons.app_registration_rounded,
-                        color: Color(0xf0808080))),
-              ),
-            )
-          ]),
-        ]),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-          child: HostDetails(hostID: widget.event.host),
-        ),
-        Expanded(
-            child: ListView(shrinkWrap: true, children: [
-          TicketBookingWidget(product: widget.event),
-          CheckoutCard(
-              product: widget.event, locationName: widget.productLocationName),
-          currentPosition == null || eventLocation == null
-              ? _buildShimmerEffect(width)
-              : SizedBox(
-                  width: width - 40,
-                  child: AspectRatio(
-                    aspectRatio: 1.5,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 20, horizontal: 10),
-                      child: GoogleMap(
-                        myLocationButtonEnabled: false,
-                        myLocationEnabled: false,
-                        zoomControlsEnabled: true,
-                        gestureRecognizers: Set()
-                          ..add(Factory<EagerGestureRecognizer>(
-                              () => EagerGestureRecognizer())),
-                        initialCameraPosition: CameraPosition(
-                            zoom: 256,
-                            target: LatLng(currentPosition!.latitude,
-                                currentPosition!.longitude)),
-                        polylines:
-                            routePolyline == null ? {} : {routePolyline!},
-                        markers: {
-                          Marker(
-                              markerId: const MarkerId("1"),
-                              icon: BitmapDescriptor.defaultMarker,
-                              position: LatLng(currentPosition!.latitude,
-                                  currentPosition!.longitude)),
-                          Marker(
-                              markerId: const MarkerId("12"),
-                              icon: BitmapDescriptor.defaultMarker,
-                              position: eventLocation!),
-                        },
+          child: Column(children: [
+            Stack(children: [
+              EventCarousel(
+                  product: widget.event,
+                  actionLabel: "View Map",
+                  onActionClick: (_) => Scrollable.ensureVisible(
+                      mapKey.currentContext!,
+                      duration: const Duration(milliseconds: 500))),
+              const StandardNavBar(showSearchBar: false)
+            ]),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    HostDetails(product: widget.event, width: width / 2),
+                    DatePicker(
+                        product: widget.event,
+                        onDateSelected: (date) =>
+                            setState(() => selectedDate = date))
+                  ]),
+            ),
+            Expanded(
+                child: SingleChildScrollView(
+              child: Column(children: [
+                TicketBookingWidget(
+                    product: widget.event,
+                    selectedDate: selectedDate,
+                    productLocationName: widget.productLocationName),
+                currentPosition == null || eventLocation == null
+                    ? _buildShimmerEffect(width)
+                    : SizedBox(
+                        width: width - 10,
+                        child: AspectRatio(
+                          aspectRatio: 1.5,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 20, horizontal: 10),
+                            child: _googleMapWidget(),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ),
-          Divider(thickness: 1, color: Colors.grey[300]),
-          const RatingSummary(),
-          for (var review in reviews) ReviewCard(review: review)
-        ]))
-      ]),
-    ));
+                Divider(thickness: 1, color: Colors.grey[300]),
+                const RatingSummary(),
+                for (var review in reviews) ReviewCard(review: review)
+              ]),
+            ))
+          ]),
+        ));
+  }
+
+  Widget _googleMapWidget() {
+    return GoogleMap(
+      key: mapKey,
+      myLocationButtonEnabled: false,
+      myLocationEnabled: false,
+      zoomControlsEnabled: true,
+      gestureRecognizers: {}
+        ..add(Factory<EagerGestureRecognizer>(() => EagerGestureRecognizer())),
+      initialCameraPosition: CameraPosition(zoom: 256, target: eventLocation!),
+      markers: {
+        Marker(
+            markerId: const MarkerId("12"),
+            icon: BitmapDescriptor.defaultMarker,
+            position: eventLocation!),
+      },
+    );
   }
 }
