@@ -51,3 +51,26 @@ LatLng parseSRID(String srid) {
       .split(" ");
   return LatLng(double.parse(cleanedSRID[1]), double.parse(cleanedSRID[0]));
 }
+
+/// Retrieves the initials from a given string.
+///
+/// If the input [string] is empty, an empty string is returned.
+/// The initials are obtained by taking the first letter of each word in the string after trimming whitespace.
+/// The initials are concatenated into a single string.
+/// If the resulting initials length is greater than 2, the first two initials are returned.
+/// Otherwise, the entire initials string is returned.
+///
+/// E.g Abiud Orina returns AO
+String getInitials(String string) {
+  if (string.isEmpty) return '';
+
+  final String initials = string
+      .trim()
+      .split(RegExp(' +'))
+      .map((String s) => s[0])
+      .join()
+      .trim()
+      .toUpperCase();
+
+  return (initials.length > 2) ? initials.trim().substring(0, 2) : initials;
+}
