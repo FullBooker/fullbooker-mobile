@@ -69,48 +69,47 @@ class _TicketFormState extends State<TicketForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      child: Column(
-        children: [
-          widget.withIndexLabel
-              ? Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 5),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text("Ticket ${widget.index + 1}",
-                        textAlign: TextAlign.start,
-                        style: const TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold)),
-                  ),
-                )
-              : const SizedBox(),
-          Card(
-            elevation: 15,
-            color: Colors.white,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    buildTicketsDropDown(),
-                    widget.bookingMode == BookingMode.bulk
-                        ? buildTextField(Icons.numbers, "Quantity",
-                            controller: numberController, required: true)
-                        : const SizedBox(),
-                    buildTextField(Icons.person, "Name",
-                        controller: nameController, validator: validateName),
-                    buildTextField(Icons.credit_card, "ID/ Passport Number",
-                        controller: idController, required: true),
-                    buildTextField(Icons.phone, "Phone Number",
-                        controller: phoneController,
-                        validator: validatePhoneNumber),
-                    buildTextField(Icons.email, "Email",
-                        controller: emailController, validator: validateEmail),
-                    Padding(
+    return Column(
+      children: [
+        widget.withIndexLabel
+            ? Padding(
+                padding: const EdgeInsets.symmetric(vertical: 5),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text("Ticket ${widget.index + 1}",
+                      textAlign: TextAlign.start,
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold)),
+                ),
+              )
+            : const SizedBox(),
+        Card(
+          color: Colors.white,
+          elevation: 1,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  buildTicketsDropDown(),
+                  widget.bookingMode == BookingMode.bulk
+                      ? buildTextField(Icons.numbers, "Quantity",
+                          controller: numberController, required: true)
+                      : const SizedBox(),
+                  buildTextField(Icons.person, "Name",
+                      controller: nameController, validator: validateName),
+                  buildTextField(Icons.credit_card, "ID/ Passport Number",
+                      controller: idController, required: true),
+                  buildTextField(Icons.phone, "Phone Number",
+                      controller: phoneController,
+                      validator: validatePhoneNumber),
+                  buildTextField(Icons.email, "Email",
+                      controller: emailController, validator: validateEmail),
+                  GestureDetector(
+                    onTap: onAddClicked,
+                    child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 4),
                       child: Center(
                         child: Container(
@@ -118,42 +117,41 @@ class _TicketFormState extends State<TicketForm> {
                               border: Border.all(),
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(5))),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 4),
-                          child: GestureDetector(
-                            onTap: onAddClicked,
-                            child: SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.3,
-                              child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Flexible(
+                          padding: const EdgeInsets.symmetric(vertical: 4),
+                          child: SizedBox(
+                            height: 40,
+                            child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Flexible(
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(right: 5),
                                       child: Text(
                                           widget.bookingMode ==
                                                   BookingMode.single
-                                              ? "Add more tickets"
+                                              ? "Add More Tickets"
                                               : "Save",
                                           softWrap: true,
                                           style: const TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 16)),
                                     ),
-                                    const Icon(Icons.add,
-                                        color: Color(0xf0FC8135), size: 14)
-                                  ]),
-                            ),
+                                  ),
+                                  const Icon(Icons.add,
+                                      color: Color(0xf0FC8135), size: 14)
+                                ]),
                           ),
                         ),
                       ),
-                    )
-                  ],
-                ),
+                    ),
+                  )
+                ],
               ),
             ),
-          )
-        ],
-      ),
+          ),
+        )
+      ],
     );
   }
 
