@@ -23,22 +23,38 @@ class _EventsSectionState extends State<EventsSection> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-      child: Column(children: [
-        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          Text(widget.sectionName,
-              style:
-                  const TextStyle(fontSize: 20, fontWeight: FontWeight.w900)),
-          widget.onSeAllClick == null
-              ? const SizedBox()
-              : const Text("See All",
-                  style: TextStyle(fontSize: 18, color: Color(0xf0F55E00)))
-        ]),
-        Wrap(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Text(
+              widget.sectionName,
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
+            ),
+            widget.onSeAllClick == null
+                ? const SizedBox()
+                : const Text(
+                    "See All",
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Color(0xf0F55E00),
+                    ),
+                  )
+          ]),
+          const SizedBox(height: 12),
+          Wrap(
             alignment: WrapAlignment.spaceBetween,
-            children: List.generate(widget.events.length, (idx) {
-              return EventCard(product: widget.events[idx]);
-            }))
-      ]),
+            runSpacing: 8,
+            spacing: 12,
+            children: List.generate(
+              widget.events.length,
+              (idx) {
+                return EventCard(product: widget.events[idx]);
+              },
+            ),
+          )
+        ],
+      ),
     );
   }
 }
