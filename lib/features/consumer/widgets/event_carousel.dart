@@ -151,7 +151,7 @@ class _EventCarouselState extends State<EventCarousel> {
                     ),
                     Container(
                       width: width,
-                      color: Colors.black.withOpacity(0.45), // Dark overlay
+                      color: Colors.black.withValues(alpha: 0.45), // Dark overlay
                     )
                   ]);
                 }).toList(),
