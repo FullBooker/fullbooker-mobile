@@ -150,73 +150,103 @@ class _EventCardState extends State<EventCard> {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    return Card(
-        elevation: 5,
-        color: Colors.white,
-        child: InkWell(
-          onTap: widget.onBuyClick,
-          child: SizedBox(
-              width: width * 0.45,
-              child: AspectRatio(
-                  aspectRatio: 0.6,
-                  child: isLoading
-                      ? _buildShimmerEffect(width)
-                      : Column(children: [
-                          Flexible(
-                            child: FractionallySizedBox(
-                                heightFactor: 1,
-                                child: Stack(children: [
-                                  Container(
-                                      decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: NetworkImage(
-                                            widget.product.image!.file),
-                                        fit: BoxFit.cover),
-                                  ))
-                                ])),
-                          ),
-                          Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 4, horizontal: 12),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    widget.product.name,
-                                    style: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  Text(
-                                    "$locationName, ${distanceFromEvent?.toStringAsFixed(0) ?? "_"} km away",
-                                    style: TextStyle(color: Colors.grey[600]),
-                                  ),
-                                  Text(
-                                    '${getStartDate()} - ${getEndDate()}',
-                                    style: TextStyle(color: Colors.grey[600]),
-                                  ),
-                                  Text(
-                                    'from KES ${getLowestPrice().cost}',
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  SizedBox(
-                                    width: double.infinity,
-                                    child: Button(
-                                        widget.onBuyClick ??
-                                            () => goToEventDetails(
-                                                widget.product),
-                                        actionLabel: "Buy Ticket",
-                                        verticalPadding: 4,
-                                        elevation: 0),
-                                  ),
-                                ],
-                              ),
+    var height = MediaQuery.of(context).size.height;
+
+    return InkWell(
+      onTap: widget.onBuyClick,
+      child: Container(
+        width: width * 0.45,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: const BorderRadius.only(
+            bottomLeft: Radius.circular(8),
+            bottomRight: Radius.circular(8),
+            topRight: Radius.circular(8),
+            topLeft: Radius.circular(8),
+          ),
+          boxShadow: [
+            BoxShadow(
+              offset: const Offset(0, 4),
+              blurRadius: 30,
+              color: Colors.black.withValues(alpha: .1),
+            ),
+          ],
+        ),
+        child: isLoading
+            ? _buildShimmerEffect(width)
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(8),
+                        topRight: Radius.circular(8),
+                      ),
+                    ),
+                    height: height / 6,
+                    child: Stack(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: NetworkImage(widget.product.image!.file),
+                              fit: BoxFit.cover,
                             ),
-                          )
-                        ]))),
-        ));
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      spacing: 8,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.product.name,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ),
+                        Text(
+                          "$locationName, ${distanceFromEvent?.toStringAsFixed(0) ?? "_"} km away",
+                          style: TextStyle(
+                            color: Colors.grey[600],
+                            fontSize: 14,
+                          ),
+                        ),
+                        Text(
+                          '${getStartDate()} - ${getEndDate()}',
+                          style: TextStyle(
+                            color: Colors.grey[600],
+                            fontSize: 14,
+                          ),
+                        ),
+                        Text(
+                          'From KES ${getLowestPrice().cost}',
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(
+                          width: double.infinity,
+                          child: Button(
+                            widget.onBuyClick ??
+                                () => goToEventDetails(widget.product),
+                            actionLabel: "Buy Ticket",
+                            verticalPadding: 4,
+                            elevation: 0,
+                            
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+      ),
+    );
   }
 }

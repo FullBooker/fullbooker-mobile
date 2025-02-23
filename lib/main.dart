@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fullbooker/core/environments.dart';
 import 'package:fullbooker/features/auth/pages/login.dart';
 import 'package:fullbooker/features/host/pages/summary.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 Future setupEnvironment() async {
   const envString = String.fromEnvironment("ENV");
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
             seedColor: const Color(0xfff55E00),
             primary: const Color(0xfff55E00)),
         useMaterial3: true,
-        fontFamily: "Open Sans",
+        textTheme: GoogleFonts.openSansTextTheme(),
       ),
       home: homePage(),
     );
