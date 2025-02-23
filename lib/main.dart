@@ -13,6 +13,9 @@ Future setupEnvironment() async {
 }
 
 Future main() async {
+  FlutterError.onError = (FlutterErrorDetails details) {
+    debugPrintStack(stackTrace: details.stack);
+  };
   WidgetsFlutterBinding.ensureInitialized();
   await setupEnvironment();
   runApp(const MyApp(getHomePage));

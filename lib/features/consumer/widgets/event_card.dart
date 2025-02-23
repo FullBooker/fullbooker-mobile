@@ -39,11 +39,11 @@ class _EventCardState extends State<EventCard> {
   }
 
   void goToEventDetails(Product event) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-        return EventDetails(event: event, productLocationName: locationName!);
-      }));
-    });
+    //WidgetsBinding.instance.addPostFrameCallback((_) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+      return EventDetails(event: event, productLocationName: locationName!);
+    }));
+    //});
   }
 
   Future<void> fetchLocationName() async {
@@ -190,7 +190,7 @@ class _EventCardState extends State<EventCard> {
                                         fontWeight: FontWeight.bold),
                                   ),
                                   Text(
-                                    "$locationName, ${distanceFromEvent?.toStringAsFixed(0) ?? "Error"} km away",
+                                    "$locationName, ${distanceFromEvent?.toStringAsFixed(0) ?? "_"} km away",
                                     style: TextStyle(color: Colors.grey[600]),
                                   ),
                                   Text(

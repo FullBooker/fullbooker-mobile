@@ -32,7 +32,7 @@ class PasswordChangeState extends State<PasswordChange> {
         builder: (BuildContext context) {
           return InformationModal(
             title: "PASSWORD RESET SUCCESSFULLY",
-            message: "You have reset your\npassword sucessfully",
+            message: const Text("You have reset your password sucessfully"),
             actionTitle: "Home",
             action: () => goToLogin(context),
           );

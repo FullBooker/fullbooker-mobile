@@ -7,6 +7,7 @@ import 'package:fullbooker/shared/widgets/page_title.dart';
 import 'package:fullbooker/shared/widgets/titled_dropdown.dart';
 import 'package:fullbooker/features/host/models/categories.dart';
 
+// ignore: constant_identifier_names
 enum ProductTypes { Event, Activity }
 
 class CategorySelection extends StatefulWidget {

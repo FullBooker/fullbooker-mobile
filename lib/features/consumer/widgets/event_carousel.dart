@@ -14,12 +14,11 @@ class EventCarousel extends StatefulWidget {
   final String actionLabel;
   final Function(String) onActionClick;
 
-  const EventCarousel({
-    super.key,
-    required this.product,
-    required this.onActionClick,
-    this.actionLabel = "",
-  });
+  const EventCarousel(
+      {super.key,
+      required this.product,
+      required this.onActionClick,
+      this.actionLabel = ""});
 
   @override
   State<StatefulWidget> createState() => _EventCarouselState();
@@ -142,19 +141,19 @@ class _EventCarouselState extends State<EventCarousel> {
                   autoPlayInterval: const Duration(seconds: 15),
                 ),
                 items: images.map((imageUrl) {
-                  return Container(
-                    width: width,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: NetworkImage(imageUrl),
-                        fit: BoxFit.cover,
-                        colorFilter: ColorFilter.mode(
-                          Colors.black.withOpacity(0.45),
-                          BlendMode.darken,
-                        ),
+                  return Stack(children: [
+                    Container(
+                      width: width,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: NetworkImage(imageUrl), fit: BoxFit.cover),
                       ),
                     ),
-                  );
+                    Container(
+                      width: width,
+                      color: Colors.black.withOpacity(0.45), // Dark overlay
+                    )
+                  ]);
                 }).toList(),
               ),
         Positioned(

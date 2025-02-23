@@ -25,62 +25,59 @@ class RatingSummary extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       elevation: 4,
       child: SizedBox(
-        width: width - 40,
-        child: AspectRatio(
-          aspectRatio: 3.2,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: ratingDistribution.entries.map((entry) {
-                        return Row(
-                          children: [
-                            Text("${entry.key} ",
-                                style: const TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.bold)),
-                            const Icon(Icons.star,
-                                color: Colors.orange, size: 18),
-                            const SizedBox(width: 8),
-                            SizedBox(
-                                width: width / 2,
-                                child: LinearProgressIndicator(
-                                  value: entry.value,
-                                  color: Colors.orange,
-                                  backgroundColor: Colors.grey[300],
-                                  minHeight: 6,
-                                ))
-                          ],
-                        );
-                      }).toList(),
-                    ),
-                    Column(
-                      children: [
-                        Text("$rating",
-                            style: const TextStyle(
-                                fontSize: 36, fontWeight: FontWeight.bold)),
-                        Row(
-                          children: List.generate(5, (index) {
-                            return Icon(
-                              index < rating ? Icons.star : Icons.star_border,
-                              color: Colors.orange,
-                            );
-                          }),
-                        ),
-                        const SizedBox(height: 5),
-                        Text("$totalReviews Reviews",
-                            style: const TextStyle(
-                                fontSize: 14, color: Colors.grey)),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            ),
+        width: width - 20,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: ratingDistribution.entries.map((entry) {
+                      return Row(
+                        children: [
+                          Text("${entry.key} ",
+                              style: const TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold)),
+                          const Icon(Icons.star,
+                              color: Colors.orange, size: 18),
+                          const SizedBox(width: 8),
+                          SizedBox(
+                              width: width / 2,
+                              child: LinearProgressIndicator(
+                                value: entry.value,
+                                color: Colors.orange,
+                                backgroundColor: Colors.grey[300],
+                                minHeight: 6,
+                              ))
+                        ],
+                      );
+                    }).toList(),
+                  ),
+                  Column(
+                    children: [
+                      Text("$rating",
+                          style: const TextStyle(
+                              fontSize: 36, fontWeight: FontWeight.bold)),
+                      Row(
+                        children: List.generate(5, (index) {
+                          return Icon(
+                            index < rating ? Icons.star : Icons.star_border,
+                            color: Colors.orange,
+                          );
+                        }),
+                      ),
+                      const SizedBox(height: 5),
+                      Text("$totalReviews Reviews",
+                          style: const TextStyle(
+                              fontSize: 14, color: Colors.grey)),
+                    ],
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),

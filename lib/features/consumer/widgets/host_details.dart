@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fullbooker/features/host/models/product.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ProfileRating extends StatelessWidget {
@@ -51,9 +52,10 @@ class ProfileRating extends StatelessWidget {
 }
 
 class HostDetails extends StatefulWidget {
-  final String hostID;
+  final Product product;
+  final double width;
 
-  const HostDetails({super.key, required this.hostID});
+  const HostDetails({super.key, required this.product, required this.width});
 
   @override
   State<StatefulWidget> createState() => _HostDetailsState();
@@ -84,17 +86,11 @@ class _HostDetailsState extends State<HostDetails> {
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
-
     return SizedBox(
-        width: width - 40,
-        child: AspectRatio(
-            aspectRatio: 8,
-            child: isLoading
-                ? _buildShimmerEffect(width)
-                : const ProfileRating(
-                    profileImageUrl: null,
-                    rating: 4,
-                    hostName: "Kevin Laichana")));
+        width: widget.width,
+        child: isLoading
+            ? _buildShimmerEffect(widget.width)
+            : const ProfileRating(
+                profileImageUrl: null, rating: 4, hostName: "Kevin Laichana"));
   }
 }
