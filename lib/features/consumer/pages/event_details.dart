@@ -149,50 +149,51 @@ class _EventDetailsState extends State<EventDetails> {
         backgroundColor: Colors.white,
         body: SafeArea(
           child: Column(children: [
-            Stack(children: [
-              EventCarousel(
-                  product: widget.event,
-                  actionLabel: "View Map",
-                  onActionClick: (_) => Scrollable.ensureVisible(
-                      mapKey.currentContext!,
-                      duration: const Duration(milliseconds: 500))),
-              const StandardNavBar(showSearchBar: false)
-            ]),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    HostDetails(product: widget.event, width: width / 2),
-                    DatePicker(
-                        product: widget.event,
-                        onDateSelected: (date) =>
-                            setState(() => selectedDate = date))
-                  ]),
-            ),
             Expanded(
                 child: SingleChildScrollView(
               child: Column(children: [
-                TicketBookingWidget(
-                    product: widget.event,
-                    selectedDate: selectedDate,
-                    productLocationName: widget.productLocationName),
-                currentPosition == null || eventLocation == null
-                    ? _buildShimmerEffect(width)
-                    : SizedBox(
-                        width: width - 10,
-                        child: AspectRatio(
-                          aspectRatio: 1.5,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 20, horizontal: 10),
-                            child: _googleMapWidget(),
+                Stack(children: [
+                  EventCarousel(
+                      product: widget.event,
+                      actionLabel: "View on Map",
+                      onActionClick: (_) => Scrollable.ensureVisible(
+                          mapKey.currentContext!,
+                          duration: const Duration(milliseconds: 500))),
+                  const StandardNavBar(showSearchBar: false)
+                ]),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                  child: Column(spacing: 12, children: [
+                    Wrap(runSpacing: 16, children: [
+                      HostDetails(product: widget.event, width: width / 2),
+                      DatePicker(
+                          product: widget.event,
+                          onDateSelected: (date) =>
+                              setState(() => selectedDate = date))
+                    ]),
+                    TicketBookingWidget(
+                        product: widget.event,
+                        selectedDate: selectedDate,
+                        productLocationName: widget.productLocationName),
+                    currentPosition == null || eventLocation == null
+                        ? _buildShimmerEffect(width)
+                        : SizedBox(
+                            width: width - 10,
+                            child: AspectRatio(
+                              aspectRatio: 1.5,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 20, horizontal: 10),
+                                child: _googleMapWidget(),
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                Divider(thickness: 1, color: Colors.grey[300]),
-                const RatingSummary(),
-                for (var review in reviews) ReviewCard(review: review)
+                    Divider(thickness: 1, color: Colors.grey[300]),
+                    const RatingSummary(),
+                    for (var review in reviews) ReviewCard(review: review)
+                  ]),
+                ),
               ]),
             ))
           ]),
@@ -207,7 +208,7 @@ class _EventDetailsState extends State<EventDetails> {
       zoomControlsEnabled: true,
       gestureRecognizers: {}
         ..add(Factory<EagerGestureRecognizer>(() => EagerGestureRecognizer())),
-      initialCameraPosition: CameraPosition(zoom: 256, target: eventLocation!),
+      initialCameraPosition: CameraPosition(zoom: 16, target: eventLocation!),
       markers: {
         Marker(
             markerId: const MarkerId("12"),

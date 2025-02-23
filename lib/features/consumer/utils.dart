@@ -41,7 +41,7 @@ ProductPricing getProductPricing({double? price}) {
   return ProductPricing(
       uuid.v4(),
       uuid.v4(),
-      (price ?? randomDouble()).toStringAsFixed(0),
+      (price ?? randomDouble()).toStringAsFixed(2),
       randomString(),
       randomString(),
       randomInt());

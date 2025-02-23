@@ -5,7 +5,7 @@ import 'package:fullbooker/features/consumer/pages/purchase_summary.dart';
 import 'package:fullbooker/features/consumer/widgets/tickets_form.dart';
 import 'package:fullbooker/features/consumer/widgets/tickets_summary.dart';
 import 'package:fullbooker/features/host/models/product.dart';
-import 'package:fullbooker/shared/widgets/button.dart';
+import 'package:fullbooker/shared/widgets/secondary_button.dart';
 
 enum BookingMode { bulk, single }
 
@@ -75,57 +75,68 @@ class _TicketBookingWidgetState extends State<TicketBookingWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          const Center(
-              child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 5),
-            child: Text("Tickets",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-          )),
-          TicketForm(
-              index: 0,
-              product: widget.product,
-              productLocationName: widget.productLocationName,
-              withIndexLabel: false,
-              onAddClicked: addTicket,
-              bookingMode: bookingMode),
-          TicketsSummary(
-              tickets: tickets,
-              onRemove: (ticketsNow) => setState(() => tickets = ticketsNow),
-              bookingMode: bookingMode),
-          Center(
-              child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child: Column(children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4),
-                child: Text(bookingMode == BookingMode.bulk
-                    ? "3 tickets or less ?"
-                    : "More than 3 tickets?"),
-              ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width / 1.7,
-                child: Button(_toggleBookingMode,
-                    actionLabel: bookingMode == BookingMode.bulk
-                        ? "Single Tickets"
-                        : "Bulk Booking",
-                    color: const Color(0xf0FADFCF),
-                    actionLabelColor: Colors.black),
-              )
-            ]),
-          )),
-          CheckoutCard(
-              pricing: tickets.isEmpty ? null : tickets.first.pricing,
-              quantity: bookingMode == BookingMode.single
-                  ? tickets.length
-                  : tickets.isEmpty
-                      ? 0
-                      : tickets.first.quantity,
-              locationName: widget.productLocationName,
-              onProceedClick: checkout),
-        ]));
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      const Text("Tickets",
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+      TicketForm(
+          index: 0,
+          product: widget.product,
+          productLocationName: widget.productLocationName,
+          withIndexLabel: false,
+          onAddClicked: addTicket,
+          bookingMode: bookingMode),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 20),
+        child: Container(
+          alignment: Alignment.center,
+          width: MediaQuery.of(context).size.width - 10,
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.orange),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Column(
+            children: [
+              TicketsSummary(
+                  tickets: tickets,
+                  onRemove: (ticketsNow) =>
+                      setState(() => tickets = ticketsNow),
+                  bookingMode: bookingMode),
+              Center(
+                  child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Column(children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4),
+                    child: Text(bookingMode == BookingMode.bulk
+                        ? "3 tickets or less ?"
+                        : "More than 3 tickets?"),
+                  ),
+                  const SizedBox(height: 8),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width / 1.7,
+                    child: SecondaryButton(_toggleBookingMode,
+                        elevation: 0,
+                        actionLabel: bookingMode == BookingMode.bulk
+                            ? "Single Tickets"
+                            : "Bulk Booking"),
+                  )
+                ]),
+              )),
+            ],
+          ),
+        ),
+      ),
+      CheckoutCard(
+          pricing: tickets.isEmpty ? null : tickets.first.pricing,
+          quantity: bookingMode == BookingMode.single
+              ? tickets.length
+              : tickets.isEmpty
+                  ? 0
+                  : tickets.first.quantity,
+          locationName: widget.productLocationName,
+          onProceedClick: checkout),
+    ]);
   }
 
   void _toggleBookingMode() {

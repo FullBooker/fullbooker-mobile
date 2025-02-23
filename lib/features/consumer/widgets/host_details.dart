@@ -19,32 +19,39 @@ class ProfileRating extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        // Profile Picture
         CircleAvatar(
-          radius: 20, // Adjust size as needed
+          radius: 24,
           backgroundImage:
               profileImageUrl == null ? null : NetworkImage(profileImageUrl!),
         ),
-        const SizedBox(width: 8), // Spacing between image and stars
-
-        Column(
-          children: [
-            const Padding(
-                padding: EdgeInsets.only(bottom: 2),
-                child: Text("Hosted by Some Person")),
-            Row(
-              children: List.generate(totalStars, (index) {
-                return Icon(
-                  index < rating
-                      ? Icons.star
-                      : Icons.star_border, // Filled or empty star
-                  color: index < rating ? Colors.amber : Colors.grey,
-                  size: 20,
-                );
-              }),
-            ),
-          ],
+        const SizedBox(width: 8),
+        Expanded(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Hosted by $hostName",
+                softWrap: true,
+                overflow: TextOverflow.ellipsis, // Handles overflow
+                maxLines: 2, // Limits to 2 lines
+                style:
+                    const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+              ),
+              Row(
+                children: List.generate(totalStars, (index) {
+                  return Icon(
+                    index < rating ? Icons.star : Icons.star_border,
+                    color:
+                        index < rating ? const Color(0xf0E4A70A) : Colors.grey,
+                    size: 20,
+                  );
+                }),
+              ),
+            ],
+          ),
         ),
       ],
     );
@@ -86,11 +93,9 @@ class _HostDetailsState extends State<HostDetails> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-        width: widget.width,
-        child: isLoading
-            ? _buildShimmerEffect(widget.width)
-            : const ProfileRating(
-                profileImageUrl: null, rating: 4, hostName: "Kevin Laichana"));
+    return isLoading
+        ? _buildShimmerEffect(widget.width)
+        : const ProfileRating(
+            profileImageUrl: null, rating: 4, hostName: "Kevin Laichena");
   }
 }

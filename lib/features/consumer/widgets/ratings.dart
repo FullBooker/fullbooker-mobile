@@ -25,7 +25,7 @@ class RatingSummary extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       elevation: 4,
       child: SizedBox(
-        width: width - 20,
+        width: width - 10,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
           child: Column(
@@ -45,11 +45,11 @@ class RatingSummary extends StatelessWidget {
                               color: Colors.orange, size: 18),
                           const SizedBox(width: 8),
                           SizedBox(
-                              width: width / 2,
+                              width: width / 2.5,
                               child: LinearProgressIndicator(
                                 value: entry.value,
                                 color: Colors.orange,
-                                backgroundColor: Colors.grey[300],
+                                backgroundColor: Colors.transparent,
                                 minHeight: 6,
                               ))
                         ],
@@ -57,6 +57,7 @@ class RatingSummary extends StatelessWidget {
                     }).toList(),
                   ),
                   Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text("$rating",
                           style: const TextStyle(
@@ -64,8 +65,8 @@ class RatingSummary extends StatelessWidget {
                       Row(
                         children: List.generate(5, (index) {
                           return Icon(
-                            index < rating ? Icons.star : Icons.star_border,
-                            color: Colors.orange,
+                            Icons.star,
+                            color: index < rating ? Colors.orange : Colors.grey,
                           );
                         }),
                       ),
