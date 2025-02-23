@@ -19,14 +19,14 @@ class _DatePickerState extends State<DatePicker> {
   @override
   Widget build(BuildContext context) {
     return Row(children: [
-      const Icon(Icons.calendar_month, color: Color(0xf0FC8135)),
+      const Icon(Icons.calendar_month, color: Color(0xf0FC8135), size: 24),
       Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 4),
+        padding: const EdgeInsets.symmetric(horizontal: 8),
         child: Text(
             setDateTime == null
                 ? "Select Date"
                 : "${setDateTime!.day}/${setDateTime!.month}/${setDateTime!.year}",
-            style: const TextStyle(fontSize: 18)),
+            style: const TextStyle(fontSize: 14)),
       ),
       GestureDetector(
         onTap: () async {

@@ -47,84 +47,76 @@ class _TicketsSummaryState extends State<TicketsSummary> {
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 10),
-      child: Container(
-        width: MediaQuery.of(context).size.width - 20,
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.orange),
-          borderRadius: BorderRadius.circular(12),
+      child: Column(mainAxisSize: MainAxisSize.min, children: [
+        // Title
+        const Text(
+          "Tickets Summary",
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
-        child: Column(mainAxisSize: MainAxisSize.min, children: [
-          // Title
-          const Text(
-            "Tickets Summary",
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 10),
+        const SizedBox(height: 10),
 
-          // Table
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: DataTable(
-              border: TableBorder.all(color: Colors.grey.shade400),
-              headingRowHeight: 40,
-              columnSpacing: 20,
-              columns: const [
-                DataColumn(
-                    label: Text("Name",
-                        style: TextStyle(fontWeight: FontWeight.bold))),
-                DataColumn(
-                    label: Text("ID/PASSPORT",
-                        style: TextStyle(fontWeight: FontWeight.bold))),
-                DataColumn(
-                    label: Text("Phone number",
-                        style: TextStyle(fontWeight: FontWeight.bold))),
-                DataColumn(
-                    label: Text("Email",
-                        style: TextStyle(fontWeight: FontWeight.bold))),
-                DataColumn(
-                    label: Text("Quantity",
-                        style: TextStyle(fontWeight: FontWeight.bold))),
-                DataColumn(label: Text("")),
-              ],
-              rows: tickets.asMap().entries.map((entry) {
-                int index = entry.key;
-                Ticket ticket = entry.value;
+        // Table
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: DataTable(
+            border: TableBorder.all(color: Colors.grey.shade400),
+            headingRowHeight: 40,
+            columnSpacing: 20,
+            columns: const [
+              DataColumn(
+                  label: Text("Name",
+                      style: TextStyle(fontWeight: FontWeight.bold))),
+              DataColumn(
+                  label: Text("ID/PASSPORT",
+                      style: TextStyle(fontWeight: FontWeight.bold))),
+              DataColumn(
+                  label: Text("Phone number",
+                      style: TextStyle(fontWeight: FontWeight.bold))),
+              DataColumn(
+                  label: Text("Email",
+                      style: TextStyle(fontWeight: FontWeight.bold))),
+              DataColumn(
+                  label: Text("Quantity",
+                      style: TextStyle(fontWeight: FontWeight.bold))),
+              DataColumn(label: Text("")),
+            ],
+            rows: tickets.asMap().entries.map((entry) {
+              int index = entry.key;
+              Ticket ticket = entry.value;
 
-                var cells = [
-                  DataCell(Text(ticket.name)),
-                  DataCell(Text(ticket.id)),
-                  DataCell(Text(ticket.phone)),
-                  DataCell(Text(ticket.email)),
-                  DataCell(Text(ticket.quantity.toString())),
-                  DataCell(
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xf0F55E00),
-                          padding: const EdgeInsets.all(0),
-                          shape: const RoundedRectangleBorder(),
-                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                          visualDensity:
-                              const VisualDensity(horizontal: 0, vertical: 0)),
-                      onPressed: () => deleteTicket(index),
-                      child: const Text("Delete",
-                          style: TextStyle(color: Colors.white)),
-                    ),
+              var cells = [
+                DataCell(Text(ticket.name)),
+                DataCell(Text(ticket.id)),
+                DataCell(Text(ticket.phone)),
+                DataCell(Text(ticket.email)),
+                DataCell(Text(ticket.quantity.toString())),
+                DataCell(
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xf0F55E00),
+                        padding: const EdgeInsets.all(0),
+                        shape: const RoundedRectangleBorder(),
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        visualDensity:
+                            const VisualDensity(horizontal: 0, vertical: 0)),
+                    onPressed: () => deleteTicket(index),
+                    child: const Text("Delete",
+                        style: TextStyle(color: Colors.white)),
                   ),
-                ];
-                return DataRow(cells: cells);
-              }).toList(),
-            ),
+                ),
+              ];
+              return DataRow(cells: cells);
+            }).toList(),
           ),
-          tickets.isEmpty
-              ? const Center(
-                  child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8.0),
-                  child: Text("Tickets will appear here when added"),
-                ))
-              : const SizedBox()
-        ]),
-      ),
+        ),
+        tickets.isEmpty
+            ? const Center(
+                child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 8.0),
+                child: Text("Tickets will appear here when added"),
+              ))
+            : const SizedBox()
+      ]),
     );
   }
 }

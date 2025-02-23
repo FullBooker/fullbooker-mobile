@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fullbooker/features/host/models/product.dart';
+import 'package:fullbooker/shared/widgets/button.dart';
 
 class CheckoutCard extends StatelessWidget {
   final ProductPricing? pricing;
@@ -122,23 +123,8 @@ class CheckoutCard extends StatelessWidget {
               SizedBox(height: screenHeight * 0.03),
 
               Center(
-                child: ElevatedButton(
-                  onPressed: onProceedClick,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xf0F55E00),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    padding: EdgeInsets.symmetric(
-                      horizontal: screenWidth * 0.2,
-                    ),
-                  ),
-                  child: Text(
-                    "Proceed to Checkout",
-                    style: TextStyle(
-                        color: Colors.white, fontSize: screenWidth * 0.045),
-                  ),
-                ),
+                child:
+                    Button(onProceedClick, actionLabel: "Proceed to checkout"),
               ),
             ],
           ),
