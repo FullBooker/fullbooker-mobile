@@ -12,6 +12,8 @@ class Button extends StatelessWidget {
   final double labelFontSize;
   final double verticalPadding;
   final double elevation;
+  final double? customHeight;
+  final double? customWidth;
 
   const Button(
     this.onPressed, {
@@ -23,29 +25,24 @@ class Button extends StatelessWidget {
     this.loading = false,
     this.labelFontSize = 16,
     this.verticalPadding = 12,
-    this.elevation = 2,
+    this.elevation = 1,
+    this.customHeight = 48,
+    this.customWidth,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      borderRadius: BorderRadius.circular(8),
-      elevation: elevation,
-      shadowColor: color,
-      child: FilledButton(
-        style: ButtonStyle(
-          backgroundColor: WidgetStateProperty.resolveWith<Color?>(
-            (Set<WidgetState> states) => color,
-          ),
-          minimumSize: const WidgetStatePropertyAll(Size.fromHeight(40)),
-          padding: WidgetStatePropertyAll(
-            EdgeInsets.symmetric(vertical: verticalPadding, horizontal: 0),
-          ),
-          shape: WidgetStatePropertyAll(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-          ),
+    final Size size = MediaQuery.of(context).size;
+
+    return SizedBox(
+      width: customWidth ?? size.width,
+      height: customHeight,
+      child: RawMaterialButton(
+        elevation: elevation,
+        fillColor: color,
+        splashColor: color,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8.0),
         ),
         onPressed: onPressed,
         child: Center(
