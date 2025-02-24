@@ -28,8 +28,12 @@ class CheckoutCard extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(color: Colors.black26, blurRadius: 10, spreadRadius: 2),
+            boxShadow: [
+              BoxShadow(
+                offset: const Offset(0, 4),
+                blurRadius: 30,
+                color: Colors.black.withValues(alpha: .1),
+              ),
             ],
           ),
           child: Column(
@@ -49,11 +53,14 @@ class CheckoutCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    "Number of tickets",
-                    style: TextStyle(
-                        fontSize: screenWidth * 0.045,
-                        fontWeight: FontWeight.bold),
+                  Flexible(
+                    child: Text(
+                      "Number of tickets",
+                      softWrap: true,
+                      style: TextStyle(
+                          fontSize: screenWidth * 0.045,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
                   Text(
                     quantity.toString(),
@@ -70,19 +77,25 @@ class CheckoutCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    "Ticket Price",
-                    style: TextStyle(
-                        fontSize: screenWidth * 0.045,
-                        fontWeight: FontWeight.bold),
+                  Flexible(
+                    child: Text(
+                      softWrap: true,
+                      "Ticket Price",
+                      style: TextStyle(
+                          fontSize: screenWidth * 0.045,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
-                  Text(
-                    pricing == null || quantity == 0
-                        ? "_"
-                        : "KES ${pricing!.cost}  X  $quantity",
-                    style: TextStyle(
-                        fontSize: screenWidth * 0.045,
-                        fontWeight: FontWeight.bold),
+                  Flexible(
+                    child: Text(
+                      pricing == null || quantity == 0
+                          ? "_"
+                          : "KES ${pricing!.cost}  X  $quantity",
+                      softWrap: true,
+                      style: TextStyle(
+                          fontSize: screenWidth * 0.045,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
                 ],
               ),

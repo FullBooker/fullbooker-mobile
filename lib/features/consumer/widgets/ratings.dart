@@ -23,9 +23,9 @@ class RatingSummary extends StatelessWidget {
     return Card(
       color: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      elevation: 4,
+      elevation: 1,
       child: SizedBox(
-        width: width - 10,
+        width: width - 5,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
           child: Column(
@@ -40,7 +40,7 @@ class RatingSummary extends StatelessWidget {
                         children: [
                           Text("${entry.key} ",
                               style: const TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold)),
+                                  fontSize: 14, fontWeight: FontWeight.bold)),
                           const Icon(Icons.star,
                               color: Colors.orange, size: 18),
                           const SizedBox(width: 8),
@@ -51,6 +51,8 @@ class RatingSummary extends StatelessWidget {
                                 color: Colors.orange,
                                 backgroundColor: Colors.transparent,
                                 minHeight: 6,
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(10)),
                               ))
                         ],
                       );
@@ -61,7 +63,7 @@ class RatingSummary extends StatelessWidget {
                     children: [
                       Text("$rating",
                           style: const TextStyle(
-                              fontSize: 36, fontWeight: FontWeight.bold)),
+                              fontSize: 32, fontWeight: FontWeight.bold)),
                       Row(
                         children: List.generate(5, (index) {
                           return Icon(
@@ -72,8 +74,9 @@ class RatingSummary extends StatelessWidget {
                       ),
                       const SizedBox(height: 5),
                       Text("$totalReviews Reviews",
+                          softWrap: true,
                           style: const TextStyle(
-                              fontSize: 14, color: Colors.grey)),
+                              fontSize: 12, color: Colors.grey)),
                     ],
                   ),
                 ],
@@ -142,7 +145,7 @@ class ReviewCard extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(review['review'],
-              style: const TextStyle(fontSize: 14, color: Colors.black)),
+              style: const TextStyle(fontSize: 14, color: Color(0xff808080))),
           const SizedBox(height: 8),
           Divider(color: Colors.grey[300]),
         ],

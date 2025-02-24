@@ -92,7 +92,7 @@ class _EventsSummaryState extends State<EventsSummary> {
     super.initState();
     productsController.repository.post({}, "/hosts/").then((host) {
       productsController.repository.pullMultiple(1, 100,
-          processResponseAsPage: false,
+          processResponseAsPage: true,
           filters: {"host": host["id"]}).then((products_) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           if (products_.isEmpty) {
