@@ -147,3 +147,20 @@ String randomCategory() {
   var idx = rnd.nextInt(subCategories.length - 1);
   return subCategories[idx];
 }
+
+Map<String, Category> getCategories() {
+  return {
+    "assets/icons/kids_icon.png": Category(
+        uuid.v4(), DateTime.now(), DateTime.now(), true, "Kids", null, []),
+    "assets/icons/concerts_icon.png": Category(
+        uuid.v4(), DateTime.now(), DateTime.now(), true, "Concerts", null, []),
+    "assets/icons/gym_icon.png": Category(
+        uuid.v4(), DateTime.now(), DateTime.now(), true, "Gyms", null, []),
+    "assets/icons/go_cart_icon.png": Category(uuid.v4(), DateTime.now(),
+        DateTime.now(), true, "Go Karting", null, []),
+    "assets/icons/swimming_icon.png": Category(
+        uuid.v4(), DateTime.now(), DateTime.now(), true, "Swimming", null, []),
+    "assets/icons/car_icon.png": Category(
+        uuid.v4(), DateTime.now(), DateTime.now(), true, "Car Shows", null, [])
+  };
+}

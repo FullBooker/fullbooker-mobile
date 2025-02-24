@@ -3,6 +3,8 @@ import 'package:fullbooker/features/consumer/painters.dart';
 import 'package:fullbooker/features/consumer/widgets/tickets_summary.dart';
 import 'package:fullbooker/features/host/models/product.dart';
 import 'package:fullbooker/shared/widgets/appbar.dart';
+import 'package:fullbooker/shared/widgets/divider.dart';
+import 'package:fullbooker/shared/widgets/scale_locked_text.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class PaymentConfirmationScreen extends StatelessWidget {
@@ -18,6 +20,8 @@ class PaymentConfirmationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar:
@@ -27,14 +31,20 @@ class PaymentConfirmationScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Checkmark Icon
+            SizedBox(
+                width: width * 0.7,
+                child:
+                    const RoundedDivider(color: Color(0xf0F55E00), height: 2)),
             const Icon(Icons.check_circle, color: Colors.green, size: 80),
             const SizedBox(height: 10),
-
-            // Confirmation Message
-            const Text(
-              "Thank you for your payment",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            SizedBox(
+              width: width * 0.7,
+              child: const Text(
+                "Thank you for your payment",
+                softWrap: true,
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+              ),
             ),
             const SizedBox(height: 20),
 
@@ -132,10 +142,15 @@ class PaymentConfirmationScreen extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(title,
-              style:
-                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
-          Text(value, style: const TextStyle(fontSize: 14)),
+          Flexible(
+            child: Text(title,
+                softWrap: true,
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+          ),
+          Flexible(
+              child: Text(value,
+                  softWrap: true, style: const TextStyle(fontSize: 14))),
         ],
       ),
     );
@@ -144,12 +159,10 @@ class PaymentConfirmationScreen extends StatelessWidget {
   // Ticket Card Widget
   Widget _ticketCard() {
     return Container(
-      width: 360,
-      height: 160,
-      decoration: BoxDecoration(
+      height: 190,
+      decoration: const BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: const [
+        boxShadow: [
           BoxShadow(color: Colors.black26, blurRadius: 5, offset: Offset(2, 2)),
         ],
       ),
@@ -160,15 +173,11 @@ class PaymentConfirmationScreen extends StatelessWidget {
             width: 24,
             decoration: BoxDecoration(
               color: Colors.grey[400],
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(12),
-                bottomLeft: Radius.circular(12),
-              ),
             ),
             child: const Center(
               child: RotatedBox(
                 quarterTurns: 3,
-                child: Text(
+                child: ScaleLockedText(
                   "FullBooker",
                   style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
                 ),
@@ -180,36 +189,45 @@ class PaymentConfirmationScreen extends StatelessWidget {
           Container(
             width: 100,
             padding: const EdgeInsets.symmetric(vertical: 10),
-            decoration: BoxDecoration(color: Colors.grey[200]),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  product.name,
-                  style: const TextStyle(
-                      fontSize: 12, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  "Name: ${ticket.name}\nID: ${ticket.id}",
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 10),
-                ),
-                const SizedBox(height: 8),
-                QrImageView(
-                  data: "FB25/01/001Rt",
-                  version: QrVersions.auto,
-                  size: 80,
-                ),
-                const SizedBox(height: 5)
-              ],
+            decoration: const BoxDecoration(color: Colors.white),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 4),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ScaleLockedText(
+                    product.name,
+                    style: const TextStyle(
+                        fontSize: 12, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 5),
+                  ScaleLockedText(
+                    "Name: ${ticket.name}",
+                    textAlign: TextAlign.left,
+                    style: const TextStyle(fontSize: 7),
+                  ),
+                  ScaleLockedText(
+                    "ID: ${ticket.id}",
+                    textAlign: TextAlign.left,
+                    style: const TextStyle(fontSize: 7),
+                  ),
+                  const SizedBox(height: 8),
+                  QrImageView(
+                    data: "FB25/01/001Rt",
+                    version: QrVersions.auto,
+                    size: 100,
+                  ),
+                  const SizedBox(height: 5)
+                ],
+              ),
             ),
           ),
 
           SizedBox(
             width: 10,
             child: CustomPaint(
-              size: const Size(1.5, 140),
+              size: const Size(1.5, 190),
               painter: DashedLinePainter(),
             ),
           ),
@@ -221,57 +239,80 @@ class PaymentConfirmationScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    product.name,
-                    style: const TextStyle(
-                        fontSize: 14, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 3),
-                  const Text(
-                    "Confirmation Number: FB25/01/001Rt",
-                    style: TextStyle(fontSize: 11),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Text(
-                    "Name: ${ticket.name}",
-                    style: const TextStyle(fontSize: 11),
-                  ),
-                  Text(
-                    "ID: ${ticket.id}",
-                    style: const TextStyle(fontSize: 11),
-                  ),
-                  const SizedBox(height: 3),
-                  Text(
-                    "Location: $locationName",
-                    style: const TextStyle(fontSize: 11),
-                  ),
-                  const Spacer(),
-                  const Row(
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      ScaleLockedText(
+                        product.name,
+                        style: const TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.bold),
+                      ),
+                      const Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Text(
-                            "19TH February",
+                          ScaleLockedText(
+                            "19TH",
+                            softWrap: true,
                             style: TextStyle(
                                 fontSize: 13, fontWeight: FontWeight.bold),
                           ),
-                          Text(
+                          ScaleLockedText(
+                            "February",
+                            softWrap: true,
+                            style: TextStyle(
+                                fontSize: 13, fontWeight: FontWeight.bold),
+                          ),
+                          ScaleLockedText(
                             "5PM - 1AM",
                             style: TextStyle(fontSize: 11),
                           ),
                         ],
+                      )
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  const ScaleLockedText(
+                    "Confirmation Number:",
+                    style: TextStyle(fontSize: 11),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const ScaleLockedText(
+                    "FB25/01/001Rt",
+                    style: TextStyle(fontSize: 11),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 4),
+                  ScaleLockedText(
+                    "Name: ${ticket.name}",
+                    style: const TextStyle(fontSize: 11),
+                  ),
+                  ScaleLockedText(
+                    "ID: ${ticket.id}",
+                    style: const TextStyle(fontSize: 11),
+                  ),
+                  const Spacer(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Flexible(
+                        // Allows the text to wrap properly
+                        child: ScaleLockedText(
+                          "Location: $locationName",
+                          style: const TextStyle(fontSize: 11),
+                          softWrap: true,
+                          maxLines: null,
+                        ),
                       ),
-                      Spacer(),
-                      Column(
+                      const Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Text(
+                          ScaleLockedText(
                             "Emergency contact",
                             style: TextStyle(
                                 fontSize: 10, fontWeight: FontWeight.bold),
                           ),
-                          Text(
+                          ScaleLockedText(
                             "+254701176895",
                             style: TextStyle(fontSize: 11),
                           ),
@@ -289,15 +330,11 @@ class PaymentConfirmationScreen extends StatelessWidget {
             width: 24,
             decoration: BoxDecoration(
               color: Colors.grey[400],
-              borderRadius: const BorderRadius.only(
-                topRight: Radius.circular(12),
-                bottomRight: Radius.circular(12),
-              ),
             ),
             child: const Center(
               child: RotatedBox(
                 quarterTurns: 3,
-                child: Text(
+                child: ScaleLockedText(
                   "REGULAR",
                   style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
                 ),
