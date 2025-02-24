@@ -27,9 +27,13 @@ class _EventsSectionState extends State<EventsSection> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Text(
-              widget.sectionName,
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
+            Flexible(
+              child: Text(
+                widget.sectionName,
+                softWrap: true,
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
+              ),
             ),
             widget.onSeAllClick == null
                 ? const SizedBox()

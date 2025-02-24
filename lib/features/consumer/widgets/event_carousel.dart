@@ -151,7 +151,8 @@ class _EventCarouselState extends State<EventCarousel> {
                     ),
                     Container(
                       width: width,
-                      color: Colors.black.withValues(alpha: 0.45), // Dark overlay
+                      color:
+                          Colors.black.withValues(alpha: 0.45), // Dark overlay
                     )
                   ]);
                 }).toList(),
@@ -190,7 +191,6 @@ class _EventCarouselState extends State<EventCarousel> {
           right: 10,
           child: SizedBox(
               width: 170,
-              height: 28,
               child: Button(() => widget.onActionClick(locationName!),
                   actionLabel: widget.actionLabel,
                   verticalPadding: 0,

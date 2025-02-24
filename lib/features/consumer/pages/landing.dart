@@ -22,7 +22,7 @@ class _LandingState extends State<Landing> {
   var productsController = ProductViewModel();
   var categoriesController = CategoryViewModel();
   List<Product>? products;
-  List<Category>? categories;
+  Map<String, Category>? categories;
   bool isLoading = false;
 
   void goToEventDetails(Product event, String locationName) {
@@ -36,14 +36,10 @@ class _LandingState extends State<Landing> {
   @override
   void initState() {
     super.initState();
-    categoriesController.repository
-        .pullMultiple(1, 200, processResponseAsPage: true)
-        .then((fetchedCategories) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        setState(() {
-          categories = fetchedCategories;
-          products = getMultipleProducts();
-        });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {
+        categories = getCategories();
+        products = getMultipleProducts();
       });
     });
   }
@@ -62,7 +58,7 @@ class _LandingState extends State<Landing> {
               child: products == null
                   ? _buildShimmerEffect(width)
                   : CategoryConveyer(
-                      categories: categories == null ? [] : categories!),
+                      categories: categories == null ? {} : categories!),
             ),
             products == null
                 ? _buildShimmerEffect(width)

@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/utils.dart';
+import 'package:fullbooker/features/consumer/pages/landing.dart';
 import 'package:fullbooker/features/consumer/widgets/date_picker.dart';
 import 'package:fullbooker/features/consumer/widgets/event_carousel.dart';
 import 'package:fullbooker/features/consumer/widgets/host_details.dart';
@@ -9,6 +10,7 @@ import 'package:fullbooker/features/consumer/widgets/ratings.dart';
 import 'package:fullbooker/features/consumer/widgets/ticket_booking.dart';
 import 'package:fullbooker/features/host/models/product.dart';
 import 'package:fullbooker/shared/widgets/appbar.dart';
+import 'package:fullbooker/shared/widgets/secondary_button.dart';
 import 'package:map_location_picker/map_location_picker.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -109,6 +111,11 @@ class _EventDetailsState extends State<EventDetails> {
     }
   }
 
+  void goHome() {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (_) => const Landing()));
+  }
+
   @override
   void initState() {
     super.initState();
@@ -121,7 +128,7 @@ class _EventDetailsState extends State<EventDetails> {
     final List<Map<String, dynamic>> reviews = [
       {
         "name": "Jane Mbithe",
-        "profilePic": null,
+        "profilePic": "https://i.imgur.com/aen9woM.png",
         "rating": 5,
         "timeAgo": "6 months ago",
         "review":
@@ -129,7 +136,7 @@ class _EventDetailsState extends State<EventDetails> {
       },
       {
         "name": "Brian Ochonga",
-        "profilePic": null,
+        "profilePic": "https://i.imgur.com/aen9woM.png",
         "rating": 4,
         "timeAgo": "7 months ago",
         "review":
@@ -137,7 +144,7 @@ class _EventDetailsState extends State<EventDetails> {
       },
       {
         "name": "George Onsarigo",
-        "profilePic": null,
+        "profilePic": "https://i.imgur.com/aen9woM.png",
         "rating": 3,
         "timeAgo": "2 years ago",
         "review":
@@ -155,27 +162,55 @@ class _EventDetailsState extends State<EventDetails> {
                 Stack(children: [
                   EventCarousel(
                       product: widget.event,
-                      actionLabel: "View on Map",
+                      actionLabel: "View Map",
                       onActionClick: (_) => Scrollable.ensureVisible(
                           mapKey.currentContext!,
                           duration: const Duration(milliseconds: 500))),
-                  const StandardNavBar(showSearchBar: false)
+                  const StandardNavBar(
+                      showSearchBar: false, pageTitle: "Event Details")
                 ]),
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
                   child: Column(spacing: 12, children: [
-                    Wrap(runSpacing: 16, children: [
-                      HostDetails(product: widget.event, width: width / 2),
-                      DatePicker(
-                          product: widget.event,
-                          onDateSelected: (date) =>
-                              setState(() => selectedDate = date))
-                    ]),
+                    SizedBox(
+                      width: double.maxFinite,
+                      child: Wrap(
+                          runAlignment: WrapAlignment.spaceBetween,
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          alignment: WrapAlignment.start,
+                          spacing: 32,
+                          children: [
+                            HostDetails(
+                                product: widget.event, width: width / 2),
+                            DatePicker(
+                                product: widget.event,
+                                onDateSelected: (date) =>
+                                    setState(() => selectedDate = date))
+                          ]),
+                    ),
                     TicketBookingWidget(
                         product: widget.event,
                         selectedDate: selectedDate,
                         productLocationName: widget.productLocationName),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text("Map",
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold)),
+                              const SizedBox(height: 8),
+                              Text("${widget.event.name}, "
+                                  "${widget.productLocationName}")
+                            ]),
+                      ),
+                    ),
                     currentPosition == null || eventLocation == null
                         ? _buildShimmerEffect(width)
                         : SizedBox(
@@ -189,6 +224,11 @@ class _EventDetailsState extends State<EventDetails> {
                               ),
                             ),
                           ),
+                    SizedBox(
+                      width: width * 0.6,
+                      child: SecondaryButton(goHome,
+                          actionLabel: "Back Home", elevation: 0),
+                    ),
                     Divider(thickness: 1, color: Colors.grey[300]),
                     const RatingSummary(),
                     for (var review in reviews) ReviewCard(review: review)
@@ -208,7 +248,7 @@ class _EventDetailsState extends State<EventDetails> {
       zoomControlsEnabled: true,
       gestureRecognizers: {}
         ..add(Factory<EagerGestureRecognizer>(() => EagerGestureRecognizer())),
-      initialCameraPosition: CameraPosition(zoom: 16, target: eventLocation!),
+      initialCameraPosition: CameraPosition(zoom: 15, target: eventLocation!),
       markers: {
         Marker(
             markerId: const MarkerId("12"),

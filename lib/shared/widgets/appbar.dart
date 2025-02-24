@@ -97,12 +97,14 @@ class StandardNavBar extends StatelessWidget implements PreferredSizeWidget {
   final bool showSearchBar;
   final Color iconsColor;
   final double height;
+  final String? pageTitle;
 
   const StandardNavBar(
       {super.key,
       this.showSearchBar = true,
       this.iconsColor = Colors.white,
-      this.height = 60});
+      this.height = 60,
+      this.pageTitle});
 
   @override
   Size get preferredSize => Size.fromHeight(height);
@@ -129,11 +131,12 @@ class StandardNavBar extends StatelessWidget implements PreferredSizeWidget {
         toolbarHeight: height * 0.1,
         backgroundColor: Colors.transparent,
         iconTheme: IconThemeData(color: iconsColor),
+        centerTitle: true,
         title: DecoratedBox(
           decoration: BoxDecoration(
               color: Colors.white,
-              border: Border.all(color: Colors.black45),
-              borderRadius: const BorderRadius.all(Radius.circular(15))),
+              border: Border.all(color: Colors.black),
+              borderRadius: const BorderRadius.all(Radius.circular(20))),
           child: showSearchBar
               ? Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -144,33 +147,46 @@ class StandardNavBar extends StatelessWidget implements PreferredSizeWidget {
                         child: SizedBox(
                             height: 50,
                             child: TextField(
-                                textAlign: TextAlign.center,
                                 decoration: InputDecoration(
                                     filled: false,
                                     border: InputBorder.none,
                                     hintText:
                                         "Search for activities and events",
                                     hintStyle: TextStyle(
-                                        fontSize: 18,
-                                        color: Color(0xf0808080))))),
+                                        fontSize: 18, color: Color(0xf0808080)),
+                                    contentPadding:
+                                        EdgeInsets.symmetric(horizontal: 24)))),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: GestureDetector(
-                          child: const Icon(Icons.app_registration_rounded,
-                              color: Color(0xf0808080))),
+                          child: Image.asset("assets/icons/filter-icon.png")),
                     )
                   ],
                 )
-              : const SizedBox(),
+              : pageTitle != null
+                  ? DecoratedBox(
+                      decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                      child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 10),
+                          child: Text(
+                            pageTitle!,
+                            style: const TextStyle(fontSize: 14),
+                          )))
+                  : const SizedBox(),
         ),
         actions: [
           Padding(
               padding: const EdgeInsets.only(right: 5),
               child: PopupMenuButton(
                   color: Colors.white,
-                  child: Icon(Icons.menu, color: iconsColor, size: 64),
+                  child: Transform.scale(
+                      scaleX: .7,
+                      child: Icon(Icons.menu, color: iconsColor, size: 60)),
                   itemBuilder: (BuildContext context) {
                     return <PopupMenuEntry<Widget>>[
                       PopupMenuItem<Widget>(

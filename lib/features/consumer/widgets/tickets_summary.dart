@@ -46,11 +46,12 @@ class _TicketsSummaryState extends State<TicketsSummary> {
     tickets = widget.tickets;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 6),
       child: Column(mainAxisSize: MainAxisSize.min, children: [
         // Title
         const Text(
           "Tickets Summary",
+          textAlign: TextAlign.left,
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 10),

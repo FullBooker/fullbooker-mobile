@@ -159,29 +159,44 @@ class _TicketFormState extends State<TicketForm> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: DropdownButtonFormField<ProductPricing>(
-          value: null,
-          isExpanded: true,
-          hint: const Align(
-              alignment: Alignment.centerLeft, child: Text("Pricing Tier")),
-          validator: (value) {
-            if (value == null) return "please select a pricing tier";
-            return null;
-          },
-          decoration: InputDecoration(
-            prefixIcon: const Icon(Icons.price_change, color: Colors.grey),
-            filled: true,
-            fillColor: Colors.grey[200],
-            border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide.none),
+        value: selectedPricing,
+        isExpanded: true, // Ensure dropdown expands to available width
+        hint: const FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            "Pricing Tier",
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
           ),
-          items: List.generate(widget.product.pricing.length, (idx) {
-            var pricing = widget.product.pricing[idx];
-            return DropdownMenuItem(
-                value: pricing,
-                child: Text("${pricing.ticketTier} - KES ${pricing.cost}"));
-          }),
-          onChanged: (val) => setState(() => selectedPricing = val)),
+        ),
+        validator: (value) {
+          if (value == null) return "Please select a pricing tier";
+          return null;
+        },
+        decoration: InputDecoration(
+          prefixIcon: const Icon(Icons.price_change, color: Colors.grey),
+          filled: true,
+          fillColor: Colors.grey[200],
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: BorderSide.none,
+          ),
+        ),
+        items: widget.product.pricing.map((pricing) {
+          return DropdownMenuItem(
+            value: pricing,
+            child: FittedBox(
+              fit: BoxFit.scaleDown, // Prevents overflow by scaling down text
+              child: Text(
+                "${pricing.ticketTier} - KES ${pricing.cost}",
+                overflow: TextOverflow.ellipsis, // Truncate long text
+                maxLines: 1,
+              ),
+            ),
+          );
+        }).toList(),
+        onChanged: (val) => setState(() => selectedPricing = val),
+      ),
     );
   }
 

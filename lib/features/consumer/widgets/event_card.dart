@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/features/consumer/pages/event_details.dart';
+import 'package:fullbooker/features/consumer/widgets/event_meta.dart';
 import 'package:fullbooker/features/host/models/product.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:geocoding/geocoding.dart';
@@ -184,7 +185,7 @@ class _EventCardState extends State<EventCard> {
                         topRight: Radius.circular(8),
                       ),
                     ),
-                    height: height / 6,
+                    height: height / 5.5,
                     child: Stack(
                       children: [
                         Container(
@@ -194,7 +195,8 @@ class _EventCardState extends State<EventCard> {
                               fit: BoxFit.cover,
                             ),
                           ),
-                        )
+                        ),
+                        EventMetaRow(width: width * 0.45)
                       ],
                     ),
                   ),
@@ -238,7 +240,6 @@ class _EventCardState extends State<EventCard> {
                             actionLabel: "Buy Ticket",
                             verticalPadding: 4,
                             elevation: 0,
-                            
                           ),
                         ),
                       ],

@@ -70,6 +70,7 @@ class Button extends StatelessWidget {
                     )
                   : Text(
                       actionLabel,
+                      softWrap: true,
                       style: TextStyle(
                         fontSize: labelFontSize,
                         color: actionLabelColor,

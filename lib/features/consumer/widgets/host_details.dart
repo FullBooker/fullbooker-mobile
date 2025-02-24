@@ -95,7 +95,12 @@ class _HostDetailsState extends State<HostDetails> {
   Widget build(BuildContext context) {
     return isLoading
         ? _buildShimmerEffect(widget.width)
-        : const ProfileRating(
-            profileImageUrl: null, rating: 4, hostName: "Kevin Laichena");
+        : SizedBox(
+            width: widget.width,
+            child: const ProfileRating(
+                profileImageUrl: "https://i.imgur.com/GEPhBnS.png",
+                rating: 4,
+                hostName: "Kevin Laichena"),
+          );
   }
 }

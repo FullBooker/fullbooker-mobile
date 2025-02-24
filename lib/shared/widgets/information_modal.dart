@@ -30,27 +30,31 @@ class InformationModal extends StatelessWidget {
           height: height,
           width: 380,
           child: Center(
-              child: Column(children: [
-            Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5),
-                child: SizedBox(
-                    width: MediaQuery.of(context).size.width * .5,
-                    child: RoundedDivider(
-                        height: topDividerHeight, color: topDividerColor))),
-            withSuccessTick
-                ? Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: Image.asset("assets/icons/ok.png",
-                        width: 70, height: 70))
-                : const SizedBox(),
-            Padding(
-                padding: const EdgeInsets.only(bottom: 20),
-                child: Text(title,
-                    style: const TextStyle(
-                        fontSize: 20, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center)),
-            message
-          ])),
+              child: SingleChildScrollView(
+            child: Column(children: [
+              Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5),
+                  child: SizedBox(
+                      width: MediaQuery.of(context).size.width * .5,
+                      child: RoundedDivider(
+                          height: topDividerHeight, color: topDividerColor))),
+              withSuccessTick
+                  ? Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Image.asset("assets/icons/ok.png",
+                          width: 70, height: 70))
+                  : const SizedBox(),
+              title != ""
+                  ? Padding(
+                      padding: const EdgeInsets.only(bottom: 20),
+                      child: Text(title,
+                          style: const TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center))
+                  : const SizedBox(),
+              message
+            ]),
+          )),
         ),
         actions: [
           Padding(
