@@ -14,7 +14,7 @@ class EventMetaRow extends StatelessWidget {
       Padding(
           padding: const EdgeInsets.only(left: 4, top: 8),
           child: ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: width * 0.7, maxHeight: 40),
+            constraints: BoxConstraints(maxWidth: width * 0.8),
             child: DecoratedBox(
                 decoration: BoxDecoration(
                     color: Colors.white,

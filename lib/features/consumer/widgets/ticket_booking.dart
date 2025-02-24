@@ -78,6 +78,7 @@ class _TicketBookingWidgetState extends State<TicketBookingWidget> {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       const Text("Tickets",
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+      const SizedBox(height: 8),
       TicketForm(
           index: 0,
           product: widget.product,

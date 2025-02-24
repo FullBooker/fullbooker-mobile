@@ -15,39 +15,36 @@ class MpesaCheckoutInstructions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "MPESA Checkout sent to ${ticket.phone}",
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 10),
-            const Text(
-              "Payment Alert",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 10),
-            const Text(
-              "Follow the instructions below:",
-              style: TextStyle(fontSize: 16),
-            ),
-            const SizedBox(height: 10),
-            const Text(
-              "Instructions to Pay:",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            _buildBulletPoint("Check on a payment pop-up on your phone.",
-                isBold: true),
-            _buildBulletPoint("Input your MPESA PIN and click OK.",
-                isBold: true),
-            _buildBulletPoint("An MPESA confirmation SMS will be sent to you.",
-                isBold: true),
-          ],
-        ),
+      padding: const EdgeInsets.all(12.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "MPESA Checkout sent to ${ticket.phone}",
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 10),
+          const Text(
+            "Payment Alert",
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 10),
+          const Text(
+            "Follow the instructions below:",
+            style: TextStyle(fontSize: 16),
+          ),
+          const SizedBox(height: 10),
+          const Text(
+            "Instructions to Pay:",
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 8),
+          _buildBulletPoint("Check on a payment pop-up on your phone.",
+              isBold: true),
+          _buildBulletPoint("Input your MPESA PIN and click OK.", isBold: true),
+          _buildBulletPoint("An MPESA confirmation SMS will be sent to you.",
+              isBold: true),
+        ],
       ),
     );
   }
@@ -215,16 +212,22 @@ class PaymentSummaryWidget extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Grand Total",
-                          style: TextStyle(
-                              fontSize: screenWidth * 0.05,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.green)),
-                      Text("KES ${getGrandTotal()}",
-                          style: TextStyle(
-                              fontSize: screenWidth * 0.05,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.green)),
+                      Flexible(
+                        child: Text("Grand Total",
+                            softWrap: true,
+                            style: TextStyle(
+                                fontSize: screenWidth * 0.05,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.green)),
+                      ),
+                      Flexible(
+                        child: Text("KES ${getGrandTotal()}",
+                            softWrap: true,
+                            style: TextStyle(
+                                fontSize: screenWidth * 0.05,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.green)),
+                      ),
                     ],
                   ),
                 ),
@@ -275,11 +278,15 @@ class PaymentSummaryWidget extends StatelessWidget {
                       color: Colors.black,
                       fontSize: 18,
                       fontWeight: FontWeight.w400)),
-              Text(value,
-                  style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600)),
+              Flexible(
+                child: Text(value,
+                    softWrap: true,
+                    textAlign: TextAlign.right,
+                    style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600)),
+              ),
             ],
           ),
           const Divider()

@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:fullbooker/features/host/models/categories.dart';
+import 'package:fullbooker/shared/widgets/scale_locked_text.dart';
+
+class CategoryWithIcon {
+  Category category;
+  String icon;
+
+  CategoryWithIcon({required this.category, required this.icon});
+}
 
 class CategoryConveyer extends StatefulWidget {
-  final List<Category> categories;
+  final Map<String, Category> categories;
   final Function? onCategoryClick;
 
   const CategoryConveyer(
-      {super.key, this.categories = const [], this.onCategoryClick});
+      {super.key, this.categories = const {}, this.onCategoryClick});
 
   @override
   State<StatefulWidget> createState() => _CategoryConveyerState();
@@ -31,23 +39,43 @@ class _CategoryConveyerState extends State<CategoryConveyer> {
     );
   }
 
+  List<CategoryWithIcon> getCategoriesWithIcons() {
+    return widget.categories.entries.map((entry) {
+      return CategoryWithIcon(category: entry.value, icon: entry.key);
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
+    var cats = getCategoriesWithIcons();
+
     return SizedBox(
       height: 70,
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          IconButton(
-            icon: const Icon(Icons.arrow_back_ios),
-            onPressed: _scrollLeft,
+          SizedBox(
+            width: 30,
+            child: GestureDetector(
+              onTap: _scrollLeft,
+              child: Container(
+                  width: 24,
+                  height: 24,
+                  decoration: BoxDecoration(
+                      color: Colors.transparent,
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.black)),
+                  child: const Icon(Icons.arrow_back_ios_new_sharp, size: 24)),
+            ),
           ),
           Expanded(
             child: ListView.builder(
               controller: _scrollController,
               scrollDirection: Axis.horizontal,
-              itemCount: widget.categories.length,
+              itemCount: cats.length,
               itemBuilder: (context, index) {
-                final category = widget.categories[index];
+                final category = cats[index];
                 return GestureDetector(
                   onTap: () => widget.onCategoryClick?.call(category),
                   child: Padding(
@@ -56,19 +84,19 @@ class _CategoryConveyerState extends State<CategoryConveyer> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Container(
+                          height: 40,
+                          width: 40,
                           padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            color: Colors.grey[200],
+                          decoration: const BoxDecoration(
+                            color: Colors.transparent,
                             shape: BoxShape.circle,
                           ),
-                          child:
-                              const Icon(Icons.category, color: Colors.black54),
+                          child: Image.asset(category.icon),
                         ),
-                        const SizedBox(height: 4),
-                        Text(
-                          category.title,
+                        ScaleLockedText(
+                          category.category.title,
                           style: const TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.w500),
+                              fontSize: 13, fontWeight: FontWeight.w500),
                         ),
                       ],
                     ),
@@ -77,9 +105,19 @@ class _CategoryConveyerState extends State<CategoryConveyer> {
               },
             ),
           ),
-          IconButton(
-            icon: const Icon(Icons.arrow_forward_ios),
-            onPressed: _scrollRight,
+          SizedBox(
+            width: 30,
+            child: GestureDetector(
+              onTap: _scrollRight,
+              child: Container(
+                  width: 24,
+                  height: 24,
+                  decoration: BoxDecoration(
+                      color: Colors.transparent,
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.black)),
+                  child: const Icon(Icons.arrow_forward_ios, size: 24)),
+            ),
           ),
         ],
       ),
