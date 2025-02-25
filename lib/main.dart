@@ -6,10 +6,10 @@ import 'package:google_fonts/google_fonts.dart';
 
 Future setupEnvironment() async {
   const envString = String.fromEnvironment("ENV");
-  FlavourType envFalvour = FlavourType.values.firstWhere(
+  FlavourType envFlavour = FlavourType.values.firstWhere(
       (value) => value.toString() == "FlavourType.$envString",
       orElse: () => FlavourType.development);
-  var envBuilder = BuildEnvironment(envFalvour);
+  var envBuilder = BuildEnvironment(envFlavour);
   await envBuilder.setEnv();
 }
 
