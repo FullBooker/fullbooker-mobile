@@ -49,8 +49,8 @@ class LoginViewModel extends BaseViewModel<Token> {
     };
     try {
       await _repository.post(data, "/accounts/signup/");
-    } catch (exception) {
-      return "Please check that your password is not too common";
+    } on Exception catch (exception) {
+      return "$exception";
     }
     return null;
   }
