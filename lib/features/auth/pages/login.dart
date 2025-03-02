@@ -135,16 +135,7 @@ class LoginState extends State<Login> {
                             actionLabel: "Sign in with google",
                             actionLabelColor: Colors.black,
                             actionLabelPrefix: const Image(
-                                image: AssetImage("assets/icons/google.png")))),
-                    Padding(
-                        padding: const EdgeInsets.only(top: 5),
-                        child: Button(() {},
-                            color: const Color(0xf0F5F4F4),
-                            actionLabel: "Sign in with Facebook",
-                            actionLabelColor: Colors.black,
-                            actionLabelPrefix: const Image(
-                                image:
-                                    AssetImage("assets/icons/facebook.png"))))
+                                image: AssetImage("assets/icons/google.png"))))
                   ],
                 ),
               ),

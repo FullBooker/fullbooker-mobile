@@ -144,17 +144,6 @@ class SignUpState extends State<SignUp> {
                               actionLabelPrefix: const Image(
                                   image: AssetImage("assets/icons/google.png")),
                               actionLabelColor: Colors.black,
-                            )),
-                        Padding(
-                            padding: const EdgeInsets.only(top: 5),
-                            child: Button(
-                              () {},
-                              color: const Color(0xf0F5F4F4),
-                              actionLabel: "Sign in with facebook",
-                              actionLabelPrefix: const Image(
-                                  image:
-                                      AssetImage("assets/icons/facebook.png")),
-                              actionLabelColor: Colors.black,
                             ))
                       ],
                     ),
