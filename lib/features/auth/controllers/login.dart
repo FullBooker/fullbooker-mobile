@@ -29,7 +29,32 @@ class LoginViewModel extends BaseViewModel<Token> {
               TokenSerializer().fromJson(res as Map<String, Object?>);
       }
     } catch (exception) {
-      return "Invalid credentials, please try again";
+      return "We couldn’t sign you in. Please check that your email and password"
+          "are correct.";
+    }
+
+    return null;
+  }
+
+  Future<String?> signInWithGoogle() async {
+    try {
+      var account = await googleSignIn.signIn();
+      if (account == null) return "Please chose a google account to proceed";
+      var auth = await account.authentication;
+      var data = {"access_token": auth.accessToken};
+      var res =
+          await _repository.post(data, "/accounts/google/", withHeaders: false);
+      switch (res.runtimeType) {
+        case Token val:
+          await repository.store.set(res);
+          currentToken = val;
+        default:
+          await repository.store.setData(res, "access");
+          currentToken =
+              TokenSerializer().fromJson(res as Map<String, Object?>);
+      }
+    } catch (e) {
+      return "$e";
     }
 
     return null;
@@ -39,7 +64,7 @@ class LoginViewModel extends BaseViewModel<Token> {
       String email, String phonNumber, String name, String password) async {
     var names = name.split(" ");
     String firstName = names[0];
-    String lastName = name[1];
+    String lastName = names[1];
     var data = {
       "phone_number": phonNumber,
       "email": email,
@@ -48,7 +73,16 @@ class LoginViewModel extends BaseViewModel<Token> {
       "password": password,
     };
     try {
-      await _repository.post(data, "/accounts/signup/");
+      var res = await _repository.post(data, "/accounts/signup/");
+      switch (res.runtimeType) {
+        case Token val:
+          await repository.store.set(res);
+          currentToken = val;
+        default:
+          await repository.store.setData(res, "access_token");
+          currentToken =
+              TokenSerializer().fromJson(res as Map<String, Object?>);
+      }
     } on Exception catch (exception) {
       return "$exception";
     }
@@ -71,7 +105,7 @@ class LoginViewModel extends BaseViewModel<Token> {
     try {
       await _repository.post(data, "/accounts/otp/verify");
     } catch (exc) {
-      return "Invalid OTP, please try again";
+      return "We could not verify that OTP, please try again";
     }
     return null;
   }

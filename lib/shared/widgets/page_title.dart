@@ -38,7 +38,9 @@ class PageHeader extends StatelessWidget {
                   fontWeight: FontWeight.bold, fontSize: pageHeaderFontSize)),
         ),
         withLogo
-            ? const Image(image: AssetImage("assets/logo_splash.png"))
+            ? const SizedBox(
+                height: 64,
+                child: Image(image: AssetImage("assets/logo_splash.png")))
             : const SizedBox(),
         Padding(
             padding: EdgeInsets.only(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fullbooker/features/auth/models/login.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sembast/sembast_io.dart';
 import 'db.dart';
 
@@ -24,6 +25,10 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 late Flavour env;
 Token? currentToken;
+
+GoogleSignIn googleSignIn = GoogleSignIn(
+  scopes: ['email', 'https://www.googleapis.com/auth/contacts.readonly'],
+);
 
 class BuildEnvironment {
   FlavourType type;

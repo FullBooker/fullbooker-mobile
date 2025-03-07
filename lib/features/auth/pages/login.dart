@@ -67,6 +67,21 @@ class LoginState extends State<Login> {
     }
   }
 
+  void loginWithGoogle() {
+    var errFuture = loginController.signInWithGoogle();
+    setState(() {
+      loading = true;
+      errorMessage = "";
+    });
+    errFuture.then((err) {
+      setState(() {
+        loading = false;
+        if (err != null) errorMessage = err;
+        if (err == null) logedIn = true;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     if (logedIn) goToEventsSummary(context);
@@ -76,7 +91,14 @@ class LoginState extends State<Login> {
         body: Padding(
           padding: const EdgeInsets.all(20),
           child: ListView(children: [
-            const PageHeader("Welcome", "Sign in to your account"),
+            const Center(
+              child: Text(
+                "WELCOME",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+            ),
+            const PageHeader("", "Sign in to your account",
+                pageDescriptionPadding: 0, headerTopPadding: 0),
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.8,
               child: Form(
@@ -88,7 +110,8 @@ class LoginState extends State<Login> {
                         child: StandardTextInput("Phone Number",
                             labelPrefix: Icons.phone,
                             validator: validatePhoneNumber,
-                            controller: emailController)),
+                            controller: emailController,
+                            maxLenght: 13)),
                     Padding(
                         padding: const EdgeInsets.only(top: 10),
                         child: StandardTextInput("Password",
@@ -130,7 +153,7 @@ class LoginState extends State<Login> {
                         MediaQuery.of(context).size.width * 0.8, "Or"),
                     Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: Button(() {},
+                        child: Button(loginWithGoogle,
                             color: const Color(0xf0F5F4F4),
                             actionLabel: "Sign in with google",
                             actionLabelColor: Colors.black,
