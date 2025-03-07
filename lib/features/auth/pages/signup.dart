@@ -2,6 +2,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/features/auth/controllers/login.dart';
 import 'package:fullbooker/features/auth/pages/login.dart';
+import 'package:fullbooker/features/consumer/pages/landing.dart';
+import 'package:fullbooker/shared/widgets/appbar.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:fullbooker/shared/widgets/divider.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
@@ -18,6 +20,7 @@ class SignUp extends StatefulWidget {
 class SignUpState extends State<SignUp> {
   final _formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
+  final lastNameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmController = TextEditingController();
@@ -38,7 +41,7 @@ class SignUpState extends State<SignUp> {
       var errFuture = loginController.signup(
           emailController.value.text,
           phoneNumberController.value.text,
-          nameController.value.text,
+          "${nameController.value.text} ${lastNameController.value.text}",
           passwordController.value.text);
       String? errOuter;
       setState(() {
@@ -57,17 +60,49 @@ class SignUpState extends State<SignUp> {
     }
   }
 
+  void goToEventsSummary(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (_) => const Landing()));
+    });
+  }
+
+  void loginWithGoogle() {
+    var errFuture = loginController.signInWithGoogle();
+    setState(() {
+      isLoading = true;
+      errorMessage = "";
+    });
+    errFuture.then((err) {
+      setState(() {
+        isLoading = false;
+        if (err != null) errorMessage = err;
+        if (err == null) signedUp = true;
+      });
+    });
+  }
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (signedUp) goToLogIn(context);
+      if (signedUp) goToEventsSummary(context);
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    if (signedUp) goToEventsSummary(context);
+
     return Scaffold(
+        appBar: const StandardNavBar(
+            showSearchBar: false,
+            iconsColor: Colors.black,
+            pageTitle: "WELCOME",
+            showRightAction: false,
+            height: 36,
+            tileFontSize: 20,
+            titleFontWeight: FontWeight.bold),
         backgroundColor: Colors.white,
         body: Padding(
           padding: const EdgeInsets.all(20),
@@ -75,7 +110,10 @@ class SignUpState extends State<SignUp> {
             const Padding(
                 padding: EdgeInsets.only(bottom: 20),
                 child: PageHeader("", "Sign Up",
-                    withLogo: false, headerPadding: 10, headerTopPadding: 0)),
+                    withLogo: true,
+                    headerPadding: 10,
+                    headerTopPadding: 0,
+                    pageTitleBottomPadding: 0)),
             Padding(
                 padding: const EdgeInsets.symmetric(vertical: 5),
                 child: SizedBox(
@@ -86,10 +124,16 @@ class SignUpState extends State<SignUp> {
                       children: [
                         Padding(
                             padding: const EdgeInsets.symmetric(vertical: 5),
-                            child: StandardTextInput("Name",
+                            child: StandardTextInput("First Name",
                                 labelPrefix: Icons.person,
-                                validator: validateName,
+                                validator: validateNotEmpty,
                                 controller: nameController)),
+                        Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 5),
+                            child: StandardTextInput("Last Name",
+                                labelPrefix: Icons.person,
+                                validator: validateNotEmpty,
+                                controller: lastNameController)),
                         Padding(
                             padding: const EdgeInsets.symmetric(vertical: 5),
                             child: StandardTextInput("Email Address",
@@ -101,7 +145,8 @@ class SignUpState extends State<SignUp> {
                             child: StandardTextInput("Phone Number",
                                 labelPrefix: Icons.phone,
                                 validator: validatePhoneNumber,
-                                controller: phoneNumberController)),
+                                controller: phoneNumberController,
+                                maxLenght: 13)),
                         Padding(
                             padding: const EdgeInsets.symmetric(vertical: 5),
                             child: StandardTextInput("Password",
@@ -136,9 +181,9 @@ class SignUpState extends State<SignUp> {
                               MediaQuery.of(context).size.width * 0.8, "Or"),
                         ),
                         Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            padding: const EdgeInsets.symmetric(vertical: 2),
                             child: Button(
-                              () {},
+                              loginWithGoogle,
                               color: const Color(0xf0F5F4F4),
                               actionLabel: "Sign in with google",
                               actionLabelPrefix: const Image(

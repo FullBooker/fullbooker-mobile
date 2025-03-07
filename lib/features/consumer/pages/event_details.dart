@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/utils.dart';
+import 'package:fullbooker/features/consumer/pages/gallery.dart';
 import 'package:fullbooker/features/consumer/pages/landing.dart';
 import 'package:fullbooker/features/consumer/widgets/date_picker.dart';
 import 'package:fullbooker/features/consumer/widgets/event_carousel.dart';
@@ -116,6 +117,11 @@ class _EventDetailsState extends State<EventDetails> {
         .push(MaterialPageRoute(builder: (_) => const Landing()));
   }
 
+  void goToGallery() {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (_) => const Gallery(images: [])));
+  }
+
   @override
   void initState() {
     super.initState();
@@ -160,12 +166,15 @@ class _EventDetailsState extends State<EventDetails> {
                 child: SingleChildScrollView(
               child: Column(children: [
                 Stack(children: [
-                  EventCarousel(
-                      product: widget.event,
-                      actionLabel: "View Map",
-                      onActionClick: (_) => Scrollable.ensureVisible(
-                          mapKey.currentContext!,
-                          duration: const Duration(milliseconds: 500))),
+                  GestureDetector(
+                    onTap: () => goToGallery(),
+                    child: EventCarousel(
+                        product: widget.event,
+                        actionLabel: "View Map",
+                        onActionClick: (_) => Scrollable.ensureVisible(
+                            mapKey.currentContext!,
+                            duration: const Duration(milliseconds: 500))),
+                  ),
                   const StandardNavBar(
                       showSearchBar: false, pageTitle: "Event Details")
                 ]),

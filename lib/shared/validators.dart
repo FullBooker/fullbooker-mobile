@@ -1,3 +1,11 @@
+String? validateNotEmpty(String? val, {isOptional = false}) {
+  if (isOptional) return null;
+  if (val == null || val.isEmpty) {
+    return "The value of this field is required";
+  }
+  return null;
+}
+
 String? validateEmail(String? email, {isOptional = false}) {
   if (email == null && !isOptional) return null;
   if (email == null) return "Please enter your email";

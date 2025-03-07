@@ -98,13 +98,19 @@ class StandardNavBar extends StatelessWidget implements PreferredSizeWidget {
   final Color iconsColor;
   final double height;
   final String? pageTitle;
+  final bool showRightAction;
+  final double tileFontSize;
+  final FontWeight titleFontWeight;
 
   const StandardNavBar(
       {super.key,
       this.showSearchBar = true,
       this.iconsColor = Colors.white,
       this.height = 60,
-      this.pageTitle});
+      this.showRightAction = true,
+      this.pageTitle,
+      this.tileFontSize = 14,
+      this.titleFontWeight = FontWeight.normal});
 
   @override
   Size get preferredSize => Size.fromHeight(height);
@@ -132,6 +138,7 @@ class StandardNavBar extends StatelessWidget implements PreferredSizeWidget {
         backgroundColor: Colors.transparent,
         iconTheme: IconThemeData(color: iconsColor),
         centerTitle: true,
+        leading: const Icon(Icons.arrow_back_ios_new),
         title: DecoratedBox(
           decoration: BoxDecoration(
               color: Colors.white,
@@ -175,34 +182,38 @@ class StandardNavBar extends StatelessWidget implements PreferredSizeWidget {
                               horizontal: 20, vertical: 10),
                           child: Text(
                             pageTitle!,
-                            style: const TextStyle(fontSize: 14),
+                            style: TextStyle(
+                                fontSize: tileFontSize,
+                                fontWeight: titleFontWeight),
                           )))
                   : const SizedBox(),
         ),
         actions: [
-          Padding(
-              padding: const EdgeInsets.only(right: 5),
-              child: PopupMenuButton(
-                  color: Colors.white,
-                  child: Transform.scale(
-                      scaleX: .7,
-                      child: Icon(Icons.menu, color: iconsColor, size: 60)),
-                  itemBuilder: (BuildContext context) {
-                    return <PopupMenuEntry<Widget>>[
-                      PopupMenuItem<Widget>(
-                          onTap: () => goToLogin(context),
-                          child: const Row(children: [
-                            Icon(Icons.person, color: Color(0xf0FC8135)),
-                            Text("Log out")
-                          ])),
-                      PopupMenuItem<Widget>(
-                          onTap: () => goToHosting(context),
-                          child: const Row(children: [
-                            Icon(Icons.home, color: Color(0xf0FC8135)),
-                            Text("Switch to hosting")
-                          ]))
-                    ];
-                  }))
+          showRightAction
+              ? Padding(
+                  padding: const EdgeInsets.only(right: 5),
+                  child: PopupMenuButton(
+                      color: Colors.white,
+                      child: Transform.scale(
+                          scaleX: .7,
+                          child: Icon(Icons.menu, color: iconsColor, size: 60)),
+                      itemBuilder: (BuildContext context) {
+                        return <PopupMenuEntry<Widget>>[
+                          PopupMenuItem<Widget>(
+                              onTap: () => goToLogin(context),
+                              child: const Row(children: [
+                                Icon(Icons.person, color: Color(0xf0FC8135)),
+                                Text("Log out")
+                              ])),
+                          PopupMenuItem<Widget>(
+                              onTap: () => goToHosting(context),
+                              child: const Row(children: [
+                                Icon(Icons.home, color: Color(0xf0FC8135)),
+                                Text("Switch to hosting")
+                              ]))
+                        ];
+                      }))
+              : const SizedBox()
         ]);
   }
 }

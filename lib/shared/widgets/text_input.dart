@@ -8,12 +8,14 @@ class StandardTextInput extends StatefulWidget {
   final String? Function(String?)? validator;
   final TextEditingController? controller;
   final bool isOptional;
+  final int? maxLenght;
 
   const StandardTextInput(this.label,
       {super.key,
       this.labelPrefix,
       this.validator,
       this.controller,
+      this.maxLenght,
       this.isPassword = false,
       this.isOptional = false});
 
@@ -36,8 +38,8 @@ class StandardTextInputState extends State<StandardTextInput> {
         elevation: 2,
         borderRadius: BorderRadius.circular(12),
         child: TextFormField(
+          maxLength: widget.maxLenght,
           obscureText: !_passwordVisible && widget.isPassword,
-          autovalidateMode: AutovalidateMode.onUserInteraction,
           validator: widget.validator,
           controller: widget.controller,
           decoration: InputDecoration(
@@ -46,6 +48,7 @@ class StandardTextInputState extends State<StandardTextInput> {
             hintStyle: const TextStyle(color: Color.fromARGB(255, 65, 65, 65)),
             filled: true,
             fillColor: const Color(0xf0F5F4F4),
+            counter: const SizedBox(),
             suffixIcon: widget.isPassword
                 ? IconButton(
                     icon: Icon(

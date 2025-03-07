@@ -2,7 +2,7 @@ import 'package:fullbooker/core/models.dart';
 
 class User implements Model {
   String phoneNumber;
-  String email;
+  String? email;
   String firstName;
   String lastName;
 
@@ -18,7 +18,7 @@ class UserSerializer implements Serializer<User> {
     return User(
       json["first_name"] as String,
       json["last_name"] as String,
-      json["email"] as String,
+      json["email"] as String?,
       json["phone_number"] as String,
     );
   }
@@ -42,7 +42,7 @@ final userSerializer = UserSerializer();
 class Token implements Model {
   String accessToken;
   String refreshToken;
-  String expiresAt;
+  String? expiresAt;
   User user;
 
   Token(this.accessToken, this.refreshToken, this.expiresAt, this.user);
@@ -55,9 +55,9 @@ class TokenSerializer implements Serializer<Token> {
   @override
   Token fromJson(Map<String, Object?> json) {
     return Token(
-        json["access_token"] as String,
-        json["refresh_token"] as String,
-        json["expires_at"] as String,
+        (json["access_token"] ?? json["access"]) as String,
+        (json["refresh_token"] ?? json["refresh"]) as String,
+        json["expires_at"] as String?,
         userSerializer.fromJson(json["user"] as Map<String, Object?>));
   }
 

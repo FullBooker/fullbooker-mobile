@@ -56,10 +56,17 @@ class NotFoundException implements Exception {
 void handleResponse(http.Response response) {
   Map<String, dynamic> responseData = jsonDecode(response.body);
 
-  String errorMessage =
+  dynamic errorMessage =
       responseData.isNotEmpty ? responseData[responseData.keys.first] : "";
-  errorMessage =
-      "${errorMessage[0].toUpperCase()}${errorMessage.substring(1).toLowerCase()}";
+  String error;
+
+  if (errorMessage.runtimeType == List<dynamic>) {
+    error = errorMessage[0];
+  } else {
+    error = errorMessage;
+  }
+
+  error = "${error[0].toUpperCase()}${error.substring(1).toLowerCase()}";
 
   switch (response.statusCode) {
     case 401:
@@ -76,11 +83,11 @@ void handleResponse(http.Response response) {
       throw NotFoundException(
           "Could not find what you're looking for, please try again");
     case 422:
-      throw UnprocessableEntity(errorMessage);
+      throw UnprocessableEntity(error);
     case >= 500:
       throw ServerError("Server error: ");
     case >= 400 && < 500:
-      throw ClientError(errorMessage);
+      throw ClientError(error);
     default:
       break;
   }
