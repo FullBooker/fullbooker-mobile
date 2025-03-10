@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fullbooker/features/auth/controllers/login.dart';
 import 'package:fullbooker/features/auth/pages/login.dart';
 import 'package:fullbooker/features/auth/pages/validated_otp.dart';
@@ -73,75 +74,81 @@ class RequestOtpState extends State<RequestOtp> {
     if (resetRequestSuccesfull) goToOTP(context);
 
     return Scaffold(
+        backgroundColor: Colors.white,
         body: Column(
-      children: [
-        Expanded(
-          child: ListView(children: [
-            Form(
-              key: _formKey,
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(children: [
-                  const PageHeader("",
-                      "Input email or phone number\nto reset your password"),
-                  Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 5, horizontal: 10),
-                      child: StandardTextInput("Email",
-                          labelPrefix: Icons.email_sharp,
-                          validator: (email) =>
-                              validateEmail(email, isOptional: true),
-                          controller: emailController)),
-                  Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 30),
-                      child: LabeledDivider(Colors.black, 18,
-                          MediaQuery.of(context).size.width * .8, "Or")),
-                  Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 5, horizontal: 10),
-                      child: StandardTextInput("Phone Number",
-                          labelPrefix: Icons.phone,
-                          validator: (number) =>
-                              validatePhoneNumber(number, isOptional: true),
-                          controller: phoneNumberController)),
-                  Center(
-                      child: (errorMessage == "")
-                          ? const SizedBox()
-                          : Padding(
-                              padding: const EdgeInsets.all(20),
-                              child: Text(errorMessage,
-                                  style: const TextStyle(color: Colors.red)))),
-                ]),
-              ),
+          children: [
+            Expanded(
+              child: ListView(children: [
+                Form(
+                  key: _formKey,
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(children: [
+                      const PageHeader("",
+                          "Please provide email or phone number\nto reset your password"),
+                      Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 10),
+                          child: StandardTextInput("Email",
+                              labelPrefix: Icons.email_sharp,
+                              validator: (email) =>
+                                  validateEmail(email, isOptional: true),
+                              controller: emailController)),
+                      Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 30),
+                          child: LabeledDivider(Colors.black, 18,
+                              MediaQuery.of(context).size.width * .8, "Or")),
+                      Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 10),
+                          child: StandardTextInput("Phone Number",
+                              labelPrefix: Icons.phone,
+                              validator: (number) =>
+                                  validatePhoneNumber(number, isOptional: true),
+                              controller: phoneNumberController,
+                              formatters: [
+                                FilteringTextInputFormatter.digitsOnly
+                              ])),
+                      Center(
+                          child: (errorMessage == "")
+                              ? const SizedBox()
+                              : Padding(
+                                  padding: const EdgeInsets.all(20),
+                                  child: Text(errorMessage,
+                                      style:
+                                          const TextStyle(color: Colors.red)))),
+                    ]),
+                  ),
+                ),
+              ]),
             ),
-          ]),
-        ),
-        Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                child: Column(children: [
-                  Button(() => requestOTP(context),
-                      actionLabel: "Continue", loading: isLoading),
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 20, horizontal: 8),
-                    child: RichText(
-                      text: TextSpan(children: [
-                        const TextSpan(
-                            text: "Go back to ",
-                            style: TextStyle(color: Colors.black)),
-                        TextSpan(
-                            text: "login",
-                            style: const TextStyle(color: Color(0xf015B9FF)),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () => goToLogin(context))
-                      ]),
-                    ),
-                  )
-                ])))
-      ],
-    ));
+            Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 20, horizontal: 20),
+                    child: Column(children: [
+                      Button(() => requestOTP(context),
+                          actionLabel: "Continue", loading: isLoading),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 20, horizontal: 8),
+                        child: RichText(
+                          text: TextSpan(children: [
+                            const TextSpan(
+                                text: "Go back to ",
+                                style: TextStyle(color: Colors.black)),
+                            TextSpan(
+                                text: "login",
+                                style:
+                                    const TextStyle(color: Color(0xf015B9FF)),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () => goToLogin(context))
+                          ]),
+                        ),
+                      )
+                    ])))
+          ],
+        ));
   }
 }

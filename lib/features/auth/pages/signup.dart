@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fullbooker/features/auth/controllers/login.dart';
 import 'package:fullbooker/features/auth/pages/login.dart';
 import 'package:fullbooker/features/consumer/pages/landing.dart';
@@ -102,7 +103,8 @@ class SignUpState extends State<SignUp> {
             showRightAction: false,
             height: 36,
             tileFontSize: 20,
-            titleFontWeight: FontWeight.bold),
+            titleFontWeight: FontWeight.w900,
+            backgroundColor: Colors.transparent),
         backgroundColor: Colors.white,
         body: Padding(
           padding: const EdgeInsets.all(20),
@@ -146,7 +148,10 @@ class SignUpState extends State<SignUp> {
                                 labelPrefix: Icons.phone,
                                 validator: validatePhoneNumber,
                                 controller: phoneNumberController,
-                                maxLenght: 13)),
+                                maxLenght: 13,
+                                formatters: [
+                                  FilteringTextInputFormatter.digitsOnly
+                                ])),
                         Padding(
                             padding: const EdgeInsets.symmetric(vertical: 5),
                             child: StandardTextInput("Password",
@@ -185,7 +190,7 @@ class SignUpState extends State<SignUp> {
                             child: Button(
                               loginWithGoogle,
                               color: const Color(0xf0F5F4F4),
-                              actionLabel: "Sign in with google",
+                              actionLabel: "Sign up with Google",
                               actionLabelPrefix: const Image(
                                   image: AssetImage("assets/icons/google.png")),
                               actionLabelColor: Colors.black,

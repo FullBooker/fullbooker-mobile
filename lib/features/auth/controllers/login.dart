@@ -30,7 +30,7 @@ class LoginViewModel extends BaseViewModel<Token> {
       }
     } catch (exception) {
       return "We couldn’t sign you in. Please check that your email and password"
-          "are correct.";
+          " are correct.";
     }
 
     return null;
@@ -39,7 +39,7 @@ class LoginViewModel extends BaseViewModel<Token> {
   Future<String?> signInWithGoogle() async {
     try {
       var account = await googleSignIn.signIn();
-      if (account == null) return "Please chose a google account to proceed";
+      if (account == null) return "Please choose a Google account to proceed";
       var auth = await account.authentication;
       var data = {"access_token": auth.accessToken};
       var res =
@@ -54,7 +54,7 @@ class LoginViewModel extends BaseViewModel<Token> {
               TokenSerializer().fromJson(res as Map<String, Object?>);
       }
     } catch (e) {
-      return "$e";
+      return "Oops! Something went wrong on our end, please try again";
     }
 
     return null;
@@ -94,7 +94,7 @@ class LoginViewModel extends BaseViewModel<Token> {
     try {
       await _repository.post(data, "/accounts/otp/request");
     } catch (exception) {
-      return "Invalid phone number, please verify that the number you entered is correct";
+      return "Please verify that the number you entered is correct";
     }
     return null;
   }
