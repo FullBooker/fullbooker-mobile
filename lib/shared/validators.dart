@@ -45,6 +45,6 @@ String? validateConfirmPassword(String? password, String? confirm) {
   if (passConfirm != null) return passConfirm;
   passConfirm = validatePassword(confirm);
   if (passConfirm != null) return passConfirm;
-  if (password != confirm) return "Password donot match";
+  if (password != confirm) return "Password do not match";
   return null;
 }
