@@ -9,6 +9,7 @@ class StandardTextInput extends StatefulWidget {
   final TextEditingController? controller;
   final bool isOptional;
   final int? maxLenght;
+  final List<TextInputFormatter>? formatters;
 
   const StandardTextInput(this.label,
       {super.key,
@@ -16,6 +17,7 @@ class StandardTextInput extends StatefulWidget {
       this.validator,
       this.controller,
       this.maxLenght,
+      this.formatters,
       this.isPassword = false,
       this.isOptional = false});
 
@@ -42,8 +44,9 @@ class StandardTextInputState extends State<StandardTextInput> {
           obscureText: !_passwordVisible && widget.isPassword,
           validator: widget.validator,
           controller: widget.controller,
+          inputFormatters: widget.formatters,
           decoration: InputDecoration(
-            prefixIcon: Icon(widget.labelPrefix),
+            prefixIcon: Icon(widget.labelPrefix, color: Colors.black),
             hintText: widget.label,
             hintStyle: const TextStyle(color: Color.fromARGB(255, 65, 65, 65)),
             filled: true,

@@ -115,93 +115,98 @@ class ValidatedOtpState extends State<ValidatedOtp> {
   Widget build(BuildContext context) {
     if (otpVerified) goToPasswordChange(context);
     return Scaffold(
+        backgroundColor: Colors.white,
         body: Column(
-      children: [
-        Expanded(
-            child: ListView(
           children: [
-            Form(
-                key: _formKey,
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(children: [
-                    PageHeader("",
-                        "An OTP code has been sent to\n${widget.phoneNumber}"),
-                    Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 5, horizontal: 10),
-                        child: OtpPinField(
-                            fieldHeight: 80,
-                            fieldWidth: 80,
-                            onSubmit: onPinChange,
-                            onChange: onPinChange,
-                            otpPinFieldDecoration:
-                                OtpPinFieldDecoration.defaultPinBoxDecoration,
-                            otpPinFieldStyle: const OtpPinFieldStyle(
-                                fieldBorderRadius: 20,
-                                activeFieldBorderColor: Color(0xf0AE4808),
-                                filledFieldBorderColor: Color(0xf0AE4808)))),
-                    Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 20),
-                        child: Align(
-                          alignment: Alignment.centerRight,
-                          child: (counter > 0)
-                              ? RichText(
-                                  text: TextSpan(children: [
-                                  const TextSpan(
-                                      text: "Resend code in ",
-                                      style: TextStyle(color: Colors.black)),
-                                  TextSpan(
-                                      text: timerText(),
-                                      style: const TextStyle(
-                                          color: Color(0xfff55E00)))
-                                ]))
-                              : RichText(
-                                  text: TextSpan(
-                                      text: "Resend OTP code",
-                                      style: const TextStyle(
-                                          color: Color(0xf015B9FF)),
-                                      recognizer: TapGestureRecognizer()
-                                        ..onTap = () => resendOTP(context))),
-                        )),
-                    Center(
-                        child: (errorMessage == "")
-                            ? const SizedBox()
-                            : Padding(
-                                padding: const EdgeInsets.all(20),
-                                child: Text(errorMessage,
-                                    style:
-                                        const TextStyle(color: Colors.red)))),
-                  ]),
-                ))
-          ],
-        )),
-        Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                child: Column(children: [
-                  Button(() => validateOTP(context),
-                      loading: isLoading, actionLabel: "Continue"),
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 20, horizontal: 8),
-                    child: RichText(
-                      text: TextSpan(children: [
-                        const TextSpan(
-                            text: "Use a different ",
-                            style: TextStyle(color: Colors.black)),
-                        TextSpan(
-                            text: "email / phone number",
-                            style: const TextStyle(color: Color(0xf015B9FF)),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () => goToRequestOtp(context))
+            Expanded(
+                child: ListView(
+              children: [
+                Form(
+                    key: _formKey,
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Column(children: [
+                        PageHeader("",
+                            "An OTP code has been sent to\n${widget.phoneNumber}"),
+                        Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 5, horizontal: 10),
+                            child: OtpPinField(
+                                fieldHeight: 80,
+                                fieldWidth: 80,
+                                onSubmit: onPinChange,
+                                onChange: onPinChange,
+                                otpPinFieldDecoration: OtpPinFieldDecoration
+                                    .defaultPinBoxDecoration,
+                                otpPinFieldStyle: const OtpPinFieldStyle(
+                                    fieldBorderRadius: 20,
+                                    activeFieldBorderColor: Color(0xf0AE4808),
+                                    filledFieldBorderColor:
+                                        Color(0xf0AE4808)))),
+                        Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 20),
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: (counter > 0)
+                                  ? RichText(
+                                      text: TextSpan(children: [
+                                      const TextSpan(
+                                          text: "Resend code in ",
+                                          style:
+                                              TextStyle(color: Colors.black)),
+                                      TextSpan(
+                                          text: timerText(),
+                                          style: const TextStyle(
+                                              color: Color(0xfff55E00)))
+                                    ]))
+                                  : RichText(
+                                      text: TextSpan(
+                                          text: "Resend OTP code",
+                                          style: const TextStyle(
+                                              color: Color(0xf015B9FF)),
+                                          recognizer: TapGestureRecognizer()
+                                            ..onTap =
+                                                () => resendOTP(context))),
+                            )),
+                        Center(
+                            child: (errorMessage == "")
+                                ? const SizedBox()
+                                : Padding(
+                                    padding: const EdgeInsets.all(20),
+                                    child: Text(errorMessage,
+                                        style: const TextStyle(
+                                            color: Colors.red)))),
                       ]),
-                    ),
-                  )
-                ])))
-      ],
-    ));
+                    ))
+              ],
+            )),
+            Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 20, horizontal: 20),
+                    child: Column(children: [
+                      Button(() => validateOTP(context),
+                          loading: isLoading, actionLabel: "Continue"),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 20, horizontal: 8),
+                        child: RichText(
+                          text: TextSpan(children: [
+                            const TextSpan(
+                                text: "Use a different ",
+                                style: TextStyle(color: Colors.black)),
+                            TextSpan(
+                                text: "email / phone number",
+                                style:
+                                    const TextStyle(color: Color(0xf015B9FF)),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () => goToRequestOtp(context))
+                          ]),
+                        ),
+                      )
+                    ])))
+          ],
+        ));
   }
 }

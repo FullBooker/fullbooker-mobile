@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fullbooker/features/auth/pages/request_otp.dart';
 import 'package:fullbooker/features/auth/pages/signup.dart';
 import 'package:fullbooker/features/consumer/pages/landing.dart';
@@ -28,12 +29,12 @@ class LoginState extends State<Login> {
   bool logedIn = false;
 
   void goToSignUp(BuildContext context) {
-    Navigator.of(context).pushReplacement(
+    Navigator.of(context).push(
         MaterialPageRoute(builder: (BuildContext context) => const SignUp()));
   }
 
   void goToPasswordReset(BuildContext context) {
-    Navigator.of(context).pushReplacement(MaterialPageRoute(
+    Navigator.of(context).push(MaterialPageRoute(
         builder: (BuildContext context) => const RequestOtp()));
   }
 
@@ -111,7 +112,10 @@ class LoginState extends State<Login> {
                             labelPrefix: Icons.phone,
                             validator: validatePhoneNumber,
                             controller: emailController,
-                            maxLenght: 13)),
+                            maxLenght: 13,
+                            formatters: [
+                              FilteringTextInputFormatter.digitsOnly
+                            ])),
                     Padding(
                         padding: const EdgeInsets.only(top: 10),
                         child: StandardTextInput("Password",
@@ -155,7 +159,7 @@ class LoginState extends State<Login> {
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         child: Button(loginWithGoogle,
                             color: const Color(0xf0F5F4F4),
-                            actionLabel: "Sign in with google",
+                            actionLabel: "Sign in with Google",
                             actionLabelColor: Colors.black,
                             actionLabelPrefix: const Image(
                                 image: AssetImage("assets/icons/google.png"))))

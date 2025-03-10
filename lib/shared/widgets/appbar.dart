@@ -101,6 +101,7 @@ class StandardNavBar extends StatelessWidget implements PreferredSizeWidget {
   final bool showRightAction;
   final double tileFontSize;
   final FontWeight titleFontWeight;
+  final Color backgroundColor;
 
   const StandardNavBar(
       {super.key,
@@ -110,7 +111,8 @@ class StandardNavBar extends StatelessWidget implements PreferredSizeWidget {
       this.showRightAction = true,
       this.pageTitle,
       this.tileFontSize = 14,
-      this.titleFontWeight = FontWeight.normal});
+      this.titleFontWeight = FontWeight.normal,
+      this.backgroundColor = Colors.white});
 
   @override
   Size get preferredSize => Size.fromHeight(height);
@@ -135,13 +137,13 @@ class StandardNavBar extends StatelessWidget implements PreferredSizeWidget {
 
     return AppBar(
         toolbarHeight: height * 0.1,
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.white,
         iconTheme: IconThemeData(color: iconsColor),
         centerTitle: true,
         leading: const Icon(Icons.arrow_back_ios_new),
         title: DecoratedBox(
           decoration: BoxDecoration(
-              color: Colors.white,
+              color: Colors.transparent,
               border: Border.all(color: Colors.black),
               borderRadius: const BorderRadius.all(Radius.circular(20))),
           child: showSearchBar
