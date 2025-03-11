@@ -13,6 +13,7 @@ import 'package:fullbooker/shared/widgets/divider.dart';
 import 'package:fullbooker/shared/widgets/dropdown.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
 import 'package:flutter/foundation.dart';
+import 'package:fullbooker/shared/widgets/scale_locked_text.dart';
 
 class TimeSelectionCard extends StatelessWidget {
   final void Function(int)? onMinuteSelected;
@@ -143,7 +144,7 @@ class _ActivityDateSelectionState extends State<ActivityDateSelection> {
 
   void fetchDays() {
     daysController.repository
-        .pullMultiple(1, 100, processResponseAsPage: false)
+        .pullMultiple(1, 100, processResponseAsPage: true)
         .then((days_) {
       setState(() => days = days_);
     });
@@ -322,10 +323,14 @@ class _ActivityDateSelectionState extends State<ActivityDateSelection> {
                               height: 120,
                               width: 140,
                               child: Column(children: [
-                                const Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 5),
-                                    child: Text("Activity Not Open On")),
+                                const Expanded(
+                                  child: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 10, vertical: 5),
+                                      child: ScaleLockedText(
+                                          "Activity Not Open On",
+                                          softWrap: true)),
+                                ),
                                 const RoundedDivider(
                                   height: 1,
                                   color: Color(0xf0FC8135),
@@ -339,7 +344,7 @@ class _ActivityDateSelectionState extends State<ActivityDateSelection> {
                                             padding: const EdgeInsets.symmetric(
                                                 vertical: 5, horizontal: 4),
                                             child: Center(
-                                              child: Text(
+                                              child: ScaleLockedText(
                                                   "${closedDays[idx].year}/"
                                                   "${closedDays[idx].month}/"
                                                   "${closedDays[idx].day}"),

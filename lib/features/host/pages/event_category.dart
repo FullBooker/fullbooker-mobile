@@ -5,6 +5,7 @@ import 'package:fullbooker/features/host/models/currency.dart';
 import 'package:fullbooker/features/host/models/product.dart';
 import 'package:fullbooker/features/host/pages/tickets_summary.dart';
 import 'package:fullbooker/shared/widgets/appbar.dart';
+import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:fullbooker/shared/widgets/card.dart';
 import 'package:fullbooker/shared/widgets/dropdown.dart';
@@ -83,9 +84,7 @@ class _EventCategoryState extends State<EventCategory> {
   @override
   void initState() {
     super.initState();
-    currencyViewModel.repository
-        .pullMultiple(1, 100, processResponseAsPage: false)
-        .then((currencies_) {
+    currencyViewModel.repository.pullMultiple(1, 100).then((currencies_) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         setState(() {
           currencies = currencies_;
@@ -105,24 +104,30 @@ class _EventCategoryState extends State<EventCategory> {
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
         appBar: const ProductSetupNavBar(step: ProductSteps.Products),
+        bottomNavigationBar: const BottomNavBar(),
         body: Column(children: [
           Expanded(
               child: ListView(children: [
             const PageHeader(
-                "", "How much will you charge for this event per ticket?",
+                "How much will you charge for this event per ticket?", "",
                 withLogo: false,
                 widthFactor: 0.9,
-                pageDescriptionPadding: 20,
-                headerTopPadding: 0,
-                pageTitleBottomPadding: 0,
-                pageDescriptionFontSize: 13),
+                pageDescriptionPadding: 0,
+                headerTopPadding: 10,
+                pageTitleBottomPadding: 10,
+                pageHeaderFontSize: 16,
+                pageDescriptionTopPadding: 0,
+                pageDescriptionFontSize: 0),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: CustomCard(
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                    const Text("Select a currency for this event"),
+                    const Expanded(
+                      child: Text("Select a currency for this event",
+                          softWrap: true),
+                    ),
                     currencies.isEmpty
                         ? const Center(child: CircularProgressIndicator())
                         : SizedBox(

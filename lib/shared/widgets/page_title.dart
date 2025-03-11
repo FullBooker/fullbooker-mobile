@@ -35,7 +35,8 @@ class PageHeader extends StatelessWidget {
           padding: EdgeInsets.only(bottom: pageTitleBottomPadding),
           child: Text(title,
               style: TextStyle(
-                  fontWeight: FontWeight.bold, fontSize: pageHeaderFontSize)),
+                  fontWeight: FontWeight.bold, fontSize: pageHeaderFontSize),
+              textAlign: TextAlign.center),
         ),
         withLogo
             ? const SizedBox(
@@ -50,7 +51,7 @@ class PageHeader extends StatelessWidget {
                 textAlign: TextAlign.center)),
         SizedBox(
             width: MediaQuery.of(context).size.width * widthFactor,
-            child: const RoundedDivider(height: 2, color: Color(0xf0AE4808)))
+            child: const RoundedDivider(height: 2, color: Color(0xf0FC8135)))
       ]),
     );
   }

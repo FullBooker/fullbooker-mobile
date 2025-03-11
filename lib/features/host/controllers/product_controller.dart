@@ -34,11 +34,12 @@ class ProductViewModel extends BaseViewModel<Product> {
   }
 
   Future<Map<String, Object?>?> createLocation(
-      String product, double lat, double long) async {
+      String product, double lat, double long, String address) async {
     var objData = {
       "product": product,
       "lat": lat.toString(),
-      "long": long.toString()
+      "long": long.toString(),
+      "address": address
     };
     try {
       var response = await repository.post(objData, "/location/");

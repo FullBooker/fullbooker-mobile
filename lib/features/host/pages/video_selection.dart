@@ -9,6 +9,7 @@ import 'package:fullbooker/features/host/pages/activity_pricing.dart';
 import 'package:fullbooker/features/host/pages/category_selection.dart';
 import 'package:fullbooker/features/host/pages/event_category.dart';
 import 'package:fullbooker/shared/widgets/appbar.dart';
+import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:fullbooker/shared/widgets/card.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
@@ -102,16 +103,19 @@ class _VideoSelectionState extends State<VideoSelection> {
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
         appBar: const ProductSetupNavBar(step: ProductSteps.Products),
+        bottomNavigationBar: const BottomNavBar(),
         body: Column(children: [
           Expanded(
               child: ListView(shrinkWrap: true, children: [
-            const PageHeader("", "Upload videos of the activity",
+            const PageHeader("Upload videos of the activity", "",
                 withLogo: false,
                 widthFactor: 0.9,
-                pageDescriptionPadding: 20,
-                headerTopPadding: 0,
-                pageTitleBottomPadding: 0,
-                pageDescriptionFontSize: 13),
+                pageDescriptionPadding: 0,
+                headerTopPadding: 10,
+                pageTitleBottomPadding: 10,
+                pageHeaderFontSize: 16,
+                pageDescriptionTopPadding: 0,
+                pageDescriptionFontSize: 0),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Wrap(
