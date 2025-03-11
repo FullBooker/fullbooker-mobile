@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fullbooker/shared/widgets/scale_locked_text.dart';
 
 class NavItem extends StatelessWidget {
   final IconData icon;
@@ -8,14 +9,25 @@ class NavItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      Center(
-          child: Icon(
-        icon,
-        color: const Color(0xf0F55E00),
-      )),
-      Center(child: Text(title, style: const TextStyle(fontSize: 12)))
-    ]);
+    return Column(
+      mainAxisSize: MainAxisSize.min, // Ensures no unnecessary space
+      children: [
+        Icon(icon, color: const Color(0xf0F55E00)),
+        Padding(
+          padding: const EdgeInsets.only(top: 2),
+          child: SizedBox(
+            width: 120,
+            child: ScaleLockedText(
+              title,
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 12),
+              softWrap: true,
+              overflow: TextOverflow.visible,
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }
 
@@ -30,14 +42,16 @@ class BottomNavBar extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.only(left: 15, right: 15, top: 10),
         child: SizedBox(
-            height: 50,
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  NavItem("Switch to hosting", Icons.home),
-                  NavItem("Search", Icons.search),
-                  NavItem("Profile", Icons.person)
-                ])),
+          height: 60, // Slightly increased height for better spacing
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              NavItem("Switch to Hosting", Icons.home),
+              NavItem("Search", Icons.search),
+              NavItem("Profile", Icons.person),
+            ],
+          ),
+        ),
       ),
     );
   }

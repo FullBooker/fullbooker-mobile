@@ -63,7 +63,7 @@ void handleResponse(http.Response response) {
   if (errorMessage.runtimeType == List<dynamic>) {
     error = errorMessage[0];
   } else {
-    error = errorMessage;
+    error = "$errorMessage";
   }
 
   error = "${error[0].toUpperCase()}${error.substring(1).toLowerCase()}";

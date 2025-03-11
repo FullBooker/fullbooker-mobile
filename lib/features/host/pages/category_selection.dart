@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fullbooker/features/host/controllers/category_controller.dart';
 import 'package:fullbooker/features/host/pages/product_details.dart';
 import 'package:fullbooker/shared/widgets/appbar.dart';
+import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
 import 'package:fullbooker/shared/widgets/titled_dropdown.dart';
@@ -71,43 +72,53 @@ class CategorySelectionState extends State<CategorySelection> {
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: const ProductSetupNavBar(step: ProductSteps.Products),
-      body: isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : Column(children: [
-              Expanded(
-                  child: ListView(children: [
-                const PageHeader("", "Tell us about your product",
-                    withLogo: false,
-                    widthFactor: 0.9,
-                    pageDescriptionPadding: 20,
-                    headerTopPadding: 0),
-                const Center(
-                  child: Padding(
-                      padding: EdgeInsets.only(bottom: 5),
-                      child: Text(
-                          "Pick the one that best describes your product")),
-                ),
-                for (var category in categories)
-                  category.subcategories.isNotEmpty
-                      ? Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 13, horizontal: 25),
-                          child: TitledDropdown(
-                              title: category.title,
-                              options: category.subcategories.map((subCat) {
-                                return DropDownOption(subCat.name, subCat.id,
-                                    () => optionSelected(subCat, category));
-                              }).toList()))
-                      : const SizedBox(),
-              ])),
-              Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: width / 8, vertical: 30),
-                    child: Button(onContinueClick, actionLabel: "Continue"),
-                  ))
-            ]),
+      bottomNavigationBar: const BottomNavBar(),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : Column(children: [
+                Expanded(
+                    child: ListView(children: [
+                  const PageHeader("Tell us about your product", "",
+                      withLogo: false,
+                      widthFactor: 0.9,
+                      pageDescriptionPadding: 0,
+                      headerTopPadding: 15,
+                      pageTitleBottomPadding: 10,
+                      pageHeaderFontSize: 17,
+                      pageDescriptionTopPadding: 10,
+                      pageDescriptionFontSize: 0),
+                  const Center(
+                    child: Padding(
+                        padding: EdgeInsets.only(bottom: 5),
+                        child: Text(
+                          "Pick the one that best describes your product",
+                          style: TextStyle(fontSize: 18),
+                        )),
+                  ),
+                  for (var category in categories)
+                    category.subcategories.isNotEmpty
+                        ? Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 13, horizontal: 25),
+                            child: TitledDropdown(
+                                title: category.title,
+                                options: category.subcategories.map((subCat) {
+                                  return DropDownOption(subCat.name, subCat.id,
+                                      () => optionSelected(subCat, category));
+                                }).toList()))
+                        : const SizedBox(),
+                ])),
+                Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: width / 8, vertical: 30),
+                      child: Button(onContinueClick, actionLabel: "Continue"),
+                    ))
+              ]),
+      ),
     );
   }
 }

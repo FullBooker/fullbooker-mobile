@@ -1,11 +1,12 @@
 import 'package:fullbooker/core/models.dart';
+import 'package:fullbooker/features/auth/models/login.dart';
 
 class Product implements Model {
   String id;
   String name;
   String? description;
   String subcategory;
-  String host;
+  ProductHost host;
   String number;
   bool active;
   List<ProductPricing> pricing;
@@ -46,7 +47,7 @@ class ProductSerializer implements Serializer<Product> {
         json["name"] as String,
         json["description"] as String?,
         json["subcategory"] as String,
-        json["host"] as String,
+        ProductHostSerializer().fromJson(json["host"]),
         json["number"] as String,
         json["active"] as bool,
         pricings,
@@ -164,6 +165,34 @@ class ProductLocationSerializer implements Serializer<ProductLocation> {
   @override
   Map<String, Object?> toJson(ProductLocation object) {
     return {"id": object.id, "coordinates": object.coordinates};
+  }
+
+  @override
+  String getIdKeyName() => "id";
+}
+
+class ProductHost implements Model {
+  String id;
+  User user;
+
+  ProductHost(this.id, this.user);
+
+  @override
+  String getId() => id;
+
+  @override
+  String toString() => id;
+}
+
+class ProductHostSerializer implements Serializer<ProductHost> {
+  @override
+  ProductHost fromJson(Map<String, dynamic> json) {
+    return ProductHost(json["id"], UserSerializer().fromJson(json["user"]));
+  }
+
+  @override
+  Map<String, Object?> toJson(ProductHost object) {
+    return {"id": object.id, "user": UserSerializer().toJson(object.user)};
   }
 
   @override
