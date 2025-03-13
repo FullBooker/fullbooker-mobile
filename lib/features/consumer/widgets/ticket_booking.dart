@@ -14,11 +14,12 @@ class TicketBookingWidget extends StatefulWidget {
   final String productLocationName;
   final DateTime? selectedDate;
 
-  const TicketBookingWidget(
-      {super.key,
-      required this.product,
-      required this.productLocationName,
-      this.selectedDate});
+  const TicketBookingWidget({
+    super.key,
+    required this.product,
+    required this.productLocationName,
+    this.selectedDate,
+  });
 
   @override
   State createState() => _TicketBookingWidgetState();
@@ -27,27 +28,31 @@ class TicketBookingWidget extends StatefulWidget {
 class _TicketBookingWidgetState extends State<TicketBookingWidget> {
   int selectedTickets = 1;
   BookingMode bookingMode = BookingMode.single;
-  List<Ticket> tickets = [];
+  List<Ticket> tickets = <Ticket>[];
   ProductPricing? selectedPricings;
 
   void goToCheckout() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Navigator.of(context).push(MaterialPageRoute(
+      Navigator.of(context).push(
+        MaterialPageRoute<PaymentSummaryWidget>(
           builder: (_) => PaymentSummaryWidget(
-              product: widget.product,
-              locationName: widget.productLocationName,
-              tickets: tickets,
-              selectedDateTime: widget.selectedDate!)));
+            product: widget.product,
+            locationName: widget.productLocationName,
+            tickets: tickets,
+            selectedDateTime: widget.selectedDate!,
+          ),
+        ),
+      );
     });
   }
 
   void checkout() {
     if (tickets.isEmpty) {
-      showSnackBar("Please add at least one ticket", context);
+      showSnackBar('Please add at least one ticket', context);
       return;
     }
     if (widget.selectedDate == null) {
-      showSnackBar("Please set a date", context);
+      showSnackBar('Please set a date', context);
       return;
     }
     goToCheckout();
@@ -58,8 +63,9 @@ class _TicketBookingWidgetState extends State<TicketBookingWidget> {
       case BookingMode.single:
         if (tickets.length >= 3) {
           showSnackBar(
-              "Please use bulk booking if you need more than 3 tickets",
-              context);
+            'Please use bulk booking if you need more than 3 tickets',
+            context,
+          );
           return;
         }
         setState(() => tickets.add(ticket));
@@ -75,60 +81,73 @@ class _TicketBookingWidgetState extends State<TicketBookingWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      const Text("Tickets",
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-      const SizedBox(height: 8),
-      TicketForm(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        const Text(
+          'Tickets',
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 8),
+        TicketForm(
           index: 0,
           product: widget.product,
           productLocationName: widget.productLocationName,
           withIndexLabel: false,
           onAddClicked: addTicket,
-          bookingMode: bookingMode),
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 20),
-        child: Container(
-          alignment: Alignment.center,
-          width: MediaQuery.of(context).size.width - 10,
-          padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.orange),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Column(
-            children: [
-              TicketsSummary(
+          bookingMode: bookingMode,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 20),
+          child: Container(
+            alignment: Alignment.center,
+            width: MediaQuery.of(context).size.width - 10,
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.orange),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Column(
+              children: <Widget>[
+                TicketsSummary(
                   tickets: tickets,
-                  onRemove: (ticketsNow) =>
+                  onRemove: (List<Ticket> ticketsNow) =>
                       setState(() => tickets = ticketsNow),
-                  bookingMode: bookingMode),
-              Center(
+                  bookingMode: bookingMode,
+                ),
+                Center(
                   child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: Column(children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4),
-                    child: Text(bookingMode == BookingMode.bulk
-                        ? "3 tickets or less ?"
-                        : "More than 3 tickets?"),
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4),
+                          child: Text(
+                            bookingMode == BookingMode.bulk
+                                ? '3 tickets or less ?'
+                                : 'More than 3 tickets?',
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width / 1.7,
+                          child: SecondaryButton(
+                            _toggleBookingMode,
+                            elevation: 0,
+                            actionLabel: bookingMode == BookingMode.bulk
+                                ? 'Single Tickets'
+                                : 'Bulk Booking',
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  const SizedBox(height: 8),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width / 1.7,
-                    child: SecondaryButton(_toggleBookingMode,
-                        elevation: 0,
-                        actionLabel: bookingMode == BookingMode.bulk
-                            ? "Single Tickets"
-                            : "Bulk Booking"),
-                  )
-                ]),
-              )),
-            ],
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-      CheckoutCard(
+        CheckoutCard(
           pricing: tickets.isEmpty ? null : tickets.first.pricing,
           quantity: bookingMode == BookingMode.single
               ? tickets.length
@@ -136,12 +155,14 @@ class _TicketBookingWidgetState extends State<TicketBookingWidget> {
                   ? 0
                   : tickets.first.quantity,
           locationName: widget.productLocationName,
-          onProceedClick: checkout),
-    ]);
+          onProceedClick: checkout,
+        ),
+      ],
+    );
   }
 
   void _toggleBookingMode() {
-    var bookingModeLocal =
+    final BookingMode bookingModeLocal =
         bookingMode == BookingMode.bulk ? BookingMode.single : BookingMode.bulk;
     setState(() {
       tickets.clear();

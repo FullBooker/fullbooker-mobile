@@ -13,8 +13,11 @@ class CategoryConveyer extends StatefulWidget {
   final Map<String, Category> categories;
   final Function? onCategoryClick;
 
-  const CategoryConveyer(
-      {super.key, this.categories = const {}, this.onCategoryClick});
+  const CategoryConveyer({
+    super.key,
+    this.categories = const <String, Category>{},
+    this.onCategoryClick,
+  });
 
   @override
   State<StatefulWidget> createState() => _CategoryConveyerState();
@@ -40,33 +43,34 @@ class _CategoryConveyerState extends State<CategoryConveyer> {
   }
 
   List<CategoryWithIcon> getCategoriesWithIcons() {
-    return widget.categories.entries.map((entry) {
+    return widget.categories.entries.map((MapEntry<String, Category> entry) {
       return CategoryWithIcon(category: entry.value, icon: entry.key);
     }).toList();
   }
 
   @override
   Widget build(BuildContext context) {
-    var cats = getCategoriesWithIcons();
+    final List<CategoryWithIcon> cats = getCategoriesWithIcons();
 
     return SizedBox(
       height: 70,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
+        children: <Widget>[
           SizedBox(
             width: 30,
             child: GestureDetector(
               onTap: _scrollLeft,
               child: Container(
-                  width: 24,
-                  height: 24,
-                  decoration: BoxDecoration(
-                      color: Colors.transparent,
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Colors.black)),
-                  child: const Icon(Icons.arrow_back_ios_new_sharp, size: 24)),
+                width: 24,
+                height: 24,
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  shape: BoxShape.circle,
+                  border: Border.all(),
+                ),
+                child: const Icon(Icons.arrow_back_ios_new_sharp, size: 24),
+              ),
             ),
           ),
           Expanded(
@@ -74,15 +78,15 @@ class _CategoryConveyerState extends State<CategoryConveyer> {
               controller: _scrollController,
               scrollDirection: Axis.horizontal,
               itemCount: cats.length,
-              itemBuilder: (context, index) {
-                final category = cats[index];
+              itemBuilder: (BuildContext context, int index) {
+                final CategoryWithIcon category = cats[index];
                 return GestureDetector(
                   onTap: () => widget.onCategoryClick?.call(category),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
-                      children: [
+                      children: <Widget>[
                         Container(
                           height: 40,
                           width: 40,
@@ -96,7 +100,9 @@ class _CategoryConveyerState extends State<CategoryConveyer> {
                         ScaleLockedText(
                           category.category.title,
                           style: const TextStyle(
-                              fontSize: 13, fontWeight: FontWeight.w500),
+                            fontSize: 13,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ],
                     ),
@@ -110,13 +116,15 @@ class _CategoryConveyerState extends State<CategoryConveyer> {
             child: GestureDetector(
               onTap: _scrollRight,
               child: Container(
-                  width: 24,
-                  height: 24,
-                  decoration: BoxDecoration(
-                      color: Colors.transparent,
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Colors.black)),
-                  child: const Icon(Icons.arrow_forward_ios, size: 24)),
+                width: 24,
+                height: 24,
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  shape: BoxShape.circle,
+                  border: Border.all(),
+                ),
+                child: const Icon(Icons.arrow_forward_ios, size: 24),
+              ),
             ),
           ),
         ],

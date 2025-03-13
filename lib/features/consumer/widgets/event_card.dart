@@ -12,19 +12,140 @@ import 'package:map_location_picker/map_location_picker.dart';
 import 'package:shimmer/shimmer.dart';
 
 class EventCard extends StatefulWidget {
-  final Product product;
-  final VoidCallback? onBuyClick;
-
   const EventCard({super.key, required this.product, this.onBuyClick});
+
+  final VoidCallback? onBuyClick;
+  final Product product;
 
   @override
   State<StatefulWidget> createState() => _EventCardState();
 }
 
 class _EventCardState extends State<EventCard> {
-  String? locationName;
-  bool isLoading = true; // Track loading state
   double? distanceFromEvent;
+  bool isLoading = true; // Track loading state
+  String? locationName;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchLocationName();
+  }
+
+  void goToEventDetails(Product event) {
+    //WidgetsBinding.instance.addPostFrameCallback((_) {
+    Navigator.of(context).push(
+      MaterialPageRoute<EventDetails>(
+        builder: (_) {
+          return EventDetails(event: event, productLocationName: locationName!);
+        },
+      ),
+    );
+    //});
+  }
+
+  Future<void> fetchLocationName() async {
+    try {
+      final ProductLocation location = widget.product.locations.first;
+      final LatLng coordinates = parseSRID(location.coordinates);
+      final List<Placemark> placeMark = await placemarkFromCoordinates(
+        coordinates.latitude,
+        coordinates.longitude,
+      );
+      final double distanceAway = await calculateDistanceAway();
+      if (mounted) {
+        setState(() {
+          locationName = placeMark.first.name;
+          distanceFromEvent = distanceAway;
+          isLoading = false; // Data fetched, stop loading
+        });
+      }
+    } catch (e) {
+      debugPrint('Error fetching location: $e');
+      setState(
+        () => isLoading = false,
+      ); // Stop loading even if there's an error
+    }
+  }
+
+  Future<Position> determinePosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return Future<Position>.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future<Position>.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      return Future<Position>.error(
+        'Location permissions are permanently denied, we cannot request permissions.',
+      );
+    }
+    return Geolocator.getCurrentPosition();
+  }
+
+  Future<double> calculateDistanceAway() async {
+    final ProductLocation location = widget.product.locations.first;
+    final LatLng coordinates = parseSRID(location.coordinates);
+    final Position currentLocation = await determinePosition();
+    const double p =
+        0.017453292519943295; //conversion factor from radians to decimal degrees, exactly math.pi/180
+    const double Function(num radians) c = cos;
+    final double a = 0.5 -
+        c((coordinates.latitude - currentLocation.latitude) * p) / 2 +
+        c(currentLocation.latitude * p) *
+            c(coordinates.latitude * p) *
+            (1 - c((coordinates.longitude - currentLocation.longitude) * p)) /
+            2;
+    const int radiusOfEarth = 6371;
+    return radiusOfEarth * 2 * asin(sqrt(a));
+  }
+
+  ProductPricing getLowestPrice() {
+    final List<ProductPricing> prices = widget.product.pricing;
+    prices.sort(
+      (ProductPricing a, ProductPricing b) =>
+          double.parse(a.cost).compareTo(double.parse(b.cost)),
+    );
+    return prices.first;
+  }
+
+  String getStartDate() {
+    if (widget.product.availability!['start'] != null) {
+      final DateTime dateTime = DateTime.parse(
+        "${widget.product.availability!["start"]} ${widget.product.availability!["start_time"]}",
+      );
+      return DateFormat('E dd MMMM, hh:mm').format(dateTime);
+    }
+
+    final List<dynamic> openTimes =
+        widget.product.availability!['open_days'] as List<dynamic>;
+    return "${(openTimes[0]["day_name"] as String).substring(0, 3)} ${openTimes[0]["opening_at"]} "
+        "- ${openTimes[0]["closing_at"]}";
+  }
+
+  String getEndDate() {
+    if (widget.product.availability!['end'] != null) {
+      final DateTime dateTime = DateTime.parse(
+        "${widget.product.availability!["end"]} ${widget.product.availability!["end_time"]}",
+      );
+      return DateFormat('E dd MMMM, hh:mm').format(dateTime);
+    }
+
+    final List<dynamic> openTimes =
+        widget.product.availability!['open_days'] as List<dynamic>;
+    return "${(openTimes.last["day_name"] as String).substring(0, 3)} "
+        "${openTimes.last["opening_at"]} - ${openTimes.last["closing_at"]}";
+  }
 
   // Shimmer loading effect
   Widget _buildShimmerEffect(double width) {
@@ -39,119 +160,10 @@ class _EventCardState extends State<EventCard> {
     );
   }
 
-  void goToEventDetails(Product event) {
-    //WidgetsBinding.instance.addPostFrameCallback((_) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-      return EventDetails(event: event, productLocationName: locationName!);
-    }));
-    //});
-  }
-
-  Future<void> fetchLocationName() async {
-    try {
-      var location = widget.product.locations.first;
-      var coordinates = parseSRID(location.coordinates);
-      var placeMark = await placemarkFromCoordinates(
-        coordinates.latitude,
-        coordinates.longitude,
-      );
-      var distanceAway = await calculateDistanceAway();
-      if (mounted) {
-        setState(() {
-          locationName = placeMark.first.name;
-          distanceFromEvent = distanceAway;
-          isLoading = false; // Data fetched, stop loading
-        });
-      }
-    } catch (e) {
-      debugPrint("Error fetching location: $e");
-      setState(
-          () => isLoading = false); // Stop loading even if there's an error
-    }
-  }
-
-  Future<Position> determinePosition() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      return Future.error('Location services are disabled.');
-    }
-
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        return Future.error('Location permissions are denied');
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
-    }
-    return await Geolocator.getCurrentPosition();
-  }
-
-  Future<double> calculateDistanceAway() async {
-    var location = widget.product.locations.first;
-    var coordinates = parseSRID(location.coordinates);
-    var currentLocation = await determinePosition();
-    var p =
-        0.017453292519943295; //conversion factor from radians to decimal degrees, exactly math.pi/180
-    var c = cos;
-    var a = 0.5 -
-        c((coordinates.latitude - currentLocation.latitude) * p) / 2 +
-        c(currentLocation.latitude * p) *
-            c(coordinates.latitude * p) *
-            (1 - c((coordinates.longitude - currentLocation.longitude) * p)) /
-            2;
-    var radiusOfEarth = 6371;
-    return radiusOfEarth * 2 * asin(sqrt(a));
-  }
-
-  ProductPricing getLowestPrice() {
-    var pricings = widget.product.pricing;
-    pricings
-        .sort((a, b) => double.parse(a.cost).compareTo(double.parse(b.cost)));
-    return pricings.first;
-  }
-
-  String getStartDate() {
-    if (widget.product.availability!["start"] != null) {
-      var dateTime = DateTime.parse(
-          "${widget.product.availability!["start"]} ${widget.product.availability!["start_time"]}");
-      return DateFormat("E dd MMMM, hh:mm").format(dateTime);
-    }
-
-    var openTimes = widget.product.availability!["open_days"] as List<dynamic>;
-    return "${(openTimes[0]["day_name"] as String).substring(0, 3)} ${openTimes[0]["opening_at"]} "
-        "- ${openTimes[0]["closing_at"]}";
-  }
-
-  String getEndDate() {
-    if (widget.product.availability!["end"] != null) {
-      var dateTime = DateTime.parse(
-          "${widget.product.availability!["end"]} ${widget.product.availability!["end_time"]}");
-      return DateFormat("E dd MMMM, hh:mm").format(dateTime);
-    }
-
-    var openTimes = widget.product.availability!["open_days"] as List<dynamic>;
-    return "${(openTimes.last["day_name"] as String).substring(0, 3)} "
-        "${openTimes.last["opening_at"]} - ${openTimes.last["closing_at"]}";
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    fetchLocationName();
-  }
-
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.height;
+    final double width = MediaQuery.of(context).size.width;
+    final double height = MediaQuery.of(context).size.height;
 
     return InkWell(
       onTap: widget.onBuyClick,
@@ -165,7 +177,7 @@ class _EventCardState extends State<EventCard> {
             topRight: Radius.circular(8),
             topLeft: Radius.circular(8),
           ),
-          boxShadow: [
+          boxShadow: <BoxShadow>[
             BoxShadow(
               offset: const Offset(0, 4),
               blurRadius: 30,
@@ -177,7 +189,7 @@ class _EventCardState extends State<EventCard> {
             ? _buildShimmerEffect(width)
             : Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                children: <Widget>[
                   Container(
                     decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(
@@ -187,7 +199,7 @@ class _EventCardState extends State<EventCard> {
                     ),
                     height: height / 5.5,
                     child: Stack(
-                      children: [
+                      children: <Widget>[
                         Container(
                           decoration: BoxDecoration(
                             image: DecorationImage(
@@ -196,7 +208,7 @@ class _EventCardState extends State<EventCard> {
                             ),
                           ),
                         ),
-                        EventMetaRow(width: width * 0.45)
+                        EventMetaRow(width: width * 0.45),
                       ],
                     ),
                   ),
@@ -205,7 +217,7 @@ class _EventCardState extends State<EventCard> {
                     child: Column(
                       spacing: 8,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                      children: <Widget>[
                         Text(
                           widget.product.name,
                           style: TextStyle(
@@ -237,14 +249,14 @@ class _EventCardState extends State<EventCard> {
                           child: Button(
                             widget.onBuyClick ??
                                 () => goToEventDetails(widget.product),
-                            actionLabel: "Buy Ticket",
+                            actionLabel: 'Buy Ticket',
                             verticalPadding: 4,
                             elevation: 0,
                           ),
                         ),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
       ),

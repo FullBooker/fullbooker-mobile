@@ -19,36 +19,43 @@ class _DatePickerState extends State<DatePicker> {
   @override
   Widget build(BuildContext context) {
     return Wrap(
-        alignment: WrapAlignment.center,
-        crossAxisAlignment: WrapCrossAlignment.center,
-        children: [
-          const Icon(Icons.calendar_month, color: Color(0xf0FC8135), size: 24),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: Text(
-                setDateTime == null
-                    ? "Select Date"
-                    : "${setDateTime!.day}/${setDateTime!.month}/${setDateTime!.year}",
-                style: const TextStyle(fontSize: 14)),
+      alignment: WrapAlignment.center,
+      crossAxisAlignment: WrapCrossAlignment.center,
+      children: <Widget>[
+        const Icon(Icons.calendar_month, color: Color(0xf0FC8135), size: 24),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: Text(
+            setDateTime == null
+                ? 'Select Date'
+                : '${setDateTime!.day}/${setDateTime!.month}/${setDateTime!.year}',
+            style: const TextStyle(fontSize: 14),
           ),
-          GestureDetector(
-            onTap: () async {
-              var dateTimeLocal = await showDatePicker(
-                  context: context,
-                  firstDate: DateTime(2018, 1, 1),
-                  lastDate: DateTime(2026, 1, 1));
-              setState(() => setDateTime = dateTimeLocal);
-              if (widget.onDateSelected != null) {
-                widget.onDateSelected!(dateTimeLocal);
-              }
-            },
-            child: DecoratedBox(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all()),
-                child: Transform.rotate(
-                    angle: 1.57, child: const Icon(Icons.arrow_forward_ios))),
-          )
-        ]);
+        ),
+        GestureDetector(
+          onTap: () async {
+            final DateTime? dateTimeLocal = await showDatePicker(
+              context: context,
+              firstDate: DateTime(2018),
+              lastDate: DateTime(2026),
+            );
+            setState(() => setDateTime = dateTimeLocal);
+            if (widget.onDateSelected != null) {
+              widget.onDateSelected!(dateTimeLocal);
+            }
+          },
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(),
+            ),
+            child: Transform.rotate(
+              angle: 1.57,
+              child: const Icon(Icons.arrow_forward_ios),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }
