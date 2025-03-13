@@ -14,11 +14,12 @@ class EventCarousel extends StatefulWidget {
   final String actionLabel;
   final Function(String) onActionClick;
 
-  const EventCarousel(
-      {super.key,
-      required this.product,
-      required this.onActionClick,
-      this.actionLabel = ""});
+  const EventCarousel({
+    super.key,
+    required this.product,
+    required this.onActionClick,
+    this.actionLabel = '',
+  });
 
   @override
   State<StatefulWidget> createState() => _EventCarouselState();
@@ -30,21 +31,24 @@ class _EventCarouselState extends State<EventCarousel> {
   double? distanceFromEvent;
 
   ProductPricing getLowestPrice() {
-    var pricings = List<ProductPricing>.from(widget.product.pricing);
-    pricings
-        .sort((a, b) => double.parse(a.cost).compareTo(double.parse(b.cost)));
-    return pricings.first;
+    final List<ProductPricing> prices =
+        List<ProductPricing>.from(widget.product.pricing);
+    prices.sort(
+      (ProductPricing a, ProductPricing b) =>
+          double.parse(a.cost).compareTo(double.parse(b.cost)),
+    );
+    return prices.first;
   }
 
   Future<void> fetchLocationName() async {
     try {
-      var location = widget.product.locations.first;
-      var coordinates = parseSRID(location.coordinates);
-      var placeMark = await placemarkFromCoordinates(
+      final ProductLocation location = widget.product.locations.first;
+      final LatLng coordinates = parseSRID(location.coordinates);
+      final List<Placemark> placeMark = await placemarkFromCoordinates(
         coordinates.latitude,
         coordinates.longitude,
       );
-      var distanceAway = await calculateDistanceAway();
+      final double distanceAway = await calculateDistanceAway();
       if (mounted) {
         setState(() {
           locationName = placeMark.first.name;
@@ -53,9 +57,10 @@ class _EventCarouselState extends State<EventCarousel> {
         });
       }
     } catch (e) {
-      debugPrint("Error fetching location: $e");
+      debugPrint('Error fetching location: $e');
       setState(
-          () => isLoading = false); // Stop loading even if there's an error
+        () => isLoading = false,
+      ); // Stop loading even if there's an error
     }
   }
 
@@ -69,7 +74,7 @@ class _EventCarouselState extends State<EventCarousel> {
       // Location services are not enabled don't continue
       // accessing the position and request users of the
       // App to enable the location services.
-      return Future.error('Location services are disabled.');
+      return Future<Position>.error('Location services are disabled.');
     }
 
     permission = await Geolocator.checkPermission();
@@ -81,35 +86,36 @@ class _EventCarouselState extends State<EventCarousel> {
         // Android's shouldShowRequestPermissionRationale
         // returned true. According to Android guidelines
         // your App should show an explanatory UI now.
-        return Future.error('Location permissions are denied');
+        return Future<Position>.error('Location permissions are denied');
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
       // Permissions are denied forever, handle appropriately.
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
+      return Future<Position>.error(
+        'Location permissions are permanently denied, we cannot request permissions.',
+      );
     }
 
     // When we reach here, permissions are granted and we can
     // continue accessing the position of the device.
-    return await Geolocator.getCurrentPosition();
+    return Geolocator.getCurrentPosition();
   }
 
   Future<double> calculateDistanceAway() async {
-    var location = widget.product.locations.first;
-    var coordinates = parseSRID(location.coordinates);
-    var currentLocation = await determinePosition();
-    var p =
+    final ProductLocation location = widget.product.locations.first;
+    final LatLng coordinates = parseSRID(location.coordinates);
+    final Position currentLocation = await determinePosition();
+    const double p =
         0.017453292519943295; //conversion factor from radians to decimal degrees, exactly math.pi/180
-    var c = cos;
-    var a = 0.5 -
+    const double Function(num radians) c = cos;
+    final double a = 0.5 -
         c((coordinates.latitude - currentLocation.latitude) * p) / 2 +
         c(currentLocation.latitude * p) *
             c(coordinates.latitude * p) *
             (1 - c((coordinates.longitude - currentLocation.longitude) * p)) /
             2;
-    var radiusOfEarth = 6371;
+    const int radiusOfEarth = 6371;
     return radiusOfEarth * 2 * asin(sqrt(a));
   }
 
@@ -121,81 +127,95 @@ class _EventCarouselState extends State<EventCarousel> {
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
-    List<String> images =
-        widget.product.image == null ? [] : [widget.product.image!.file];
+    final double width = MediaQuery.of(context).size.width;
+    List<String> images = widget.product.image == null
+        ? <String>[]
+        : <String>[widget.product.image!.file];
     images = images.isEmpty && widget.product.image != null
-        ? [widget.product.image!.file]
+        ? <String>[widget.product.image!.file]
         : images;
 
     return Stack(
-      children: [
-        isLoading
-            ? _buildShimmerEffect(width)
-            : CarouselSlider(
-                options: CarouselOptions(
-                  autoPlay: true,
-                  enlargeCenterPage: true,
-                  aspectRatio: 16 / 9,
-                  viewportFraction: 1,
-                  autoPlayInterval: const Duration(seconds: 15),
-                ),
-                items: images.map((imageUrl) {
-                  return Stack(children: [
-                    Container(
-                      width: width,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: NetworkImage(imageUrl), fit: BoxFit.cover),
+      children: <Widget>[
+        if (isLoading)
+          _buildShimmerEffect(width)
+        else
+          CarouselSlider(
+            options: CarouselOptions(
+              autoPlay: true,
+              enlargeCenterPage: true,
+              viewportFraction: 1,
+              autoPlayInterval: const Duration(seconds: 15),
+            ),
+            items: images.map((String imageUrl) {
+              return Stack(
+                children: <Widget>[
+                  Container(
+                    width: width,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: NetworkImage(imageUrl),
+                        fit: BoxFit.cover,
                       ),
                     ),
-                    Container(
-                      width: width,
-                      color:
-                          Colors.black.withValues(alpha: 0.45), // Dark overlay
-                    )
-                  ]);
-                }).toList(),
-              ),
+                  ),
+                  Container(
+                    width: width,
+                    color: Colors.black.withValues(alpha: 0.45), // Dark overlay
+                  ),
+                ],
+              );
+            }).toList(),
+          ),
         Positioned(
           bottom: 20,
           left: 10,
           child: SizedBox(
-              width: width / 2.5,
-              child: Column(children: [
+            width: width / 2.5,
+            child: Column(
+              children: <Widget>[
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 20),
                     child: Text(
-                        "${widget.product.name}, $locationName, ${distanceFromEvent?.toStringAsFixed(0) ?? "Error"} km away",
-                        style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w800,
-                            fontSize: 16)),
+                      "${widget.product.name}, $locationName, ${distanceFromEvent?.toStringAsFixed(0) ?? "Error"} km away",
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w800,
+                        fontSize: 16,
+                      ),
+                    ),
                   ),
                 ),
                 Align(
                   alignment: Alignment.centerLeft,
-                  child: Text("from KES ${getLowestPrice().cost}",
-                      textAlign: TextAlign.left,
-                      style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w800,
-                          fontSize: 16)),
-                )
-              ])),
+                  child: Text(
+                    'from KES ${getLowestPrice().cost}',
+                    textAlign: TextAlign.left,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w800,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
         Positioned(
           bottom: 20,
           right: 10,
           child: SizedBox(
-              width: 170,
-              child: Button(() => widget.onActionClick(locationName!),
-                  actionLabel: widget.actionLabel,
-                  verticalPadding: 0,
-                  labelFontSize: 16)),
-        )
+            width: 170,
+            child: Button(
+              () => widget.onActionClick(locationName!),
+              actionLabel: widget.actionLabel,
+              verticalPadding: 0,
+            ),
+          ),
+        ),
       ],
     );
   }

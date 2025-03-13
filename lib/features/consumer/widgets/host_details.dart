@@ -19,8 +19,7 @@ class ProfileRating extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
+      children: <Widget>[
         CircleAvatar(
           radius: 24,
           backgroundImage:
@@ -29,11 +28,10 @@ class ProfileRating extends StatelessWidget {
         const SizedBox(width: 8),
         Expanded(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: <Widget>[
               Text(
-                "Hosted by $hostName",
+                'Hosted by $hostName',
                 softWrap: true,
                 overflow: TextOverflow.ellipsis, // Handles overflow
                 maxLines: 2, // Limits to 2 lines
@@ -41,7 +39,7 @@ class ProfileRating extends StatelessWidget {
                     const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
               ),
               Row(
-                children: List.generate(totalStars, (index) {
+                children: List<Icon>.generate(totalStars, (int index) {
                   return Icon(
                     index < rating ? Icons.star : Icons.star_border,
                     color:
@@ -98,9 +96,10 @@ class _HostDetailsState extends State<HostDetails> {
         : SizedBox(
             width: widget.width,
             child: const ProfileRating(
-                profileImageUrl: "https://i.imgur.com/GEPhBnS.png",
-                rating: 4,
-                hostName: "Kevin Laichena"),
+              profileImageUrl: 'https://i.imgur.com/GEPhBnS.png',
+              rating: 4,
+              hostName: 'Kevin Laichena',
+            ),
           );
   }
 }

@@ -5,21 +5,22 @@ class RatingSummary extends StatelessWidget {
   final int totalReviews;
   final Map<int, double> ratingDistribution;
 
-  const RatingSummary(
-      {super.key,
-      this.rating = 4.0,
-      this.totalReviews = 52,
-      this.ratingDistribution = const {
-        5: 0.8,
-        4: 0.6,
-        3: 0.4,
-        2: 0.1,
-        1: 0.05,
-      }});
+  const RatingSummary({
+    super.key,
+    this.rating = 4.0,
+    this.totalReviews = 52,
+    this.ratingDistribution = const <int, double>{
+      5: 0.8,
+      4: 0.6,
+      3: 0.4,
+      2: 0.1,
+      1: 0.05,
+    },
+  });
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
+    final double width = MediaQuery.of(context).size.width;
     return Card(
       color: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -29,43 +30,56 @@ class RatingSummary extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
           child: Column(
-            children: [
+            children: <Widget>[
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
+                children: <Widget>[
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: ratingDistribution.entries.map((entry) {
+                    children: ratingDistribution.entries
+                        .map((MapEntry<int, double> entry) {
                       return Row(
-                        children: [
-                          Text("${entry.key} ",
-                              style: const TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.bold)),
-                          const Icon(Icons.star,
-                              color: Colors.orange, size: 18),
+                        children: <Widget>[
+                          Text(
+                            '${entry.key} ',
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const Icon(
+                            Icons.star,
+                            color: Colors.orange,
+                            size: 18,
+                          ),
                           const SizedBox(width: 8),
                           SizedBox(
-                              width: width / 2.5,
-                              child: LinearProgressIndicator(
-                                value: entry.value,
-                                color: Colors.orange,
-                                backgroundColor: Colors.transparent,
-                                minHeight: 6,
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(10)),
-                              ))
+                            width: width / 2.5,
+                            child: LinearProgressIndicator(
+                              value: entry.value,
+                              color: Colors.orange,
+                              backgroundColor: Colors.transparent,
+                              minHeight: 6,
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(10)),
+                            ),
+                          ),
                         ],
                       );
                     }).toList(),
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text("$rating",
-                          style: const TextStyle(
-                              fontSize: 32, fontWeight: FontWeight.bold)),
+                    children: <Widget>[
+                      Text(
+                        '$rating',
+                        style: const TextStyle(
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       Row(
-                        children: List.generate(5, (index) {
+                        children: List<Icon>.generate(5, (int index) {
                           return Icon(
                             Icons.star,
                             color: index < rating ? Colors.orange : Colors.grey,
@@ -73,10 +87,14 @@ class RatingSummary extends StatelessWidget {
                         }),
                       ),
                       const SizedBox(height: 5),
-                      Text("$totalReviews Reviews",
-                          softWrap: true,
-                          style: const TextStyle(
-                              fontSize: 12, color: Colors.grey)),
+                      Text(
+                        '$totalReviews Reviews',
+                        softWrap: true,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey,
+                        ),
+                      ),
                     ],
                   ),
                 ],
@@ -99,9 +117,9 @@ class ReviewCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Column(
-        children: [
+        children: <Widget>[
           Row(
-            children: [
+            children: <Widget>[
               CircleAvatar(
                 radius: 24,
                 backgroundImage: review['profilePic'] == null
@@ -112,16 +130,18 @@ class ReviewCard extends StatelessWidget {
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: <Widget>[
                     Text(
                       review['name'],
                       style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.bold),
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     Row(
-                      children: [
+                      children: <Widget>[
                         Row(
-                          children: List.generate(5, (index) {
+                          children: List.generate(5, (int index) {
                             return Icon(
                               index < review['rating']
                                   ? Icons.star
@@ -132,9 +152,13 @@ class ReviewCard extends StatelessWidget {
                           }),
                         ),
                         const SizedBox(width: 8),
-                        Text(review['timeAgo'],
-                            style: const TextStyle(
-                                color: Colors.grey, fontSize: 12)),
+                        Text(
+                          review['timeAgo'],
+                          style: const TextStyle(
+                            color: Colors.grey,
+                            fontSize: 12,
+                          ),
+                        ),
                       ],
                     ),
                   ],
@@ -144,8 +168,10 @@ class ReviewCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 8),
-          Text(review['review'],
-              style: const TextStyle(fontSize: 14, color: Color(0xff808080))),
+          Text(
+            review['review'],
+            style: const TextStyle(fontSize: 14, color: Color(0xff808080)),
+          ),
           const SizedBox(height: 8),
           Divider(color: Colors.grey[300]),
         ],
