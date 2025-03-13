@@ -16,28 +16,28 @@ class UserSerializer implements Serializer<User> {
   @override
   User fromJson(Map<String, Object?> json) {
     return User(
-      json["first_name"] as String,
-      json["last_name"] as String,
-      json["email"] as String?,
-      json["phone_number"] as String,
+      json['first_name'] as String,
+      json['last_name'] as String,
+      json['email'] as String?,
+      json['phone_number'] as String,
     );
   }
 
   @override
   Map<String, Object?> toJson(User object) {
-    return {
-      "first_name": object.firstName,
-      "last_name": object.lastName,
-      "email": object.email,
-      "phone_number": object.phoneNumber
+    return <String, Object?>{
+      'first_name': object.firstName,
+      'last_name': object.lastName,
+      'email': object.email,
+      'phone_number': object.phoneNumber,
     };
   }
 
   @override
-  String getIdKeyName() => "phone_number";
+  String getIdKeyName() => 'phone_number';
 }
 
-final userSerializer = UserSerializer();
+final UserSerializer userSerializer = UserSerializer();
 
 class Token implements Model {
   String accessToken;
@@ -55,21 +55,22 @@ class TokenSerializer implements Serializer<Token> {
   @override
   Token fromJson(Map<String, Object?> json) {
     return Token(
-        (json["access_token"] ?? json["access"]) as String,
-        (json["refresh_token"] ?? json["refresh"]) as String,
-        json["expires_at"] as String?,
-        userSerializer.fromJson(json["user"] as Map<String, Object?>));
+      (json['access_token'] ?? json['access']) as String,
+      (json['refresh_token'] ?? json['refresh']) as String,
+      json['expires_at'] as String?,
+      userSerializer.fromJson(json['user'] as Map<String, Object?>),
+    );
   }
 
   @override
   Map<String, Object?> toJson(Token object) {
-    return {
-      "access_token": object.accessToken,
-      "refresh_token": object.refreshToken,
-      "expires_at": object.expiresAt
+    return <String, Object?>{
+      'access_token': object.accessToken,
+      'refresh_token': object.refreshToken,
+      'expires_at': object.expiresAt,
     };
   }
 
   @override
-  String getIdKeyName() => "access_token";
+  String getIdKeyName() => 'access_token';
 }

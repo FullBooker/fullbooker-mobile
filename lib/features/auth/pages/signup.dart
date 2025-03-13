@@ -148,7 +148,7 @@ class SignUpState extends State<SignUp> {
                                 labelPrefix: Icons.phone,
                                 validator: validatePhoneNumber,
                                 controller: phoneNumberController,
-                                maxLenght: 13,
+                                maxLength: 13,
                                 formatters: [
                                   FilteringTextInputFormatter.digitsOnly
                                 ])),
