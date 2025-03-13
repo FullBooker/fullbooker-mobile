@@ -14,116 +14,71 @@ import 'package:geocoding/geocoding.dart';
 import 'package:map_location_picker/map_location_picker.dart';
 
 class Bound {
+  Bound({
+    required this.east,
+    required this.west,
+    required this.north,
+    required this.south,
+  });
+
   double east;
-  double west;
   double north;
   double south;
-
-  Bound(
-      {required this.east,
-      required this.west,
-      required this.north,
-      required this.south});
+  double west;
 }
 
 class LocationSelection extends StatefulWidget {
+  const LocationSelection(this.product, {super.key, required this.productType});
+
   final Product product;
   final ProductTypes productType;
-
-  const LocationSelection(this.product, {super.key, required this.productType});
 
   @override
   State<StatefulWidget> createState() => _LocationSelectionState();
 }
 
 class _LocationSelectionState extends State<LocationSelection> {
+  Placemark? address;
   String? addressName;
   String? autocompletePlace;
-  Prediction? initialValue;
-  Completer<GoogleMapController> googleMapController = Completer();
   CameraPosition? cameraPosition;
   late LatLng defaultLatLng;
+  String draggedAddress = '';
   late LatLng draggedLatLng;
-  String draggedAddress = "";
-  late String mapStyle;
-  Placemark? address;
-  List<Placemark>? placeMarks;
-  LatLng? selectedLocation;
+  Completer<GoogleMapController> googleMapController =
+      Completer<GoogleMapController>();
+
+  Prediction? initialValue;
   bool isLoading = false;
-  var productController = ProductViewModel();
+  late String mapStyle;
+  List<Placemark>? placeMarks;
+  ProductViewModel productController = ProductViewModel();
+  LatLng? selectedLocation;
 
-  Future _gotoUserCurrentPosition() async {
-    Position currentPosition = await _determineUserCurrentPosition();
-    _gotoSpecificPosition(
-        LatLng(currentPosition.latitude, currentPosition.longitude));
-  }
-
-  Future _gotoSpecificPosition(LatLng position) async {
-    GoogleMapController mapController = await googleMapController.future;
-    mapController.animateCamera(CameraUpdate.newCameraPosition(
-        CameraPosition(target: position, zoom: 15)));
-    await _getAddress(position);
-  }
-
-  Future<String> _getAddress(LatLng position) async {
-    placeMarks =
-        await placemarkFromCoordinates(position.latitude, position.longitude);
-    address = placeMarks![0];
-    String addressString =
-        "${address!.street},${address!.locality},${address!.administrativeArea}, ${address!.country}";
-    setState(() {
-      draggedAddress = addressString;
-    });
-    return addressString;
-  }
-
-  Future _determineUserCurrentPosition() async {
-    LocationPermission locationPermission;
-    bool isLocationServiceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!isLocationServiceEnabled) {
-      debugPrint("user don't enable location permission");
-    }
-
-    locationPermission = await Geolocator.checkPermission();
-    if (locationPermission == LocationPermission.denied) {
-      locationPermission = await Geolocator.requestPermission();
-      if (locationPermission == LocationPermission.denied) {
-        debugPrint("user denied location permission");
-      }
-    }
-    if (locationPermission == LocationPermission.deniedForever) {
-      debugPrint("user denied permission forever");
-    }
-    return await Geolocator.getCurrentPosition(
-        locationSettings:
-            const LocationSettings(accuracy: LocationAccuracy.high));
-  }
-
-  // checks if provided latlong is within a country
-  bool _inBounds(LatLng point) {
-    var keBounds = Bound(east: 42, west: 35, north: 5.05, south: -4.7);
-    bool eastBound = point.longitude < keBounds.east;
-    bool westBound = point.longitude > keBounds.west;
-    bool inLong;
-
-    inLong = eastBound && westBound;
-
-    var inLat =
-        point.latitude > keBounds.south && point.latitude < keBounds.north;
-    return inLat && inLong;
+  @override
+  void initState() {
+    super.initState();
+    _gotoUserCurrentPosition();
+    defaultLatLng = const LatLng(-1.286389, 36.817223);
+    draggedLatLng = defaultLatLng;
+    cameraPosition = CameraPosition(target: defaultLatLng, zoom: 15);
   }
 
   void onContinueClick() {
     if (selectedLocation == null) {
-      showSnackBar("Please select a location");
+      showSnackBar('Please select a location');
       return;
     }
     setState(() => isLoading = true);
-    _getAddress(selectedLocation!).then((address) {
+    _getAddress(selectedLocation!).then((String address) {
       productController
-          .createLocation(widget.product.id, selectedLocation!.latitude,
-              selectedLocation!.longitude, address)
-          .then((location) {
+          .createLocation(
+        widget.product.id,
+        selectedLocation!.latitude,
+        selectedLocation!.longitude,
+        address,
+      )
+          .then((Map<String, Object?>? location) {
         if (location == null) {
           setState(() {
             isLoading = false;
@@ -132,13 +87,23 @@ class _LocationSelectionState extends State<LocationSelection> {
           setState(() => isLoading = false);
           WidgetsBinding.instance.addPostFrameCallback((_) {
             if (widget.productType == ProductTypes.Event) {
-              Navigator.of(context).push(MaterialPageRoute(
+              Navigator.of(context).push(
+                MaterialPageRoute<DateSelection>(
                   builder: (_) => DateSelection(
-                      product: widget.product, location: location)));
+                    product: widget.product,
+                    location: location,
+                  ),
+                ),
+              );
             } else {
-              Navigator.of(context).push(MaterialPageRoute(
+              Navigator.of(context).push(
+                MaterialPageRoute<ActivityDateSelection>(
                   builder: (_) => ActivityDateSelection(
-                      product: widget.product, location: location)));
+                    product: widget.product,
+                    location: location,
+                  ),
+                ),
+              );
             }
           });
         }
@@ -159,8 +124,8 @@ class _LocationSelectionState extends State<LocationSelection> {
         duration: const Duration(milliseconds: 5000),
         width: 340, // Width of the SnackBar.
         padding: const EdgeInsets.symmetric(
-            horizontal: 8.0, vertical: 10 // Inner padding for SnackBar content.
-            ),
+          horizontal: 8.0, vertical: 10, // Inner padding for SnackBar content.
+        ),
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
@@ -170,137 +135,205 @@ class _LocationSelectionState extends State<LocationSelection> {
     );
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _gotoUserCurrentPosition();
-    defaultLatLng = const LatLng(-1.286389, 36.817223);
-    draggedLatLng = defaultLatLng;
-    cameraPosition = CameraPosition(target: defaultLatLng, zoom: 15);
+  Future<dynamic> _gotoUserCurrentPosition() async {
+    final Position currentPosition = await _determineUserCurrentPosition();
+    _gotoSpecificPosition(
+      LatLng(currentPosition.latitude, currentPosition.longitude),
+    );
+  }
+
+  Future<dynamic> _gotoSpecificPosition(LatLng position) async {
+    final GoogleMapController mapController = await googleMapController.future;
+    mapController.animateCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(target: position, zoom: 15),
+      ),
+    );
+    await _getAddress(position);
+  }
+
+  Future<String> _getAddress(LatLng position) async {
+    placeMarks =
+        await placemarkFromCoordinates(position.latitude, position.longitude);
+    address = placeMarks![0];
+    final String addressString =
+        '${address!.street},${address!.locality},${address!.administrativeArea}, ${address!.country}';
+    setState(() {
+      draggedAddress = addressString;
+    });
+    return addressString;
+  }
+
+  Future<dynamic> _determineUserCurrentPosition() async {
+    LocationPermission locationPermission;
+    final bool isLocationServiceEnabled =
+        await Geolocator.isLocationServiceEnabled();
+    if (!isLocationServiceEnabled) {
+      debugPrint("user don't enable location permission");
+    }
+
+    locationPermission = await Geolocator.checkPermission();
+    if (locationPermission == LocationPermission.denied) {
+      locationPermission = await Geolocator.requestPermission();
+      if (locationPermission == LocationPermission.denied) {
+        debugPrint('user denied location permission');
+      }
+    }
+    if (locationPermission == LocationPermission.deniedForever) {
+      debugPrint('user denied permission forever');
+    }
+    return Geolocator.getCurrentPosition(
+      locationSettings: const LocationSettings(accuracy: LocationAccuracy.high),
+    );
+  }
+
+  // checks if provided latlong is within a country
+  bool _inBounds(LatLng point) {
+    final Bound keBounds = Bound(east: 42, west: 35, north: 5.05, south: -4.7);
+    final bool eastBound = point.longitude < keBounds.east;
+    final bool westBound = point.longitude > keBounds.west;
+    bool inLong;
+
+    inLong = eastBound && westBound;
+
+    final bool inLat =
+        point.latitude > keBounds.south && point.latitude < keBounds.north;
+    return inLat && inLong;
   }
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
+    final double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-        appBar: const ProductSetupNavBar(step: ProductSteps.Products),
-        bottomNavigationBar: const BottomNavBar(),
-        body: Column(
-          children: [
-            Expanded(
-              child: Column(children: [
+      appBar: const ProductSetupNavBar(step: ProductSteps.Products),
+      bottomNavigationBar: const BottomNavBar(),
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            child: Column(
+              children: <Widget>[
                 PageHeader(
-                    "Where will this ${widget.productType.name} happen ?",
-                    "This address will only be shared after clients have booked a ticket",
-                    withLogo: false,
-                    widthFactor: 0.9,
-                    pageDescriptionPadding: 10,
-                    headerTopPadding: 10,
-                    pageTitleBottomPadding: 5,
-                    pageHeaderFontSize: 20),
+                  'Where will this ${widget.productType.name} happen ?',
+                  'This address will only be shared after clients have booked a ticket',
+                  withLogo: false,
+                  widthFactor: 0.9,
+                  pageDescriptionPadding: 10,
+                  pageTitleBottomPadding: 5,
+                  pageHeaderFontSize: 20,
+                ),
                 Expanded(
                   child: Stack(
-                    children: [
+                    children: <Widget>[
                       Center(
                         child: SizedBox(
-                            width: width,
-                            child: MapLocationPicker(
-                                apiKey:
-                                    "AIzaSyDen5uldAkBcBPog8ajqpThWXGsiXmYSyU",
-                                popOnNextButtonTaped: true,
-                                currentLatLng: cameraPosition!.target,
-                                topCardColor: Colors.white,
-                                debounceDuration:
-                                    const Duration(milliseconds: 500),
-                                backButton: Image.asset(
-                                    "assets/icons/location_icon.png"),
-                                hideBottomCard: true,
-                                hideMoreOptions: true,
-                                hideMapTypeButton: true,
-                                hideLocationButton: true,
-                                searchHintText:
-                                    "Where is the product located ?",
-                                mapType: MapType.hybrid,
-                                onNext: (GeocodingResult? result) {
-                                  if (result != null) {
-                                    var location = LatLng(
-                                        result.geometry.location.lat,
-                                        result.geometry.location.lng);
-                                    if (!_inBounds(location)) {
-                                      showSnackBar(
-                                          "Please select a location within Kenya");
-                                      return;
-                                    }
-                                    setState(() {
-                                      addressName =
-                                          result.formattedAddress ?? "";
-                                      selectedLocation = location;
-                                    });
-                                  }
-                                },
-                                onSuggestionSelected:
-                                    (PlacesDetailsResponse? response) {
-                                  setState(() {
-                                    if (response != null) {
-                                      addressName =
-                                          response.result.formattedAddress ??
-                                              "";
-                                      selectedLocation = LatLng(
-                                          response
-                                              .result.geometry!.location.lat,
-                                          response
-                                              .result.geometry!.location.lng);
-                                    }
-                                  });
-                                },
-                                onLongPress: (LatLng latLng) {
-                                  if (!_inBounds(latLng)) {
-                                    showSnackBar(
-                                        "Please select a location within Kenya");
-                                    return;
-                                  }
-                                  setState(() => selectedLocation = latLng);
-                                },
-                                onDecodeAddress:
-                                    (GeocodingResult? geocodingResult) {
-                                  if (geocodingResult != null) {
-                                    var location = LatLng(
-                                        geocodingResult.geometry.location.lat,
-                                        geocodingResult.geometry.location.lng);
-                                    if (!_inBounds(location)) {
-                                      showSnackBar(
-                                          "Please select a location within Kenya");
-                                      return;
-                                    }
-                                    setState(() {
-                                      selectedLocation = location;
-                                    });
-                                  }
-                                })),
+                          width: width,
+                          child: MapLocationPicker(
+                            apiKey: 'AIzaSyDen5uldAkBcBPog8ajqpThWXGsiXmYSyU',
+                            popOnNextButtonTaped: true,
+                            currentLatLng: cameraPosition!.target,
+                            topCardColor: Colors.white,
+                            backButton: Image.asset(
+                              'assets/icons/location_icon.png',
+                            ),
+                            hideBottomCard: true,
+                            hideMoreOptions: true,
+                            hideMapTypeButton: true,
+                            hideLocationButton: true,
+                            searchHintText: 'Where is the product located ?',
+                            mapType: MapType.hybrid,
+                            onNext: (GeocodingResult? result) {
+                              if (result != null) {
+                                final LatLng location = LatLng(
+                                  result.geometry.location.lat,
+                                  result.geometry.location.lng,
+                                );
+                                if (!_inBounds(location)) {
+                                  showSnackBar(
+                                    'Please select a location within Kenya',
+                                  );
+                                  return;
+                                }
+                                setState(() {
+                                  addressName = result.formattedAddress ?? '';
+                                  selectedLocation = location;
+                                });
+                              }
+                            },
+                            onSuggestionSelected:
+                                (PlacesDetailsResponse? response) {
+                              setState(() {
+                                if (response != null) {
+                                  addressName =
+                                      response.result.formattedAddress ?? '';
+                                  selectedLocation = LatLng(
+                                    response.result.geometry!.location.lat,
+                                    response.result.geometry!.location.lng,
+                                  );
+                                }
+                              });
+                            },
+                            onLongPress: (LatLng latLng) {
+                              if (!_inBounds(latLng)) {
+                                showSnackBar(
+                                  'Please select a location within Kenya',
+                                );
+                                return;
+                              }
+                              setState(() => selectedLocation = latLng);
+                            },
+                            onDecodeAddress:
+                                (GeocodingResult? geocodingResult) {
+                              if (geocodingResult != null) {
+                                final LatLng location = LatLng(
+                                  geocodingResult.geometry.location.lat,
+                                  geocodingResult.geometry.location.lng,
+                                );
+                                if (!_inBounds(location)) {
+                                  showSnackBar(
+                                    'Please select a location within Kenya',
+                                  );
+                                  return;
+                                }
+                                setState(() {
+                                  selectedLocation = location;
+                                });
+                              }
+                            },
+                          ),
+                        ),
                       ),
                       Positioned.fill(
+                        child: Align(
                           child: Align(
-                              child: Align(
-                                  alignment: Alignment.bottomCenter,
-                                  child: SizedBox(
-                                    height: 100,
-                                    child: Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: width / 8,
-                                            vertical: 30),
-                                        child: Button(onContinueClick,
-                                            actionLabel: "Continue",
-                                            loading: isLoading,
-                                            verticalPadding: 0,
-                                            elevation: 0)),
-                                  ))))
+                            alignment: Alignment.bottomCenter,
+                            child: SizedBox(
+                              height: 100,
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: width / 8,
+                                  vertical: 30,
+                                ),
+                                child: Button(
+                                  onContinueClick,
+                                  actionLabel: 'Continue',
+                                  loading: isLoading,
+                                  verticalPadding: 0,
+                                  elevation: 0,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
-              ]),
+              ],
             ),
-          ],
-        ));
+          ),
+        ],
+      ),
+    );
   }
 }
