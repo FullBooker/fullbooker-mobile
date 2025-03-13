@@ -12,17 +12,22 @@ class OverviewStep {
   OverviewStep(this.images, this.title, this.subTitle);
 }
 
-List<OverviewStep> defaultSteps = [
+List<OverviewStep> defaultSteps = <OverviewStep>[
   OverviewStep(
-      const [AssetImage("assets/images/overview1/overview.png")],
-      "FIND YOUR FAVOURITE EVENTS HERE",
-      "Discover, Book, Enjoy\nYour Favorite Events Await!"),
-  OverviewStep(const [AssetImage("assets/images/overview2/overview.png")],
-      "FIND NEARBY EVENTS", "Your Go-To App for\nNearby Events!"),
+    const <AssetImage>[AssetImage('assets/images/overview1/overview.png')],
+    'FIND YOUR FAVORITE EVENTS HERE',
+    'Discover, Book, Enjoy\nYour Favorite Events Await!',
+  ),
   OverviewStep(
-      const [AssetImage("assets/images/overview3/overview.png")],
-      "UPDATE YOUR UPCOMING EVENTS HERE",
-      "Keep Your Events Fresh\nUpdate Here!"),
+    const <AssetImage>[AssetImage('assets/images/overview2/overview.png')],
+    'FIND NEARBY EVENTS',
+    'Your Go-To App for\nNearby Events!',
+  ),
+  OverviewStep(
+    const <AssetImage>[AssetImage('assets/images/overview3/overview.png')],
+    'UPDATE YOUR UPCOMING EVENTS HERE',
+    'Keep Your Events Fresh\nUpdate Here!',
+  ),
 ];
 
 class Overview extends StatefulWidget {
@@ -48,7 +53,10 @@ class OverviewState extends State<Overview> {
       });
     } else {
       Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (BuildContext context) => const Login()));
+        MaterialPageRoute<Login>(
+          builder: (BuildContext context) => const Login(),
+        ),
+      );
     }
   }
 
@@ -58,7 +66,7 @@ class OverviewState extends State<Overview> {
       currentStep = widget.currentStep;
     }
 
-    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+    SchedulerBinding.instance.addPostFrameCallback((Duration timeStamp) {
       if (gridScrollController.hasClients) {
         setState(() {
           gridScrollController
@@ -69,38 +77,59 @@ class OverviewState extends State<Overview> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: ListView(children: [
-        Padding(
+      body: ListView(
+        children: <Widget>[
+          Padding(
             padding: const EdgeInsets.only(bottom: 10),
-            child: Image(image: widget.steps[currentStep].images[0])),
-        Center(
+            child: Image(image: widget.steps[currentStep].images[0]),
+          ),
+          Center(
             child: Padding(
-                padding: const EdgeInsets.only(bottom: 30),
-                child: SizedBox(
-                  width: 280,
-                  child: Column(children: [
+              padding: const EdgeInsets.only(bottom: 30),
+              child: SizedBox(
+                width: 280,
+                child: Column(
+                  children: <Widget>[
                     Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
-                        child: Text(widget.steps[currentStep].title,
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 24),
-                            textAlign: TextAlign.center)),
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: Text(
+                        widget.steps[currentStep].title,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 24,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
                     Padding(
-                        padding: const EdgeInsets.only(bottom: 22),
-                        child: Text(widget.steps[currentStep].subTitle,
-                            textAlign: TextAlign.center)),
-                    Padding(
-                        padding: const EdgeInsets.only(bottom: 30),
-                        child: SimpleStepper(widget.steps.length,
-                            height: 8, currentStep: currentStep)),
+                      padding: const EdgeInsets.only(bottom: 22),
+                      child: Text(
+                        widget.steps[currentStep].subTitle,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 30),
-                      child: Button(() => goToNextOverviewStep(context),
-                          actionLabel: "Next"),
-                    )
-                  ]),
-                )))
-      ]),
+                      child: SimpleStepper(
+                        widget.steps.length,
+                        height: 8,
+                        currentStep: currentStep,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 30),
+                      child: Button(
+                        () => goToNextOverviewStep(context),
+                        actionLabel: 'Next',
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
