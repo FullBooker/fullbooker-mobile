@@ -48,8 +48,8 @@ class ActivitiesTable extends StatelessWidget {
                     color: product.active ? Colors.green : Colors.red),
                 textAlign: TextAlign.center,
               )),
-              DataCell(
-                  Text("Edit", style: const TextStyle(color: Colors.orange))),
+              const DataCell(
+                  Text("Edit", style: TextStyle(color: Colors.orange))),
             ],
           );
         }).toList(),
