@@ -1,3 +1,4 @@
+import 'package:fullbooker/features/auth/models/login.dart';
 import 'package:fullbooker/features/host/models/categories.dart';
 import 'package:fullbooker/features/host/models/product.dart';
 import 'package:uuid/uuid.dart';
@@ -27,6 +28,14 @@ var uuid = const Uuid();
 Category getCategory() {
   return Category(uuid.v4(), DateTime.now(), DateTime.now(), true,
       randomString(), null, []);
+}
+
+User getUser() {
+  return User(randomString(), randomString(), "test@mail.com", "0711222333");
+}
+
+ProductHost getProductHost() {
+  return ProductHost(uuid.v4(), getUser());
 }
 
 SubCategory getSubCategory({Category? category, String? name}) {
@@ -104,7 +113,7 @@ Product getProduct(
     name ?? randomString(),
     randomString(),
     subCategory?.id ?? getSubCategory(name: subCategoryName).id,
-    uuid.v4(),
+    getProductHost(),
     randomString(),
     true,
     pricingOptions ?? [getProductPricing(), getProductPricing()],

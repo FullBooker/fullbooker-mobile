@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fullbooker/shared/widgets/scale_locked_text.dart';
 
 class RoundedDivider extends StatelessWidget {
   final Color color;
@@ -31,17 +32,24 @@ class LabeledDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-        width: width,
-        height: height,
-        child: Row(children: [
-          const Expanded(
-              child: RoundedDivider(height: 1, color: Color(0xf0B3ADAD))),
-          Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5),
-              child: Text(label)),
-          const Expanded(
-              child: RoundedDivider(height: 1, color: Color(0xf0B3ADAD)))
-        ]));
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      child: SizedBox(
+          width: width,
+          height: height,
+          child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Expanded(
+                    child: RoundedDivider(height: 1, color: Color(0xf0B3ADAD))),
+                Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                    child: ScaleLockedText(label,
+                        style: const TextStyle(fontSize: 12))),
+                const Expanded(
+                    child: RoundedDivider(height: 1, color: Color(0xf0B3ADAD)))
+              ])),
+    );
   }
 }

@@ -7,6 +7,7 @@ import 'package:fullbooker/features/host/models/product.dart';
 import 'package:fullbooker/features/host/pages/activity_day_pass.dart';
 import 'package:fullbooker/features/host/pages/host_product_summary.dart';
 import 'package:fullbooker/shared/widgets/appbar.dart';
+import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:fullbooker/shared/widgets/card.dart';
 import 'package:fullbooker/shared/widgets/divider.dart';
@@ -81,7 +82,7 @@ class _ActivitySubscription extends State<ActivitySubscription> {
       setState(() => isLoading = false);
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Navigator.of(context).push(MaterialPageRoute(
-            builder: (_) => HostProductSummary(host: widget.product.host)));
+            builder: (_) => HostProductSummary(host: widget.product.host.id)));
       });
     });
   }
@@ -89,9 +90,7 @@ class _ActivitySubscription extends State<ActivitySubscription> {
   @override
   void initState() {
     super.initState();
-    currencyViewModel.repository
-        .pullMultiple(1, 100, processResponseAsPage: false)
-        .then((currencies_) {
+    currencyViewModel.repository.pullMultiple(1, 100).then((currencies_) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         setState(() => currencies = currencies_);
       });
@@ -103,6 +102,7 @@ class _ActivitySubscription extends State<ActivitySubscription> {
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
         appBar: const ProductSetupNavBar(step: ProductSteps.Products),
+        bottomNavigationBar: const BottomNavBar(),
         body: Column(children: [
           Expanded(
               child: ListView(children: [
@@ -168,11 +168,14 @@ class _ActivitySubscription extends State<ActivitySubscription> {
                 padding: EdgeInsets.all(20),
                 child: Row(children: [
                   RoundedFloatingAction("C", height: 40),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: Text("Monthly Subscription",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w600)),
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: Text("Monthly Subscription",
+                          softWrap: true,
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w600)),
+                    ),
                   )
                 ])),
             Padding(
@@ -238,14 +241,18 @@ class _ActivitySubscription extends State<ActivitySubscription> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 10),
-                                    child: Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                          "Amount (${selectedCurrency?.code ?? "_"})",
-                                          style: const TextStyle(fontSize: 18)),
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 10),
+                                      child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                            "Amount (${selectedCurrency?.code ?? "_"})",
+                                            softWrap: true,
+                                            style:
+                                                const TextStyle(fontSize: 18)),
+                                      ),
                                     ),
                                   ),
                                   Align(
@@ -263,10 +270,13 @@ class _ActivitySubscription extends State<ActivitySubscription> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    const Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text("Service Fee (5%)",
-                                          style: TextStyle(fontSize: 18)),
+                                    const Expanded(
+                                      child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text("Service Fee (5%)",
+                                            softWrap: true,
+                                            style: TextStyle(fontSize: 18)),
+                                      ),
                                     ),
                                     Align(
                                       alignment: Alignment.centerRight,

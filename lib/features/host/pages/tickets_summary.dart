@@ -5,6 +5,7 @@ import 'package:fullbooker/features/host/models/currency.dart';
 import 'package:fullbooker/features/host/models/product.dart';
 import 'package:fullbooker/features/host/pages/host_product_summary.dart';
 import 'package:fullbooker/shared/widgets/appbar.dart';
+import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:fullbooker/shared/widgets/card.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
@@ -50,7 +51,8 @@ class _TicketsSummaryState extends State<TicketsSummary> {
         setState(() => isLoading = false);
         WidgetsBinding.instance.addPostFrameCallback((_) {
           Navigator.of(context).push(MaterialPageRoute(
-              builder: (_) => HostProductSummary(host: widget.product.host)));
+              builder: (_) =>
+                  HostProductSummary(host: widget.product.host.id)));
         });
       }
     });
@@ -62,16 +64,19 @@ class _TicketsSummaryState extends State<TicketsSummary> {
     double fontSize = 16;
     return Scaffold(
       appBar: const ProductSetupNavBar(step: ProductSteps.Products),
+      bottomNavigationBar: const BottomNavBar(),
       body: Column(children: [
         Expanded(
             child: ListView(children: [
-          PageHeader("", "Charges Summary",
+          const PageHeader("Charges Summary", "",
               withLogo: false,
               widthFactor: 0.9,
-              pageDescriptionPadding: 20,
-              headerTopPadding: 0,
-              pageTitleBottomPadding: 0,
-              pageDescriptionFontSize: fontSize),
+              pageDescriptionPadding: 0,
+              headerTopPadding: 10,
+              pageTitleBottomPadding: 10,
+              pageHeaderFontSize: 20,
+              pageDescriptionTopPadding: 0,
+              pageDescriptionFontSize: 0),
           for (var category in widget.selectedCategories)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -94,14 +99,17 @@ class _TicketsSummaryState extends State<TicketsSummary> {
                           Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 10),
-                                  child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                        "Amount (${widget.currency.code})",
-                                        style: TextStyle(fontSize: fontSize)),
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10),
+                                    child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                          "Amount (${widget.currency.code})",
+                                          style: TextStyle(fontSize: fontSize),
+                                          softWrap: true),
+                                    ),
                                   ),
                                 ),
                                 Align(
@@ -117,10 +125,13 @@ class _TicketsSummaryState extends State<TicketsSummary> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text("Service Fee (5%)",
-                                        style: TextStyle(fontSize: fontSize)),
+                                  Expanded(
+                                    child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text("Service Fee (5%)",
+                                          softWrap: true,
+                                          style: TextStyle(fontSize: fontSize)),
+                                    ),
                                   ),
                                   Align(
                                     alignment: Alignment.centerRight,
