@@ -9,8 +9,15 @@ class SubCategory implements Model {
   String? description;
   String category;
 
-  SubCategory(this.id, this.createdAt, this.updatedAt, this.active, this.name,
-      this.description, this.category);
+  SubCategory(
+    this.id,
+    this.createdAt,
+    this.updatedAt,
+    this.active,
+    this.name,
+    this.description,
+    this.category,
+  );
 
   @override
   String getId() => id;
@@ -20,30 +27,31 @@ class SubCategorySerializer implements Serializer<SubCategory> {
   @override
   SubCategory fromJson(Map<String, Object?> json) {
     return SubCategory(
-        json["id"] as String,
-        DateTime.parse(json["created_at"] as String),
-        DateTime.parse(json["updated_at"] as String),
-        json["active"] as bool,
-        json["name"] as String,
-        json["description"] as String?,
-        json["category"] as String);
+      json['id'] as String,
+      DateTime.parse(json['created_at'] as String),
+      DateTime.parse(json['updated_at'] as String),
+      json['active'] as bool,
+      json['name'] as String,
+      json['description'] as String?,
+      json['category'] as String,
+    );
   }
 
   @override
   Map<String, Object?> toJson(SubCategory object) {
-    return {
-      "id": object.id,
-      "created_at": object.createdAt.toString(),
-      "updated_at": object.updatedAt.toString(),
-      "active": object.active,
-      "name": object.name,
-      "description": object.description,
-      "category": object.category
+    return <String, Object?>{
+      'id': object.id,
+      'created_at': object.createdAt.toString(),
+      'updated_at': object.updatedAt.toString(),
+      'active': object.active,
+      'name': object.name,
+      'description': object.description,
+      'category': object.category,
     };
   }
 
   @override
-  String getIdKeyName() => "id";
+  String getIdKeyName() => 'id';
 }
 
 class Category implements Model {
@@ -55,8 +63,15 @@ class Category implements Model {
   String? description;
   List<SubCategory> subcategories;
 
-  Category(this.id, this.createdAt, this.updatedAt, this.active, this.title,
-      this.description, this.subcategories);
+  Category(
+    this.id,
+    this.createdAt,
+    this.updatedAt,
+    this.active,
+    this.title,
+    this.description,
+    this.subcategories,
+  );
 
   @override
   String getId() => id;
@@ -65,37 +80,39 @@ class Category implements Model {
 class CategorySerializer implements Serializer<Category> {
   @override
   Category fromJson(Map<String, Object?> json) {
-    List<SubCategory> subcategories =
-        (json["subcategories"] as List<dynamic>).map((subcategoryJson) {
+    final List<SubCategory> subcategories =
+        (json['subcategories'] as List<SubCategorySerializer>)
+            .map((SubCategorySerializer subCategoryJson) {
       return SubCategorySerializer()
-          .fromJson(subcategoryJson as Map<String, Object?>);
+          .fromJson(subCategoryJson as Map<String, Object?>);
     }).toList();
 
     return Category(
-        json["id"] as String,
-        DateTime.parse(json["created_at"] as String),
-        DateTime.parse(json["updated_at"] as String),
-        json["active"] as bool,
-        json["name"] as String,
-        json["description"] as String?,
-        subcategories);
+      json['id'] as String,
+      DateTime.parse(json['created_at'] as String),
+      DateTime.parse(json['updated_at'] as String),
+      json['active'] as bool,
+      json['name'] as String,
+      json['description'] as String?,
+      subcategories,
+    );
   }
 
   @override
   Map<String, Object?> toJson(Category object) {
-    return {
-      "id": object.id,
-      "created_at": object.createdAt.toString(),
-      "updated_at": object.updatedAt.toString(),
-      "active": object.active,
-      "name": object.title,
-      "description": object.description,
-      "subcategories": object.subcategories.map((subCategory) {
+    return <String, Object?>{
+      'id': object.id,
+      'created_at': object.createdAt.toString(),
+      'updated_at': object.updatedAt.toString(),
+      'active': object.active,
+      'name': object.title,
+      'description': object.description,
+      'subcategories': object.subcategories.map((SubCategory subCategory) {
         return SubCategorySerializer().toJson(subCategory);
-      })
+      }),
     };
   }
 
   @override
-  String getIdKeyName() => "id";
+  String getIdKeyName() => 'id';
 }

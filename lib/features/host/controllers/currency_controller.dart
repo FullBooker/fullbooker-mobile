@@ -11,6 +11,6 @@ class CurrencyViewModel extends BaseViewModel<Currency> {
       _repository = repository;
 
   CurrencyViewModel() {
-    repository = CRUDRepository<Currency>("currencies", CurrencySerializer());
+    repository = CRUDRepository<Currency>('currencies', CurrencySerializer());
   }
 }

@@ -13,14 +13,14 @@ class Days implements Model {
 class DaysSerializer implements Serializer<Days> {
   @override
   Days fromJson(Map<String, dynamic> json) {
-    return Days(json["id"], json["name"]);
+    return Days(json['id'], json['name']);
   }
 
   @override
   Map<String, Object?> toJson(Days object) {
-    return {"id": object.id, "name": object.name};
+    return <String, Object?>{'id': object.id, 'name': object.name};
   }
 
   @override
-  String getIdKeyName() => "id";
+  String getIdKeyName() => 'id';
 }

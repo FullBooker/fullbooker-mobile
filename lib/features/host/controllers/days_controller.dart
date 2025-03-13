@@ -10,6 +10,6 @@ class DaysViewModel extends BaseViewModel<Days> {
   set repository(CRUDRepository<Days> repository) => _repository = repository;
 
   DaysViewModel() {
-    repository = CRUDRepository<Days>("days-of-week", DaysSerializer());
+    repository = CRUDRepository<Days>('days-of-week', DaysSerializer());
   }
 }
