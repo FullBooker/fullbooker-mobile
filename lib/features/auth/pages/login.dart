@@ -20,22 +20,28 @@ class Login extends StatefulWidget {
 }
 
 class LoginState extends State<Login> {
-  final _formKey = GlobalKey<FormState>();
-  final loginController = LoginViewModel();
-  String errorMessage = "";
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final LoginViewModel loginController = LoginViewModel();
+  String errorMessage = '';
   bool loading = false;
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  bool logedIn = false;
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  bool loggedIn = false;
 
   void goToSignUp(BuildContext context) {
     Navigator.of(context).push(
-        MaterialPageRoute(builder: (BuildContext context) => const SignUp()));
+      MaterialPageRoute<SignUp>(
+        builder: (BuildContext context) => const SignUp(),
+      ),
+    );
   }
 
   void goToPasswordReset(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(
-        builder: (BuildContext context) => const RequestOtp()));
+    Navigator.of(context).push(
+      MaterialPageRoute<RequestOtp>(
+        builder: (BuildContext context) => const RequestOtp(),
+      ),
+    );
   }
 
   void goToEventsSummary(BuildContext context) {
@@ -46,123 +52,158 @@ class LoginState extends State<Login> {
     }
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (_) => const Landing()));
+        context,
+        MaterialPageRoute<Landing>(builder: (_) => const Landing()),
+      );
     });
   }
 
   void login(String email, String password) {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      var errFuture = loginController.login(email, password);
+      final Future<String?> errFuture = loginController.login(email, password);
       setState(() {
         loading = true;
-        errorMessage = "";
+        errorMessage = '';
       });
-      errFuture.then((err) {
+      errFuture.then((String? err) {
         setState(() {
           loading = false;
           if (err != null) errorMessage = err;
-          if (err == null) logedIn = true;
+          if (err == null) loggedIn = true;
         });
       });
     }
   }
 
   void loginWithGoogle() {
-    var errFuture = loginController.signInWithGoogle();
+    final Future<String?> errFuture = loginController.signInWithGoogle();
     setState(() {
       loading = true;
-      errorMessage = "";
+      errorMessage = '';
     });
-    errFuture.then((err) {
+    errFuture.then((String? err) {
       setState(() {
         loading = false;
         if (err != null) errorMessage = err;
-        if (err == null) logedIn = true;
+        if (err == null) loggedIn = true;
       });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (logedIn) goToEventsSummary(context);
+    if (loggedIn) goToEventsSummary(context);
 
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: Padding(
-          padding: const EdgeInsets.all(20),
-          child: ListView(children: [
+      backgroundColor: Colors.white,
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: ListView(
+          children: <Widget>[
             const Center(
               child: Text(
-                "WELCOME",
+                'WELCOME',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
-            const PageHeader("", "Sign in to your account",
-                pageDescriptionPadding: 0, headerTopPadding: 0),
+            const PageHeader(
+              '',
+              'Sign in to your account',
+              pageDescriptionPadding: 0,
+              headerTopPadding: 0,
+            ),
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.8,
               child: Form(
                 key: _formKey,
                 child: Column(
-                  children: [
+                  children: <Widget>[
                     Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: StandardTextInput("Phone Number",
-                            labelPrefix: Icons.phone,
-                            validator: validatePhoneNumber,
-                            controller: emailController,
-                            maxLenght: 13,
-                            formatters: [
-                              FilteringTextInputFormatter.digitsOnly
-                            ])),
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: StandardTextInput(
+                        'Phone Number',
+                        labelPrefix: Icons.phone,
+                        validator: validatePhoneNumber,
+                        controller: emailController,
+                        maxLength: 13,
+                        formatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly,
+                        ],
+                      ),
+                    ),
                     Padding(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: StandardTextInput("Password",
-                            labelPrefix: Icons.key,
-                            isPassword: true,
-                            validator: validatePassword,
-                            controller: passwordController)),
+                      padding: const EdgeInsets.only(top: 10),
+                      child: StandardTextInput(
+                        'Password',
+                        labelPrefix: Icons.key,
+                        isPassword: true,
+                        validator: validatePassword,
+                        controller: passwordController,
+                      ),
+                    ),
                     Center(
-                        child: (errorMessage == "")
-                            ? const SizedBox()
-                            : Padding(
-                                padding: const EdgeInsets.all(20),
-                                child: Text(errorMessage,
-                                    style:
-                                        const TextStyle(color: Colors.red)))),
+                      child: (errorMessage == '')
+                          ? const SizedBox()
+                          : Padding(
+                              padding: const EdgeInsets.all(20),
+                              child: Text(
+                                errorMessage,
+                                style: const TextStyle(color: Colors.red),
+                              ),
+                            ),
+                    ),
                     Center(
-                        child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 20),
-                            child: RichText(
-                                text: TextSpan(children: [
-                              const TextSpan(
-                                  text: "Forgot password ? ",
-                                  style: TextStyle(color: Colors.black)),
-                              TextSpan(
-                                  text: "Reset here",
-                                  style:
-                                      const TextStyle(color: Color(0xf015B9FF)),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () => goToPasswordReset(context))
-                            ])))),
-                    Padding(
+                      child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 20),
-                        child: Button(
-                            () => login(emailController.value.text,
-                                passwordController.value.text),
-                            actionLabel: "Sign In",
-                            loading: loading)),
-                    LabeledDivider(Colors.black, 15,
-                        MediaQuery.of(context).size.width * 0.8, "Or"),
+                        child: RichText(
+                          text: TextSpan(
+                            children: <InlineSpan>[
+                              const TextSpan(
+                                text: 'Forgot password ? ',
+                                style: TextStyle(color: Colors.black),
+                              ),
+                              TextSpan(
+                                text: 'Reset here',
+                                style:
+                                    const TextStyle(color: Color(0xf015B9FF)),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () => goToPasswordReset(context),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
                     Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: Button(loginWithGoogle,
-                            color: const Color(0xf0F5F4F4),
-                            actionLabel: "Sign in with Google",
-                            actionLabelColor: Colors.black,
-                            actionLabelPrefix: const Image(
-                                image: AssetImage("assets/icons/google.png"))))
+                      padding: const EdgeInsets.symmetric(vertical: 20),
+                      child: Button(
+                        () => login(
+                          emailController.value.text,
+                          passwordController.value.text,
+                        ),
+                        actionLabel: 'Sign In',
+                        loading: loading,
+                      ),
+                    ),
+                    LabeledDivider(
+                      Colors.black,
+                      15,
+                      MediaQuery.of(context).size.width * 0.8,
+                      'Or',
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: Button(
+                        loginWithGoogle,
+                        color: const Color(0xf0F5F4F4),
+                        actionLabel: 'Sign in with Google',
+                        actionLabelColor: Colors.black,
+                        actionLabelPrefix: const Image(
+                          image: AssetImage('assets/icons/google.png'),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -171,20 +212,26 @@ class LoginState extends State<Login> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 40),
                 child: RichText(
-                  text: TextSpan(children: [
-                    const TextSpan(
-                        text: "Dont have an account ? ",
-                        style: TextStyle(color: Colors.black)),
-                    TextSpan(
-                        text: "Sign Up",
+                  text: TextSpan(
+                    children: <InlineSpan>[
+                      const TextSpan(
+                        text: 'Dont have an account ? ',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      TextSpan(
+                        text: 'Sign Up',
                         style: const TextStyle(color: Color(0xf015B9FF)),
                         recognizer: TapGestureRecognizer()
-                          ..onTap = () => goToSignUp(context))
-                  ]),
+                          ..onTap = () => goToSignUp(context),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            )
-          ]),
-        ));
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

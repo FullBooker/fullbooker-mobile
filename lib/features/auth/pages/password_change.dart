@@ -17,31 +17,35 @@ class PasswordChange extends StatefulWidget {
 }
 
 class PasswordChangeState extends State<PasswordChange> {
-  final _formKey = GlobalKey<FormState>();
-  var errorMessage = "";
-  final loginController = LoginViewModel();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String errorMessage = '';
+  final LoginViewModel loginController = LoginViewModel();
   bool isLoading = false;
-  final passwordController = TextEditingController();
-  final confirmController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmController = TextEditingController();
   bool passwordChanged = false;
   bool modalOpened = false;
 
   Future<void> _dialogBuilder(BuildContext context) {
     return showDialog<void>(
-        context: context,
-        builder: (BuildContext context) {
-          return InformationModal(
-            title: "PASSWORD RESET SUCCESSFULLY",
-            message: const Text("You have reset your password sucessfully"),
-            actionTitle: "Home",
-            action: () => goToLogin(context),
-          );
-        });
+      context: context,
+      builder: (BuildContext context) {
+        return InformationModal(
+          title: 'PASSWORD RESET SUCCESSFULLY',
+          message: const Text('You have reset your password successfully'),
+          actionTitle: 'Home',
+          action: () => goToLogin(context),
+        );
+      },
+    );
   }
 
   void goToLogin(BuildContext context) {
     Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (BuildContext context) => const Login()));
+      MaterialPageRoute<Login>(
+        builder: (BuildContext context) => const Login(),
+      ),
+    );
   }
 
   void showModal(BuildContext context) {
@@ -49,8 +53,9 @@ class PasswordChangeState extends State<PasswordChange> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _dialogBuilder(context).then((_) {
         if (!context.mounted) return;
-        Navigator.of(context)
-            .pushReplacement(MaterialPageRoute(builder: (_) => const Login()));
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute<Login>(builder: (_) => const Login()),
+        );
       });
     });
   }
@@ -58,13 +63,15 @@ class PasswordChangeState extends State<PasswordChange> {
   void changePassword(BuildContext context) {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      var errFuture = loginController.changePassword(
-          passwordController.value.text, widget.phoneNumber);
+      final Future<String?> errFuture = loginController.changePassword(
+        passwordController.value.text,
+        widget.phoneNumber,
+      );
       setState(() {
         isLoading = true;
-        errorMessage = "";
+        errorMessage = '';
       });
-      errFuture.then((err) {
+      errFuture.then((String? err) {
         setState(() {
           isLoading = false;
           if (err != null) errorMessage = err;
@@ -78,59 +85,84 @@ class PasswordChangeState extends State<PasswordChange> {
   Widget build(BuildContext context) {
     if (passwordChanged & !modalOpened) showModal(context);
     return Scaffold(
-        body: Padding(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        children: [
-          Expanded(
-              child: ListView(children: [
-            const PageHeader("", "Please enter a new password below"),
-            Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5),
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      children: [
-                        Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: StandardTextInput("Enter New Password",
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: ListView(
+                children: <Widget>[
+                  const PageHeader('', 'Please enter a new password below'),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 5),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 10),
+                              child: StandardTextInput(
+                                'Enter New Password',
                                 labelPrefix: Icons.key,
                                 isPassword: true,
                                 validator: validatePassword,
-                                controller: passwordController)),
-                        Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: StandardTextInput("Re-enter New Password",
+                                controller: passwordController,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 10),
+                              child: StandardTextInput(
+                                'Re-enter New Password',
                                 labelPrefix: Icons.key,
                                 isPassword: true,
                                 controller: confirmController,
-                                validator: (password) =>
-                                    validateConfirmPassword(password,
-                                        passwordController.value.text))),
-                        Center(
-                            child: (errorMessage == "")
-                                ? const SizedBox()
-                                : Padding(
-                                    padding: const EdgeInsets.all(20),
-                                    child: Text(errorMessage,
+                                validator: (String? password) =>
+                                    validateConfirmPassword(
+                                  password,
+                                  passwordController.value.text,
+                                ),
+                              ),
+                            ),
+                            Center(
+                              child: (errorMessage == '')
+                                  ? const SizedBox()
+                                  : Padding(
+                                      padding: const EdgeInsets.all(20),
+                                      child: Text(
+                                        errorMessage,
                                         style: const TextStyle(
-                                            color: Colors.red)))),
-                      ],
+                                          color: Colors.red,
+                                        ),
+                                      ),
+                                    ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
-                )),
-          ])),
-          Align(
-              child: Column(children: [
-            Padding(
-                padding: const EdgeInsets.only(top: 20, bottom: 60),
-                child: Button(() => changePassword(context),
-                    actionLabel: "Change Password", loading: isLoading))
-          ]))
-        ],
+                ],
+              ),
+            ),
+            Align(
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20, bottom: 60),
+                    child: Button(
+                      () => changePassword(context),
+                      actionLabel: 'Change Password',
+                      loading: isLoading,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
-    ));
+    );
   }
 }
