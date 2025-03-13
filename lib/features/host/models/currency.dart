@@ -14,14 +14,18 @@ class Currency implements Model {
 class CurrencySerializer implements Serializer<Currency> {
   @override
   Currency fromJson(Map<String, dynamic> json) {
-    return Currency(json["id"], json["name"], json["code"]);
+    return Currency(json['id'], json['name'], json['code']);
   }
 
   @override
   Map<String, Object?> toJson(Currency object) {
-    return {"id": object.id, "name": object.name, "code": object.code};
+    return <String, Object?>{
+      'id': object.id,
+      'name': object.name,
+      'code': object.code,
+    };
   }
 
   @override
-  String getIdKeyName() => "id";
+  String getIdKeyName() => 'id';
 }

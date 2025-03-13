@@ -8,25 +8,33 @@ import 'package:fullbooker/features/host/pages/activity_day_pass.dart';
 import 'package:fullbooker/features/host/pages/date_selection.dart';
 
 class ProductViewModel extends BaseViewModel<Product> {
+  ProductViewModel() {
+    repository = CRUDRepository<Product>('products', ProductSerializer());
+  }
+
   late CRUDRepository<Product> _repository;
+
   @override
   CRUDRepository<Product> get repository => _repository;
+
   @override
   set repository(CRUDRepository<Product> repository) =>
       _repository = repository;
 
-  ProductViewModel() {
-    repository = CRUDRepository<Product>("products", ProductSerializer());
-  }
-
   Future<Product?> createProduct(
-      String name, String? description, String subcategory) async {
-    var productData = {"name": name, "subcategory": subcategory};
-    if (description != null) productData["description"] = description;
+    String name,
+    String? description,
+    String subcategory,
+  ) async {
+    final Map<String, String> productData = <String, String>{
+      'name': name,
+      'subcategory': subcategory,
+    };
+    if (description != null) productData['description'] = description;
     try {
-      repository.post({}, "/hosts/");
-      var response =
-          await repository.post(productData, "/products/", serialize: true);
+      repository.post(<String, Object?>{}, '/hosts/');
+      final dynamic response =
+          await repository.post(productData, '/products/', serialize: true);
       return response as Product;
     } catch (exception) {
       return null;
@@ -34,15 +42,19 @@ class ProductViewModel extends BaseViewModel<Product> {
   }
 
   Future<Map<String, Object?>?> createLocation(
-      String product, double lat, double long, String address) async {
-    var objData = {
-      "product": product,
-      "lat": lat.toString(),
-      "long": long.toString(),
-      "address": address
+    String product,
+    double lat,
+    double long,
+    String address,
+  ) async {
+    final Map<String, String> objData = <String, String>{
+      'product': product,
+      'lat': lat.toString(),
+      'long': long.toString(),
+      'address': address,
     };
     try {
-      var response = await repository.post(objData, "/location/");
+      final dynamic response = await repository.post(objData, '/location/');
       return response as Map<String, Object?>;
     } catch (exception) {
       return null;
@@ -50,22 +62,26 @@ class ProductViewModel extends BaseViewModel<Product> {
   }
 
   String formatDate(DateTime date) {
-    return "${date.year.toString()}-"
+    return '${date.year.toString()}-'
         "${date.month.toString().padLeft(2, '0')}"
         "-${date.day.toString().padLeft(2, '0')}";
   }
 
   Future<Map<String, Object?>?> createAvailability(
-      DateGroup startDate, DateGroup endDate, String productId) async {
-    var availabilityData = {
-      "product": productId,
-      "start": formatDate(startDate.date),
-      "end": formatDate(endDate.date),
-      "start_time": "${startDate.hours}:${startDate.minutes}:00",
-      "end_time": "${endDate.hours}:${endDate.minutes}:00"
+    DateGroup startDate,
+    DateGroup endDate,
+    String productId,
+  ) async {
+    final Map<String, String> availabilityData = <String, String>{
+      'product': productId,
+      'start': formatDate(startDate.date),
+      'end': formatDate(endDate.date),
+      'start_time': '${startDate.hours}:${startDate.minutes}:00',
+      'end_time': '${endDate.hours}:${endDate.minutes}:00',
     };
     try {
-      var response = await repository.post(availabilityData, "/availability/");
+      final dynamic response =
+          await repository.post(availabilityData, '/availability/');
       return response as Map<String, Object?>;
     } catch (exception) {
       return null;
@@ -73,52 +89,45 @@ class ProductViewModel extends BaseViewModel<Product> {
   }
 
   Future<Map<String, Object?>?> createMedia(
-      List<File> images, String productId, String mediaType) async {
-    var mediaData = {
-      "media_type ": mediaType,
-      "product_id ": productId,
+    List<File> images,
+    String productId,
+    String mediaType,
+  ) async {
+    final Map<String, String> mediaData = <String, String>{
+      'media_type ': mediaType,
+      'product_id ': productId,
     };
     try {
-      var response =
-          await repository.postWithImages(mediaData, images, "/media/");
+      final dynamic response =
+          await repository.postWithImages(mediaData, images, '/media/');
       return response as Map<String, Object?>;
     } catch (exception) {
       return null;
     }
   }
 
-  String _mapNameToType(String category) {
-    var optionsMapping = {
-      "Early Bird": "early_bird",
-      "Last Minute": "last_minute",
-      "Standard": "standard",
-      "Standard At The Gate": "standard_at_the_gate",
-      "VIP": "vip",
-      "VVIP": "vvip"
-    };
-    return optionsMapping[category]!;
-  }
-
   Future<List<Map<String, Object?>>?> createPricing(
-      String productId,
-      List<String> categories,
-      String currencyId,
-      Map<String, double> prices,
-      Map<String, int> amounts) async {
-    List<Map<String, Object?>> pricesCreated = [];
-    var pricesFailed = [];
-    for (var category in categories) {
-      var pricingData = {
-        "name": category,
-        "product": productId,
-        "currency": currencyId,
-        "cost": prices[category].toString(),
-        "type": "ticket",
-        "maximum_number_of_tickets": amounts[category].toString(),
-        "ticket_tier": _mapNameToType(category)
+    String productId,
+    List<String> categories,
+    String currencyId,
+    Map<String, double> prices,
+    Map<String, int> amounts,
+  ) async {
+    final List<Map<String, Object?>> pricesCreated = <Map<String, Object?>>[];
+    final List<dynamic> pricesFailed = <dynamic>[];
+    for (String category in categories) {
+      final Map<String, String> pricingData = <String, String>{
+        'name': category,
+        'product': productId,
+        'currency': currencyId,
+        'cost': prices[category].toString(),
+        'type': 'ticket',
+        'maximum_number_of_tickets': amounts[category].toString(),
+        'ticket_tier': _mapNameToType(category),
       };
       try {
-        var response = await repository.post(pricingData, "/pricing/");
+        final dynamic response =
+            await repository.post(pricingData, '/pricing/');
         pricesCreated.add(response as Map<String, Object?>);
       } catch (exception) {
         pricesFailed.add(exception);
@@ -130,30 +139,35 @@ class ProductViewModel extends BaseViewModel<Product> {
   }
 
   Future<Map<String, Object?>?> createActivityAvailability(
-      String productId,
-      Map<String, TimeOfDay> startTimes,
-      Map<String, TimeOfDay> endTimes,
-      List<DateTime> closedDays) async {
-    var openDays = [];
-    for (var startTimeDay in startTimes.keys) {
-      openDays.add({
-        "day": startTimeDay,
-        "opening_at":
-            "${startTimes[startTimeDay]!.hour}:${startTimes[startTimeDay]!.minute}",
-        "closing_at":
-            "${endTimes[startTimeDay]!.hour}:${endTimes[startTimeDay]!.minute}"
+    String productId,
+    Map<String, TimeOfDay> startTimes,
+    Map<String, TimeOfDay> endTimes,
+    List<DateTime> closedDays,
+  ) async {
+    final List<dynamic> openDays = <dynamic>[];
+    for (String startTimeDay in startTimes.keys) {
+      openDays.add(<String, String>{
+        'day': startTimeDay,
+        'opening_at':
+            '${startTimes[startTimeDay]!.hour}:${startTimes[startTimeDay]!.minute}',
+        'closing_at':
+            '${endTimes[startTimeDay]!.hour}:${endTimes[startTimeDay]!.minute}',
       });
     }
-    var closedDaysData = closedDays
-        .map((day) => {"date": "${day.year}-${day.month}-${day.day}"})
+    final List<Map<String, String>> closedDaysData = closedDays
+        .map(
+          (DateTime day) =>
+              <String, String>{'date': '${day.year}-${day.month}-${day.day}'},
+        )
         .toList();
-    var availabilityData = {
-      "product": productId,
-      "open_days": openDays,
-      "closed_dates": closedDaysData
+    final Map<String, Object> availabilityData = <String, Object>{
+      'product': productId,
+      'open_days': openDays,
+      'closed_dates': closedDaysData,
     };
     try {
-      var response = await repository.post(availabilityData, "/availability/");
+      final dynamic response =
+          await repository.post(availabilityData, '/availability/');
       return response as Map<String, Object?>;
     } catch (exception) {
       return null;
@@ -161,35 +175,38 @@ class ProductViewModel extends BaseViewModel<Product> {
   }
 
   Future<List<Map<String, Object?>>?> createActivityPricing(
-      String productId,
-      SessionPricing session,
-      SessionPricing? dayPass,
-      SessionPricing? subscription) async {
-    List<Map<String, Object?>> responses = [];
-    var sessionPricingData = {
-      "product": productId,
-      "currency": session.currency.id,
-      "cost": session.price,
-      "type": "session",
-      "maximum_number_of_tickets": session.maxTickets
+    String productId,
+    SessionPricing session,
+    SessionPricing? dayPass,
+    SessionPricing? subscription,
+  ) async {
+    final List<Map<String, Object?>> responses = <Map<String, Object?>>[];
+    final Map<String, Object> sessionPricingData = <String, Object>{
+      'product': productId,
+      'currency': session.currency.id,
+      'cost': session.price,
+      'type': 'session',
+      'maximum_number_of_tickets': session.maxTickets,
     };
     try {
-      var response = await repository.post(sessionPricingData, "/pricing/");
+      final dynamic response =
+          await repository.post(sessionPricingData, '/pricing/');
       responses.add(response as Map<String, Object?>);
     } catch (exception) {
       return null;
     }
 
     if (dayPass != null) {
-      var dayPassPricingData = {
-        "product": productId,
-        "currency": dayPass.currency.id,
-        "cost": dayPass.price,
-        "type": "day_pass",
-        "maximum_number_of_tickets": dayPass.maxTickets
+      final Map<String, Object> dayPassPricingData = <String, Object>{
+        'product': productId,
+        'currency': dayPass.currency.id,
+        'cost': dayPass.price,
+        'type': 'day_pass',
+        'maximum_number_of_tickets': dayPass.maxTickets,
       };
       try {
-        var response = await repository.post(dayPassPricingData, "/pricing/");
+        final dynamic response =
+            await repository.post(dayPassPricingData, '/pricing/');
         responses.add(response as Map<String, Object?>);
       } catch (exception) {
         return null;
@@ -197,15 +214,18 @@ class ProductViewModel extends BaseViewModel<Product> {
     }
 
     if (subscription != null) {
-      var dayPassPricingData = {
-        "product": productId,
-        "currency": subscription.currency.id,
-        "cost": subscription.price,
-        "type": "monthly_subscription",
-        "maximum_number_of_tickets": 1
+      final Map<String, Object> dayPassPricingData = <String, Object>{
+        'product': productId,
+        'currency': subscription.currency.id,
+        'cost': subscription.price,
+        'type': 'monthly_subscription',
+        'maximum_number_of_tickets': 1,
       };
       try {
-        var response = await repository.post(dayPassPricingData, "/pricing/");
+        final dynamic response = await repository.post(
+          dayPassPricingData,
+          '/pricing/',
+        );
         responses.add(response as Map<String, Object?>);
       } catch (exception) {
         return null;
@@ -213,5 +233,17 @@ class ProductViewModel extends BaseViewModel<Product> {
     }
 
     return responses;
+  }
+
+  String _mapNameToType(String category) {
+    final Map<String, String> optionsMapping = <String, String>{
+      'Early Bird': 'early_bird',
+      'Last Minute': 'last_minute',
+      'Standard': 'standard',
+      'Standard At The Gate': 'standard_at_the_gate',
+      'VIP': 'vip',
+      'VVIP': 'vvip',
+    };
+    return optionsMapping[category]!;
   }
 }
