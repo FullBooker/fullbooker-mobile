@@ -18,32 +18,36 @@ class MpesaCheckoutInstructions extends StatelessWidget {
       padding: const EdgeInsets.all(12.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           Text(
-            "MPESA Checkout sent to ${ticket.phone}",
+            'MPESA Checkout sent to ${ticket.phone}',
             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 10),
           const Text(
-            "Payment Alert",
+            'Payment Alert',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 10),
           const Text(
-            "Follow the instructions below:",
+            'Follow the instructions below:',
             style: TextStyle(fontSize: 16),
           ),
           const SizedBox(height: 10),
           const Text(
-            "Instructions to Pay:",
+            'Instructions to Pay:',
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 8),
-          _buildBulletPoint("Check on a payment pop-up on your phone.",
-              isBold: true),
-          _buildBulletPoint("Input your MPESA PIN and click OK.", isBold: true),
-          _buildBulletPoint("An MPESA confirmation SMS will be sent to you.",
-              isBold: true),
+          _buildBulletPoint(
+            'Check on a payment pop-up on your phone.',
+            isBold: true,
+          ),
+          _buildBulletPoint('Input your MPESA PIN and click OK.', isBold: true),
+          _buildBulletPoint(
+            'An MPESA confirmation SMS will be sent to you.',
+            isBold: true,
+          ),
         ],
       ),
     );
@@ -54,8 +58,8 @@ class MpesaCheckoutInstructions extends StatelessWidget {
       padding: const EdgeInsets.only(left: 10, bottom: 6),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text("• ", style: TextStyle(fontSize: 16)),
+        children: <Widget>[
+          const Text('• ', style: TextStyle(fontSize: 16)),
           Expanded(
             child: Text(
               text,
@@ -84,8 +88,9 @@ class InstructionText extends StatelessWidget {
       child: Text(
         text,
         style: TextStyle(
-            fontSize: 14,
-            fontWeight: isBold ? FontWeight.bold : FontWeight.normal),
+          fontSize: 14,
+          fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
+        ),
       ),
     );
   }
@@ -97,43 +102,48 @@ class PaymentSummaryWidget extends StatelessWidget {
   final List<Ticket> tickets;
   final DateTime selectedDateTime;
 
-  const PaymentSummaryWidget(
-      {super.key,
-      required this.product,
-      required this.locationName,
-      required this.tickets,
-      required this.selectedDateTime});
+  const PaymentSummaryWidget({
+    super.key,
+    required this.product,
+    required this.locationName,
+    required this.tickets,
+    required this.selectedDateTime,
+  });
 
-  Future showMpesaModal(BuildContext context) async {
+  Future<dynamic> showMpesaModal(BuildContext context) async {
     return showDialog<void>(
-        context: context,
-        builder: (BuildContext context) {
-          return InformationModal(
-            title: "",
-            message: MpesaCheckoutInstructions(ticket: tickets.first),
-            actionTitle: "Confirm Payment",
-            action: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (_) => PaymentConfirmationScreen(
-                      product: product,
-                      locationName: locationName,
-                      ticket: tickets[0])));
-            },
-            height: 330,
-            withSuccessTick: false,
-            topDividerColor: const Color(0xf02FBD6A),
-            topDividerHeight: 20,
-          );
-        });
+      context: context,
+      builder: (BuildContext context) {
+        return InformationModal(
+          message: MpesaCheckoutInstructions(ticket: tickets.first),
+          actionTitle: 'Confirm Payment',
+          action: () {
+            Navigator.of(context).push(
+              MaterialPageRoute<PaymentConfirmationScreen>(
+                builder: (_) => PaymentConfirmationScreen(
+                  product: product,
+                  locationName: locationName,
+                  ticket: tickets[0],
+                ),
+              ),
+            );
+          },
+          height: 330,
+          withSuccessTick: false,
+          topDividerColor: const Color(0xf02FBD6A),
+          topDividerHeight: 20,
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
 
     double getGrandTotal() {
-      return tickets.fold<double>(0, (initial, ticket) {
+      return tickets.fold<double>(0, (double initial, Ticket ticket) {
         return initial + (ticket.quantity * double.parse(ticket.pricing.cost));
       });
     }
@@ -146,7 +156,9 @@ class PaymentSummaryWidget extends StatelessWidget {
         child: Container(
           width: screenWidth,
           padding: const EdgeInsets.symmetric(
-              vertical: 10, horizontal: 20), // Dynamic padding
+            vertical: 10,
+            horizontal: 20,
+          ), // Dynamic padding
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(16),
@@ -155,78 +167,94 @@ class PaymentSummaryWidget extends StatelessWidget {
             // Make it scrollable
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              children: <Widget>[
                 SizedBox(height: screenHeight * 0.02),
                 const Center(
                   child: Text(
-                    "Summary",
+                    'Summary',
                     style: TextStyle(
-                        fontSize: 26,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
+                      fontSize: 26,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
                   ),
                 ),
                 SizedBox(height: screenHeight * 0.02),
                 Container(
                   padding: EdgeInsets.all(screenWidth * 0.03),
                   decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: Colors.grey)),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: Colors.grey),
+                  ),
                   child: Center(
                     child: Text(
-                      "${product.name}, $locationName",
+                      '${product.name}, $locationName',
                       style: const TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black),
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
                 ),
                 SizedBox(height: screenHeight * 0.02),
                 const Center(
                   child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 15),
-                      child: Text("Ticket Details",
-                          style: TextStyle(
-                              fontSize: 26,
-                              fontWeight: FontWeight.bold,
-                              fontStyle: FontStyle.italic))),
+                    padding: EdgeInsets.symmetric(vertical: 15),
+                    child: Text(
+                      'Ticket Details',
+                      style: TextStyle(
+                        fontSize: 26,
+                        fontWeight: FontWeight.bold,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
                 ),
 
                 // Form fields
-                buildInputField("Name", tickets.first.name),
-                buildInputField("Date & Time",
-                    DateFormat("E dd MMMM").format(selectedDateTime)),
+                buildInputField('Name', tickets.first.name),
                 buildInputField(
-                    "No. of tickets",
-                    (tickets.length == 1
-                            ? tickets.first.quantity
-                            : tickets.length)
-                        .toString()),
-                buildInputField("Total Hours", "8 hours"),
+                  'Date & Time',
+                  DateFormat('E dd MMMM').format(selectedDateTime),
+                ),
+                buildInputField(
+                  'No. of tickets',
+                  (tickets.length == 1
+                          ? tickets.first.quantity
+                          : tickets.length)
+                      .toString(),
+                ),
+                buildInputField('Total Hours', '8 hours'),
 
                 // Grand total
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: screenHeight * 0.02),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
+                    children: <Widget>[
                       Flexible(
-                        child: Text("Grand Total",
-                            softWrap: true,
-                            style: TextStyle(
-                                fontSize: screenWidth * 0.05,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.green)),
+                        child: Text(
+                          'Grand Total',
+                          softWrap: true,
+                          style: TextStyle(
+                            fontSize: screenWidth * 0.05,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.green,
+                          ),
+                        ),
                       ),
                       Flexible(
-                        child: Text("KES ${getGrandTotal()}",
-                            softWrap: true,
-                            style: TextStyle(
-                                fontSize: screenWidth * 0.05,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.green)),
+                        child: Text(
+                          'KES ${getGrandTotal()}',
+                          softWrap: true,
+                          style: TextStyle(
+                            fontSize: screenWidth * 0.05,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.green,
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -235,19 +263,22 @@ class PaymentSummaryWidget extends StatelessWidget {
                 // Promo Code Input
                 Container(
                   padding: EdgeInsets.symmetric(
-                      horizontal: screenWidth * 0.03,
-                      vertical: screenHeight * 0.015),
+                    horizontal: screenWidth * 0.03,
+                    vertical: screenHeight * 0.015,
+                  ),
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.orange),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Row(
-                    children: [
+                    children: <Widget>[
                       const Icon(Icons.card_giftcard, color: Colors.orange),
                       SizedBox(width: screenWidth * 0.02),
                       const Expanded(
-                        child: Text("Enter your promo code here",
-                            style: TextStyle(color: Colors.grey)),
+                        child: Text(
+                          'Enter your promo code here',
+                          style: TextStyle(color: Colors.grey),
+                        ),
                       ),
                     ],
                   ),
@@ -255,7 +286,7 @@ class PaymentSummaryWidget extends StatelessWidget {
 
                 SizedBox(height: screenHeight * 0.02),
 
-                PaymentForm(onCompleteClick: () => showMpesaModal(context))
+                PaymentForm(onCompleteClick: () => showMpesaModal(context)),
               ],
             ),
           ),
@@ -269,27 +300,33 @@ class PaymentSummaryWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Column(
-        children: [
+        children: <Widget>[
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(hint,
-                  style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400)),
+            children: <Widget>[
+              Text(
+                hint,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
               Flexible(
-                child: Text(value,
-                    softWrap: true,
-                    textAlign: TextAlign.right,
-                    style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600)),
+                child: Text(
+                  value,
+                  softWrap: true,
+                  textAlign: TextAlign.right,
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               ),
             ],
           ),
-          const Divider()
+          const Divider(),
         ],
       ),
     );
@@ -297,17 +334,27 @@ class PaymentSummaryWidget extends StatelessWidget {
 
   // Payment Button Widget
   Widget paymentButton(
-      String text, Color bgColor, Color textColor, double screenWidth,
-      {double borderSize = 1, Color borderColor = Colors.grey}) {
+    String text,
+    Color bgColor,
+    Color textColor,
+    double screenWidth, {
+    double borderSize = 1,
+    Color borderColor = Colors.grey,
+  }) {
     return Container(
       padding: EdgeInsets.symmetric(
-          vertical: screenWidth * 0.02, horizontal: screenWidth * 0.05),
+        vertical: screenWidth * 0.02,
+        horizontal: screenWidth * 0.05,
+      ),
       decoration: BoxDecoration(
-          color: bgColor,
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: borderColor, width: borderSize)),
-      child: Text(text,
-          style: TextStyle(color: textColor, fontWeight: FontWeight.bold)),
+        color: bgColor,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: borderColor, width: borderSize),
+      ),
+      child: Text(
+        text,
+        style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
+      ),
     );
   }
 }

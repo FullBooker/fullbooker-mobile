@@ -8,17 +8,18 @@ class CheckoutCard extends StatelessWidget {
   final String locationName;
   final VoidCallback onProceedClick;
 
-  const CheckoutCard(
-      {super.key,
-      this.pricing,
-      required this.quantity,
-      required this.locationName,
-      required this.onProceedClick});
+  const CheckoutCard({
+    super.key,
+    this.pricing,
+    required this.quantity,
+    required this.locationName,
+    required this.onProceedClick,
+  });
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
 
     return Center(
       child: Padding(
@@ -28,7 +29,7 @@ class CheckoutCard extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(20),
-            boxShadow: [
+            boxShadow: <BoxShadow>[
               BoxShadow(
                 offset: const Offset(0, 4),
                 blurRadius: 30,
@@ -39,34 +40,37 @@ class CheckoutCard extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: <Widget>[
               Center(
-                  child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 60, vertical: 5),
-                child: Image.asset("assets/logo_splash.png"),
-              )),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 60, vertical: 5),
+                  child: Image.asset('assets/logo_splash.png'),
+                ),
+              ),
 
               SizedBox(height: screenHeight * 0.02),
 
               // Number of Tickets
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
+                children: <Widget>[
                   Flexible(
                     child: Text(
-                      "Number of tickets",
+                      'Number of tickets',
                       softWrap: true,
                       style: TextStyle(
-                          fontSize: screenWidth * 0.045,
-                          fontWeight: FontWeight.bold),
+                        fontSize: screenWidth * 0.045,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                   Text(
                     quantity.toString(),
                     style: TextStyle(
-                        fontSize: screenWidth * 0.045,
-                        fontWeight: FontWeight.bold),
+                      fontSize: screenWidth * 0.045,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ],
               ),
@@ -76,25 +80,27 @@ class CheckoutCard extends StatelessWidget {
               // Ticket Price
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
+                children: <Widget>[
                   Flexible(
                     child: Text(
                       softWrap: true,
-                      "Ticket Price",
+                      'Ticket Price',
                       style: TextStyle(
-                          fontSize: screenWidth * 0.045,
-                          fontWeight: FontWeight.bold),
+                        fontSize: screenWidth * 0.045,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                   Flexible(
                     child: Text(
                       pricing == null || quantity == 0
-                          ? "_"
-                          : "KES ${pricing!.cost}  X  $quantity",
+                          ? '_'
+                          : 'KES ${pricing!.cost}  X  $quantity',
                       softWrap: true,
                       style: TextStyle(
-                          fontSize: screenWidth * 0.045,
-                          fontWeight: FontWeight.bold),
+                        fontSize: screenWidth * 0.045,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ],
@@ -105,9 +111,9 @@ class CheckoutCard extends StatelessWidget {
               // Total Price
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
+                children: <Widget>[
                   Text(
-                    "Total",
+                    'Total',
                     style: TextStyle(
                       fontSize: screenWidth * 0.05,
                       fontWeight: FontWeight.bold,
@@ -120,8 +126,8 @@ class CheckoutCard extends StatelessWidget {
                       child: Text(
                         softWrap: true,
                         quantity > 0 && pricing != null
-                            ? "KES ${pricing!.cost * quantity}"
-                            : "_",
+                            ? 'KES ${pricing!.cost * quantity}'
+                            : '_',
                         style: TextStyle(
                           fontSize: screenWidth * 0.05,
                           fontWeight: FontWeight.bold,
@@ -137,7 +143,7 @@ class CheckoutCard extends StatelessWidget {
 
               Center(
                 child:
-                    Button(onProceedClick, actionLabel: "Proceed to checkout"),
+                    Button(onProceedClick, actionLabel: 'Proceed to checkout'),
               ),
             ],
           ),
