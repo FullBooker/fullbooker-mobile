@@ -16,118 +16,152 @@ import 'package:flutter/foundation.dart';
 import 'package:fullbooker/shared/widgets/scale_locked_text.dart';
 
 class TimeSelectionCard extends StatelessWidget {
+  const TimeSelectionCard({
+    super.key,
+    this.onHourSelected,
+    this.onMinuteSelected,
+  });
+
   final void Function(int)? onMinuteSelected;
   final void Function(int)? onHourSelected;
 
-  const TimeSelectionCard(
-      {super.key, this.onHourSelected, this.onMinuteSelected});
-
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
+    final double width = MediaQuery.of(context).size.width;
     return CustomCard(
-        child: Column(
-      children: [
-        const Text("How long is the activity",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 21)),
-        SizedBox(
+      child: Column(
+        children: <Widget>[
+          const Text(
+            'How long is the activity',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 21),
+          ),
+          SizedBox(
             width: width - 40,
             child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                          width: (width) / 2.8,
-                          height: 42,
-                          child: CustomDropdown(
-                              label: "Hours",
-                              options: List.generate(
-                                  23,
-                                  (idx) => DropDownOption((idx + 1).toString(),
-                                      idx.toString(), () {})),
-                              onChanged: (hour) {
-                                if (hour != null && onHourSelected != null) {
-                                  onHourSelected!(int.parse(hour.name));
-                                }
-                              })),
-                      SizedBox(
-                          width: (width) / 2.8,
-                          height: 42,
-                          child: CustomDropdown(
-                              label: "Minutes",
-                              options: List.generate(
-                                  59,
-                                  (idx) => DropDownOption((idx + 1).toString(),
-                                      idx.toString(), () {})),
-                              onChanged: (minutes) {
-                                if (minutes != null &&
-                                    onMinuteSelected != null) {
-                                  onMinuteSelected!(int.parse(minutes.name));
-                                }
-                              }))
-                    ]))),
-      ],
-    ));
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  SizedBox(
+                    width: width / 2.8,
+                    height: 42,
+                    child: CustomDropdown(
+                      label: 'Hours',
+                      options: List<DropDownOption>.generate(
+                        23,
+                        (int idx) => DropDownOption(
+                          (idx + 1).toString(),
+                          idx.toString(),
+                          () {},
+                        ),
+                      ),
+                      onChanged: (DropDownOption? hour) {
+                        if (hour != null && onHourSelected != null) {
+                          onHourSelected!(int.parse(hour.name));
+                        }
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    width: width / 2.8,
+                    height: 42,
+                    child: CustomDropdown(
+                      label: 'Minutes',
+                      options: List<DropDownOption>.generate(
+                        59,
+                        (int idx) => DropDownOption(
+                          (idx + 1).toString(),
+                          idx.toString(),
+                          () {},
+                        ),
+                      ),
+                      onChanged: (DropDownOption? minutes) {
+                        if (minutes != null && onMinuteSelected != null) {
+                          onMinuteSelected!(int.parse(minutes.name));
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 
 class ActivityDateSelection extends StatefulWidget {
-  final Product product;
-  final Map<String, Object?> location;
+  const ActivityDateSelection({
+    super.key,
+    required this.product,
+    required this.location,
+  });
 
-  const ActivityDateSelection(
-      {super.key, required this.product, required this.location});
+  final Map<String, Object?> location;
+  final Product product;
 
   @override
   State<StatefulWidget> createState() => _ActivityDateSelectionState();
 }
 
 class _ActivityDateSelectionState extends State<ActivityDateSelection> {
-  bool isLoading = false;
-  int? hourSelected;
-  int? minuteSelected;
+  List<DateTime> closedDays = <DateTime>[];
   List<Days>? days;
-  var daysController = DaysViewModel();
-  var productController = ProductViewModel();
-  Map<String, TimeOfDay> startTimes = {};
-  Map<String, TimeOfDay> endTimes = {};
-  List<DateTime> closedDays = [];
+  DaysViewModel daysController = DaysViewModel();
+  Map<String, TimeOfDay> endTimes = <String, TimeOfDay>{};
+  int? hourSelected;
+  bool isLoading = false;
+  int? minuteSelected;
+  ProductViewModel productController = ProductViewModel();
+  Map<String, TimeOfDay> startTimes = <String, TimeOfDay>{};
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => fetchDays());
+  }
 
   void onContinueClick() {
     if (hourSelected == null || minuteSelected == null) {
-      showSnackBar("Please set how long the activity is", context);
+      showSnackBar('Please set how long the activity is', context);
       return;
     }
     if (startTimes.isEmpty || endTimes.isEmpty) {
       showSnackBar(
-          "Please set both start and endtime for at least one day of the week",
-          context);
+        'Please set both start and endtime for at least one day of the week',
+        context,
+      );
       return;
     }
 
     setState(() => isLoading = true);
-    var startTimesKeys = startTimes.keys.toList();
+    final List<String> startTimesKeys = startTimes.keys.toList();
     startTimesKeys.sort();
-    var endTimesKeys = endTimes.keys.toList();
+    final List<String> endTimesKeys = endTimes.keys.toList();
     endTimesKeys.sort();
 
     if (!listEquals(startTimesKeys, endTimesKeys)) {
       showSnackBar(
-          "Please set both the start and end times for the days you've selected",
-          context);
+        "Please set both the start and end times for the days you've selected",
+        context,
+      );
       setState(() => isLoading = true);
       return;
     }
 
     productController
         .createActivityAvailability(
-            widget.product.id, startTimes, endTimes, closedDays)
-        .then((availability) {
+      widget.product.id,
+      startTimes,
+      endTimes,
+      closedDays,
+    )
+        .then((Map<String, Object?>? availability) {
       if (availability == null) {
         if (mounted) {
-          showSnackBar("Failed to create availability for activity", context);
+          showSnackBar('Failed to create availability for activity', context);
         }
         setState(() => isLoading = false);
         return;
@@ -135,9 +169,14 @@ class _ActivityDateSelectionState extends State<ActivityDateSelection> {
 
       setState(() => isLoading = false);
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        Navigator.of(context).push(MaterialPageRoute(
+        Navigator.of(context).push(
+          MaterialPageRoute<ImageSelection>(
             builder: (_) => ImageSelection(
-                product: widget.product, type: ProductTypes.Activity)));
+              product: widget.product,
+              type: ProductTypes.Activity,
+            ),
+          ),
+        );
       });
     });
   }
@@ -145,7 +184,7 @@ class _ActivityDateSelectionState extends State<ActivityDateSelection> {
   void fetchDays() {
     daysController.repository
         .pullMultiple(1, 100, processResponseAsPage: true)
-        .then((days_) {
+        .then((List<Days> days_) {
       setState(() => days = days_);
     });
   }
@@ -167,203 +206,289 @@ class _ActivityDateSelectionState extends State<ActivityDateSelection> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => fetchDays());
-  }
-
-  @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
+    final double width = MediaQuery.of(context).size.width;
     return Scaffold(
-        appBar: const ProductSetupNavBar(step: ProductSteps.Products),
-        body: Center(
-            child: Column(children: [
-          Expanded(
-              child: ListView(children: [
-            const PageHeader("", "When does this activity happen?",
-                withLogo: false,
-                widthFactor: 0.9,
-                pageDescriptionPadding: 20,
-                headerTopPadding: 0,
-                pageTitleBottomPadding: 0,
-                pageDescriptionFontSize: 13),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: TimeSelectionCard(
-                  onMinuteSelected: (minute) =>
-                      setState(() => minuteSelected = minute),
-                  onHourSelected: (hour) =>
-                      setState(() => hourSelected = hour)),
-            ),
-            Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                child: CustomCard(
-                    child: Column(children: [
-                  const Text("Select the days of the week that you are open",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 21)),
-                  if (days == null)
-                    const Center(child: CircularProgressIndicator())
-                  else
-                    Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 5, horizontal: 20),
-                        child: Row(children: [
-                          const Expanded(child: SizedBox()),
-                          SizedBox(
-                              width: (width - 30) / 4,
-                              child: const Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 10),
-                                child: Center(child: Text("Start Time")),
-                              )),
-                          SizedBox(
-                              width: (width - 30) / 4,
-                              child: const Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 10),
-                                child: Center(child: Text("End Time")),
-                              ))
-                        ])),
-                  for (var day in days ?? [])
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 5),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                              child: Text(day.name,
-                                  style: const TextStyle(fontSize: 16),
-                                  textScaler: TextScaler.linear(
-                                      ScaleSize.textScaleFactor(context,
-                                          maxTextScaleFactor: 2.6)))),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child: SizedBox(
-                                width: (width - 30) / 4,
-                                height: 42,
-                                child: CustomDropdown(
-                                  onlyLabelContent: true,
-                                  label: startTimes[day.id] != null
-                                      ? startTimes[day.id]!.format(context)
-                                      : "",
-                                  withNullOption: false,
-                                  onClick: () => showTimePicker(
-                                          context: context,
-                                          initialTime: TimeOfDay.now())
-                                      .then((time) =>
-                                          setStartTimeForDay(day.id, time)),
-                                )),
+      appBar: const ProductSetupNavBar(step: ProductSteps.Products),
+      body: Center(
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: ListView(
+                children: <Widget>[
+                  const PageHeader(
+                    '',
+                    'When does this activity happen?',
+                    withLogo: false,
+                    widthFactor: 0.9,
+                    pageDescriptionPadding: 20,
+                    headerTopPadding: 0,
+                    pageTitleBottomPadding: 0,
+                    pageDescriptionFontSize: 13,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: TimeSelectionCard(
+                      onMinuteSelected: (int minute) =>
+                          setState(() => minuteSelected = minute),
+                      onHourSelected: (int hour) =>
+                          setState(() => hourSelected = hour),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 20,
+                    ),
+                    child: CustomCard(
+                      child: Column(
+                        children: <Widget>[
+                          const Text(
+                            'Select the days of the week that you are open',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 21,
+                            ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child: SizedBox(
-                                width: (width - 30) / 4,
-                                height: 42,
-                                child: CustomDropdown(
-                                  onlyLabelContent: true,
-                                  label: endTimes[day.id] != null
-                                      ? endTimes[day.id]!.format(context)
-                                      : "",
-                                  withNullOption: false,
-                                  onClick: () => showTimePicker(
+                          if (days == null)
+                            const Center(child: CircularProgressIndicator())
+                          else
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 5,
+                                horizontal: 20,
+                              ),
+                              child: Row(
+                                children: <Widget>[
+                                  const Expanded(child: SizedBox()),
+                                  SizedBox(
+                                    width: (width - 30) / 4,
+                                    child: const Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 10),
+                                      child: Center(child: Text('Start Time')),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: (width - 30) / 4,
+                                    child: const Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 10),
+                                      child: Center(child: Text('End Time')),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          for (Days day in days ?? <dynamic>[])
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 20,
+                                vertical: 5,
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Expanded(
+                                    child: Text(
+                                      day.name,
+                                      style: const TextStyle(fontSize: 16),
+                                      textScaler: TextScaler.linear(
+                                        ScaleSize.textScaleFactor(
+                                          context,
+                                          maxTextScaleFactor: 2.6,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 10,
+                                    ),
+                                    child: SizedBox(
+                                      width: (width - 30) / 4,
+                                      height: 42,
+                                      child: CustomDropdown(
+                                        onlyLabelContent: true,
+                                        label: startTimes[day.id] != null
+                                            ? startTimes[day.id]!
+                                                .format(context)
+                                            : '',
+                                        withNullOption: false,
+                                        onClick: () => showTimePicker(
                                           context: context,
-                                          initialTime: TimeOfDay.now())
-                                      .then((time) =>
-                                          setEndTimeForDay(day.id, time)),
-                                )),
-                          )
+                                          initialTime: TimeOfDay.now(),
+                                        ).then(
+                                          (TimeOfDay? time) =>
+                                              setStartTimeForDay(day.id, time),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 10,
+                                    ),
+                                    child: SizedBox(
+                                      width: (width - 30) / 4,
+                                      height: 42,
+                                      child: CustomDropdown(
+                                        onlyLabelContent: true,
+                                        label: endTimes[day.id] != null
+                                            ? endTimes[day.id]!.format(context)
+                                            : '',
+                                        withNullOption: false,
+                                        onClick: () => showTimePicker(
+                                          context: context,
+                                          initialTime: TimeOfDay.now(),
+                                        ).then(
+                                          (TimeOfDay? time) =>
+                                              setEndTimeForDay(day.id, time),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                         ],
                       ),
                     ),
-                ]))),
-            Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                child: CustomCard(
-                    child: Column(children: [
-                  const Text(
-                      "Choose the specific days of the year when "
-                      "your activity will  remain closed (Optional)",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 21)),
-                  Center(
-                    child: Row(children: [
-                      SizedBox(
-                          width: (width - 30) / 2,
-                          child: Row(children: [
-                            const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 10),
-                              child: Icon(Icons.calendar_month,
-                                  color: Color(0xf0FC8135)),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 20,
+                    ),
+                    child: CustomCard(
+                      child: Column(
+                        children: <Widget>[
+                          const Text(
+                            'Choose the specific days of the year when '
+                            'your activity will  remain closed (Optional)',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 21,
                             ),
-                            SizedBox(
-                                width: (width - 40) / 4,
-                                height: 25,
-                                child: CustomDropdown(
-                                    label: "",
-                                    onClick: () async {
-                                      var date = await showDatePicker(
-                                          context: context,
-                                          firstDate: DateTime.now(),
-                                          lastDate: DateTime(
-                                              DateTime.now().year + 2));
-                                      setState(() {
-                                        if (date != null) closedDays.add(date);
-                                      });
-                                    },
-                                    withNullOption: false))
-                          ])),
-                      DecoratedBox(
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.black),
-                              borderRadius: BorderRadius.circular(5)),
-                          child: SizedBox(
-                              height: 120,
-                              width: 140,
-                              child: Column(children: [
-                                const Expanded(
-                                  child: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 10, vertical: 5),
-                                      child: ScaleLockedText(
-                                          "Activity Not Open On",
-                                          softWrap: true)),
+                          ),
+                          Center(
+                            child: Row(
+                              children: <Widget>[
+                                SizedBox(
+                                  width: (width - 30) / 2,
+                                  child: Row(
+                                    children: <Widget>[
+                                      const Padding(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: 10,
+                                        ),
+                                        child: Icon(
+                                          Icons.calendar_month,
+                                          color: Color(0xf0FC8135),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: (width - 40) / 4,
+                                        height: 25,
+                                        child: CustomDropdown(
+                                          onClick: () async {
+                                            final DateTime? date =
+                                                await showDatePicker(
+                                              context: context,
+                                              firstDate: DateTime.now(),
+                                              lastDate: DateTime(
+                                                DateTime.now().year + 2,
+                                              ),
+                                            );
+                                            setState(() {
+                                              if (date != null) {
+                                                closedDays.add(date);
+                                              }
+                                            });
+                                          },
+                                          withNullOption: false,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                                const RoundedDivider(
-                                  height: 1,
-                                  color: Color(0xf0FC8135),
+                                DecoratedBox(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(),
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  child: SizedBox(
+                                    height: 120,
+                                    width: 140,
+                                    child: Column(
+                                      children: <Widget>[
+                                        const Expanded(
+                                          child: Padding(
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal: 10,
+                                              vertical: 5,
+                                            ),
+                                            child: ScaleLockedText(
+                                              'Activity Not Open On',
+                                              softWrap: true,
+                                            ),
+                                          ),
+                                        ),
+                                        const RoundedDivider(
+                                          height: 1,
+                                          color: Color(0xf0FC8135),
+                                        ),
+                                        Expanded(
+                                          child: ListView(
+                                            shrinkWrap: true,
+                                            children: List<Padding>.generate(
+                                                closedDays.length, (int idx) {
+                                              return Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                  vertical: 5,
+                                                  horizontal: 4,
+                                                ),
+                                                child: Center(
+                                                  child: ScaleLockedText(
+                                                      '${closedDays[idx].year}/'
+                                                      '${closedDays[idx].month}/'
+                                                      '${closedDays[idx].day}'),
+                                                ),
+                                              );
+                                            }),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
-                                Expanded(
-                                  child: ListView(
-                                      shrinkWrap: true,
-                                      children: List.generate(closedDays.length,
-                                          (idx) {
-                                        return Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 5, horizontal: 4),
-                                            child: Center(
-                                              child: ScaleLockedText(
-                                                  "${closedDays[idx].year}/"
-                                                  "${closedDays[idx].month}/"
-                                                  "${closedDays[idx].day}"),
-                                            ));
-                                      })),
-                                )
-                              ])))
-                    ]),
-                  )
-                ])))
-          ])),
-          Align(
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
                 padding:
                     EdgeInsets.symmetric(horizontal: width / 8, vertical: 30),
-                child: Button(onContinueClick,
-                    actionLabel: "Continue", loading: isLoading),
-              ))
-        ])));
+                child: Button(
+                  onContinueClick,
+                  actionLabel: 'Continue',
+                  loading: isLoading,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

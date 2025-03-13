@@ -19,22 +19,22 @@ class CategorySelection extends StatefulWidget {
 }
 
 class CategorySelectionState extends State<CategorySelection> {
-  List<Category> categories = [];
+  List<Category> categories = <Category>[];
+  CategoryViewModel categoryController = CategoryViewModel();
   bool isLoading = true;
-  var categoryController = CategoryViewModel();
   SubCategory? selectedSubCat;
   Category? selectedSubCatParent;
 
-  ProductTypes _mapCategoryToType(String categoryName) {
-    var map = {
-      "Activities": ProductTypes.Activity,
-      "Events": ProductTypes.Event
-    };
-    return map[categoryName]!;
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => fetchCategories());
   }
 
   void fetchCategories() {
-    categoryController.repository.pullMultiple(1, 100).then((categories_) {
+    categoryController.repository
+        .pullMultiple(1, 100)
+        .then((List<Category> categories_) {
       setState(() {
         categories = categories_;
         isLoading = false;
@@ -44,32 +44,45 @@ class CategorySelectionState extends State<CategorySelection> {
 
   void onContinueClick() {
     if (selectedSubCat == null) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text("Please select a category for your event")));
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please select a category for your event'),
+        ),
+      );
     }
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-      var type = _mapCategoryToType(selectedSubCatParent!.title);
-      return ProductDetails(selectedSubCat!, productType: type);
-    }));
+    Navigator.of(context).push(
+      MaterialPageRoute<ProductDetails>(
+        builder: (_) {
+          final ProductTypes type =
+              _mapCategoryToType(selectedSubCatParent!.title);
+          return ProductDetails(selectedSubCat!, productType: type);
+        },
+      ),
+    );
   }
 
   void optionSelected(SubCategory subCat, Category subCatParent) {
-    var type = _mapCategoryToType(subCatParent.title);
+    final ProductTypes type = _mapCategoryToType(subCatParent.title);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Navigator.of(context).push(MaterialPageRoute(
-          builder: (_) => ProductDetails(subCat, productType: type)));
+      Navigator.of(context).push(
+        MaterialPageRoute<ProductDetails>(
+          builder: (_) => ProductDetails(subCat, productType: type),
+        ),
+      );
     });
   }
 
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => fetchCategories());
+  ProductTypes _mapCategoryToType(String categoryName) {
+    final Map<String, ProductTypes> map = <String, ProductTypes>{
+      'Activities': ProductTypes.Activity,
+      'Events': ProductTypes.Event,
+    };
+    return map[categoryName]!;
   }
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
+    final double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: const ProductSetupNavBar(step: ProductSteps.Products),
       bottomNavigationBar: const BottomNavBar(),
@@ -77,47 +90,66 @@ class CategorySelectionState extends State<CategorySelection> {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: isLoading
             ? const Center(child: CircularProgressIndicator())
-            : Column(children: [
-                Expanded(
-                    child: ListView(children: [
-                  const PageHeader("Tell us about your product", "",
-                      withLogo: false,
-                      widthFactor: 0.9,
-                      pageDescriptionPadding: 0,
-                      headerTopPadding: 15,
-                      pageTitleBottomPadding: 10,
-                      pageHeaderFontSize: 17,
-                      pageDescriptionTopPadding: 10,
-                      pageDescriptionFontSize: 0),
-                  const Center(
-                    child: Padding(
-                        padding: EdgeInsets.only(bottom: 5),
-                        child: Text(
-                          "Pick the one that best describes your product",
-                          style: TextStyle(fontSize: 18),
-                        )),
+            : Column(
+                children: <Widget>[
+                  Expanded(
+                    child: ListView(
+                      children: <Widget>[
+                        const PageHeader(
+                          'Tell us about your product',
+                          '',
+                          withLogo: false,
+                          widthFactor: 0.9,
+                          pageDescriptionPadding: 0,
+                          headerTopPadding: 15,
+                          pageTitleBottomPadding: 10,
+                          pageHeaderFontSize: 17,
+                          pageDescriptionFontSize: 0,
+                        ),
+                        const Center(
+                          child: Padding(
+                            padding: EdgeInsets.only(bottom: 5),
+                            child: Text(
+                              'Pick the one that best describes your product',
+                              style: TextStyle(fontSize: 18),
+                            ),
+                          ),
+                        ),
+                        for (Category category in categories)
+                          category.subcategories.isNotEmpty
+                              ? Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 13,
+                                    horizontal: 25,
+                                  ),
+                                  child: TitledDropdown(
+                                    title: category.title,
+                                    options: category.subcategories
+                                        .map((SubCategory subCat) {
+                                      return DropDownOption(
+                                        subCat.name,
+                                        subCat.id,
+                                        () => optionSelected(subCat, category),
+                                      );
+                                    }).toList(),
+                                  ),
+                                )
+                              : const SizedBox(),
+                      ],
+                    ),
                   ),
-                  for (var category in categories)
-                    category.subcategories.isNotEmpty
-                        ? Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 13, horizontal: 25),
-                            child: TitledDropdown(
-                                title: category.title,
-                                options: category.subcategories.map((subCat) {
-                                  return DropDownOption(subCat.name, subCat.id,
-                                      () => optionSelected(subCat, category));
-                                }).toList()))
-                        : const SizedBox(),
-                ])),
-                Align(
+                  Align(
                     alignment: Alignment.bottomCenter,
                     child: Padding(
                       padding: EdgeInsets.symmetric(
-                          horizontal: width / 8, vertical: 30),
-                      child: Button(onContinueClick, actionLabel: "Continue"),
-                    ))
-              ]),
+                        horizontal: width / 8,
+                        vertical: 30,
+                      ),
+                      child: Button(onContinueClick, actionLabel: 'Continue'),
+                    ),
+                  ),
+                ],
+              ),
       ),
     );
   }

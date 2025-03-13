@@ -22,8 +22,12 @@ class EventTimeSelectionCard extends StatefulWidget {
   final String title;
   final Function(DateGroup)? onValueChanged;
 
-  const EventTimeSelectionCard(
-      {super.key, this.width = 100, this.title = "", this.onValueChanged});
+  const EventTimeSelectionCard({
+    super.key,
+    this.width = 100,
+    this.title = '',
+    this.onValueChanged,
+  });
 
   @override
   State<StatefulWidget> createState() => _EventTimeSelectionCard();
@@ -41,75 +45,101 @@ class _EventTimeSelectionCard extends State<EventTimeSelectionCard> {
         minuteSelected != null) {
       if (widget.onValueChanged != null) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          widget.onValueChanged!(DateGroup(
+          widget.onValueChanged!(
+            DateGroup(
               date: selectedDate!,
               hours: hourSelected!,
-              minutes: minuteSelected!));
+              minutes: minuteSelected!,
+            ),
+          );
         });
       }
     }
 
     return CustomCard(
-        child: Column(children: [
-      Text(widget.title),
-      SizedBox(
-        width: widget.width / 2,
-        child: Row(children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            child: Icon(Icons.calendar_month, color: Color(0xf0FC8135)),
-          ),
+      child: Column(
+        children: <Widget>[
+          Text(widget.title),
           SizedBox(
-              width: 160,
-              height: 25,
-              child: CustomDropdown(
-                  label: selectedDate == null ? "" : selectedDate.toString(),
-                  onClick: () async {
-                    var date = await showDatePicker(
+            width: widget.width / 2,
+            child: Row(
+              children: <Widget>[
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: Icon(Icons.calendar_month, color: Color(0xf0FC8135)),
+                ),
+                SizedBox(
+                  width: 160,
+                  height: 25,
+                  child: CustomDropdown(
+                    label: selectedDate == null ? '' : selectedDate.toString(),
+                    onClick: () async {
+                      final DateTime? date = await showDatePicker(
                         context: context,
                         firstDate: DateTime.now(),
-                        lastDate: DateTime(DateTime.now().year + 2));
-                    setState(() => selectedDate = date);
-                  },
-                  withNullOption: false))
-        ]),
+                        lastDate: DateTime(DateTime.now().year + 2),
+                      );
+                      setState(() => selectedDate = date);
+                    },
+                    withNullOption: false,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            width: widget.width - 40,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+              child: Row(
+                children: <Widget>[
+                  SizedBox(
+                    width: (widget.width) / 2.5,
+                    height: 42,
+                    child: CustomDropdown(
+                      label: 'Hours',
+                      options: List<DropDownOption>.generate(
+                        23,
+                        (int idx) => DropDownOption(
+                          (idx + 1).toString(),
+                          idx.toString(),
+                          () {},
+                        ),
+                      ),
+                      onChanged: (DropDownOption? hour) => setState(() {
+                        if (hour != null) {
+                          hourSelected = int.parse(hour.name);
+                        }
+                      }),
+                    ),
+                  ),
+                  SizedBox(
+                    width: (widget.width) / 2.5,
+                    height: 42,
+                    child: CustomDropdown(
+                      label: 'Minutes',
+                      options: List<DropDownOption>.generate(
+                        59,
+                        (int idx) => DropDownOption(
+                          (idx + 1).toString(),
+                          idx.toString(),
+                          () {},
+                        ),
+                      ),
+                      onChanged: (DropDownOption? minutes) => setState(() {
+                        if (minutes != null) {
+                          minuteSelected = int.parse(minutes.name);
+                        }
+                      }),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
-      SizedBox(
-        width: widget.width - 40,
-        child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-            child: Row(children: [
-              SizedBox(
-                  width: (widget.width) / 2.5,
-                  height: 42,
-                  child: CustomDropdown(
-                      label: "Hours",
-                      options: List.generate(
-                          23,
-                          (idx) => DropDownOption(
-                              (idx + 1).toString(), idx.toString(), () {})),
-                      onChanged: (hour) => setState(() {
-                            if (hour != null) {
-                              hourSelected = int.parse(hour.name);
-                            }
-                          }))),
-              SizedBox(
-                  width: (widget.width) / 2.5,
-                  height: 42,
-                  child: CustomDropdown(
-                      label: "Minutes",
-                      options: List.generate(
-                          59,
-                          (idx) => DropDownOption(
-                              (idx + 1).toString(), idx.toString(), () {})),
-                      onChanged: (minutes) => setState(() {
-                            if (minutes != null) {
-                              minuteSelected = int.parse(minutes.name);
-                            }
-                          })))
-            ])),
-      )
-    ]));
+    );
   }
 }
 
@@ -117,8 +147,11 @@ class DateSelection extends StatefulWidget {
   final Product product;
   final Map<String, Object?> location;
 
-  const DateSelection(
-      {super.key, required this.location, required this.product});
+  const DateSelection({
+    super.key,
+    required this.location,
+    required this.product,
+  });
 
   @override
   State<StatefulWidget> createState() => _DateSelectionState();
@@ -128,7 +161,7 @@ class _DateSelectionState extends State<DateSelection> {
   DateGroup? startDate;
   DateGroup? endDate;
   bool isLoading = false;
-  var productController = ProductViewModel();
+  ProductViewModel productController = ProductViewModel();
 
   void showSnackBar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -154,65 +187,85 @@ class _DateSelectionState extends State<DateSelection> {
 
   void onContinueClick() {
     if (startDate == null || endDate == null) {
-      showSnackBar("Please select a start and end date");
+      showSnackBar('Please select a start and end date');
       return;
     }
     setState(() => isLoading = true);
     productController
         .createAvailability(startDate!, endDate!, widget.product.id)
-        .then((availability) {
+        .then((Map<String, Object?>? availability) {
       setState(() => isLoading = false);
       if (availability != null) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (_) => ImageSelection(product: widget.product)));
+          Navigator.of(context).push(
+            MaterialPageRoute<ImageSelection>(
+              builder: (_) => ImageSelection(product: widget.product),
+            ),
+          );
         });
       } else {
-        showSnackBar("Please ensure start date is before end date");
+        showSnackBar('Please ensure start date is before end date');
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
+    final double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: const ProductSetupNavBar(step: ProductSteps.Products),
       bottomNavigationBar: const BottomNavBar(),
-      body: Column(children: [
-        Expanded(
-            child: ListView(children: [
-          const PageHeader("When will this event happen", "",
-              withLogo: false,
-              widthFactor: 0.9,
-              pageDescriptionPadding: 0,
-              headerTopPadding: 10,
-              pageTitleBottomPadding: 10,
-              pageHeaderFontSize: 16,
-              pageDescriptionTopPadding: 0,
-              pageDescriptionFontSize: 0),
-          Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: EventTimeSelectionCard(
-                  title: "What time will this event start?",
-                  width: width,
-                  onValueChanged: (date) => setState(() => startDate = date))),
-          Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              child: EventTimeSelectionCard(
-                  title: "What time will this event end?",
-                  width: width,
-                  onValueChanged: (date) => setState(() => endDate = date)))
-        ])),
-        Align(
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            child: ListView(
+              children: <Widget>[
+                const PageHeader(
+                  'When will this event happen',
+                  '',
+                  withLogo: false,
+                  widthFactor: 0.9,
+                  pageDescriptionPadding: 0,
+                  pageTitleBottomPadding: 10,
+                  pageDescriptionTopPadding: 0,
+                  pageDescriptionFontSize: 0,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: EventTimeSelectionCard(
+                    title: 'What time will this event start?',
+                    width: width,
+                    onValueChanged: (DateGroup date) =>
+                        setState(() => startDate = date),
+                  ),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  child: EventTimeSelectionCard(
+                    title: 'What time will this event end?',
+                    width: width,
+                    onValueChanged: (DateGroup date) =>
+                        setState(() => endDate = date),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
               padding:
                   EdgeInsets.symmetric(horizontal: width / 8, vertical: 30),
-              child: Button(onContinueClick,
-                  actionLabel: "Continue", loading: isLoading),
-            ))
-      ]),
+              child: Button(
+                onContinueClick,
+                actionLabel: 'Continue',
+                loading: isLoading,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
