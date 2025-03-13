@@ -23,8 +23,8 @@ void showSnackBar(String message, BuildContext context, {int duration = 5000}) {
       duration: Duration(milliseconds: duration),
       width: 340, // Width of the SnackBar.
       padding: const EdgeInsets.symmetric(
-          horizontal: 8.0, vertical: 10 // Inner padding for SnackBar content.
-          ),
+        horizontal: 8.0, vertical: 10, // Inner padding for SnackBar content.
+      ),
       behavior: SnackBarBehavior.floating,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
@@ -35,20 +35,22 @@ void showSnackBar(String message, BuildContext context, {int duration = 5000}) {
 }
 
 class ScaleSize {
-  static double textScaleFactor(BuildContext context,
-      {double maxTextScaleFactor = 2}) {
-    final width = MediaQuery.of(context).size.width;
-    double val = (width / 1400) * maxTextScaleFactor;
+  static double textScaleFactor(
+    BuildContext context, {
+    double maxTextScaleFactor = 2,
+  }) {
+    final double width = MediaQuery.of(context).size.width;
+    final double val = (width / 1400) * maxTextScaleFactor;
     return min(val, maxTextScaleFactor);
   }
 }
 
 LatLng parseSRID(String srid) {
-  var cleanedSRID = RegExp(r"[\(][-?0-9.]+\s[-?0-9.]+[\)]")
+  final List<String> cleanedSRID = RegExp(r'[\(][-?0-9.]+\s[-?0-9.]+[\)]')
       .firstMatch(srid)!
       .group(0)!
-      .replaceAll(RegExp(r"[\(\)]"), "")
-      .split(" ");
+      .replaceAll(RegExp(r'[\(\)]'), '')
+      .split(' ');
   return LatLng(double.parse(cleanedSRID[1]), double.parse(cleanedSRID[0]));
 }
 

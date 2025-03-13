@@ -54,38 +54,43 @@ class NotFoundException implements Exception {
 }
 
 void handleResponse(http.Response response) {
-  Map<String, dynamic> responseData = jsonDecode(response.body);
+  final Map<String, dynamic> responseData = jsonDecode(response.body);
 
-  dynamic errorMessage =
-      responseData.isNotEmpty ? responseData[responseData.keys.first] : "";
+  final dynamic errorMessage =
+      responseData.isNotEmpty ? responseData[responseData.keys.first] : '';
   String error;
 
   if (errorMessage.runtimeType == List<dynamic>) {
     error = errorMessage[0];
   } else {
-    error = "$errorMessage";
+    error = '$errorMessage';
   }
 
-  error = "${error[0].toUpperCase()}${error.substring(1).toLowerCase()}";
+  error = '${error[0].toUpperCase()}${error.substring(1).toLowerCase()}';
 
   switch (response.statusCode) {
     case 401:
       if (response.request != null &&
-          !response.request!.url.toString().contains("signin")) {
-        navigatorKey.currentState!.push(MaterialPageRoute(
-            builder: (_) => const Login(goBackToOrigin: true)));
+          !response.request!.url.toString().contains('signin')) {
+        navigatorKey.currentState!.push(
+          MaterialPageRoute<Login>(
+            builder: (_) => const Login(goBackToOrigin: true),
+          ),
+        );
       }
-      throw AuthenticationException("You were logged out");
+      throw AuthenticationException('You were logged out');
     case 403:
       throw PermissionsException(
-          "Permission denied: you do not have the permissions to perform that action");
+        'Permission denied: you do not have the permissions to perform that action',
+      );
     case 404:
       throw NotFoundException(
-          "Could not find what you're looking for, please try again");
+        "Could not find what you're looking for, please try again",
+      );
     case 422:
       throw UnprocessableEntity(error);
     case >= 500:
-      throw ServerError("Server error: ");
+      throw ServerError('Server error: ');
     case >= 400 && < 500:
       throw ClientError(error);
     default:
