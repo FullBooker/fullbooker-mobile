@@ -19,17 +19,24 @@ class Landing extends StatefulWidget {
 }
 
 class _LandingState extends State<Landing> {
-  var productsController = ProductViewModel();
-  var categoriesController = CategoryViewModel();
+  ProductViewModel productsController = ProductViewModel();
+  CategoryViewModel categoriesController = CategoryViewModel();
   List<Product>? products;
   Map<String, Category>? categories;
   bool isLoading = false;
 
   void goToEventDetails(Product event, String locationName) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-        return EventDetails(event: event, productLocationName: locationName);
-      }));
+      Navigator.of(context).push(
+        MaterialPageRoute<EventDetails>(
+          builder: (_) {
+            return EventDetails(
+              event: event,
+              productLocationName: locationName,
+            );
+          },
+        ),
+      );
     });
   }
 
@@ -46,47 +53,64 @@ class _LandingState extends State<Landing> {
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
+    final double width = MediaQuery.of(context).size.width;
     try {
       return Scaffold(
-          appBar: const StandardNavBar(iconsColor: Colors.black),
-          backgroundColor: Colors.white,
-          body: SafeArea(
-              child: Column(children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              child: products == null
-                  ? _buildShimmerEffect(width)
-                  : CategoryConveyer(
-                      categories: categories == null ? {} : categories!),
-            ),
-            products == null
-                ? _buildShimmerEffect(width)
-                : Expanded(
-                    child: ListView(children: [
-                    products!.length < 2
-                        ? const SizedBox()
-                        : EventsSection(
-                            sectionName: "Popular Now",
-                            onSeAllClick: () {},
-                            events:
-                                products!.sublist(0, min(products!.length, 2))),
-                    products!.length < 4
-                        ? const SizedBox()
-                        : EventsSection(
-                            sectionName: "Near You",
-                            onSeAllClick: () {},
-                            events:
-                                products!.sublist(2, min(products!.length, 4))),
-                    products!.length < 6
-                        ? const SizedBox()
-                        : EventsSection(
-                            sectionName: "Recommended For You",
-                            onSeAllClick: () {},
-                            events:
-                                products!.sublist(4, min(products!.length, 6)))
-                  ]))
-          ])));
+        appBar: const StandardNavBar(iconsColor: Colors.black),
+        backgroundColor: Colors.white,
+        body: SafeArea(
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                child: products == null
+                    ? _buildShimmerEffect(width)
+                    : CategoryConveyer(
+                        categories: categories == null
+                            ? <String, Category>{}
+                            : categories!,
+                      ),
+              ),
+              if (products == null)
+                _buildShimmerEffect(width)
+              else
+                Expanded(
+                  child: ListView(
+                    children: <Widget>[
+                      if (products!.length < 2)
+                        const SizedBox()
+                      else
+                        EventsSection(
+                          sectionName: 'Popular Now',
+                          onSeAllClick: () {},
+                          events:
+                              products!.sublist(0, min(products!.length, 2)),
+                        ),
+                      if (products!.length < 4)
+                        const SizedBox()
+                      else
+                        EventsSection(
+                          sectionName: 'Near You',
+                          onSeAllClick: () {},
+                          events:
+                              products!.sublist(2, min(products!.length, 4)),
+                        ),
+                      if (products!.length < 6)
+                        const SizedBox()
+                      else
+                        EventsSection(
+                          sectionName: 'Recommended For You',
+                          onSeAllClick: () {},
+                          events:
+                              products!.sublist(4, min(products!.length, 6)),
+                        ),
+                    ],
+                  ),
+                ),
+            ],
+          ),
+        ),
+      );
     } catch (e, stack) {
       debugPrint('Page Error: $e\n$stack');
       return Scaffold(body: Center(child: Text('Error loading page, $e')));
