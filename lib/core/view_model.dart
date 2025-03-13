@@ -7,7 +7,8 @@ abstract class BaseViewModel<T extends Model> {
   CRUDRepository<T> get repository;
   set repository(CRUDRepository<T> repository);
 
-  final List<EventObserver> _observerList = List.empty(growable: true);
+  final List<EventObserver> _observerList =
+      List<EventObserver>.empty(growable: true);
 
   void subscribe(EventObserver o) {
     if (_observerList.contains(o)) return;
@@ -24,8 +25,8 @@ abstract class BaseViewModel<T extends Model> {
     }
   }
 
-  void notify(ViewEvent event) {
-    for (var element in _observerList) {
+  void notify(ViewEvent<dynamic> event) {
+    for (EventObserver element in _observerList) {
       element.notify(event);
     }
   }

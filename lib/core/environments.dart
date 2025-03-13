@@ -13,21 +13,26 @@ class Flavour {
 
   const Flavour(this.apiHost, this.db, {this.type = FlavourType.development});
 
-  static Future<Flavour> withDB(String apiHost,
-      {FlavourType type = FlavourType.development}) async {
-    var db = await setupDB(type.toString());
+  static Future<Flavour> withDB(
+    String apiHost, {
+    FlavourType type = FlavourType.development,
+  }) async {
+    final Database db = await setupDB(type.toString());
     return Flavour(apiHost, db, type: type);
   }
 }
 
-var development = Flavour.withDB("api.dev.fullbooker.co.ke");
+Future<Flavour> development = Flavour.withDB('api.dev.fullbooker.co.ke');
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 late Flavour env;
 Token? currentToken;
 
 GoogleSignIn googleSignIn = GoogleSignIn(
-  scopes: ['email', 'https://www.googleapis.com/auth/contacts.readonly'],
+  scopes: <String>[
+    'email',
+    'https://www.googleapis.com/auth/contacts.readonly',
+  ],
 );
 
 class BuildEnvironment {
@@ -35,15 +40,17 @@ class BuildEnvironment {
 
   BuildEnvironment(this.type);
 
-  Future setExistingToken() async {
-    var store = stringMapStoreFactory.store("$Token-store");
-    var record = await store.record("currentToken").get(env.db);
+  Future<void> setExistingToken() async {
+    final StoreRef<String, Map<String, Object?>> store =
+        stringMapStoreFactory.store('$Token-store');
+    final Map<String, Object?>? record =
+        await store.record('currentToken').get(env.db);
     if (record != null) {
       currentToken = TokenSerializer().fromJson(record);
     }
   }
 
-  Future setEnv() async {
+  Future<void> setEnv() async {
     switch (type) {
       case FlavourType.development:
         env = await development;

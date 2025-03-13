@@ -1,7 +1,7 @@
 import 'package:fullbooker/core/models.dart';
 
 abstract class EventObserver {
-  void notify(ViewEvent event);
+  void notify(ViewEvent<dynamic> event);
 }
 
 abstract class ViewEvent<T extends Model> {
@@ -18,17 +18,17 @@ abstract class ViewEvent<T extends Model> {
 class LoadingEvent<T extends Model> extends ViewEvent<T> {
   bool isLoading;
 
-  LoadingEvent({required this.isLoading}) : super("LoadingEvent");
+  LoadingEvent({required this.isLoading}) : super('LoadingEvent');
 }
 
 class TasksLoadedEvent<T extends Model> extends ViewEvent<T> {
   final List<T> tasks;
 
-  TasksLoadedEvent({required this.tasks}) : super("TasksLoadedEvent");
+  TasksLoadedEvent({required this.tasks}) : super('TasksLoadedEvent');
 }
 
 class TaskCreatedEvent<T extends Model> extends ViewEvent<T> {
   final T task;
 
-  TaskCreatedEvent(this.task) : super("TaskCreatedEvent");
+  TaskCreatedEvent(this.task) : super('TaskCreatedEvent');
 }
