@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,6 +12,7 @@ import 'package:fullbooker/shared/widgets/standard_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/text_input.dart';
 import 'package:fullbooker/shared/validators.dart';
 
+@RoutePage()
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
 

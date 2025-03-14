@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ import 'package:fullbooker/shared/widgets/standard_nav_bar.dart';
 import 'package:map_location_picker/map_location_picker.dart';
 import 'package:shimmer/shimmer.dart';
 
+@RoutePage()
 class EventDetailsPage extends StatefulWidget {
   const EventDetailsPage({
     super.key,

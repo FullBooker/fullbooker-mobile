@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/features/host/controllers/product_controller.dart';
@@ -11,6 +12,7 @@ import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:fullbooker/shared/widgets/card.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
 
+@RoutePage()
 class TicketsSummaryPage extends StatefulWidget {
   const TicketsSummaryPage({
     super.key,
@@ -59,8 +61,9 @@ class _TicketsSummaryPageState extends State<TicketsSummaryPage> {
         setState(() => isLoading = false);
         WidgetsBinding.instance.addPostFrameCallback((_) {
           Navigator.of(context).push(
-            MaterialPageRoute<HostProductSummary>(
-              builder: (_) => HostProductSummary(host: widget.product.host.id),
+            MaterialPageRoute<HostProductSummaryPage>(
+              builder: (_) =>
+                  HostProductSummaryPage(host: widget.product.host.id),
             ),
           );
         });

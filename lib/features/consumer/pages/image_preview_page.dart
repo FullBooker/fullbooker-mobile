@@ -1,8 +1,10 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
-class FullScreenImagePage extends StatelessWidget {
-  const FullScreenImagePage({super.key, required this.imageUrl});
+@RoutePage()
+class ImagePreviewPage extends StatelessWidget {
+  const ImagePreviewPage({super.key, required this.imageUrl});
 
   final String imageUrl;
 

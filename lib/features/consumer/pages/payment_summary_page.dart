@@ -1,5 +1,6 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:fullbooker/features/consumer/pages/payment_confirmation.dart';
+import 'package:fullbooker/features/consumer/pages/payment_confirmation_page.dart';
 import 'package:fullbooker/features/consumer/widgets/mpesa_checkout_instructions_widget.dart';
 import 'package:fullbooker/features/consumer/widgets/payment_forms.dart';
 import 'package:fullbooker/features/host/models/product.dart';
@@ -8,6 +9,7 @@ import 'package:fullbooker/shared/widgets/information_modal.dart';
 import 'package:fullbooker/shared/widgets/standard_nav_bar.dart';
 import 'package:intl/intl.dart';
 
+@RoutePage()
 class PaymentSummaryPage extends StatelessWidget {
   const PaymentSummaryPage({
     super.key,
@@ -31,8 +33,8 @@ class PaymentSummaryPage extends StatelessWidget {
           actionTitle: 'Confirm Payment',
           action: () {
             Navigator.of(context).push(
-              MaterialPageRoute<PaymentConfirmationScreen>(
-                builder: (_) => PaymentConfirmationScreen(
+              MaterialPageRoute<PaymentConfirmationPage>(
+                builder: (_) => PaymentConfirmationPage(
                   product: product,
                   locationName: locationName,
                   ticket: tickets[0],

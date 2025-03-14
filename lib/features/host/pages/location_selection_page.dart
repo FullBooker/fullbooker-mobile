@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/features/host/controllers/product_controller.dart';
 import 'package:fullbooker/features/host/models/product.dart';
@@ -14,6 +15,7 @@ import 'package:fullbooker/shared/widgets/page_title.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:map_location_picker/map_location_picker.dart';
 
+@RoutePage()
 class LocationSelectionPage extends StatefulWidget {
   const LocationSelectionPage(
     this.product, {
