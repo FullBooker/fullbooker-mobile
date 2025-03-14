@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/utils.dart';
-import 'package:fullbooker/features/consumer/widgets/tickets_summary.dart';
 import 'package:fullbooker/features/host/models/product.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
+import 'package:fullbooker/shared/entities/ticket.dart';
 import 'package:fullbooker/shared/validators.dart';
 
-class TicketForm extends StatefulWidget {
+class TicketFormWidget extends StatefulWidget {
   final Product product;
   final String productLocationName;
   final int index;
@@ -14,7 +14,7 @@ class TicketForm extends StatefulWidget {
   final BookingMode bookingMode;
   final Function(Ticket)? onAddClicked;
 
-  const TicketForm({
+  const TicketFormWidget({
     super.key,
     required this.index,
     required this.product,
@@ -26,10 +26,10 @@ class TicketForm extends StatefulWidget {
   });
 
   @override
-  State<StatefulWidget> createState() => _TicketFormState();
+  State<StatefulWidget> createState() => _TicketFormWidgetState();
 }
 
-class _TicketFormState extends State<TicketForm> {
+class _TicketFormWidgetState extends State<TicketFormWidget> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController emailController = TextEditingController();

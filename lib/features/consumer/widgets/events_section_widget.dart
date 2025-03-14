@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:fullbooker/features/consumer/widgets/event_card.dart';
+import 'package:fullbooker/features/consumer/widgets/event_card_widget.dart';
 import 'package:fullbooker/features/host/models/product.dart';
 
-class EventsSection extends StatefulWidget {
+class EventsSectionWidget extends StatefulWidget {
   final String sectionName;
   final Function? onSeAllClick;
   final List<Product> events;
 
-  const EventsSection({
+  const EventsSectionWidget({
     super.key,
     required this.sectionName,
     this.onSeAllClick,
@@ -15,10 +15,10 @@ class EventsSection extends StatefulWidget {
   }) : assert(events.length <= 2);
 
   @override
-  State<StatefulWidget> createState() => _EventsSectionState();
+  State<StatefulWidget> createState() => _EventsSectionWidgetState();
 }
 
-class _EventsSectionState extends State<EventsSection> {
+class _EventsSectionWidgetState extends State<EventsSectionWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -56,10 +56,10 @@ class _EventsSectionState extends State<EventsSection> {
             alignment: WrapAlignment.spaceBetween,
             runSpacing: 8,
             spacing: 12,
-            children: List<EventCard>.generate(
+            children: List<EventCardWidget>.generate(
               widget.events.length,
               (int idx) {
-                return EventCard(product: widget.events[idx]);
+                return EventCardWidget(product: widget.events[idx]);
               },
             ),
           ),

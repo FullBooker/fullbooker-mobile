@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fullbooker/shared/entities/dummy_data.dart';
 
 class PaymentForm extends StatefulWidget {
   const PaymentForm({super.key, this.onCompleteClick});
@@ -11,47 +12,9 @@ class PaymentForm extends StatefulWidget {
 }
 
 class _PaymentFormState extends State<PaymentForm> {
-  String selectedMethod = 'Mpesa'; // Default selected payment method
+  String selectedMethod = 'Mpesa';
 
   Widget _buildPaymentOptions() {
-    final List<Map<String, dynamic>> paymentMethods = <Map<String, dynamic>>[
-      <String, dynamic>{
-        'name': 'Mpesa',
-        'id': 'Mpesa',
-        'color': Colors.green,
-        'isApplePay': false,
-        'icon': null,
-      },
-      <String, dynamic>{
-        'name': 'Card',
-        'id': 'Card',
-        'color': Colors.green,
-        'isApplePay': false,
-        'icon': null,
-      },
-      <String, dynamic>{
-        'name': 'Bank',
-        'id': 'Bank',
-        'color': Colors.green,
-        'isApplePay': false,
-        'icon': null,
-      },
-      <String, dynamic>{
-        'name': 'Pay',
-        'id': 'Apple Pay',
-        'color': Colors.green,
-        'isApplePay': true,
-        'icon': null,
-      },
-      <String, dynamic>{
-        'name': 'Pay',
-        'id': 'G Pay',
-        'color': Colors.green,
-        'isApplePay': false,
-        'icon': Icons.g_mobiledata,
-      },
-    ];
-
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
@@ -227,7 +190,7 @@ class _PaymentFormState extends State<PaymentForm> {
       height: 50,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xf0F55E00), // Orange for primary button
+          backgroundColor: const Color(0xf0F55E00),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),

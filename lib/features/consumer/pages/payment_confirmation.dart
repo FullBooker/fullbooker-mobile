@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fullbooker/features/consumer/painters.dart';
-import 'package:fullbooker/features/consumer/widgets/tickets_summary.dart';
 import 'package:fullbooker/features/host/models/product.dart';
+import 'package:fullbooker/shared/entities/ticket.dart';
 import 'package:fullbooker/shared/widgets/appbar.dart';
 import 'package:fullbooker/shared/widgets/divider.dart';
 import 'package:fullbooker/shared/widgets/scale_locked_text.dart';

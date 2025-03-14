@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:fullbooker/features/host/models/product.dart';
-import 'package:shimmer/shimmer.dart';
 
-class ProfileRating extends StatelessWidget {
+class ProfileRatingWidget extends StatelessWidget {
   final String? profileImageUrl;
   final double rating;
   final int totalStars;
   final String hostName;
 
-  const ProfileRating({
+  const ProfileRatingWidget({
     super.key,
     required this.profileImageUrl,
     required this.rating,
@@ -53,53 +51,5 @@ class ProfileRating extends StatelessWidget {
         ),
       ],
     );
-  }
-}
-
-class HostDetails extends StatefulWidget {
-  final Product product;
-  final double width;
-
-  const HostDetails({super.key, required this.product, required this.width});
-
-  @override
-  State<StatefulWidget> createState() => _HostDetailsState();
-}
-
-class _HostDetailsState extends State<HostDetails> {
-  bool isLoading = true;
-
-  Widget _buildShimmerEffect(double width) {
-    return Shimmer.fromColors(
-      baseColor: Colors.grey[300]!,
-      highlightColor: Colors.grey[100]!,
-      child: Container(
-        width: width,
-        height: 200,
-        color: Colors.grey[300],
-      ),
-    );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      setState(() => isLoading = false);
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return isLoading
-        ? _buildShimmerEffect(widget.width)
-        : SizedBox(
-            width: widget.width,
-            child: const ProfileRating(
-              profileImageUrl: 'https://i.imgur.com/GEPhBnS.png',
-              rating: 4,
-              hostName: 'Kevin Laichena',
-            ),
-          );
   }
 }

@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:fullbooker/features/host/models/product.dart';
 
-class DatePicker extends StatefulWidget {
+class DatePickerWidget extends StatefulWidget {
   final Product product;
   final Function(DateTime?)? onDateSelected;
 
-  const DatePicker({super.key, required this.product, this.onDateSelected});
+  const DatePickerWidget({
+    super.key,
+    required this.product,
+    this.onDateSelected,
+  });
 
   @override
-  State<StatefulWidget> createState() => _DatePickerState();
+  State<StatefulWidget> createState() => _DatePickerWidgetState();
 }
 
-class _DatePickerState extends State<DatePicker> {
+class _DatePickerWidgetState extends State<DatePickerWidget> {
   DateTime? setDateTime;
 
   void setSelectedDate() {}

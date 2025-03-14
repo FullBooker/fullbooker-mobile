@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/features/consumer/pages/event_details.dart';
-import 'package:fullbooker/features/consumer/widgets/event_meta.dart';
+import 'package:fullbooker/features/consumer/widgets/event_meta_widget.dart';
 import 'package:fullbooker/features/host/models/product.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:geocoding/geocoding.dart';
@@ -11,17 +11,17 @@ import 'package:intl/intl.dart';
 import 'package:map_location_picker/map_location_picker.dart';
 import 'package:shimmer/shimmer.dart';
 
-class EventCard extends StatefulWidget {
-  const EventCard({super.key, required this.product, this.onBuyClick});
+class EventCardWidget extends StatefulWidget {
+  const EventCardWidget({super.key, required this.product, this.onBuyClick});
 
   final VoidCallback? onBuyClick;
   final Product product;
 
   @override
-  State<StatefulWidget> createState() => _EventCardState();
+  State<StatefulWidget> createState() => _EventCardWidgetState();
 }
 
-class _EventCardState extends State<EventCard> {
+class _EventCardWidgetState extends State<EventCardWidget> {
   double? distanceFromEvent;
   bool isLoading = true; // Track loading state
   String? locationName;
@@ -208,7 +208,7 @@ class _EventCardState extends State<EventCard> {
                             ),
                           ),
                         ),
-                        EventMetaRow(width: width * 0.45),
+                        EventMetaWidget(width: width * 0.45),
                       ],
                     ),
                   ),

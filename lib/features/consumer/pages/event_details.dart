@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/features/consumer/pages/gallery.dart';
 import 'package:fullbooker/features/consumer/pages/landing.dart';
-import 'package:fullbooker/features/consumer/widgets/date_picker.dart';
-import 'package:fullbooker/features/consumer/widgets/event_carousel.dart';
-import 'package:fullbooker/features/consumer/widgets/host_details.dart';
-import 'package:fullbooker/features/consumer/widgets/ratings.dart';
-import 'package:fullbooker/features/consumer/widgets/ticket_booking.dart';
+import 'package:fullbooker/features/consumer/widgets/date_picker_widget.dart';
+import 'package:fullbooker/features/consumer/widgets/event_carousel_widget.dart';
+import 'package:fullbooker/features/consumer/widgets/host_details_widget.dart';
+import 'package:fullbooker/features/consumer/widgets/rating_summary_widget.dart';
+import 'package:fullbooker/features/consumer/widgets/review_card_widget.dart';
+import 'package:fullbooker/features/consumer/widgets/ticket_booking_widget.dart';
 import 'package:fullbooker/features/host/models/product.dart';
+import 'package:fullbooker/shared/entities/dummy_data.dart';
 import 'package:fullbooker/shared/widgets/appbar.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
 import 'package:map_location_picker/map_location_picker.dart';
@@ -155,32 +157,6 @@ class _EventDetailsState extends State<EventDetails> {
   @override
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
-    final List<Map<String, dynamic>> reviews = <Map<String, dynamic>>[
-      <String, dynamic>{
-        'name': 'Jane Mbithe',
-        'profilePic': 'https://i.imgur.com/aen9woM.png',
-        'rating': 5,
-        'timeAgo': '6 months ago',
-        'review':
-            'The rock concert was pure energy from start to finish! The band was on fire, delivering every song with passion and precision. The lighting and sound setup amplified the atmosphere, creating an unforgettable experience.',
-      },
-      <String, dynamic>{
-        'name': 'Brian Ochonga',
-        'profilePic': 'https://i.imgur.com/aen9woM.png',
-        'rating': 4,
-        'timeAgo': '7 months ago',
-        'review':
-            'The band gave a raw and authentic performance, proving why they’re one of the rising stars in rock. The drummer’s solo was a highlight, and the lyrics hit home with so many in the audience.',
-      },
-      <String, dynamic>{
-        'name': 'George Onsarigo',
-        'profilePic': 'https://i.imgur.com/aen9woM.png',
-        'rating': 3,
-        'timeAgo': '2 years ago',
-        'review':
-            'What a show! From the moment the lights dimmed, the energy was electric. The hard rock numbers shook the venue, and the slower ballads gave us a chance to catch our breath.',
-      },
-    ];
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -195,7 +171,7 @@ class _EventDetailsState extends State<EventDetails> {
                       children: <Widget>[
                         GestureDetector(
                           onTap: () => goToGallery(),
-                          child: EventCarousel(
+                          child: EventCarouselWidget(
                             product: widget.event,
                             actionLabel: 'View Map',
                             onActionClick: (_) => Scrollable.ensureVisible(
@@ -225,11 +201,11 @@ class _EventDetailsState extends State<EventDetails> {
                               crossAxisAlignment: WrapCrossAlignment.center,
                               spacing: 32,
                               children: <Widget>[
-                                HostDetails(
+                                HostDetailsWidget(
                                   product: widget.event,
                                   width: width / 2,
                                 ),
-                                DatePicker(
+                                DatePickerWidget(
                                   product: widget.event,
                                   onDateSelected: (DateTime? date) =>
                                       setState(() => selectedDate = date),
@@ -289,9 +265,10 @@ class _EventDetailsState extends State<EventDetails> {
                             ),
                           ),
                           Divider(thickness: 1, color: Colors.grey[300]),
-                          const RatingSummary(),
-                          for (Map<String, dynamic> review in reviews)
-                            ReviewCard(review: review),
+                          const RatingSummaryWidget(),
+                          for (Map<String, dynamic> review
+                              in eventReviewsDummyData)
+                            ReviewCardWidget(review: review),
                         ],
                       ),
                     ),

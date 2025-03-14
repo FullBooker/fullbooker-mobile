@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:fullbooker/features/consumer/utils.dart';
 
-class EventMetaRow extends StatelessWidget {
+class EventMetaWidget extends StatelessWidget {
   final Color hearColor;
   final double width;
 
-  const EventMetaRow({
+  const EventMetaWidget({
     super.key,
     required this.width,
     this.hearColor = Colors.white,

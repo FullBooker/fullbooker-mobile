@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:fullbooker/features/consumer/widgets/event_title.dart';
-import 'package:fullbooker/features/consumer/widgets/full_screen_image.dart';
+import 'package:fullbooker/features/consumer/widgets/event_title_widget.dart';
+import 'package:fullbooker/features/consumer/pages/full_screen_image.dart';
 import 'package:fullbooker/shared/widgets/appbar.dart';
 
 class Gallery extends StatefulWidget {
@@ -42,7 +42,7 @@ class GalleryState extends State<Gallery> {
           children: <Widget>[
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 20, horizontal: 12),
-              child: EventTitleSection(),
+              child: EventTitleWidget(),
             ),
             StaggeredGrid.count(
               crossAxisCount: 2,

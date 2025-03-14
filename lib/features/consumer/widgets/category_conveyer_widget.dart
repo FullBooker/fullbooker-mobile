@@ -9,21 +9,21 @@ class CategoryWithIcon {
   CategoryWithIcon({required this.category, required this.icon});
 }
 
-class CategoryConveyer extends StatefulWidget {
+class CategoryConveyerWidget extends StatefulWidget {
   final Map<String, Category> categories;
   final Function? onCategoryClick;
 
-  const CategoryConveyer({
+  const CategoryConveyerWidget({
     super.key,
     this.categories = const <String, Category>{},
     this.onCategoryClick,
   });
 
   @override
-  State<StatefulWidget> createState() => _CategoryConveyerState();
+  State<StatefulWidget> createState() => _CategoryConveyerWidgetState();
 }
 
-class _CategoryConveyerState extends State<CategoryConveyer> {
+class _CategoryConveyerWidgetState extends State<CategoryConveyerWidget> {
   final ScrollController _scrollController = ScrollController();
 
   void _scrollLeft() {

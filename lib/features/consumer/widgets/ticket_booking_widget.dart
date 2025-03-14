@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/features/consumer/pages/checkout.dart';
 import 'package:fullbooker/features/consumer/pages/purchase_summary.dart';
-import 'package:fullbooker/features/consumer/widgets/tickets_form.dart';
+import 'package:fullbooker/features/consumer/widgets/ticket_form_widget.dart';
 import 'package:fullbooker/features/consumer/widgets/tickets_summary.dart';
 import 'package:fullbooker/features/host/models/product.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
+import 'package:fullbooker/shared/entities/ticket.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
 
 class TicketBookingWidget extends StatefulWidget {
@@ -88,7 +89,7 @@ class _TicketBookingWidgetState extends State<TicketBookingWidget> {
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 8),
-        TicketForm(
+        TicketFormWidget(
           index: 0,
           product: widget.product,
           productLocationName: widget.productLocationName,
@@ -108,7 +109,7 @@ class _TicketBookingWidgetState extends State<TicketBookingWidget> {
             ),
             child: Column(
               children: <Widget>[
-                TicketsSummary(
+                TicketsSummaryWidget(
                   tickets: tickets,
                   onRemove: (List<Ticket> ticketsNow) =>
                       setState(() => tickets = ticketsNow),
