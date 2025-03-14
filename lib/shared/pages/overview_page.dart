@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:fullbooker/features/auth/pages/login.dart';
-import 'package:fullbooker/shared/dummy_data.dart';
-import 'package:fullbooker/shared/overview_step.dart';
+import 'package:fullbooker/shared/entities/dummy_data.dart';
+import 'package:fullbooker/shared/entities/overview_step.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:fullbooker/shared/widgets/simple_stepper.dart';
 
-class Overview extends StatefulWidget {
+class OverviewPage extends StatefulWidget {
   late final List<OverviewStep> steps;
   final int currentStep;
 
-  Overview({super.key, this.currentStep = 0}) {
+  OverviewPage({super.key, this.currentStep = 0}) {
     steps = defaultSteps;
   }
 
   @override
-  State<Overview> createState() => OverviewState();
+  State<OverviewPage> createState() => OverviewPageState();
 }
 
-class OverviewState extends State<Overview> {
+class OverviewPageState extends State<OverviewPage> {
   int currentStep = 0;
   final ScrollController gridScrollController = ScrollController();
 

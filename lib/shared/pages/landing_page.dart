@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:fullbooker/shared/pages/overview.dart';
+import 'package:fullbooker/shared/pages/overview_page.dart';
 
 class LandingPage extends StatelessWidget {
   const LandingPage({super.key});
@@ -11,8 +11,8 @@ class LandingPage extends StatelessWidget {
     Timer(
       const Duration(seconds: 3),
       () => Navigator.of(context).pushReplacement(
-        MaterialPageRoute<Overview>(
-          builder: (BuildContext context) => Overview(),
+        MaterialPageRoute<OverviewPage>(
+          builder: (BuildContext context) => OverviewPage(),
         ),
       ),
     );

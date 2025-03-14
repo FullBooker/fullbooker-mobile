@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:fullbooker/features/auth/models/login.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -26,7 +25,6 @@ class Flavour {
 }
 
 Future<Flavour> development = Flavour.withDB('api.dev.fullbooker.co.ke');
-final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 late Flavour env;
 Token? currentToken;
