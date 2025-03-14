@@ -83,3 +83,18 @@ final List<Map<String, dynamic>> paymentMethods = <Map<String, dynamic>>[
     'icon': Icons.g_mobiledata,
   },
 ];
+
+final List<String> mockImageUrls = <String>[
+  'https://i.imgur.com/KBicWbe.png',
+  'https://i.imgur.com/QoUtaJz.png',
+  'https://i.imgur.com/dCBshIt.png',
+  'https://i.imgur.com/aGE2yAR.png',
+  'https://i.imgur.com/ooAxO9f.png',
+  'https://i.imgur.com/O6Zd54G.png',
+  'https://i.imgur.com/mAmy0jb.png',
+  'https://i.imgur.com/tRmwlQw.png',
+  'https://i.imgur.com/XK4RGag.png',
+  'https://i.imgur.com/ZpJwjtd.png',
+  'https://i.imgur.com/dnrQX0i.png',
+  'https://i.imgur.com/wVU5Evt.png',
+];

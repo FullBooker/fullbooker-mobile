@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/utils.dart';
-import 'package:fullbooker/features/consumer/pages/event_details.dart';
+import 'package:fullbooker/features/consumer/pages/event_details_page.dart';
 import 'package:fullbooker/features/consumer/widgets/event_meta_widget.dart';
 import 'package:fullbooker/features/host/models/product.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
@@ -35,9 +35,12 @@ class _EventCardWidgetState extends State<EventCardWidget> {
   void goToEventDetails(Product event) {
     //WidgetsBinding.instance.addPostFrameCallback((_) {
     Navigator.of(context).push(
-      MaterialPageRoute<EventDetails>(
+      MaterialPageRoute<EventDetailsPage>(
         builder: (_) {
-          return EventDetails(event: event, productLocationName: locationName!);
+          return EventDetailsPage(
+            event: event,
+            productLocationName: locationName!,
+          );
         },
       ),
     );

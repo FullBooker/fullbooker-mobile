@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fullbooker/features/consumer/pages/payment_confirmation.dart';
+import 'package:fullbooker/features/consumer/widgets/mpesa_checkout_instructions_widget.dart';
 import 'package:fullbooker/features/consumer/widgets/payment_forms.dart';
 import 'package:fullbooker/features/host/models/product.dart';
 import 'package:fullbooker/shared/entities/ticket.dart';
@@ -7,102 +8,8 @@ import 'package:fullbooker/shared/widgets/appbar.dart';
 import 'package:fullbooker/shared/widgets/information_modal.dart';
 import 'package:intl/intl.dart';
 
-class MpesaCheckoutInstructions extends StatelessWidget {
-  final Ticket ticket;
-
-  const MpesaCheckoutInstructions({super.key, required this.ticket});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(12.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            'MPESA Checkout sent to ${ticket.phone}',
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 10),
-          const Text(
-            'Payment Alert',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 10),
-          const Text(
-            'Follow the instructions below:',
-            style: TextStyle(fontSize: 16),
-          ),
-          const SizedBox(height: 10),
-          const Text(
-            'Instructions to Pay:',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 8),
-          _buildBulletPoint(
-            'Check on a payment pop-up on your phone.',
-            isBold: true,
-          ),
-          _buildBulletPoint('Input your MPESA PIN and click OK.', isBold: true),
-          _buildBulletPoint(
-            'An MPESA confirmation SMS will be sent to you.',
-            isBold: true,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildBulletPoint(String text, {bool isBold = false}) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 10, bottom: 6),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          const Text('• ', style: TextStyle(fontSize: 16)),
-          Expanded(
-            child: Text(
-              text,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class InstructionText extends StatelessWidget {
-  final String text;
-  final bool isBold;
-
-  const InstructionText(this.text, {super.key, this.isBold = false});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Text(
-        text,
-        style: TextStyle(
-          fontSize: 14,
-          fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
-        ),
-      ),
-    );
-  }
-}
-
-class PaymentSummaryWidget extends StatelessWidget {
-  final Product product;
-  final String locationName;
-  final List<Ticket> tickets;
-  final DateTime selectedDateTime;
-
-  const PaymentSummaryWidget({
+class PaymentSummaryPage extends StatelessWidget {
+  const PaymentSummaryPage({
     super.key,
     required this.product,
     required this.locationName,
@@ -110,12 +17,17 @@ class PaymentSummaryWidget extends StatelessWidget {
     required this.selectedDateTime,
   });
 
+  final String locationName;
+  final Product product;
+  final DateTime selectedDateTime;
+  final List<Ticket> tickets;
+
   Future<dynamic> showMpesaModal(BuildContext context) async {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return InformationModal(
-          message: MpesaCheckoutInstructions(ticket: tickets.first),
+          message: MpesaCheckoutInstructionsWidget(ticket: tickets.first),
           actionTitle: 'Confirm Payment',
           action: () {
             Navigator.of(context).push(
@@ -134,6 +46,69 @@ class PaymentSummaryWidget extends StatelessWidget {
           topDividerHeight: 20,
         );
       },
+    );
+  }
+
+  // Method to build input fields
+  Widget buildInputField(String hint, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Column(
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(
+                hint,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+              Flexible(
+                child: Text(
+                  value,
+                  softWrap: true,
+                  textAlign: TextAlign.right,
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const Divider(),
+        ],
+      ),
+    );
+  }
+
+  // Payment Button Widget
+  Widget paymentButton(
+    String text,
+    Color bgColor,
+    Color textColor,
+    double screenWidth, {
+    double borderSize = 1,
+    Color borderColor = Colors.grey,
+  }) {
+    return Container(
+      padding: EdgeInsets.symmetric(
+        vertical: screenWidth * 0.02,
+        horizontal: screenWidth * 0.05,
+      ),
+      decoration: BoxDecoration(
+        color: bgColor,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: borderColor, width: borderSize),
+      ),
+      child: Text(
+        text,
+        style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
+      ),
     );
   }
 
@@ -158,13 +133,12 @@ class PaymentSummaryWidget extends StatelessWidget {
           padding: const EdgeInsets.symmetric(
             vertical: 10,
             horizontal: 20,
-          ), // Dynamic padding
+          ),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(16),
           ),
           child: SingleChildScrollView(
-            // Make it scrollable
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -291,69 +265,6 @@ class PaymentSummaryWidget extends StatelessWidget {
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  // Method to build input fields
-  Widget buildInputField(String hint, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      child: Column(
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(
-                hint,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-              Flexible(
-                child: Text(
-                  value,
-                  softWrap: true,
-                  textAlign: TextAlign.right,
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const Divider(),
-        ],
-      ),
-    );
-  }
-
-  // Payment Button Widget
-  Widget paymentButton(
-    String text,
-    Color bgColor,
-    Color textColor,
-    double screenWidth, {
-    double borderSize = 1,
-    Color borderColor = Colors.grey,
-  }) {
-    return Container(
-      padding: EdgeInsets.symmetric(
-        vertical: screenWidth * 0.02,
-        horizontal: screenWidth * 0.05,
-      ),
-      decoration: BoxDecoration(
-        color: bgColor,
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: borderColor, width: borderSize),
-      ),
-      child: Text(
-        text,
-        style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
       ),
     );
   }
