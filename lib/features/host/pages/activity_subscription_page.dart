@@ -4,9 +4,10 @@ import 'package:fullbooker/features/host/controllers/currency_controller.dart';
 import 'package:fullbooker/features/host/controllers/product_controller.dart';
 import 'package:fullbooker/features/host/models/currency.dart';
 import 'package:fullbooker/features/host/models/product.dart';
-import 'package:fullbooker/features/host/pages/activity_day_pass.dart';
 import 'package:fullbooker/features/host/pages/host_product_summary.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
+import 'package:fullbooker/shared/entities/session_pricing.dart';
+import 'package:fullbooker/shared/widgets/custom_switch_widget.dart';
 import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
@@ -16,12 +17,12 @@ import 'package:fullbooker/shared/widgets/dropdown.dart';
 import 'package:fullbooker/shared/widgets/rounded_floating_action.dart';
 import 'package:fullbooker/shared/widgets/text_input.dart';
 
-class ActivitySubscription extends StatefulWidget {
+class ActivitySubscriptionPage extends StatefulWidget {
   final Product product;
   final SessionPricing sessionPricing;
   final SessionPricing? dayPassPricing;
 
-  const ActivitySubscription({
+  const ActivitySubscriptionPage({
     super.key,
     required this.product,
     required this.sessionPricing,
@@ -32,7 +33,7 @@ class ActivitySubscription extends StatefulWidget {
   State<StatefulWidget> createState() => _ActivitySubscription();
 }
 
-class _ActivitySubscription extends State<ActivitySubscription> {
+class _ActivitySubscription extends State<ActivitySubscriptionPage> {
   bool isLoading = false;
   bool setSub = false;
 
@@ -137,7 +138,9 @@ class _ActivitySubscription extends State<ActivitySubscription> {
                             ),
                           ),
                         ),
-                        CustomSwitch(onValueChanged: onSubSelectionChanged),
+                        CustomSwitchWidget(
+                          onValueChanged: onSubSelectionChanged,
+                        ),
                       ],
                     ),
                   ),

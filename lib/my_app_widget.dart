@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/environments.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
-import 'package:fullbooker/features/auth/pages/login.dart';
+import 'package:fullbooker/features/auth/pages/login_page.dart';
 import 'package:fullbooker/features/host/pages/summary.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -24,7 +24,7 @@ class MyAppWidget extends StatelessWidget {
         useMaterial3: true,
         textTheme: GoogleFonts.openSansTextTheme(),
       ),
-      home: (currentToken == null) ? const Login() : const EventsSummary(),
+      home: (currentToken == null) ? const LoginPage() : const EventsSummary(),
     );
   }
 }

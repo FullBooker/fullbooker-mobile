@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fullbooker/features/host/controllers/product_controller.dart';
 import 'package:fullbooker/features/host/models/product.dart';
-import 'package:fullbooker/features/host/pages/category_selection.dart';
+import 'package:fullbooker/features/host/pages/category_selection_page.dart';
 import 'package:fullbooker/features/host/pages/host_product_summary.dart';
 import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
@@ -129,8 +129,8 @@ class _EventsSummaryState extends State<EventsSummary> {
 
   void goToCategorySelection(BuildContext context) {
     Navigator.of(context).push(
-      MaterialPageRoute<CategorySelection>(
-        builder: (BuildContext context) => const CategorySelection(),
+      MaterialPageRoute<CategorySelectionPage>(
+        builder: (BuildContext context) => const CategorySelectionPage(),
       ),
     );
   }

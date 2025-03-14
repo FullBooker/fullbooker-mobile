@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:fullbooker/features/auth/controllers/login.dart';
-import 'package:fullbooker/features/auth/pages/login.dart';
+import 'package:fullbooker/features/auth/pages/login_page.dart';
 import 'package:fullbooker/shared/validators.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:fullbooker/shared/widgets/information_modal.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
 import 'package:fullbooker/shared/widgets/text_input.dart';
 
-class PasswordChange extends StatefulWidget {
+class ChangePasswordPage extends StatefulWidget {
   final String phoneNumber;
 
-  const PasswordChange(this.phoneNumber, {super.key});
+  const ChangePasswordPage(this.phoneNumber, {super.key});
 
   @override
-  State<StatefulWidget> createState() => PasswordChangeState();
+  State<StatefulWidget> createState() => ChangePasswordPageState();
 }
 
-class PasswordChangeState extends State<PasswordChange> {
+class ChangePasswordPageState extends State<ChangePasswordPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String errorMessage = '';
   final LoginViewModel loginController = LoginViewModel();
@@ -42,8 +42,8 @@ class PasswordChangeState extends State<PasswordChange> {
 
   void goToLogin(BuildContext context) {
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute<Login>(
-        builder: (BuildContext context) => const Login(),
+      MaterialPageRoute<LoginPage>(
+        builder: (BuildContext context) => const LoginPage(),
       ),
     );
   }
@@ -54,7 +54,7 @@ class PasswordChangeState extends State<PasswordChange> {
       _dialogBuilder(context).then((_) {
         if (!context.mounted) return;
         Navigator.of(context).pushReplacement(
-          MaterialPageRoute<Login>(builder: (_) => const Login()),
+          MaterialPageRoute<LoginPage>(builder: (_) => const LoginPage()),
         );
       });
     });

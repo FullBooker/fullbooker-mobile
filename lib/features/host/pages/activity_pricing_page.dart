@@ -3,8 +3,9 @@ import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/features/host/controllers/currency_controller.dart';
 import 'package:fullbooker/features/host/models/currency.dart';
 import 'package:fullbooker/features/host/models/product.dart';
-import 'package:fullbooker/features/host/pages/activity_day_pass.dart';
+import 'package:fullbooker/features/host/pages/activity_day_pass_page.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
+import 'package:fullbooker/shared/entities/session_pricing.dart';
 import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
@@ -14,16 +15,16 @@ import 'package:fullbooker/shared/widgets/page_title.dart';
 import 'package:fullbooker/shared/widgets/rounded_floating_action.dart';
 import 'package:fullbooker/shared/widgets/text_input.dart';
 
-class ActivityPricing extends StatefulWidget {
+class ActivityPricingPage extends StatefulWidget {
   final Product product;
 
-  const ActivityPricing({super.key, required this.product});
+  const ActivityPricingPage({super.key, required this.product});
 
   @override
-  State<StatefulWidget> createState() => _ActivityPricingState();
+  State<StatefulWidget> createState() => _ActivityPricingPageState();
 }
 
-class _ActivityPricingState extends State<ActivityPricing> {
+class _ActivityPricingPageState extends State<ActivityPricingPage> {
   bool isLoading = false;
   List<Currency> currencies = <Currency>[];
   CurrencyViewModel currencyViewModel = CurrencyViewModel();
@@ -44,8 +45,8 @@ class _ActivityPricingState extends State<ActivityPricing> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Navigator.of(context).push(
-        MaterialPageRoute<ActivityDayPass>(
-          builder: (_) => ActivityDayPass(
+        MaterialPageRoute<ActivityDayPassPage>(
+          builder: (_) => ActivityDayPassPage(
             product: widget.product,
             sessionPricing: SessionPricing(
               price: double.parse(priceController.text),

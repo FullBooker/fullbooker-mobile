@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fullbooker/features/auth/pages/login.dart';
+import 'package:fullbooker/features/auth/pages/login_page.dart';
 import 'package:fullbooker/features/host/pages/summary.dart';
 
 class StandardNavBar extends StatelessWidget implements PreferredSizeWidget {
@@ -30,7 +30,7 @@ class StandardNavBar extends StatelessWidget implements PreferredSizeWidget {
   void goToLogin(BuildContext context) {
     return WidgetsBinding.instance.addPostFrameCallback((_) {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute<Login>(builder: (_) => const Login()),
+        MaterialPageRoute<LoginPage>(builder: (_) => const LoginPage()),
       );
     });
   }

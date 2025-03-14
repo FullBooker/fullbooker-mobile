@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/features/host/controllers/product_controller.dart';
 import 'package:fullbooker/features/host/models/product.dart';
-import 'package:fullbooker/features/host/pages/activity_date_selection.dart';
-import 'package:fullbooker/features/host/pages/date_selection.dart';
+import 'package:fullbooker/features/host/pages/activity_date_selection_page.dart';
+import 'package:fullbooker/features/host/pages/date_selection_page.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
@@ -88,8 +88,8 @@ class _LocationSelectionState extends State<LocationSelection> {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             if (widget.productType == ProductTypes.Event) {
               Navigator.of(context).push(
-                MaterialPageRoute<DateSelection>(
-                  builder: (_) => DateSelection(
+                MaterialPageRoute<DateSelectionPage>(
+                  builder: (_) => DateSelectionPage(
                     product: widget.product,
                     location: location,
                   ),
@@ -97,8 +97,8 @@ class _LocationSelectionState extends State<LocationSelection> {
               );
             } else {
               Navigator.of(context).push(
-                MaterialPageRoute<ActivityDateSelection>(
-                  builder: (_) => ActivityDateSelection(
+                MaterialPageRoute<ActivityDateSelectionPage>(
+                  builder: (_) => ActivityDateSelectionPage(
                     product: widget.product,
                     location: location,
                   ),

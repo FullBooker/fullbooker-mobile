@@ -3,8 +3,10 @@ import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/features/host/controllers/currency_controller.dart';
 import 'package:fullbooker/features/host/models/currency.dart';
 import 'package:fullbooker/features/host/models/product.dart';
-import 'package:fullbooker/features/host/pages/activity_subscription.dart';
+import 'package:fullbooker/features/host/pages/activity_subscription_page.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
+import 'package:fullbooker/shared/entities/session_pricing.dart';
+import 'package:fullbooker/shared/widgets/custom_switch_widget.dart';
 import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
@@ -14,58 +16,11 @@ import 'package:fullbooker/shared/widgets/dropdown.dart';
 import 'package:fullbooker/shared/widgets/rounded_floating_action.dart';
 import 'package:fullbooker/shared/widgets/text_input.dart';
 
-class SessionPricing {
-  final double price;
-  final int maxTickets;
-  final Currency currency;
-
-  const SessionPricing({
-    required this.price,
-    required this.maxTickets,
-    required this.currency,
-  });
-}
-
-class CustomSwitch extends StatefulWidget {
-  final Function(bool)? onValueChanged;
-
-  const CustomSwitch({super.key, this.onValueChanged});
-
-  @override
-  State<StatefulWidget> createState() => _CustomSwitchState();
-}
-
-class _CustomSwitchState extends State<CustomSwitch> {
-  bool isSwitchOn = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Text(
-          isSwitchOn ? 'Yes' : 'No',
-          style: const TextStyle(fontSize: 18),
-        ),
-        Switch(
-          value: isSwitchOn,
-          onChanged: (bool value) {
-            setState(() {
-              isSwitchOn = value;
-              if (widget.onValueChanged != null) widget.onValueChanged!(value);
-            });
-          },
-        ),
-      ],
-    );
-  }
-}
-
-class ActivityDayPass extends StatefulWidget {
+class ActivityDayPassPage extends StatefulWidget {
   final Product product;
   final SessionPricing sessionPricing;
 
-  const ActivityDayPass({
+  const ActivityDayPassPage({
     super.key,
     required this.product,
     required this.sessionPricing,
@@ -75,7 +30,7 @@ class ActivityDayPass extends StatefulWidget {
   State<StatefulWidget> createState() => _ActivityDayPass();
 }
 
-class _ActivityDayPass extends State<ActivityDayPass> {
+class _ActivityDayPass extends State<ActivityDayPassPage> {
   bool isLoading = false;
   List<Currency> currencies = <Currency>[];
   CurrencyViewModel currencyViewModel = CurrencyViewModel();
@@ -97,8 +52,8 @@ class _ActivityDayPass extends State<ActivityDayPass> {
       }
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Navigator.of(context).push(
-          MaterialPageRoute<ActivitySubscription>(
-            builder: (_) => ActivitySubscription(
+          MaterialPageRoute<ActivitySubscriptionPage>(
+            builder: (_) => ActivitySubscriptionPage(
               product: widget.product,
               dayPassPricing: SessionPricing(
                 price: double.parse(priceController.text),
@@ -113,8 +68,8 @@ class _ActivityDayPass extends State<ActivityDayPass> {
     }
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Navigator.of(context).push(
-        MaterialPageRoute<ActivitySubscription>(
-          builder: (_) => ActivitySubscription(
+        MaterialPageRoute<ActivitySubscriptionPage>(
+          builder: (_) => ActivitySubscriptionPage(
             product: widget.product,
             sessionPricing: widget.sessionPricing,
           ),
@@ -168,7 +123,9 @@ class _ActivityDayPass extends State<ActivityDayPass> {
                             ),
                           ),
                         ),
-                        CustomSwitch(onValueChanged: onDayPassSelectionChanged),
+                        CustomSwitchWidget(
+                          onValueChanged: onDayPassSelectionChanged,
+                        ),
                       ],
                     ),
                   ),

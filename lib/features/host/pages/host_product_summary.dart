@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fullbooker/features/host/controllers/product_controller.dart';
 import 'package:fullbooker/features/host/models/product.dart';
-import 'package:fullbooker/features/host/pages/category_selection.dart';
+import 'package:fullbooker/features/host/pages/category_selection_page.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
@@ -105,8 +105,8 @@ class _HostProductSummaryState extends State<HostProductSummary> {
   void onContinueClick(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Navigator.of(context).push(
-        MaterialPageRoute<CategorySelection>(
-          builder: (_) => const CategorySelection(),
+        MaterialPageRoute<CategorySelectionPage>(
+          builder: (_) => const CategorySelectionPage(),
         ),
       );
     });
