@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/features/host/controllers/days_controller.dart';
@@ -16,6 +17,7 @@ import 'package:flutter/foundation.dart';
 import 'package:fullbooker/shared/widgets/scale_locked_text.dart';
 import 'package:fullbooker/shared/widgets/time_selection_card.dart';
 
+@RoutePage()
 class ActivityDateSelectionPage extends StatefulWidget {
   const ActivityDateSelectionPage({
     super.key,

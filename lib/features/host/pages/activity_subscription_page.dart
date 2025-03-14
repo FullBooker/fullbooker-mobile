@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/features/host/controllers/currency_controller.dart';
@@ -17,6 +18,7 @@ import 'package:fullbooker/shared/widgets/dropdown.dart';
 import 'package:fullbooker/shared/widgets/rounded_floating_action.dart';
 import 'package:fullbooker/shared/widgets/text_input.dart';
 
+@RoutePage()
 class ActivitySubscriptionPage extends StatefulWidget {
   final Product product;
   final SessionPricing sessionPricing;
@@ -91,8 +93,9 @@ class _ActivitySubscription extends State<ActivitySubscriptionPage> {
       setState(() => isLoading = false);
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Navigator.of(context).push(
-          MaterialPageRoute<HostProductSummary>(
-            builder: (_) => HostProductSummary(host: widget.product.host.id),
+          MaterialPageRoute<HostProductSummaryPage>(
+            builder: (_) =>
+                HostProductSummaryPage(host: widget.product.host.id),
           ),
         );
       });

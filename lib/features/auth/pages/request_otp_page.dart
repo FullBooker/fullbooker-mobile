@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,14 +11,15 @@ import 'package:fullbooker/shared/widgets/page_title.dart';
 import 'package:fullbooker/shared/widgets/text_input.dart';
 import 'package:fullbooker/shared/validators.dart';
 
-class RequestOtpPage extends StatefulWidget {
-  const RequestOtpPage({super.key});
+@RoutePage()
+class RequestOTPPage extends StatefulWidget {
+  const RequestOTPPage({super.key});
 
   @override
-  State<StatefulWidget> createState() => RequestOtpPageState();
+  State<StatefulWidget> createState() => RequestOTPPageState();
 }
 
-class RequestOtpPageState extends State<RequestOtpPage> {
+class RequestOTPPageState extends State<RequestOTPPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool isLoading = false;
   final TextEditingController phoneNumberController = TextEditingController();
@@ -38,8 +40,8 @@ class RequestOtpPageState extends State<RequestOtpPage> {
   void goToOTP(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute<VerifyOtpPage>(
-          builder: (_) => VerifyOtpPage(otpChannel),
+        MaterialPageRoute<VerifyOTPPage>(
+          builder: (_) => VerifyOTPPage(otpChannel),
         ),
       );
     });

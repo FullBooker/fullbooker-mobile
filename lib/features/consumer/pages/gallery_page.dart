@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:fullbooker/features/consumer/widgets/event_title_widget.dart';
-import 'package:fullbooker/features/consumer/pages/full_screen_image_page.dart';
+import 'package:fullbooker/features/consumer/pages/image_preview_page.dart';
 import 'package:fullbooker/shared/entities/data_mocks.dart';
 import 'package:fullbooker/shared/widgets/standard_nav_bar.dart';
 
@@ -50,9 +50,9 @@ class GalleryPageState extends State<GalleryPage> {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute<FullScreenImagePage>(
+          MaterialPageRoute<ImagePreviewPage>(
             builder: (_) {
-              return FullScreenImagePage(imageUrl: imageUrl);
+              return ImagePreviewPage(imageUrl: imageUrl);
             },
           ),
         );

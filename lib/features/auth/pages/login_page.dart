@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,6 +12,7 @@ import 'package:fullbooker/shared/widgets/text_input.dart';
 import 'package:fullbooker/shared/validators.dart';
 import 'package:fullbooker/features/auth/controllers/login.dart';
 
+@RoutePage()
 class LoginPage extends StatefulWidget {
   final bool goBackToOrigin;
   const LoginPage({super.key, this.goBackToOrigin = false});
@@ -38,8 +40,8 @@ class LoginPageState extends State<LoginPage> {
 
   void goToPasswordReset(BuildContext context) {
     Navigator.of(context).push(
-      MaterialPageRoute<RequestOtpPage>(
-        builder: (BuildContext context) => const RequestOtpPage(),
+      MaterialPageRoute<RequestOTPPage>(
+        builder: (BuildContext context) => const RequestOTPPage(),
       ),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/features/host/controllers/currency_controller.dart';
@@ -15,6 +16,7 @@ import 'package:fullbooker/shared/widgets/page_title.dart';
 import 'package:fullbooker/shared/widgets/rounded_floating_action.dart';
 import 'package:fullbooker/shared/widgets/text_input.dart';
 
+@RoutePage()
 class ActivityPricingPage extends StatefulWidget {
   final Product product;
 

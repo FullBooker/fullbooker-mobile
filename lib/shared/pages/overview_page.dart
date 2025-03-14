@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:fullbooker/features/auth/pages/login_page.dart';
@@ -6,6 +7,7 @@ import 'package:fullbooker/shared/entities/overview_step.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:fullbooker/shared/widgets/simple_stepper.dart';
 
+@RoutePage()
 class OverviewPage extends StatefulWidget {
   late final List<OverviewStep> steps;
   final int currentStep;

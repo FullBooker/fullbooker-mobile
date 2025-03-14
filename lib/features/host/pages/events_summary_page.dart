@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/features/host/controllers/product_controller.dart';
 import 'package:fullbooker/features/host/models/product.dart';
@@ -11,6 +12,7 @@ import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
 
+@RoutePage()
 class EventsSummaryPage extends StatefulWidget {
   const EventsSummaryPage({super.key});
 
@@ -39,8 +41,8 @@ class _EventsSummaryPageState extends State<EventsSummaryPage> {
             return;
           }
           Navigator.of(context).push(
-            MaterialPageRoute<HostProductSummary>(
-              builder: (_) => HostProductSummary(host: host['id']),
+            MaterialPageRoute<HostProductSummaryPage>(
+              builder: (_) => HostProductSummaryPage(host: host['id']),
             ),
           );
         });

@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/features/consumer/painters.dart';
@@ -8,12 +9,13 @@ import 'package:fullbooker/shared/widgets/scale_locked_text.dart';
 import 'package:fullbooker/shared/widgets/standard_nav_bar.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
-class PaymentConfirmationScreen extends StatelessWidget {
+@RoutePage()
+class PaymentConfirmationPage extends StatelessWidget {
   final Product product;
   final String locationName;
   final Ticket ticket;
 
-  const PaymentConfirmationScreen({
+  const PaymentConfirmationPage({
     super.key,
     required this.product,
     required this.locationName,

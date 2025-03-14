@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/features/host/controllers/product_controller.dart';
 import 'package:fullbooker/features/host/models/product.dart';
@@ -8,16 +9,17 @@ import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 
-class HostProductSummary extends StatefulWidget {
-  const HostProductSummary({super.key, required this.host});
+@RoutePage()
+class HostProductSummaryPage extends StatefulWidget {
+  const HostProductSummaryPage({super.key, required this.host});
 
   final String host;
 
   @override
-  State<StatefulWidget> createState() => _HostProductSummaryState();
+  State<StatefulWidget> createState() => _HostProductSummaryPageState();
 }
 
-class _HostProductSummaryState extends State<HostProductSummary> {
+class _HostProductSummaryPageState extends State<HostProductSummaryPage> {
   List<Product>? products;
   ProductViewModel productsController = ProductViewModel();
 

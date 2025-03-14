@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/features/auth/controllers/login.dart';
@@ -9,15 +10,16 @@ import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
 import 'package:otp_pin_field/otp_pin_field.dart';
 
-class VerifyOtpPage extends StatefulWidget {
+@RoutePage()
+class VerifyOTPPage extends StatefulWidget {
   final String phoneNumber;
-  const VerifyOtpPage(this.phoneNumber, {super.key});
+  const VerifyOTPPage(this.phoneNumber, {super.key});
 
   @override
-  State<StatefulWidget> createState() => VerifyOtpPageState();
+  State<StatefulWidget> createState() => VerifyOTPPageState();
 }
 
-class VerifyOtpPageState extends State<VerifyOtpPage> {
+class VerifyOTPPageState extends State<VerifyOTPPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String errorMessage = '';
   final LoginViewModel loginController = LoginViewModel();
@@ -63,8 +65,8 @@ class VerifyOtpPageState extends State<VerifyOtpPage> {
   void goToRequestOtp(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute<RequestOtpPage>(
-          builder: (BuildContext context) => const RequestOtpPage(),
+        MaterialPageRoute<RequestOTPPage>(
+          builder: (BuildContext context) => const RequestOTPPage(),
         ),
       );
     });

@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/features/auth/controllers/login.dart';
 import 'package:fullbooker/features/auth/pages/login_page.dart';
@@ -7,6 +8,7 @@ import 'package:fullbooker/shared/widgets/information_modal.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
 import 'package:fullbooker/shared/widgets/text_input.dart';
 
+@RoutePage()
 class ChangePasswordPage extends StatefulWidget {
   final String phoneNumber;
 

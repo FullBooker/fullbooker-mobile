@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/utils.dart';
@@ -15,6 +16,7 @@ import 'package:fullbooker/shared/widgets/card.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
 import 'package:video_player/video_player.dart';
 
+@RoutePage()
 class VideoSelectionPage extends StatefulWidget {
   final Product product;
   final ProductTypes type;
