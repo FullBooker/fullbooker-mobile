@@ -1,8 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fullbooker/features/auth/pages/request_otp.dart';
-import 'package:fullbooker/features/auth/pages/signup.dart';
+import 'package:fullbooker/features/auth/pages/request_otp_page.dart';
+import 'package:fullbooker/features/auth/pages/sign_up_page.dart';
 import 'package:fullbooker/features/consumer/pages/landing_page.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:fullbooker/shared/widgets/divider.dart';
@@ -11,15 +11,15 @@ import 'package:fullbooker/shared/widgets/text_input.dart';
 import 'package:fullbooker/shared/validators.dart';
 import 'package:fullbooker/features/auth/controllers/login.dart';
 
-class Login extends StatefulWidget {
+class LoginPage extends StatefulWidget {
   final bool goBackToOrigin;
-  const Login({super.key, this.goBackToOrigin = false});
+  const LoginPage({super.key, this.goBackToOrigin = false});
 
   @override
-  State<StatefulWidget> createState() => LoginState();
+  State<StatefulWidget> createState() => LoginPageState();
 }
 
-class LoginState extends State<Login> {
+class LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final LoginViewModel loginController = LoginViewModel();
   String errorMessage = '';
@@ -30,16 +30,16 @@ class LoginState extends State<Login> {
 
   void goToSignUp(BuildContext context) {
     Navigator.of(context).push(
-      MaterialPageRoute<SignUp>(
-        builder: (BuildContext context) => const SignUp(),
+      MaterialPageRoute<SignUpPage>(
+        builder: (BuildContext context) => const SignUpPage(),
       ),
     );
   }
 
   void goToPasswordReset(BuildContext context) {
     Navigator.of(context).push(
-      MaterialPageRoute<RequestOtp>(
-        builder: (BuildContext context) => const RequestOtp(),
+      MaterialPageRoute<RequestOtpPage>(
+        builder: (BuildContext context) => const RequestOtpPage(),
       ),
     );
   }

@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:fullbooker/core/repository.dart';
 import 'package:fullbooker/core/view_model.dart';
 import 'package:fullbooker/features/host/models/product.dart';
-import 'package:fullbooker/features/host/pages/activity_day_pass.dart';
-import 'package:fullbooker/features/host/pages/date_selection.dart';
+import 'package:fullbooker/shared/entities/date_group.dart';
+import 'package:fullbooker/shared/entities/session_pricing.dart';
 
 class ProductViewModel extends BaseViewModel<Product> {
   ProductViewModel() {

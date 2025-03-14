@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/features/host/controllers/product_controller.dart';
 import 'package:fullbooker/features/host/models/product.dart';
-import 'package:fullbooker/features/host/pages/activity_pricing.dart';
+import 'package:fullbooker/features/host/pages/activity_pricing_page.dart';
 import 'package:fullbooker/features/host/pages/event_category.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
@@ -96,8 +96,8 @@ class _VideoSelectionState extends State<VideoSelection> {
           case ProductTypes.Activity:
             WidgetsBinding.instance.addPostFrameCallback((_) {
               Navigator.of(context).push(
-                MaterialPageRoute<ActivityPricing>(
-                  builder: (_) => ActivityPricing(product: widget.product),
+                MaterialPageRoute<ActivityPricingPage>(
+                  builder: (_) => ActivityPricingPage(product: widget.product),
                 ),
               );
             });

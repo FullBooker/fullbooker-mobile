@@ -2,22 +2,22 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fullbooker/features/auth/controllers/login.dart';
-import 'package:fullbooker/features/auth/pages/login.dart';
-import 'package:fullbooker/features/auth/pages/validated_otp.dart';
+import 'package:fullbooker/features/auth/pages/login_page.dart';
+import 'package:fullbooker/features/auth/pages/verify_otp_page.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:fullbooker/shared/widgets/divider.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
 import 'package:fullbooker/shared/widgets/text_input.dart';
 import 'package:fullbooker/shared/validators.dart';
 
-class RequestOtp extends StatefulWidget {
-  const RequestOtp({super.key});
+class RequestOtpPage extends StatefulWidget {
+  const RequestOtpPage({super.key});
 
   @override
-  State<StatefulWidget> createState() => RequestOtpState();
+  State<StatefulWidget> createState() => RequestOtpPageState();
 }
 
-class RequestOtpState extends State<RequestOtp> {
+class RequestOtpPageState extends State<RequestOtpPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool isLoading = false;
   final TextEditingController phoneNumberController = TextEditingController();
@@ -29,8 +29,8 @@ class RequestOtpState extends State<RequestOtp> {
 
   void goToLogin(BuildContext context) {
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute<Login>(
-        builder: (BuildContext context) => const Login(),
+      MaterialPageRoute<LoginPage>(
+        builder: (BuildContext context) => const LoginPage(),
       ),
     );
   }
@@ -38,8 +38,8 @@ class RequestOtpState extends State<RequestOtp> {
   void goToOTP(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute<ValidatedOtp>(
-          builder: (_) => ValidatedOtp(otpChannel),
+        MaterialPageRoute<VerifyOtpPage>(
+          builder: (_) => VerifyOtpPage(otpChannel),
         ),
       );
     });

@@ -3,21 +3,21 @@ import 'dart:async';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/features/auth/controllers/login.dart';
-import 'package:fullbooker/features/auth/pages/password_change.dart';
-import 'package:fullbooker/features/auth/pages/request_otp.dart';
+import 'package:fullbooker/features/auth/pages/change_password_page.dart';
+import 'package:fullbooker/features/auth/pages/request_otp_page.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
 import 'package:otp_pin_field/otp_pin_field.dart';
 
-class ValidatedOtp extends StatefulWidget {
+class VerifyOtpPage extends StatefulWidget {
   final String phoneNumber;
-  const ValidatedOtp(this.phoneNumber, {super.key});
+  const VerifyOtpPage(this.phoneNumber, {super.key});
 
   @override
-  State<StatefulWidget> createState() => ValidatedOtpState();
+  State<StatefulWidget> createState() => VerifyOtpPageState();
 }
 
-class ValidatedOtpState extends State<ValidatedOtp> {
+class VerifyOtpPageState extends State<VerifyOtpPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String errorMessage = '';
   final LoginViewModel loginController = LoginViewModel();
@@ -53,8 +53,8 @@ class ValidatedOtpState extends State<ValidatedOtp> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute<PasswordChange>(
-          builder: (_) => PasswordChange(widget.phoneNumber),
+        MaterialPageRoute<ChangePasswordPage>(
+          builder: (_) => ChangePasswordPage(widget.phoneNumber),
         ),
       );
     });
@@ -63,8 +63,8 @@ class ValidatedOtpState extends State<ValidatedOtp> {
   void goToRequestOtp(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute<RequestOtp>(
-          builder: (BuildContext context) => const RequestOtp(),
+        MaterialPageRoute<RequestOtpPage>(
+          builder: (BuildContext context) => const RequestOtpPage(),
         ),
       );
     });

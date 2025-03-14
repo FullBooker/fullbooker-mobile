@@ -10,14 +10,14 @@ import 'package:fullbooker/shared/widgets/page_title.dart';
 import 'package:fullbooker/shared/widgets/titled_dropdown.dart';
 import 'package:fullbooker/features/host/models/categories.dart';
 
-class CategorySelection extends StatefulWidget {
-  const CategorySelection({super.key});
+class CategorySelectionPage extends StatefulWidget {
+  const CategorySelectionPage({super.key});
 
   @override
-  State<StatefulWidget> createState() => CategorySelectionState();
+  State<StatefulWidget> createState() => CategorySelectionPageState();
 }
 
-class CategorySelectionState extends State<CategorySelection> {
+class CategorySelectionPageState extends State<CategorySelectionPage> {
   List<Category> categories = <Category>[];
   CategoryViewModel categoryController = CategoryViewModel();
   bool isLoading = true;

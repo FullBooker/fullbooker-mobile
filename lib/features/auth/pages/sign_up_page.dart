@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fullbooker/features/auth/controllers/login.dart';
-import 'package:fullbooker/features/auth/pages/login.dart';
+import 'package:fullbooker/features/auth/pages/login_page.dart';
 import 'package:fullbooker/features/consumer/pages/landing_page.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:fullbooker/shared/widgets/divider.dart';
@@ -11,14 +11,14 @@ import 'package:fullbooker/shared/widgets/standard_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/text_input.dart';
 import 'package:fullbooker/shared/validators.dart';
 
-class SignUp extends StatefulWidget {
-  const SignUp({super.key});
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
 
   @override
-  State<StatefulWidget> createState() => SignUpState();
+  State<StatefulWidget> createState() => SignUpPageState();
 }
 
-class SignUpState extends State<SignUp> {
+class SignUpPageState extends State<SignUpPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();
@@ -33,8 +33,8 @@ class SignUpState extends State<SignUp> {
 
   void goToLogIn(BuildContext context) {
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute<Login>(
-        builder: (BuildContext context) => const Login(),
+      MaterialPageRoute<LoginPage>(
+        builder: (BuildContext context) => const LoginPage(),
       ),
     );
   }
