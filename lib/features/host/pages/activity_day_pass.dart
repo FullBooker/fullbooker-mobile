@@ -26,7 +26,7 @@ class SessionPricing {
 }
 
 class CustomSwitch extends StatefulWidget {
-  final Function(bool val)? onValueChanged;
+  final Function(bool)? onValueChanged;
 
   const CustomSwitch({super.key, this.onValueChanged});
 
