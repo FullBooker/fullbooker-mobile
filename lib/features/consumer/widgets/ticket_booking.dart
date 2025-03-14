@@ -5,9 +5,8 @@ import 'package:fullbooker/features/consumer/pages/purchase_summary.dart';
 import 'package:fullbooker/features/consumer/widgets/tickets_form.dart';
 import 'package:fullbooker/features/consumer/widgets/tickets_summary.dart';
 import 'package:fullbooker/features/host/models/product.dart';
+import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
-
-enum BookingMode { bulk, single }
 
 class TicketBookingWidget extends StatefulWidget {
   final Product product;

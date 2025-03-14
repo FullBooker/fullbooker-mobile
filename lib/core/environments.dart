@@ -1,24 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:fullbooker/features/auth/models/login.dart';
+import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sembast/sembast_io.dart';
 import 'db.dart';
 
-enum FlavourType { development, production }
-
 class Flavour {
   final String apiHost;
-  final FlavourType type;
+  final AppEnvironment appEnv;
   final Database db;
 
-  const Flavour(this.apiHost, this.db, {this.type = FlavourType.development});
+  const Flavour(
+    this.apiHost,
+    this.db, {
+    this.appEnv = AppEnvironment.dev,
+  });
 
   static Future<Flavour> withDB(
     String apiHost, {
-    FlavourType type = FlavourType.development,
+    AppEnvironment type = AppEnvironment.dev,
   }) async {
     final Database db = await setupDB(type.toString());
-    return Flavour(apiHost, db, type: type);
+    return Flavour(apiHost, db, appEnv: type);
   }
 }
 
@@ -36,7 +39,7 @@ GoogleSignIn googleSignIn = GoogleSignIn(
 );
 
 class BuildEnvironment {
-  FlavourType type;
+  AppEnvironment type;
 
   BuildEnvironment(this.type);
 
@@ -52,7 +55,7 @@ class BuildEnvironment {
 
   Future<void> setEnv() async {
     switch (type) {
-      case FlavourType.development:
+      case AppEnvironment.dev:
         env = await development;
         break;
       default:

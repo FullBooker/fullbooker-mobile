@@ -4,12 +4,11 @@ import 'dart:io';
 import 'package:fullbooker/core/db.dart';
 import 'package:fullbooker/core/environments.dart';
 import 'package:fullbooker/core/exceptions.dart';
+import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:fullbooker/core/models.dart';
 import 'package:sembast/sembast.dart';
-
-enum RepositoryMode { onlineFirst, offlineFirst }
 
 class CRUDRepository<T extends Model> {
   String path;

@@ -1,18 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/environments.dart';
+import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/features/auth/pages/login.dart';
 import 'package:fullbooker/features/host/pages/summary.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-Future<void> setupEnvironment() async {
-  const String envString = String.fromEnvironment('ENV');
-  final FlavourType envFlavour = FlavourType.values.firstWhere(
-    (FlavourType value) => value.toString() == 'FlavourType.$envString',
-    orElse: () => FlavourType.development,
-  );
-  final BuildEnvironment envBuilder = BuildEnvironment(envFlavour);
-  await envBuilder.setEnv();
-}
 
 Future<void> main() async {
   FlutterError.onError = (FlutterErrorDetails details) {
