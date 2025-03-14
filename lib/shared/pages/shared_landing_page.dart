@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/shared/pages/overview_page.dart';
 
+@RoutePage()
 class SharedLandingPage extends StatelessWidget {
   const SharedLandingPage({super.key});
 

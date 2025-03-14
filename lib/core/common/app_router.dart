@@ -9,5 +9,6 @@ class AppRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => <AutoRoute>[
         AutoRoute(page: ConsumerLandingRoute.page, initial: true),
+        AutoRoute(page: SharedLandingRoute.page),
       ];
 }
