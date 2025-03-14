@@ -1,9 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/features/host/controllers/product_controller.dart';
 import 'package:fullbooker/features/host/models/product.dart';
-import 'package:fullbooker/features/host/pages/category_selection_page.dart';
-import 'package:fullbooker/features/host/pages/host_product_summary_page.dart';
 import 'package:fullbooker/shared/entities/data_mocks.dart';
 import 'package:fullbooker/shared/entities/event_creation_model.dart';
 import 'package:fullbooker/shared/widgets/event_creation_steps.dart';
@@ -40,22 +39,11 @@ class _EventsSummaryPageState extends State<EventsSummaryPage> {
             setState(() => hasLoaded = true);
             return;
           }
-          Navigator.of(context).push(
-            MaterialPageRoute<HostProductSummaryPage>(
-              builder: (_) => HostProductSummaryPage(host: host['id']),
-            ),
-          );
+
+          context.router.push(HostProductSummaryRoute(host: host['id']));
         });
       });
     });
-  }
-
-  void goToCategorySelection(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute<CategorySelectionPage>(
-        builder: (BuildContext context) => const CategorySelectionPage(),
-      ),
-    );
   }
 
   @override
@@ -93,7 +81,7 @@ class _EventsSummaryPageState extends State<EventsSummaryPage> {
                       vertical: 30,
                     ),
                     child: Button(
-                      () => goToCategorySelection(context),
+                      () => context.router.push(CategorySelectionRoute()),
                       actionLabel: 'Continue',
                     ),
                   ),

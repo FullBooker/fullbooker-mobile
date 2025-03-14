@@ -3,11 +3,10 @@ import 'dart:io';
 import 'package:auto_route/auto_route.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/features/host/controllers/product_controller.dart';
 import 'package:fullbooker/features/host/models/product.dart';
-import 'package:fullbooker/features/host/pages/activity_pricing_page.dart';
-import 'package:fullbooker/features/host/pages/event_category_page.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
@@ -91,22 +90,10 @@ class _VideoSelectionPageState extends State<VideoSelectionPage> {
       if (media != null) {
         switch (widget.type) {
           case ProductTypes.Event:
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              Navigator.of(context).push(
-                MaterialPageRoute<EventCategoryPage>(
-                  builder: (_) => EventCategoryPage(product: widget.product),
-                ),
-              );
-            });
+            context.router.push(EventCategoryRoute(product: widget.product));
             break;
           case ProductTypes.Activity:
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              Navigator.of(context).push(
-                MaterialPageRoute<ActivityPricingPage>(
-                  builder: (_) => ActivityPricingPage(product: widget.product),
-                ),
-              );
-            });
+            context.router.push(ActivityPricingRoute(product: widget.product));
             break;
         }
       }

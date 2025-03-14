@@ -1,6 +1,6 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:fullbooker/features/auth/pages/login_page.dart';
-import 'package:fullbooker/features/host/pages/events_summary_page.dart';
+import 'package:fullbooker/core/common/app_router.gr.dart';
 
 class StandardNavBar extends StatelessWidget implements PreferredSizeWidget {
   final bool showSearchBar;
@@ -26,24 +26,6 @@ class StandardNavBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize => Size.fromHeight(height);
-
-  void goToLogin(BuildContext context) {
-    return WidgetsBinding.instance.addPostFrameCallback((_) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute<LoginPage>(builder: (_) => const LoginPage()),
-      );
-    });
-  }
-
-  void goToHosting(BuildContext context) {
-    return WidgetsBinding.instance.addPostFrameCallback((_) {
-      Navigator.of(context).push(
-        MaterialPageRoute<EventsSummaryPage>(
-          builder: (_) => const EventsSummaryPage(),
-        ),
-      );
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +111,7 @@ class StandardNavBar extends StatelessWidget implements PreferredSizeWidget {
               itemBuilder: (BuildContext context) {
                 return <PopupMenuEntry<Widget>>[
                   PopupMenuItem<Widget>(
-                    onTap: () => goToLogin(context),
+                    onTap: () => context.router.replace(LoginRoute()),
                     child: const Row(
                       children: <Widget>[
                         Icon(Icons.person, color: Color(0xf0FC8135)),
@@ -138,7 +120,7 @@ class StandardNavBar extends StatelessWidget implements PreferredSizeWidget {
                     ),
                   ),
                   PopupMenuItem<Widget>(
-                    onTap: () => goToHosting(context),
+                    onTap: () => context.router.push(EventsSummaryRoute()),
                     child: const Row(
                       children: <Widget>[
                         Icon(Icons.home, color: Color(0xf0FC8135)),

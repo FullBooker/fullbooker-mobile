@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/features/host/controllers/product_controller.dart';
 import 'package:fullbooker/features/host/models/product.dart';
-import 'package:fullbooker/features/host/pages/category_selection_page.dart';
 import 'package:fullbooker/shared/entities/activities_table_widget.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
@@ -30,16 +30,6 @@ class _HostProductSummaryPageState extends State<HostProductSummaryPage> {
   void initState() {
     super.initState();
     _fetchProducts();
-  }
-
-  void onContinueClick(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Navigator.of(context).push(
-        MaterialPageRoute<CategorySelectionPage>(
-          builder: (_) => const CategorySelectionPage(),
-        ),
-      );
-    });
   }
 
   Future<void> _fetchProducts() async {
@@ -123,7 +113,7 @@ class _HostProductSummaryPageState extends State<HostProductSummaryPage> {
               padding:
                   EdgeInsets.symmetric(horizontal: width / 8, vertical: 30),
               child: Button(
-                () => onContinueClick(context),
+                () => context.router.push(CategorySelectionRoute()),
                 actionLabel: 'New Product',
               ),
             ),

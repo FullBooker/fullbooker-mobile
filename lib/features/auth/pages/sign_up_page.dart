@@ -2,8 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/features/auth/controllers/login.dart';
-import 'package:fullbooker/features/auth/pages/login_page.dart';
 import 'package:fullbooker/features/consumer/pages/consumer_landing_page.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:fullbooker/shared/widgets/divider.dart';
@@ -33,14 +33,6 @@ class SignUpPageState extends State<SignUpPage> {
   String errorMessage = '';
   bool signedUp = false;
 
-  void goToLogIn(BuildContext context) {
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute<LoginPage>(
-        builder: (BuildContext context) => const LoginPage(),
-      ),
-    );
-  }
-
   void signup(BuildContext context) {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
@@ -63,7 +55,7 @@ class SignUpPageState extends State<SignUpPage> {
         });
         errOuter = err;
       });
-      if (errOuter == null && signedUp) goToLogIn(context);
+      if (errOuter == null && signedUp) context.router.replace(LoginRoute());
     }
   }
 
@@ -266,7 +258,8 @@ class SignUpPageState extends State<SignUpPage> {
                             text: 'Login',
                             style: const TextStyle(color: Color(0xf015B9FF)),
                             recognizer: TapGestureRecognizer()
-                              ..onTap = () => goToLogIn(context),
+                              ..onTap =
+                                  () => context.router.replace(LoginRoute()),
                           ),
                         ],
                       ),

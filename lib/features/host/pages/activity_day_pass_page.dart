@@ -1,10 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/features/host/controllers/currency_controller.dart';
 import 'package:fullbooker/features/host/models/currency.dart';
 import 'package:fullbooker/features/host/models/product.dart';
-import 'package:fullbooker/features/host/pages/activity_subscription_page.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/session_pricing.dart';
 import 'package:fullbooker/shared/widgets/custom_switch_widget.dart';
@@ -53,28 +53,24 @@ class _ActivityDayPass extends State<ActivityDayPassPage> {
         return;
       }
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        Navigator.of(context).push(
-          MaterialPageRoute<ActivitySubscriptionPage>(
-            builder: (_) => ActivitySubscriptionPage(
-              product: widget.product,
-              dayPassPricing: SessionPricing(
-                price: double.parse(priceController.text),
-                maxTickets: int.parse(amountController.text),
-                currency: selectedCurrency!,
-              ),
-              sessionPricing: widget.sessionPricing,
+        context.router.push(
+          ActivitySubscriptionRoute(
+            product: widget.product,
+            dayPassPricing: SessionPricing(
+              price: double.parse(priceController.text),
+              maxTickets: int.parse(amountController.text),
+              currency: selectedCurrency!,
             ),
+            sessionPricing: widget.sessionPricing,
           ),
         );
       });
     }
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Navigator.of(context).push(
-        MaterialPageRoute<ActivitySubscriptionPage>(
-          builder: (_) => ActivitySubscriptionPage(
-            product: widget.product,
-            sessionPricing: widget.sessionPricing,
-          ),
+      context.router.push(
+        ActivitySubscriptionRoute(
+          product: widget.product,
+          sessionPricing: widget.sessionPricing,
         ),
       );
     });

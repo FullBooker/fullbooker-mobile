@@ -1,10 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/features/host/controllers/currency_controller.dart';
 import 'package:fullbooker/features/host/models/currency.dart';
 import 'package:fullbooker/features/host/models/product.dart';
-import 'package:fullbooker/features/host/pages/activity_day_pass_page.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/session_pricing.dart';
 import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
@@ -45,20 +45,16 @@ class _ActivityPricingPageState extends State<ActivityPricingPage> {
       return;
     }
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Navigator.of(context).push(
-        MaterialPageRoute<ActivityDayPassPage>(
-          builder: (_) => ActivityDayPassPage(
-            product: widget.product,
-            sessionPricing: SessionPricing(
-              price: double.parse(priceController.text),
-              maxTickets: int.parse(amountController.text),
-              currency: selectedCurrency!,
-            ),
-          ),
+    context.router.push(
+      ActivityDayPassRoute(
+        product: widget.product,
+        sessionPricing: SessionPricing(
+          price: double.parse(priceController.text),
+          maxTickets: int.parse(amountController.text),
+          currency: selectedCurrency!,
         ),
-      );
-    });
+      ),
+    );
   }
 
   @override

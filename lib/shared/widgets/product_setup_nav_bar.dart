@@ -1,7 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
-import 'package:fullbooker/features/auth/pages/login_page.dart';
-import 'package:fullbooker/features/consumer/pages/consumer_landing_page.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 
 class ProductSetupNavBar extends StatelessWidget
@@ -20,24 +20,6 @@ class ProductSetupNavBar extends StatelessWidget
     this.height = 50,
     this.title,
   });
-
-  void goToLogin(BuildContext context) {
-    return WidgetsBinding.instance.addPostFrameCallback((_) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute<LoginPage>(builder: (_) => const LoginPage()),
-      );
-    });
-  }
-
-  void goToConsumer(BuildContext context) {
-    return WidgetsBinding.instance.addPostFrameCallback((_) {
-      Navigator.of(context).push(
-        MaterialPageRoute<ConsumerLandingPage>(
-          builder: (_) => const ConsumerLandingPage(),
-        ),
-      );
-    });
-  }
 
   @override
   Size get preferredSize => Size.fromHeight(height);
@@ -85,7 +67,7 @@ class ProductSetupNavBar extends StatelessWidget
             itemBuilder: (BuildContext context) {
               return <PopupMenuEntry<Widget>>[
                 PopupMenuItem<Widget>(
-                  onTap: () => goToLogin(context),
+                  onTap: () => context.router.replace(LoginRoute()),
                   child: const Row(
                     children: <Widget>[
                       Icon(Icons.person, color: Color(0xf0FC8135)),
@@ -94,7 +76,7 @@ class ProductSetupNavBar extends StatelessWidget
                   ),
                 ),
                 PopupMenuItem<Widget>(
-                  onTap: () => goToConsumer(context),
+                  onTap: () => context.router.push(ConsumerLandingRoute()),
                   child: const Row(
                     children: <Widget>[
                       Icon(Icons.home, color: Color(0xf0FC8135)),

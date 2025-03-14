@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/features/host/controllers/category_controller.dart';
 import 'package:fullbooker/features/host/models/sub_category_model.dart';
-import 'package:fullbooker/features/host/pages/product_details_page.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
@@ -51,26 +51,23 @@ class CategorySelectionPageState extends State<CategorySelectionPage> {
         ),
       );
     }
-    Navigator.of(context).push(
-      MaterialPageRoute<ProductDetailsPage>(
-        builder: (_) {
-          final ProductTypes type =
-              _mapCategoryToType(selectedSubCatParent!.title);
-          return ProductDetailsPage(selectedSubCat!, productType: type);
-        },
+    context.router.push(
+      ProductDetailsRoute(
+        category: selectedSubCat!,
+        productType: _mapCategoryToType(selectedSubCatParent!.title),
       ),
     );
   }
 
   void optionSelected(SubCategory subCat, Category subCatParent) {
     final ProductTypes type = _mapCategoryToType(subCatParent.title);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Navigator.of(context).push(
-        MaterialPageRoute<ProductDetailsPage>(
-          builder: (_) => ProductDetailsPage(subCat, productType: type),
-        ),
-      );
-    });
+
+    context.router.push(
+      ProductDetailsRoute(
+        category: subCat,
+        productType: type,
+      ),
+    );
   }
 
   ProductTypes _mapCategoryToType(String categoryName) {

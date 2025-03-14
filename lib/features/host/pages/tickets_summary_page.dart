@@ -1,10 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/features/host/controllers/product_controller.dart';
 import 'package:fullbooker/features/host/models/currency.dart';
 import 'package:fullbooker/features/host/models/product.dart';
-import 'package:fullbooker/features/host/pages/host_product_summary_page.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
@@ -59,14 +59,9 @@ class _TicketsSummaryPageState extends State<TicketsSummaryPage> {
         return;
       } else {
         setState(() => isLoading = false);
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          Navigator.of(context).push(
-            MaterialPageRoute<HostProductSummaryPage>(
-              builder: (_) =>
-                  HostProductSummaryPage(host: widget.product.host.id),
-            ),
-          );
-        });
+
+        context.router
+            .push(HostProductSummaryRoute(host: widget.product.host.id));
       }
     });
   }

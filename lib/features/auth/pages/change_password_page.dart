@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/features/auth/controllers/login.dart';
-import 'package:fullbooker/features/auth/pages/login_page.dart';
 import 'package:fullbooker/shared/validators.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:fullbooker/shared/widgets/information_modal.dart';
@@ -36,17 +36,9 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
           title: 'PASSWORD RESET SUCCESSFULLY',
           message: const Text('You have reset your password successfully'),
           actionTitle: 'Home',
-          action: () => goToLogin(context),
+          action: () => context.router.replace(LoginRoute()),
         );
       },
-    );
-  }
-
-  void goToLogin(BuildContext context) {
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute<LoginPage>(
-        builder: (BuildContext context) => const LoginPage(),
-      ),
     );
   }
 
@@ -55,9 +47,7 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _dialogBuilder(context).then((_) {
         if (!context.mounted) return;
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute<LoginPage>(builder: (_) => const LoginPage()),
-        );
+        context.router.replace(LoginRoute());
       });
     });
   }

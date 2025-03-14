@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:fullbooker/features/consumer/pages/event_details_page.dart';
 import 'package:fullbooker/features/consumer/utils.dart';
 import 'package:fullbooker/features/consumer/widgets/category_conveyer_widget.dart';
 import 'package:fullbooker/features/consumer/widgets/events_section_widget.dart';
@@ -26,21 +25,6 @@ class _ConsumerLandingPageState extends State<ConsumerLandingPage> {
   List<Product>? products;
   Map<String, Category>? categories;
   bool isLoading = false;
-
-  void goToEventDetails(Product event, String locationName) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Navigator.of(context).push(
-        MaterialPageRoute<EventDetailsPage>(
-          builder: (_) {
-            return EventDetailsPage(
-              event: event,
-              productLocationName: locationName,
-            );
-          },
-        ),
-      );
-    });
-  }
 
   @override
   void initState() {

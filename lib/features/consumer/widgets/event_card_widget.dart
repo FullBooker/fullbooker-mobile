@@ -1,8 +1,9 @@
 import 'dart:math';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/utils.dart';
-import 'package:fullbooker/features/consumer/pages/event_details_page.dart';
 import 'package:fullbooker/features/consumer/widgets/event_meta_widget.dart';
 import 'package:fullbooker/features/host/models/product.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
@@ -30,21 +31,6 @@ class _EventCardWidgetState extends State<EventCardWidget> {
   void initState() {
     super.initState();
     fetchLocationName();
-  }
-
-  void goToEventDetails(Product event) {
-    //WidgetsBinding.instance.addPostFrameCallback((_) {
-    Navigator.of(context).push(
-      MaterialPageRoute<EventDetailsPage>(
-        builder: (_) {
-          return EventDetailsPage(
-            event: event,
-            productLocationName: locationName!,
-          );
-        },
-      ),
-    );
-    //});
   }
 
   Future<void> fetchLocationName() async {
@@ -251,7 +237,12 @@ class _EventCardWidgetState extends State<EventCardWidget> {
                           width: double.infinity,
                           child: Button(
                             widget.onBuyClick ??
-                                () => goToEventDetails(widget.product),
+                                () => context.router.push(
+                                      EventDetailsRoute(
+                                        event: widget.product,
+                                        productLocationName: locationName!,
+                                      ),
+                                    ),
                             actionLabel: 'Buy Ticket',
                             verticalPadding: 4,
                             elevation: 0,

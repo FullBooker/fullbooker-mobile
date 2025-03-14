@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/features/host/controllers/product_controller.dart';
 import 'package:fullbooker/features/host/models/product.dart';
-import 'package:fullbooker/features/host/pages/image_selection_page.dart';
 import 'package:fullbooker/shared/entities/date_group.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/event_time_selection_card.dart';
@@ -65,13 +65,7 @@ class _DateSelectionPageState extends State<DateSelectionPage> {
         .then((Map<String, Object?>? availability) {
       setState(() => isLoading = false);
       if (availability != null) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          Navigator.of(context).push(
-            MaterialPageRoute<ImageSelectionPage>(
-              builder: (_) => ImageSelectionPage(product: widget.product),
-            ),
-          );
-        });
+        context.router.push(ImageSelectionRoute(product: widget.product));
       } else {
         showSnackBar('Please ensure start date is before end date');
       }
