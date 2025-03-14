@@ -6,7 +6,7 @@ import 'package:fullbooker/features/host/models/days.dart';
 import 'package:fullbooker/features/host/models/product.dart';
 import 'package:fullbooker/features/host/pages/image_selection.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
-import 'package:fullbooker/shared/widgets/appbar.dart';
+import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:fullbooker/shared/widgets/card.dart';
 import 'package:fullbooker/shared/widgets/divider.dart';

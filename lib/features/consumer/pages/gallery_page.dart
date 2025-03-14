@@ -4,7 +4,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:fullbooker/features/consumer/widgets/event_title_widget.dart';
 import 'package:fullbooker/features/consumer/pages/full_screen_image_page.dart';
 import 'package:fullbooker/shared/entities/data_mocks.dart';
-import 'package:fullbooker/shared/widgets/appbar.dart';
+import 'package:fullbooker/shared/widgets/standard_nav_bar.dart';
 
 class GalleryPage extends StatefulWidget {
   final List<String> images;

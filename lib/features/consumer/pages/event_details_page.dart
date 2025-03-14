@@ -12,8 +12,8 @@ import 'package:fullbooker/features/consumer/widgets/review_card_widget.dart';
 import 'package:fullbooker/features/consumer/widgets/ticket_booking_widget.dart';
 import 'package:fullbooker/features/host/models/product.dart';
 import 'package:fullbooker/shared/entities/data_mocks.dart';
-import 'package:fullbooker/shared/widgets/appbar.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
+import 'package:fullbooker/shared/widgets/standard_nav_bar.dart';
 import 'package:map_location_picker/map_location_picker.dart';
 import 'package:shimmer/shimmer.dart';
 

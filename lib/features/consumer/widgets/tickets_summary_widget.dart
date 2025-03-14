@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/ticket.dart';
 
@@ -100,7 +101,7 @@ class _TicketsSummaryWidgetState extends State<TicketsSummaryWidget> {
                   DataCell(
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xf0F55E00),
+                        backgroundColor: AppColors.primaryColor,
                         padding: EdgeInsets.zero,
                         shape: const RoundedRectangleBorder(),
                         tapTargetSize: MaterialTapTargetSize.shrinkWrap,

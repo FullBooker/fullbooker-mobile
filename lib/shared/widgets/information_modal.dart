@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:fullbooker/shared/widgets/divider.dart';
 
@@ -20,7 +21,7 @@ class InformationModal extends StatelessWidget {
     this.actionTitle = '',
     this.height = 230,
     this.withSuccessTick = true,
-    this.topDividerColor = const Color(0xfff55E00),
+    this.topDividerColor = AppColors.primaryColor,
     this.topDividerHeight = 3,
   });
 

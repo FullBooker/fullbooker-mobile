@@ -8,7 +8,7 @@ import 'package:fullbooker/features/host/controllers/category_controller.dart';
 import 'package:fullbooker/features/host/controllers/product_controller.dart';
 import 'package:fullbooker/features/host/models/categories.dart';
 import 'package:fullbooker/features/host/models/product.dart';
-import 'package:fullbooker/shared/widgets/appbar.dart';
+import 'package:fullbooker/shared/widgets/standard_nav_bar.dart';
 import 'package:shimmer/shimmer.dart';
 
 class LandingPage extends StatefulWidget {

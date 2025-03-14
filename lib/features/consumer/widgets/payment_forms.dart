@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/shared/entities/data_mocks.dart';
 
 class PaymentForm extends StatefulWidget {
@@ -190,7 +191,7 @@ class _PaymentFormState extends State<PaymentForm> {
       height: 50,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xf0F55E00),
+          backgroundColor: AppColors.primaryColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
