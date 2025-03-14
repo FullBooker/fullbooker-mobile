@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fullbooker/features/host/controllers/product_controller.dart';
-import 'package:fullbooker/features/host/models/categories.dart';
 import 'package:fullbooker/features/host/models/product.dart';
+import 'package:fullbooker/features/host/models/sub_category_model.dart';
 import 'package:fullbooker/features/host/pages/location_selection.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/appbar.dart';
