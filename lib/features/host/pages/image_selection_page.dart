@@ -4,7 +4,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/features/host/controllers/product_controller.dart';
 import 'package:fullbooker/features/host/models/product.dart';
-import 'package:fullbooker/features/host/pages/video_selection.dart';
+import 'package:fullbooker/features/host/pages/video_selection_page.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
@@ -12,8 +12,8 @@ import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:fullbooker/shared/widgets/card.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
 
-class ImageSelection extends StatefulWidget {
-  const ImageSelection({
+class ImageSelectionPage extends StatefulWidget {
+  const ImageSelectionPage({
     super.key,
     required this.product,
     this.type = ProductTypes.Event,
@@ -23,10 +23,10 @@ class ImageSelection extends StatefulWidget {
   final ProductTypes type;
 
   @override
-  State<StatefulWidget> createState() => _ImageSelectionState();
+  State<StatefulWidget> createState() => _ImageSelectionPageState();
 }
 
-class _ImageSelectionState extends State<ImageSelection> {
+class _ImageSelectionPageState extends State<ImageSelectionPage> {
   List<File> images = <File>[];
   bool isLoading = false;
   ProductViewModel productViewModel = ProductViewModel();
@@ -36,9 +36,7 @@ class _ImageSelectionState extends State<ImageSelection> {
       SnackBar(
         action: SnackBarAction(
           label: 'Dismiss',
-          onPressed: () {
-            // Code to execute.
-          },
+          onPressed: () {},
         ),
         content: Text(message),
         duration: const Duration(milliseconds: 5000),
@@ -110,9 +108,11 @@ class _ImageSelectionState extends State<ImageSelection> {
       if (media != null) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           Navigator.of(context).push(
-            MaterialPageRoute<VideoSelection>(
-              builder: (_) =>
-                  VideoSelection(product: widget.product, type: widget.type),
+            MaterialPageRoute<VideoSelectionPage>(
+              builder: (_) => VideoSelectionPage(
+                product: widget.product,
+                type: widget.type,
+              ),
             ),
           );
         });

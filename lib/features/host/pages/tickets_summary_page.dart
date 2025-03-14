@@ -3,7 +3,7 @@ import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/features/host/controllers/product_controller.dart';
 import 'package:fullbooker/features/host/models/currency.dart';
 import 'package:fullbooker/features/host/models/product.dart';
-import 'package:fullbooker/features/host/pages/host_product_summary.dart';
+import 'package:fullbooker/features/host/pages/host_product_summary_page.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
@@ -11,8 +11,8 @@ import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:fullbooker/shared/widgets/card.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
 
-class TicketsSummary extends StatefulWidget {
-  const TicketsSummary({
+class TicketsSummaryPage extends StatefulWidget {
+  const TicketsSummaryPage({
     super.key,
     required this.product,
     required this.prices,
@@ -28,10 +28,10 @@ class TicketsSummary extends StatefulWidget {
   final List<String> selectedCategories;
 
   @override
-  State<StatefulWidget> createState() => _TicketsSummaryState();
+  State<StatefulWidget> createState() => _TicketsSummaryPageState();
 }
 
-class _TicketsSummaryState extends State<TicketsSummary> {
+class _TicketsSummaryPageState extends State<TicketsSummaryPage> {
   bool isLoading = false;
   ProductViewModel productController = ProductViewModel();
 

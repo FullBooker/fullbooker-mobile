@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fullbooker/shared/entities/event_creation_model.dart';
 import 'package:fullbooker/shared/entities/overview_step.dart';
 
 List<OverviewStep> defaultSteps = <OverviewStep>[
@@ -97,4 +98,23 @@ final List<String> mockImageUrls = <String>[
   'https://i.imgur.com/ZpJwjtd.png',
   'https://i.imgur.com/dnrQX0i.png',
   'https://i.imgur.com/wVU5Evt.png',
+];
+
+const List<EventCreationStepModel> eventCreationSteps =
+    <EventCreationStepModel>[
+  EventCreationStepModel(
+    1,
+    'Tell us about your product',
+    'What activities do you have?  When do they happen?  Where are they located?',
+  ),
+  EventCreationStepModel(
+    2,
+    'Upload Photos and videos of your product',
+    'A picture is worth a thousand words, share photos and videos that showcase your products',
+  ),
+  EventCreationStepModel(
+    3,
+    'Publish Your Product',
+    'Make it official, publish your product and start selling',
+  ),
 ];

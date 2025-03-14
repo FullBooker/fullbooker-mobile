@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fullbooker/features/host/controllers/category_controller.dart';
 import 'package:fullbooker/features/host/models/sub_category_model.dart';
-import 'package:fullbooker/features/host/pages/product_details.dart';
+import 'package:fullbooker/features/host/pages/product_details_page.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
@@ -50,11 +50,11 @@ class CategorySelectionPageState extends State<CategorySelectionPage> {
       );
     }
     Navigator.of(context).push(
-      MaterialPageRoute<ProductDetails>(
+      MaterialPageRoute<ProductDetailsPage>(
         builder: (_) {
           final ProductTypes type =
               _mapCategoryToType(selectedSubCatParent!.title);
-          return ProductDetails(selectedSubCat!, productType: type);
+          return ProductDetailsPage(selectedSubCat!, productType: type);
         },
       ),
     );
@@ -64,8 +64,8 @@ class CategorySelectionPageState extends State<CategorySelectionPage> {
     final ProductTypes type = _mapCategoryToType(subCatParent.title);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Navigator.of(context).push(
-        MaterialPageRoute<ProductDetails>(
-          builder: (_) => ProductDetails(subCat, productType: type),
+        MaterialPageRoute<ProductDetailsPage>(
+          builder: (_) => ProductDetailsPage(subCat, productType: type),
         ),
       );
     });

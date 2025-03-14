@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fullbooker/features/host/controllers/product_controller.dart';
 import 'package:fullbooker/features/host/models/product.dart';
-import 'package:fullbooker/features/host/pages/image_selection.dart';
+import 'package:fullbooker/features/host/pages/image_selection_page.dart';
 import 'package:fullbooker/shared/entities/date_group.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/event_time_selection_card.dart';
@@ -65,8 +65,8 @@ class _DateSelectionPageState extends State<DateSelectionPage> {
       if (availability != null) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           Navigator.of(context).push(
-            MaterialPageRoute<ImageSelection>(
-              builder: (_) => ImageSelection(product: widget.product),
+            MaterialPageRoute<ImageSelectionPage>(
+              builder: (_) => ImageSelectionPage(product: widget.product),
             ),
           );
         });

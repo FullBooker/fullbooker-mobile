@@ -4,7 +4,7 @@ import 'package:fullbooker/features/host/controllers/currency_controller.dart';
 import 'package:fullbooker/features/host/controllers/product_controller.dart';
 import 'package:fullbooker/features/host/models/currency.dart';
 import 'package:fullbooker/features/host/models/product.dart';
-import 'package:fullbooker/features/host/pages/host_product_summary.dart';
+import 'package:fullbooker/features/host/pages/host_product_summary_page.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/session_pricing.dart';
 import 'package:fullbooker/shared/widgets/custom_switch_widget.dart';

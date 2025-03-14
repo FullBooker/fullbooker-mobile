@@ -2,83 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:fullbooker/features/host/controllers/product_controller.dart';
 import 'package:fullbooker/features/host/models/product.dart';
 import 'package:fullbooker/features/host/pages/category_selection_page.dart';
+import 'package:fullbooker/shared/entities/activities_table_widget.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
-
-class ActivitiesTable extends StatelessWidget {
-  const ActivitiesTable({super.key, this.products = const <Product>[]});
-
-  final List<Product> products;
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: DataTable(
-        border: const TableBorder(
-          top: BorderSide(color: Colors.black12),
-          horizontalInside: BorderSide(color: Colors.black12),
-          verticalInside: BorderSide(color: Colors.black12),
-        ),
-        columnSpacing: 10,
-        horizontalMargin: 5,
-        columns: const <DataColumn>[
-          DataColumn(label: _TableHeaderText('Tracking Number')),
-          DataColumn(label: _TableHeaderText('Product Name')),
-          DataColumn(label: _TableHeaderText('Price')),
-          DataColumn(label: _TableHeaderText('Status')),
-          DataColumn(label: _TableHeaderText('Next Actions')),
-        ],
-        rows: products.map((Product product) {
-          return DataRow(
-            cells: <DataCell>[
-              DataCell(Text('#${product.number}', textAlign: TextAlign.center)),
-              DataCell(Text(product.name, textAlign: TextAlign.center)),
-              DataCell(
-                Text(
-                  product.pricing.isNotEmpty
-                      ? 'KES ${product.pricing.first.cost}'
-                      : '_',
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              DataCell(
-                Text(
-                  product.active ? 'Active' : 'Disabled',
-                  style: TextStyle(
-                    color: product.active ? Colors.green : Colors.red,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              const DataCell(
-                Text('Edit', style: TextStyle(color: Colors.orange)),
-              ),
-            ],
-          );
-        }).toList(),
-      ),
-    );
-  }
-}
-
-class _TableHeaderText extends StatelessWidget {
-  const _TableHeaderText(this.text);
-
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      text,
-      textAlign: TextAlign.center,
-      style: const TextStyle(fontWeight: FontWeight.bold),
-      softWrap: true,
-    );
-  }
-}
 
 class HostProductSummary extends StatefulWidget {
   const HostProductSummary({super.key, required this.host});
@@ -177,7 +105,7 @@ class _HostProductSummaryState extends State<HostProductSummary> {
                                           ),
                                         ),
                                       ),
-                                      ActivitiesTable(products: products!),
+                                      ActivitiesTableTable(products: products!),
                                     ],
                                   ),
                                 ),
