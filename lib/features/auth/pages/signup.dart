@@ -19,37 +19,41 @@ class SignUp extends StatefulWidget {
 }
 
 class SignUpState extends State<SignUp> {
-  final _formKey = GlobalKey<FormState>();
-  final nameController = TextEditingController();
-  final lastNameController = TextEditingController();
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  final confirmController = TextEditingController();
-  final phoneNumberController = TextEditingController();
-  final loginController = LoginViewModel();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmController = TextEditingController();
+  final TextEditingController phoneNumberController = TextEditingController();
+  final LoginViewModel loginController = LoginViewModel();
   bool isLoading = false;
-  String errorMessage = "";
+  String errorMessage = '';
   bool signedUp = false;
 
   void goToLogIn(BuildContext context) {
     Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (BuildContext context) => const Login()));
+      MaterialPageRoute<Login>(
+        builder: (BuildContext context) => const Login(),
+      ),
+    );
   }
 
   void signup(BuildContext context) {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      var errFuture = loginController.signup(
-          emailController.value.text,
-          phoneNumberController.value.text,
-          "${nameController.value.text} ${lastNameController.value.text}",
-          passwordController.value.text);
+      final Future<String?> errFuture = loginController.signup(
+        emailController.value.text,
+        phoneNumberController.value.text,
+        '${nameController.value.text} ${lastNameController.value.text}',
+        passwordController.value.text,
+      );
       String? errOuter;
       setState(() {
         isLoading = true;
-        errorMessage = "";
+        errorMessage = '';
       });
-      errFuture.then((err) {
+      errFuture.then((String? err) {
         setState(() {
           isLoading = false;
           if (err != null) errorMessage = err;
@@ -64,17 +68,19 @@ class SignUpState extends State<SignUp> {
   void goToEventsSummary(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (_) => const Landing()));
+        context,
+        MaterialPageRoute<Landing>(builder: (_) => const Landing()),
+      );
     });
   }
 
   void loginWithGoogle() {
-    var errFuture = loginController.signInWithGoogle();
+    final Future<String?> errFuture = loginController.signInWithGoogle();
     setState(() {
       isLoading = true;
-      errorMessage = "";
+      errorMessage = '';
     });
-    errFuture.then((err) {
+    errFuture.then((String? err) {
       setState(() {
         isLoading = false;
         if (err != null) errorMessage = err;
@@ -96,126 +102,178 @@ class SignUpState extends State<SignUp> {
     if (signedUp) goToEventsSummary(context);
 
     return Scaffold(
-        appBar: const StandardNavBar(
-            showSearchBar: false,
-            iconsColor: Colors.black,
-            pageTitle: "WELCOME",
-            showRightAction: false,
-            height: 36,
-            tileFontSize: 20,
-            titleFontWeight: FontWeight.w900,
-            backgroundColor: Colors.transparent),
-        backgroundColor: Colors.white,
-        body: Padding(
-          padding: const EdgeInsets.all(20),
-          child: ListView(children: [
+      appBar: const StandardNavBar(
+        showSearchBar: false,
+        iconsColor: Colors.black,
+        pageTitle: 'WELCOME',
+        showRightAction: false,
+        height: 36,
+        tileFontSize: 20,
+        titleFontWeight: FontWeight.w900,
+        backgroundColor: Colors.transparent,
+      ),
+      backgroundColor: Colors.white,
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: ListView(
+          children: <Widget>[
             const Padding(
-                padding: EdgeInsets.only(bottom: 20),
-                child: PageHeader("", "Sign Up",
-                    withLogo: true,
-                    headerPadding: 10,
-                    headerTopPadding: 0,
-                    pageTitleBottomPadding: 0)),
+              padding: EdgeInsets.only(bottom: 20),
+              child: PageHeader(
+                '',
+                'Sign Up',
+                headerPadding: 10,
+                headerTopPadding: 0,
+                pageTitleBottomPadding: 0,
+              ),
+            ),
             Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5),
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      children: [
-                        Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 5),
-                            child: StandardTextInput("First Name",
-                                labelPrefix: Icons.person,
-                                validator: validateNotEmpty,
-                                controller: nameController)),
-                        Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 5),
-                            child: StandardTextInput("Last Name",
-                                labelPrefix: Icons.person,
-                                validator: validateNotEmpty,
-                                controller: lastNameController)),
-                        Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 5),
-                            child: StandardTextInput("Email Address",
-                                labelPrefix: Icons.email_sharp,
-                                validator: validateEmail,
-                                controller: emailController)),
-                        Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 5),
-                            child: StandardTextInput("Phone Number",
-                                labelPrefix: Icons.phone,
-                                validator: validatePhoneNumber,
-                                controller: phoneNumberController,
-                                maxLength: 13,
-                                formatters: [
-                                  FilteringTextInputFormatter.digitsOnly
-                                ])),
-                        Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 5),
-                            child: StandardTextInput("Password",
-                                labelPrefix: Icons.key,
-                                isPassword: true,
-                                validator: validatePassword,
-                                controller: passwordController)),
-                        Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 5),
-                            child: StandardTextInput("Confirm Password",
-                                labelPrefix: Icons.key,
-                                isPassword: true,
-                                controller: confirmController,
-                                validator: (password) =>
-                                    validateConfirmPassword(password,
-                                        passwordController.value.text))),
-                        Center(
-                            child: (errorMessage == "")
-                                ? const SizedBox()
-                                : Padding(
-                                    padding: const EdgeInsets.all(20),
-                                    child: Text(errorMessage,
-                                        style: const TextStyle(
-                                            color: Colors.red)))),
-                        Padding(
-                            padding: const EdgeInsets.only(top: 20),
-                            child: Button(() => signup(context),
-                                loading: isLoading, actionLabel: "Sign Up")),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 15),
-                          child: LabeledDivider(Colors.black, 15,
-                              MediaQuery.of(context).size.width * 0.8, "Or"),
+              padding: const EdgeInsets.symmetric(vertical: 5),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width * 0.8,
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: StandardTextInput(
+                          'First Name',
+                          labelPrefix: Icons.person,
+                          validator: validateNotEmpty,
+                          controller: nameController,
                         ),
-                        Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 2),
-                            child: Button(
-                              loginWithGoogle,
-                              color: const Color(0xf0F5F4F4),
-                              actionLabel: "Sign up with Google",
-                              actionLabelPrefix: const Image(
-                                  image: AssetImage("assets/icons/google.png")),
-                              actionLabelColor: Colors.black,
-                            ))
-                      ],
-                    ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: StandardTextInput(
+                          'Last Name',
+                          labelPrefix: Icons.person,
+                          validator: validateNotEmpty,
+                          controller: lastNameController,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: StandardTextInput(
+                          'Email Address',
+                          labelPrefix: Icons.email_sharp,
+                          validator: validateEmail,
+                          controller: emailController,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: StandardTextInput(
+                          'Phone Number',
+                          labelPrefix: Icons.phone,
+                          validator: validatePhoneNumber,
+                          controller: phoneNumberController,
+                          maxLength: 13,
+                          formatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.digitsOnly,
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: StandardTextInput(
+                          'Password',
+                          labelPrefix: Icons.key,
+                          isPassword: true,
+                          validator: validatePassword,
+                          controller: passwordController,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: StandardTextInput(
+                          'Confirm Password',
+                          labelPrefix: Icons.key,
+                          isPassword: true,
+                          controller: confirmController,
+                          validator: (String? password) =>
+                              validateConfirmPassword(
+                            password,
+                            passwordController.value.text,
+                          ),
+                        ),
+                      ),
+                      Center(
+                        child: (errorMessage == '')
+                            ? const SizedBox()
+                            : Padding(
+                                padding: const EdgeInsets.all(20),
+                                child: Text(
+                                  errorMessage,
+                                  style: const TextStyle(
+                                    color: Colors.red,
+                                  ),
+                                ),
+                              ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20),
+                        child: Button(
+                          () => signup(context),
+                          loading: isLoading,
+                          actionLabel: 'Sign Up',
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 15),
+                        child: LabeledDivider(
+                          Colors.black,
+                          15,
+                          MediaQuery.of(context).size.width * 0.8,
+                          'Or',
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 2),
+                        child: Button(
+                          loginWithGoogle,
+                          color: const Color(0xf0F5F4F4),
+                          actionLabel: 'Sign up with Google',
+                          actionLabelPrefix: const Image(
+                            image: AssetImage('assets/icons/google.png'),
+                          ),
+                          actionLabelColor: Colors.black,
+                        ),
+                      ),
+                    ],
                   ),
-                )),
-            Column(children: [
-              Center(
+                ),
+              ),
+            ),
+            Column(
+              children: <Widget>[
+                Center(
                   child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 4),
-                      child: RichText(
-                          text: TextSpan(children: [
-                        const TextSpan(
-                            text: "Already have an account ? ",
-                            style: TextStyle(color: Colors.black)),
-                        TextSpan(
-                            text: "Login",
+                    padding: const EdgeInsets.symmetric(vertical: 4),
+                    child: RichText(
+                      text: TextSpan(
+                        children: <InlineSpan>[
+                          const TextSpan(
+                            text: 'Already have an account ? ',
+                            style: TextStyle(color: Colors.black),
+                          ),
+                          TextSpan(
+                            text: 'Login',
                             style: const TextStyle(color: Color(0xf015B9FF)),
                             recognizer: TapGestureRecognizer()
-                              ..onTap = () => goToLogIn(context))
-                      ]))))
-            ])
-          ]),
-        ));
+                              ..onTap = () => goToLogIn(context),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
