@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/features/auth/controllers/login.dart';
-import 'package:fullbooker/features/consumer/pages/consumer_landing_page.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:fullbooker/shared/widgets/divider.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
@@ -59,17 +58,6 @@ class SignUpPageState extends State<SignUpPage> {
     }
   }
 
-  void goToEventsSummary(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute<ConsumerLandingPage>(
-          builder: (_) => const ConsumerLandingPage(),
-        ),
-      );
-    });
-  }
-
   void loginWithGoogle() {
     final Future<String?> errFuture = loginController.signInWithGoogle();
     setState(() {
@@ -86,17 +74,15 @@ class SignUpPageState extends State<SignUpPage> {
   }
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (signedUp) goToEventsSummary(context);
+      if (signedUp) context.router.replace(ConsumerLandingRoute());
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (signedUp) goToEventsSummary(context);
-
     return Scaffold(
       appBar: const StandardNavBar(
         showSearchBar: false,

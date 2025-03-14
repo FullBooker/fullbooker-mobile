@@ -5,7 +5,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/features/auth/controllers/login.dart';
-import 'package:fullbooker/features/auth/pages/change_password_page.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
 import 'package:otp_pin_field/otp_pin_field.dart';
@@ -49,17 +48,6 @@ class VerifyOTPPageState extends State<VerifyOTPPage> {
     final int minutes = counter ~/ 60;
     final int seconds = counter % 60;
     return '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
-  }
-
-  void goToPasswordChange(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute<ChangePasswordPage>(
-          builder: (_) => ChangePasswordPage(widget.phoneNumber),
-        ),
-      );
-    });
   }
 
   void validateOTP(BuildContext context) {
@@ -112,7 +100,12 @@ class VerifyOTPPageState extends State<VerifyOTPPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (otpVerified) goToPasswordChange(context);
+    // TODO(abiud): this is wrong. change it in another refactor
+    if (otpVerified) {
+      context.router
+          .replace(ChangePasswordRoute(phoneNumber: widget.phoneNumber));
+    }
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(

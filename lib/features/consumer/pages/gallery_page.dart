@@ -2,8 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/features/consumer/widgets/event_title_widget.dart';
-import 'package:fullbooker/features/consumer/pages/image_preview_page.dart';
 import 'package:fullbooker/shared/entities/data_mocks.dart';
 import 'package:fullbooker/shared/widgets/standard_nav_bar.dart';
 
@@ -49,16 +49,7 @@ class GalleryPageState extends State<GalleryPage> {
 
   Widget _buildImageTile(BuildContext context, String imageUrl) {
     return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute<ImagePreviewPage>(
-            builder: (_) {
-              return ImagePreviewPage(imageUrl: imageUrl);
-            },
-          ),
-        );
-      },
+      onTap: () => context.router.push(ImagePreviewRoute(imageUrl: imageUrl)),
       child: Hero(
         tag: imageUrl,
         child: ClipRRect(
