@@ -3,7 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/features/consumer/pages/gallery_page.dart';
-import 'package:fullbooker/features/consumer/pages/landing_page.dart';
+import 'package:fullbooker/features/consumer/pages/consumer_landing_page.dart';
 import 'package:fullbooker/features/consumer/widgets/date_picker_widget.dart';
 import 'package:fullbooker/features/consumer/widgets/event_carousel_widget.dart';
 import 'package:fullbooker/features/consumer/widgets/host_details_widget.dart';
@@ -115,7 +115,9 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
 
   void goHome() {
     Navigator.of(context).push(
-      MaterialPageRoute<LandingPage>(builder: (_) => const LandingPage()),
+      MaterialPageRoute<ConsumerLandingPage>(
+        builder: (_) => const ConsumerLandingPage(),
+      ),
     );
   }
 
