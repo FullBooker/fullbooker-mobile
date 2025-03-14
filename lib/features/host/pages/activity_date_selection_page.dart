@@ -1,11 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/features/host/controllers/days_controller.dart';
 import 'package:fullbooker/features/host/controllers/product_controller.dart';
 import 'package:fullbooker/features/host/models/days.dart';
 import 'package:fullbooker/features/host/models/product.dart';
-import 'package:fullbooker/features/host/pages/image_selection_page.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
@@ -95,12 +95,10 @@ class _ActivityDateSelectionPageState extends State<ActivityDateSelectionPage> {
 
       setState(() => isLoading = false);
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        Navigator.of(context).push(
-          MaterialPageRoute<ImageSelectionPage>(
-            builder: (_) => ImageSelectionPage(
-              product: widget.product,
-              type: ProductTypes.Activity,
-            ),
+        context.router.push(
+          ImageSelectionRoute(
+            product: widget.product,
+            type: ProductTypes.Activity,
           ),
         );
       });

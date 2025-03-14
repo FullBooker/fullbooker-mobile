@@ -1,6 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/utils.dart';
-import 'package:fullbooker/features/consumer/pages/payment_summary_page.dart';
 import 'package:fullbooker/features/consumer/widgets/checkout_card_widget.dart';
 import 'package:fullbooker/features/consumer/widgets/ticket_form_widget.dart';
 import 'package:fullbooker/features/consumer/widgets/tickets_summary_widget.dart';
@@ -31,21 +32,6 @@ class _TicketBookingWidgetState extends State<TicketBookingWidget> {
   List<Ticket> tickets = <Ticket>[];
   ProductPricing? selectedPricings;
 
-  void goToCheckout() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Navigator.of(context).push(
-        MaterialPageRoute<PaymentSummaryPage>(
-          builder: (_) => PaymentSummaryPage(
-            product: widget.product,
-            locationName: widget.productLocationName,
-            tickets: tickets,
-            selectedDateTime: widget.selectedDate!,
-          ),
-        ),
-      );
-    });
-  }
-
   void checkout() {
     if (tickets.isEmpty) {
       showSnackBar('Please add at least one ticket', context);
@@ -55,7 +41,14 @@ class _TicketBookingWidgetState extends State<TicketBookingWidget> {
       showSnackBar('Please set a date', context);
       return;
     }
-    goToCheckout();
+    context.router.push(
+      PaymentSummaryRoute(
+        product: widget.product,
+        locationName: widget.productLocationName,
+        tickets: tickets,
+        selectedDateTime: widget.selectedDate!,
+      ),
+    );
   }
 
   void addTicket(Ticket ticket) {

@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:fullbooker/features/consumer/pages/payment_confirmation_page.dart';
+import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/features/consumer/widgets/mpesa_checkout_instructions_widget.dart';
 import 'package:fullbooker/features/consumer/widgets/payment_forms.dart';
 import 'package:fullbooker/features/host/models/product.dart';
@@ -31,17 +31,13 @@ class PaymentSummaryPage extends StatelessWidget {
         return InformationModal(
           message: MpesaCheckoutInstructionsWidget(ticket: tickets.first),
           actionTitle: 'Confirm Payment',
-          action: () {
-            Navigator.of(context).push(
-              MaterialPageRoute<PaymentConfirmationPage>(
-                builder: (_) => PaymentConfirmationPage(
-                  product: product,
-                  locationName: locationName,
-                  ticket: tickets[0],
-                ),
-              ),
-            );
-          },
+          action: () => context.router.push(
+            PaymentConfirmationRoute(
+              product: product,
+              locationName: locationName,
+              ticket: tickets[0],
+            ),
+          ),
           height: 330,
           withSuccessTick: false,
           topDividerColor: const Color(0xf02FBD6A),

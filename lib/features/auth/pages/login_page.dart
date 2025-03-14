@@ -2,9 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fullbooker/features/auth/pages/request_otp_page.dart';
-import 'package:fullbooker/features/auth/pages/sign_up_page.dart';
-import 'package:fullbooker/features/consumer/pages/consumer_landing_page.dart';
+import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:fullbooker/shared/widgets/divider.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
@@ -29,38 +27,6 @@ class LoginPageState extends State<LoginPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool loggedIn = false;
-
-  void goToSignUp(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute<SignUpPage>(
-        builder: (BuildContext context) => const SignUpPage(),
-      ),
-    );
-  }
-
-  void goToPasswordReset(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute<RequestOTPPage>(
-        builder: (BuildContext context) => const RequestOTPPage(),
-      ),
-    );
-  }
-
-  void goToEventsSummary(BuildContext context) {
-    if (widget.goBackToOrigin) {
-      WidgetsBinding.instance
-          .addPostFrameCallback((_) => Navigator.pop(context));
-      return;
-    }
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute<ConsumerLandingPage>(
-          builder: (_) => const ConsumerLandingPage(),
-        ),
-      );
-    });
-  }
 
   void login(String email, String password) {
     if (_formKey.currentState!.validate()) {
@@ -97,8 +63,6 @@ class LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (loggedIn) goToEventsSummary(context);
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
@@ -172,7 +136,8 @@ class LoginPageState extends State<LoginPage> {
                                 style:
                                     const TextStyle(color: Color(0xf015B9FF)),
                                 recognizer: TapGestureRecognizer()
-                                  ..onTap = () => goToPasswordReset(context),
+                                  ..onTap = () =>
+                                      context.router.push(RequestOTPRoute()),
                               ),
                             ],
                           ),
@@ -226,7 +191,7 @@ class LoginPageState extends State<LoginPage> {
                         text: 'Sign Up',
                         style: const TextStyle(color: Color(0xf015B9FF)),
                         recognizer: TapGestureRecognizer()
-                          ..onTap = () => goToSignUp(context),
+                          ..onTap = () => context.router.push(SignUpRoute()),
                       ),
                     ],
                   ),

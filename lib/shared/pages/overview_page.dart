@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:fullbooker/features/auth/pages/login_page.dart';
+import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/shared/entities/data_mocks.dart';
 import 'package:fullbooker/shared/entities/overview_step.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
@@ -30,11 +30,7 @@ class OverviewPageState extends State<OverviewPage> {
         currentStep += 1;
       });
     } else {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute<LoginPage>(
-          builder: (BuildContext context) => const LoginPage(),
-        ),
-      );
+      context.router.replace(LoginRoute());
     }
   }
 

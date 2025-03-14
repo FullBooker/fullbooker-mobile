@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/features/auth/controllers/login.dart';
 import 'package:fullbooker/features/auth/pages/change_password_page.dart';
-import 'package:fullbooker/features/auth/pages/request_otp_page.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
 import 'package:otp_pin_field/otp_pin_field.dart';
@@ -57,16 +57,6 @@ class VerifyOTPPageState extends State<VerifyOTPPage> {
         context,
         MaterialPageRoute<ChangePasswordPage>(
           builder: (_) => ChangePasswordPage(widget.phoneNumber),
-        ),
-      );
-    });
-  }
-
-  void goToRequestOtp(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute<RequestOTPPage>(
-          builder: (BuildContext context) => const RequestOTPPage(),
         ),
       );
     });
@@ -242,7 +232,8 @@ class VerifyOTPPageState extends State<VerifyOTPPage> {
                             text: 'email / phone number',
                             style: const TextStyle(color: Color(0xf015B9FF)),
                             recognizer: TapGestureRecognizer()
-                              ..onTap = () => goToRequestOtp(context),
+                              ..onTap = () =>
+                                  context.router.replace(RequestOTPRoute()),
                           ),
                         ],
                       ),

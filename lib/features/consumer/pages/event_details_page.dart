@@ -2,9 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/utils.dart';
-import 'package:fullbooker/features/consumer/pages/gallery_page.dart';
-import 'package:fullbooker/features/consumer/pages/consumer_landing_page.dart';
 import 'package:fullbooker/features/consumer/widgets/date_picker_widget.dart';
 import 'package:fullbooker/features/consumer/widgets/event_carousel_widget.dart';
 import 'package:fullbooker/features/consumer/widgets/host_details_widget.dart';
@@ -115,22 +114,6 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
     }
   }
 
-  void goHome() {
-    Navigator.of(context).push(
-      MaterialPageRoute<ConsumerLandingPage>(
-        builder: (_) => const ConsumerLandingPage(),
-      ),
-    );
-  }
-
-  void goToGallery() {
-    Navigator.of(context).push(
-      MaterialPageRoute<GalleryPage>(
-        builder: (_) => const GalleryPage(images: <String>[]),
-      ),
-    );
-  }
-
   Widget _buildShimmerEffect(double width) {
     return Shimmer.fromColors(
       baseColor: Colors.grey[300]!,
@@ -175,7 +158,8 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                     Stack(
                       children: <Widget>[
                         GestureDetector(
-                          onTap: () => goToGallery(),
+                          onTap: () => context.router
+                              .push(GalleryRoute(images: const <String>[])),
                           child: EventCarouselWidget(
                             product: widget.event,
                             actionLabel: 'View Map',
@@ -264,7 +248,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                           SizedBox(
                             width: width * 0.6,
                             child: SecondaryButton(
-                              goHome,
+                              () => context.router.push(ConsumerLandingRoute()),
                               actionLabel: 'Back Home',
                               elevation: 0,
                             ),

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:fullbooker/shared/pages/overview_page.dart';
+import 'package:fullbooker/core/common/app_router.gr.dart';
 
 @RoutePage()
 class SharedLandingPage extends StatelessWidget {
@@ -12,11 +12,7 @@ class SharedLandingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     Timer(
       const Duration(seconds: 3),
-      () => Navigator.of(context).pushReplacement(
-        MaterialPageRoute<OverviewPage>(
-          builder: (BuildContext context) => OverviewPage(),
-        ),
-      ),
+      () => context.router.replace(OverviewRoute()),
     );
 
     return const Scaffold(

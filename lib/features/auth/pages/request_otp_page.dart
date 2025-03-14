@@ -2,9 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/features/auth/controllers/login.dart';
-import 'package:fullbooker/features/auth/pages/login_page.dart';
-import 'package:fullbooker/features/auth/pages/verify_otp_page.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:fullbooker/shared/widgets/divider.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
@@ -28,24 +27,6 @@ class RequestOTPPageState extends State<RequestOTPPage> {
   String errorMessage = '';
   bool resetRequestSuccessful = false;
   late String otpChannel;
-
-  void goToLogin(BuildContext context) {
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute<LoginPage>(
-        builder: (BuildContext context) => const LoginPage(),
-      ),
-    );
-  }
-
-  void goToOTP(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute<VerifyOTPPage>(
-          builder: (_) => VerifyOTPPage(otpChannel),
-        ),
-      );
-    });
-  }
 
   void requestOTP(BuildContext context) {
     _formKey.currentState!.save();
@@ -79,7 +60,9 @@ class RequestOTPPageState extends State<RequestOTPPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (resetRequestSuccessful) goToOTP(context);
+    if (resetRequestSuccessful) {
+      context.router.replace(VerifyOTPRoute(phoneNumber: otpChannel));
+    }
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -184,7 +167,8 @@ class RequestOTPPageState extends State<RequestOTPPage> {
                             text: 'login',
                             style: const TextStyle(color: Color(0xf015B9FF)),
                             recognizer: TapGestureRecognizer()
-                              ..onTap = () => goToLogin(context),
+                              ..onTap =
+                                  () => context.router.replace(LoginRoute()),
                           ),
                         ],
                       ),

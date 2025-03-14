@@ -2,10 +2,9 @@ import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/features/host/controllers/product_controller.dart';
 import 'package:fullbooker/features/host/models/product.dart';
-import 'package:fullbooker/features/host/pages/activity_date_selection_page.dart';
-import 'package:fullbooker/features/host/pages/date_selection_page.dart';
 import 'package:fullbooker/shared/entities/bound.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
@@ -80,21 +79,17 @@ class _LocationSelectionPageState extends State<LocationSelectionPage> {
           setState(() => isLoading = false);
           WidgetsBinding.instance.addPostFrameCallback((_) {
             if (widget.productType == ProductTypes.Event) {
-              Navigator.of(context).push(
-                MaterialPageRoute<DateSelectionPage>(
-                  builder: (_) => DateSelectionPage(
-                    product: widget.product,
-                    location: location,
-                  ),
+              context.router.push(
+                DateSelectionRoute(
+                  product: widget.product,
+                  location: location,
                 ),
               );
             } else {
-              Navigator.of(context).push(
-                MaterialPageRoute<ActivityDateSelectionPage>(
-                  builder: (_) => ActivityDateSelectionPage(
-                    product: widget.product,
-                    location: location,
-                  ),
+              context.router.push(
+                ActivityDateSelectionRoute(
+                  product: widget.product,
+                  location: location,
                 ),
               );
             }

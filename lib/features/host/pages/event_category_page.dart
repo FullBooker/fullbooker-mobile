@@ -1,10 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/features/host/controllers/currency_controller.dart';
 import 'package:fullbooker/features/host/models/currency.dart';
 import 'package:fullbooker/features/host/models/product.dart';
-import 'package:fullbooker/features/host/pages/tickets_summary_page.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
@@ -78,15 +78,14 @@ class _EventCategoryPageState extends State<EventCategoryPage> {
       setState(() => isLoading = false);
       return;
     }
-    Navigator.of(context).push(
-      MaterialPageRoute<TicketsSummaryPage>(
-        builder: (_) => TicketsSummaryPage(
-          product: widget.product,
-          currency: selectedCurrency!,
-          prices: prices,
-          amounts: amounts,
-          selectedCategories: selectedCategories,
-        ),
+
+    context.router.push(
+      TicketsSummaryRoute(
+        product: widget.product,
+        currency: selectedCurrency!,
+        prices: prices,
+        amounts: amounts,
+        selectedCategories: selectedCategories,
       ),
     );
   }
