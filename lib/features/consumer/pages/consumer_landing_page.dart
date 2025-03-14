@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/features/consumer/pages/event_details_page.dart';
 import 'package:fullbooker/features/consumer/utils.dart';
@@ -11,14 +12,15 @@ import 'package:fullbooker/features/host/models/product.dart';
 import 'package:fullbooker/shared/widgets/standard_nav_bar.dart';
 import 'package:shimmer/shimmer.dart';
 
-class LandingPage extends StatefulWidget {
-  const LandingPage({super.key});
+@RoutePage()
+class ConsumerLandingPage extends StatefulWidget {
+  const ConsumerLandingPage({super.key});
 
   @override
-  State<StatefulWidget> createState() => _LandingPageState();
+  State<StatefulWidget> createState() => _ConsumerLandingPageState();
 }
 
-class _LandingPageState extends State<LandingPage> {
+class _ConsumerLandingPageState extends State<ConsumerLandingPage> {
   ProductViewModel productsController = ProductViewModel();
   CategoryViewModel categoriesController = CategoryViewModel();
   List<Product>? products;

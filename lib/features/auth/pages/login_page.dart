@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fullbooker/features/auth/pages/request_otp_page.dart';
 import 'package:fullbooker/features/auth/pages/sign_up_page.dart';
-import 'package:fullbooker/features/consumer/pages/landing_page.dart';
+import 'package:fullbooker/features/consumer/pages/consumer_landing_page.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:fullbooker/shared/widgets/divider.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
@@ -53,7 +53,9 @@ class LoginPageState extends State<LoginPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute<LandingPage>(builder: (_) => const LandingPage()),
+        MaterialPageRoute<ConsumerLandingPage>(
+          builder: (_) => const ConsumerLandingPage(),
+        ),
       );
     });
   }

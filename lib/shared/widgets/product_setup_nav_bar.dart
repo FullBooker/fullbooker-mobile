@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/features/auth/pages/login_page.dart';
-import 'package:fullbooker/features/consumer/pages/landing_page.dart';
+import 'package:fullbooker/features/consumer/pages/consumer_landing_page.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 
 class ProductSetupNavBar extends StatelessWidget
@@ -32,7 +32,9 @@ class ProductSetupNavBar extends StatelessWidget
   void goToConsumer(BuildContext context) {
     return WidgetsBinding.instance.addPostFrameCallback((_) {
       Navigator.of(context).push(
-        MaterialPageRoute<LandingPage>(builder: (_) => const LandingPage()),
+        MaterialPageRoute<ConsumerLandingPage>(
+          builder: (_) => const ConsumerLandingPage(),
+        ),
       );
     });
   }

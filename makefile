@@ -4,3 +4,8 @@ test:
 	flutter test --coverage && \
 	lcov -r coverage/lcov.info "lib/**.g.dart" "lib/**.freezed.dart" "lib/**.gr.dart" -o coverage/lcov.info --ignore-errors unused && \
 	genhtml coverage/lcov.info -o coverage
+
+
+.PHONY: generate
+generate:
+	dart run build_runner build --delete-conflicting-outputs

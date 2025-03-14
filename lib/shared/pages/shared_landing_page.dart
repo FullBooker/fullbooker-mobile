@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/shared/pages/overview_page.dart';
 
-class LandingPage extends StatelessWidget {
-  const LandingPage({super.key});
+class SharedLandingPage extends StatelessWidget {
+  const SharedLandingPage({super.key});
 
   @override
   Widget build(BuildContext context) {
