@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fullbooker/features/consumer/widgets/ticket_booking.dart';
 import 'package:fullbooker/features/host/models/product.dart';
+import 'package:fullbooker/shared/entities/enums.dart';
 
 class Ticket {
   String name;

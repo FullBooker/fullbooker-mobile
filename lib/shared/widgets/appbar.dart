@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fullbooker/features/auth/pages/login.dart';
 import 'package:fullbooker/features/consumer/pages/landing.dart';
 import 'package:fullbooker/features/host/pages/summary.dart';
-
-// ignore: constant_identifier_names
-enum ProductSteps { Overview, Products, Sales, Expenses, Goals }
+import 'package:fullbooker/shared/entities/enums.dart';
 
 class ProductSetupNavBar extends StatelessWidget
     implements PreferredSizeWidget {

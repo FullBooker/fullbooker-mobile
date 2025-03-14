@@ -1,5 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:fullbooker/core/environments.dart';
+import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:map_location_picker/map_location_picker.dart';
 
 String getFileExtension(String fileName) {
@@ -75,4 +77,14 @@ String getInitials(String string) {
       .toUpperCase();
 
   return (initials.length > 2) ? initials.trim().substring(0, 2) : initials;
+}
+
+Future<void> setupEnvironment() async {
+  const String envString = String.fromEnvironment('ENV');
+  final AppEnvironment envFlavour = AppEnvironment.values.firstWhere(
+    (AppEnvironment value) => value.toString() == 'AppEnvironment.$envString',
+    orElse: () => AppEnvironment.dev,
+  );
+  final BuildEnvironment envBuilder = BuildEnvironment(envFlavour);
+  await envBuilder.setEnv();
 }

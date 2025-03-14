@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:fullbooker/features/host/controllers/category_controller.dart';
 import 'package:fullbooker/features/host/pages/product_details.dart';
+import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/appbar.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
 import 'package:fullbooker/shared/widgets/titled_dropdown.dart';
 import 'package:fullbooker/features/host/models/categories.dart';
-
-// ignore: constant_identifier_names
-enum ProductTypes { Event, Activity }
 
 class CategorySelection extends StatefulWidget {
   const CategorySelection({super.key});
