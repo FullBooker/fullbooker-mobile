@@ -6,7 +6,7 @@ import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/features/host/controllers/product_controller.dart';
 import 'package:fullbooker/features/host/models/product.dart';
 import 'package:fullbooker/features/host/pages/activity_pricing_page.dart';
-import 'package:fullbooker/features/host/pages/event_category.dart';
+import 'package:fullbooker/features/host/pages/event_category_page.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
@@ -15,17 +15,21 @@ import 'package:fullbooker/shared/widgets/card.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
 import 'package:video_player/video_player.dart';
 
-class VideoSelection extends StatefulWidget {
+class VideoSelectionPage extends StatefulWidget {
   final Product product;
   final ProductTypes type;
 
-  const VideoSelection({super.key, required this.product, required this.type});
+  const VideoSelectionPage({
+    super.key,
+    required this.product,
+    required this.type,
+  });
 
   @override
-  State<StatefulWidget> createState() => _VideoSelectionState();
+  State<StatefulWidget> createState() => _VideoSelectionPageState();
 }
 
-class _VideoSelectionState extends State<VideoSelection> {
+class _VideoSelectionPageState extends State<VideoSelectionPage> {
   final List<VideoPlayerController> _controllers = <VideoPlayerController>[];
   List<File> videos = <File>[];
   int filesLoaded = 0;
@@ -87,8 +91,8 @@ class _VideoSelectionState extends State<VideoSelection> {
           case ProductTypes.Event:
             WidgetsBinding.instance.addPostFrameCallback((_) {
               Navigator.of(context).push(
-                MaterialPageRoute<EventCategory>(
-                  builder: (_) => EventCategory(product: widget.product),
+                MaterialPageRoute<EventCategoryPage>(
+                  builder: (_) => EventCategoryPage(product: widget.product),
                 ),
               );
             });

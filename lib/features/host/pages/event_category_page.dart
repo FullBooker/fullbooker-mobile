@@ -3,7 +3,7 @@ import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/features/host/controllers/currency_controller.dart';
 import 'package:fullbooker/features/host/models/currency.dart';
 import 'package:fullbooker/features/host/models/product.dart';
-import 'package:fullbooker/features/host/pages/tickets_summary.dart';
+import 'package:fullbooker/features/host/pages/tickets_summary_page.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
@@ -13,15 +13,15 @@ import 'package:fullbooker/shared/widgets/dropdown.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
 import 'package:fullbooker/shared/widgets/text_input.dart';
 
-class EventCategory extends StatefulWidget {
+class EventCategoryPage extends StatefulWidget {
   final Product product;
-  const EventCategory({super.key, required this.product});
+  const EventCategoryPage({super.key, required this.product});
 
   @override
-  State<StatefulWidget> createState() => _EventCategoryState();
+  State<StatefulWidget> createState() => _EventCategoryPageState();
 }
 
-class _EventCategoryState extends State<EventCategory> {
+class _EventCategoryPageState extends State<EventCategoryPage> {
   List<String> categories = <String>[
     'Early Bird',
     'Last Minute',
@@ -77,8 +77,8 @@ class _EventCategoryState extends State<EventCategory> {
       return;
     }
     Navigator.of(context).push(
-      MaterialPageRoute<TicketsSummary>(
-        builder: (_) => TicketsSummary(
+      MaterialPageRoute<TicketsSummaryPage>(
+        builder: (_) => TicketsSummaryPage(
           product: widget.product,
           currency: selectedCurrency!,
           prices: prices,

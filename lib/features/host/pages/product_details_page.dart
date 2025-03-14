@@ -2,24 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:fullbooker/features/host/controllers/product_controller.dart';
 import 'package:fullbooker/features/host/models/product.dart';
 import 'package:fullbooker/features/host/models/sub_category_model.dart';
-import 'package:fullbooker/features/host/pages/location_selection.dart';
+import 'package:fullbooker/features/host/pages/location_selection_page.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
 
-class ProductDetails extends StatefulWidget {
-  const ProductDetails(this.category, {super.key, required this.productType});
+class ProductDetailsPage extends StatefulWidget {
+  const ProductDetailsPage(
+    this.category, {
+    super.key,
+    required this.productType,
+  });
 
   final SubCategory category;
   final ProductTypes productType;
 
   @override
-  State<StatefulWidget> createState() => _ProductDetailsState();
+  State<StatefulWidget> createState() => _ProductDetailsPageState();
 }
 
-class _ProductDetailsState extends State<ProductDetails> {
+class _ProductDetailsPageState extends State<ProductDetailsPage> {
   TextEditingController descriptionController = TextEditingController();
   bool descriptionValid = true;
   bool isLoading = false;
@@ -50,9 +54,11 @@ class _ProductDetailsState extends State<ProductDetails> {
       } else {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           Navigator.of(context).push(
-            MaterialPageRoute<LocationSelection>(
-              builder: (_) =>
-                  LocationSelection(product, productType: widget.productType),
+            MaterialPageRoute<LocationSelectionPage>(
+              builder: (_) => LocationSelectionPage(
+                product,
+                productType: widget.productType,
+              ),
             ),
           );
         });

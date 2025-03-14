@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fullbooker/features/auth/pages/login_page.dart';
-import 'package:fullbooker/features/host/pages/summary.dart';
+import 'package:fullbooker/features/host/pages/events_summary_page.dart';
 
 class StandardNavBar extends StatelessWidget implements PreferredSizeWidget {
   final bool showSearchBar;
@@ -38,8 +38,8 @@ class StandardNavBar extends StatelessWidget implements PreferredSizeWidget {
   void goToHosting(BuildContext context) {
     return WidgetsBinding.instance.addPostFrameCallback((_) {
       Navigator.of(context).push(
-        MaterialPageRoute<EventsSummary>(
-          builder: (_) => const EventsSummary(),
+        MaterialPageRoute<EventsSummaryPage>(
+          builder: (_) => const EventsSummaryPage(),
         ),
       );
     });

@@ -5,6 +5,7 @@ import 'package:fullbooker/features/host/controllers/product_controller.dart';
 import 'package:fullbooker/features/host/models/product.dart';
 import 'package:fullbooker/features/host/pages/activity_date_selection_page.dart';
 import 'package:fullbooker/features/host/pages/date_selection_page.dart';
+import 'package:fullbooker/shared/entities/bound.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
@@ -13,31 +14,21 @@ import 'package:fullbooker/shared/widgets/page_title.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:map_location_picker/map_location_picker.dart';
 
-class Bound {
-  Bound({
-    required this.east,
-    required this.west,
-    required this.north,
-    required this.south,
+class LocationSelectionPage extends StatefulWidget {
+  const LocationSelectionPage(
+    this.product, {
+    super.key,
+    required this.productType,
   });
-
-  double east;
-  double north;
-  double south;
-  double west;
-}
-
-class LocationSelection extends StatefulWidget {
-  const LocationSelection(this.product, {super.key, required this.productType});
 
   final Product product;
   final ProductTypes productType;
 
   @override
-  State<StatefulWidget> createState() => _LocationSelectionState();
+  State<StatefulWidget> createState() => _LocationSelectionPageState();
 }
 
-class _LocationSelectionState extends State<LocationSelection> {
+class _LocationSelectionPageState extends State<LocationSelectionPage> {
   Placemark? address;
   String? addressName;
   String? autocompletePlace;
