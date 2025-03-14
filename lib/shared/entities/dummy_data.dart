@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fullbooker/shared/overview_step.dart';
+import 'package:fullbooker/shared/entities/overview_step.dart';
 
 List<OverviewStep> defaultSteps = <OverviewStep>[
   OverviewStep(
