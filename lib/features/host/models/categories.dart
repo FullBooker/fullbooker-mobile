@@ -1,27 +1,5 @@
 import 'package:fullbooker/core/models.dart';
-
-class SubCategory implements Model {
-  String id;
-  DateTime createdAt;
-  DateTime updatedAt;
-  bool active;
-  String name;
-  String? description;
-  String category;
-
-  SubCategory(
-    this.id,
-    this.createdAt,
-    this.updatedAt,
-    this.active,
-    this.name,
-    this.description,
-    this.category,
-  );
-
-  @override
-  String getId() => id;
-}
+import 'package:fullbooker/features/host/models/sub_category_model.dart';
 
 class SubCategorySerializer implements Serializer<SubCategory> {
   @override

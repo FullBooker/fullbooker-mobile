@@ -1,6 +1,7 @@
 import 'package:fullbooker/features/auth/models/login.dart';
 import 'package:fullbooker/features/host/models/categories.dart';
 import 'package:fullbooker/features/host/models/product.dart';
+import 'package:fullbooker/features/host/models/sub_category_model.dart';
 import 'package:uuid/uuid.dart';
 import 'dart:math';
 
