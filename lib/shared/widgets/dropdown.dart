@@ -1,23 +1,14 @@
 import 'package:flutter/material.dart';
 
 class DropDownOption {
-  String name;
-  String id;
-  VoidCallback onClick;
-
   DropDownOption(this.name, this.id, this.onClick);
+
+  String id;
+  String name;
+  VoidCallback onClick;
 }
 
 class CustomDropdown extends StatefulWidget {
-  final double width;
-  final double height;
-  final String label;
-  final Function? onClick;
-  final List<DropDownOption> options;
-  final Function(DropDownOption?)? onChanged;
-  final bool withNullOption;
-  final bool onlyLabelContent;
-
   const CustomDropdown({
     super.key,
     this.width = 340,
@@ -30,16 +21,38 @@ class CustomDropdown extends StatefulWidget {
     this.onChanged,
   });
 
+  final Function(DropDownOption?)? onChanged;
+  final double height;
+  final String label;
+  final Function? onClick;
+  final bool onlyLabelContent;
+  final List<DropDownOption> options;
+  final double width;
+  final bool withNullOption;
+
   @override
   State<StatefulWidget> createState() => _CustomDropDownState();
 }
 
 class _CustomDropDownState extends State<CustomDropdown> {
-  bool selected = false;
-  final GlobalKey<State<StatefulWidget>> _dropdownKey = GlobalKey();
-  final FocusNode focusNode = FocusNode();
   int focusChanged = 0;
+  final FocusNode focusNode = FocusNode();
+  bool selected = false;
   DropDownOption? setValue;
+
+  final GlobalKey<State<StatefulWidget>> _dropdownKey = GlobalKey();
+
+  @override
+  void dispose() {
+    focusNode.removeListener(functionCheckFocus);
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    focusNode.addListener(functionCheckFocus);
+  }
 
   Color getHighLightColor() =>
       selected ? const Color(0xf0F58C4A) : const Color(0xf0000000);
@@ -94,29 +107,20 @@ class _CustomDropDownState extends State<CustomDropdown> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    focusNode.addListener(functionCheckFocus);
-  }
-
-  @override
-  void dispose() {
-    focusNode.removeListener(functionCheckFocus);
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final List<DropdownMenuItem<DropDownOption>> items =
         widget.options.map((DropDownOption option) {
-      return DropdownMenuItem(
+      return DropdownMenuItem<DropDownOption>(
         value: option,
         onTap: option.onClick,
         child: Text(option.name),
       );
     }).toList();
     if (widget.withNullOption) {
-      items.insert(0, const DropdownMenuItem(child: Text('----')));
+      items.insert(
+        0,
+        const DropdownMenuItem<DropDownOption>(child: Text('----')),
+      );
     }
     return GestureDetector(
       onTap: toggleSelected,
@@ -137,7 +141,7 @@ class _CustomDropDownState extends State<CustomDropdown> {
                 ),
               ),
               Offstage(
-                child: DropdownButton(
+                child: DropdownButton<DropDownOption>(
                   key: _dropdownKey,
                   focusNode: focusNode,
                   onChanged: onChanged,

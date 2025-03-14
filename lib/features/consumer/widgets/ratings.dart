@@ -141,7 +141,7 @@ class ReviewCard extends StatelessWidget {
                     Row(
                       children: <Widget>[
                         Row(
-                          children: List.generate(5, (int index) {
+                          children: List<Icon>.generate(5, (int index) {
                             return Icon(
                               index < review['rating']
                                   ? Icons.star

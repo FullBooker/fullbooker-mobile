@@ -6,6 +6,7 @@ analyzer:
     missing_required_param: error
     missing_return: error
     invalid_annotation_target: ignore
+    avoid_positional_boolean_parameters: ignore
   exclude:
     - "lib/generated_plugin_*.dart"
     - "lib/generated/*.dart"

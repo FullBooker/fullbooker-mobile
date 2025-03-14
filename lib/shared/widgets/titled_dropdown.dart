@@ -104,13 +104,16 @@ class _TitledDropDownState extends State<TitledDropdown> {
   Widget build(BuildContext context) {
     final List<DropdownMenuItem<DropDownOption>> items =
         widget.options.map((DropDownOption option) {
-      return DropdownMenuItem(
+      return DropdownMenuItem<DropDownOption>(
         value: option,
         onTap: option.onClick,
         child: Text(option.name),
       );
     }).toList();
-    items.insert(0, const DropdownMenuItem(child: Text('----')));
+    items.insert(
+      0,
+      const DropdownMenuItem<DropDownOption>(child: Text('----')),
+    );
     return GestureDetector(
       onTap: toggleSelected,
       child: SizedBox(
@@ -136,7 +139,7 @@ class _TitledDropDownState extends State<TitledDropdown> {
               ),
               VerticalDivider(color: getHighlightColor(), width: 2),
               Offstage(
-                child: DropdownButton(
+                child: DropdownButton<DropDownOption>(
                   key: _dropdownKey,
                   focusNode: focusNode,
                   onChanged: onChanged,
