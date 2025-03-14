@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/environments.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
+import 'package:fullbooker/shared/entities/regexes.dart';
 import 'package:map_location_picker/map_location_picker.dart';
 
 String getFileExtension(String fileName) {
@@ -48,7 +49,7 @@ class ScaleSize {
 }
 
 LatLng parseSRID(String srid) {
-  final List<String> cleanedSRID = RegExp(r'[\(][-?0-9.]+\s[-?0-9.]+[\)]')
+  final List<String> cleanedSRID = cleanSRIDRegex
       .firstMatch(srid)!
       .group(0)!
       .replaceAll(RegExp(r'[\(\)]'), '')

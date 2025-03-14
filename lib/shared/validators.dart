@@ -1,3 +1,5 @@
+import 'package:fullbooker/shared/entities/regexes.dart';
+
 String? validateNotEmpty(String? val, {bool isOptional = false}) {
   if (isOptional) return null;
   if (val == null || val.isEmpty) {
@@ -9,9 +11,7 @@ String? validateNotEmpty(String? val, {bool isOptional = false}) {
 String? validateEmail(String? email, {bool isOptional = false}) {
   if (email == null && !isOptional) return null;
   if (email == null) return 'Please enter your email';
-  final bool emailValid = RegExp(
-    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
-  ).hasMatch(email);
+  final bool emailValid = validEmailRegex.hasMatch(email);
   if (!emailValid) return 'Please enter a valid email';
   return null;
 }
@@ -19,8 +19,8 @@ String? validateEmail(String? email, {bool isOptional = false}) {
 String? validatePhoneNumber(String? number, {bool isOptional = false}) {
   if (number == null && !isOptional) return null;
   if (number == null) return 'Please enter your email';
-  final bool emailValid = RegExp(r'^(?:\+?254|0)?[0-9]\d{8}$').hasMatch(number);
-  if (!emailValid) return 'Please enter a valid phone number';
+  final bool isValidPhone = validPhoneRegex.hasMatch(number);
+  if (!isValidPhone) return 'Please enter a valid phone number';
   return null;
 }
 
