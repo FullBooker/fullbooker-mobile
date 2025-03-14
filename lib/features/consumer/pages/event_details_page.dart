@@ -2,8 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/utils.dart';
-import 'package:fullbooker/features/consumer/pages/gallery.dart';
-import 'package:fullbooker/features/consumer/pages/landing.dart';
+import 'package:fullbooker/features/consumer/pages/gallery_page.dart';
+import 'package:fullbooker/features/consumer/pages/landing_page.dart';
 import 'package:fullbooker/features/consumer/widgets/date_picker_widget.dart';
 import 'package:fullbooker/features/consumer/widgets/event_carousel_widget.dart';
 import 'package:fullbooker/features/consumer/widgets/host_details_widget.dart';
@@ -11,14 +11,14 @@ import 'package:fullbooker/features/consumer/widgets/rating_summary_widget.dart'
 import 'package:fullbooker/features/consumer/widgets/review_card_widget.dart';
 import 'package:fullbooker/features/consumer/widgets/ticket_booking_widget.dart';
 import 'package:fullbooker/features/host/models/product.dart';
-import 'package:fullbooker/shared/entities/dummy_data.dart';
+import 'package:fullbooker/shared/entities/data_mocks.dart';
 import 'package:fullbooker/shared/widgets/appbar.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
 import 'package:map_location_picker/map_location_picker.dart';
 import 'package:shimmer/shimmer.dart';
 
-class EventDetails extends StatefulWidget {
-  const EventDetails({
+class EventDetailsPage extends StatefulWidget {
+  const EventDetailsPage({
     super.key,
     required this.event,
     required this.productLocationName,
@@ -28,10 +28,10 @@ class EventDetails extends StatefulWidget {
   final String productLocationName;
 
   @override
-  State<StatefulWidget> createState() => _EventDetailsState();
+  State<StatefulWidget> createState() => _EventDetailsPageState();
 }
 
-class _EventDetailsState extends State<EventDetails> {
+class _EventDetailsPageState extends State<EventDetailsPage> {
   Position? currentPosition;
   LatLng? eventLocation;
   bool isLoading = true;
@@ -114,14 +114,15 @@ class _EventDetailsState extends State<EventDetails> {
   }
 
   void goHome() {
-    Navigator.of(context)
-        .push(MaterialPageRoute<Landing>(builder: (_) => const Landing()));
+    Navigator.of(context).push(
+      MaterialPageRoute<LandingPage>(builder: (_) => const LandingPage()),
+    );
   }
 
   void goToGallery() {
     Navigator.of(context).push(
-      MaterialPageRoute<Gallery>(
-        builder: (_) => const Gallery(images: <String>[]),
+      MaterialPageRoute<GalleryPage>(
+        builder: (_) => const GalleryPage(images: <String>[]),
       ),
     );
   }

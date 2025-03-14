@@ -2,34 +2,20 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:fullbooker/features/consumer/widgets/event_title_widget.dart';
-import 'package:fullbooker/features/consumer/pages/full_screen_image.dart';
+import 'package:fullbooker/features/consumer/pages/full_screen_image_page.dart';
+import 'package:fullbooker/shared/entities/data_mocks.dart';
 import 'package:fullbooker/shared/widgets/appbar.dart';
 
-class Gallery extends StatefulWidget {
+class GalleryPage extends StatefulWidget {
   final List<String> images;
 
-  const Gallery({super.key, required this.images});
+  const GalleryPage({super.key, required this.images});
 
   @override
-  State<StatefulWidget> createState() => GalleryState();
+  State<StatefulWidget> createState() => GalleryPageState();
 }
 
-class GalleryState extends State<Gallery> {
-  final List<String> imageUrls = <String>[
-    'https://i.imgur.com/KBicWbe.png',
-    'https://i.imgur.com/QoUtaJz.png',
-    'https://i.imgur.com/dCBshIt.png',
-    'https://i.imgur.com/aGE2yAR.png',
-    'https://i.imgur.com/ooAxO9f.png',
-    'https://i.imgur.com/O6Zd54G.png',
-    'https://i.imgur.com/mAmy0jb.png',
-    'https://i.imgur.com/tRmwlQw.png',
-    'https://i.imgur.com/XK4RGag.png',
-    'https://i.imgur.com/ZpJwjtd.png',
-    'https://i.imgur.com/dnrQX0i.png',
-    'https://i.imgur.com/wVU5Evt.png',
-  ];
-
+class GalleryPageState extends State<GalleryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +35,8 @@ class GalleryState extends State<Gallery> {
               crossAxisSpacing: 8,
               mainAxisSpacing: 8,
               children: <Widget>[
-                for (String image in imageUrls) _buildImageTile(context, image),
+                for (String image in mockImageUrls)
+                  _buildImageTile(context, image),
               ],
             ),
           ],
@@ -63,9 +50,9 @@ class GalleryState extends State<Gallery> {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute<FullScreenImageView>(
+          MaterialPageRoute<FullScreenImagePage>(
             builder: (_) {
-              return FullScreenImageView(imageUrl: imageUrl);
+              return FullScreenImagePage(imageUrl: imageUrl);
             },
           ),
         );

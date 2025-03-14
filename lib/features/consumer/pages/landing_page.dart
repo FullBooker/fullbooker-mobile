@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:fullbooker/features/consumer/pages/event_details.dart';
+import 'package:fullbooker/features/consumer/pages/event_details_page.dart';
 import 'package:fullbooker/features/consumer/utils.dart';
 import 'package:fullbooker/features/consumer/widgets/category_conveyer_widget.dart';
 import 'package:fullbooker/features/consumer/widgets/events_section_widget.dart';
@@ -11,14 +11,14 @@ import 'package:fullbooker/features/host/models/product.dart';
 import 'package:fullbooker/shared/widgets/appbar.dart';
 import 'package:shimmer/shimmer.dart';
 
-class Landing extends StatefulWidget {
-  const Landing({super.key});
+class LandingPage extends StatefulWidget {
+  const LandingPage({super.key});
 
   @override
-  State<StatefulWidget> createState() => _LandingState();
+  State<StatefulWidget> createState() => _LandingPageState();
 }
 
-class _LandingState extends State<Landing> {
+class _LandingPageState extends State<LandingPage> {
   ProductViewModel productsController = ProductViewModel();
   CategoryViewModel categoriesController = CategoryViewModel();
   List<Product>? products;
@@ -28,9 +28,9 @@ class _LandingState extends State<Landing> {
   void goToEventDetails(Product event, String locationName) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Navigator.of(context).push(
-        MaterialPageRoute<EventDetails>(
+        MaterialPageRoute<EventDetailsPage>(
           builder: (_) {
-            return EventDetails(
+            return EventDetailsPage(
               event: event,
               productLocationName: locationName,
             );

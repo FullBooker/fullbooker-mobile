@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fullbooker/shared/entities/dummy_data.dart';
+import 'package:fullbooker/shared/entities/data_mocks.dart';
 
 class PaymentForm extends StatefulWidget {
   const PaymentForm({super.key, this.onCompleteClick});

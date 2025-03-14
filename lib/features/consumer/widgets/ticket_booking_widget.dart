@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/utils.dart';
-import 'package:fullbooker/features/consumer/pages/checkout.dart';
-import 'package:fullbooker/features/consumer/pages/purchase_summary.dart';
+import 'package:fullbooker/features/consumer/pages/payment_summary_page.dart';
+import 'package:fullbooker/features/consumer/widgets/checkout_card_widget.dart';
 import 'package:fullbooker/features/consumer/widgets/ticket_form_widget.dart';
-import 'package:fullbooker/features/consumer/widgets/tickets_summary.dart';
+import 'package:fullbooker/features/consumer/widgets/tickets_summary_widget.dart';
 import 'package:fullbooker/features/host/models/product.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/ticket.dart';
@@ -34,8 +34,8 @@ class _TicketBookingWidgetState extends State<TicketBookingWidget> {
   void goToCheckout() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Navigator.of(context).push(
-        MaterialPageRoute<PaymentSummaryWidget>(
-          builder: (_) => PaymentSummaryWidget(
+        MaterialPageRoute<PaymentSummaryPage>(
+          builder: (_) => PaymentSummaryPage(
             product: widget.product,
             locationName: widget.productLocationName,
             tickets: tickets,
