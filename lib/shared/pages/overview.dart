@@ -1,34 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:fullbooker/features/auth/pages/login.dart';
+import 'package:fullbooker/shared/dummy_data.dart';
+import 'package:fullbooker/shared/overview_step.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:fullbooker/shared/widgets/simple_stepper.dart';
-
-class OverviewStep {
-  final List<AssetImage> images;
-  final String title;
-  final String subTitle;
-
-  OverviewStep(this.images, this.title, this.subTitle);
-}
-
-List<OverviewStep> defaultSteps = <OverviewStep>[
-  OverviewStep(
-    const <AssetImage>[AssetImage('assets/images/overview1/overview.png')],
-    'FIND YOUR FAVORITE EVENTS HERE',
-    'Discover, Book, Enjoy\nYour Favorite Events Await!',
-  ),
-  OverviewStep(
-    const <AssetImage>[AssetImage('assets/images/overview2/overview.png')],
-    'FIND NEARBY EVENTS',
-    'Your Go-To App for\nNearby Events!',
-  ),
-  OverviewStep(
-    const <AssetImage>[AssetImage('assets/images/overview3/overview.png')],
-    'UPDATE YOUR UPCOMING EVENTS HERE',
-    'Keep Your Events Fresh\nUpdate Here!',
-  ),
-];
 
 class Overview extends StatefulWidget {
   late final List<OverviewStep> steps;

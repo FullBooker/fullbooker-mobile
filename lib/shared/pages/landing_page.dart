@@ -16,6 +16,7 @@ class LandingPage extends StatelessWidget {
         ),
       ),
     );
+
     return const Scaffold(
       backgroundColor: Colors.black,
       body: Center(
