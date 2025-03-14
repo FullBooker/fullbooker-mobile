@@ -2,7 +2,7 @@ import 'package:fullbooker/features/auth/models/login.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sembast/sembast_io.dart';
-import 'db.dart';
+import '../database/db.dart';
 
 class Flavour {
   final String apiHost;
