@@ -20,7 +20,7 @@ class SecondaryButton extends StatelessWidget {
     super.key,
     this.actionLabelPrefix,
     this.color = const Color(0xfff55E00),
-    this.actionLabel = "",
+    this.actionLabel = '',
     this.actionLabelColor = Colors.white,
     this.loading = false,
     this.labelFontSize = 16,
@@ -51,21 +51,28 @@ class SecondaryButton extends StatelessWidget {
               : actionLabelPrefix != null
                   ? Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
+                      children: <Widget>[
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 4.0),
                           child: SizedBox(
-                              width: 16, height: 16, child: actionLabelPrefix),
+                            width: 16,
+                            height: 16,
+                            child: actionLabelPrefix,
+                          ),
                         ),
                         Text(
                           actionLabel,
                           style: TextStyle(
-                              fontSize: labelFontSize, color: actionLabelColor),
-                          textScaler: TextScaler.linear(
-                            ScaleSize.textScaleFactor(context,
-                                maxTextScaleFactor: 2.6),
+                            fontSize: labelFontSize,
+                            color: actionLabelColor,
                           ),
-                        )
+                          textScaler: TextScaler.linear(
+                            ScaleSize.textScaleFactor(
+                              context,
+                              maxTextScaleFactor: 2.6,
+                            ),
+                          ),
+                        ),
                       ],
                     )
                   : Text(

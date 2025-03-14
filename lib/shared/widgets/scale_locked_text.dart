@@ -8,20 +8,22 @@ class ScaleLockedText extends StatelessWidget {
   final TextAlign? textAlign;
   final bool? softWrap;
 
-  const ScaleLockedText(this.data,
-      {super.key,
-      this.style,
-      this.maxLines,
-      this.overflow,
-      this.textAlign,
-      this.softWrap});
+  const ScaleLockedText(
+    this.data, {
+    super.key,
+    this.style,
+    this.maxLines,
+    this.overflow,
+    this.textAlign,
+    this.softWrap,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final fontSize = style?.fontSize == null
+    final double fontSize = style?.fontSize == null
         ? 16 / MediaQuery.textScalerOf(context).scale(1)
         : style!.fontSize! / MediaQuery.textScalerOf(context).scale(1);
-    final textStyle = style == null
+    final TextStyle textStyle = style == null
         ? TextStyle(fontSize: fontSize)
         : style!.copyWith(fontSize: fontSize);
 

@@ -4,16 +4,17 @@ import 'package:fullbooker/features/auth/pages/login.dart';
 import 'package:fullbooker/features/host/pages/summary.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-Future setupEnvironment() async {
-  const envString = String.fromEnvironment("ENV");
-  FlavourType envFlavour = FlavourType.values.firstWhere(
-      (value) => value.toString() == "FlavourType.$envString",
-      orElse: () => FlavourType.development);
-  var envBuilder = BuildEnvironment(envFlavour);
+Future<void> setupEnvironment() async {
+  const String envString = String.fromEnvironment('ENV');
+  final FlavourType envFlavour = FlavourType.values.firstWhere(
+    (FlavourType value) => value.toString() == 'FlavourType.$envString',
+    orElse: () => FlavourType.development,
+  );
+  final BuildEnvironment envBuilder = BuildEnvironment(envFlavour);
   await envBuilder.setEnv();
 }
 
-Future main() async {
+Future<void> main() async {
   FlutterError.onError = (FlutterErrorDetails details) {
     debugPrintStack(stackTrace: details.stack);
   };
@@ -41,8 +42,9 @@ class MyApp extends StatelessWidget {
       navigatorKey: navigatorKey,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color(0xfff55E00),
-            primary: const Color(0xfff55E00)),
+          seedColor: const Color(0xfff55E00),
+          primary: const Color(0xfff55E00),
+        ),
         useMaterial3: true,
         textTheme: GoogleFonts.openSansTextTheme(),
       ),

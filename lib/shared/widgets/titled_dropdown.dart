@@ -15,13 +15,14 @@ class TitledDropdown extends StatefulWidget {
   final List<DropDownOption> options;
   final Function(DropDownOption?)? onChanged;
 
-  const TitledDropdown(
-      {super.key,
-      this.width = 340,
-      this.height = 55,
-      this.title = "",
-      this.options = const [],
-      this.onChanged});
+  const TitledDropdown({
+    super.key,
+    this.width = 340,
+    this.height = 55,
+    this.title = '',
+    this.options = const <DropDownOption>[],
+    this.onChanged,
+  });
 
   @override
   State<StatefulWidget> createState() => _TitledDropDownState();
@@ -29,12 +30,12 @@ class TitledDropdown extends StatefulWidget {
 
 class _TitledDropDownState extends State<TitledDropdown> {
   bool selected = false;
-  final _dropdownKey = GlobalKey();
+  final GlobalKey<State<StatefulWidget>> _dropdownKey = GlobalKey();
   final FocusNode focusNode = FocusNode();
   int focusChanged = 0;
   DropDownOption? setValue;
 
-  Color gethighLightColor() =>
+  Color getHighlightColor() =>
       selected ? const Color(0xf0F58C4A) : const Color(0xf0000000);
 
   void toggleSelected() {
@@ -49,7 +50,7 @@ class _TitledDropDownState extends State<TitledDropdown> {
   void openDropdown() {
     GestureDetector? detector;
     void searchForGestureDetector(BuildContext element) {
-      element.visitChildElements((element) {
+      element.visitChildElements((Element element) {
         if (element.widget is GestureDetector) {
           detector = element.widget as GestureDetector;
         } else {
@@ -101,51 +102,64 @@ class _TitledDropDownState extends State<TitledDropdown> {
 
   @override
   Widget build(BuildContext context) {
-    var items = widget.options.map((option) {
+    final List<DropdownMenuItem<DropDownOption>> items =
+        widget.options.map((DropDownOption option) {
       return DropdownMenuItem(
         value: option,
         onTap: option.onClick,
         child: Text(option.name),
       );
     }).toList();
-    items.insert(0, const DropdownMenuItem(value: null, child: Text("----")));
+    items.insert(0, const DropdownMenuItem(child: Text('----')));
     return GestureDetector(
-        onTap: toggleSelected,
-        child: SizedBox(
-          width: widget.width,
-          height: widget.height,
-          child: DecoratedBox(
-              decoration:
-                  BoxDecoration(border: Border.all(color: gethighLightColor())),
-              child: Row(children: [
-                Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4),
-                    child: SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.35,
-                      child: Center(
-                          child: Text(
-                        widget.title,
-                        style: const TextStyle(fontSize: 18),
-                        textAlign: TextAlign.center,
-                      )),
-                    )),
-                VerticalDivider(color: gethighLightColor(), width: 2),
-                Offstage(
-                    child: DropdownButton(
-                        key: _dropdownKey,
-                        focusNode: focusNode,
-                        onChanged: onChanged,
-                        alignment: AlignmentDirectional.centerEnd,
-                        items: items)),
-                setValue == null
-                    ? const Expanded(child: SizedBox())
-                    : Expanded(child: Center(child: Text(setValue!.name))),
-                Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 5),
-                    child: Icon(!selected
-                        ? Icons.keyboard_arrow_down
-                        : Icons.keyboard_arrow_up))
-              ])),
-        ));
+      onTap: toggleSelected,
+      child: SizedBox(
+        width: widget.width,
+        height: widget.height,
+        child: DecoratedBox(
+          decoration:
+              BoxDecoration(border: Border.all(color: getHighlightColor())),
+          child: Row(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4),
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.35,
+                  child: Center(
+                    child: Text(
+                      widget.title,
+                      style: const TextStyle(fontSize: 18),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+              ),
+              VerticalDivider(color: getHighlightColor(), width: 2),
+              Offstage(
+                child: DropdownButton(
+                  key: _dropdownKey,
+                  focusNode: focusNode,
+                  onChanged: onChanged,
+                  alignment: AlignmentDirectional.centerEnd,
+                  items: items,
+                ),
+              ),
+              if (setValue == null)
+                const Expanded(child: SizedBox())
+              else
+                Expanded(child: Center(child: Text(setValue!.name))),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5),
+                child: Icon(
+                  !selected
+                      ? Icons.keyboard_arrow_down
+                      : Icons.keyboard_arrow_up,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
