@@ -1,4 +1,4 @@
-import 'package:fullbooker/core/environments.dart';
+import 'package:fullbooker/config/environments.dart';
 import 'package:fullbooker/core/repository.dart';
 import 'package:fullbooker/core/view_model.dart';
 import 'package:fullbooker/features/auth/models/login.dart';

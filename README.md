@@ -1,6 +1,6 @@
 # fullbooker
 
-Your favourite events await!
+Your favorite events await!
 
 ## Getting Started
 
@@ -16,7 +16,7 @@ lib/
 │   ├── errors/
 │   │   ├── failure.dart       # Custom failure classes
 │   │   ├── sentry_service.dart # Sentry error reporting integration
-│   ├── usecases/
+│   ├── use_cases/
 │   ├── network/
 │   ├── services/
 │   │   ├── google_sign_in_service.dart # Google authentication
