@@ -1,31 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:fullbooker/features/host/models/product.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
+import 'package:fullbooker/shared/entities/ticket.dart';
 
-class Ticket {
-  String name;
-  String id;
-  String phone;
-  String email;
-  ProductPricing pricing;
-  int quantity;
-
-  Ticket(
-    this.name,
-    this.id,
-    this.phone,
-    this.email,
-    this.pricing,
-    this.quantity,
-  );
-}
-
-class TicketsSummary extends StatefulWidget {
+class TicketsSummaryWidget extends StatefulWidget {
   final List<Ticket> tickets;
   final BookingMode bookingMode;
   final Function(List<Ticket>)? onRemove;
 
-  const TicketsSummary({
+  const TicketsSummaryWidget({
     super.key,
     this.tickets = const <Ticket>[],
     this.onRemove,
@@ -33,10 +15,10 @@ class TicketsSummary extends StatefulWidget {
   });
 
   @override
-  State<StatefulWidget> createState() => _TicketsSummaryState();
+  State<StatefulWidget> createState() => _TicketsSummaryWidgetState();
 }
 
-class _TicketsSummaryState extends State<TicketsSummary> {
+class _TicketsSummaryWidgetState extends State<TicketsSummaryWidget> {
   // Sample list of tickets (this could come from an API or user input)
   late List<Ticket> tickets;
 

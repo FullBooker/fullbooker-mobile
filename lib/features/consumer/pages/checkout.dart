@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fullbooker/features/consumer/pages/payment_confirmation.dart';
 import 'package:fullbooker/features/consumer/widgets/payment_forms.dart';
-import 'package:fullbooker/features/consumer/widgets/tickets_summary.dart';
 import 'package:fullbooker/features/host/models/product.dart';
+import 'package:fullbooker/shared/entities/ticket.dart';
 import 'package:fullbooker/shared/widgets/appbar.dart';
 import 'package:fullbooker/shared/widgets/information_modal.dart';
 import 'package:intl/intl.dart';

@@ -9,12 +9,12 @@ import 'package:geocoding/geocoding.dart';
 import 'package:map_location_picker/map_location_picker.dart';
 import 'package:shimmer/shimmer.dart';
 
-class EventCarousel extends StatefulWidget {
+class EventCarouselWidget extends StatefulWidget {
   final Product product;
   final String actionLabel;
   final Function(String) onActionClick;
 
-  const EventCarousel({
+  const EventCarouselWidget({
     super.key,
     required this.product,
     required this.onActionClick,
@@ -22,10 +22,10 @@ class EventCarousel extends StatefulWidget {
   });
 
   @override
-  State<StatefulWidget> createState() => _EventCarouselState();
+  State<StatefulWidget> createState() => _EventCarouselWidgetState();
 }
 
-class _EventCarouselState extends State<EventCarousel> {
+class _EventCarouselWidgetState extends State<EventCarouselWidget> {
   String? locationName;
   bool isLoading = true; // Track loading state
   double? distanceFromEvent;

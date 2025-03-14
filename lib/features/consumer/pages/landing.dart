@@ -2,8 +2,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/features/consumer/pages/event_details.dart';
 import 'package:fullbooker/features/consumer/utils.dart';
-import 'package:fullbooker/features/consumer/widgets/category_conveyer.dart';
-import 'package:fullbooker/features/consumer/widgets/events_section.dart';
+import 'package:fullbooker/features/consumer/widgets/category_conveyer_widget.dart';
+import 'package:fullbooker/features/consumer/widgets/events_section_widget.dart';
 import 'package:fullbooker/features/host/controllers/category_controller.dart';
 import 'package:fullbooker/features/host/controllers/product_controller.dart';
 import 'package:fullbooker/features/host/models/categories.dart';
@@ -65,7 +65,7 @@ class _LandingState extends State<Landing> {
                 padding: const EdgeInsets.symmetric(vertical: 20),
                 child: products == null
                     ? _buildShimmerEffect(width)
-                    : CategoryConveyer(
+                    : CategoryConveyerWidget(
                         categories: categories == null
                             ? <String, Category>{}
                             : categories!,
@@ -80,7 +80,7 @@ class _LandingState extends State<Landing> {
                       if (products!.length < 2)
                         const SizedBox()
                       else
-                        EventsSection(
+                        EventsSectionWidget(
                           sectionName: 'Popular Now',
                           onSeAllClick: () {},
                           events:
@@ -89,7 +89,7 @@ class _LandingState extends State<Landing> {
                       if (products!.length < 4)
                         const SizedBox()
                       else
-                        EventsSection(
+                        EventsSectionWidget(
                           sectionName: 'Near You',
                           onSeAllClick: () {},
                           events:
@@ -98,7 +98,7 @@ class _LandingState extends State<Landing> {
                       if (products!.length < 6)
                         const SizedBox()
                       else
-                        EventsSection(
+                        EventsSectionWidget(
                           sectionName: 'Recommended For You',
                           onSeAllClick: () {},
                           events:
