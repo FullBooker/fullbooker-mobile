@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
 class ErrorStateWidget extends StatelessWidget {
+  const ErrorStateWidget({
+    super.key,
+    required this.message,
+    required this.onRetry,
+  });
+
   final String message;
   final VoidCallback onRetry;
-
-  const ErrorStateWidget(
-      {super.key, required this.message, required this.onRetry});
 
   @override
   Widget build(BuildContext context) {
@@ -14,12 +17,15 @@ class ErrorStateWidget extends StatelessWidget {
         padding: const EdgeInsets.all(20.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.search_off,
-                size: 80, color: Colors.grey.shade400), // Changed icon
+          children: <Widget>[
+            Icon(
+              Icons.search_off,
+              size: 80,
+              color: Colors.grey.shade400,
+            ), // Changed icon
             const SizedBox(height: 20),
             const Text(
-              "No Data Found",
+              'No Data Found',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
@@ -32,7 +38,7 @@ class ErrorStateWidget extends StatelessWidget {
             ElevatedButton.icon(
               onPressed: onRetry,
               icon: const Icon(Icons.refresh),
-              label: const Text("Try Again"),
+              label: const Text('Try Again'),
               style: ElevatedButton.styleFrom(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 12),

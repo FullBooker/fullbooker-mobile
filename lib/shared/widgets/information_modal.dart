@@ -12,57 +12,79 @@ class InformationModal extends StatelessWidget {
   final Color topDividerColor;
   final double topDividerHeight;
 
-  const InformationModal(
-      {super.key,
-      this.action,
-      this.title = "",
-      this.message = const SizedBox(),
-      this.actionTitle = "",
-      this.height = 230,
-      this.withSuccessTick = true,
-      this.topDividerColor = const Color(0xfff55E00),
-      this.topDividerHeight = 3});
+  const InformationModal({
+    super.key,
+    this.action,
+    this.title = '',
+    this.message = const SizedBox(),
+    this.actionTitle = '',
+    this.height = 230,
+    this.withSuccessTick = true,
+    this.topDividerColor = const Color(0xfff55E00),
+    this.topDividerHeight = 3,
+  });
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-        content: SizedBox(
-          height: height,
-          width: 380,
-          child: Center(
-              child: SingleChildScrollView(
-            child: Column(children: [
-              Padding(
+      content: SizedBox(
+        height: height,
+        width: 380,
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Padding(
                   padding: const EdgeInsets.symmetric(vertical: 5),
                   child: SizedBox(
-                      width: MediaQuery.of(context).size.width * .5,
-                      child: RoundedDivider(
-                          height: topDividerHeight, color: topDividerColor))),
-              withSuccessTick
-                  ? Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: Image.asset("assets/icons/ok.png",
-                          width: 70, height: 70))
-                  : const SizedBox(),
-              title != ""
-                  ? Padding(
-                      padding: const EdgeInsets.only(bottom: 20),
-                      child: Text(title,
-                          style: const TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.center))
-                  : const SizedBox(),
-              message
-            ]),
-          )),
+                    width: MediaQuery.of(context).size.width * .5,
+                    child: RoundedDivider(
+                      height: topDividerHeight,
+                      color: topDividerColor,
+                    ),
+                  ),
+                ),
+                if (withSuccessTick)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Image.asset(
+                      'assets/icons/ok.png',
+                      width: 70,
+                      height: 70,
+                    ),
+                  )
+                else
+                  const SizedBox(),
+                if (title != '')
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: Text(
+                      title,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  )
+                else
+                  const SizedBox(),
+                message,
+              ],
+            ),
+          ),
         ),
-        actions: [
-          Padding(
-              padding: const EdgeInsets.only(top: 20, bottom: 5),
-              child: SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.6,
-                  child: Button(action ?? () {}, actionLabel: actionTitle)))
-        ],
-        actionsAlignment: MainAxisAlignment.center);
+      ),
+      actions: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(top: 20, bottom: 5),
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width * 0.6,
+            child: Button(action ?? () {}, actionLabel: actionTitle),
+          ),
+        ),
+      ],
+      actionsAlignment: MainAxisAlignment.center,
+    );
   }
 }
