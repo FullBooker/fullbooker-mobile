@@ -4,7 +4,7 @@ import 'package:fullbooker/features/host/models/product.dart';
 import 'package:fullbooker/features/host/models/sub_category_model.dart';
 import 'package:fullbooker/features/host/pages/location_selection.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
-import 'package:fullbooker/shared/widgets/appbar.dart';
+import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/environments.dart';
+import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/features/auth/pages/login.dart';
 import 'package:fullbooker/features/host/pages/summary.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -17,8 +18,8 @@ class MyAppWidget extends StatelessWidget {
       navigatorKey: navigatorKey,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xfff55E00),
-          primary: const Color(0xfff55E00),
+          seedColor: AppColors.primaryColor,
+          primary: AppColors.primaryColor,
         ),
         useMaterial3: true,
         textTheme: GoogleFonts.openSansTextTheme(),

@@ -4,8 +4,8 @@ import 'package:fullbooker/features/consumer/widgets/mpesa_checkout_instructions
 import 'package:fullbooker/features/consumer/widgets/payment_forms.dart';
 import 'package:fullbooker/features/host/models/product.dart';
 import 'package:fullbooker/shared/entities/ticket.dart';
-import 'package:fullbooker/shared/widgets/appbar.dart';
 import 'package:fullbooker/shared/widgets/information_modal.dart';
+import 'package:fullbooker/shared/widgets/standard_nav_bar.dart';
 import 'package:intl/intl.dart';
 
 class PaymentSummaryPage extends StatelessWidget {

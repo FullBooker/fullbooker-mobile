@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 
@@ -7,7 +8,7 @@ class Button extends StatelessWidget {
     this.onPressed, {
     super.key,
     this.actionLabelPrefix,
-    this.color = const Color(0xfff55E00),
+    this.color = AppColors.primaryColor,
     this.actionLabel = '',
     this.actionLabelColor = Colors.white,
     this.loading = false,
@@ -95,7 +96,7 @@ class ExtendedTextButton extends StatelessWidget {
     this.onPressed, {
     super.key,
     this.actionLabelPrefix,
-    this.color = const Color(0xfff55E00),
+    this.color = AppColors.primaryColor,
     this.actionLabel = '',
     this.loading = false,
   });
