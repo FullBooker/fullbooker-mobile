@@ -1,8 +1,9 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/config/environments.dart';
+import 'package:fullbooker/core/common/app_router.dart';
+import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
-import 'package:fullbooker/features/auth/pages/login_page.dart';
-import 'package:fullbooker/features/host/pages/events_summary_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MyAppWidget extends StatelessWidget {
@@ -10,12 +11,23 @@ class MyAppWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+    final AppRouter appRouter = AppRouter();
 
-    return MaterialApp(
-      title: 'Fullbooker',
+    return MaterialApp.router(
+      routerConfig: appRouter.config(
+        deepLinkBuilder: (PlatformDeepLink deepLink) {
+          if (currentToken == null) {
+            return DeepLink(
+              <PageRouteInfo<dynamic>>[LoginRoute()],
+            );
+          }
+          return const DeepLink(
+            <PageRouteInfo<dynamic>>[EventsSummaryRoute()],
+          );
+        },
+        navigatorObservers: () => <NavigatorObserver>[],
+      ),
       debugShowCheckedModeBanner: false,
-      navigatorKey: navigatorKey,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: AppColors.primaryColor,
@@ -24,9 +36,6 @@ class MyAppWidget extends StatelessWidget {
         useMaterial3: true,
         textTheme: GoogleFonts.openSansTextTheme(),
       ),
-      home: (currentToken == null)
-          ? const LoginPage()
-          : const EventsSummaryPage(),
     );
   }
 }
