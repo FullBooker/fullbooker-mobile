@@ -1,9 +1,9 @@
 import 'package:fullbooker/features/auth/models/login.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sembast/sembast_io.dart';
 import '../database/db.dart';
 
+// ================= Remove everything below this line when done
 class Flavour {
   final String apiHost;
   final AppEnvironment appEnv;
@@ -27,14 +27,9 @@ class Flavour {
 Future<Flavour> development = Flavour.withDB('api.dev.fullbooker.co.ke');
 
 late Flavour env;
-Token? currentToken;
 
-GoogleSignIn googleSignIn = GoogleSignIn(
-  scopes: <String>[
-    'email',
-    'https://www.googleapis.com/auth/contacts.readonly',
-  ],
-);
+// TODO(abiud): remove this once the refactor is complete
+Token? currentToken;
 
 class BuildEnvironment {
   AppEnvironment type;
