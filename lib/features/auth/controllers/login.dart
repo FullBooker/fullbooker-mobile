@@ -48,6 +48,7 @@ class LoginViewModel extends BaseViewModel<Token> {
       final Map<String, String?> data = <String, String?>{
         'access_token': auth.accessToken,
       };
+
       final dynamic res =
           await _repository.post(data, '/accounts/google/', withHeaders: false);
       switch (res.runtimeType) {
