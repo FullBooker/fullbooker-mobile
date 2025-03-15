@@ -8,7 +8,7 @@ import 'package:fullbooker/shared/widgets/divider.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
 import 'package:fullbooker/shared/widgets/text_input.dart';
 import 'package:fullbooker/shared/validators.dart';
-import 'package:fullbooker/features/auth/controllers/login.dart';
+import 'package:fullbooker/features/auth/controllers/login_controller.dart';
 
 @RoutePage()
 class LoginPage extends StatefulWidget {

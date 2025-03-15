@@ -4,7 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
-import 'package:fullbooker/features/auth/controllers/login.dart';
+import 'package:fullbooker/features/auth/controllers/login_controller.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
 import 'package:otp_pin_field/otp_pin_field.dart';
