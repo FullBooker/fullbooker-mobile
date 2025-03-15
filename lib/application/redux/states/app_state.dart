@@ -1,0 +1,20 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:fullbooker/application/redux/states/auth_state.dart';
+
+part 'app_state.freezed.dart';
+part 'app_state.g.dart';
+
+@freezed
+class AppState with _$AppState {
+  @JsonSerializable(explicitToJson: true)
+  const factory AppState({
+    AuthState? authState,
+  }) = _AppState;
+
+  factory AppState.fromJson(Map<String, dynamic> json) =>
+      _$AppStateFromJson(json);
+
+  factory AppState.initial() => AppState(
+        authState: AuthState.initial(),
+      );
+}
