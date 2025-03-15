@@ -1,0 +1,73 @@
+import 'dart:async';
+
+import 'package:async_redux/async_redux.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:fullbooker/application/redux/observers/custom_observer.dart';
+import 'package:fullbooker/application/redux/states/app_state.dart';
+import 'package:fullbooker/core/common/constants.dart';
+import 'package:fullbooker/core/utils.dart';
+import 'package:fullbooker/domain/value_objects/app_config.dart';
+import 'package:fullbooker/infrastructure/repository/state_persistor.dart';
+import 'package:fullbooker/fullbooker_app_widget.dart';
+import 'package:get_it/get_it.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
+Future<void> appBootStrap() async {
+  runZonedGuarded(() async {
+    WidgetsFlutterBinding.ensureInitialized();
+
+    // Load environment variables before accessing them
+    await dotenv.load();
+
+    const String appEnv = String.fromEnvironment('ENV');
+
+    final AppConfig appConfig = getAppConfig(appEnv);
+
+    /// Force portrait orientation on devices
+    await SystemChrome.setPreferredOrientations(
+      <DeviceOrientation>[DeviceOrientation.portraitUp],
+    );
+
+    final StateDatabase stateDB =
+        StateDatabase(dataBaseName: appConfig.databaseName);
+
+    await stateDB.init();
+
+    final AppState initialState = await stateDB.readState();
+
+    if (initialState == AppState.initial()) {
+      await stateDB.saveInitialState(initialState);
+    }
+
+    final Store<AppState> store = Store<AppState>(
+      initialState: initialState,
+      defaultDistinct: true,
+      persistor: PersistorPrinterDecorator<AppState>(stateDB),
+      actionObservers: <ActionObserver<AppState>>[CustomActionObserver()],
+    );
+
+    // TODO(abiud): setup firebase
+    // await Firebase.initializeApp(
+    //   name: appConfig.applicationName,
+    //   options: DefaultFirebaseOptions.currentPlatform,
+    // );
+
+    // Single instances used across the app
+    GetIt.I.registerSingleton<AppConfig>(appConfig);
+    GetIt.I.registerSingleton<GoogleSignIn>(
+      GoogleSignIn(scopes: googleSignInScopes),
+    );
+
+    // TODO(abiud):setup google analytics service
+    // await AnalyticsService().init(environment: appConfig.environment);
+
+    // TODO(abiud): setup crashlytics
+    // FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+
+    runApp(FullbookerAppWidget(appStore: store));
+  }, (Object error, StackTrace stack) async {
+    // TODO(abiud): setup crashlytics and sentry here
+  });
+}

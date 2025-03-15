@@ -1,12 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:fullbooker/core/utils.dart';
-import 'package:fullbooker/my_app_widget.dart';
+import 'package:fullbooker/app_bootstrap.dart';
 
-Future<void> main() async {
-  FlutterError.onError = (FlutterErrorDetails details) {
-    debugPrintStack(stackTrace: details.stack);
-  };
-  WidgetsFlutterBinding.ensureInitialized();
-  await setupEnvironment();
-  runApp(const MyAppWidget());
-}
+Future<void> main() => appBootStrap();

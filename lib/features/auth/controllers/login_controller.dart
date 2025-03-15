@@ -2,6 +2,7 @@ import 'package:fullbooker/config/environments.dart';
 import 'package:fullbooker/core/repository.dart';
 import 'package:fullbooker/core/view_model.dart';
 import 'package:fullbooker/features/auth/models/login.dart';
+import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginViewModel extends BaseViewModel<Token> {
@@ -42,7 +43,9 @@ class LoginViewModel extends BaseViewModel<Token> {
 
   Future<String?> signInWithGoogle() async {
     try {
+      final GoogleSignIn googleSignIn = GetIt.I.get<GoogleSignIn>();
       final GoogleSignInAccount? account = await googleSignIn.signIn();
+
       if (account == null) return 'Please choose a Google account to proceed';
       final GoogleSignInAuthentication auth = await account.authentication;
       final Map<String, String?> data = <String, String?>{

@@ -1,6 +1,8 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/config/environments.dart';
+import 'package:fullbooker/core/common/constants.dart';
+import 'package:fullbooker/domain/value_objects/app_config.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/regexes.dart';
 import 'package:map_location_picker/map_location_picker.dart';
@@ -89,3 +91,41 @@ Future<void> setupEnvironment() async {
   final BuildEnvironment envBuilder = BuildEnvironment(envFlavour);
   await envBuilder.setEnv();
 }
+
+/// Utility function to get the appropriate AppConfig based on the environment
+AppConfig getAppConfig(String env) {
+  switch (env.toUpperCase()) {
+    case 'DEV':
+      return devAppConfig;
+    case 'PROD':
+      return prodAppConfig;
+    case 'TEST':
+      return testAppConfig;
+    default:
+      throw ArgumentError('Invalid environment: $env. Use DEV or PROD.');
+  }
+}
+
+final AppConfig devAppConfig = AppConfig(
+  appContext: AppContext.dev,
+  databaseName: kDevDatabaseName,
+  sentryDsn: '',
+  environment: AppEnvironment.dev.name,
+  applicationName: kDevAppName,
+);
+
+final AppConfig prodAppConfig = AppConfig(
+  appContext: AppContext.prod,
+  databaseName: kProdDatabaseName,
+  sentryDsn: '',
+  environment: AppEnvironment.prod.name,
+  applicationName: kAppName,
+);
+
+final AppConfig testAppConfig = AppConfig(
+  appContext: AppContext.test,
+  databaseName: kDevDatabaseName,
+  sentryDsn: '',
+  environment: AppEnvironment.dev.name,
+  applicationName: kDevAppName,
+);
