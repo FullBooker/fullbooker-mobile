@@ -69,3 +69,5 @@ const String alreadyHaveAnAccountString = 'Already have an account? ';
 String otpSentCopy(String phone) => 'An OTP code has been sent to $phone';
 const String resendCodeInString = 'Resend code in ';
 const String resentOTPString = 'Resend OTP code';
+const String useDifferentString = 'Use a different ';
+const String emailOrPhoneString = 'email / phone number';
