@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/widgets/nav_item.dart';
 
 class BottomNavBar extends StatelessWidget {
@@ -16,9 +17,9 @@ class BottomNavBar extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              NavItemWidget('Switch to Hosting', Icons.home),
-              NavItemWidget('Search', Icons.search),
-              NavItemWidget('Profile', Icons.person),
+              NavItemWidget(switchToHostingString, Icons.home),
+              NavItemWidget(searchString, Icons.search),
+              NavItemWidget(profileString, Icons.person),
             ],
           ),
         ),

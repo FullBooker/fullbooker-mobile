@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
+import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/entities/data_mocks.dart';
 import 'package:fullbooker/shared/entities/overview_step.dart';
 import 'package:fullbooker/shared/widgets/buttons.dart';
@@ -94,7 +95,7 @@ class OverviewPageState extends State<OverviewPage> {
                       padding: const EdgeInsets.only(bottom: 30),
                       child: Button(
                         () => goToNextOverviewStep(context),
-                        actionLabel: 'Next',
+                        actionLabel: nextString,
                       ),
                     ),
                   ],
