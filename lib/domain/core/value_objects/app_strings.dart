@@ -64,3 +64,8 @@ const String emailAddressString = 'Email Address';
 const String confirmPasswordString = 'Confirm Password';
 const String signUpWithGoogleString = 'Sign up with Google';
 const String alreadyHaveAnAccountString = 'Already have an account? ';
+
+// Verify OTP page
+String otpSentCopy(String phone) => 'An OTP code has been sent to $phone';
+const String resendCodeInString = 'Resend code in ';
+const String resentOTPString = 'Resend OTP code';
