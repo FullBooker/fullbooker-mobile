@@ -227,4 +227,17 @@ const String whenWillThisEventHappen = 'When will this event happen';
 const String timeStart = 'What time will this event start?';
 const String timeEnd = 'What time will this event end?';
 
+const String selectCategoryError = 'Please select at least one category';
+const String ensurePricesForCategories =
+    "Ensure you've set both prices and amounts for all selected categories";
+const String howMuchPerTicket =
+    'How much will you charge for this event per ticket?';
+const String selectCurrencyForEvent = 'Select a currency for this event';
+const String selectTicketCategories = 'Select Ticket Categories';
+const String pricePerTicketCategory = 'Price Per Ticket Category';
+const String selectTicketCategoryPrompt = 'Please select a ticket category';
+const String maxTicketsPerCategory = 'Maximum number of tickets per category';
+const String pleaseSelectTicketCategory = 'Please select a ticket category';
 
+// Event Summary
+const String letsGetStarted = 'Let\'s Get you Started';

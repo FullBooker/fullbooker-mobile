@@ -5,6 +5,7 @@ import 'package:fullbooker/features/host/controllers/product_controller.dart';
 import 'package:fullbooker/features/host/models/product.dart';
 import 'package:fullbooker/shared/entities/activities_table_widget.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
+import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/buttons.dart';
@@ -71,7 +72,7 @@ class _HostProductSummaryPageState extends State<HostProductSummaryPage> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 30),
                     child: _loading
-                        ? const Center(child: CircularProgressIndicator())
+                        ? const Center(child: AppLoading())
                         : _errorMessage != null
                             ? Center(child: Text(_errorMessage!))
                             : SizedBox(

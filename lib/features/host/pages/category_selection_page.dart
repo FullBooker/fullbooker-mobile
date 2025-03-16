@@ -5,6 +5,7 @@ import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/features/host/controllers/category_controller.dart';
 import 'package:fullbooker/features/host/models/sub_category_model.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
+import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/buttons.dart';
@@ -88,7 +89,7 @@ class CategorySelectionPageState extends State<CategorySelectionPage> {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: isLoading
-            ? const Center(child: CircularProgressIndicator())
+            ? const Center(child: AppLoading())
             : Column(
                 children: <Widget>[
                   Expanded(

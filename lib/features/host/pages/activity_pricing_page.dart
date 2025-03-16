@@ -9,6 +9,7 @@ import 'package:fullbooker/features/host/models/currency.dart';
 import 'package:fullbooker/features/host/models/product.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/session_pricing.dart';
+import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/buttons.dart';
@@ -100,7 +101,7 @@ class _ActivityPricingPageState extends State<ActivityPricingPage> {
                           child: const Text(selectCurrencyPromptForActivity),
                         ),
                         if (currencies.isEmpty)
-                          const Center(child: CircularProgressIndicator())
+                          const Center(child: AppLoading())
                         else
                           SizedBox(
                             width: width * 0.4,

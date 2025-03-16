@@ -5,6 +5,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/features/consumer/widgets/event_title_widget.dart';
 import 'package:fullbooker/shared/entities/data_mocks.dart';
+import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/standard_nav_bar.dart';
 
 @RoutePage()
@@ -60,7 +61,7 @@ class GalleryPageState extends State<GalleryPage> {
             placeholder: (BuildContext context, String url) => Container(
               height: 150,
               color: Colors.grey[300],
-              child: const Center(child: CircularProgressIndicator()),
+              child: const Center(child: AppLoading()),
             ),
             errorWidget: (BuildContext context, String url, Object error) =>
                 const Icon(Icons.broken_image, size: 50),

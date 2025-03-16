@@ -7,6 +7,7 @@ import 'package:fullbooker/features/host/controllers/currency_controller.dart';
 import 'package:fullbooker/features/host/models/currency.dart';
 import 'package:fullbooker/features/host/models/product.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
+import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/buttons.dart';
@@ -54,7 +55,7 @@ class _EventCategoryPageState extends State<EventCategoryPage> {
   void onContinueClick() {
     setState(() => isLoading = true);
     if (selectedCategories.isEmpty) {
-      showSnackBar('Please select at least one category', context);
+      showSnackBar(selectCategoryError, context);
       setState(() => isLoading = false);
       return;
     }
@@ -72,7 +73,7 @@ class _EventCategoryPageState extends State<EventCategoryPage> {
       prices = <String, double>{};
       amounts = <String, int>{};
       showSnackBar(
-        "ensure you've set both prices and amounts for all selected categories",
+        ensurePricesForCategories,
         context,
         duration: 10000,
       );
@@ -123,7 +124,7 @@ class _EventCategoryPageState extends State<EventCategoryPage> {
             child: ListView(
               children: <Widget>[
                 const PageHeader(
-                  'How much will you charge for this event per ticket?',
+                  howMuchPerTicket,
                   '',
                   withLogo: false,
                   widthFactor: 0.9,
@@ -140,12 +141,12 @@ class _EventCategoryPageState extends State<EventCategoryPage> {
                       children: <Widget>[
                         const Expanded(
                           child: Text(
-                            'Select a currency for this event',
+                            selectCurrencyForEvent,
                             softWrap: true,
                           ),
                         ),
                         if (currencies.isEmpty)
-                          const Center(child: CircularProgressIndicator())
+                          const Center(child: AppLoading())
                         else
                           SizedBox(
                             width: 120,
@@ -187,7 +188,7 @@ class _EventCategoryPageState extends State<EventCategoryPage> {
                     child: Column(
                       children: <Widget>[
                         const Text(
-                          'Select Ticket Categories',
+                          selectTicketCategories,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 22,
@@ -237,7 +238,7 @@ class _EventCategoryPageState extends State<EventCategoryPage> {
                     child: Column(
                       children: <Widget>[
                         const Text(
-                          'Price Per Ticket Category',
+                          pricePerTicketCategory,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 22,
@@ -247,8 +248,7 @@ class _EventCategoryPageState extends State<EventCategoryPage> {
                           children: selectedCategories.isEmpty
                               ? <Widget>[
                                   const Center(
-                                    child:
-                                        Text('Please select a ticket category'),
+                                    child: Text(selectTicketCategoryPrompt),
                                   ),
                                 ]
                               : selectedCategories
@@ -302,7 +302,7 @@ class _EventCategoryPageState extends State<EventCategoryPage> {
                     child: Column(
                       children: <Widget>[
                         const Text(
-                          'Maximum number of tickets per category',
+                          maxTicketsPerCategory,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 22,
@@ -312,8 +312,7 @@ class _EventCategoryPageState extends State<EventCategoryPage> {
                           children: selectedCategories.isEmpty
                               ? <Widget>[
                                   const Center(
-                                    child:
-                                        Text('Please select a ticket category'),
+                                    child: Text(pleaseSelectTicketCategory),
                                   ),
                                 ]
                               : selectedCategories
