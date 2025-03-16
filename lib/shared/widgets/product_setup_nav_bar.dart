@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
+import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 
 class ProductSetupNavBar extends StatelessWidget
@@ -71,7 +72,7 @@ class ProductSetupNavBar extends StatelessWidget
                   child: Row(
                     children: <Widget>[
                       Icon(Icons.person, color: Theme.of(context).primaryColor),
-                      Text('Log out'),
+                      Text(logoutString),
                     ],
                   ),
                 ),
@@ -80,7 +81,7 @@ class ProductSetupNavBar extends StatelessWidget
                   child: Row(
                     children: <Widget>[
                       Icon(Icons.home, color: Theme.of(context).primaryColor),
-                      Text('Buy A Ticket'),
+                      Text(buyATicketString),
                     ],
                   ),
                 ),

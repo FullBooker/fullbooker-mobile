@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/entities/date_group.dart';
 import 'package:fullbooker/shared/widgets/card.dart';
 import 'package:fullbooker/shared/widgets/dropdown.dart';
@@ -86,7 +87,7 @@ class _EventTimeSelectionCard extends State<EventTimeSelectionCard> {
                     width: (widget.width) / 2.5,
                     height: 42,
                     child: CustomDropdown(
-                      label: 'Hours',
+                      label: hoursString,
                       options: List<DropDownOption>.generate(
                         23,
                         (int idx) => DropDownOption(
@@ -106,7 +107,7 @@ class _EventTimeSelectionCard extends State<EventTimeSelectionCard> {
                     width: (widget.width) / 2.5,
                     height: 42,
                     child: CustomDropdown(
-                      label: 'Minutes',
+                      label: minutesString,
                       options: List<DropDownOption>.generate(
                         59,
                         (int idx) => DropDownOption(

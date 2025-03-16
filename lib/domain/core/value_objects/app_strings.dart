@@ -292,3 +292,19 @@ const String disabledString = 'Disabled';
 const String switchToHostingString = 'Switch to Hosting';
 const String searchString = 'Search';
 const String profileString = 'Profile';
+
+const String yesString = 'Yes';
+const String noString = 'No';
+
+const String noDataFound = 'No data found';
+const String tryAgain = 'Try Again';
+
+const String hoursString = 'Hours';
+const String minutesString = 'Minutes';
+
+const String logoutString = 'Log out';
+const String buyATicketString = 'Buy A Ticket';
+
+const String searchForActivitiesString = 'Search for activities and events';
+
+const String activityLengthString = 'How long is the activity';

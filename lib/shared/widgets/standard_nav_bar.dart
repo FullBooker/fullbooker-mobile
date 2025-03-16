@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
+import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 
 class StandardNavBar extends StatelessWidget implements PreferredSizeWidget {
@@ -57,10 +58,10 @@ class StandardNavBar extends StatelessWidget implements PreferredSizeWidget {
                           decoration: InputDecoration(
                             filled: false,
                             border: InputBorder.none,
-                            hintText: 'Search for activities and events',
+                            hintText: searchForActivitiesString,
                             hintStyle: TextStyle(
                               fontSize: 18,
-                              color: Color(0xf0808080),
+                              color: Color(0xff808080),
                             ),
                             contentPadding:
                                 EdgeInsets.symmetric(horizontal: 24),
@@ -119,7 +120,7 @@ class StandardNavBar extends StatelessWidget implements PreferredSizeWidget {
                           Icons.person,
                           color: Theme.of(context).primaryColor,
                         ),
-                        Text('Log out'),
+                        Text(logoutString),
                       ],
                     ),
                   ),
@@ -128,7 +129,7 @@ class StandardNavBar extends StatelessWidget implements PreferredSizeWidget {
                     child: Row(
                       children: <Widget>[
                         Icon(Icons.home, color: Theme.of(context).primaryColor),
-                        Text('Switch to hosting'),
+                        Text(switchToHostingString),
                       ],
                     ),
                   ),
