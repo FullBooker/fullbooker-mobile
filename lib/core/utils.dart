@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fullbooker/config/environments.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
+import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/regexes.dart';
 import 'package:map_location_picker/map_location_picker.dart';
@@ -19,7 +20,7 @@ void showSnackBar(String message, BuildContext context, {int duration = 5000}) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       action: SnackBarAction(
-        label: 'Dismiss',
+        label: okThanksString,
         onPressed: () {
           // Code to execute.
         },
