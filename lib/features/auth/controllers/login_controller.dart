@@ -1,6 +1,8 @@
 import 'package:fullbooker/config/environments.dart';
 import 'package:fullbooker/core/repository.dart';
 import 'package:fullbooker/core/view_model.dart';
+import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
+import 'package:fullbooker/domain/core/value_objects/endpoints.dart';
 import 'package:fullbooker/features/auth/models/login.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -23,7 +25,7 @@ class LoginViewModel extends BaseViewModel<Token> {
         'password': password,
       };
       final dynamic res =
-          await _repository.post(data, '/accounts/signin/', withHeaders: false);
+          await _repository.post(data, signInEndpoint, withHeaders: false);
       switch (res.runtimeType) {
         case final Token val:
           await repository.store.set(res);
@@ -52,8 +54,11 @@ class LoginViewModel extends BaseViewModel<Token> {
         'access_token': auth.accessToken,
       };
 
-      final dynamic res =
-          await _repository.post(data, '/accounts/google/', withHeaders: false);
+      final dynamic res = await _repository.post(
+        data,
+        googleSignInEndpoint,
+        withHeaders: false,
+      );
       switch (res.runtimeType) {
         case final Token val:
           await repository.store.set(res);
@@ -64,7 +69,7 @@ class LoginViewModel extends BaseViewModel<Token> {
               TokenSerializer().fromJson(res as Map<String, Object?>);
       }
     } catch (e) {
-      return 'Oops! Something went wrong on our end, please try again';
+      return genericErrorString;
     }
 
     return null;
@@ -87,7 +92,7 @@ class LoginViewModel extends BaseViewModel<Token> {
       'password': password,
     };
     try {
-      final dynamic res = await _repository.post(data, '/accounts/signup/');
+      final dynamic res = await _repository.post(data, signUpEndpoint);
       switch (res.runtimeType) {
         case final Token val:
           await repository.store.set(res);
@@ -106,9 +111,9 @@ class LoginViewModel extends BaseViewModel<Token> {
   Future<String?> resetPassword(String phone) async {
     final Map<String, String> data = <String, String>{'identifier': phone};
     try {
-      await _repository.post(data, '/accounts/otp/request');
+      await _repository.post(data, requestOTPEndpoint);
     } catch (exception) {
-      return 'Please verify that the number you entered is correct';
+      return verifyNumberString;
     }
     return null;
   }
@@ -120,9 +125,9 @@ class LoginViewModel extends BaseViewModel<Token> {
     };
 
     try {
-      await _repository.post(data, '/accounts/otp/verify');
+      await _repository.post(data, verifyOTPEndpoint);
     } catch (exc) {
-      return 'We could not verify that OTP, please try again';
+      return weCouldNotVerifyOTPString;
     }
     return null;
   }
@@ -134,9 +139,9 @@ class LoginViewModel extends BaseViewModel<Token> {
     };
 
     try {
-      await _repository.post(data, '/accounts/password/reset');
+      await _repository.post(data, resetPasswordEndpoint);
     } catch (exc) {
-      return 'Please verify that your password is not too common';
+      return passwordTooCommonString;
     }
 
     return null;

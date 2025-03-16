@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
+import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/features/auth/controllers/login_controller.dart';
 import 'package:fullbooker/shared/validators.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
@@ -33,9 +34,9 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
       context: context,
       builder: (BuildContext context) {
         return InformationModal(
-          title: 'PASSWORD RESET SUCCESSFULLY',
-          message: const Text('You have reset your password successfully'),
-          actionTitle: 'Home',
+          title: passwordChangedTitle,
+          message: const Text(passwordChangedCopy),
+          actionTitle: homeString,
           action: () => context.router.replace(LoginRoute()),
         );
       },
@@ -84,7 +85,7 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
             Expanded(
               child: ListView(
                 children: <Widget>[
-                  const PageHeader('', 'Please enter a new password below'),
+                  const PageHeader('', enterNewPasswordTitle),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 5),
                     child: SizedBox(
@@ -96,7 +97,7 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
                             Padding(
                               padding: const EdgeInsets.symmetric(vertical: 10),
                               child: StandardTextInput(
-                                'Enter New Password',
+                                enterNewPasswordString,
                                 labelPrefix: Icons.key,
                                 isPassword: true,
                                 validator: validatePassword,
@@ -106,7 +107,7 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
                             Padding(
                               padding: const EdgeInsets.symmetric(vertical: 10),
                               child: StandardTextInput(
-                                'Re-enter New Password',
+                                reEnterNewPasswordString,
                                 labelPrefix: Icons.key,
                                 isPassword: true,
                                 controller: confirmController,
@@ -145,7 +146,7 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
                     padding: const EdgeInsets.only(top: 20, bottom: 60),
                     child: Button(
                       () => changePassword(context),
-                      actionLabel: 'Change Password',
+                      actionLabel: changePasswordString,
                       loading: isLoading,
                     ),
                   ),

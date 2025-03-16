@@ -11,12 +11,3 @@ const String masterSchemaTableName = 'sqlite_master';
 // DB Names
 const String kDevDatabaseName = 'fullbooker.dev.store.db';
 const String kProdDatabaseName = 'fullbooker.store.db';
-
-// Google sign in scopes
-
-final List<String> googleSignInScopes = <String>[
-  'email',
-  'https://www.googleapis.com/auth/contacts.readonly',
-];
-
-const String devAPIEndpoint = 'api.dev.fullbooker.co.ke';

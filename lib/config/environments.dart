@@ -1,4 +1,4 @@
-import 'package:fullbooker/core/common/constants.dart';
+import 'package:fullbooker/domain/core/value_objects/endpoints.dart';
 import 'package:fullbooker/features/auth/models/login.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:sembast/sembast_io.dart';
@@ -25,7 +25,7 @@ class Flavour {
   }
 }
 
-// TODO(abiud): this should come from 
+// TODO(abiud): this should come from
 Future<Flavour> development = Flavour.withDB(devAPIEndpoint);
 
 late Flavour env;
