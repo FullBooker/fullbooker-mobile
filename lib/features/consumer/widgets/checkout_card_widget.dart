@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/features/host/models/product.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
@@ -58,7 +59,7 @@ class CheckoutCard extends StatelessWidget {
                 children: <Widget>[
                   Flexible(
                     child: Text(
-                      'Number of tickets',
+                      noOfTickets,
                       softWrap: true,
                       style: TextStyle(
                         fontSize: screenWidth * 0.045,
@@ -85,7 +86,7 @@ class CheckoutCard extends StatelessWidget {
                   Flexible(
                     child: Text(
                       softWrap: true,
-                      'Ticket Price',
+                      ticketPriceString,
                       style: TextStyle(
                         fontSize: screenWidth * 0.045,
                         fontWeight: FontWeight.bold,
@@ -114,7 +115,7 @@ class CheckoutCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
-                    'Total',
+                    totalString,
                     style: TextStyle(
                       fontSize: screenWidth * 0.05,
                       fontWeight: FontWeight.bold,
@@ -143,8 +144,10 @@ class CheckoutCard extends StatelessWidget {
               SizedBox(height: screenHeight * 0.03),
 
               Center(
-                child:
-                    Button(onProceedClick, actionLabel: 'Proceed to checkout'),
+                child: Button(
+                  onProceedClick,
+                  actionLabel: proceedToCheckoutString,
+                ),
               ),
             ],
           ),

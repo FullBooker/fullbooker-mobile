@@ -86,3 +86,28 @@ const String backHomeString = 'Back Home';
 const String mapString = 'Map';
 const String viewMapString = 'View Map';
 const String eventDetailsString = 'Event Details';
+
+// Payment confirmation page
+const String thankYouForPayment = 'Thank you for your payment';
+const String downloadString = 'Download ';
+const String yourTicketBelow = 'your ticket below ';
+const String orCheckEmailText = 'or check your email at ';
+const String downloadTicket = 'Download ticket';
+
+// Payment summary page
+const String confirmPaymentString = 'Confirm Payment';
+const String summaryString = 'Summary';
+const String ticketDetailsString = 'Ticket Details';
+const String nameString = 'Name';
+const String dateAndTimeString = 'Date & Time';
+const String noOfTickets = 'No. of tickets';
+const String totalHours = 'Total Hours';
+const String grandTotal = 'Grand Total';
+const String promoCode = 'Enter your promo code here';
+
+// Other widgets
+const String ticketPriceString = 'Ticket Price';
+const String totalString = 'Total';
+const String proceedToCheckoutString = 'Proceed to checkout';
+const String selectDateString = 'Select Date';
+const String buyTicketString = 'Buy Ticket';

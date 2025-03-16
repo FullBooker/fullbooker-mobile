@@ -4,13 +4,14 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/utils.dart';
+import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/features/consumer/widgets/event_meta_widget.dart';
 import 'package:fullbooker/features/host/models/product.dart';
+import 'package:fullbooker/presentation/core/components/shimmers.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:intl/intl.dart';
 import 'package:map_location_picker/map_location_picker.dart';
-import 'package:shimmer/shimmer.dart';
 
 class EventCardWidget extends StatefulWidget {
   const EventCardWidget({super.key, required this.product, this.onBuyClick});
@@ -50,34 +51,32 @@ class _EventCardWidgetState extends State<EventCardWidget> {
         });
       }
     } catch (e) {
-      debugPrint('Error fetching location: $e');
       setState(
         () => isLoading = false,
       ); // Stop loading even if there's an error
     }
   }
 
+  // TODO(abiud): this is repeated. Extract into a shared utils
   Future<Position> determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
 
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      return Future<Position>.error('Location services are disabled.');
+      return Future<Position>.error(locationServicesDisabled);
     }
 
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        return Future<Position>.error('Location permissions are denied');
+        return Future<Position>.error(locationServicesDenied);
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
-      return Future<Position>.error(
-        'Location permissions are permanently denied, we cannot request permissions.',
-      );
+      return Future<Position>.error(locationServicesPermanentlyDenied);
     }
     return Geolocator.getCurrentPosition();
   }
@@ -86,8 +85,8 @@ class _EventCardWidgetState extends State<EventCardWidget> {
     final ProductLocation location = widget.product.locations.first;
     final LatLng coordinates = parseSRID(location.coordinates);
     final Position currentLocation = await determinePosition();
-    const double p =
-        0.017453292519943295; //conversion factor from radians to decimal degrees, exactly math.pi/180
+    //conversion factor from radians to decimal degrees, exactly math.pi/180
+    const double p = 0.017453292519943295;
     const double Function(num radians) c = cos;
     final double a = 0.5 -
         c((coordinates.latitude - currentLocation.latitude) * p) / 2 +
@@ -136,19 +135,6 @@ class _EventCardWidgetState extends State<EventCardWidget> {
         "${openTimes.last["opening_at"]} - ${openTimes.last["closing_at"]}";
   }
 
-  // Shimmer loading effect
-  Widget _buildShimmerEffect(double width) {
-    return Shimmer.fromColors(
-      baseColor: Colors.grey[300]!,
-      highlightColor: Colors.grey[100]!,
-      child: Container(
-        width: width,
-        height: 200,
-        color: Colors.grey[300],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
@@ -175,7 +161,7 @@ class _EventCardWidgetState extends State<EventCardWidget> {
           ],
         ),
         child: isLoading
-            ? _buildShimmerEffect(width)
+            ? LandingPageShimmer()
             : Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -243,7 +229,7 @@ class _EventCardWidgetState extends State<EventCardWidget> {
                                         productLocationName: locationName!,
                                       ),
                                     ),
-                            actionLabel: 'Buy Ticket',
+                            actionLabel: buyTicketString,
                             verticalPadding: 4,
                             elevation: 0,
                           ),
