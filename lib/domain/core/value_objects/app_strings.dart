@@ -14,6 +14,7 @@ const String genericErrorString =
 // Shared
 const String okThanksString = 'Ok, Thanks';
 const String homeString = 'Home';
+const String continueString = 'Continue';
 
 // Login
 const String verifyNumberString =
@@ -44,3 +45,22 @@ const String signUpString = 'Sign Up';
 const String signInWithGoogleString = 'Sign in with Google';
 const String dontHaveAccountString = 'Dont have an account? ';
 const String orString = 'Or';
+
+// Request OTP page
+const String enterPhoneOrEmailString =
+    'Please enter either your email or phone number';
+const String enterPhoneOrEmailCopy =
+    'Please enter your email or phone number to reset your password';
+const String emailString = 'Email';
+const String phoneNumberString = 'Phone Number';
+
+const String goBackToString = 'Go back to ';
+const String loginString = 'Login';
+
+// Sign up page
+const String firstNameString = 'First Name';
+const String lastNameString = 'Last Name';
+const String emailAddressString = 'Email Address';
+const String confirmPasswordString = 'Confirm Password';
+const String signUpWithGoogleString = 'Sign up with Google';
+const String alreadyHaveAnAccountString = 'Already have an account? ';
