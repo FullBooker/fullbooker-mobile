@@ -8,7 +8,7 @@ import 'package:fullbooker/shared/entities/event_creation_model.dart';
 import 'package:fullbooker/shared/widgets/event_creation_steps.dart';
 import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
-import 'package:fullbooker/shared/widgets/button.dart';
+import 'package:fullbooker/shared/widgets/buttons.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
 
 @RoutePage()

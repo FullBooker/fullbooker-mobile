@@ -111,3 +111,36 @@ const String totalString = 'Total';
 const String proceedToCheckoutString = 'Proceed to checkout';
 const String selectDateString = 'Select Date';
 const String buyTicketString = 'Buy Ticket';
+
+const String seeAllString = 'See All';
+
+// MPESA Checkout
+
+String checkoutSentToString(String phone) => 'MPESA Checkout sent to $phone';
+const String paymentAlert = 'Payment Alert';
+const String followInstructions = 'Follow the instructions below:';
+const String paymentInstructions = 'Instructions to Pay:';
+const String checkPopup = 'Check on a payment pop-up on your phone.';
+const String inputMpesaPIN = 'Input your MPESA PIN and click OK.';
+const String mpesaConfirmation =
+    'An MPESA confirmation SMS will be sent to you.';
+
+const String mpesaNo = 'M-Pesa Mobile No';
+const String completePayment = 'Complete payment';
+
+const String cardHolderName = 'Cardholder Name';
+const String cardNumber = 'Card Number';
+const String expiryDate = 'Expiry Date (MM/YY)';
+const String cvvString = 'CVV';
+
+const String billingAddress = 'Billing Address (Optional)';
+const String selectPaymentMethod = 'Select a payment method';
+
+String hostedByString(String hostName) => 'Hosted by $hostName';
+
+const String addAtLeastOneTicket = 'Please add at least one ticket';
+const String selectADateString = 'Please set a date';
+const String useBulkBookingString =
+    'Please use bulk booking if you need more than 3 tickets';
+
+const String ticketsString = 'Tickets';

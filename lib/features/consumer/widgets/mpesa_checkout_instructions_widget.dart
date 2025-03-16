@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/entities/ticket.dart';
 
 class MpesaCheckoutInstructionsWidget extends StatelessWidget {
@@ -14,34 +15,31 @@ class MpesaCheckoutInstructionsWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            'MPESA Checkout sent to ${ticket.phone}',
+            checkoutSentToString(ticket.phone),
             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 10),
           const Text(
-            'Payment Alert',
+            paymentAlert,
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 10),
           const Text(
-            'Follow the instructions below:',
+            followInstructions,
             style: TextStyle(fontSize: 16),
           ),
           const SizedBox(height: 10),
           const Text(
-            'Instructions to Pay:',
+            paymentInstructions,
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 8),
           _buildBulletPoint(
-            'Check on a payment pop-up on your phone.',
+            checkPopup,
             isBold: true,
           ),
-          _buildBulletPoint('Input your MPESA PIN and click OK.', isBold: true),
-          _buildBulletPoint(
-            'An MPESA confirmation SMS will be sent to you.',
-            isBold: true,
-          ),
+          _buildBulletPoint(inputMpesaPIN, isBold: true),
+          _buildBulletPoint(mpesaConfirmation, isBold: true),
         ],
       ),
     );

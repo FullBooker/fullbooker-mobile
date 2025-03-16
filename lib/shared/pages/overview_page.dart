@@ -4,7 +4,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/shared/entities/data_mocks.dart';
 import 'package:fullbooker/shared/entities/overview_step.dart';
-import 'package:fullbooker/shared/widgets/button.dart';
+import 'package:fullbooker/shared/widgets/buttons.dart';
 import 'package:fullbooker/shared/widgets/simple_stepper.dart';
 
 @RoutePage()

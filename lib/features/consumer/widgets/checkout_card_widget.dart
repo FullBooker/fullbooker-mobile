@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/features/host/models/product.dart';
-import 'package:fullbooker/shared/widgets/button.dart';
+import 'package:fullbooker/shared/widgets/buttons.dart';
 
 class CheckoutCard extends StatelessWidget {
   final ProductPricing? pricing;

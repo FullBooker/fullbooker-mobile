@@ -8,7 +8,7 @@ import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/features/consumer/widgets/event_meta_widget.dart';
 import 'package:fullbooker/features/host/models/product.dart';
 import 'package:fullbooker/presentation/core/components/shimmers.dart';
-import 'package:fullbooker/shared/widgets/button.dart';
+import 'package:fullbooker/shared/widgets/buttons.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:intl/intl.dart';
 import 'package:map_location_picker/map_location_picker.dart';
@@ -25,7 +25,7 @@ class EventCardWidget extends StatefulWidget {
 
 class _EventCardWidgetState extends State<EventCardWidget> {
   double? distanceFromEvent;
-  bool isLoading = true; // Track loading state
+  bool isLoading = true;
   String? locationName;
 
   @override
@@ -47,13 +47,13 @@ class _EventCardWidgetState extends State<EventCardWidget> {
         setState(() {
           locationName = placeMark.first.name;
           distanceFromEvent = distanceAway;
-          isLoading = false; // Data fetched, stop loading
+          isLoading = false;
         });
       }
     } catch (e) {
       setState(
         () => isLoading = false,
-      ); // Stop loading even if there's an error
+      );
     }
   }
 
@@ -85,7 +85,7 @@ class _EventCardWidgetState extends State<EventCardWidget> {
     final ProductLocation location = widget.product.locations.first;
     final LatLng coordinates = parseSRID(location.coordinates);
     final Position currentLocation = await determinePosition();
-    //conversion factor from radians to decimal degrees, exactly math.pi/180
+    // Conversion factor from radians to decimal degrees, exactly math.pi/180
     const double p = 0.017453292519943295;
     const double Function(num radians) c = cos;
     final double a = 0.5 -

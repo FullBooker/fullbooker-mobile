@@ -44,6 +44,7 @@ class _HostDetailsWidgetState extends State<HostDetailsWidget> {
   Widget build(BuildContext context) {
     return isLoading
         ? _buildShimmerEffect(widget.width)
+        // TODO!!(abiud): replace this with actual data
         : SizedBox(
             width: widget.width,
             child: const ProfileRatingWidget(

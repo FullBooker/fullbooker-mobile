@@ -39,7 +39,10 @@ class PaymentConfirmationPage extends StatelessWidget {
           children: <Widget>[
             SizedBox(
               width: width * 0.7,
-              child: const RoundedDivider(color: Color(0xf0F55E00), height: 2),
+              child: RoundedDivider(
+                color: Theme.of(context).primaryColor,
+                height: 2,
+              ),
             ),
             const Icon(Icons.check_circle, color: Colors.green, size: 80),
             const SizedBox(height: 10),
@@ -131,7 +134,7 @@ class PaymentConfirmationPage extends StatelessWidget {
             ElevatedButton(
               onPressed: () {},
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primaryColor,
+                backgroundColor: Theme.of(context).primaryColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),

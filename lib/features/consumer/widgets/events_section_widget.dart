@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/features/consumer/widgets/event_card_widget.dart';
 import 'package:fullbooker/features/host/models/product.dart';
 
@@ -42,11 +43,11 @@ class _EventsSectionWidgetState extends State<EventsSectionWidget> {
               if (widget.onSeAllClick == null)
                 const SizedBox()
               else
-                const Text(
-                  'See All',
+                Text(
+                  seeAllString,
                   style: TextStyle(
                     fontSize: 18,
-                    color: Color(0xf0F55E00),
+                    color: Theme.of(context).primaryColor,
                   ),
                 ),
             ],

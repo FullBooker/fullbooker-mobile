@@ -3,11 +3,12 @@ import 'dart:math';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/utils.dart';
+import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/features/host/models/product.dart';
-import 'package:fullbooker/shared/widgets/button.dart';
+import 'package:fullbooker/presentation/core/components/shimmers.dart';
+import 'package:fullbooker/shared/widgets/buttons.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:map_location_picker/map_location_picker.dart';
-import 'package:shimmer/shimmer.dart';
 
 class EventCarouselWidget extends StatefulWidget {
   final Product product;
@@ -57,13 +58,13 @@ class _EventCarouselWidgetState extends State<EventCarouselWidget> {
         });
       }
     } catch (e) {
-      debugPrint('Error fetching location: $e');
       setState(
         () => isLoading = false,
       ); // Stop loading even if there's an error
     }
   }
 
+  // TODO(abiud): extract this into a shared util
   Future<Position> determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -74,7 +75,7 @@ class _EventCarouselWidgetState extends State<EventCarouselWidget> {
       // Location services are not enabled don't continue
       // accessing the position and request users of the
       // App to enable the location services.
-      return Future<Position>.error('Location services are disabled.');
+      return Future<Position>.error(locationServicesDisabled);
     }
 
     permission = await Geolocator.checkPermission();
@@ -86,15 +87,13 @@ class _EventCarouselWidgetState extends State<EventCarouselWidget> {
         // Android's shouldShowRequestPermissionRationale
         // returned true. According to Android guidelines
         // your App should show an explanatory UI now.
-        return Future<Position>.error('Location permissions are denied');
+        return Future<Position>.error(locationServicesDenied);
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
       // Permissions are denied forever, handle appropriately.
-      return Future<Position>.error(
-        'Location permissions are permanently denied, we cannot request permissions.',
-      );
+      return Future<Position>.error(locationServicesPermanentlyDenied);
     }
 
     // When we reach here, permissions are granted and we can
@@ -138,7 +137,7 @@ class _EventCarouselWidgetState extends State<EventCarouselWidget> {
     return Stack(
       children: <Widget>[
         if (isLoading)
-          _buildShimmerEffect(width)
+          LandingPageShimmer()
         else
           CarouselSlider(
             options: CarouselOptions(
@@ -179,6 +178,7 @@ class _EventCarouselWidgetState extends State<EventCarouselWidget> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 20),
                     child: Text(
+                      // TODO(abiud): fix this. We can't show error in the distance to the user
                       "${widget.product.name}, $locationName, ${distanceFromEvent?.toStringAsFixed(0) ?? "Error"} km away",
                       style: const TextStyle(
                         color: Colors.white,
@@ -217,19 +217,6 @@ class _EventCarouselWidgetState extends State<EventCarouselWidget> {
           ),
         ),
       ],
-    );
-  }
-
-  // Shimmer loading effect
-  Widget _buildShimmerEffect(double width) {
-    return Shimmer.fromColors(
-      baseColor: Colors.grey[300]!,
-      highlightColor: Colors.grey[100]!,
-      child: Container(
-        width: width,
-        height: 200,
-        color: Colors.grey[300],
-      ),
     );
   }
 }
