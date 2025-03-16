@@ -129,10 +129,13 @@ class CRUDRepository<T extends Model> {
     final Uri url = Uri.https(this.host, path);
     final Map<String, String> headers =
         withHeaders ? setupHeaders() : <String, String>{};
-    headers.addAll(<String, String>{
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-    });
+    headers.addAll(
+      <String, String>{
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+    );
+
     final http.Response response =
         await http.post(url, body: json.encode(data), headers: headers);
     handleResponse(response);
