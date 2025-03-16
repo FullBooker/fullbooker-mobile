@@ -9,12 +9,13 @@ const String serverError = 'Server error';
 const String genericErrorString =
     'Oops! Something went wrong on our end, please try again';
 
-// Utils
-
 // Shared
 const String okThanksString = 'Ok, Thanks';
 const String homeString = 'Home';
 const String continueString = 'Continue';
+
+/// USER SIDE STRINGS
+///
 
 // Login
 const String verifyNumberString =
@@ -169,5 +170,26 @@ const String ticketSummaryString = 'Tickets Summary';
 
 const String deleteString = 'Delete';
 
-const String ticketsWillAppearString =
-    'Tickets will appear here when added';
+const String ticketsWillAppearString = 'Tickets will appear here when added';
+
+/// HOST SIDE STRINGS
+///
+
+// activity selection page
+const String activityLengthPrompt = 'Please set how long the activity is';
+const String startEndTimePrompt =
+    'Please set both start and end time for at least one day of the week';
+const String dayStartEndTimePrompt =
+    "Please set both the start and end times for the days you've selected";
+const String availabilityCreationError =
+    'Failed to create availability for activity';
+const String activityTimeString = 'When does this activity happen?';
+const String openWeekDays = 'Select the days of the week that you are open';
+
+const String startTimeString = 'Start time';
+const String endTimeString = 'Start time';
+
+const String closedTimeOfYearString =
+    'Choose the specific days of the year when '
+    'your activity will  remain closed (Optional)';
+const String activityNotOpen = 'Activity Not Open On';
