@@ -7,6 +7,7 @@ import 'package:fullbooker/features/host/controllers/product_controller.dart';
 import 'package:fullbooker/features/host/models/product.dart';
 import 'package:fullbooker/shared/entities/data_mocks.dart';
 import 'package:fullbooker/shared/entities/event_creation_model.dart';
+import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/event_creation_steps.dart';
 import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
@@ -62,7 +63,7 @@ class _EventsSummaryPageState extends State<EventsSummaryPage> {
                     children: <Widget>[
                       const PageHeader(
                         '',
-                        "Let's Get you Started",
+                        letsGetStarted,
                         withLogo: false,
                         widthFactor: 0.9,
                         pageDescriptionPadding: 40,
@@ -90,7 +91,7 @@ class _EventsSummaryPageState extends State<EventsSummaryPage> {
                 ),
               ],
             )
-          : const Center(child: CircularProgressIndicator()),
+          : const Center(child: AppLoading()),
     );
   }
 }
