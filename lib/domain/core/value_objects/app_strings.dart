@@ -241,3 +241,27 @@ const String pleaseSelectTicketCategory = 'Please select a ticket category';
 
 // Event Summary
 const String letsGetStarted = 'Let\'s Get you Started';
+
+const String failedToLoadProductsError = 'Failed to load products';
+
+const String activitiesString = 'Activities';
+
+const String newProductString = 'New Product';
+
+// Image selection page
+const String selectImagesAlert = 'Please select at least 2 images';
+const String selectVideosAlert = 'Please select at least 2 videos';
+const String uploadPhotosOfActivity = 'Upload photos of the activity';
+const String uploadVideosOfActivity = 'Upload videos of the activity';
+const String replaceString = 'Replace';
+const String selectImageCopy = 'Tap below to select image';
+const String selectVideoCopy = 'Tap below to select video';
+const String browseString = 'Browse';
+
+const String selectLocationPrompt = 'Please select a location';
+
+const String selectLocationWithinKenya =
+    'Please select a location within Kenya';
+
+const String nameCannotBeEmpty = 'Name cannot be empty';
+const String provideAnyOtherDetails = 'Provide any other details about this';

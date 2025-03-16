@@ -167,7 +167,7 @@ class _TicketsSummaryPageState extends State<TicketsSummaryPage> {
                                           child: Align(
                                             alignment: Alignment.centerLeft,
                                             child: Text(
-                                              serviceFee(appServiceFee),
+                                              serviceFee(kPlatformServiceFee),
                                               softWrap: true,
                                               style:
                                                   TextStyle(fontSize: fontSize),

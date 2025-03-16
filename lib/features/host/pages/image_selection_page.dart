@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
+import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/features/host/controllers/product_controller.dart';
@@ -61,7 +62,7 @@ class _ImageSelectionPageState extends State<ImageSelectionPage> {
     final FilePickerResult? result = await FilePicker.platform.pickFiles(
       allowMultiple: true,
       type: FileType.custom,
-      allowedExtensions: <String>['jpg', 'png'],
+      allowedExtensions: kAllowedImageExtensions,
     );
     if (result != null) {
       setState(() {
@@ -73,7 +74,7 @@ class _ImageSelectionPageState extends State<ImageSelectionPage> {
   Future<void> selectSingleImage() async {
     final FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
-      allowedExtensions: <String>['jpg', 'png'],
+      allowedExtensions: kAllowedImageExtensions,
     );
     if (result != null) {
       setState(() {
@@ -86,7 +87,7 @@ class _ImageSelectionPageState extends State<ImageSelectionPage> {
   Future<void> replaceImage(int currentImageIndex) async {
     final FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
-      allowedExtensions: <String>['jpg', 'png'],
+      allowedExtensions: kAllowedImageExtensions,
     );
     if (result != null) {
       images[currentImageIndex] = File(result.paths[0]!);
@@ -101,7 +102,7 @@ class _ImageSelectionPageState extends State<ImageSelectionPage> {
 
   void onContinueClick() {
     if (images.length < 2) {
-      showSnackBar('Please select at least 2 images');
+      showSnackBar(selectImagesAlert);
       return;
     }
     setState(() => isLoading = true);
@@ -133,7 +134,7 @@ class _ImageSelectionPageState extends State<ImageSelectionPage> {
               shrinkWrap: true,
               children: <Widget>[
                 const PageHeader(
-                  'Upload photos of the activity',
+                  uploadPhotosOfActivity,
                   '',
                   withLogo: false,
                   widthFactor: 0.9,
@@ -186,7 +187,7 @@ class _ImageSelectionPageState extends State<ImageSelectionPage> {
                                         height: 22,
                                         child: Button(
                                           () => replaceImage(idx),
-                                          actionLabel: 'Replace',
+                                          actionLabel: replaceString,
                                           labelFontSize: 13,
                                           color: const Color(0xf0FCF2EB),
                                           actionLabelColor: Colors.black,
@@ -223,15 +224,15 @@ class _ImageSelectionPageState extends State<ImageSelectionPage> {
                       children: <Widget>[
                         const Padding(
                           padding: EdgeInsets.all(10),
-                          child: Text('Tap below to select image'),
+                          child: Text(selectImageCopy),
                         ),
                         SizedBox(
                           width: 160,
                           height: 50,
                           child: Button(
                             selectImage,
-                            actionLabel: 'Browse',
-                            color: const Color(0xf0333333),
+                            actionLabel: browseString,
+                            color: const Color(0xff333333),
                           ),
                         ),
                       ],

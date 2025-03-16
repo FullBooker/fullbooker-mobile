@@ -320,7 +320,7 @@ class _ActivityDayPass extends State<ActivityDayPassPage> {
                                         child: Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            serviceFee(appServiceFee),
+                                            serviceFee(kPlatformServiceFee),
                                             softWrap: true,
                                             style: TextStyle(fontSize: 18),
                                           ),

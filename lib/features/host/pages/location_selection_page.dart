@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
+import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/features/host/controllers/product_controller.dart';
@@ -60,7 +61,7 @@ class _LocationSelectionPageState extends State<LocationSelectionPage> {
 
   void onContinueClick() {
     if (selectedLocation == null) {
-      showSnackBar('Please select a location');
+      showSnackBar(selectLocationPrompt);
       return;
     }
     setState(() => isLoading = true);
@@ -159,6 +160,7 @@ class _LocationSelectionPageState extends State<LocationSelectionPage> {
     final bool isLocationServiceEnabled =
         await Geolocator.isLocationServiceEnabled();
     if (!isLocationServiceEnabled) {
+      // TODO(abiud): show a good error message here
       debugPrint("user don't enable location permission");
     }
 
@@ -166,10 +168,14 @@ class _LocationSelectionPageState extends State<LocationSelectionPage> {
     if (locationPermission == LocationPermission.denied) {
       locationPermission = await Geolocator.requestPermission();
       if (locationPermission == LocationPermission.denied) {
+        // TODO(abiud): show a good error message here
+
         debugPrint('user denied location permission');
       }
     }
     if (locationPermission == LocationPermission.deniedForever) {
+      // TODO(abiud): show a good error message here
+
       debugPrint('user denied permission forever');
     }
     return Geolocator.getCurrentPosition(
@@ -219,7 +225,7 @@ class _LocationSelectionPageState extends State<LocationSelectionPage> {
                         child: SizedBox(
                           width: width,
                           child: MapLocationPicker(
-                            apiKey: 'AIzaSyDen5uldAkBcBPog8ajqpThWXGsiXmYSyU',
+                            apiKey: kMapsAPIKey,
                             popOnNextButtonTaped: true,
                             currentLatLng: cameraPosition!.target,
                             topCardColor: Colors.white,
@@ -263,10 +269,7 @@ class _LocationSelectionPageState extends State<LocationSelectionPage> {
                             },
                             onLongPress: (LatLng latLng) {
                               if (!_inBounds(latLng)) {
-                                showSnackBar(
-                                  'Please select a location within Kenya',
-                                );
-                                return;
+                                return showSnackBar(selectLocationWithinKenya);
                               }
                               setState(() => selectedLocation = latLng);
                             },
@@ -278,10 +281,9 @@ class _LocationSelectionPageState extends State<LocationSelectionPage> {
                                   geocodingResult.geometry.location.lng,
                                 );
                                 if (!_inBounds(location)) {
-                                  showSnackBar(
-                                    'Please select a location within Kenya',
+                                  return showSnackBar(
+                                    selectLocationWithinKenya,
                                   );
-                                  return;
                                 }
                                 setState(() {
                                   selectedLocation = location;
