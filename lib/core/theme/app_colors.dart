@@ -10,4 +10,7 @@ class AppColors {
   static const Color inputBackgroundColor = Colors.white;
 
   static const Color backgroundColor = Colors.white;
+
+  // App custom colors
+  static const Color customBlueColor = Color(0xf015B9FF);
 }

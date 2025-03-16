@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
+import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
@@ -135,8 +136,9 @@ class LoginPageState extends State<LoginPage> {
                               ),
                               TextSpan(
                                 text: resetHereString,
-                                style:
-                                    const TextStyle(color: Color(0xf015B9FF)),
+                                style: const TextStyle(
+                                  color: AppColors.customBlueColor,
+                                ),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () =>
                                       context.router.push(RequestOTPRoute()),
@@ -191,7 +193,8 @@ class LoginPageState extends State<LoginPage> {
                       ),
                       TextSpan(
                         text: signUpString,
-                        style: const TextStyle(color: Color(0xf015B9FF)),
+                        style:
+                            const TextStyle(color: AppColors.customBlueColor),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () => context.router.push(SignUpRoute()),
                       ),

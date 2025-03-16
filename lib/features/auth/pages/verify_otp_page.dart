@@ -4,6 +4,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
+import 'package:fullbooker/core/theme/app_colors.dart';
+import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/features/auth/controllers/login_controller.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
@@ -121,7 +123,7 @@ class VerifyOTPPageState extends State<VerifyOTPPage> {
                       children: <Widget>[
                         PageHeader(
                           '',
-                          'An OTP code has been sent to\n${widget.phoneNumber}',
+                          otpSentCopy(widget.phoneNumber),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(
@@ -151,7 +153,7 @@ class VerifyOTPPageState extends State<VerifyOTPPage> {
                                     text: TextSpan(
                                       children: <InlineSpan>[
                                         const TextSpan(
-                                          text: 'Resend code in ',
+                                          text: resendCodeInString,
                                           style: TextStyle(color: Colors.black),
                                         ),
                                         TextSpan(
@@ -165,9 +167,9 @@ class VerifyOTPPageState extends State<VerifyOTPPage> {
                                   )
                                 : RichText(
                                     text: TextSpan(
-                                      text: 'Resend OTP code',
+                                      text: resentOTPString,
                                       style: const TextStyle(
-                                        color: Color(0xf015B9FF),
+                                        color: AppColors.customBlueColor,
                                       ),
                                       recognizer: TapGestureRecognizer()
                                         ..onTap = () => resendOTP(context),
@@ -223,7 +225,9 @@ class VerifyOTPPageState extends State<VerifyOTPPage> {
                           ),
                           TextSpan(
                             text: 'email / phone number',
-                            style: const TextStyle(color: Color(0xf015B9FF)),
+                            style: const TextStyle(
+                              color: AppColors.customBlueColor,
+                            ),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () =>
                                   context.router.replace(RequestOTPRoute()),
