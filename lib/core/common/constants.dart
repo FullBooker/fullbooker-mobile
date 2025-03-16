@@ -18,3 +18,5 @@ final List<String> googleSignInScopes = <String>[
   'email',
   'https://www.googleapis.com/auth/contacts.readonly',
 ];
+
+const String devAPIEndpoint = 'api.dev.fullbooker.co.ke';
