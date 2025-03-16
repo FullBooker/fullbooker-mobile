@@ -4,6 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/utils.dart';
+import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/features/consumer/widgets/date_picker_widget.dart';
 import 'package:fullbooker/features/consumer/widgets/event_carousel_widget.dart';
 import 'package:fullbooker/features/consumer/widgets/host_details_widget.dart';
@@ -11,11 +12,11 @@ import 'package:fullbooker/features/consumer/widgets/rating_summary_widget.dart'
 import 'package:fullbooker/features/consumer/widgets/review_card_widget.dart';
 import 'package:fullbooker/features/consumer/widgets/ticket_booking_widget.dart';
 import 'package:fullbooker/features/host/models/product.dart';
+import 'package:fullbooker/presentation/core/components/shimmers.dart';
 import 'package:fullbooker/shared/entities/data_mocks.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
 import 'package:fullbooker/shared/widgets/standard_nav_bar.dart';
 import 'package:map_location_picker/map_location_picker.dart';
-import 'package:shimmer/shimmer.dart';
 
 @RoutePage()
 class EventDetailsPage extends StatefulWidget {
@@ -56,7 +57,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
       // Location services are not enabled don't continue
       // accessing the position and request users of the
       // App to enable the location services.
-      return Future<Position>.error('Location services are disabled.');
+      return Future<Position>.error(locationServicesDisabled);
     }
 
     permission = await Geolocator.checkPermission();
@@ -68,15 +69,13 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
         // Android's shouldShowRequestPermissionRationale
         // returned true. According to Android guidelines
         // your App should show an explanatory UI now.
-        return Future<Position>.error('Location permissions are denied');
+        return Future<Position>.error(locationServicesDenied);
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
       // Permissions are denied forever, handle appropriately.
-      return Future<Position>.error(
-        'Location permissions are permanently denied, we cannot request permissions.',
-      );
+      return Future<Position>.error(locationServicesPermanentlyDenied);
     }
 
     // When we reach here, permissions are granted and we can
@@ -103,27 +102,14 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
           eventLocation = coordinates;
           currentPosition = currentPos;
           routePolyline = routePolylineSet;
-          isLoading = false; // Data fetched, stop loading
+          isLoading = false;
         });
       }
     } catch (e) {
-      debugPrint('Error fetching location: $e');
       setState(
         () => isLoading = false,
-      ); // Stop loading even if there's an error
+      );
     }
-  }
-
-  Widget _buildShimmerEffect(double width) {
-    return Shimmer.fromColors(
-      baseColor: Colors.grey[300]!,
-      highlightColor: Colors.grey[100]!,
-      child: Container(
-        width: width,
-        height: 200,
-        color: Colors.grey[300],
-      ),
-    );
   }
 
   Widget _googleMapWidget() {
@@ -162,7 +148,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                               .push(GalleryRoute(images: const <String>[])),
                           child: EventCarouselWidget(
                             product: widget.event,
-                            actionLabel: 'View Map',
+                            actionLabel: viewMapString,
                             onActionClick: (_) => Scrollable.ensureVisible(
                               mapKey.currentContext!,
                               duration: const Duration(milliseconds: 500),
@@ -171,7 +157,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                         ),
                         const StandardNavBar(
                           showSearchBar: false,
-                          pageTitle: 'Event Details',
+                          pageTitle: eventDetailsString,
                         ),
                       ],
                     ),
@@ -215,7 +201,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   const Text(
-                                    'Map',
+                                    mapString,
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
                                       fontSize: 16,
@@ -230,7 +216,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                             ),
                           ),
                           if (currentPosition == null || eventLocation == null)
-                            _buildShimmerEffect(width)
+                            LandingPageShimmer()
                           else
                             SizedBox(
                               width: width - 10,
@@ -249,7 +235,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                             width: width * 0.6,
                             child: SecondaryButton(
                               () => context.router.push(ConsumerLandingRoute()),
-                              actionLabel: 'Back Home',
+                              actionLabel: backHomeString,
                               elevation: 0,
                             ),
                           ),
