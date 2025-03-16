@@ -32,7 +32,8 @@ class ActivitiesTableTable extends StatelessWidget {
             return DataRow(
               cells: <DataCell>[
                 DataCell(
-                    Text('#${product.number}', textAlign: TextAlign.center)),
+                  Text('#${product.number}', textAlign: TextAlign.center),
+                ),
                 DataCell(Text(product.name, textAlign: TextAlign.center)),
                 DataCell(
                   Text(

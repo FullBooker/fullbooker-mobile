@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/widgets/card.dart';
 import 'package:fullbooker/shared/widgets/dropdown.dart';
 
@@ -19,7 +20,7 @@ class TimeSelectionCard extends StatelessWidget {
       child: Column(
         children: <Widget>[
           const Text(
-            'How long is the activity',
+            activityLengthString,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 21),
           ),
           SizedBox(
@@ -33,7 +34,7 @@ class TimeSelectionCard extends StatelessWidget {
                     width: width / 2.8,
                     height: 42,
                     child: CustomDropdown(
-                      label: 'Hours',
+                      label: hoursString,
                       options: List<DropDownOption>.generate(
                         23,
                         (int idx) => DropDownOption(
@@ -53,7 +54,7 @@ class TimeSelectionCard extends StatelessWidget {
                     width: width / 2.8,
                     height: 42,
                     child: CustomDropdown(
-                      label: 'Minutes',
+                      label: minutesString,
                       options: List<DropDownOption>.generate(
                         59,
                         (int idx) => DropDownOption(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 
 class CustomSwitchWidget extends StatefulWidget {
   final Function(bool)? onValueChanged;
@@ -18,7 +19,7 @@ class _CustomSwitchWidgetState extends State<CustomSwitchWidget> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text(
-          isSwitchOn ? 'Yes' : 'No',
+          isSwitchOn ? yesString : noString,
           style: const TextStyle(fontSize: 18),
         ),
         Switch(
