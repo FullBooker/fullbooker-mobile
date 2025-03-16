@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
+import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:fullbooker/shared/widgets/divider.dart';
@@ -72,13 +73,13 @@ class LoginPageState extends State<LoginPage> {
           children: <Widget>[
             const Center(
               child: Text(
-                'WELCOME',
+                welcomeString,
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
             const PageHeader(
               '',
-              'Sign in to your account',
+              signInCopy,
               pageDescriptionPadding: 0,
               headerTopPadding: 0,
             ),
@@ -91,7 +92,7 @@ class LoginPageState extends State<LoginPage> {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       child: StandardTextInput(
-                        'Phone Number',
+                        phonNumberString,
                         labelPrefix: Icons.phone,
                         validator: validatePhoneNumber,
                         controller: emailController,
@@ -104,7 +105,7 @@ class LoginPageState extends State<LoginPage> {
                     Padding(
                       padding: const EdgeInsets.only(top: 10),
                       child: StandardTextInput(
-                        'Password',
+                        passwordString,
                         labelPrefix: Icons.key,
                         isPassword: true,
                         validator: validatePassword,
@@ -129,11 +130,11 @@ class LoginPageState extends State<LoginPage> {
                           text: TextSpan(
                             children: <InlineSpan>[
                               const TextSpan(
-                                text: 'Forgot password ? ',
+                                text: forgotPasswordString,
                                 style: TextStyle(color: Colors.black),
                               ),
                               TextSpan(
-                                text: 'Reset here',
+                                text: resetHereString,
                                 style:
                                     const TextStyle(color: Color(0xf015B9FF)),
                                 recognizer: TapGestureRecognizer()
@@ -152,7 +153,7 @@ class LoginPageState extends State<LoginPage> {
                           emailController.value.text,
                           passwordController.value.text,
                         ),
-                        actionLabel: 'Sign In',
+                        actionLabel: signInString,
                         loading: loading,
                       ),
                     ),
@@ -160,14 +161,14 @@ class LoginPageState extends State<LoginPage> {
                       Colors.black,
                       15,
                       MediaQuery.of(context).size.width * 0.8,
-                      'Or',
+                      orString,
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       child: Button(
                         loginWithGoogle,
                         color: const Color(0xf0F5F4F4),
-                        actionLabel: 'Sign in with Google',
+                        actionLabel: signInWithGoogleString,
                         actionLabelColor: Colors.black,
                         actionLabelPrefix: const Image(
                           image: AssetImage(googleIconPath),
@@ -185,11 +186,11 @@ class LoginPageState extends State<LoginPage> {
                   text: TextSpan(
                     children: <InlineSpan>[
                       const TextSpan(
-                        text: 'Dont have an account ? ',
+                        text: dontHaveAccountString,
                         style: TextStyle(color: Colors.black),
                       ),
                       TextSpan(
-                        text: 'Sign Up',
+                        text: signUpString,
                         style: const TextStyle(color: Color(0xf015B9FF)),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () => context.router.push(SignUpRoute()),
