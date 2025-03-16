@@ -12,7 +12,7 @@ import 'package:fullbooker/features/host/models/product.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
-import 'package:fullbooker/shared/widgets/buttons.dart';
+import 'package:fullbooker/shared/widgets/old_buttons.dart';
 import 'package:fullbooker/shared/widgets/card.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
 
@@ -185,7 +185,7 @@ class _ImageSelectionPageState extends State<ImageSelectionPage> {
                                       SizedBox(
                                         width: (width - 32) * 0.25,
                                         height: 22,
-                                        child: Button(
+                                        child: OldButton(
                                           () => replaceImage(idx),
                                           actionLabel: replaceString,
                                           labelFontSize: 13,
@@ -197,7 +197,7 @@ class _ImageSelectionPageState extends State<ImageSelectionPage> {
                                       SizedBox(
                                         width: (width - 32) * 0.15,
                                         height: 22,
-                                        child: Button(
+                                        child: OldButton(
                                           () => removeImage(idx),
                                           actionLabel: 'X',
                                           labelFontSize: 13,
@@ -229,7 +229,7 @@ class _ImageSelectionPageState extends State<ImageSelectionPage> {
                         SizedBox(
                           width: 160,
                           height: 50,
-                          child: Button(
+                          child: OldButton(
                             selectImage,
                             actionLabel: browseString,
                             color: const Color(0xff333333),
@@ -247,7 +247,7 @@ class _ImageSelectionPageState extends State<ImageSelectionPage> {
             child: Padding(
               padding:
                   EdgeInsets.symmetric(horizontal: width / 8, vertical: 30),
-              child: Button(
+              child: OldButton(
                 onContinueClick,
                 actionLabel: continueString,
                 loading: isLoading,

@@ -9,7 +9,7 @@ import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/event_time_selection_card.dart';
 import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
-import 'package:fullbooker/shared/widgets/buttons.dart';
+import 'package:fullbooker/shared/widgets/old_buttons.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
 
 @RoutePage()
@@ -121,7 +121,7 @@ class _DateSelectionPageState extends State<DateSelectionPage> {
             child: Padding(
               padding:
                   EdgeInsets.symmetric(horizontal: width / 8, vertical: 30),
-              child: Button(
+              child: OldButton(
                 onContinueClick,
                 actionLabel: continueString,
                 loading: isLoading,

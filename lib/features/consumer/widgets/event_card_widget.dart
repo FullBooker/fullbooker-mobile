@@ -8,7 +8,7 @@ import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/features/consumer/widgets/event_meta_widget.dart';
 import 'package:fullbooker/features/host/models/product.dart';
 import 'package:fullbooker/presentation/core/components/shimmers.dart';
-import 'package:fullbooker/shared/widgets/buttons.dart';
+import 'package:fullbooker/shared/widgets/old_buttons.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:intl/intl.dart';
 import 'package:map_location_picker/map_location_picker.dart';
@@ -221,7 +221,7 @@ class _EventCardWidgetState extends State<EventCardWidget> {
                         ),
                         SizedBox(
                           width: double.infinity,
-                          child: Button(
+                          child: OldButton(
                             widget.onBuyClick ??
                                 () => context.router.push(
                                       EventDetailsRoute(

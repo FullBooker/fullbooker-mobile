@@ -6,7 +6,7 @@ import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
-import 'package:fullbooker/shared/widgets/buttons.dart';
+import 'package:fullbooker/shared/widgets/old_buttons.dart';
 import 'package:fullbooker/shared/widgets/divider.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
 import 'package:fullbooker/shared/widgets/text_inputs.dart';
@@ -150,7 +150,7 @@ class LoginPageState extends State<LoginPage> {
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 20),
-                      child: Button(
+                      child: OldButton(
                         () => login(
                           emailController.value.text,
                           passwordController.value.text,
@@ -167,7 +167,7 @@ class LoginPageState extends State<LoginPage> {
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: Button(
+                      child: OldButton(
                         loginWithGoogle,
                         color: const Color(0xf0F5F4F4),
                         actionLabel: signInWithGoogleString,

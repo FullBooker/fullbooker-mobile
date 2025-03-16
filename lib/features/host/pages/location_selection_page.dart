@@ -12,7 +12,7 @@ import 'package:fullbooker/shared/entities/bound.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
-import 'package:fullbooker/shared/widgets/buttons.dart';
+import 'package:fullbooker/shared/widgets/old_buttons.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:map_location_picker/map_location_picker.dart';
@@ -304,7 +304,7 @@ class _LocationSelectionPageState extends State<LocationSelectionPage> {
                                   horizontal: width / 8,
                                   vertical: 30,
                                 ),
-                                child: Button(
+                                child: OldButton(
                                   onContinueClick,
                                   actionLabel: continueString,
                                   loading: isLoading,

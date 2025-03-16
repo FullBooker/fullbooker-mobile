@@ -4,7 +4,7 @@ import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/features/auth/controllers/login_controller.dart';
 import 'package:fullbooker/shared/validators.dart';
-import 'package:fullbooker/shared/widgets/buttons.dart';
+import 'package:fullbooker/shared/widgets/old_buttons.dart';
 import 'package:fullbooker/shared/widgets/information_modal.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
 import 'package:fullbooker/shared/widgets/text_inputs.dart';
@@ -144,7 +144,7 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.only(top: 20, bottom: 60),
-                    child: Button(
+                    child: OldButton(
                       () => changePassword(context),
                       actionLabel: changePasswordString,
                       loading: isLoading,

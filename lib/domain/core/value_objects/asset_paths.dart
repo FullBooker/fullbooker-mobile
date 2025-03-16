@@ -19,6 +19,6 @@ const String swimmingIconPath = 'assets/icons/swimming_icon.png';
 const String carIconPath = 'assets/icons/car_icon.png';
 
 // App overview images
-const String appOverView1ImagePath = 'assets/images/overview1/overview.png';
-const String appOverView2ImagePath = 'assets/images/overview2/overview.png';
-const String appOverView3ImagePath = 'assets/images/overview3/overview.png';
+const String appOverView1ImagePath = 'assets/images/overview_1.png';
+const String appOverView2ImagePath = 'assets/images/overview_2.png';
+const String appOverView3ImagePath = 'assets/images/overview_3.png';
