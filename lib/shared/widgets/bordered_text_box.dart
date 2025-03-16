@@ -28,7 +28,7 @@ class BorderedTextBoxState extends State<BorderedTextBox> {
         height: widget.height,
         child: DecoratedBox(
           decoration: BoxDecoration(
-            border: Border.all(color: const Color(0xf0FC8135)),
+            border: Border.all(color: Theme.of(context).primaryColor),
           ),
           child: Column(
             children: <Widget>[

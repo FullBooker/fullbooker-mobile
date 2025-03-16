@@ -303,13 +303,13 @@ class _ActivityDateSelectionPageState extends State<ActivityDateSelectionPage> {
                                   width: (width - 30) / 2,
                                   child: Row(
                                     children: <Widget>[
-                                      const Padding(
+                                      Padding(
                                         padding: EdgeInsets.symmetric(
                                           horizontal: 10,
                                         ),
                                         child: Icon(
                                           Icons.calendar_month,
-                                          color: Color(0xf0FC8135),
+                                          color: Theme.of(context).primaryColor,
                                         ),
                                       ),
                                       SizedBox(
@@ -359,9 +359,9 @@ class _ActivityDateSelectionPageState extends State<ActivityDateSelectionPage> {
                                             ),
                                           ),
                                         ),
-                                        const RoundedDivider(
+                                        RoundedDivider(
                                           height: 1,
-                                          color: Color(0xf0FC8135),
+                                          color: Theme.of(context).primaryColor,
                                         ),
                                         Expanded(
                                           child: ListView(

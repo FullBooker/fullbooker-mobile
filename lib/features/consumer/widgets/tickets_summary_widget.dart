@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
+import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/ticket.dart';
 
@@ -42,7 +43,7 @@ class _TicketsSummaryWidgetState extends State<TicketsSummaryWidget> {
         children: <Widget>[
           // Title
           const Text(
-            'Tickets Summary',
+            ticketSummaryString,
             textAlign: TextAlign.left,
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
@@ -58,31 +59,31 @@ class _TicketsSummaryWidgetState extends State<TicketsSummaryWidget> {
               columns: const <DataColumn>[
                 DataColumn(
                   label: Text(
-                    'Name',
+                    nameString,
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
                 DataColumn(
                   label: Text(
-                    'ID/PASSPORT',
+                    idNumber,
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
                 DataColumn(
                   label: Text(
-                    'Phone number',
+                    phonNumberString,
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
                 DataColumn(
                   label: Text(
-                    'Email',
+                    emailAddressString,
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
                 DataColumn(
                   label: Text(
-                    'Quantity',
+                    quantityString,
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -109,7 +110,7 @@ class _TicketsSummaryWidgetState extends State<TicketsSummaryWidget> {
                       ),
                       onPressed: () => deleteTicket(index),
                       child: const Text(
-                        'Delete',
+                        deleteString,
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
@@ -123,11 +124,9 @@ class _TicketsSummaryWidgetState extends State<TicketsSummaryWidget> {
             const Center(
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 8.0),
-                child: Text('Tickets will appear here when added'),
+                child: Text(ticketsWillAppearString),
               ),
-            )
-          else
-            const SizedBox(),
+            ),
         ],
       ),
     );

@@ -9,7 +9,7 @@ class CustomCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        border: Border.all(color: const Color(0xf0FC8135)),
+        border: Border.all(color: Theme.of(context).primaryColor),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Padding(

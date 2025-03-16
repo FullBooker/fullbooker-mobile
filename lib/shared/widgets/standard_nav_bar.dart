@@ -113,18 +113,21 @@ class StandardNavBar extends StatelessWidget implements PreferredSizeWidget {
                 return <PopupMenuEntry<Widget>>[
                   PopupMenuItem<Widget>(
                     onTap: () => context.router.replace(LoginRoute()),
-                    child: const Row(
+                    child: Row(
                       children: <Widget>[
-                        Icon(Icons.person, color: Color(0xf0FC8135)),
+                        Icon(
+                          Icons.person,
+                          color: Theme.of(context).primaryColor,
+                        ),
                         Text('Log out'),
                       ],
                     ),
                   ),
                   PopupMenuItem<Widget>(
                     onTap: () => context.router.push(EventsSummaryRoute()),
-                    child: const Row(
+                    child: Row(
                       children: <Widget>[
-                        Icon(Icons.home, color: Color(0xf0FC8135)),
+                        Icon(Icons.home, color: Theme.of(context).primaryColor),
                         Text('Switch to hosting'),
                       ],
                     ),

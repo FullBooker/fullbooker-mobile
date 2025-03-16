@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/utils.dart';
+import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/features/host/models/product.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/ticket.dart';
@@ -40,7 +41,7 @@ class _TicketFormWidgetState extends State<TicketFormWidget> {
 
   String? nullCheckValidator(String? fieldValue, {bool required = false}) {
     if ((fieldValue == null || fieldValue.isEmpty) && required) {
-      return 'This field is required';
+      return thisFieldIsRequired;
     }
     return null;
   }
@@ -48,7 +49,7 @@ class _TicketFormWidgetState extends State<TicketFormWidget> {
   void onAddClicked() {
     if (_formKey.currentState!.validate()) {
       if (selectedPricing == null) {
-        showSnackBar('Please select a pricing tier for this ticket', context);
+        showSnackBar(selectPricingTierPrompt, context);
         return;
       }
       final int quantity = numberController.text.isEmpty ||
@@ -79,7 +80,7 @@ class _TicketFormWidgetState extends State<TicketFormWidget> {
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                'Ticket ${widget.index + 1}',
+                ticketNumber(widget.index + 1),
                 textAlign: TextAlign.start,
                 style: const TextStyle(
                   fontSize: 18,
@@ -104,7 +105,7 @@ class _TicketFormWidgetState extends State<TicketFormWidget> {
                   if (widget.bookingMode == BookingMode.bulk)
                     buildTextField(
                       Icons.numbers,
-                      'Quantity',
+                      quantityString,
                       controller: numberController,
                       required: true,
                     )
@@ -112,25 +113,25 @@ class _TicketFormWidgetState extends State<TicketFormWidget> {
                     const SizedBox(),
                   buildTextField(
                     Icons.person,
-                    'Name',
+                    nameString,
                     controller: nameController,
                     validator: validateName,
                   ),
                   buildTextField(
                     Icons.credit_card,
-                    'ID/ Passport Number',
+                    idNumber,
                     controller: idController,
                     required: true,
                   ),
                   buildTextField(
                     Icons.phone,
-                    'Phone Number',
+                    phonNumberString,
                     controller: phoneController,
                     validator: validatePhoneNumber,
                   ),
                   buildTextField(
                     Icons.email,
-                    'Email',
+                    emailAddressString,
                     controller: emailController,
                     validator: validateEmail,
                   ),
@@ -156,8 +157,8 @@ class _TicketFormWidgetState extends State<TicketFormWidget> {
                                     padding: const EdgeInsets.only(right: 5),
                                     child: Text(
                                       widget.bookingMode == BookingMode.single
-                                          ? 'Add More Tickets'
-                                          : 'Save',
+                                          ? addMoreTicketsString
+                                          : saveString,
                                       softWrap: true,
                                       style: const TextStyle(
                                         fontWeight: FontWeight.bold,
@@ -166,9 +167,9 @@ class _TicketFormWidgetState extends State<TicketFormWidget> {
                                     ),
                                   ),
                                 ),
-                                const Icon(
+                                Icon(
                                   Icons.add,
-                                  color: Color(0xf0FC8135),
+                                  color: Theme.of(context).primaryColor,
                                   size: 14,
                                 ),
                               ],
@@ -192,17 +193,17 @@ class _TicketFormWidgetState extends State<TicketFormWidget> {
       padding: const EdgeInsets.only(bottom: 10),
       child: DropdownButtonFormField<ProductPricing>(
         value: selectedPricing,
-        isExpanded: true, // Ensure dropdown expands to available width
+        isExpanded: true,
         hint: const FittedBox(
           fit: BoxFit.scaleDown,
           child: Text(
-            'Pricing Tier',
+            pricingTier,
             overflow: TextOverflow.ellipsis,
             maxLines: 1,
           ),
         ),
         validator: (ProductPricing? value) {
-          if (value == null) return 'Please select a pricing tier';
+          if (value == null) return selectPricingTierPrompt;
           return null;
         },
         decoration: InputDecoration(
@@ -218,10 +219,10 @@ class _TicketFormWidgetState extends State<TicketFormWidget> {
           return DropdownMenuItem<ProductPricing>(
             value: pricing,
             child: FittedBox(
-              fit: BoxFit.scaleDown, // Prevents overflow by scaling down text
+              fit: BoxFit.scaleDown,
               child: Text(
                 '${pricing.ticketTier} - KES ${pricing.cost}',
-                overflow: TextOverflow.ellipsis, // Truncate long text
+                overflow: TextOverflow.ellipsis,
                 maxLines: 1,
               ),
             ),
@@ -255,64 +256,6 @@ class _TicketFormWidgetState extends State<TicketFormWidget> {
             borderRadius: BorderRadius.circular(8),
             borderSide: BorderSide.none,
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class AmountSelectionDropdown extends StatefulWidget {
-  const AmountSelectionDropdown({super.key});
-
-  @override
-  State<StatefulWidget> createState() => _AmountSelectionDropdownState();
-}
-
-class _AmountSelectionDropdownState extends State<AmountSelectionDropdown> {
-  int selectedTickets = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12),
-        decoration: BoxDecoration(
-          color: const Color(0xf0FADFCF),
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            // Label
-            Text(
-              'Select number of tickets',
-              style: TextStyle(color: Colors.grey[700], fontSize: 14),
-            ),
-
-            // Dropdown Button
-            DropdownButton<int>(
-              value: selectedTickets,
-              icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
-              underline: const SizedBox(),
-              // TODO(abiud): investigate this and fix
-              // ignore: always_specify_types
-              items: List.generate(11, (int index) => index).map((int number) {
-                return DropdownMenuItem<int>(
-                  value: number,
-                  child: Text(
-                    number.toString(),
-                    style: const TextStyle(color: Colors.black),
-                  ),
-                );
-              }).toList(),
-              onChanged: (int? value) {
-                setState(() {
-                  selectedTickets = value!;
-                });
-              },
-            ),
-          ],
         ),
       ),
     );
