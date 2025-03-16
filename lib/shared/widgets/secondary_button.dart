@@ -1,89 +1,60 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:fullbooker/core/theme/app_colors.dart';
-import 'package:fullbooker/core/utils.dart';
-import 'package:fullbooker/shared/widgets/app_loading.dart';
+
+// Package imports:
+import 'package:dartz/dartz.dart';
 
 class SecondaryButton extends StatelessWidget {
-  final Function() onPressed;
-  final Color color;
-  final String actionLabel;
-  final Widget? actionLabelPrefix;
-  final bool loading;
-  final Color actionLabelColor;
-  final double labelFontSize;
-  final double verticalPadding;
-  final double elevation;
-  final double? customHeight;
-  final double? customWidth;
-
-  const SecondaryButton(
-    this.onPressed, {
+  const SecondaryButton({
     super.key,
-    this.actionLabelPrefix,
-    this.color = AppColors.primaryColor,
-    this.actionLabel = '',
-    this.actionLabelColor = Colors.white,
-    this.loading = false,
-    this.labelFontSize = 16,
-    this.verticalPadding = 12,
-    this.elevation = 1,
-    this.customHeight = 48,
+    required this.child,
+    required this.onPressed,
+    this.buttonKey,
+    this.customHeight,
+    this.textColor,
+    this.fillColor,
     this.customWidth,
   });
 
+  final void Function()? onPressed;
+  final Key? buttonKey;
+  final Either<Widget, String> child;
+  final double? customHeight;
+  final double? customWidth;
+  final Color? fillColor;
+  final Color? textColor;
+
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-
-    return SizedBox(
-      width: customWidth ?? size.width,
-      height: customHeight,
-      child: RawMaterialButton(
-        elevation: elevation,
-        fillColor: color.withValues(alpha: .1),
-        splashColor: color,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0),
-        ),
-        onPressed: onPressed,
-        child: Center(
-          child: loading
-              ? const AppLoading()
-              : actionLabelPrefix != null
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                          child: SizedBox(
-                            width: 16,
-                            height: 16,
-                            child: actionLabelPrefix,
-                          ),
-                        ),
-                        Text(
-                          actionLabel,
-                          style: TextStyle(
-                            fontSize: labelFontSize,
-                            color: actionLabelColor,
-                          ),
-                          textScaler: TextScaler.linear(
-                            ScaleSize.textScaleFactor(
-                              context,
-                              maxTextScaleFactor: 2.6,
-                            ),
-                          ),
-                        ),
-                      ],
-                    )
-                  : Text(
-                      actionLabel,
-                      style: TextStyle(
-                        fontSize: labelFontSize,
-                        color: color,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
+    return Container(
+      height: customHeight ?? 48,
+      width: customWidth ?? double.infinity,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        color:
+            fillColor ?? Theme.of(context).primaryColor.withValues(alpha: 0.1),
+      ),
+      child: InkWell(
+        key: buttonKey,
+        onTap: onPressed,
+        highlightColor: Theme.of(context).primaryColor.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(8),
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Center(
+            child: child.fold(
+              id,
+              (String text) => Text(
+                text,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge
+                    ?.copyWith(color: Theme.of(context).primaryColor),
+              ),
+            ),
+          ),
         ),
       ),
     );

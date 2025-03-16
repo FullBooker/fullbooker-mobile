@@ -7,7 +7,7 @@ import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/features/auth/controllers/login_controller.dart';
-import 'package:fullbooker/shared/widgets/buttons.dart';
+import 'package:fullbooker/shared/widgets/old_buttons.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
 import 'package:otp_pin_field/otp_pin_field.dart';
 
@@ -207,7 +207,7 @@ class VerifyOTPPageState extends State<VerifyOTPPage> {
               ),
               child: Column(
                 children: <Widget>[
-                  Button(
+                  OldButton(
                     () => validateOTP(context),
                     loading: isLoading,
                     actionLabel: continueString,

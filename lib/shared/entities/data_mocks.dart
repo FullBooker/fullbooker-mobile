@@ -1,26 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
-import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/shared/entities/event_creation_model.dart';
-import 'package:fullbooker/shared/entities/overview_step.dart';
-
-List<OverviewStep> defaultSteps = <OverviewStep>[
-  OverviewStep(
-    const <AssetImage>[AssetImage(appOverView1ImagePath)],
-    overview1Title,
-    overview1Copy,
-  ),
-  OverviewStep(
-    const <AssetImage>[AssetImage(appOverView2ImagePath)],
-    overview2Title,
-    overview2Copy,
-  ),
-  OverviewStep(
-    const <AssetImage>[AssetImage(appOverView2ImagePath)],
-    overview3Title,
-    overview3Copy,
-  ),
-];
 
 final List<Map<String, dynamic>> eventReviewsDummyData = <Map<String, dynamic>>[
   <String, dynamic>{

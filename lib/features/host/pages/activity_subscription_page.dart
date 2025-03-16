@@ -14,7 +14,7 @@ import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/custom_switch_widget.dart';
 import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
-import 'package:fullbooker/shared/widgets/buttons.dart';
+import 'package:fullbooker/shared/widgets/old_buttons.dart';
 import 'package:fullbooker/shared/widgets/card.dart';
 import 'package:fullbooker/shared/widgets/divider.dart';
 import 'package:fullbooker/shared/widgets/dropdown.dart';
@@ -417,7 +417,7 @@ class _ActivitySubscription extends State<ActivitySubscriptionPage> {
             child: Padding(
               padding:
                   EdgeInsets.symmetric(horizontal: width / 8, vertical: 30),
-              child: Button(
+              child: OldButton(
                 onContinueClick,
                 actionLabel: publish,
                 loading: isLoading,

@@ -13,7 +13,7 @@ import 'package:fullbooker/features/host/models/product.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
-import 'package:fullbooker/shared/widgets/buttons.dart';
+import 'package:fullbooker/shared/widgets/old_buttons.dart';
 import 'package:fullbooker/shared/widgets/card.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
 import 'package:video_player/video_player.dart';
@@ -187,7 +187,7 @@ class _VideoSelectionPageState extends State<VideoSelectionPage> {
                                         SizedBox(
                                           width: (width - 32) * 0.25,
                                           height: 22,
-                                          child: Button(
+                                          child: OldButton(
                                             () => replaceVideo(idx),
                                             actionLabel: replaceString,
                                             labelFontSize: 13,
@@ -199,7 +199,7 @@ class _VideoSelectionPageState extends State<VideoSelectionPage> {
                                         SizedBox(
                                           width: (width - 32) * 0.15,
                                           height: 22,
-                                          child: Button(
+                                          child: OldButton(
                                             () => removeVideo(idx),
                                             // TODO(abiud): replace this with an icon
                                             actionLabel: 'X',
@@ -233,7 +233,7 @@ class _VideoSelectionPageState extends State<VideoSelectionPage> {
                         SizedBox(
                           width: 160,
                           height: 50,
-                          child: Button(
+                          child: OldButton(
                             selectVideo,
                             actionLabel: browseString,
                             color: const Color(0xf0333333),
@@ -251,7 +251,7 @@ class _VideoSelectionPageState extends State<VideoSelectionPage> {
             child: Padding(
               padding:
                   EdgeInsets.symmetric(horizontal: width / 8, vertical: 30),
-              child: Button(
+              child: OldButton(
                 onContinueClick,
                 actionLabel: continueString,
                 loading: isLoading,

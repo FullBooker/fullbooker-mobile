@@ -1,11 +1,12 @@
 // Onboarding strings
 // TODO(abiud): improve this copy
-const String overview1Title = 'Find your favorite events';
+const String overview1Title = 'Find your favorite events and activities';
 const String overview1Copy = 'Discover, book, and enjoy your favorite events';
-const String overview2Title = 'FIND NEARBY EVENTS';
-const String overview2Copy = 'Your Go-To app for nearby events';
-const String overview3Title = 'Update your upcoming events';
-const String overview3Copy = 'Keep your events up to date';
+const String overview2Title = 'Find events and activities events nearby';
+const String overview2Copy = 'Your Go-To App for nearby Events and activities';
+const String overview3Title = 'Post your events and activities';
+const String overview3Copy =
+    'Amplify Your Reach. Share your events and activities here';
 
 // Exception strings
 const String youWereLoggedOutString = 'You were logged out';

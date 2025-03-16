@@ -6,7 +6,7 @@ import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/features/auth/controllers/login_controller.dart';
-import 'package:fullbooker/shared/widgets/buttons.dart';
+import 'package:fullbooker/shared/widgets/old_buttons.dart';
 import 'package:fullbooker/shared/widgets/divider.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
 import 'package:fullbooker/shared/widgets/text_inputs.dart';
@@ -148,7 +148,7 @@ class RequestOTPPageState extends State<RequestOTPPage> {
               ),
               child: Column(
                 children: <Widget>[
-                  Button(
+                  OldButton(
                     () => requestOTP(context),
                     actionLabel: continueString,
                     loading: isLoading,

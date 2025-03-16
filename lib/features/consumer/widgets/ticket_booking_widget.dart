@@ -9,7 +9,7 @@ import 'package:fullbooker/features/consumer/widgets/tickets_summary_widget.dart
 import 'package:fullbooker/features/host/models/product.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/ticket.dart';
-import 'package:fullbooker/shared/widgets/secondary_button.dart';
+import 'package:fullbooker/shared/widgets/old_secondary_button.dart';
 
 class TicketBookingWidget extends StatefulWidget {
   final Product product;
@@ -122,7 +122,7 @@ class _TicketBookingWidgetState extends State<TicketBookingWidget> {
                         const SizedBox(height: 8),
                         SizedBox(
                           width: MediaQuery.of(context).size.width / 1.7,
-                          child: SecondaryButton(
+                          child: OldSecondaryButton(
                             _toggleBookingMode,
                             elevation: 0,
                             actionLabel: bookingMode == BookingMode.bulk

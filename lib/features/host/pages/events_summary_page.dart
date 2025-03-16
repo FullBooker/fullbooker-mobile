@@ -11,7 +11,7 @@ import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/event_creation_steps.dart';
 import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
-import 'package:fullbooker/shared/widgets/buttons.dart';
+import 'package:fullbooker/shared/widgets/old_buttons.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
 
 @RoutePage()
@@ -83,7 +83,7 @@ class _EventsSummaryPageState extends State<EventsSummaryPage> {
                       horizontal: width / 8,
                       vertical: 30,
                     ),
-                    child: Button(
+                    child: OldButton(
                       () => context.router.push(CategorySelectionRoute()),
                       actionLabel: continueString,
                     ),

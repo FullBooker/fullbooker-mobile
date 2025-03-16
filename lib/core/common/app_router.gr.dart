@@ -748,41 +748,18 @@ class LoginRouteArgs {
 
 /// generated route for
 /// [_i18.OverviewPage]
-class OverviewRoute extends _i28.PageRouteInfo<OverviewRouteArgs> {
-  OverviewRoute({
-    _i29.Key? key,
-    int currentStep = 0,
-    List<_i28.PageRouteInfo>? children,
-  }) : super(
-         OverviewRoute.name,
-         args: OverviewRouteArgs(key: key, currentStep: currentStep),
-         initialChildren: children,
-       );
+class OverviewRoute extends _i28.PageRouteInfo<void> {
+  const OverviewRoute({List<_i28.PageRouteInfo>? children})
+    : super(OverviewRoute.name, initialChildren: children);
 
   static const String name = 'OverviewRoute';
 
   static _i28.PageInfo page = _i28.PageInfo(
     name,
     builder: (data) {
-      final args = data.argsAs<OverviewRouteArgs>(
-        orElse: () => const OverviewRouteArgs(),
-      );
-      return _i18.OverviewPage(key: args.key, currentStep: args.currentStep);
+      return const _i18.OverviewPage();
     },
   );
-}
-
-class OverviewRouteArgs {
-  const OverviewRouteArgs({this.key, this.currentStep = 0});
-
-  final _i29.Key? key;
-
-  final int currentStep;
-
-  @override
-  String toString() {
-    return 'OverviewRouteArgs{key: $key, currentStep: $currentStep}';
-  }
 }
 
 /// generated route for

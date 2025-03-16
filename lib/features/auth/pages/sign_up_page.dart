@@ -7,7 +7,7 @@ import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/features/auth/controllers/login_controller.dart';
-import 'package:fullbooker/shared/widgets/buttons.dart';
+import 'package:fullbooker/shared/widgets/old_buttons.dart';
 import 'package:fullbooker/shared/widgets/divider.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
 import 'package:fullbooker/shared/widgets/standard_nav_bar.dart';
@@ -199,7 +199,7 @@ class SignUpPageState extends State<SignUpPage> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 20),
-                        child: Button(
+                        child: OldButton(
                           () => signup(context),
                           loading: isLoading,
                           actionLabel: signUpString,
@@ -216,7 +216,7 @@ class SignUpPageState extends State<SignUpPage> {
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 2),
-                        child: Button(
+                        child: OldButton(
                           loginWithGoogle,
                           color: const Color(0xf0F5F4F4),
                           actionLabel: signUpWithGoogleString,

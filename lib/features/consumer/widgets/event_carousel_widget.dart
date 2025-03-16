@@ -6,7 +6,7 @@ import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/features/host/models/product.dart';
 import 'package:fullbooker/presentation/core/components/shimmers.dart';
-import 'package:fullbooker/shared/widgets/buttons.dart';
+import 'package:fullbooker/shared/widgets/old_buttons.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:map_location_picker/map_location_picker.dart';
 
@@ -209,7 +209,7 @@ class _EventCarouselWidgetState extends State<EventCarouselWidget> {
           right: 10,
           child: SizedBox(
             width: 170,
-            child: Button(
+            child: OldButton(
               () => widget.onActionClick(locationName!),
               actionLabel: widget.actionLabel,
               verticalPadding: 0,

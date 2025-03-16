@@ -3,13 +3,14 @@ import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 
-class Button extends StatelessWidget {
-  const Button(
+// TODO(abiud): retire these buttons
+class OldButton extends StatelessWidget {
+  const OldButton(
     this.onPressed, {
     super.key,
     this.actionLabelPrefix,
     this.color = AppColors.primaryColor,
-    this.actionLabel = '',
+    required this.actionLabel,
     this.actionLabelColor = Colors.white,
     this.loading = false,
     this.labelFontSize = 16,

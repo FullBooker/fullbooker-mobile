@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
-import 'package:fullbooker/shared/widgets/buttons.dart';
+import 'package:fullbooker/shared/widgets/old_buttons.dart';
 import 'package:fullbooker/shared/widgets/divider.dart';
 
 class InformationModal extends StatelessWidget {
@@ -82,7 +82,7 @@ class InformationModal extends StatelessWidget {
           padding: const EdgeInsets.only(top: 20, bottom: 5),
           child: SizedBox(
             width: MediaQuery.of(context).size.width * 0.6,
-            child: Button(action ?? () {}, actionLabel: actionTitle),
+            child: OldButton(action ?? () {}, actionLabel: actionTitle),
           ),
         ),
       ],
