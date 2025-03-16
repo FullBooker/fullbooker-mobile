@@ -71,3 +71,18 @@ const String resendCodeInString = 'Resend code in ';
 const String resentOTPString = 'Resend OTP code';
 const String useDifferentString = 'Use a different ';
 const String emailOrPhoneString = 'email / phone number';
+
+// Consumer landing page
+const String popularNowString = 'Popular Now';
+const String nearYouString = 'Near You';
+const String recommendedString = 'Recommended For You';
+
+// Consumer landing page
+const String locationServicesDisabled = 'Location services are disabled.';
+const String locationServicesDenied = 'Location permissions are denied';
+const String locationServicesPermanentlyDenied =
+    'Location permissions are permanently denied, we cannot request permissions';
+const String backHomeString = 'Back Home';
+const String mapString = 'Map';
+const String viewMapString = 'View Map';
+const String eventDetailsString = 'Event Details';
