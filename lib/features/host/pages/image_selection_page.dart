@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
+import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/features/host/controllers/product_controller.dart';
 import 'package:fullbooker/features/host/models/product.dart';
@@ -38,7 +39,7 @@ class _ImageSelectionPageState extends State<ImageSelectionPage> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         action: SnackBarAction(
-          label: 'Dismiss',
+          label: okThanksString,
           onPressed: () {},
         ),
         content: Text(message),
@@ -247,7 +248,7 @@ class _ImageSelectionPageState extends State<ImageSelectionPage> {
                   EdgeInsets.symmetric(horizontal: width / 8, vertical: 30),
               child: Button(
                 onContinueClick,
-                actionLabel: 'Continue',
+                actionLabel: continueString,
                 loading: isLoading,
               ),
             ),

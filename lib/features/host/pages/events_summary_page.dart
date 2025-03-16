@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
+import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
+import 'package:fullbooker/domain/core/value_objects/endpoints.dart';
 import 'package:fullbooker/features/host/controllers/product_controller.dart';
 import 'package:fullbooker/features/host/models/product.dart';
 import 'package:fullbooker/shared/entities/data_mocks.dart';
@@ -27,7 +29,7 @@ class _EventsSummaryPageState extends State<EventsSummaryPage> {
   void initState() {
     super.initState();
     productsController.repository
-        .post(<String, Object?>{}, '/hosts/').then((dynamic host) {
+        .post(<String, Object?>{}, hostsEndpoint).then((dynamic host) {
       productsController.repository.pullMultiple(
         1,
         100,
@@ -82,7 +84,7 @@ class _EventsSummaryPageState extends State<EventsSummaryPage> {
                     ),
                     child: Button(
                       () => context.router.push(CategorySelectionRoute()),
-                      actionLabel: 'Continue',
+                      actionLabel: continueString,
                     ),
                   ),
                 ),

@@ -1,7 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
+import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/utils.dart';
+import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/features/host/controllers/currency_controller.dart';
 import 'package:fullbooker/features/host/models/currency.dart';
 import 'package:fullbooker/features/host/models/product.dart';
@@ -14,7 +16,7 @@ import 'package:fullbooker/shared/widgets/card.dart';
 import 'package:fullbooker/shared/widgets/dropdown.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
 import 'package:fullbooker/shared/widgets/rounded_floating_action.dart';
-import 'package:fullbooker/shared/widgets/text_input.dart';
+import 'package:fullbooker/shared/widgets/text_inputs.dart';
 
 @RoutePage()
 class ActivityPricingPage extends StatefulWidget {
@@ -38,10 +40,7 @@ class _ActivityPricingPageState extends State<ActivityPricingPage> {
     if (priceController.text.isEmpty ||
         amountController.text.isEmpty ||
         selectedCurrency == null) {
-      showSnackBar(
-        'Please set the currency, price and maximum booking amount for the activity',
-        context,
-      );
+      showSnackBar(selectCurrencyPrompt, context);
       return;
     }
 
@@ -81,7 +80,7 @@ class _ActivityPricingPageState extends State<ActivityPricingPage> {
             child: ListView(
               children: <Widget>[
                 const PageHeader(
-                  'How much will the activity cost',
+                  activityPricePrompt,
                   '',
                   withLogo: false,
                   widthFactor: 0.9,
@@ -98,8 +97,7 @@ class _ActivityPricingPageState extends State<ActivityPricingPage> {
                       children: <Widget>[
                         SizedBox(
                           width: width * 0.4,
-                          child:
-                              const Text('Select a currency for this activity'),
+                          child: const Text(selectCurrencyPromptForActivity),
                         ),
                         if (currencies.isEmpty)
                           const Center(child: CircularProgressIndicator())
@@ -145,7 +143,7 @@ class _ActivityPricingPageState extends State<ActivityPricingPage> {
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         child: Text(
-                          'Cost per session',
+                          costPerSession,
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
@@ -163,7 +161,7 @@ class _ActivityPricingPageState extends State<ActivityPricingPage> {
                       SizedBox(
                         width: (width - 20) * 0.5,
                         child: const Text(
-                          'What is the price per person per session',
+                          pricePerPersonPerSession,
                           style: TextStyle(fontSize: 16),
                         ),
                       ),
@@ -173,7 +171,8 @@ class _ActivityPricingPageState extends State<ActivityPricingPage> {
                             ? Center(
                                 child: SizedBox(
                                   width: width * 0.3,
-                                  child: const Text('Please select a currency'),
+                                  child:
+                                      const Text(currencySelectGeneralPrompt),
                                 ),
                               )
                             : SizedBox(
@@ -196,7 +195,7 @@ class _ActivityPricingPageState extends State<ActivityPricingPage> {
                       SizedBox(
                         width: (width - 20) * 0.5,
                         child: const Text(
-                          'Maximum number of tickets per session',
+                          maxTicketsPerSession,
                           style: TextStyle(fontSize: 16),
                         ),
                       ),
@@ -217,7 +216,7 @@ class _ActivityPricingPageState extends State<ActivityPricingPage> {
                     child: Column(
                       children: <Widget>[
                         const Text(
-                          'TOTAL CHARGEABLE (PER SESSION)',
+                          totalChargeable,
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w400,
@@ -267,11 +266,11 @@ class _ActivityPricingPageState extends State<ActivityPricingPage> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
-                                      const Expanded(
+                                      Expanded(
                                         child: Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            'Service Fee (5%)',
+                                            serviceFee(appServiceFee),
                                             style: TextStyle(fontSize: 18),
                                           ),
                                         ),
@@ -348,7 +347,7 @@ class _ActivityPricingPageState extends State<ActivityPricingPage> {
                   EdgeInsets.symmetric(horizontal: width / 8, vertical: 30),
               child: Button(
                 onContinueClick,
-                actionLabel: 'Continue',
+                actionLabel: continueString,
                 loading: isLoading,
               ),
             ),

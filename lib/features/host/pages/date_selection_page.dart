@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
+import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/features/host/controllers/product_controller.dart';
 import 'package:fullbooker/features/host/models/product.dart';
 import 'package:fullbooker/shared/entities/date_group.dart';
@@ -36,7 +37,7 @@ class _DateSelectionPageState extends State<DateSelectionPage> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         action: SnackBarAction(
-          label: 'Dismiss',
+          label: okThanksString,
           onPressed: () {
             // Code to execute.
           },
@@ -56,7 +57,7 @@ class _DateSelectionPageState extends State<DateSelectionPage> {
 
   void onContinueClick() {
     if (startDate == null || endDate == null) {
-      showSnackBar('Please select a start and end date');
+      showSnackBar(selectStartEndDate);
       return;
     }
     setState(() => isLoading = true);
@@ -67,7 +68,7 @@ class _DateSelectionPageState extends State<DateSelectionPage> {
       if (availability != null) {
         context.router.push(ImageSelectionRoute(product: widget.product));
       } else {
-        showSnackBar('Please ensure start date is before end date');
+        showSnackBar(startBeforeEndDate);
       }
     });
   }
@@ -84,7 +85,7 @@ class _DateSelectionPageState extends State<DateSelectionPage> {
             child: ListView(
               children: <Widget>[
                 const PageHeader(
-                  'When will this event happen',
+                  whenWillThisEventHappen,
                   '',
                   withLogo: false,
                   widthFactor: 0.9,
@@ -96,7 +97,7 @@ class _DateSelectionPageState extends State<DateSelectionPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: EventTimeSelectionCard(
-                    title: 'What time will this event start?',
+                    title: timeStart,
                     width: width,
                     onValueChanged: (DateGroup date) =>
                         setState(() => startDate = date),
@@ -106,7 +107,7 @@ class _DateSelectionPageState extends State<DateSelectionPage> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                   child: EventTimeSelectionCard(
-                    title: 'What time will this event end?',
+                    title: timeEnd,
                     width: width,
                     onValueChanged: (DateGroup date) =>
                         setState(() => endDate = date),
@@ -122,7 +123,7 @@ class _DateSelectionPageState extends State<DateSelectionPage> {
                   EdgeInsets.symmetric(horizontal: width / 8, vertical: 30),
               child: Button(
                 onContinueClick,
-                actionLabel: 'Continue',
+                actionLabel: continueString,
                 loading: isLoading,
               ),
             ),

@@ -1,7 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
+import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/utils.dart';
+import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/features/host/controllers/currency_controller.dart';
 import 'package:fullbooker/features/host/models/currency.dart';
 import 'package:fullbooker/features/host/models/product.dart';
@@ -15,7 +17,7 @@ import 'package:fullbooker/shared/widgets/card.dart';
 import 'package:fullbooker/shared/widgets/divider.dart';
 import 'package:fullbooker/shared/widgets/dropdown.dart';
 import 'package:fullbooker/shared/widgets/rounded_floating_action.dart';
-import 'package:fullbooker/shared/widgets/text_input.dart';
+import 'package:fullbooker/shared/widgets/text_inputs.dart';
 
 @RoutePage()
 class ActivityDayPassPage extends StatefulWidget {
@@ -46,10 +48,7 @@ class _ActivityDayPass extends State<ActivityDayPassPage> {
       if (priceController.text.isEmpty ||
           amountController.text.isEmpty ||
           selectedCurrency == null) {
-        showSnackBar(
-          'Please set the currency, price and maximum booking amount for the activity',
-          context,
-        );
+        showSnackBar(selectCurrencyPrompt, context);
         return;
       }
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -114,7 +113,7 @@ class _ActivityDayPass extends State<ActivityDayPassPage> {
                         SizedBox(
                           width: width * 0.5,
                           child: const Text(
-                            'Is there a day pass for your product',
+                            dayPassPrompt,
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w600,
@@ -133,9 +132,9 @@ class _ActivityDayPass extends State<ActivityDayPassPage> {
                       const EdgeInsets.only(bottom: 20, left: 20, right: 20),
                   child: SizedBox(
                     width: width * 0.8,
-                    child: const RoundedDivider(
+                    child: RoundedDivider(
                       height: 2,
-                      color: Color(0xfff55E00),
+                      color: Theme.of(context).primaryColor,
                     ),
                   ),
                 ),
@@ -147,8 +146,7 @@ class _ActivityDayPass extends State<ActivityDayPassPage> {
                       children: <Widget>[
                         SizedBox(
                           width: width * 0.4,
-                          child:
-                              const Text('Select a currency for this activity'),
+                          child: const Text(selectCurrencyPromptForActivity),
                         ),
                         if (currencies.isEmpty)
                           const Center(child: CircularProgressIndicator())
@@ -194,7 +192,7 @@ class _ActivityDayPass extends State<ActivityDayPassPage> {
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         child: Text(
-                          'Day Pass',
+                          dayPassString,
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
@@ -212,7 +210,7 @@ class _ActivityDayPass extends State<ActivityDayPassPage> {
                       SizedBox(
                         width: (width - 20) * 0.5,
                         child: const Text(
-                          'What is the price per person per day pass',
+                          pricePerPerson,
                           style: TextStyle(fontSize: 16),
                         ),
                       ),
@@ -222,7 +220,8 @@ class _ActivityDayPass extends State<ActivityDayPassPage> {
                             ? Center(
                                 child: SizedBox(
                                   width: (width - 20) * 0.3,
-                                  child: const Text('Please select a currency'),
+                                  child:
+                                      const Text(currencySelectGeneralPrompt),
                                 ),
                               )
                             : SizedBox(
@@ -245,7 +244,7 @@ class _ActivityDayPass extends State<ActivityDayPassPage> {
                       SizedBox(
                         width: (width - 20) * 0.5,
                         child: const Text(
-                          'Maximum number of tickets per day pass',
+                          dayPassMaxTickets,
                           style: TextStyle(fontSize: 16),
                         ),
                       ),
@@ -266,7 +265,7 @@ class _ActivityDayPass extends State<ActivityDayPassPage> {
                     child: Column(
                       children: <Widget>[
                         const Text(
-                          'TOTAL CHARGEABLE (PER SESSION)',
+                          totalChargeable,
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w400,
@@ -316,11 +315,11 @@ class _ActivityDayPass extends State<ActivityDayPassPage> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
-                                      const Expanded(
+                                      Expanded(
                                         child: Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            'Service Fee (5%)',
+                                            serviceFee(appServiceFee),
                                             softWrap: true,
                                             style: TextStyle(fontSize: 18),
                                           ),
@@ -352,7 +351,7 @@ class _ActivityDayPass extends State<ActivityDayPassPage> {
                                       const Align(
                                         alignment: Alignment.centerLeft,
                                         child: Text(
-                                          'Total',
+                                          totalString,
                                           style: TextStyle(
                                             color: Color(0xf008AE32),
                                             fontSize: 20,
@@ -398,7 +397,7 @@ class _ActivityDayPass extends State<ActivityDayPassPage> {
                   EdgeInsets.symmetric(horizontal: width / 8, vertical: 30),
               child: Button(
                 onContinueClick,
-                actionLabel: 'Continue',
+                actionLabel: continueString,
                 loading: isLoading,
               ),
             ),

@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
+import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/features/host/controllers/category_controller.dart';
 import 'package:fullbooker/features/host/models/sub_category_model.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
@@ -47,7 +48,7 @@ class CategorySelectionPageState extends State<CategorySelectionPage> {
     if (selectedSubCat == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Please select a category for your event'),
+          content: Text(selectCategoryPrompt),
         ),
       );
     }
@@ -94,7 +95,7 @@ class CategorySelectionPageState extends State<CategorySelectionPage> {
                     child: ListView(
                       children: <Widget>[
                         const PageHeader(
-                          'Tell us about your product',
+                          tellUsAboutProduct,
                           '',
                           withLogo: false,
                           widthFactor: 0.9,
@@ -108,7 +109,7 @@ class CategorySelectionPageState extends State<CategorySelectionPage> {
                           child: Padding(
                             padding: EdgeInsets.only(bottom: 5),
                             child: Text(
-                              'Pick the one that best describes your product',
+                              pickOneThatApplies,
                               style: TextStyle(fontSize: 18),
                             ),
                           ),
@@ -143,7 +144,8 @@ class CategorySelectionPageState extends State<CategorySelectionPage> {
                         horizontal: width / 8,
                         vertical: 30,
                       ),
-                      child: Button(onContinueClick, actionLabel: 'Continue'),
+                      child:
+                          Button(onContinueClick, actionLabel: continueString),
                     ),
                   ),
                 ],

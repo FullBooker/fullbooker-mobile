@@ -11,7 +11,7 @@ import 'package:fullbooker/shared/widgets/buttons.dart';
 import 'package:fullbooker/shared/widgets/divider.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
 import 'package:fullbooker/shared/widgets/standard_nav_bar.dart';
-import 'package:fullbooker/shared/widgets/text_input.dart';
+import 'package:fullbooker/shared/widgets/text_inputs.dart';
 import 'package:fullbooker/shared/validators.dart';
 
 @RoutePage()
