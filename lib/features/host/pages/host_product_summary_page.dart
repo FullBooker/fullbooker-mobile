@@ -7,7 +7,7 @@ import 'package:fullbooker/shared/entities/activities_table_widget.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
-import 'package:fullbooker/shared/widgets/button.dart';
+import 'package:fullbooker/shared/widgets/buttons.dart';
 
 @RoutePage()
 class HostProductSummaryPage extends StatefulWidget {

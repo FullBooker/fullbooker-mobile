@@ -10,7 +10,7 @@ import 'package:fullbooker/shared/entities/session_pricing.dart';
 import 'package:fullbooker/shared/widgets/custom_switch_widget.dart';
 import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
-import 'package:fullbooker/shared/widgets/button.dart';
+import 'package:fullbooker/shared/widgets/buttons.dart';
 import 'package:fullbooker/shared/widgets/card.dart';
 import 'package:fullbooker/shared/widgets/divider.dart';
 import 'package:fullbooker/shared/widgets/dropdown.dart';

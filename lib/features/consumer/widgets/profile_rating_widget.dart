@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 
 class ProfileRatingWidget extends StatelessWidget {
   final String? profileImageUrl;
@@ -29,10 +30,10 @@ class ProfileRatingWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                'Hosted by $hostName',
+                hostedByString(hostName),
                 softWrap: true,
-                overflow: TextOverflow.ellipsis, // Handles overflow
-                maxLines: 2, // Limits to 2 lines
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
                 style:
                     const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
               ),

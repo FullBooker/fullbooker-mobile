@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// TODO!!(abiud): pass an event details object here and update the displays
 class EventTitleWidget extends StatelessWidget {
   const EventTitleWidget({super.key});
 

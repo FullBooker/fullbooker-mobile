@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
+import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/entities/data_mocks.dart';
 
 class PaymentForm extends StatefulWidget {
@@ -78,17 +79,18 @@ class _PaymentFormState extends State<PaymentForm> {
     }
   }
 
+  // TODO!!(abiud): this is repetitive. Clean it up
   // Updated M-Pesa Form with Better Styling
   Widget _mpesaForm() {
     return Column(
       children: <Widget>[
         _customTextField(
-          label: 'M-Pesa Mobile No',
+          label: mpesaNo,
           icon: Icons.phone,
           isNumeric: true,
         ),
         const SizedBox(height: 15),
-        _styledButton('Complete payment', isPrimary: true),
+        _styledButton(completePayment, isPrimary: true),
       ],
     );
   }
@@ -97,7 +99,7 @@ class _PaymentFormState extends State<PaymentForm> {
     return Column(
       children: <Widget>[
         const SizedBox(height: 15),
-        _styledButton('Complete payment', isPrimary: true),
+        _styledButton(completePayment, isPrimary: true),
       ],
     );
   }
@@ -106,7 +108,7 @@ class _PaymentFormState extends State<PaymentForm> {
     return Column(
       children: <Widget>[
         const SizedBox(height: 15),
-        _styledButton('Complete payment', isPrimary: true),
+        _styledButton(completePayment, isPrimary: true),
       ],
     );
   }
@@ -115,7 +117,7 @@ class _PaymentFormState extends State<PaymentForm> {
     return Column(
       children: <Widget>[
         const SizedBox(height: 15),
-        _styledButton('Complete payment', isPrimary: true),
+        _styledButton(completePayment, isPrimary: true),
       ],
     );
   }
@@ -123,10 +125,10 @@ class _PaymentFormState extends State<PaymentForm> {
   Widget _cardForm() {
     return Column(
       children: <Widget>[
-        _customTextField(label: 'Cardholder Name', icon: Icons.person),
+        _customTextField(label: cardHolderName, icon: Icons.person),
         const SizedBox(height: 10),
         _customTextField(
-          label: 'Card Number',
+          label: cardNumber,
           icon: Icons.credit_card,
           isNumeric: true,
         ),
@@ -135,14 +137,14 @@ class _PaymentFormState extends State<PaymentForm> {
           children: <Widget>[
             Expanded(
               child: _customTextField(
-                label: 'Expiry Date (MM/YY)',
+                label: expiryDate,
                 isNumeric: true,
               ),
             ),
             const SizedBox(width: 10),
             Expanded(
               child: _customTextField(
-                label: 'CVV',
+                label: cvvString,
                 isNumeric: true,
                 isCvv: true,
               ),
@@ -151,11 +153,11 @@ class _PaymentFormState extends State<PaymentForm> {
         ),
         const SizedBox(height: 10),
         _customTextField(
-          label: 'Billing Address (Optional)',
+          label: billingAddress,
           icon: Icons.location_on,
         ),
         const SizedBox(height: 15),
-        _styledButton('Complete payment', isPrimary: true),
+        _styledButton(completePayment, isPrimary: true),
       ],
     );
   }
@@ -215,7 +217,7 @@ class _PaymentFormState extends State<PaymentForm> {
       children: <Widget>[
         const SizedBox(height: 20),
         const Text(
-          'Select a payment method',
+          selectPaymentMethod,
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 15),

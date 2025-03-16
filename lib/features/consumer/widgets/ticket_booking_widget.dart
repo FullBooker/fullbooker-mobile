@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/utils.dart';
+import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/features/consumer/widgets/checkout_card_widget.dart';
 import 'package:fullbooker/features/consumer/widgets/ticket_form_widget.dart';
 import 'package:fullbooker/features/consumer/widgets/tickets_summary_widget.dart';
@@ -34,11 +35,11 @@ class _TicketBookingWidgetState extends State<TicketBookingWidget> {
 
   void checkout() {
     if (tickets.isEmpty) {
-      showSnackBar('Please add at least one ticket', context);
+      showSnackBar(addAtLeastOneTicket, context);
       return;
     }
     if (widget.selectedDate == null) {
-      showSnackBar('Please set a date', context);
+      showSnackBar(selectADateString, context);
       return;
     }
     context.router.push(
@@ -55,10 +56,7 @@ class _TicketBookingWidgetState extends State<TicketBookingWidget> {
     switch (bookingMode) {
       case BookingMode.single:
         if (tickets.length >= 3) {
-          showSnackBar(
-            'Please use bulk booking if you need more than 3 tickets',
-            context,
-          );
+          showSnackBar(useBulkBookingString, context);
           return;
         }
         setState(() => tickets.add(ticket));
@@ -78,7 +76,7 @@ class _TicketBookingWidgetState extends State<TicketBookingWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         const Text(
-          'Tickets',
+          ticketsString,
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 8),
@@ -97,7 +95,7 @@ class _TicketBookingWidgetState extends State<TicketBookingWidget> {
             width: MediaQuery.of(context).size.width - 10,
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              border: Border.all(color: Colors.orange),
+              border: Border.all(color: Theme.of(context).primaryColor),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Column(
