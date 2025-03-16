@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
+import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/features/consumer/widgets/mpesa_checkout_instructions_widget.dart';
 import 'package:fullbooker/features/consumer/widgets/payment_forms.dart';
 import 'package:fullbooker/features/host/models/product.dart';
@@ -30,7 +31,7 @@ class PaymentSummaryPage extends StatelessWidget {
       builder: (BuildContext context) {
         return InformationModal(
           message: MpesaCheckoutInstructionsWidget(ticket: tickets.first),
-          actionTitle: 'Confirm Payment',
+          actionTitle: confirmPaymentString,
           action: () => context.router.push(
             PaymentConfirmationRoute(
               product: product,
@@ -143,7 +144,7 @@ class PaymentSummaryPage extends StatelessWidget {
                 SizedBox(height: screenHeight * 0.02),
                 const Center(
                   child: Text(
-                    'Summary',
+                    summaryString,
                     style: TextStyle(
                       fontSize: 26,
                       fontWeight: FontWeight.bold,
@@ -175,7 +176,7 @@ class PaymentSummaryPage extends StatelessWidget {
                   child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 15),
                     child: Text(
-                      'Ticket Details',
+                      ticketDetailsString,
                       style: TextStyle(
                         fontSize: 26,
                         fontWeight: FontWeight.bold,
@@ -186,19 +187,19 @@ class PaymentSummaryPage extends StatelessWidget {
                 ),
 
                 // Form fields
-                buildInputField('Name', tickets.first.name),
+                buildInputField(nameString, tickets.first.name),
                 buildInputField(
-                  'Date & Time',
+                  dateAndTimeString,
                   DateFormat('E dd MMMM').format(selectedDateTime),
                 ),
                 buildInputField(
-                  'No. of tickets',
+                  noOfTickets,
                   (tickets.length == 1
                           ? tickets.first.quantity
                           : tickets.length)
                       .toString(),
                 ),
-                buildInputField('Total Hours', '8 hours'),
+                buildInputField(totalHours, '8 hours'),
 
                 // Grand total
                 Padding(
@@ -208,7 +209,7 @@ class PaymentSummaryPage extends StatelessWidget {
                     children: <Widget>[
                       Flexible(
                         child: Text(
-                          'Grand Total',
+                          grandTotal,
                           softWrap: true,
                           style: TextStyle(
                             fontSize: screenWidth * 0.05,
@@ -248,7 +249,7 @@ class PaymentSummaryPage extends StatelessWidget {
                       SizedBox(width: screenWidth * 0.02),
                       const Expanded(
                         child: Text(
-                          'Enter your promo code here',
+                          promoCode,
                           style: TextStyle(color: Colors.grey),
                         ),
                       ),

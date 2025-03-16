@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
+import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/features/consumer/painters.dart';
 import 'package:fullbooker/features/host/models/product.dart';
 import 'package:fullbooker/shared/entities/ticket.dart';
@@ -9,6 +11,7 @@ import 'package:fullbooker/shared/widgets/scale_locked_text.dart';
 import 'package:fullbooker/shared/widgets/standard_nav_bar.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
+// TODO(abiud): replace the values in this page with mock data for now
 @RoutePage()
 class PaymentConfirmationPage extends StatelessWidget {
   final Product product;
@@ -43,7 +46,7 @@ class PaymentConfirmationPage extends StatelessWidget {
             SizedBox(
               width: width * 0.7,
               child: const Text(
-                'Thank you for your payment',
+                thankYouForPayment,
                 softWrap: true,
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
@@ -99,15 +102,15 @@ class PaymentConfirmationPage extends StatelessWidget {
             // Email Info
             Text.rich(
               TextSpan(
-                text: 'Download ',
+                text: downloadString,
                 style: const TextStyle(fontSize: 14),
                 children: <InlineSpan>[
                   const TextSpan(
-                    text: 'your ticket below ',
+                    text: yourTicketBelow,
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   const TextSpan(
-                    text: 'or check your email at ',
+                    text: orCheckEmailText,
                   ),
                   TextSpan(
                     text: ticket.email,
@@ -136,7 +139,7 @@ class PaymentConfirmationPage extends StatelessWidget {
                     const EdgeInsets.symmetric(vertical: 14, horizontal: 32),
               ),
               child: const Text(
-                'Download ticket',
+                downloadTicket,
                 style: TextStyle(fontSize: 16, color: Colors.white),
               ),
             ),
@@ -193,8 +196,9 @@ class PaymentConfirmationPage extends StatelessWidget {
             child: const Center(
               child: RotatedBox(
                 quarterTurns: 3,
+                // TODO(abiud): extract this value from AppConfig
                 child: ScaleLockedText(
-                  'FullBooker',
+                  kAppName,
                   style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
                 ),
               ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/features/host/models/product.dart';
 
 class DatePickerWidget extends StatefulWidget {
@@ -31,7 +32,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Text(
             setDateTime == null
-                ? 'Select Date'
+                ? selectDateString
                 : '${setDateTime!.day}/${setDateTime!.month}/${setDateTime!.year}',
             style: const TextStyle(fontSize: 14),
           ),
