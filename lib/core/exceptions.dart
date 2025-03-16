@@ -1,50 +1,57 @@
 import 'dart:convert';
 
+import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:http/http.dart' as http;
 
 class AuthenticationException implements Exception {
-  String cause;
   AuthenticationException(this.cause);
+
+  String cause;
 
   @override
   String toString() => cause;
 }
 
 class PermissionsException implements Exception {
-  String cause;
   PermissionsException(this.cause);
+
+  String cause;
 
   @override
   String toString() => cause;
 }
 
 class UnprocessableEntity implements Exception {
-  String cause;
   UnprocessableEntity(this.cause);
+
+  String cause;
 
   @override
   String toString() => cause;
 }
 
 class ServerError implements Exception {
-  String cause;
   ServerError(this.cause);
+
+  String cause;
 
   @override
   String toString() => cause;
 }
 
 class ClientError implements Exception {
-  String cause;
   ClientError(this.cause);
+
+  String cause;
 
   @override
   String toString() => cause;
 }
 
 class NotFoundException implements Exception {
-  String cause;
   NotFoundException(this.cause);
+
+  String cause;
 
   @override
   String toString() => cause;
@@ -76,19 +83,15 @@ void handleResponse(http.Response response) {
         //   ),
         // );
       }
-      throw AuthenticationException('You were logged out');
+      throw AuthenticationException(youWereLoggedOutString);
     case 403:
-      throw PermissionsException(
-        'Permission denied: you do not have the permissions to perform that action',
-      );
+      throw PermissionsException(permissionDeniedString);
     case 404:
-      throw NotFoundException(
-        "Could not find what you're looking for, please try again",
-      );
+      throw NotFoundException(notFoundString);
     case 422:
       throw UnprocessableEntity(error);
     case >= 500:
-      throw ServerError('Server error: ');
+      throw ServerError(serverError);
     case >= 400 && < 500:
       throw ClientError(error);
     default:
