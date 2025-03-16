@@ -5,6 +5,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/utils.dart';
+import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/features/host/controllers/product_controller.dart';
 import 'package:fullbooker/features/host/models/product.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
@@ -139,7 +140,7 @@ class _VideoSelectionPageState extends State<VideoSelectionPage> {
                             height: 180,
                             width: width * 0.9,
                             child: const Image(
-                              image: AssetImage('assets/defaultImg.png'),
+                              image: AssetImage(imageZeroStatePath),
                               fit: BoxFit.cover,
                             ),
                           ),

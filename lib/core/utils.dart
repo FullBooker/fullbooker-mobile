@@ -2,7 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/config/environments.dart';
 import 'package:fullbooker/core/common/constants.dart';
-import 'package:fullbooker/domain/value_objects/app_config.dart';
+import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/regexes.dart';
 import 'package:map_location_picker/map_location_picker.dart';

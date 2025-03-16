@@ -9,7 +9,7 @@ import 'package:fullbooker/application/redux/observers/custom_observer.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/utils.dart';
-import 'package:fullbooker/domain/value_objects/app_config.dart';
+import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/infrastructure/repository/state_persistor.dart';
 import 'package:fullbooker/fullbooker_app_widget.dart';
 import 'package:get_it/get_it.dart';

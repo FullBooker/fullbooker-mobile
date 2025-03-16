@@ -1,0 +1,24 @@
+const String logoSplashImagePath = 'assets/logo_splash.png';
+
+const String googleIconPath = 'assets/icons/google.png';
+
+const String imageZeroStatePath = 'assets/defaultImg.png';
+
+const String locationIconPath = 'assets/icons/location_icon.png';
+
+const String okImageIconPath = 'assets/icons/ok.png';
+
+const String filterIconPath = 'assets/icons/filter-icon.png';
+
+// Product category icons
+const String kidsIconPath = 'assets/icons/kids_icon.png';
+const String concertsIconPath = 'assets/icons/concerts_icon.png';
+const String gymIconPath = 'assets/icons/gym_icon.png';
+const String goCartIconPath = 'assets/icons/go_cart_icon.png';
+const String swimmingIconPath = 'assets/icons/swimming_icon.png';
+const String carIconPath = 'assets/icons/car_icon.png';
+
+// App overview images
+const String appOverView1ImagePath = 'assets/images/overview1/overview.png';
+const String appOverView2ImagePath = 'assets/images/overview2/overview.png';
+const String appOverView3ImagePath = 'assets/images/overview3/overview.png';

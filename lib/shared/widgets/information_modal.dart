@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
+import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:fullbooker/shared/widgets/divider.dart';
 
@@ -49,7 +50,7 @@ class InformationModal extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 10),
                     child: Image.asset(
-                      'assets/icons/ok.png',
+                      okImageIconPath,
                       width: 70,
                       height: 70,
                     ),

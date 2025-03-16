@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/features/host/models/product.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 
@@ -45,7 +46,7 @@ class CheckoutCard extends StatelessWidget {
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 60, vertical: 5),
-                  child: Image.asset('assets/logo_splash.png'),
+                  child: Image.asset(logoSplashImagePath),
                 ),
               ),
 

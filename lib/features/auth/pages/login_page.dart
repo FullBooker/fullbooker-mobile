@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
+import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:fullbooker/shared/widgets/divider.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
@@ -169,7 +170,7 @@ class LoginPageState extends State<LoginPage> {
                         actionLabel: 'Sign in with Google',
                         actionLabelColor: Colors.black,
                         actionLabelPrefix: const Image(
-                          image: AssetImage('assets/icons/google.png'),
+                          image: AssetImage(googleIconPath),
                         ),
                       ),
                     ),
