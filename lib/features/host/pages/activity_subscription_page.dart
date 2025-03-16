@@ -341,7 +341,7 @@ class _ActivitySubscription extends State<ActivitySubscriptionPage> {
                                         child: Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            serviceFee(appServiceFee),
+                                            serviceFee(kPlatformServiceFee),
                                             softWrap: true,
                                             style: TextStyle(fontSize: 18),
                                           ),

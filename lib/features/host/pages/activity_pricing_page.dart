@@ -271,7 +271,7 @@ class _ActivityPricingPageState extends State<ActivityPricingPage> {
                                         child: Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            serviceFee(appServiceFee),
+                                            serviceFee(kPlatformServiceFee),
                                             style: TextStyle(fontSize: 18),
                                           ),
                                         ),

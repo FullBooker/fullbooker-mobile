@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
+import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
@@ -43,7 +44,7 @@ class _VideoSelectionPageState extends State<VideoSelectionPage> {
     final FilePickerResult? result = await FilePicker.platform.pickFiles(
       allowMultiple: true,
       type: FileType.custom,
-      allowedExtensions: <String>['mp4'],
+      allowedExtensions: kAllowedVideoExtensions,
     );
     if (result != null) {
       setState(() {
@@ -56,7 +57,7 @@ class _VideoSelectionPageState extends State<VideoSelectionPage> {
   Future<void> replaceVideo(int currentVideoIndex) async {
     final FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
-      allowedExtensions: <String>['mp4'],
+      allowedExtensions: kAllowedVideoExtensions,
     );
     if (result != null) {
       videos[currentVideoIndex] = File(result.paths[0]!);
@@ -67,7 +68,7 @@ class _VideoSelectionPageState extends State<VideoSelectionPage> {
   Future<void> selectSingleVideo() async {
     final FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
-      allowedExtensions: <String>['mp4'],
+      allowedExtensions: kAllowedVideoExtensions,
     );
     if (result != null) {
       videos.add(File(result.paths[0]!));
@@ -82,7 +83,7 @@ class _VideoSelectionPageState extends State<VideoSelectionPage> {
 
   void onContinueClick() {
     if (videos.length != 2) {
-      showSnackBar('Please select at least 2 videos', context);
+      showSnackBar(selectVideosAlert, context);
     }
     setState(() => isLoading = true);
     productViewModel
@@ -115,7 +116,7 @@ class _VideoSelectionPageState extends State<VideoSelectionPage> {
               shrinkWrap: true,
               children: <Widget>[
                 const PageHeader(
-                  'Upload videos of the activity',
+                  uploadVideosOfActivity,
                   '',
                   withLogo: false,
                   widthFactor: 0.9,
@@ -188,7 +189,7 @@ class _VideoSelectionPageState extends State<VideoSelectionPage> {
                                           height: 22,
                                           child: Button(
                                             () => replaceVideo(idx),
-                                            actionLabel: 'Replace',
+                                            actionLabel: replaceString,
                                             labelFontSize: 13,
                                             color: const Color(0xf0FCF2EB),
                                             actionLabelColor: Colors.black,
@@ -200,6 +201,7 @@ class _VideoSelectionPageState extends State<VideoSelectionPage> {
                                           height: 22,
                                           child: Button(
                                             () => removeVideo(idx),
+                                            // TODO(abiud): replace this with an icon
                                             actionLabel: 'X',
                                             labelFontSize: 13,
                                             color: const Color(0xf0FCF2EB),
@@ -226,14 +228,14 @@ class _VideoSelectionPageState extends State<VideoSelectionPage> {
                       children: <Widget>[
                         const Padding(
                           padding: EdgeInsets.all(10),
-                          child: Text('Tap below to select video'),
+                          child: Text(selectVideoCopy),
                         ),
                         SizedBox(
                           width: 160,
                           height: 50,
                           child: Button(
                             selectVideo,
-                            actionLabel: 'Browse',
+                            actionLabel: browseString,
                             color: const Color(0xf0333333),
                           ),
                         ),

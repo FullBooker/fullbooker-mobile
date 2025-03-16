@@ -81,7 +81,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                   const Padding(
                     padding: EdgeInsets.only(top: 20),
                     child: PageHeader(
-                      'Tell us about your product',
+                      tellUsAboutProduct,
                       '',
                       withLogo: false,
                       widthFactor: 0.9,
@@ -99,8 +99,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     child: TextField(
                       controller: nameController,
                       decoration: InputDecoration(
-                        hintText: '${widget.productType.name} Name',
-                        errorText: nameValid ? null : 'Name cannot be empty',
+                        hintText: '${widget.productType.name} $nameString',
+                        errorText: nameValid ? null : nameCannotBeEmpty,
                       ),
                     ),
                   ),
@@ -114,7 +114,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       maxLines: null,
                       decoration: InputDecoration(
                         hintText:
-                            'Provide any other details about this ${widget.productType.name}',
+                            '$provideAnyOtherDetails ${widget.productType.name}',
                       ),
                     ),
                   ),
