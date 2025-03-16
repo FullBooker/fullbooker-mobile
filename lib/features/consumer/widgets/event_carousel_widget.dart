@@ -28,7 +28,7 @@ class EventCarouselWidget extends StatefulWidget {
 
 class _EventCarouselWidgetState extends State<EventCarouselWidget> {
   String? locationName;
-  bool isLoading = true; // Track loading state
+  bool isLoading = true;
   double? distanceFromEvent;
 
   ProductPricing getLowestPrice() {
@@ -54,13 +54,13 @@ class _EventCarouselWidgetState extends State<EventCarouselWidget> {
         setState(() {
           locationName = placeMark.first.name;
           distanceFromEvent = distanceAway;
-          isLoading = false; // Data fetched, stop loading
+          isLoading = false;
         });
       }
     } catch (e) {
       setState(
         () => isLoading = false,
-      ); // Stop loading even if there's an error
+      );
     }
   }
 

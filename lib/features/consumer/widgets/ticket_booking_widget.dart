@@ -115,8 +115,8 @@ class _TicketBookingWidgetState extends State<TicketBookingWidget> {
                           padding: const EdgeInsets.symmetric(vertical: 4),
                           child: Text(
                             bookingMode == BookingMode.bulk
-                                ? '3 tickets or less ?'
-                                : 'More than 3 tickets?',
+                                ? lessThan3Tickets
+                                : moreThan3Tickets,
                           ),
                         ),
                         const SizedBox(height: 8),
@@ -126,8 +126,8 @@ class _TicketBookingWidgetState extends State<TicketBookingWidget> {
                             _toggleBookingMode,
                             elevation: 0,
                             actionLabel: bookingMode == BookingMode.bulk
-                                ? 'Single Tickets'
-                                : 'Bulk Booking',
+                                ? singleTickets
+                                : bulkBooking,
                           ),
                         ),
                       ],

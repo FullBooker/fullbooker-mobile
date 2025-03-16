@@ -144,3 +144,30 @@ const String useBulkBookingString =
     'Please use bulk booking if you need more than 3 tickets';
 
 const String ticketsString = 'Tickets';
+
+String totalReviewCount(int reviews) => '$reviews Reviews';
+
+const String lessThan3Tickets = '3 tickets or less ?';
+const String moreThan3Tickets = 'More than 3 tickets?';
+
+const String singleTickets = 'Single Tickets';
+const String bulkBooking = 'Bulk Booking';
+
+const String thisFieldIsRequired = 'This field is required';
+const String selectPricingTierPrompt =
+    'Please select a pricing tier for this ticket';
+const String selectNumberOfTicketsPrompt = 'Select number of tickets';
+
+String ticketNumber(int number) => 'Ticket $number';
+const String quantityString = 'Quantity';
+const String idNumber = 'ID/ Passport Number';
+const String addMoreTicketsString = 'Add More Tickets';
+const String saveString = 'Save';
+const String pricingTier = 'Pricing Tier';
+
+const String ticketSummaryString = 'Tickets Summary';
+
+const String deleteString = 'Delete';
+
+const String ticketsWillAppearString =
+    'Tickets will appear here when added';

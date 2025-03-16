@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 
 class RatingSummaryWidget extends StatelessWidget {
   final double rating;
@@ -88,7 +89,7 @@ class RatingSummaryWidget extends StatelessWidget {
                       ),
                       const SizedBox(height: 5),
                       Text(
-                        '$totalReviews Reviews',
+                        totalReviewCount(totalReviews),
                         softWrap: true,
                         style: const TextStyle(
                           fontSize: 12,

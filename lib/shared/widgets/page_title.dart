@@ -67,7 +67,10 @@ class PageHeader extends StatelessWidget {
           ),
           SizedBox(
             width: MediaQuery.of(context).size.width * widthFactor,
-            child: const RoundedDivider(height: 2, color: Color(0xf0FC8135)),
+            child: RoundedDivider(
+              height: 2,
+              color: Theme.of(context).primaryColor,
+            ),
           ),
         ],
       ),

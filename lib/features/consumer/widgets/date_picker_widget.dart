@@ -27,7 +27,11 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
       alignment: WrapAlignment.center,
       crossAxisAlignment: WrapCrossAlignment.center,
       children: <Widget>[
-        const Icon(Icons.calendar_month, color: Color(0xf0FC8135), size: 24),
+        Icon(
+          Icons.calendar_month,
+          color: Theme.of(context).primaryColor,
+          size: 24,
+        ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Text(

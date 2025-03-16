@@ -50,9 +50,12 @@ class _EventTimeSelectionCard extends State<EventTimeSelectionCard> {
             width: widget.width / 2,
             child: Row(
               children: <Widget>[
-                const Padding(
+                Padding(
                   padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: Icon(Icons.calendar_month, color: Color(0xf0FC8135)),
+                  child: Icon(
+                    Icons.calendar_month,
+                    color: Theme.of(context).primaryColor,
+                  ),
                 ),
                 SizedBox(
                   width: 160,
