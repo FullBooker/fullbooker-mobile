@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/repository.dart';
 import 'package:fullbooker/core/view_model.dart';
+import 'package:fullbooker/domain/core/value_objects/endpoints.dart';
 import 'package:fullbooker/features/host/models/product.dart';
 import 'package:fullbooker/shared/entities/date_group.dart';
 import 'package:fullbooker/shared/entities/session_pricing.dart';
@@ -32,9 +33,9 @@ class ProductViewModel extends BaseViewModel<Product> {
     };
     if (description != null) productData['description'] = description;
     try {
-      repository.post(<String, Object?>{}, '/hosts/');
+      repository.post(<String, Object?>{}, hostsEndpoint);
       final dynamic response =
-          await repository.post(productData, '/products/', serialize: true);
+          await repository.post(productData, productsEndpoint, serialize: true);
       return response as Product;
     } catch (exception) {
       return null;
@@ -54,7 +55,7 @@ class ProductViewModel extends BaseViewModel<Product> {
       'address': address,
     };
     try {
-      final dynamic response = await repository.post(objData, '/location/');
+      final dynamic response = await repository.post(objData, locationEndpoint);
       return response as Map<String, Object?>;
     } catch (exception) {
       return null;
@@ -99,7 +100,7 @@ class ProductViewModel extends BaseViewModel<Product> {
     };
     try {
       final dynamic response =
-          await repository.postWithImages(mediaData, images, '/media/');
+          await repository.postWithImages(mediaData, images, mediaEndpoint);
       return response as Map<String, Object?>;
     } catch (exception) {
       return null;
@@ -127,7 +128,7 @@ class ProductViewModel extends BaseViewModel<Product> {
       };
       try {
         final dynamic response =
-            await repository.post(pricingData, '/pricing/');
+            await repository.post(pricingData, pricingEndpoint);
         pricesCreated.add(response as Map<String, Object?>);
       } catch (exception) {
         pricesFailed.add(exception);
@@ -167,7 +168,7 @@ class ProductViewModel extends BaseViewModel<Product> {
     };
     try {
       final dynamic response =
-          await repository.post(availabilityData, '/availability/');
+          await repository.post(availabilityData, availabilityEndpoint);
       return response as Map<String, Object?>;
     } catch (exception) {
       return null;
@@ -190,7 +191,7 @@ class ProductViewModel extends BaseViewModel<Product> {
     };
     try {
       final dynamic response =
-          await repository.post(sessionPricingData, '/pricing/');
+          await repository.post(sessionPricingData, pricingEndpoint);
       responses.add(response as Map<String, Object?>);
     } catch (exception) {
       return null;
@@ -206,7 +207,7 @@ class ProductViewModel extends BaseViewModel<Product> {
       };
       try {
         final dynamic response =
-            await repository.post(dayPassPricingData, '/pricing/');
+            await repository.post(dayPassPricingData, pricingEndpoint);
         responses.add(response as Map<String, Object?>);
       } catch (exception) {
         return null;
