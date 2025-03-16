@@ -4,6 +4,7 @@ import 'package:async_redux/async_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:fullbooker/application/core/services/analytics_service.dart';
 import 'package:fullbooker/application/redux/observers/custom_observer.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/core/common/constants.dart';
@@ -61,7 +62,7 @@ Future<void> appBootStrap() async {
     );
 
     // TODO(abiud):setup google analytics service
-    // await AnalyticsService().init(environment: appConfig.environment);
+    await AnalyticsService().init(environment: appConfig.environment);
 
     // TODO(abiud): setup crashlytics
     // FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
