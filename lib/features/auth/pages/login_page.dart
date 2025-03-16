@@ -9,7 +9,7 @@ import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/shared/widgets/buttons.dart';
 import 'package:fullbooker/shared/widgets/divider.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
-import 'package:fullbooker/shared/widgets/text_input.dart';
+import 'package:fullbooker/shared/widgets/text_inputs.dart';
 import 'package:fullbooker/shared/validators.dart';
 import 'package:fullbooker/features/auth/controllers/login_controller.dart';
 

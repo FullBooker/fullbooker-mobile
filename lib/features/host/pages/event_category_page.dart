@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/utils.dart';
+import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/features/host/controllers/currency_controller.dart';
 import 'package:fullbooker/features/host/models/currency.dart';
 import 'package:fullbooker/features/host/models/product.dart';
@@ -12,7 +13,7 @@ import 'package:fullbooker/shared/widgets/buttons.dart';
 import 'package:fullbooker/shared/widgets/card.dart';
 import 'package:fullbooker/shared/widgets/dropdown.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
-import 'package:fullbooker/shared/widgets/text_input.dart';
+import 'package:fullbooker/shared/widgets/text_inputs.dart';
 
 @RoutePage()
 class EventCategoryPage extends StatefulWidget {
@@ -270,7 +271,7 @@ class _EventCategoryPageState extends State<EventCategoryPage> {
                                         if (selectedCurrency == null)
                                           const Center(
                                             child: Text(
-                                              'Please select a currency',
+                                              currencySelectGeneralPrompt,
                                             ),
                                           )
                                         else
@@ -359,7 +360,7 @@ class _EventCategoryPageState extends State<EventCategoryPage> {
                   EdgeInsets.symmetric(horizontal: width / 8, vertical: 30),
               child: Button(
                 onContinueClick,
-                actionLabel: 'Continue',
+                actionLabel: continueString,
                 loading: isLoading,
               ),
             ),

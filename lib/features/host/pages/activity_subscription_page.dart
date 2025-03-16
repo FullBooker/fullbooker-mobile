@@ -1,7 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
+import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/utils.dart';
+import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/features/host/controllers/currency_controller.dart';
 import 'package:fullbooker/features/host/controllers/product_controller.dart';
 import 'package:fullbooker/features/host/models/currency.dart';
@@ -16,7 +18,7 @@ import 'package:fullbooker/shared/widgets/card.dart';
 import 'package:fullbooker/shared/widgets/divider.dart';
 import 'package:fullbooker/shared/widgets/dropdown.dart';
 import 'package:fullbooker/shared/widgets/rounded_floating_action.dart';
-import 'package:fullbooker/shared/widgets/text_input.dart';
+import 'package:fullbooker/shared/widgets/text_inputs.dart';
 
 @RoutePage()
 class ActivitySubscriptionPage extends StatefulWidget {
@@ -148,9 +150,9 @@ class _ActivitySubscription extends State<ActivitySubscriptionPage> {
                       const EdgeInsets.only(bottom: 20, left: 20, right: 20),
                   child: SizedBox(
                     width: width * 0.8,
-                    child: const RoundedDivider(
+                    child: RoundedDivider(
                       height: 2,
-                      color: Color(0xfff55E00),
+                      color: Theme.of(context).primaryColor,
                     ),
                   ),
                 ),
@@ -240,7 +242,8 @@ class _ActivitySubscription extends State<ActivitySubscriptionPage> {
                             ? Center(
                                 child: SizedBox(
                                   width: (width - 20) * 0.3,
-                                  child: const Text('Please select a currency'),
+                                  child:
+                                      const Text(currencySelectGeneralPrompt),
                                 ),
                               )
                             : SizedBox(
@@ -334,11 +337,11 @@ class _ActivitySubscription extends State<ActivitySubscriptionPage> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
-                                      const Expanded(
+                                      Expanded(
                                         child: Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            'Service Fee (5%)',
+                                            serviceFee(appServiceFee),
                                             softWrap: true,
                                             style: TextStyle(fontSize: 18),
                                           ),
@@ -416,7 +419,7 @@ class _ActivitySubscription extends State<ActivitySubscriptionPage> {
                   EdgeInsets.symmetric(horizontal: width / 8, vertical: 30),
               child: Button(
                 onContinueClick,
-                actionLabel: 'Publish',
+                actionLabel:publish,
                 loading: isLoading,
               ),
             ),

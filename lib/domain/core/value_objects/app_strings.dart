@@ -193,3 +193,38 @@ const String closedTimeOfYearString =
     'Choose the specific days of the year when '
     'your activity will  remain closed (Optional)';
 const String activityNotOpen = 'Activity Not Open On';
+
+// Activity day pass page
+
+const String selectCurrencyPrompt =
+    'Please set the currency, price and maximum booking amount for the activity';
+const String dayPassPrompt = 'Is there a day pass for your product';
+const String selectCurrencyPromptForActivity =
+    'Select a currency for this activity';
+const String dayPassString = 'Day Pass';
+const String pricePerPerson = 'What is the price per person per day pass';
+const String currencySelectGeneralPrompt = 'Please select a currency';
+const String dayPassMaxTickets = 'Maximum number of tickets per day pass';
+const String totalChargeable = 'Total Chargeable (Per Session)';
+String serviceFee(double value) => 'Service Fee ($value%)';
+const String activityPricePrompt = 'How much will the activity cost';
+const String costPerSession = 'Cost per session';
+const String pricePerPersonPerSession =
+    'What is the price per person per session';
+const String maxTicketsPerSession = 'Maximum number of tickets per session';
+const String publish = 'Publish';
+
+const String selectCategoryPrompt = 'Please select a category for your event';
+
+const String tellUsAboutProduct = 'Tell us about your product';
+const String pickOneThatApplies =
+    'Pick the one that best describes your product';
+
+const String selectStartEndDate = 'Please select a start and end date';
+const String startBeforeEndDate = 'Please ensure start date is before end date';
+
+const String whenWillThisEventHappen = 'When will this event happen';
+const String timeStart = 'What time will this event start?';
+const String timeEnd = 'What time will this event end?';
+
+

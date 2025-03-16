@@ -7,7 +7,7 @@ import 'package:fullbooker/shared/validators.dart';
 import 'package:fullbooker/shared/widgets/buttons.dart';
 import 'package:fullbooker/shared/widgets/information_modal.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
-import 'package:fullbooker/shared/widgets/text_input.dart';
+import 'package:fullbooker/shared/widgets/text_inputs.dart';
 
 @RoutePage()
 class ChangePasswordPage extends StatefulWidget {

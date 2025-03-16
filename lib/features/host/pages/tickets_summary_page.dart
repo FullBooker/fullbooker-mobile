@@ -1,7 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
+import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/utils.dart';
+import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/features/host/controllers/product_controller.dart';
 import 'package:fullbooker/features/host/models/currency.dart';
 import 'package:fullbooker/features/host/models/product.dart';
@@ -161,11 +163,11 @@ class _TicketsSummaryPageState extends State<TicketsSummaryPage> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: <Widget>[
-                                        const Expanded(
+                                        Expanded(
                                           child: Align(
                                             alignment: Alignment.centerLeft,
                                             child: Text(
-                                              'Service Fee (5%)',
+                                              serviceFee(appServiceFee),
                                               softWrap: true,
                                               style:
                                                   TextStyle(fontSize: fontSize),

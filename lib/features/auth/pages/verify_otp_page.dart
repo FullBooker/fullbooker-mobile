@@ -158,8 +158,9 @@ class VerifyOTPPageState extends State<VerifyOTPPage> {
                                         ),
                                         TextSpan(
                                           text: timerText(),
-                                          style: const TextStyle(
-                                            color: Color(0xfff55E00),
+                                          style: TextStyle(
+                                            color:
+                                                Theme.of(context).primaryColor,
                                           ),
                                         ),
                                       ],

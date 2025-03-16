@@ -73,13 +73,15 @@ class StandardTextInputState extends State<StandardTextInput> {
             borderRadius: BorderRadius.all(Radius.circular(12)),
             borderSide: BorderSide.none,
           ),
-          errorBorder: const OutlineInputBorder(
+          errorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(12)),
-            borderSide: BorderSide(color: Color(0xfff55E00), width: 2),
+            borderSide:
+                BorderSide(color: Theme.of(context).primaryColor, width: 2),
           ),
-          focusedErrorBorder: const OutlineInputBorder(
+          focusedErrorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(12)),
-            borderSide: BorderSide(color: Color(0xfff55E00), width: 2),
+            borderSide:
+                BorderSide(color: Theme.of(context).primaryColor, width: 2),
           ),
         ),
       ),
