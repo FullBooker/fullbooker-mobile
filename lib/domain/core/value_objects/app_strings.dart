@@ -1,3 +1,12 @@
+// Onboarding strings
+// TODO(abiud): improve this copy
+const String overview1Title = 'Find your favorite events';
+const String overview1Copy = 'Discover, book, and enjoy your favorite events';
+const String overview2Title = 'FIND NEARBY EVENTS';
+const String overview2Copy = 'Your Go-To app for nearby events';
+const String overview3Title = 'Update your upcoming events';
+const String overview3Copy = 'Keep your events up to date';
+
 // Exception strings
 const String youWereLoggedOutString = 'You were logged out';
 const String permissionDeniedString =
@@ -13,6 +22,8 @@ const String genericErrorString =
 const String okThanksString = 'Ok, Thanks';
 const String homeString = 'Home';
 const String continueString = 'Continue';
+const String editString = 'Edit';
+const String nextString = 'Next';
 
 /// USER SIDE STRINGS
 ///
@@ -265,3 +276,19 @@ const String selectLocationWithinKenya =
 
 const String nameCannotBeEmpty = 'Name cannot be empty';
 const String provideAnyOtherDetails = 'Provide any other details about this';
+
+// Entities
+
+const String trackingNumber = 'Tracking Number';
+const String productName = 'Product Name';
+const String priceString = 'Price';
+const String statusString = 'Status';
+const String nextActionsString = 'Next Actions';
+
+const String activeString = 'Active';
+const String disabledString = 'Disabled';
+
+// Bottom nav
+const String switchToHostingString = 'Switch to Hosting';
+const String searchString = 'Search';
+const String profileString = 'Profile';
