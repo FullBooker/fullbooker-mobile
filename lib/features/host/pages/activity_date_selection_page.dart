@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/utils.dart';
+import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/features/host/controllers/days_controller.dart';
 import 'package:fullbooker/features/host/controllers/product_controller.dart';
 import 'package:fullbooker/features/host/models/days.dart';
@@ -51,12 +52,12 @@ class _ActivityDateSelectionPageState extends State<ActivityDateSelectionPage> {
 
   void onContinueClick() {
     if (hourSelected == null || minuteSelected == null) {
-      showSnackBar('Please set how long the activity is', context);
+      showSnackBar(activityLengthPrompt, context);
       return;
     }
     if (startTimes.isEmpty || endTimes.isEmpty) {
       showSnackBar(
-        'Please set both start and endtime for at least one day of the week',
+        startEndTimePrompt,
         context,
       );
       return;
@@ -70,7 +71,7 @@ class _ActivityDateSelectionPageState extends State<ActivityDateSelectionPage> {
 
     if (!listEquals(startTimesKeys, endTimesKeys)) {
       showSnackBar(
-        "Please set both the start and end times for the days you've selected",
+        dayStartEndTimePrompt,
         context,
       );
       setState(() => isLoading = true);
@@ -87,7 +88,7 @@ class _ActivityDateSelectionPageState extends State<ActivityDateSelectionPage> {
         .then((Map<String, Object?>? availability) {
       if (availability == null) {
         if (mounted) {
-          showSnackBar('Failed to create availability for activity', context);
+          showSnackBar(availabilityCreationError, context);
         }
         setState(() => isLoading = false);
         return;
@@ -142,7 +143,7 @@ class _ActivityDateSelectionPageState extends State<ActivityDateSelectionPage> {
                 children: <Widget>[
                   const PageHeader(
                     '',
-                    'When does this activity happen?',
+                    activityTimeString,
                     withLogo: false,
                     widthFactor: 0.9,
                     pageDescriptionPadding: 20,
@@ -168,7 +169,7 @@ class _ActivityDateSelectionPageState extends State<ActivityDateSelectionPage> {
                       child: Column(
                         children: <Widget>[
                           const Text(
-                            'Select the days of the week that you are open',
+                            openWeekDays,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 21,
@@ -190,7 +191,8 @@ class _ActivityDateSelectionPageState extends State<ActivityDateSelectionPage> {
                                     child: const Padding(
                                       padding:
                                           EdgeInsets.symmetric(horizontal: 10),
-                                      child: Center(child: Text('Start Time')),
+                                      child:
+                                          Center(child: Text(startTimeString)),
                                     ),
                                   ),
                                   SizedBox(
@@ -198,7 +200,7 @@ class _ActivityDateSelectionPageState extends State<ActivityDateSelectionPage> {
                                     child: const Padding(
                                       padding:
                                           EdgeInsets.symmetric(horizontal: 10),
-                                      child: Center(child: Text('End Time')),
+                                      child: Center(child: Text(endTimeString)),
                                     ),
                                   ),
                                 ],
@@ -289,8 +291,7 @@ class _ActivityDateSelectionPageState extends State<ActivityDateSelectionPage> {
                       child: Column(
                         children: <Widget>[
                           const Text(
-                            'Choose the specific days of the year when '
-                            'your activity will  remain closed (Optional)',
+                            closedTimeOfYearString,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 21,
@@ -354,7 +355,7 @@ class _ActivityDateSelectionPageState extends State<ActivityDateSelectionPage> {
                                               vertical: 5,
                                             ),
                                             child: ScaleLockedText(
-                                              'Activity Not Open On',
+                                              activityNotOpen,
                                               softWrap: true,
                                             ),
                                           ),
@@ -405,7 +406,7 @@ class _ActivityDateSelectionPageState extends State<ActivityDateSelectionPage> {
                     EdgeInsets.symmetric(horizontal: width / 8, vertical: 30),
                 child: Button(
                   onContinueClick,
-                  actionLabel: 'Continue',
+                  actionLabel: continueString,
                   loading: isLoading,
                 ),
               ),
