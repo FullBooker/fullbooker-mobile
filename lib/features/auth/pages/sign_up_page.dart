@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
+import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/features/auth/controllers/login_controller.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
@@ -88,7 +89,7 @@ class SignUpPageState extends State<SignUpPage> {
       appBar: const StandardNavBar(
         showSearchBar: false,
         iconsColor: Colors.black,
-        pageTitle: 'WELCOME',
+        pageTitle: welcomeString,
         showRightAction: false,
         height: 36,
         tileFontSize: 20,
@@ -104,7 +105,7 @@ class SignUpPageState extends State<SignUpPage> {
               padding: EdgeInsets.only(bottom: 20),
               child: PageHeader(
                 '',
-                'Sign Up',
+                signUpString,
                 headerPadding: 10,
                 headerTopPadding: 0,
                 pageTitleBottomPadding: 0,
@@ -121,7 +122,7 @@ class SignUpPageState extends State<SignUpPage> {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 5),
                         child: StandardTextInput(
-                          'First Name',
+                          firstNameString,
                           labelPrefix: Icons.person,
                           validator: validateNotEmpty,
                           controller: nameController,
@@ -130,7 +131,7 @@ class SignUpPageState extends State<SignUpPage> {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 5),
                         child: StandardTextInput(
-                          'Last Name',
+                          lastNameString,
                           labelPrefix: Icons.person,
                           validator: validateNotEmpty,
                           controller: lastNameController,
@@ -139,7 +140,7 @@ class SignUpPageState extends State<SignUpPage> {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 5),
                         child: StandardTextInput(
-                          'Email Address',
+                          emailAddressString,
                           labelPrefix: Icons.email_sharp,
                           validator: validateEmail,
                           controller: emailController,
@@ -148,7 +149,7 @@ class SignUpPageState extends State<SignUpPage> {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 5),
                         child: StandardTextInput(
-                          'Phone Number',
+                          phoneNumberString,
                           labelPrefix: Icons.phone,
                           validator: validatePhoneNumber,
                           controller: phoneNumberController,
@@ -161,7 +162,7 @@ class SignUpPageState extends State<SignUpPage> {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 5),
                         child: StandardTextInput(
-                          'Password',
+                          passwordString,
                           labelPrefix: Icons.key,
                           isPassword: true,
                           validator: validatePassword,
@@ -171,7 +172,7 @@ class SignUpPageState extends State<SignUpPage> {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 5),
                         child: StandardTextInput(
-                          'Confirm Password',
+                          confirmPasswordString,
                           labelPrefix: Icons.key,
                           isPassword: true,
                           controller: confirmController,
@@ -200,7 +201,7 @@ class SignUpPageState extends State<SignUpPage> {
                         child: Button(
                           () => signup(context),
                           loading: isLoading,
-                          actionLabel: 'Sign Up',
+                          actionLabel: signUpString,
                         ),
                       ),
                       Padding(
@@ -217,7 +218,7 @@ class SignUpPageState extends State<SignUpPage> {
                         child: Button(
                           loginWithGoogle,
                           color: const Color(0xf0F5F4F4),
-                          actionLabel: 'Sign up with Google',
+                          actionLabel: signUpWithGoogleString,
                           actionLabelPrefix: const Image(
                             image: AssetImage(googleIconPath),
                           ),
@@ -238,11 +239,11 @@ class SignUpPageState extends State<SignUpPage> {
                       text: TextSpan(
                         children: <InlineSpan>[
                           const TextSpan(
-                            text: 'Already have an account ? ',
+                            text: alreadyHaveAnAccountString,
                             style: TextStyle(color: Colors.black),
                           ),
                           TextSpan(
-                            text: 'Login',
+                            text: loginString,
                             style: const TextStyle(color: Color(0xf015B9FF)),
                             recognizer: TapGestureRecognizer()
                               ..onTap =

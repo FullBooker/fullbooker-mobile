@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
+import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/features/auth/controllers/login_controller.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:fullbooker/shared/widgets/divider.dart';
@@ -33,7 +34,7 @@ class RequestOTPPageState extends State<RequestOTPPage> {
     if (phoneNumberController.value.text.isEmpty &&
         emailController.value.text.isEmpty) {
       setState(() {
-        errorMessage = 'Please enter either your email or phone number';
+        errorMessage = enterPhoneOrEmailString;
       });
       return;
     }
@@ -79,7 +80,7 @@ class RequestOTPPageState extends State<RequestOTPPage> {
                       children: <Widget>[
                         const PageHeader(
                           '',
-                          'Please provide email or phone number\nto reset your password',
+                          enterPhoneOrEmailCopy,
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(
@@ -87,7 +88,7 @@ class RequestOTPPageState extends State<RequestOTPPage> {
                             horizontal: 10,
                           ),
                           child: StandardTextInput(
-                            'Email',
+                            emailString,
                             labelPrefix: Icons.email_sharp,
                             validator: (String? email) =>
                                 validateEmail(email, isOptional: true),
@@ -100,7 +101,7 @@ class RequestOTPPageState extends State<RequestOTPPage> {
                             Colors.black,
                             18,
                             MediaQuery.of(context).size.width * .8,
-                            'Or',
+                            orString,
                           ),
                         ),
                         Padding(
@@ -109,7 +110,7 @@ class RequestOTPPageState extends State<RequestOTPPage> {
                             horizontal: 10,
                           ),
                           child: StandardTextInput(
-                            'Phone Number',
+                            phonNumberString,
                             labelPrefix: Icons.phone,
                             validator: (String? number) =>
                                 validatePhoneNumber(number, isOptional: true),
@@ -120,7 +121,7 @@ class RequestOTPPageState extends State<RequestOTPPage> {
                           ),
                         ),
                         Center(
-                          child: (errorMessage == '')
+                          child: (errorMessage.isEmpty)
                               ? const SizedBox()
                               : Padding(
                                   padding: const EdgeInsets.all(20),
@@ -148,7 +149,7 @@ class RequestOTPPageState extends State<RequestOTPPage> {
                 children: <Widget>[
                   Button(
                     () => requestOTP(context),
-                    actionLabel: 'Continue',
+                    actionLabel: continueString,
                     loading: isLoading,
                   ),
                   Padding(
@@ -160,11 +161,11 @@ class RequestOTPPageState extends State<RequestOTPPage> {
                       text: TextSpan(
                         children: <InlineSpan>[
                           const TextSpan(
-                            text: 'Go back to ',
+                            text: goBackToString,
                             style: TextStyle(color: Colors.black),
                           ),
                           TextSpan(
-                            text: 'login',
+                            text: loginString.toLowerCase(),
                             style: const TextStyle(color: Color(0xf015B9FF)),
                             recognizer: TapGestureRecognizer()
                               ..onTap =
