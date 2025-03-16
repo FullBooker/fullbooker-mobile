@@ -209,7 +209,7 @@ class VerifyOTPPageState extends State<VerifyOTPPage> {
                   Button(
                     () => validateOTP(context),
                     loading: isLoading,
-                    actionLabel: 'Continue',
+                    actionLabel: continueString,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
@@ -220,11 +220,11 @@ class VerifyOTPPageState extends State<VerifyOTPPage> {
                       text: TextSpan(
                         children: <InlineSpan>[
                           const TextSpan(
-                            text: 'Use a different ',
+                            text: useDifferentString,
                             style: TextStyle(color: Colors.black),
                           ),
                           TextSpan(
-                            text: 'email / phone number',
+                            text: emailOrPhoneString,
                             style: const TextStyle(
                               color: AppColors.customBlueColor,
                             ),
