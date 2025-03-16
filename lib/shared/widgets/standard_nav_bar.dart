@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
+import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 
 class StandardNavBar extends StatelessWidget implements PreferredSizeWidget {
   final bool showSearchBar;
@@ -71,7 +72,7 @@ class StandardNavBar extends StatelessWidget implements PreferredSizeWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: GestureDetector(
-                      child: Image.asset('assets/icons/filter-icon.png'),
+                      child: Image.asset(filterIconPath),
                     ),
                   ),
                 ],

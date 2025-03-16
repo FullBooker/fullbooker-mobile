@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
+import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/features/host/controllers/product_controller.dart';
 import 'package:fullbooker/features/host/models/product.dart';
 import 'package:fullbooker/shared/entities/bound.dart';
@@ -221,9 +222,7 @@ class _LocationSelectionPageState extends State<LocationSelectionPage> {
                             popOnNextButtonTaped: true,
                             currentLatLng: cameraPosition!.target,
                             topCardColor: Colors.white,
-                            backButton: Image.asset(
-                              'assets/icons/location_icon.png',
-                            ),
+                            backButton: Image.asset(locationIconPath),
                             hideBottomCard: true,
                             hideMoreOptions: true,
                             hideMapTypeButton: true,

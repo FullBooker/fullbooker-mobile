@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/shared/widgets/divider.dart';
 
 class PageHeader extends StatelessWidget {
@@ -49,7 +50,7 @@ class PageHeader extends StatelessWidget {
           if (withLogo)
             const SizedBox(
               height: 64,
-              child: Image(image: AssetImage('assets/logo_splash.png')),
+              child: Image(image: AssetImage(logoSplashImagePath)),
             )
           else
             const SizedBox(),

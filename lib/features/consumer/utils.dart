@@ -1,7 +1,9 @@
+import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/features/auth/models/login.dart';
 import 'package:fullbooker/features/host/models/categories.dart';
 import 'package:fullbooker/features/host/models/product.dart';
 import 'package:fullbooker/features/host/models/sub_category_model.dart';
+import 'package:fullbooker/shared/entities/data_mocks.dart';
 import 'package:uuid/uuid.dart';
 import 'dart:math';
 
@@ -84,41 +86,7 @@ ProductLocation getProductLocation() {
   return ProductLocation(uuid.v4(), 'SRID=4326;POINT (36.8133793 -1.2949716)');
 }
 
-Map<String, dynamic> getAvailability() {
-  return <String, dynamic>{
-    'id': 'debfc057-f6cc-4682-91f1-5c8c7c5380d6',
-    'product': 'c81d6ee5-a9fd-4046-8fde-5077bd3ecde5',
-    'product_name': 'Quad Biking 10',
-    'start': null,
-    'end': null,
-    'start_time': null,
-    'end_time': null,
-    'duration': null,
-    'open_days': <Map<String, Object>>[
-      <String, Object>{
-        'id': 'e0b9eac7-e420-4e23-85dd-d82213b6f411',
-        'created_at': '2025-02-12T09:57:35.395512Z',
-        'updated_at': '2025-02-12T09:57:35.395529Z',
-        'active': true,
-        'host': 'd060199b-f032-40f9-adb2-9de24de3b2cf',
-        'day': '7060954a-a354-49f1-8b8e-21aefbe6f995',
-        'day_name': 'Monday',
-        'opening_at': '23:34:00',
-        'closing_at': '23:57:00',
-      }
-    ],
-    'closed_dates': <Map<String, dynamic>>[
-      <String, dynamic>{
-        'id': 'fb65d6f4-a972-4de2-80d6-61d9d526cf5c',
-        'created_at': '2025-02-12T09:57:35.399393Z',
-        'updated_at': '2025-02-12T09:57:35.399406Z',
-        'active': true,
-        'host': 'd060199b-f032-40f9-adb2-9de24de3b2cf',
-        'date': '2025-02-13',
-      }
-    ],
-  };
-}
+Map<String, dynamic> getAvailability() => availabilityMockResponse;
 
 Product getProduct({
   String? imageUrl,
@@ -144,15 +112,6 @@ Product getProduct({
     availability ?? getAvailability(),
   );
 }
-
-final List<String> productImages = <String>[
-  'https://i.imgur.com/aqOo5Ao.png',
-  'https://i.imgur.com/uXBwWkK.png',
-  'https://i.imgur.com/9KrQ1c7.png',
-  'https://i.imgur.com/Fhw9EqV.png',
-  'https://i.imgur.com/D6FdHMN.png',
-  'https://i.imgur.com/tIXPEJv.png',
-];
 
 final List<String> subCategories = <String>[
   'Quad Biking',
@@ -181,7 +140,7 @@ String randomCategory() {
 
 Map<String, Category> getCategories() {
   return <String, Category>{
-    'assets/icons/kids_icon.png': Category(
+    kidsIconPath: Category(
       uuid.v4(),
       DateTime.now(),
       DateTime.now(),
@@ -190,7 +149,7 @@ Map<String, Category> getCategories() {
       null,
       <SubCategory>[],
     ),
-    'assets/icons/concerts_icon.png': Category(
+    concertsIconPath: Category(
       uuid.v4(),
       DateTime.now(),
       DateTime.now(),
@@ -199,7 +158,7 @@ Map<String, Category> getCategories() {
       null,
       <SubCategory>[],
     ),
-    'assets/icons/gym_icon.png': Category(
+    gymIconPath: Category(
       uuid.v4(),
       DateTime.now(),
       DateTime.now(),
@@ -208,7 +167,7 @@ Map<String, Category> getCategories() {
       null,
       <SubCategory>[],
     ),
-    'assets/icons/go_cart_icon.png': Category(
+    goCartIconPath: Category(
       uuid.v4(),
       DateTime.now(),
       DateTime.now(),
@@ -217,7 +176,7 @@ Map<String, Category> getCategories() {
       null,
       <SubCategory>[],
     ),
-    'assets/icons/swimming_icon.png': Category(
+    swimmingIconPath: Category(
       uuid.v4(),
       DateTime.now(),
       DateTime.now(),
@@ -226,7 +185,7 @@ Map<String, Category> getCategories() {
       null,
       <SubCategory>[],
     ),
-    'assets/icons/car_icon.png': Category(
+    carIconPath: Category(
       uuid.v4(),
       DateTime.now(),
       DateTime.now(),

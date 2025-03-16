@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
+import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/features/auth/controllers/login_controller.dart';
 import 'package:fullbooker/shared/widgets/button.dart';
 import 'package:fullbooker/shared/widgets/divider.dart';
@@ -218,7 +219,7 @@ class SignUpPageState extends State<SignUpPage> {
                           color: const Color(0xf0F5F4F4),
                           actionLabel: 'Sign up with Google',
                           actionLabelPrefix: const Image(
-                            image: AssetImage('assets/icons/google.png'),
+                            image: AssetImage(googleIconPath),
                           ),
                           actionLabelColor: Colors.black,
                         ),
