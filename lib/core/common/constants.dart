@@ -18,3 +18,13 @@ const List<String> kAllowedImageExtensions = <String>['jpg', 'png'];
 const List<String> kAllowedVideoExtensions = <String>['mp4'];
 
 const String kMapsAPIKey = 'AIzaSyDen5uldAkBcBPog8ajqpThWXGsiXmYSyU';
+
+const int kRequestTimeoutSeconds = 45;
+
+const Map<String, dynamic> kTimeoutResponsePayload = <String, dynamic>{
+  'statusCode': 408,
+  'error': 'Network connection unreliable. Please try again later.',
+};
+
+const String kLoginLogoutPrompt = 'Oops!!! Something wrong just happened. '
+    'If this persists, log out and login again';
