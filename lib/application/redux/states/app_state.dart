@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:fullbooker/application/redux/states/auth_state.dart';
 import 'package:fullbooker/application/redux/states/bottom_nav_state.dart';
+import 'package:fullbooker/application/redux/states/onboarding_state.dart';
 import 'package:fullbooker/application/redux/states/user_state.dart';
 
 part 'app_state.freezed.dart';
@@ -13,6 +14,7 @@ class AppState with _$AppState {
     AuthState? authState,
     UserState? userState,
     BottomNavState? bottomNavState,
+    OnboardingState? onboardingState,
   }) = _AppState;
 
   factory AppState.fromJson(Map<String, dynamic> json) =>
@@ -22,5 +24,6 @@ class AppState with _$AppState {
         authState: AuthState.initial(),
         bottomNavState: BottomNavState.initial(),
         userState: UserState.initial(),
+        onboardingState: OnboardingState.initial(),
       );
 }

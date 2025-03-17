@@ -1,7 +1,10 @@
+import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fullbooker/application/redux/states/app_state.dart';
+import 'package:fullbooker/application/redux/view_models/login_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
@@ -11,7 +14,6 @@ import 'package:fullbooker/shared/widgets/divider.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
 import 'package:fullbooker/shared/widgets/text_inputs.dart';
 import 'package:fullbooker/shared/validators.dart';
-import 'package:fullbooker/features/auth/controllers/login_controller.dart';
 
 @RoutePage()
 class LoginPage extends StatefulWidget {
@@ -24,7 +26,6 @@ class LoginPage extends StatefulWidget {
 
 class LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final LoginViewModel loginController = LoginViewModel();
   String errorMessage = '';
   bool loading = false;
   final TextEditingController emailController = TextEditingController();
@@ -34,34 +35,34 @@ class LoginPageState extends State<LoginPage> {
   void login(String email, String password) {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      final Future<String?> errFuture = loginController.login(email, password);
+      // final Future<String?> errFuture = loginController.login(email, password);
       setState(() {
         loading = true;
         errorMessage = '';
       });
-      errFuture.then((String? err) {
-        setState(() {
-          loading = false;
-          if (err != null) errorMessage = err;
-          if (err == null) loggedIn = true;
-        });
-      });
+      // errFuture.then((String? err) {
+      //   setState(() {
+      //     loading = false;
+      //     if (err != null) errorMessage = err;
+      //     if (err == null) loggedIn = true;
+      //   });
+      // });
     }
   }
 
   void loginWithGoogle() {
-    final Future<String?> errFuture = loginController.signInWithGoogle();
-    setState(() {
-      loading = true;
-      errorMessage = '';
-    });
-    errFuture.then((String? err) {
-      setState(() {
-        loading = false;
-        if (err != null) errorMessage = err;
-        if (err == null) loggedIn = true;
-      });
-    });
+    // final Future<String?> errFuture = loginController.signInWithGoogle();
+    // setState(() {
+    //   loading = true;
+    //   errorMessage = '';
+    // });
+    // errFuture.then((String? err) {
+    //   setState(() {
+    //     loading = false;
+    //     if (err != null) errorMessage = err;
+    //     if (err == null) loggedIn = true;
+    //   });
+    // });
   }
 
   @override
@@ -70,140 +71,148 @@ class LoginPageState extends State<LoginPage> {
       backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(20),
-        child: ListView(
-          children: <Widget>[
-            const Center(
-              child: Text(
-                welcomeString,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-            ),
-            const PageHeader(
-              '',
-              signInCopy,
-              pageDescriptionPadding: 0,
-              headerTopPadding: 0,
-            ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.8,
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: StandardTextInput(
-                        phonNumberString,
-                        labelPrefix: Icons.phone,
-                        validator: validatePhoneNumber,
-                        controller: emailController,
-                        maxLength: 13,
-                        formatters: <TextInputFormatter>[
-                          FilteringTextInputFormatter.digitsOnly,
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: StandardTextInput(
-                        passwordString,
-                        labelPrefix: Icons.key,
-                        isPassword: true,
-                        validator: validatePassword,
-                        controller: passwordController,
-                      ),
-                    ),
-                    Center(
-                      child: (errorMessage == '')
-                          ? const SizedBox()
-                          : Padding(
-                              padding: const EdgeInsets.all(20),
-                              child: Text(
-                                errorMessage,
-                                style: const TextStyle(color: Colors.red),
-                              ),
-                            ),
-                    ),
-                    Center(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 20),
-                        child: RichText(
-                          text: TextSpan(
-                            children: <InlineSpan>[
-                              const TextSpan(
-                                text: forgotPasswordString,
-                                style: TextStyle(color: Colors.black),
-                              ),
-                              TextSpan(
-                                text: resetHereString,
-                                style: const TextStyle(
-                                  color: AppColors.customBlueColor,
-                                ),
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () =>
-                                      context.router.push(RequestOTPRoute()),
-                              ),
+        child: StoreConnector<AppState, LoginPageViewModel>(
+          converter: (Store<AppState> store) =>
+              LoginPageViewModel.fromState(store.state),
+          builder: (BuildContext context, LoginPageViewModel snapshot) {
+            return ListView(
+              children: <Widget>[
+                const Center(
+                  child: Text(
+                    welcomeString,
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                const PageHeader(
+                  '',
+                  signInCopy,
+                  pageDescriptionPadding: 0,
+                  headerTopPadding: 0,
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: StandardTextInput(
+                            phonNumberString,
+                            labelPrefix: Icons.phone,
+                            validator: validatePhoneNumber,
+                            controller: emailController,
+                            maxLength: 13,
+                            formatters: <TextInputFormatter>[
+                              FilteringTextInputFormatter.digitsOnly,
                             ],
                           ),
                         ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20),
-                      child: OldButton(
-                        () => login(
-                          emailController.value.text,
-                          passwordController.value.text,
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10),
+                          child: StandardTextInput(
+                            passwordString,
+                            labelPrefix: Icons.key,
+                            isPassword: true,
+                            validator: validatePassword,
+                            controller: passwordController,
+                          ),
                         ),
-                        actionLabel: signInString,
-                        loading: loading,
-                      ),
-                    ),
-                    LabeledDivider(
-                      Colors.black,
-                      15,
-                      MediaQuery.of(context).size.width * 0.8,
-                      orString,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: OldButton(
-                        loginWithGoogle,
-                        color: const Color(0xf0F5F4F4),
-                        actionLabel: signInWithGoogleString,
-                        actionLabelColor: Colors.black,
-                        actionLabelPrefix: const Image(
-                          image: AssetImage(googleIconPath),
+                        Center(
+                          child: (errorMessage == '')
+                              ? const SizedBox()
+                              : Padding(
+                                  padding: const EdgeInsets.all(20),
+                                  child: Text(
+                                    errorMessage,
+                                    style: const TextStyle(color: Colors.red),
+                                  ),
+                                ),
                         ),
-                      ),
+                        Center(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 20),
+                            child: RichText(
+                              text: TextSpan(
+                                children: <InlineSpan>[
+                                  const TextSpan(
+                                    text: forgotPasswordString,
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                  TextSpan(
+                                    text: resetHereString,
+                                    style: const TextStyle(
+                                      color: AppColors.customBlueColor,
+                                    ),
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () => context.router
+                                          .push(RequestOTPRoute()),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 20),
+                          child: OldButton(
+                            () => login(
+                              emailController.value.text,
+                              passwordController.value.text,
+                            ),
+                            actionLabel: signInString,
+                            loading: loading,
+                          ),
+                        ),
+                        LabeledDivider(
+                          Colors.black,
+                          15,
+                          MediaQuery.of(context).size.width * 0.8,
+                          orString,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: OldButton(
+                            loginWithGoogle,
+                            color: const Color(0xf0F5F4F4),
+                            actionLabel: signInWithGoogleString,
+                            actionLabelColor: Colors.black,
+                            actionLabelPrefix: const Image(
+                              image: AssetImage(googleIconPath),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-            ),
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 40),
-                child: RichText(
-                  text: TextSpan(
-                    children: <InlineSpan>[
-                      const TextSpan(
-                        text: dontHaveAccountString,
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      TextSpan(
-                        text: signUpString,
-                        style:
-                            const TextStyle(color: AppColors.customBlueColor),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () => context.router.push(SignUpRoute()),
-                      ),
-                    ],
                   ),
                 ),
-              ),
-            ),
-          ],
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 40),
+                    child: RichText(
+                      text: TextSpan(
+                        children: <InlineSpan>[
+                          const TextSpan(
+                            text: dontHaveAccountString,
+                            style: TextStyle(color: Colors.black),
+                          ),
+                          TextSpan(
+                            text: signUpString,
+                            style: const TextStyle(
+                              color: AppColors.customBlueColor,
+                            ),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap =
+                                  () => context.router.push(SignUpRoute()),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );

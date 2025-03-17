@@ -23,6 +23,7 @@ mixin _$AppState {
   AuthState? get authState => throw _privateConstructorUsedError;
   UserState? get userState => throw _privateConstructorUsedError;
   BottomNavState? get bottomNavState => throw _privateConstructorUsedError;
+  OnboardingState? get onboardingState => throw _privateConstructorUsedError;
 
   /// Serializes this AppState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -42,11 +43,13 @@ abstract class $AppStateCopyWith<$Res> {
   $Res call(
       {AuthState? authState,
       UserState? userState,
-      BottomNavState? bottomNavState});
+      BottomNavState? bottomNavState,
+      OnboardingState? onboardingState});
 
   $AuthStateCopyWith<$Res>? get authState;
   $UserStateCopyWith<$Res>? get userState;
   $BottomNavStateCopyWith<$Res>? get bottomNavState;
+  $OnboardingStateCopyWith<$Res>? get onboardingState;
 }
 
 /// @nodoc
@@ -67,6 +70,7 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
     Object? authState = freezed,
     Object? userState = freezed,
     Object? bottomNavState = freezed,
+    Object? onboardingState = freezed,
   }) {
     return _then(_value.copyWith(
       authState: freezed == authState
@@ -81,6 +85,10 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
           ? _value.bottomNavState
           : bottomNavState // ignore: cast_nullable_to_non_nullable
               as BottomNavState?,
+      onboardingState: freezed == onboardingState
+          ? _value.onboardingState
+          : onboardingState // ignore: cast_nullable_to_non_nullable
+              as OnboardingState?,
     ) as $Val);
   }
 
@@ -125,6 +133,20 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
       return _then(_value.copyWith(bottomNavState: value) as $Val);
     });
   }
+
+  /// Create a copy of AppState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $OnboardingStateCopyWith<$Res>? get onboardingState {
+    if (_value.onboardingState == null) {
+      return null;
+    }
+
+    return $OnboardingStateCopyWith<$Res>(_value.onboardingState!, (value) {
+      return _then(_value.copyWith(onboardingState: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -138,7 +160,8 @@ abstract class _$$AppStateImplCopyWith<$Res>
   $Res call(
       {AuthState? authState,
       UserState? userState,
-      BottomNavState? bottomNavState});
+      BottomNavState? bottomNavState,
+      OnboardingState? onboardingState});
 
   @override
   $AuthStateCopyWith<$Res>? get authState;
@@ -146,6 +169,8 @@ abstract class _$$AppStateImplCopyWith<$Res>
   $UserStateCopyWith<$Res>? get userState;
   @override
   $BottomNavStateCopyWith<$Res>? get bottomNavState;
+  @override
+  $OnboardingStateCopyWith<$Res>? get onboardingState;
 }
 
 /// @nodoc
@@ -164,6 +189,7 @@ class __$$AppStateImplCopyWithImpl<$Res>
     Object? authState = freezed,
     Object? userState = freezed,
     Object? bottomNavState = freezed,
+    Object? onboardingState = freezed,
   }) {
     return _then(_$AppStateImpl(
       authState: freezed == authState
@@ -178,6 +204,10 @@ class __$$AppStateImplCopyWithImpl<$Res>
           ? _value.bottomNavState
           : bottomNavState // ignore: cast_nullable_to_non_nullable
               as BottomNavState?,
+      onboardingState: freezed == onboardingState
+          ? _value.onboardingState
+          : onboardingState // ignore: cast_nullable_to_non_nullable
+              as OnboardingState?,
     ));
   }
 }
@@ -186,7 +216,11 @@ class __$$AppStateImplCopyWithImpl<$Res>
 
 @JsonSerializable(explicitToJson: true)
 class _$AppStateImpl implements _AppState {
-  const _$AppStateImpl({this.authState, this.userState, this.bottomNavState});
+  const _$AppStateImpl(
+      {this.authState,
+      this.userState,
+      this.bottomNavState,
+      this.onboardingState});
 
   factory _$AppStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$AppStateImplFromJson(json);
@@ -197,10 +231,12 @@ class _$AppStateImpl implements _AppState {
   final UserState? userState;
   @override
   final BottomNavState? bottomNavState;
+  @override
+  final OnboardingState? onboardingState;
 
   @override
   String toString() {
-    return 'AppState(authState: $authState, userState: $userState, bottomNavState: $bottomNavState)';
+    return 'AppState(authState: $authState, userState: $userState, bottomNavState: $bottomNavState, onboardingState: $onboardingState)';
   }
 
   @override
@@ -213,13 +249,15 @@ class _$AppStateImpl implements _AppState {
             (identical(other.userState, userState) ||
                 other.userState == userState) &&
             (identical(other.bottomNavState, bottomNavState) ||
-                other.bottomNavState == bottomNavState));
+                other.bottomNavState == bottomNavState) &&
+            (identical(other.onboardingState, onboardingState) ||
+                other.onboardingState == onboardingState));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, authState, userState, bottomNavState);
+  int get hashCode => Object.hash(
+      runtimeType, authState, userState, bottomNavState, onboardingState);
 
   /// Create a copy of AppState
   /// with the given fields replaced by the non-null parameter values.
@@ -241,7 +279,8 @@ abstract class _AppState implements AppState {
   const factory _AppState(
       {final AuthState? authState,
       final UserState? userState,
-      final BottomNavState? bottomNavState}) = _$AppStateImpl;
+      final BottomNavState? bottomNavState,
+      final OnboardingState? onboardingState}) = _$AppStateImpl;
 
   factory _AppState.fromJson(Map<String, dynamic> json) =
       _$AppStateImpl.fromJson;
@@ -252,6 +291,8 @@ abstract class _AppState implements AppState {
   UserState? get userState;
   @override
   BottomNavState? get bottomNavState;
+  @override
+  OnboardingState? get onboardingState;
 
   /// Create a copy of AppState
   /// with the given fields replaced by the non-null parameter values.

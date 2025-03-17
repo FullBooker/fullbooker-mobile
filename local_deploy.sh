@@ -1,1 +1,1 @@
-flutter build apk --build-number=3 --build-name=1.0.3-dev --obfuscate --split-debug-info=dump/ --release --dart-define=APPVERSION=1.0.3-dev
+flutter build apk --build-number=4 --build-name=1.0.4-dev --obfuscate --split-debug-info=dump/ --release --dart-define=APPVERSION=1.0.4-dev
