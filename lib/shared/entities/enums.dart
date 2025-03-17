@@ -9,3 +9,5 @@ enum ProductTypes { Event, Activity }
 enum ProductSteps { Overview, Products, Sales, Expenses, Goals }
 
 enum AppContext { dev, prod, test }
+
+enum RestAPIMethods { POST, GET, PUT, PATCH }
