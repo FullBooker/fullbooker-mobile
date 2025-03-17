@@ -309,3 +309,21 @@ const String buyATicketString = 'Buy A Ticket';
 const String searchForActivitiesString = 'Search for activities and events';
 
 const String activityLengthString = 'How long is the activity';
+
+// Client error strings
+
+const String slowInternet =
+    'Looks like you have a slow internet connection. Please check your '
+    'connection and try again';
+
+const String userWithThatEmailExists =
+    'Sorry, a user with that email address already exists';
+const String userNotFound =
+    'Sorry, we could not find a user with those details. Please confirm that '
+    'the credentials you provided are correct';
+const String wrongLoginCredentials = 'Your username or password do not match.';
+const String passwordHasExpired = 'Your password has expired';
+
+const String defaultUserFriendlyMessage = 'Sorry, an '
+    ' error occurred, please try again or get help from our '
+    'help center.';

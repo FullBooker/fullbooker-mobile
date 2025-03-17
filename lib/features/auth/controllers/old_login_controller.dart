@@ -26,7 +26,7 @@ class OldLoginViewModel extends BaseViewModel<Token> {
         'password': password,
       };
       final dynamic res =
-          await _repository.post(data, signInEndpoint, withHeaders: false);
+          await _repository.post(data, loginEndpoint, withHeaders: false);
       switch (res.runtimeType) {
         case final Token val:
           await repository.store.set(res);
