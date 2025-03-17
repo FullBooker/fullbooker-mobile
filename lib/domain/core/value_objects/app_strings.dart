@@ -30,6 +30,7 @@ const String nextString = 'Next';
 ///
 
 // Login
+const String letsGetStarted = 'Let’s get started!';
 const String verifyNumberString =
     'Please verify that the number you entered is correct';
 const String weCouldNotVerifyOTPString =
@@ -252,8 +253,6 @@ const String maxTicketsPerCategory = 'Maximum number of tickets per category';
 const String pleaseSelectTicketCategory = 'Please select a ticket category';
 
 // Event Summary
-const String letsGetStarted = 'Let\'s Get you Started';
-
 const String failedToLoadProductsError = 'Failed to load products';
 
 const String activitiesString = 'Activities';

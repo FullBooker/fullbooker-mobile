@@ -9,7 +9,7 @@ import 'package:fullbooker/features/auth/controllers/old_login_controller.dart';
 import 'package:fullbooker/shared/widgets/old_buttons.dart';
 import 'package:fullbooker/shared/widgets/divider.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
-import 'package:fullbooker/shared/widgets/text_inputs.dart';
+import 'package:fullbooker/shared/widgets/old_text_inputs.dart';
 import 'package:fullbooker/shared/validators.dart';
 
 @RoutePage()
