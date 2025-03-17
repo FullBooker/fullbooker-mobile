@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
-import 'package:fullbooker/features/auth/controllers/login_controller.dart';
+import 'package:fullbooker/features/auth/controllers/old_login_controller.dart';
 import 'package:fullbooker/shared/validators.dart';
 import 'package:fullbooker/shared/widgets/old_buttons.dart';
 import 'package:fullbooker/shared/widgets/information_modal.dart';
@@ -22,7 +22,7 @@ class ChangePasswordPage extends StatefulWidget {
 class ChangePasswordPageState extends State<ChangePasswordPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String errorMessage = '';
-  final LoginViewModel loginController = LoginViewModel();
+  final OldLoginViewModel loginController = OldLoginViewModel();
   bool isLoading = false;
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmController = TextEditingController();

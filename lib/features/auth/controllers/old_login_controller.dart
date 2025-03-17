@@ -7,14 +7,15 @@ import 'package:fullbooker/features/auth/models/login.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-class LoginViewModel extends BaseViewModel<Token> {
+// TODO(abiud): remove this
+class OldLoginViewModel extends BaseViewModel<Token> {
   late CRUDRepository<Token> _repository;
   @override
   CRUDRepository<Token> get repository => _repository;
   @override
   set repository(CRUDRepository<Token> repository) => _repository = repository;
 
-  LoginViewModel() {
+  OldLoginViewModel() {
     repository = CRUDRepository<Token>('accounts', TokenSerializer());
   }
 

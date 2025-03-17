@@ -6,7 +6,7 @@ import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
-import 'package:fullbooker/features/auth/controllers/login_controller.dart';
+import 'package:fullbooker/features/auth/controllers/old_login_controller.dart';
 import 'package:fullbooker/shared/widgets/old_buttons.dart';
 import 'package:fullbooker/shared/widgets/divider.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
@@ -30,7 +30,7 @@ class SignUpPageState extends State<SignUpPage> {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();
-  final LoginViewModel loginController = LoginViewModel();
+  final OldLoginViewModel loginController = OldLoginViewModel();
   bool isLoading = false;
   String errorMessage = '';
   bool signedUp = false;

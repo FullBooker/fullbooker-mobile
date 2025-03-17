@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
-import 'package:fullbooker/features/auth/controllers/login_controller.dart';
+import 'package:fullbooker/features/auth/controllers/old_login_controller.dart';
 import 'package:fullbooker/shared/widgets/old_buttons.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
 import 'package:otp_pin_field/otp_pin_field.dart';
@@ -23,7 +23,7 @@ class VerifyOTPPage extends StatefulWidget {
 class VerifyOTPPageState extends State<VerifyOTPPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String errorMessage = '';
-  final LoginViewModel loginController = LoginViewModel();
+  final OldLoginViewModel loginController = OldLoginViewModel();
   String pin = '';
   bool otpVerified = false;
   bool isLoading = false;
