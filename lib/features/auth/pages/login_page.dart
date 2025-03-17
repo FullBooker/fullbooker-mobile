@@ -12,7 +12,7 @@ import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/shared/widgets/old_buttons.dart';
 import 'package:fullbooker/shared/widgets/divider.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
-import 'package:fullbooker/shared/widgets/text_inputs.dart';
+import 'package:fullbooker/shared/widgets/old_text_inputs.dart';
 import 'package:fullbooker/shared/validators.dart';
 
 @RoutePage()
@@ -77,10 +77,11 @@ class LoginPageState extends State<LoginPage> {
           builder: (BuildContext context, LoginPageViewModel snapshot) {
             return ListView(
               children: <Widget>[
-                const Center(
+                Image(image: AssetImage(logoSplashImagePath)),
+                Center(
                   child: Text(
-                    welcomeString,
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    letsGetStarted,
+                    style: Theme.of(context).textTheme.headlineSmall,
                   ),
                 ),
                 const PageHeader(
@@ -198,8 +199,8 @@ class LoginPageState extends State<LoginPage> {
                           ),
                           TextSpan(
                             text: signUpString,
-                            style: const TextStyle(
-                              color: AppColors.customBlueColor,
+                            style: TextStyle(
+                              color: Theme.of(context).primaryColor,
                             ),
                             recognizer: TapGestureRecognizer()
                               ..onTap =

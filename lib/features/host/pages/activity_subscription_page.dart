@@ -19,7 +19,7 @@ import 'package:fullbooker/shared/widgets/card.dart';
 import 'package:fullbooker/shared/widgets/divider.dart';
 import 'package:fullbooker/shared/widgets/dropdown.dart';
 import 'package:fullbooker/shared/widgets/rounded_floating_action.dart';
-import 'package:fullbooker/shared/widgets/text_inputs.dart';
+import 'package:fullbooker/shared/widgets/old_text_inputs.dart';
 
 @RoutePage()
 class ActivitySubscriptionPage extends StatefulWidget {
