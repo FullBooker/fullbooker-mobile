@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:fullbooker/application/core/services/i_custom_client.dart';
-import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 
 /// [AppWrapperBase] is a top level base class used to efficiently propagate information down the tree.
 ///
