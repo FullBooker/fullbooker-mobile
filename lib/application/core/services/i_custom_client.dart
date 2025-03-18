@@ -50,7 +50,7 @@ abstract class ICustomClient extends BaseClient {
     }
 
     final Request request = Request(method, uri)
-      ..headers.addAll(customHeaders ?? <String, String>{});
+      ..headers.addAll(customHeaders ?? defaultRequestHeaders);
 
     if (variables != null) {
       request.body = json.encode(variables);
@@ -64,7 +64,9 @@ abstract class ICustomClient extends BaseClient {
           return StreamedResponse(
             ByteStream.fromBytes(utf8.encode(timeoutBody)),
             408,
-            headers: buildHeaders(customHeaders: customHeaders),
+            headers: buildHeaders(
+              customHeaders: customHeaders ?? defaultRequestHeaders,
+            ),
           );
         },
       ),
