@@ -13,9 +13,9 @@ _$UserStateImpl _$$UserStateImplFromJson(Map<String, dynamic> json) =>
       emailAddress: json['email'] as String? ?? UNKNOWN,
       firstName: json['first_name'] as String? ?? UNKNOWN,
       lastName: json['last_name'] as String? ?? UNKNOWN,
-      active: json['is_active'] as String? ?? false,
-      isHost: json['is_host'] as String? ?? false,
-      profileURL: json['image'] as String? ?? false,
+      active: json['is_active'] as bool? ?? false,
+      isHost: json['is_host'] as bool? ?? false,
+      profileURL: json['image'] as String? ?? UNKNOWN,
     );
 
 Map<String, dynamic> _$$UserStateImplToJson(_$UserStateImpl instance) =>

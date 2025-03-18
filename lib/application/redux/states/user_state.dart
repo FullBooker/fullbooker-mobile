@@ -10,14 +10,14 @@ part 'user_state.g.dart';
 class UserState with _$UserState {
   @JsonSerializable(explicitToJson: true)
   factory UserState({
-    @Default(UNKNOWN) @JsonKey(name: 'id') String userID,
-    @Default(UNKNOWN) @JsonKey(name: 'phone_number') String phoneNumber,
-    @Default(UNKNOWN) @JsonKey(name: 'email') String emailAddress,
-    @Default(UNKNOWN) @JsonKey(name: 'first_name') String firstName,
-    @Default(UNKNOWN) @JsonKey(name: 'last_name') String lastName,
-    @Default(false) @JsonKey(name: 'is_active') String active,
-    @Default(false) @JsonKey(name: 'is_host') String isHost,
-    @Default(false) @JsonKey(name: 'image') String profileURL,
+    @Default(UNKNOWN) @JsonKey(name: 'id') String? userID,
+    @Default(UNKNOWN) @JsonKey(name: 'phone_number') String? phoneNumber,
+    @Default(UNKNOWN) @JsonKey(name: 'email') String? emailAddress,
+    @Default(UNKNOWN) @JsonKey(name: 'first_name') String? firstName,
+    @Default(UNKNOWN) @JsonKey(name: 'last_name') String? lastName,
+    @Default(false) @JsonKey(name: 'is_active') bool active,
+    @Default(false) @JsonKey(name: 'is_host') bool isHost,
+    @Default(UNKNOWN) @JsonKey(name: 'image') String? profileURL,
   }) = _UserState;
 
   factory UserState.initial() => UserState();

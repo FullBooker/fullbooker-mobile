@@ -34,6 +34,7 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: ProductDetailsRoute.page),
         AutoRoute(page: TicketsSummaryRoute.page),
         AutoRoute(page: VideoSelectionRoute.page),
+        AutoRoute(page: HostingHomeRoute.page),
         AutoRoute(page: GalleryRoute.page),
       ];
 }
