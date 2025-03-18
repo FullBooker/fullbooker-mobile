@@ -54,7 +54,7 @@ class _EventsSummaryPageState extends State<EventsSummaryPage> {
     final double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: const ProductSetupNavBar(),
-      bottomNavigationBar: const BottomNavBar(),
+      bottomNavigationBar: const OldBottomNavBar(),
       body: hasLoaded
           ? Column(
               children: <Widget>[
