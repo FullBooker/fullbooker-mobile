@@ -1,11 +1,16 @@
 import 'dart:math';
+import 'package:auto_route/auto_route.dart';
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fullbooker/config/environments.dart';
 import 'package:fullbooker/core/common/constants.dart';
+import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/regexes.dart';
+import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:map_location_picker/map_location_picker.dart';
 
 String getFileExtension(String fileName) {
@@ -17,21 +22,81 @@ String getFileExtension(String fileName) {
 }
 
 void showSnackBar(String message, BuildContext context) {
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      action: SnackBarAction(
-        label: okThanksString,
-        onPressed: () => ScaffoldMessenger.of(context).hideCurrentSnackBar(),
+  ScaffoldMessenger.of(context)
+    ..hideCurrentSnackBar()
+    ..showSnackBar(
+      SnackBar(
+        behavior: SnackBarBehavior.floating,
+        content: Text(
+          message,
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
+        duration: const Duration(seconds: 5),
+        action: SnackBarAction(
+          label: okThanksString,
+          textColor: Theme.of(context).primaryColor,
+          onPressed: () => ScaffoldMessenger.of(context).hideCurrentSnackBar(),
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8.0),
+        ),
       ),
-      content: Text(
-        message,
-        style: Theme.of(context).textTheme.bodyLarge,
-      ),
-      behavior: SnackBarBehavior.floating,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-    ),
+    );
+}
+
+void showAlertDialog({
+  required BuildContext context,
+  required String? assetPath,
+  String? title,
+  String? description,
+}) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        content: Column(
+          spacing: 16,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            if (assetPath != null)
+              Center(
+                child: SvgPicture.asset(
+                  assetPath,
+                  width: MediaQuery.of(context).size.width * 0.4,
+                ),
+              ),
+            if (title != null)
+              Text(
+                title,
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyLarge!.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+                textAlign: TextAlign.center,
+              ),
+            if (description != null)
+              Text(
+                description,
+                textAlign: TextAlign.center,
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyMedium!.copyWith(
+                      color: AppColors.greyTextColor,
+                    ),
+              ),
+            SizedBox(
+              width: double.infinity,
+              height: 48,
+              child: PrimaryButton(
+                child: right(okThanksString),
+                onPressed: () => context.router.maybePop(),
+              ),
+            ),
+          ],
+        ),
+      );
+    },
   );
 }
 

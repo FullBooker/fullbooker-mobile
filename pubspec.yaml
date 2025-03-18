@@ -70,5 +70,6 @@ flutter:
     - assets/logo_splash.png
     - assets/images/
     - assets/icons/
+    - assets/vectors/
     - assets/defaultImg.png
     - assets/animations/pin.json
