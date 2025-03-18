@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart' as d;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
 import 'package:fullbooker/application/redux/actions/login_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/login_view_model.dart';
@@ -174,6 +175,8 @@ class LoginPageState extends State<LoginPage> {
                                 onError: (String error) {
                                   showSnackBar(error, context);
                                 },
+                                client:
+                                    AppWrapperBase.of(context)!.customClient,
                               ),
                             );
                           },

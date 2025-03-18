@@ -4,8 +4,6 @@ import 'package:async_redux/async_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fullbooker/app_entry_point.dart';
-import 'package:fullbooker/app_wrapper.dart';
-import 'package:fullbooker/application/core/services/custom_client.dart';
 import 'package:fullbooker/application/redux/observers/custom_observer.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/core/utils.dart';
@@ -13,7 +11,6 @@ import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/endpoints.dart';
 import 'package:fullbooker/domain/core/value_objects/global_keys.dart';
 import 'package:fullbooker/infrastructure/repository/state_persistor.dart';
-import 'package:fullbooker/fullbooker_app_widget.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -72,7 +69,7 @@ Future<void> appBootStrap() async {
     runApp(
       AppEntryPoint(
         appStore: store,
-        appName: '',
+        appName: appConfig.applicationName,
         appNavigatorKey: appGlobalNavigatorKey,
       ),
     );
