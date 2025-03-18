@@ -74,7 +74,7 @@ class _TicketsSummaryPageState extends State<TicketsSummaryPage> {
     const double fontSize = 16;
     return Scaffold(
       appBar: const ProductSetupNavBar(step: ProductSteps.Products),
-      bottomNavigationBar: const BottomNavBar(),
+      bottomNavigationBar: const OldBottomNavBar(),
       body: Column(
         children: <Widget>[
           Expanded(

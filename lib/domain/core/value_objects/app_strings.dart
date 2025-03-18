@@ -21,7 +21,7 @@ const String genericErrorString =
 
 // Shared
 const String okThanksString = 'Ok, Thanks';
-const String homeString = 'Home';
+
 const String continueString = 'Continue';
 const String editString = 'Edit';
 const String nextString = 'Next';
@@ -293,10 +293,12 @@ const String nextActionsString = 'Next Actions';
 const String activeString = 'Active';
 const String disabledString = 'Disabled';
 
-// Bottom nav
+// Hosting bottom nav
 const String switchToHostingString = 'Switch to Hosting';
 const String searchString = 'Search';
 const String profileString = 'Profile';
+const String homeString = 'Home';
+const String productsString = 'Products';
 
 const String yesString = 'Yes';
 const String noString = 'No';

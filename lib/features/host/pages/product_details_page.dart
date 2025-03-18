@@ -70,7 +70,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     final double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: const ProductSetupNavBar(step: ProductSteps.Products),
-      bottomNavigationBar: const BottomNavBar(),
+      bottomNavigationBar: const OldBottomNavBar(),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(

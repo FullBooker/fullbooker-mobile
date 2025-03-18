@@ -117,7 +117,7 @@ class _ActivitySubscription extends State<ActivitySubscriptionPage> {
     final double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: const ProductSetupNavBar(step: ProductSteps.Products),
-      bottomNavigationBar: const BottomNavBar(),
+      bottomNavigationBar: const OldBottomNavBar(),
       body: Column(
         children: <Widget>[
           Expanded(
