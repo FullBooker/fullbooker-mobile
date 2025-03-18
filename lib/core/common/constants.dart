@@ -28,3 +28,5 @@ const Map<String, dynamic> kTimeoutResponsePayload = <String, dynamic>{
 
 const String kLoginLogoutPrompt = 'Oops!!! Something wrong just happened. '
     'If this persists, log out and login again';
+
+const String kDefaultTokenExpiry = '3600';
