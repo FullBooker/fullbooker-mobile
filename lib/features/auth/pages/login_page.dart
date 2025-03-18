@@ -9,10 +9,10 @@ import 'package:fullbooker/application/redux/actions/login_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/login_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
-import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
+import 'package:fullbooker/shared/validators.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/custom_text_input.dart';
 import 'package:fullbooker/shared/widgets/divider_with_text.dart';
@@ -22,8 +22,7 @@ import 'package:heroicons/heroicons.dart';
 
 @RoutePage()
 class LoginPage extends StatefulWidget {
-  final bool goBackToOrigin;
-  const LoginPage({super.key, this.goBackToOrigin = false});
+  const LoginPage({super.key});
 
   @override
   State<StatefulWidget> createState() => LoginPageState();
@@ -31,29 +30,6 @@ class LoginPage extends StatefulWidget {
 
 class LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String errorMessage = '';
-  bool loading = false;
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  bool loggedIn = false;
-
-  void login(String email, String password) {
-    if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
-      // final Future<String?> errFuture = loginController.login(email, password);
-      setState(() {
-        loading = true;
-        errorMessage = '';
-      });
-      // errFuture.then((String? err) {
-      //   setState(() {
-      //     loading = false;
-      //     if (err != null) errorMessage = err;
-      //     if (err == null) loggedIn = true;
-      //   });
-      // });
-    }
-  }
 
   void loginWithGoogle() {
     // final Future<String?> errFuture = loginController.signInWithGoogle();
@@ -113,10 +89,7 @@ class LoginPageState extends State<LoginPage> {
                         hintText: emailAddressHint,
                         labelText: emailAddressString,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: (String? value) {
-                          // TODO(abiud): check this email value against a regex
-                          return null;
-                        },
+                        validator: (String? email) => validateEmail(email),
                         onChanged: (String v) {
                           // TODO(abiud): update state
                         },
@@ -130,10 +103,9 @@ class LoginPageState extends State<LoginPage> {
                       CustomTextInput(
                         labelText: passwordString,
                         hintText: passwordHint,
-                        validator: (String? value) {
-                          // TODO(abiud): check this email value against a regex
-                          return null;
-                        },
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (String? password) =>
+                            validatePassword(password),
                         onChanged: (String v) {
                           // TODO(abiud): update state
                         },
@@ -170,15 +142,21 @@ class LoginPageState extends State<LoginPage> {
                       else
                         PrimaryButton(
                           onPressed: () {
-                            context.dispatch(
-                              LoginAction(
-                                onError: (String error) {
-                                  showSnackBar(error, context);
-                                },
-                                client:
-                                    AppWrapperBase.of(context)!.customClient,
-                              ),
-                            );
+                            if (_formKey.currentState!.validate()) {
+                              context.dispatch(
+                                LoginAction(
+                                  onError: (String error) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(error),
+                                      ),
+                                    );
+                                  },
+                                  client:
+                                      AppWrapperBase.of(context)!.customClient,
+                                ),
+                              );
+                            }
                           },
                           child: d.right(loginString),
                         ),

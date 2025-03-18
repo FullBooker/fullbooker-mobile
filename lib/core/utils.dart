@@ -21,16 +21,16 @@ void showSnackBar(String message, BuildContext context) {
     SnackBar(
       action: SnackBarAction(
         label: okThanksString,
-        onPressed: () {
-          // Code to execute.
-        },
+        onPressed: () => ScaffoldMessenger.of(context).hideCurrentSnackBar(),
       ),
-      content: Text(message),
+      content: Text(
+        message,
+        style: Theme.of(context).textTheme.bodyLarge,
+      ),
       behavior: SnackBarBehavior.floating,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
+        borderRadius: BorderRadius.circular(8.0),
       ),
-      backgroundColor: Colors.red,
     ),
   );
 }
