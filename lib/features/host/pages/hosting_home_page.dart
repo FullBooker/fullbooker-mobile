@@ -2,10 +2,13 @@ import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/redux/actions/logout_action.dart';
+import 'package:fullbooker/application/redux/states/app_state.dart';
+import 'package:fullbooker/application/redux/view_models/login_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/generic_zero_state.dart';
+import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
 
 @RoutePage()
@@ -53,23 +56,36 @@ class _HostingHomePageState extends State<HostingHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            GenericZeroState(
-              iconPath: productZeroStateSVGPath,
-              title: noProducts,
-              description: noProductsCopy,
-              onCTATap: () {
-                context.dispatch(
-                  LogoutAction(
-                    onDone: () {
-                      context.router.pushAndPopUntil(
-                        const LoginRoute(),
-                        predicate: (Route<dynamic> route) => false,
-                      );
-                    },
-                  ),
+            StoreConnector<AppState, LoginPageViewModel>(
+              converter: (Store<AppState> store) =>
+                  LoginPageViewModel.fromState(store.state),
+              builder: (
+                BuildContext context,
+                LoginPageViewModel snapshot,
+              ) {
+                if (context.isWaiting(LogoutAction)) {
+                  return AppLoading();
+                }
+
+                return GenericZeroState(
+                  iconPath: productZeroStateSVGPath,
+                  title: noProducts,
+                  description: noProductsCopy,
+                  onCTATap: () {
+                    context.dispatch(
+                      LogoutAction(
+                        onDone: () {
+                          context.router.pushAndPopUntil(
+                            const LoginRoute(),
+                            predicate: (Route<dynamic> route) => false,
+                          );
+                        },
+                      ),
+                    );
+                  },
+                  ctaText: logoutString,
                 );
               },
-              ctaText: logoutString,
             ),
           ],
         ),
