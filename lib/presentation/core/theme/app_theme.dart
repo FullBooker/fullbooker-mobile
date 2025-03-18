@@ -81,19 +81,19 @@ class AppTheme {
             TextStyle(fontSize: 24, fontWeight: FontWeight.w500, height: 1.33),
         titleLarge: TextStyle(
           fontSize: 22,
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.w600,
           height: 1.27,
           color: AppColors.textBlackColor,
         ),
         titleMedium: TextStyle(
           fontSize: 16,
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.w600,
           height: 1.5,
           color: AppColors.textBlackColor,
         ),
         titleSmall: TextStyle(
           fontSize: 14,
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.w600,
           height: 1.43,
           color: AppColors.textBlackColor,
         ),
@@ -134,9 +134,7 @@ class AppTheme {
           color: AppColors.bodyTextColor,
         ),
       ),
-      appBarTheme: AppBarTheme(
-        backgroundColor: AppColors.pageBgColor,
-      ),
+      appBarTheme: AppBarTheme(backgroundColor: AppColors.pageBgColor),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: AppColors.pageBgColor,
       ),

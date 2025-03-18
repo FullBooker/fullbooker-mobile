@@ -95,7 +95,7 @@ class OverviewPageState extends State<OverviewPage> {
                                   onPressed: () {
                                     context.router.push(LoginRoute());
                                   },
-                                  child: dz.right(signInString),
+                                  child: dz.right(loginString),
                                 ),
                               ),
                             ),
@@ -108,7 +108,7 @@ class OverviewPageState extends State<OverviewPage> {
                                   onPressed: () {
                                     context.router.push(SignUpRoute());
                                   },
-                                  child: dz.right(signUpString),
+                                  child: dz.right(createAccount),
                                 ),
                               ),
                             ),

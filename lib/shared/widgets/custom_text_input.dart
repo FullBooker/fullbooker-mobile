@@ -21,8 +21,11 @@ class CustomTextInput extends StatelessWidget {
     this.labelText,
     this.initialValue,
     this.inputFormatters,
+    this.autovalidateMode,
     this.autofillHints,
   }) : super(key: inputKey);
+
+  final AutovalidateMode? autovalidateMode;
 
   final String? Function(String? value)? validator;
   final String? hintText;
@@ -49,7 +52,7 @@ class CustomTextInput extends StatelessWidget {
         if (labelText != null)
           Text(
             labelText ?? '',
-            style: Theme.of(context).textTheme.bodyLarge,
+            style: Theme.of(context).textTheme.titleMedium,
           ),
         TextFormField(
           onChanged: onChanged,
@@ -78,7 +81,6 @@ class CustomTextInput extends StatelessWidget {
                 ? IconButton(
                     icon: HeroIcon(
                       suffixIconData!,
-                      color: Theme.of(context).primaryColor,
                     ),
                     onPressed: suffixIconFunc ?? () {},
                   )

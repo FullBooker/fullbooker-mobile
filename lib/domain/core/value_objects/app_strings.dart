@@ -54,11 +54,14 @@ const String phonNumberString = 'Phone Number';
 const String passwordString = 'Password';
 const String forgotPasswordString = 'Forgot password? ';
 const String resetHereString = 'Reset here';
-const String signInString = 'Sign In';
-const String signUpString = 'Sign Up';
+const String createAccount = 'Create Account';
 const String signInWithGoogleString = 'Sign in with Google';
 const String dontHaveAccountString = 'Dont have an account? ';
-const String orString = 'Or sign in with';
+const String orString = 'OR';
+const String loginPageCopy = 'Sign in with your email and password';
+
+const String emailAddressHint = 'Enter your email address';
+const String passwordHint = 'Enter your password';
 
 // Request OTP page
 const String enterPhoneOrEmailString =
@@ -69,7 +72,7 @@ const String emailString = 'Email';
 const String phoneNumberString = 'Phone Number';
 
 const String goBackToString = 'Go back to ';
-const String loginString = 'Login';
+const String loginString = 'Sign In';
 
 // Sign up page
 const String firstNameString = 'First Name';

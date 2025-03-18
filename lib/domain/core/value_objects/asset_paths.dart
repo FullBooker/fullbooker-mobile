@@ -1,6 +1,6 @@
 const String logoSplashImagePath = 'assets/logo_splash.png';
 
-const String googleIconPath = 'assets/icons/google.png';
+const String googleIconPathOld = 'assets/icons/google.png';
 
 const String imageZeroStatePath = 'assets/defaultImg.png';
 
@@ -22,3 +22,7 @@ const String carIconPath = 'assets/icons/car_icon.png';
 const String appOverView1ImagePath = 'assets/images/overview_1.png';
 const String appOverView2ImagePath = 'assets/images/overview_2.png';
 const String appOverView3ImagePath = 'assets/images/overview_3.png';
+
+// SVGs
+const String googleIconSVGPath = 'assets/icons/google_icon.svg';
+const String appLogoFullSVGPath = 'assets/images/app_logo_full.svg';

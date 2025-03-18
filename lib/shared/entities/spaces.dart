@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 SizedBox verySmallVerticalSizedBox = const SizedBox(height: 4);
 SizedBox smallVerticalSizedBox = const SizedBox(height: 12);
-SizedBox mediumVerticalSizedBox = const SizedBox(height: 20);
+SizedBox mediumVerticalSizedBox = const SizedBox(height: 16);
 SizedBox largeVerticalSizedBox = const SizedBox(height: 32);
 SizedBox veryLargeVerticalSizedBox = const SizedBox(height: 48);
 SizedBox extremelyLargeVerticalSizedBox = const SizedBox(height: 64);

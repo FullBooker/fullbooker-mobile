@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// TODO(abiud): remove this
 class ScaleLockedText extends StatelessWidget {
   final String data;
   final TextStyle? style;

@@ -1,17 +1,19 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:dartz/dartz.dart' as d;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/login_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
-import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/widgets/custom_text_input.dart';
-import 'package:fullbooker/shared/widgets/old_buttons.dart';
-import 'package:fullbooker/shared/widgets/divider.dart';
+import 'package:fullbooker/shared/widgets/divider_with_text.dart';
+import 'package:fullbooker/shared/widgets/primary_button.dart';
+import 'package:fullbooker/shared/widgets/secondary_button.dart';
 import 'package:heroicons/heroicons.dart';
 
 @RoutePage()
@@ -77,12 +79,24 @@ class LoginPageState extends State<LoginPage> {
             return ListView(
               children: <Widget>[
                 largeVerticalSizedBox,
-                Image(image: AssetImage(logoSplashImagePath)),
-                largeVerticalSizedBox,
+                SvgPicture.asset(appLogoFullSVGPath),
+                smallVerticalSizedBox,
                 Center(
-                  child: Text(
-                    letsGetStarted,
-                    style: Theme.of(context).textTheme.headlineSmall,
+                  child: Column(
+                    spacing: 4,
+                    children: <Widget>[
+                      Text(
+                        letsGetStarted,
+                        style:
+                            Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                      ),
+                      Text(
+                        loginPageCopy,
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                    ],
                   ),
                 ),
                 largeVerticalSizedBox,
@@ -90,8 +104,11 @@ class LoginPageState extends State<LoginPage> {
                   key: _formKey,
                   child: Column(
                     children: <Widget>[
+                      // Email input
                       CustomTextInput(
+                        hintText: emailAddressHint,
                         labelText: emailAddressString,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (String? value) {
                           // TODO(abiud): check this email value against a regex
                           return null;
@@ -104,8 +121,11 @@ class LoginPageState extends State<LoginPage> {
                         prefixIconData: HeroIcons.envelope,
                       ),
                       mediumVerticalSizedBox,
+
+                      // Password input
                       CustomTextInput(
                         labelText: passwordString,
+                        hintText: passwordHint,
                         validator: (String? value) {
                           // TODO(abiud): check this email value against a regex
                           return null;
@@ -141,32 +161,41 @@ class LoginPageState extends State<LoginPage> {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 20),
-                        child: OldButton(
-                          () => login(
+                      PrimaryButton(
+                        onPressed: () {
+                          login(
                             emailController.value.text,
                             passwordController.value.text,
-                          ),
-                          actionLabel: signInString,
-                          loading: loading,
-                        ),
+                          );
+                        },
+                        child: d.right(loginString),
                       ),
-                      LabeledDivider(
-                        AppColors.inputBackgroundColor,
-                        15,
-                        MediaQuery.of(context).size.width * 0.8,
-                        orString,
-                      ),
+
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: OldButton(
-                          loginWithGoogle,
-                          color: const Color(0xf0F5F4F4),
-                          actionLabel: signInWithGoogleString,
-                          actionLabelColor: Colors.black,
-                          actionLabelPrefix: const Image(
-                            image: AssetImage(googleIconPath),
+                        padding: const EdgeInsets.symmetric(vertical: 24),
+                        child: DividerWithText(text: orString),
+                      ),
+                      SecondaryButton(
+                        onPressed: () {
+                          loginWithGoogle();
+                        },
+                        child: d.left(
+                          Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                SvgPicture.asset(googleIconSVGPath),
+                                Text(
+                                  signInWithGoogleString,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
+                                        color: Theme.of(context).primaryColor,
+                                      ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -179,15 +208,18 @@ class LoginPageState extends State<LoginPage> {
                     child: RichText(
                       text: TextSpan(
                         children: <InlineSpan>[
-                          const TextSpan(
+                          TextSpan(
                             text: dontHaveAccountString,
-                            style: TextStyle(color: Colors.black),
+                            style: Theme.of(context).textTheme.bodyMedium,
                           ),
                           TextSpan(
-                            text: signUpString,
-                            style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                            ),
+                            text: createAccount,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
+                                  color: Theme.of(context).primaryColor,
+                                ),
                             recognizer: TapGestureRecognizer()
                               ..onTap =
                                   () => context.router.push(SignUpRoute()),
