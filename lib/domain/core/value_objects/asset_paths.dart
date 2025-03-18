@@ -26,3 +26,4 @@ const String appOverView3ImagePath = 'assets/images/overview_3.png';
 // SVGs
 const String googleIconSVGPath = 'assets/icons/google_icon.svg';
 const String appLogoFullSVGPath = 'assets/images/app_logo_full.svg';
+const String loginCredentialsSVGPath = 'assets/vectors/login_credentials.svg';

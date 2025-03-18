@@ -6,9 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
 import 'package:fullbooker/application/redux/actions/login_action.dart';
+import 'package:fullbooker/application/redux/actions/update_onboarding_state_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/login_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
+import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
@@ -90,8 +92,10 @@ class LoginPageState extends State<LoginPage> {
                         labelText: emailAddressString,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (String? email) => validateEmail(email),
-                        onChanged: (String v) {
-                          // TODO(abiud): update state
+                        onChanged: (String email) {
+                          context.dispatch(
+                            UpdateOnboardingStateAction(emailAddress: email),
+                          );
                         },
                         // hintText: newTransactionAmountHint,
                         keyboardType: TextInputType.emailAddress,
@@ -107,7 +111,9 @@ class LoginPageState extends State<LoginPage> {
                         validator: (String? password) =>
                             validatePassword(password),
                         onChanged: (String v) {
-                          // TODO(abiud): update state
+                          context.dispatch(
+                            UpdateOnboardingStateAction(password: v.trim()),
+                          );
                         },
                         // hintText: newTransactionAmountHint,
                         keyboardType: TextInputType.visiblePassword,
@@ -121,7 +127,7 @@ class LoginPageState extends State<LoginPage> {
                       SizedBox(
                         width: double.infinity,
                         child: InkWell(
-                          onTap: () => context.router.push(RequestOTPRoute()),
+                          // onTap: () => context.router.push(RequestOTPRoute()),
                           child: Padding(
                             padding: const EdgeInsets.all(12.0),
                             child: Text(
@@ -137,6 +143,7 @@ class LoginPageState extends State<LoginPage> {
                           ),
                         ),
                       ),
+                      smallVerticalSizedBox,
                       if (context.isWaiting(LoginAction))
                         AppLoading()
                       else
@@ -145,13 +152,11 @@ class LoginPageState extends State<LoginPage> {
                             if (_formKey.currentState!.validate()) {
                               context.dispatch(
                                 LoginAction(
-                                  onError: (String error) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text(error),
-                                      ),
-                                    );
-                                  },
+                                  onError: (String error) => showAlertDialog(
+                                    context: context,
+                                    assetPath: loginCredentialsSVGPath,
+                                    description: error,
+                                  ),
                                   client:
                                       AppWrapperBase.of(context)!.customClient,
                                 ),
