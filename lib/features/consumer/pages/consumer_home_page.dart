@@ -13,14 +13,14 @@ import 'package:fullbooker/presentation/core/components/shimmers.dart';
 import 'package:fullbooker/shared/widgets/standard_nav_bar.dart';
 
 @RoutePage()
-class ConsumerLandingPage extends StatefulWidget {
-  const ConsumerLandingPage({super.key});
+class ConsumerHomePage extends StatefulWidget {
+  const ConsumerHomePage({super.key});
 
   @override
-  State<StatefulWidget> createState() => _ConsumerLandingPageState();
+  State<StatefulWidget> createState() => _ConsumerHomePageState();
 }
 
-class _ConsumerLandingPageState extends State<ConsumerLandingPage> {
+class _ConsumerHomePageState extends State<ConsumerHomePage> {
   ProductViewModel productsController = ProductViewModel();
   CategoryViewModel categoriesController = CategoryViewModel();
   List<Product>? products;

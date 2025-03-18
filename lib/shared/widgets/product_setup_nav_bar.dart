@@ -77,7 +77,7 @@ class ProductSetupNavBar extends StatelessWidget
                   ),
                 ),
                 PopupMenuItem<Widget>(
-                  onTap: () => context.router.push(ConsumerLandingRoute()),
+                  onTap: () => context.router.push(ConsumerHomeRoute()),
                   child: Row(
                     children: <Widget>[
                       Icon(Icons.home, color: Theme.of(context).primaryColor),
