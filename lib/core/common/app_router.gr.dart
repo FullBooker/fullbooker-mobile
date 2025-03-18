@@ -709,41 +709,18 @@ class LocationSelectionRouteArgs {
 
 /// generated route for
 /// [_i17.LoginPage]
-class LoginRoute extends _i28.PageRouteInfo<LoginRouteArgs> {
-  LoginRoute({
-    _i29.Key? key,
-    bool goBackToOrigin = false,
-    List<_i28.PageRouteInfo>? children,
-  }) : super(
-         LoginRoute.name,
-         args: LoginRouteArgs(key: key, goBackToOrigin: goBackToOrigin),
-         initialChildren: children,
-       );
+class LoginRoute extends _i28.PageRouteInfo<void> {
+  const LoginRoute({List<_i28.PageRouteInfo>? children})
+    : super(LoginRoute.name, initialChildren: children);
 
   static const String name = 'LoginRoute';
 
   static _i28.PageInfo page = _i28.PageInfo(
     name,
     builder: (data) {
-      final args = data.argsAs<LoginRouteArgs>(
-        orElse: () => const LoginRouteArgs(),
-      );
-      return _i17.LoginPage(key: args.key, goBackToOrigin: args.goBackToOrigin);
+      return const _i17.LoginPage();
     },
   );
-}
-
-class LoginRouteArgs {
-  const LoginRouteArgs({this.key, this.goBackToOrigin = false});
-
-  final _i29.Key? key;
-
-  final bool goBackToOrigin;
-
-  @override
-  String toString() {
-    return 'LoginRouteArgs{key: $key, goBackToOrigin: $goBackToOrigin}';
-  }
 }
 
 /// generated route for
