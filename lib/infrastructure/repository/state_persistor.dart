@@ -2,6 +2,7 @@ import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/states/auth_state.dart';
 import 'package:fullbooker/application/redux/states/bottom_nav_state.dart';
+import 'package:fullbooker/application/redux/states/onboarding_state.dart';
 import 'package:fullbooker/application/redux/states/user_state.dart';
 import 'package:fullbooker/infrastructure/repository/database_base.dart';
 import 'package:fullbooker/infrastructure/repository/database_mobile.dart';
@@ -59,7 +60,8 @@ class StateDatabase implements PersistorPrinterDecorator<AppState> {
     if (lastPersistedState == null ||
         lastPersistedState.authState != newState.authState ||
         lastPersistedState.userState != newState.userState ||
-        lastPersistedState.bottomNavState != newState.bottomNavState) {
+        lastPersistedState.bottomNavState != newState.bottomNavState ||
+        lastPersistedState.onboardingState != newState.onboardingState) {
       await persistState(
         newState,
         DatabaseMobile<Database>(
@@ -113,6 +115,11 @@ class StateDatabase implements PersistorPrinterDecorator<AppState> {
         data: newState.userState!.toJson(),
         table: Tables.userState,
       );
+
+      await database.saveState(
+        data: newState.onboardingState!.toJson(),
+        table: Tables.onboardingState,
+      );
     } catch (e) {
       // TODO(abiud): report error to sentry
       // reportErrorToSentry(
@@ -133,6 +140,9 @@ class StateDatabase implements PersistorPrinterDecorator<AppState> {
         ),
         userState:
             UserState.fromJson(await database.retrieveState(Tables.userState)),
+        onboardingState: OnboardingState.fromJson(
+          await database.retrieveState(Tables.onboardingState),
+        ),
       );
     } catch (e) {
       // TODO(abiud): report error to Sentry
