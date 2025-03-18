@@ -144,29 +144,40 @@ class LoginPageState extends State<LoginPage> {
                         ),
                       ),
                       smallVerticalSizedBox,
-                      if (context.isWaiting(LoginAction))
-                        AppLoading()
-                      else
-                        PrimaryButton(
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              context.dispatch(
-                                LoginAction(
-                                  onError: (String error) => showAlertDialog(
-                                    context: context,
-                                    assetPath: loginCredentialsSVGPath,
-                                    description: error,
+
+                      StoreConnector<AppState, LoginPageViewModel>(
+                        converter: (Store<AppState> store) =>
+                            LoginPageViewModel.fromState(store.state),
+                        builder: (
+                          BuildContext context,
+                          LoginPageViewModel snapshot,
+                        ) {
+                          if (context.isWaiting(LoginAction)) {
+                            return AppLoading();
+                          }
+
+                          return PrimaryButton(
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                context.dispatch(
+                                  LoginAction(
+                                    onError: (String error) => showAlertDialog(
+                                      context: context,
+                                      assetPath: loginCredentialsSVGPath,
+                                      description: error,
+                                    ),
+                                    onSuccess: () => context.router
+                                        .navigate(HostingHomeRoute()),
+                                    client: AppWrapperBase.of(context)!
+                                        .customClient,
                                   ),
-                                  onSuccess: () => context.router
-                                      .navigate(HostingHomeRoute()),
-                                  client:
-                                      AppWrapperBase.of(context)!.customClient,
-                                ),
-                              );
-                            }
-                          },
-                          child: d.right(loginString),
-                        ),
+                                );
+                              }
+                            },
+                            child: d.right(loginString),
+                          );
+                        },
+                      ),
 
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 24),
