@@ -4,12 +4,14 @@ import 'package:dartz/dartz.dart' as d;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fullbooker/application/redux/actions/login_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/login_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
+import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/custom_text_input.dart';
 import 'package:fullbooker/shared/widgets/divider_with_text.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
@@ -161,15 +163,20 @@ class LoginPageState extends State<LoginPage> {
                           ),
                         ),
                       ),
-                      PrimaryButton(
-                        onPressed: () {
-                          login(
-                            emailController.value.text,
-                            passwordController.value.text,
-                          );
-                        },
-                        child: d.right(loginString),
-                      ),
+                      if (context.isWaiting(LoginAction))
+                        AppLoading()
+                      else
+                        PrimaryButton(
+                          onPressed: () {
+                            // login(
+                            //   emailController.value.text,
+                            //   passwordController.value.text,
+                            // );
+                            // context
+                            // .dispatch(LoginAction(client: graphQlClient));
+                          },
+                          child: d.right(loginString),
+                        ),
 
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 24),

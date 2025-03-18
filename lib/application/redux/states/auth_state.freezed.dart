@@ -24,6 +24,7 @@ mixin _$AuthState {
   bool get isSignedIn => throw _privateConstructorUsedError;
   @JsonKey(name: 'idToken')
   String get idToken => throw _privateConstructorUsedError;
+  AuthCredentials? get authCredentials => throw _privateConstructorUsedError;
 
   /// Serializes this AuthState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -42,7 +43,10 @@ abstract class $AuthStateCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: 'isSignedIn') bool isSignedIn,
-      @JsonKey(name: 'idToken') String idToken});
+      @JsonKey(name: 'idToken') String idToken,
+      AuthCredentials? authCredentials});
+
+  $AuthCredentialsCopyWith<$Res>? get authCredentials;
 }
 
 /// @nodoc
@@ -62,6 +66,7 @@ class _$AuthStateCopyWithImpl<$Res, $Val extends AuthState>
   $Res call({
     Object? isSignedIn = null,
     Object? idToken = null,
+    Object? authCredentials = freezed,
   }) {
     return _then(_value.copyWith(
       isSignedIn: null == isSignedIn
@@ -72,7 +77,25 @@ class _$AuthStateCopyWithImpl<$Res, $Val extends AuthState>
           ? _value.idToken
           : idToken // ignore: cast_nullable_to_non_nullable
               as String,
+      authCredentials: freezed == authCredentials
+          ? _value.authCredentials
+          : authCredentials // ignore: cast_nullable_to_non_nullable
+              as AuthCredentials?,
     ) as $Val);
+  }
+
+  /// Create a copy of AuthState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $AuthCredentialsCopyWith<$Res>? get authCredentials {
+    if (_value.authCredentials == null) {
+      return null;
+    }
+
+    return $AuthCredentialsCopyWith<$Res>(_value.authCredentials!, (value) {
+      return _then(_value.copyWith(authCredentials: value) as $Val);
+    });
   }
 }
 
@@ -86,7 +109,11 @@ abstract class _$$AuthStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {@JsonKey(name: 'isSignedIn') bool isSignedIn,
-      @JsonKey(name: 'idToken') String idToken});
+      @JsonKey(name: 'idToken') String idToken,
+      AuthCredentials? authCredentials});
+
+  @override
+  $AuthCredentialsCopyWith<$Res>? get authCredentials;
 }
 
 /// @nodoc
@@ -104,6 +131,7 @@ class __$$AuthStateImplCopyWithImpl<$Res>
   $Res call({
     Object? isSignedIn = null,
     Object? idToken = null,
+    Object? authCredentials = freezed,
   }) {
     return _then(_$AuthStateImpl(
       isSignedIn: null == isSignedIn
@@ -114,6 +142,10 @@ class __$$AuthStateImplCopyWithImpl<$Res>
           ? _value.idToken
           : idToken // ignore: cast_nullable_to_non_nullable
               as String,
+      authCredentials: freezed == authCredentials
+          ? _value.authCredentials
+          : authCredentials // ignore: cast_nullable_to_non_nullable
+              as AuthCredentials?,
     ));
   }
 }
@@ -124,7 +156,8 @@ class __$$AuthStateImplCopyWithImpl<$Res>
 class _$AuthStateImpl with DiagnosticableTreeMixin implements _AuthState {
   _$AuthStateImpl(
       {@JsonKey(name: 'isSignedIn') this.isSignedIn = false,
-      @JsonKey(name: 'idToken') this.idToken = UNKNOWN});
+      @JsonKey(name: 'idToken') this.idToken = UNKNOWN,
+      this.authCredentials});
 
   factory _$AuthStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$AuthStateImplFromJson(json);
@@ -135,10 +168,12 @@ class _$AuthStateImpl with DiagnosticableTreeMixin implements _AuthState {
   @override
   @JsonKey(name: 'idToken')
   final String idToken;
+  @override
+  final AuthCredentials? authCredentials;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AuthState(isSignedIn: $isSignedIn, idToken: $idToken)';
+    return 'AuthState(isSignedIn: $isSignedIn, idToken: $idToken, authCredentials: $authCredentials)';
   }
 
   @override
@@ -147,7 +182,8 @@ class _$AuthStateImpl with DiagnosticableTreeMixin implements _AuthState {
     properties
       ..add(DiagnosticsProperty('type', 'AuthState'))
       ..add(DiagnosticsProperty('isSignedIn', isSignedIn))
-      ..add(DiagnosticsProperty('idToken', idToken));
+      ..add(DiagnosticsProperty('idToken', idToken))
+      ..add(DiagnosticsProperty('authCredentials', authCredentials));
   }
 
   @override
@@ -157,12 +193,15 @@ class _$AuthStateImpl with DiagnosticableTreeMixin implements _AuthState {
             other is _$AuthStateImpl &&
             (identical(other.isSignedIn, isSignedIn) ||
                 other.isSignedIn == isSignedIn) &&
-            (identical(other.idToken, idToken) || other.idToken == idToken));
+            (identical(other.idToken, idToken) || other.idToken == idToken) &&
+            (identical(other.authCredentials, authCredentials) ||
+                other.authCredentials == authCredentials));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, isSignedIn, idToken);
+  int get hashCode =>
+      Object.hash(runtimeType, isSignedIn, idToken, authCredentials);
 
   /// Create a copy of AuthState
   /// with the given fields replaced by the non-null parameter values.
@@ -183,7 +222,8 @@ class _$AuthStateImpl with DiagnosticableTreeMixin implements _AuthState {
 abstract class _AuthState implements AuthState {
   factory _AuthState(
       {@JsonKey(name: 'isSignedIn') final bool isSignedIn,
-      @JsonKey(name: 'idToken') final String idToken}) = _$AuthStateImpl;
+      @JsonKey(name: 'idToken') final String idToken,
+      final AuthCredentials? authCredentials}) = _$AuthStateImpl;
 
   factory _AuthState.fromJson(Map<String, dynamic> json) =
       _$AuthStateImpl.fromJson;
@@ -194,6 +234,8 @@ abstract class _AuthState implements AuthState {
   @override
   @JsonKey(name: 'idToken')
   String get idToken;
+  @override
+  AuthCredentials? get authCredentials;
 
   /// Create a copy of AuthState
   /// with the given fields replaced by the non-null parameter values.
