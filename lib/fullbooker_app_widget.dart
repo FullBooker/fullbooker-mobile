@@ -15,34 +15,31 @@ class FullbookerAppWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final AppRouter appRouter = AppRouter();
 
-    return StoreProvider<AppState>(
-      store: appStore,
-      child: StoreConnector<AppState, AppState>(
-        converter: (Store<AppState> store) => store.state,
-        builder: (BuildContext context, AppState vm) {
-          final bool isSignedIn = vm.authState?.isSignedIn ?? false;
+    return StoreConnector<AppState, AppState>(
+      converter: (Store<AppState> store) => store.state,
+      builder: (BuildContext context, AppState vm) {
+        final bool isSignedIn = vm.authState?.isSignedIn ?? false;
 
-          return MaterialApp.router(
-            routerConfig: appRouter.config(
-              deepLinkBuilder: (PlatformDeepLink deepLink) {
-                if (isSignedIn) {
-                  return const DeepLink(
-                    <PageRouteInfo<dynamic>>[EventsSummaryRoute()],
-                  );
-                }
-                return DeepLink(
-                  <PageRouteInfo<dynamic>>[LoginRoute()],
+        return MaterialApp.router(
+          routerConfig: appRouter.config(
+            deepLinkBuilder: (PlatformDeepLink deepLink) {
+              if (isSignedIn) {
+                return const DeepLink(
+                  <PageRouteInfo<dynamic>>[EventsSummaryRoute()],
                 );
-              },
-              navigatorObservers: () => <NavigatorObserver>[
-                // TODO(abiud): add sentry and google analytics observers
-              ],
-            ),
-            debugShowCheckedModeBanner: false,
-            theme: AppTheme.getAppTheme(),
-          );
-        },
-      ),
+              }
+              return DeepLink(
+                <PageRouteInfo<dynamic>>[LoginRoute()],
+              );
+            },
+            navigatorObservers: () => <NavigatorObserver>[
+              // TODO(abiud): add sentry and google analytics observers
+            ],
+          ),
+          debugShowCheckedModeBanner: false,
+          theme: AppTheme.getAppTheme(),
+        );
+      },
     );
   }
 }

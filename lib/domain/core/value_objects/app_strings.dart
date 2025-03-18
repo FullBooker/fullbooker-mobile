@@ -62,6 +62,8 @@ const String loginPageCopy = 'Sign in with your email and password';
 
 const String emailAddressHint = 'Enter your email address';
 const String passwordHint = 'Enter your password';
+const String credentialsPrompt =
+    'Please enter an email and a password to sign in';
 
 // Request OTP page
 const String enterPhoneOrEmailString =

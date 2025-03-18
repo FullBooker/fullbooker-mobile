@@ -16,7 +16,7 @@ String getFileExtension(String fileName) {
   }
 }
 
-void showSnackBar(String message, BuildContext context, {int duration = 5000}) {
+void showSnackBar(String message, BuildContext context) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       action: SnackBarAction(
@@ -26,11 +26,6 @@ void showSnackBar(String message, BuildContext context, {int duration = 5000}) {
         },
       ),
       content: Text(message),
-      duration: Duration(milliseconds: duration),
-      width: 340, // Width of the SnackBar.
-      padding: const EdgeInsets.symmetric(
-        horizontal: 8.0, vertical: 10, // Inner padding for SnackBar content.
-      ),
       behavior: SnackBarBehavior.floating,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),

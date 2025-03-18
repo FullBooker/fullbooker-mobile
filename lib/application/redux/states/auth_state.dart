@@ -2,7 +2,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:fullbooker/application/redux/states/auth_credentials.dart';
-import 'package:fullbooker/core/common/constants.dart';
 
 part 'auth_state.freezed.dart';
 part 'auth_state.g.dart';
@@ -12,7 +11,6 @@ class AuthState with _$AuthState {
   @JsonSerializable(explicitToJson: true)
   factory AuthState({
     @Default(false) @JsonKey(name: 'isSignedIn') bool isSignedIn,
-    @Default(UNKNOWN) @JsonKey(name: 'idToken') String idToken,
     AuthCredentials? authCredentials,
   }) = _AuthState;
 

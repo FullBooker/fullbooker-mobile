@@ -75,7 +75,6 @@ class _EventCategoryPageState extends State<EventCategoryPage> {
       showSnackBar(
         ensurePricesForCategories,
         context,
-        duration: 10000,
       );
       setState(() => isLoading = false);
       return;

@@ -39,11 +39,11 @@ class AppTheme {
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: AppColors.inputBackgroundColor,
-        outlineBorder: BorderSide(color: Colors.grey),
+        outlineBorder: BorderSide(color: AppColors.borderColor),
         alignLabelWithHint: true,
         contentPadding: const EdgeInsets.all(12),
         enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: AppColors.bodyTextColor),
+          borderSide: BorderSide(color: AppColors.borderColor),
           borderRadius: BorderRadius.all(Radius.circular(8)),
         ),
         disabledBorder: const OutlineInputBorder(

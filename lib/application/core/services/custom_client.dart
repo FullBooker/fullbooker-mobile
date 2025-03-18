@@ -1,55 +1,40 @@
-import 'package:async_redux/async_redux.dart';
-import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/i_custom_client.dart';
-import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:http/http.dart';
 
 class CustomClient extends ICustomClient {
-  CustomClient(
-    String idToken,
-    String endpoint,
-    this.appVariant, {
-    required this.context,
-    // required this.refreshTokenEndpoint,
-    // required this.refreshToken,
+  CustomClient({
+    required String accessToken,
     this.headers,
-    Client? client,
-  }) : _client = client ?? Client() {
-    super.idToken = idToken;
-    super.endpoint = endpoint;
+  }) {
+    super.idToken = accessToken;
   }
 
-  final BuildContext context;
   final Map<String, String>? headers;
   // final String refreshToken;
   // final String refreshTokenEndpoint;
-  final String appVariant;
 
-  final Client _client;
+  // final Client _client;
 
   @override
   Future<StreamedResponse> send(BaseRequest request) async {
-    final bool isSignedIn =
-        StoreProvider.state<AppState>(context).authState?.isSignedIn ?? false;
+    // final String requestUrl = request.url.toString();
 
-    final String requestUrl = request.url.toString();
-
-    // if (isSignedIn == false && requestUrl.contains('graphql')) {
     //   request.headers.addAll(<String, String>{...?headers});
     //   return request.send();
     // }
 
     request.headers.addAll(<String, String>{...?headers});
-    final String? expiryDateString = StoreProvider.state<AppState>(context)
-        .authState
-        ?.authCredentials
-        ?.expiresAt;
+
+    // final String? expiryDateString = StoreProvider.state<AppState>(context)
+    //     .authState
+    //     ?.authCredentials
+    //     ?.expiresAt;
 
     // Safely parse the expiry date, defaulting to DateTime.now() if invalid or empty
-    final DateTime expiryDateTime = ((expiryDateString?.isNotEmpty ?? false)
-            ? DateTime.tryParse(expiryDateString!)
-            : null) ??
-        DateTime.now();
+    // final DateTime expiryDateTime = ((expiryDateString?.isNotEmpty ?? false)
+    //         ? DateTime.tryParse(expiryDateString!)
+    //         : null) ??
+    //     DateTime.now();
 
     // // Determine if the token should be refreshed
     // final bool shouldRefreshToken = isSignedIn &&
