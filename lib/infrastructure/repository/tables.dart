@@ -1,5 +1,1 @@
-enum Tables {
-  authState,
-  userState,
-  bottomNavState,
-}
+enum Tables { authState, userState, bottomNavState, onboardingState }
