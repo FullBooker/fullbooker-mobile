@@ -152,8 +152,8 @@ class __$$OnboardingStateImplCopyWithImpl<$Res>
 @JsonSerializable(explicitToJson: true)
 class _$OnboardingStateImpl implements _OnboardingState {
   const _$OnboardingStateImpl(
-      {this.emailAddress = '',
-      this.password = '',
+      {this.emailAddress = UNKNOWN,
+      this.password = UNKNOWN,
       this.invalidCredentials = false,
       this.invalidOTP = false});
 

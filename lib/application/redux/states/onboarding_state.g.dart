@@ -9,8 +9,8 @@ part of 'onboarding_state.dart';
 _$OnboardingStateImpl _$$OnboardingStateImplFromJson(
         Map<String, dynamic> json) =>
     _$OnboardingStateImpl(
-      emailAddress: json['emailAddress'] as String? ?? '',
-      password: json['password'] as String? ?? '',
+      emailAddress: json['emailAddress'] as String? ?? UNKNOWN,
+      password: json['password'] as String? ?? UNKNOWN,
       invalidCredentials: json['invalidCredentials'] as bool? ?? false,
       invalidOTP: json['invalidOTP'] as bool? ?? false,
     );
