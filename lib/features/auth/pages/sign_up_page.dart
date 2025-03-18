@@ -80,7 +80,7 @@ class SignUpPageState extends State<SignUpPage> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (signedUp) context.router.replace(ConsumerLandingRoute());
+      if (signedUp) context.router.replace(ConsumerHomeRoute());
     });
   }
 

@@ -157,6 +157,8 @@ class LoginPageState extends State<LoginPage> {
                                     assetPath: loginCredentialsSVGPath,
                                     description: error,
                                   ),
+                                  onSuccess: () => context.router
+                                      .navigate(HostingHomeRoute()),
                                   client:
                                       AppWrapperBase.of(context)!.customClient,
                                 ),

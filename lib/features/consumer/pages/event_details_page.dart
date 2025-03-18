@@ -234,7 +234,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                           SizedBox(
                             width: width * 0.6,
                             child: OldSecondaryButton(
-                              () => context.router.push(ConsumerLandingRoute()),
+                              () => context.router.push(ConsumerHomeRoute()),
                               actionLabel: backHomeString,
                               elevation: 0,
                             ),
