@@ -80,7 +80,10 @@ class CustomTextInput extends StatelessWidget {
                 ?.copyWith(color: Colors.black),
             suffixIcon: suffixIconData != null
                 ? IconButton(
-                    icon: HeroIcon(suffixIconData!),
+                    icon: HeroIcon(
+                      suffixIconData!,
+                      size: 20,
+                    ),
                     onPressed: suffixIconFunc ?? () {},
                   )
                 : null,
@@ -89,6 +92,7 @@ class CustomTextInput extends StatelessWidget {
                     icon: HeroIcon(
                       prefixIconData!,
                       color: AppColors.bodyTextColor,
+                      size: 20,
                     ),
                     onPressed: suffixIconFunc ?? () {},
                   )

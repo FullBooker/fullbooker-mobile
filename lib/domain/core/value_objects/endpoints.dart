@@ -5,7 +5,7 @@ final List<String> googleSignInScopes = <String>[
   'https://www.googleapis.com/auth/contacts.readonly',
 ];
 
-const String devAPIBaseURL = 'api.dev.fullbooker.co.ke';
+const String devAPIBaseURL = 'https://api.dev.fullbooker.co.ke';
 
 const String loginEndpoint = '$devAPIBaseURL/accounts/signin/';
 const String googleSignInEndpoint = '/accounts/google/';
@@ -19,5 +19,3 @@ const String locationEndpoint = '/location/';
 const String mediaEndpoint = '/media/';
 const String pricingEndpoint = '/pricing/';
 const String availabilityEndpoint = '/availability/';
-
-

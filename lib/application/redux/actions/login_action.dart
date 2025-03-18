@@ -1,7 +1,12 @@
+import 'dart:convert';
+
 import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/core/services/i_custom_client.dart';
+import 'package:fullbooker/application/redux/actions/update_auth_state_action.dart';
+import 'package:fullbooker/application/redux/actions/update_user_state_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/core/common/constants.dart';
+import 'package:fullbooker/domain/core/entities/login_response.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/endpoints.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
@@ -32,11 +37,12 @@ class LoginAction extends ReduxAction<AppState> {
     }
 
     final Map<String, String> data = <String, String>{
-      'phone_number': emailAddress,
+      'email': emailAddress,
       'password': password,
     };
 
     final Response httpResponse = await client.callRESTAPI(
+      // TODO(abiud): extract the endpoint from AppConfig
       endpoint: loginEndpoint,
       method: RestAPIMethods.POST.name.toUpperCase(),
       variables: data,
@@ -45,10 +51,30 @@ class LoginAction extends ReduxAction<AppState> {
     final ProcessedResponse processedResponse =
         processHttpResponse(httpResponse);
 
-    if (processedResponse.ok) {
-      // TODO(abiud): process the user profile from the backend here
+    if (!processedResponse.ok) {
+      onError?.call(processedResponse.message ?? genericErrorString);
+      return null;
     }
 
-    return null;
+    final Map<String, dynamic> body =
+        json.decode(processedResponse.response.body) as Map<String, dynamic>;
+
+    final LoginResponse loginResponse = LoginResponse.fromJson(body);
+
+    // Update the auth state
+    dispatch(
+      UpdateAuthStateAction(
+        isSignedIn: true,
+        accessToken: loginResponse.accessToken,
+        refreshToken: loginResponse.refreshToken,
+        expiresAt: loginResponse.accessToken,
+      ),
+    );
+
+    dispatch(UpdateUserStateAction(user: loginResponse.user));
+
+    onSuccess?.call();
+
+    return state;
   }
 }

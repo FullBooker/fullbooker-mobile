@@ -20,14 +20,22 @@ UserState _$UserStateFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$UserState {
+  @JsonKey(name: 'id')
+  String get userID => throw _privateConstructorUsedError;
+  @JsonKey(name: 'phone_number')
+  String get phoneNumber => throw _privateConstructorUsedError;
+  @JsonKey(name: 'email')
+  String get emailAddress => throw _privateConstructorUsedError;
   @JsonKey(name: 'first_name')
   String get firstName => throw _privateConstructorUsedError;
   @JsonKey(name: 'last_name')
   String get lastName => throw _privateConstructorUsedError;
-  @JsonKey(name: 'email')
-  String get emailAddress => throw _privateConstructorUsedError;
-  @JsonKey(name: 'phone_number')
-  String get phoneNumber => throw _privateConstructorUsedError;
+  @JsonKey(name: 'is_active')
+  String get active => throw _privateConstructorUsedError;
+  @JsonKey(name: 'is_host')
+  String get isHost => throw _privateConstructorUsedError;
+  @JsonKey(name: 'image')
+  String get profileURL => throw _privateConstructorUsedError;
 
   /// Serializes this UserState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -45,10 +53,14 @@ abstract class $UserStateCopyWith<$Res> {
       _$UserStateCopyWithImpl<$Res, UserState>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'first_name') String firstName,
-      @JsonKey(name: 'last_name') String lastName,
+      {@JsonKey(name: 'id') String userID,
+      @JsonKey(name: 'phone_number') String phoneNumber,
       @JsonKey(name: 'email') String emailAddress,
-      @JsonKey(name: 'phone_number') String phoneNumber});
+      @JsonKey(name: 'first_name') String firstName,
+      @JsonKey(name: 'last_name') String lastName,
+      @JsonKey(name: 'is_active') String active,
+      @JsonKey(name: 'is_host') String isHost,
+      @JsonKey(name: 'image') String profileURL});
 }
 
 /// @nodoc
@@ -66,12 +78,28 @@ class _$UserStateCopyWithImpl<$Res, $Val extends UserState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? userID = null,
+    Object? phoneNumber = null,
+    Object? emailAddress = null,
     Object? firstName = null,
     Object? lastName = null,
-    Object? emailAddress = null,
-    Object? phoneNumber = null,
+    Object? active = null,
+    Object? isHost = null,
+    Object? profileURL = null,
   }) {
     return _then(_value.copyWith(
+      userID: null == userID
+          ? _value.userID
+          : userID // ignore: cast_nullable_to_non_nullable
+              as String,
+      phoneNumber: null == phoneNumber
+          ? _value.phoneNumber
+          : phoneNumber // ignore: cast_nullable_to_non_nullable
+              as String,
+      emailAddress: null == emailAddress
+          ? _value.emailAddress
+          : emailAddress // ignore: cast_nullable_to_non_nullable
+              as String,
       firstName: null == firstName
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
@@ -80,13 +108,17 @@ class _$UserStateCopyWithImpl<$Res, $Val extends UserState>
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String,
-      emailAddress: null == emailAddress
-          ? _value.emailAddress
-          : emailAddress // ignore: cast_nullable_to_non_nullable
+      active: null == active
+          ? _value.active
+          : active // ignore: cast_nullable_to_non_nullable
               as String,
-      phoneNumber: null == phoneNumber
-          ? _value.phoneNumber
-          : phoneNumber // ignore: cast_nullable_to_non_nullable
+      isHost: null == isHost
+          ? _value.isHost
+          : isHost // ignore: cast_nullable_to_non_nullable
+              as String,
+      profileURL: null == profileURL
+          ? _value.profileURL
+          : profileURL // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -101,10 +133,14 @@ abstract class _$$UserStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'first_name') String firstName,
-      @JsonKey(name: 'last_name') String lastName,
+      {@JsonKey(name: 'id') String userID,
+      @JsonKey(name: 'phone_number') String phoneNumber,
       @JsonKey(name: 'email') String emailAddress,
-      @JsonKey(name: 'phone_number') String phoneNumber});
+      @JsonKey(name: 'first_name') String firstName,
+      @JsonKey(name: 'last_name') String lastName,
+      @JsonKey(name: 'is_active') String active,
+      @JsonKey(name: 'is_host') String isHost,
+      @JsonKey(name: 'image') String profileURL});
 }
 
 /// @nodoc
@@ -120,12 +156,28 @@ class __$$UserStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? userID = null,
+    Object? phoneNumber = null,
+    Object? emailAddress = null,
     Object? firstName = null,
     Object? lastName = null,
-    Object? emailAddress = null,
-    Object? phoneNumber = null,
+    Object? active = null,
+    Object? isHost = null,
+    Object? profileURL = null,
   }) {
     return _then(_$UserStateImpl(
+      userID: null == userID
+          ? _value.userID
+          : userID // ignore: cast_nullable_to_non_nullable
+              as String,
+      phoneNumber: null == phoneNumber
+          ? _value.phoneNumber
+          : phoneNumber // ignore: cast_nullable_to_non_nullable
+              as String,
+      emailAddress: null == emailAddress
+          ? _value.emailAddress
+          : emailAddress // ignore: cast_nullable_to_non_nullable
+              as String,
       firstName: null == firstName
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
@@ -134,13 +186,17 @@ class __$$UserStateImplCopyWithImpl<$Res>
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String,
-      emailAddress: null == emailAddress
-          ? _value.emailAddress
-          : emailAddress // ignore: cast_nullable_to_non_nullable
+      active: null == active
+          ? _value.active
+          : active // ignore: cast_nullable_to_non_nullable
               as String,
-      phoneNumber: null == phoneNumber
-          ? _value.phoneNumber
-          : phoneNumber // ignore: cast_nullable_to_non_nullable
+      isHost: null == isHost
+          ? _value.isHost
+          : isHost // ignore: cast_nullable_to_non_nullable
+              as String,
+      profileURL: null == profileURL
+          ? _value.profileURL
+          : profileURL // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -151,14 +207,27 @@ class __$$UserStateImplCopyWithImpl<$Res>
 @JsonSerializable(explicitToJson: true)
 class _$UserStateImpl with DiagnosticableTreeMixin implements _UserState {
   _$UserStateImpl(
-      {@JsonKey(name: 'first_name') this.firstName = UNKNOWN,
-      @JsonKey(name: 'last_name') this.lastName = UNKNOWN,
+      {@JsonKey(name: 'id') this.userID = UNKNOWN,
+      @JsonKey(name: 'phone_number') this.phoneNumber = UNKNOWN,
       @JsonKey(name: 'email') this.emailAddress = UNKNOWN,
-      @JsonKey(name: 'phone_number') this.phoneNumber = UNKNOWN});
+      @JsonKey(name: 'first_name') this.firstName = UNKNOWN,
+      @JsonKey(name: 'last_name') this.lastName = UNKNOWN,
+      @JsonKey(name: 'is_active') this.active = false,
+      @JsonKey(name: 'is_host') this.isHost = false,
+      @JsonKey(name: 'image') this.profileURL = false});
 
   factory _$UserStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserStateImplFromJson(json);
 
+  @override
+  @JsonKey(name: 'id')
+  final String userID;
+  @override
+  @JsonKey(name: 'phone_number')
+  final String phoneNumber;
+  @override
+  @JsonKey(name: 'email')
+  final String emailAddress;
   @override
   @JsonKey(name: 'first_name')
   final String firstName;
@@ -166,15 +235,18 @@ class _$UserStateImpl with DiagnosticableTreeMixin implements _UserState {
   @JsonKey(name: 'last_name')
   final String lastName;
   @override
-  @JsonKey(name: 'email')
-  final String emailAddress;
+  @JsonKey(name: 'is_active')
+  final String active;
   @override
-  @JsonKey(name: 'phone_number')
-  final String phoneNumber;
+  @JsonKey(name: 'is_host')
+  final String isHost;
+  @override
+  @JsonKey(name: 'image')
+  final String profileURL;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'UserState(firstName: $firstName, lastName: $lastName, emailAddress: $emailAddress, phoneNumber: $phoneNumber)';
+    return 'UserState(userID: $userID, phoneNumber: $phoneNumber, emailAddress: $emailAddress, firstName: $firstName, lastName: $lastName, active: $active, isHost: $isHost, profileURL: $profileURL)';
   }
 
   @override
@@ -182,10 +254,14 @@ class _$UserStateImpl with DiagnosticableTreeMixin implements _UserState {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'UserState'))
+      ..add(DiagnosticsProperty('userID', userID))
+      ..add(DiagnosticsProperty('phoneNumber', phoneNumber))
+      ..add(DiagnosticsProperty('emailAddress', emailAddress))
       ..add(DiagnosticsProperty('firstName', firstName))
       ..add(DiagnosticsProperty('lastName', lastName))
-      ..add(DiagnosticsProperty('emailAddress', emailAddress))
-      ..add(DiagnosticsProperty('phoneNumber', phoneNumber));
+      ..add(DiagnosticsProperty('active', active))
+      ..add(DiagnosticsProperty('isHost', isHost))
+      ..add(DiagnosticsProperty('profileURL', profileURL));
   }
 
   @override
@@ -193,20 +269,25 @@ class _$UserStateImpl with DiagnosticableTreeMixin implements _UserState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$UserStateImpl &&
+            (identical(other.userID, userID) || other.userID == userID) &&
+            (identical(other.phoneNumber, phoneNumber) ||
+                other.phoneNumber == phoneNumber) &&
+            (identical(other.emailAddress, emailAddress) ||
+                other.emailAddress == emailAddress) &&
             (identical(other.firstName, firstName) ||
                 other.firstName == firstName) &&
             (identical(other.lastName, lastName) ||
                 other.lastName == lastName) &&
-            (identical(other.emailAddress, emailAddress) ||
-                other.emailAddress == emailAddress) &&
-            (identical(other.phoneNumber, phoneNumber) ||
-                other.phoneNumber == phoneNumber));
+            (identical(other.active, active) || other.active == active) &&
+            (identical(other.isHost, isHost) || other.isHost == isHost) &&
+            (identical(other.profileURL, profileURL) ||
+                other.profileURL == profileURL));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, firstName, lastName, emailAddress, phoneNumber);
+  int get hashCode => Object.hash(runtimeType, userID, phoneNumber,
+      emailAddress, firstName, lastName, active, isHost, profileURL);
 
   /// Create a copy of UserState
   /// with the given fields replaced by the non-null parameter values.
@@ -226,15 +307,27 @@ class _$UserStateImpl with DiagnosticableTreeMixin implements _UserState {
 
 abstract class _UserState implements UserState {
   factory _UserState(
-          {@JsonKey(name: 'first_name') final String firstName,
-          @JsonKey(name: 'last_name') final String lastName,
-          @JsonKey(name: 'email') final String emailAddress,
-          @JsonKey(name: 'phone_number') final String phoneNumber}) =
-      _$UserStateImpl;
+      {@JsonKey(name: 'id') final String userID,
+      @JsonKey(name: 'phone_number') final String phoneNumber,
+      @JsonKey(name: 'email') final String emailAddress,
+      @JsonKey(name: 'first_name') final String firstName,
+      @JsonKey(name: 'last_name') final String lastName,
+      @JsonKey(name: 'is_active') final String active,
+      @JsonKey(name: 'is_host') final String isHost,
+      @JsonKey(name: 'image') final String profileURL}) = _$UserStateImpl;
 
   factory _UserState.fromJson(Map<String, dynamic> json) =
       _$UserStateImpl.fromJson;
 
+  @override
+  @JsonKey(name: 'id')
+  String get userID;
+  @override
+  @JsonKey(name: 'phone_number')
+  String get phoneNumber;
+  @override
+  @JsonKey(name: 'email')
+  String get emailAddress;
   @override
   @JsonKey(name: 'first_name')
   String get firstName;
@@ -242,11 +335,14 @@ abstract class _UserState implements UserState {
   @JsonKey(name: 'last_name')
   String get lastName;
   @override
-  @JsonKey(name: 'email')
-  String get emailAddress;
+  @JsonKey(name: 'is_active')
+  String get active;
   @override
-  @JsonKey(name: 'phone_number')
-  String get phoneNumber;
+  @JsonKey(name: 'is_host')
+  String get isHost;
+  @override
+  @JsonKey(name: 'image')
+  String get profileURL;
 
   /// Create a copy of UserState
   /// with the given fields replaced by the non-null parameter values.

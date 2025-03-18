@@ -30,3 +30,8 @@ const String kLoginLogoutPrompt = 'Oops!!! Something wrong just happened. '
     'If this persists, log out and login again';
 
 const String kDefaultTokenExpiry = '3600';
+
+const Map<String, String> defaultRequestHeaders = <String, String>{
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+};
