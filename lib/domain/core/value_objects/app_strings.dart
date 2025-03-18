@@ -58,7 +58,7 @@ const String signInString = 'Sign In';
 const String signUpString = 'Sign Up';
 const String signInWithGoogleString = 'Sign in with Google';
 const String dontHaveAccountString = 'Dont have an account? ';
-const String orString = 'Or';
+const String orString = 'Or sign in with';
 
 // Request OTP page
 const String enterPhoneOrEmailString =
