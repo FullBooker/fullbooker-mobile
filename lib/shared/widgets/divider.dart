@@ -47,6 +47,7 @@ class LabeledDivider extends StatelessWidget {
         height: height,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          spacing: 4,
           children: <Widget>[
             const Expanded(
               child: RoundedDivider(height: 1, color: Color(0xf0B3ADAD)),

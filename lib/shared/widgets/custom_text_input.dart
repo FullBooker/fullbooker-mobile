@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fullbooker/shared/entities/spaces.dart';
+import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/shared/entities/types.dart';
 import 'package:heroicons/heroicons.dart';
 
-class Input extends StatelessWidget {
-  const Input({
+class CustomTextInput extends StatelessWidget {
+  const CustomTextInput({
     Key? inputKey,
     required this.onChanged,
     this.iconData,
@@ -20,6 +20,8 @@ class Input extends StatelessWidget {
     this.prefixIconData,
     this.labelText,
     this.initialValue,
+    this.inputFormatters,
+    this.autofillHints,
   }) : super(key: inputKey);
 
   final String? Function(String? value)? validator;
@@ -35,6 +37,8 @@ class Input extends StatelessWidget {
   final int? maxLines;
   final bool? autoValidate;
   final String? initialValue;
+  final List<String>? autofillHints;
+  final List<TextInputFormatter>? inputFormatters;
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +59,8 @@ class Input extends StatelessWidget {
           initialValue: initialValue,
           validator: validator,
           maxLines: maxLines,
+          autofillHints: autofillHints,
+          inputFormatters: inputFormatters,
           autovalidateMode: autoValidate ?? false
               ? AutovalidateMode.always
               : AutovalidateMode.disabled,
@@ -67,7 +73,7 @@ class Input extends StatelessWidget {
             labelStyle: Theme.of(context)
                 .textTheme
                 .bodyLarge
-                ?.copyWith(color: AppColors.textTitleColor),
+                ?.copyWith(color: Colors.black),
             suffixIcon: suffixIconData != null
                 ? IconButton(
                     icon: HeroIcon(

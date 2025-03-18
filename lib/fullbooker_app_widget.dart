@@ -31,7 +31,7 @@ class FullbookerAppWidget extends StatelessWidget {
                   );
                 }
                 return DeepLink(
-                  <PageRouteInfo<dynamic>>[OverviewRoute()],
+                  <PageRouteInfo<dynamic>>[LoginRoute()],
                 );
               },
               navigatorObservers: () => <NavigatorObserver>[

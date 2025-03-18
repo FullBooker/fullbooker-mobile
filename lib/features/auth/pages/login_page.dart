@@ -2,18 +2,17 @@ import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/login_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
+import 'package:fullbooker/shared/entities/spaces.dart';
+import 'package:fullbooker/shared/widgets/custom_text_input.dart';
 import 'package:fullbooker/shared/widgets/old_buttons.dart';
 import 'package:fullbooker/shared/widgets/divider.dart';
-import 'package:fullbooker/shared/widgets/page_title.dart';
-import 'package:fullbooker/shared/widgets/old_text_inputs.dart';
-import 'package:fullbooker/shared/validators.dart';
+import 'package:heroicons/heroicons.dart';
 
 @RoutePage()
 class LoginPage extends StatefulWidget {
@@ -77,114 +76,101 @@ class LoginPageState extends State<LoginPage> {
           builder: (BuildContext context, LoginPageViewModel snapshot) {
             return ListView(
               children: <Widget>[
+                largeVerticalSizedBox,
                 Image(image: AssetImage(logoSplashImagePath)),
+                largeVerticalSizedBox,
                 Center(
                   child: Text(
                     letsGetStarted,
                     style: Theme.of(context).textTheme.headlineSmall,
                   ),
                 ),
-                const PageHeader(
-                  '',
-                  signInCopy,
-                  pageDescriptionPadding: 0,
-                  headerTopPadding: 0,
-                ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-                          child: StandardTextInput(
-                            phonNumberString,
-                            labelPrefix: Icons.phone,
-                            validator: validatePhoneNumber,
-                            controller: emailController,
-                            maxLength: 13,
-                            formatters: <TextInputFormatter>[
-                              FilteringTextInputFormatter.digitsOnly,
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: StandardTextInput(
-                            passwordString,
-                            labelPrefix: Icons.key,
-                            isPassword: true,
-                            validator: validatePassword,
-                            controller: passwordController,
-                          ),
-                        ),
-                        Center(
-                          child: (errorMessage == '')
-                              ? const SizedBox()
-                              : Padding(
-                                  padding: const EdgeInsets.all(20),
-                                  child: Text(
-                                    errorMessage,
-                                    style: const TextStyle(color: Colors.red),
-                                  ),
-                                ),
-                        ),
-                        Center(
+                largeVerticalSizedBox,
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: <Widget>[
+                      CustomTextInput(
+                        labelText: emailAddressString,
+                        validator: (String? value) {
+                          // TODO(abiud): check this email value against a regex
+                          return null;
+                        },
+                        onChanged: (String v) {
+                          // TODO(abiud): update state
+                        },
+                        // hintText: newTransactionAmountHint,
+                        keyboardType: TextInputType.emailAddress,
+                        prefixIconData: HeroIcons.envelope,
+                      ),
+                      mediumVerticalSizedBox,
+                      CustomTextInput(
+                        labelText: passwordString,
+                        validator: (String? value) {
+                          // TODO(abiud): check this email value against a regex
+                          return null;
+                        },
+                        onChanged: (String v) {
+                          // TODO(abiud): update state
+                        },
+                        // hintText: newTransactionAmountHint,
+                        keyboardType: TextInputType.visiblePassword,
+                        autofillHints: const <String>[
+                          AutofillHints.password,
+                        ],
+                        prefixIconData: HeroIcons.key,
+                        suffixIconData: HeroIcons.eyeSlash,
+                        obscureText: true,
+                      ),
+                      SizedBox(
+                        width: double.infinity,
+                        child: InkWell(
+                          onTap: () => context.router.push(RequestOTPRoute()),
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 20),
-                            child: RichText(
-                              text: TextSpan(
-                                children: <InlineSpan>[
-                                  const TextSpan(
-                                    text: forgotPasswordString,
-                                    style: TextStyle(color: Colors.black),
+                            padding: const EdgeInsets.all(12.0),
+                            child: Text(
+                              textAlign: TextAlign.right,
+                              forgotPasswordString,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge
+                                  ?.copyWith(
+                                    color: Theme.of(context).primaryColor,
                                   ),
-                                  TextSpan(
-                                    text: resetHereString,
-                                    style: const TextStyle(
-                                      color: AppColors.customBlueColor,
-                                    ),
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = () => context.router
-                                          .push(RequestOTPRoute()),
-                                  ),
-                                ],
-                              ),
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 20),
-                          child: OldButton(
-                            () => login(
-                              emailController.value.text,
-                              passwordController.value.text,
-                            ),
-                            actionLabel: signInString,
-                            loading: loading,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 20),
+                        child: OldButton(
+                          () => login(
+                            emailController.value.text,
+                            passwordController.value.text,
+                          ),
+                          actionLabel: signInString,
+                          loading: loading,
+                        ),
+                      ),
+                      LabeledDivider(
+                        AppColors.inputBackgroundColor,
+                        15,
+                        MediaQuery.of(context).size.width * 0.8,
+                        orString,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: OldButton(
+                          loginWithGoogle,
+                          color: const Color(0xf0F5F4F4),
+                          actionLabel: signInWithGoogleString,
+                          actionLabelColor: Colors.black,
+                          actionLabelPrefix: const Image(
+                            image: AssetImage(googleIconPath),
                           ),
                         ),
-                        LabeledDivider(
-                          Colors.black,
-                          15,
-                          MediaQuery.of(context).size.width * 0.8,
-                          orString,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-                          child: OldButton(
-                            loginWithGoogle,
-                            color: const Color(0xf0F5F4F4),
-                            actionLabel: signInWithGoogleString,
-                            actionLabelColor: Colors.black,
-                            actionLabelPrefix: const Image(
-                              image: AssetImage(googleIconPath),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
                 Center(
