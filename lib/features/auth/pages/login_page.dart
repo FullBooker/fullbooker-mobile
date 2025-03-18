@@ -8,6 +8,7 @@ import 'package:fullbooker/application/redux/actions/login_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/login_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
+import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
@@ -168,12 +169,13 @@ class LoginPageState extends State<LoginPage> {
                       else
                         PrimaryButton(
                           onPressed: () {
-                            // login(
-                            //   emailController.value.text,
-                            //   passwordController.value.text,
-                            // );
-                            // context
-                            // .dispatch(LoginAction(client: graphQlClient));
+                            context.dispatch(
+                              LoginAction(
+                                onError: (String error) {
+                                  showSnackBar(error, context);
+                                },
+                              ),
+                            );
                           },
                           child: d.right(loginString),
                         ),
@@ -189,6 +191,7 @@ class LoginPageState extends State<LoginPage> {
                         child: d.left(
                           Center(
                             child: Row(
+                              spacing: 8,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
                                 SvgPicture.asset(googleIconSVGPath),

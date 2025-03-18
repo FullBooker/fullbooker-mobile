@@ -3,11 +3,15 @@ import 'dart:async';
 import 'package:async_redux/async_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fullbooker/app_entry_point.dart';
+import 'package:fullbooker/app_wrapper.dart';
+import 'package:fullbooker/application/core/services/custom_client.dart';
 import 'package:fullbooker/application/redux/observers/custom_observer.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/endpoints.dart';
+import 'package:fullbooker/domain/core/value_objects/global_keys.dart';
 import 'package:fullbooker/infrastructure/repository/state_persistor.dart';
 import 'package:fullbooker/fullbooker_app_widget.dart';
 import 'package:get_it/get_it.dart';
@@ -65,7 +69,13 @@ Future<void> appBootStrap() async {
     // TODO(abiud): setup crashlytics
     // FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 
-    runApp(FullbookerAppWidget(appStore: store));
+    runApp(
+      AppEntryPoint(
+        appStore: store,
+        appName: '',
+        appNavigatorKey: appGlobalNavigatorKey,
+      ),
+    );
   }, (Object error, StackTrace stack) async {
     // TODO(abiud): setup crashlytics and sentry here
   });

@@ -49,9 +49,9 @@ class CustomTextInput extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: 12,
       children: <Widget>[
-        if (labelText != null)
+        if (labelText?.isNotEmpty ?? false)
           Text(
-            labelText ?? '',
+            labelText!,
             style: Theme.of(context).textTheme.titleMedium,
           ),
         TextFormField(
@@ -61,6 +61,7 @@ class CustomTextInput extends StatelessWidget {
           keyboardType: keyboardType,
           initialValue: initialValue,
           validator: validator,
+          textAlignVertical: TextAlignVertical.center,
           maxLines: maxLines,
           autofillHints: autofillHints,
           inputFormatters: inputFormatters,
@@ -79,9 +80,7 @@ class CustomTextInput extends StatelessWidget {
                 ?.copyWith(color: Colors.black),
             suffixIcon: suffixIconData != null
                 ? IconButton(
-                    icon: HeroIcon(
-                      suffixIconData!,
-                    ),
+                    icon: HeroIcon(suffixIconData!),
                     onPressed: suffixIconFunc ?? () {},
                   )
                 : null,

@@ -19,3 +19,5 @@ const String locationEndpoint = '/location/';
 const String mediaEndpoint = '/media/';
 const String pricingEndpoint = '/pricing/';
 const String availabilityEndpoint = '/availability/';
+
+
