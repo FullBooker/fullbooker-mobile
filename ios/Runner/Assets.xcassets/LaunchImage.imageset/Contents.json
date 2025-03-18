@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Icon-App-57x57@1x.png",
+      "filename" : "Full App Logo transparent.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Icon-App-60x60@2x.png",
+      "filename" : "Full App Logo transparent 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Icon-App-60x60@3x.png",
+      "filename" : "Full App Logo transparent 2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
