@@ -333,3 +333,7 @@ const String passwordHasExpired = 'Your password has expired';
 const String defaultUserFriendlyMessage = 'Sorry, an '
     ' error occurred, please try again or get help from our '
     'help center.';
+
+// Product zero state
+const String noProducts = 'No products';
+const String noProductsCopy = 'Let’s create our first product';

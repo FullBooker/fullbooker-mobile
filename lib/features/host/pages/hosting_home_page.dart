@@ -1,14 +1,12 @@
+import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:fullbooker/application/redux/actions/logout_action.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
-import 'package:fullbooker/shared/entities/data_mocks.dart';
-import 'package:fullbooker/shared/entities/event_creation_model.dart';
-import 'package:fullbooker/shared/widgets/event_creation_steps.dart';
-import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
+import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
+import 'package:fullbooker/presentation/core/components/generic_zero_state.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
-import 'package:fullbooker/shared/widgets/old_buttons.dart';
-import 'package:fullbooker/shared/widgets/page_title.dart';
 
 @RoutePage()
 class HostingHomePage extends StatefulWidget {
@@ -19,6 +17,7 @@ class HostingHomePage extends StatefulWidget {
 }
 
 class _HostingHomePageState extends State<HostingHomePage> {
+  // TODO(abiud): cleanup this code
   // bool hasLoaded = false;
   // ProductViewModel productsController = ProductViewModel();
 
@@ -47,44 +46,33 @@ class _HostingHomePageState extends State<HostingHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: const ProductSetupNavBar(),
       bottomNavigationBar: const BottomNavBar(),
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            child: ListView(
-              children: <Widget>[
-                const PageHeader(
-                  '',
-                  letsGetStarted,
-                  withLogo: false,
-                  widthFactor: 0.9,
-                  pageDescriptionPadding: 40,
-                ),
-                for (EventCreationStepModel step in eventCreationSteps)
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: EventCreationStep(step),
+      body: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            GenericZeroState(
+              iconPath: productZeroStateSVGPath,
+              title: noProducts,
+              description: noProductsCopy,
+              onCTATap: () {
+                context.dispatch(
+                  LogoutAction(
+                    onDone: () {
+                      context.router.pushAndPopUntil(
+                        const LoginRoute(),
+                        predicate: (Route<dynamic> route) => false,
+                      );
+                    },
                   ),
-              ],
+                );
+              },
+              ctaText: logoutString,
             ),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: width / 8,
-                vertical: 30,
-              ),
-              child: OldButton(
-                () => context.router.push(CategorySelectionRoute()),
-                actionLabel: continueString,
-              ),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
