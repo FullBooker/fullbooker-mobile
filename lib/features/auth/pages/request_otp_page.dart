@@ -6,8 +6,8 @@ import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/features/auth/controllers/old_login_controller.dart';
+import 'package:fullbooker/shared/widgets/divider_with_text.dart';
 import 'package:fullbooker/shared/widgets/old_buttons.dart';
-import 'package:fullbooker/shared/widgets/divider.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
 import 'package:fullbooker/shared/widgets/old_text_inputs.dart';
 import 'package:fullbooker/shared/validators.dart';
@@ -98,12 +98,7 @@ class RequestOTPPageState extends State<RequestOTPPage> {
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 30),
-                          child: LabeledDivider(
-                            Colors.black,
-                            18,
-                            MediaQuery.of(context).size.width * .8,
-                            orString,
-                          ),
+                          child: DividerWithText(text: orString),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(

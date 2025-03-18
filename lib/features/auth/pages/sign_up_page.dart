@@ -7,8 +7,8 @@ import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/features/auth/controllers/old_login_controller.dart';
+import 'package:fullbooker/shared/widgets/divider_with_text.dart';
 import 'package:fullbooker/shared/widgets/old_buttons.dart';
-import 'package:fullbooker/shared/widgets/divider.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
 import 'package:fullbooker/shared/widgets/standard_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/old_text_inputs.dart';
@@ -106,7 +106,7 @@ class SignUpPageState extends State<SignUpPage> {
               padding: EdgeInsets.only(bottom: 20),
               child: PageHeader(
                 '',
-                signUpString,
+                createAccount,
                 headerPadding: 10,
                 headerTopPadding: 0,
                 pageTitleBottomPadding: 0,
@@ -202,17 +202,12 @@ class SignUpPageState extends State<SignUpPage> {
                         child: OldButton(
                           () => signup(context),
                           loading: isLoading,
-                          actionLabel: signUpString,
+                          actionLabel: createAccount,
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 15),
-                        child: LabeledDivider(
-                          Colors.black,
-                          15,
-                          MediaQuery.of(context).size.width * 0.8,
-                          'Or',
-                        ),
+                        child: DividerWithText(text: orString),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 2),
@@ -221,7 +216,7 @@ class SignUpPageState extends State<SignUpPage> {
                           color: const Color(0xf0F5F4F4),
                           actionLabel: signUpWithGoogleString,
                           actionLabelPrefix: const Image(
-                            image: AssetImage(googleIconPath),
+                            image: AssetImage(googleIconPathOld),
                           ),
                           actionLabelColor: Colors.black,
                         ),
