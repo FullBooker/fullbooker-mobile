@@ -35,3 +35,6 @@ const Map<String, String> defaultRequestHeaders = <String, String>{
   'Content-Type': 'application/json',
   'Accept': 'application/json',
 };
+
+const String APPVERSION = 'APPVERSION';
+const String kDevBuild = 'dev-build';

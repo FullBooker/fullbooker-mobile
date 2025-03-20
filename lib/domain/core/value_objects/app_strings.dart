@@ -336,5 +336,14 @@ const String defaultUserFriendlyMessage = 'Sorry, an '
 
 // Product zero state
 const String noProducts = 'No products added';
-const String noProductsCopy = 'Start building your catalog by adding your first product. Make it easy for customers to browse and purchase.';
+const String noProductsCopy =
+    'Start building your catalog by adding your first product. Make it easy for customers to browse and purchase.';
 const String createProductString = 'Create Product';
+
+const String noName = 'No name';
+
+const String madeByString = 'Made by Fullbooker';
+
+String copyright() => '© ${DateTime.now().year} Memoire. All rights reserved';
+
+String appVersionFormat(String version) => 'Version: $version';
