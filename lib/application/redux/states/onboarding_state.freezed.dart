@@ -27,6 +27,15 @@ mixin _$OnboardingState {
   bool get invalidCredentials => throw _privateConstructorUsedError;
   bool get hidePassword => throw _privateConstructorUsedError;
 
+  /// CREATE ACCOUNT VALUES
+  String get firstName => throw _privateConstructorUsedError;
+  String get lastName => throw _privateConstructorUsedError;
+  String get newEmailAddress => throw _privateConstructorUsedError;
+  String get newPassword => throw _privateConstructorUsedError;
+  bool get hideNewPassword => throw _privateConstructorUsedError;
+  String get newConfirmPassword => throw _privateConstructorUsedError;
+  bool get hideNewConfirmPassword => throw _privateConstructorUsedError;
+
   /// VERIFY PHONE VALUES
   bool get invalidOTP => throw _privateConstructorUsedError;
 
@@ -51,6 +60,13 @@ abstract class $OnboardingStateCopyWith<$Res> {
       String password,
       bool invalidCredentials,
       bool hidePassword,
+      String firstName,
+      String lastName,
+      String newEmailAddress,
+      String newPassword,
+      bool hideNewPassword,
+      String newConfirmPassword,
+      bool hideNewConfirmPassword,
       bool invalidOTP});
 }
 
@@ -73,6 +89,13 @@ class _$OnboardingStateCopyWithImpl<$Res, $Val extends OnboardingState>
     Object? password = null,
     Object? invalidCredentials = null,
     Object? hidePassword = null,
+    Object? firstName = null,
+    Object? lastName = null,
+    Object? newEmailAddress = null,
+    Object? newPassword = null,
+    Object? hideNewPassword = null,
+    Object? newConfirmPassword = null,
+    Object? hideNewConfirmPassword = null,
     Object? invalidOTP = null,
   }) {
     return _then(_value.copyWith(
@@ -91,6 +114,34 @@ class _$OnboardingStateCopyWithImpl<$Res, $Val extends OnboardingState>
       hidePassword: null == hidePassword
           ? _value.hidePassword
           : hidePassword // ignore: cast_nullable_to_non_nullable
+              as bool,
+      firstName: null == firstName
+          ? _value.firstName
+          : firstName // ignore: cast_nullable_to_non_nullable
+              as String,
+      lastName: null == lastName
+          ? _value.lastName
+          : lastName // ignore: cast_nullable_to_non_nullable
+              as String,
+      newEmailAddress: null == newEmailAddress
+          ? _value.newEmailAddress
+          : newEmailAddress // ignore: cast_nullable_to_non_nullable
+              as String,
+      newPassword: null == newPassword
+          ? _value.newPassword
+          : newPassword // ignore: cast_nullable_to_non_nullable
+              as String,
+      hideNewPassword: null == hideNewPassword
+          ? _value.hideNewPassword
+          : hideNewPassword // ignore: cast_nullable_to_non_nullable
+              as bool,
+      newConfirmPassword: null == newConfirmPassword
+          ? _value.newConfirmPassword
+          : newConfirmPassword // ignore: cast_nullable_to_non_nullable
+              as String,
+      hideNewConfirmPassword: null == hideNewConfirmPassword
+          ? _value.hideNewConfirmPassword
+          : hideNewConfirmPassword // ignore: cast_nullable_to_non_nullable
               as bool,
       invalidOTP: null == invalidOTP
           ? _value.invalidOTP
@@ -113,6 +164,13 @@ abstract class _$$OnboardingStateImplCopyWith<$Res>
       String password,
       bool invalidCredentials,
       bool hidePassword,
+      String firstName,
+      String lastName,
+      String newEmailAddress,
+      String newPassword,
+      bool hideNewPassword,
+      String newConfirmPassword,
+      bool hideNewConfirmPassword,
       bool invalidOTP});
 }
 
@@ -133,6 +191,13 @@ class __$$OnboardingStateImplCopyWithImpl<$Res>
     Object? password = null,
     Object? invalidCredentials = null,
     Object? hidePassword = null,
+    Object? firstName = null,
+    Object? lastName = null,
+    Object? newEmailAddress = null,
+    Object? newPassword = null,
+    Object? hideNewPassword = null,
+    Object? newConfirmPassword = null,
+    Object? hideNewConfirmPassword = null,
     Object? invalidOTP = null,
   }) {
     return _then(_$OnboardingStateImpl(
@@ -152,6 +217,34 @@ class __$$OnboardingStateImplCopyWithImpl<$Res>
           ? _value.hidePassword
           : hidePassword // ignore: cast_nullable_to_non_nullable
               as bool,
+      firstName: null == firstName
+          ? _value.firstName
+          : firstName // ignore: cast_nullable_to_non_nullable
+              as String,
+      lastName: null == lastName
+          ? _value.lastName
+          : lastName // ignore: cast_nullable_to_non_nullable
+              as String,
+      newEmailAddress: null == newEmailAddress
+          ? _value.newEmailAddress
+          : newEmailAddress // ignore: cast_nullable_to_non_nullable
+              as String,
+      newPassword: null == newPassword
+          ? _value.newPassword
+          : newPassword // ignore: cast_nullable_to_non_nullable
+              as String,
+      hideNewPassword: null == hideNewPassword
+          ? _value.hideNewPassword
+          : hideNewPassword // ignore: cast_nullable_to_non_nullable
+              as bool,
+      newConfirmPassword: null == newConfirmPassword
+          ? _value.newConfirmPassword
+          : newConfirmPassword // ignore: cast_nullable_to_non_nullable
+              as String,
+      hideNewConfirmPassword: null == hideNewConfirmPassword
+          ? _value.hideNewConfirmPassword
+          : hideNewConfirmPassword // ignore: cast_nullable_to_non_nullable
+              as bool,
       invalidOTP: null == invalidOTP
           ? _value.invalidOTP
           : invalidOTP // ignore: cast_nullable_to_non_nullable
@@ -169,6 +262,13 @@ class _$OnboardingStateImpl implements _OnboardingState {
       this.password = UNKNOWN,
       this.invalidCredentials = false,
       this.hidePassword = true,
+      this.firstName = UNKNOWN,
+      this.lastName = UNKNOWN,
+      this.newEmailAddress = UNKNOWN,
+      this.newPassword = UNKNOWN,
+      this.hideNewPassword = true,
+      this.newConfirmPassword = UNKNOWN,
+      this.hideNewConfirmPassword = true,
       this.invalidOTP = false});
 
   factory _$OnboardingStateImpl.fromJson(Map<String, dynamic> json) =>
@@ -189,6 +289,29 @@ class _$OnboardingStateImpl implements _OnboardingState {
   @JsonKey()
   final bool hidePassword;
 
+  /// CREATE ACCOUNT VALUES
+  @override
+  @JsonKey()
+  final String firstName;
+  @override
+  @JsonKey()
+  final String lastName;
+  @override
+  @JsonKey()
+  final String newEmailAddress;
+  @override
+  @JsonKey()
+  final String newPassword;
+  @override
+  @JsonKey()
+  final bool hideNewPassword;
+  @override
+  @JsonKey()
+  final String newConfirmPassword;
+  @override
+  @JsonKey()
+  final bool hideNewConfirmPassword;
+
   /// VERIFY PHONE VALUES
   @override
   @JsonKey()
@@ -196,7 +319,7 @@ class _$OnboardingStateImpl implements _OnboardingState {
 
   @override
   String toString() {
-    return 'OnboardingState(emailAddress: $emailAddress, password: $password, invalidCredentials: $invalidCredentials, hidePassword: $hidePassword, invalidOTP: $invalidOTP)';
+    return 'OnboardingState(emailAddress: $emailAddress, password: $password, invalidCredentials: $invalidCredentials, hidePassword: $hidePassword, firstName: $firstName, lastName: $lastName, newEmailAddress: $newEmailAddress, newPassword: $newPassword, hideNewPassword: $hideNewPassword, newConfirmPassword: $newConfirmPassword, hideNewConfirmPassword: $hideNewConfirmPassword, invalidOTP: $invalidOTP)';
   }
 
   @override
@@ -212,14 +335,40 @@ class _$OnboardingStateImpl implements _OnboardingState {
                 other.invalidCredentials == invalidCredentials) &&
             (identical(other.hidePassword, hidePassword) ||
                 other.hidePassword == hidePassword) &&
+            (identical(other.firstName, firstName) ||
+                other.firstName == firstName) &&
+            (identical(other.lastName, lastName) ||
+                other.lastName == lastName) &&
+            (identical(other.newEmailAddress, newEmailAddress) ||
+                other.newEmailAddress == newEmailAddress) &&
+            (identical(other.newPassword, newPassword) ||
+                other.newPassword == newPassword) &&
+            (identical(other.hideNewPassword, hideNewPassword) ||
+                other.hideNewPassword == hideNewPassword) &&
+            (identical(other.newConfirmPassword, newConfirmPassword) ||
+                other.newConfirmPassword == newConfirmPassword) &&
+            (identical(other.hideNewConfirmPassword, hideNewConfirmPassword) ||
+                other.hideNewConfirmPassword == hideNewConfirmPassword) &&
             (identical(other.invalidOTP, invalidOTP) ||
                 other.invalidOTP == invalidOTP));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, emailAddress, password,
-      invalidCredentials, hidePassword, invalidOTP);
+  int get hashCode => Object.hash(
+      runtimeType,
+      emailAddress,
+      password,
+      invalidCredentials,
+      hidePassword,
+      firstName,
+      lastName,
+      newEmailAddress,
+      newPassword,
+      hideNewPassword,
+      newConfirmPassword,
+      hideNewConfirmPassword,
+      invalidOTP);
 
   /// Create a copy of OnboardingState
   /// with the given fields replaced by the non-null parameter values.
@@ -244,6 +393,13 @@ abstract class _OnboardingState implements OnboardingState {
       final String password,
       final bool invalidCredentials,
       final bool hidePassword,
+      final String firstName,
+      final String lastName,
+      final String newEmailAddress,
+      final String newPassword,
+      final bool hideNewPassword,
+      final String newConfirmPassword,
+      final bool hideNewConfirmPassword,
       final bool invalidOTP}) = _$OnboardingStateImpl;
 
   factory _OnboardingState.fromJson(Map<String, dynamic> json) =
@@ -259,6 +415,22 @@ abstract class _OnboardingState implements OnboardingState {
   bool get invalidCredentials;
   @override
   bool get hidePassword;
+
+  /// CREATE ACCOUNT VALUES
+  @override
+  String get firstName;
+  @override
+  String get lastName;
+  @override
+  String get newEmailAddress;
+  @override
+  String get newPassword;
+  @override
+  bool get hideNewPassword;
+  @override
+  String get newConfirmPassword;
+  @override
+  bool get hideNewConfirmPassword;
 
   /// VERIFY PHONE VALUES
   @override

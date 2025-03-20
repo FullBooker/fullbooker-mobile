@@ -16,6 +16,15 @@ class OnboardingState with _$OnboardingState {
     @Default(false) bool invalidCredentials,
     @Default(true) bool hidePassword,
 
+    /// CREATE ACCOUNT VALUES
+    @Default(UNKNOWN) String firstName,
+    @Default(UNKNOWN) String lastName,
+    @Default(UNKNOWN) String newEmailAddress,
+    @Default(UNKNOWN) String newPassword,
+    @Default(true) bool hideNewPassword,
+    @Default(UNKNOWN) String newConfirmPassword,
+    @Default(true) bool hideNewConfirmPassword,
+
     /// VERIFY PHONE VALUES
     @Default(false) bool invalidOTP,
   }) = _OnboardingState;
