@@ -3,6 +3,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fullbooker/application/redux/actions/update_onboarding_state_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/create_account_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
@@ -111,7 +112,7 @@ class CreateAccountPageState extends State<CreateAccountPage> {
                     ],
                   ),
                 ),
-                largeVerticalSizedBox,
+                mediumVerticalSizedBox,
                 Form(
                   key: _formKey,
                   child: Column(
@@ -127,9 +128,9 @@ class CreateAccountPageState extends State<CreateAccountPage> {
                           fieldName: firstNameString.toLowerCase(),
                         ),
                         onChanged: (String value) {
-                          // context.dispatch(
-                          //   UpdateOnboardingStateAction(emailAddress: email),
-                          // );
+                          context.dispatch(
+                            UpdateOnboardingStateAction(firstName: value),
+                          );
                         },
                         keyboardType: TextInputType.name,
                         prefixIconData: HeroIcons.user,
@@ -145,9 +146,9 @@ class CreateAccountPageState extends State<CreateAccountPage> {
                           fieldName: lastNameString.toLowerCase(),
                         ),
                         onChanged: (String value) {
-                          // context.dispatch(
-                          //   UpdateOnboardingStateAction(emailAddress: email),
-                          // );
+                          context.dispatch(
+                            UpdateOnboardingStateAction(lastName: value),
+                          );
                         },
                         keyboardType: TextInputType.name,
                         prefixIconData: HeroIcons.user,
@@ -160,11 +161,10 @@ class CreateAccountPageState extends State<CreateAccountPage> {
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (String? email) => validateEmail(email),
                         onChanged: (String email) {
-                          // context.dispatch(
-                          //   UpdateOnboardingStateAction(emailAddress: email),
-                          // );
+                          context.dispatch(
+                            UpdateOnboardingStateAction(emailAddress: email),
+                          );
                         },
-                        // hintText: newTransactionAmountHint,
                         keyboardType: TextInputType.emailAddress,
                         prefixIconData: HeroIcons.envelope,
                       ),
@@ -177,11 +177,10 @@ class CreateAccountPageState extends State<CreateAccountPage> {
                         validator: (String? password) =>
                             validatePassword(password),
                         onChanged: (String v) {
-                          // context.dispatch(
-                          //   UpdateOnboardingStateAction(password: v.trim()),
-                          // );
+                          context.dispatch(
+                            UpdateOnboardingStateAction(newPassword: v.trim()),
+                          );
                         },
-                        // hintText: newTransactionAmountHint,
                         keyboardType: TextInputType.visiblePassword,
                         autofillHints: const <String>[
                           AutofillHints.password,
@@ -189,28 +188,29 @@ class CreateAccountPageState extends State<CreateAccountPage> {
                         prefixIconData: HeroIcons.key,
                         suffixIconData: HeroIcons.eyeSlash,
                         suffixIconFunc: () {
-                          // context.dispatch(
-                          //   UpdateOnboardingStateAction(
-                          //     hidePassword: !vm.hidePassword,
-                          //   ),
-                          // );
+                          context.dispatch(
+                            UpdateOnboardingStateAction(
+                              hideNewPassword: !vm.hideNewPassword,
+                            ),
+                          );
                         },
-                        // obscureText: vm.hidePassword,
+                        obscureText: vm.hideNewPassword,
                       ),
 
                       // Confirm password
                       CustomTextInput(
-                        labelText: passwordString,
-                        hintText: passwordHint,
+                        labelText: confirmPasswordString,
+                        hintText: confirmPasswordHint,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (String? confirm) =>
                             validateConfirmPassword(confirm, confirm),
                         onChanged: (String v) {
-                          // context.dispatch(
-                          //   UpdateOnboardingStateAction(password: v.trim()),
-                          // );
+                          context.dispatch(
+                            UpdateOnboardingStateAction(
+                              newConfirmPassword: v.trim(),
+                            ),
+                          );
                         },
-                        // hintText: newTransactionAmountHint,
                         keyboardType: TextInputType.visiblePassword,
                         autofillHints: const <String>[
                           AutofillHints.password,
@@ -218,13 +218,14 @@ class CreateAccountPageState extends State<CreateAccountPage> {
                         prefixIconData: HeroIcons.key,
                         suffixIconData: HeroIcons.eyeSlash,
                         suffixIconFunc: () {
-                          // context.dispatch(
-                          //   UpdateOnboardingStateAction(
-                          //     hidePassword: !vm.hidePassword,
-                          //   ),
-                          // );
+                          context.dispatch(
+                            UpdateOnboardingStateAction(
+                              hideNewConfirmPassword:
+                                  !vm.hideNewConfirmPassword,
+                            ),
+                          );
                         },
-                        // obscureText: vm.hidePassword,
+                        obscureText: vm.hideNewConfirmPassword,
                       ),
 
                       PrimaryButton(

@@ -84,6 +84,7 @@ const String lastNameString = 'Last Name';
 const String lastNameHint = 'Enter your last name';
 const String emailAddressString = 'Email Address';
 const String confirmPasswordString = 'Confirm Password';
+const String confirmPasswordHint = 'Confirm your password';
 const String signUpWithGoogleString = 'Sign up with Google';
 const String alreadyHaveAnAccountString = 'Already have an account? ';
 
