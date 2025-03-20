@@ -190,3 +190,17 @@ final AppConfig testAppConfig = AppConfig(
   environment: AppEnvironment.dev.name,
   applicationName: kDevAppName,
 );
+
+String getFullName(String? firstName, String? lastName) {
+  final String fName = firstName?.trim() ?? '';
+  final String lName = lastName?.trim() ?? '';
+
+  if (fName.isEmpty && lName.isEmpty) {
+    return 'No Name';
+  }
+
+  if (fName.isEmpty) return lName;
+  if (lName.isEmpty) return fName;
+
+  return '$fName $lName';
+}
