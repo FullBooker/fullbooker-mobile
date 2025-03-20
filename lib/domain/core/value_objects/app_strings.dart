@@ -48,7 +48,7 @@ const String reEnterNewPasswordString = 'Re-enter New Password';
 const String changePasswordString = 'Change Password';
 
 // Login page
-const String welcomeString = 'Welcome';
+const String welcomeString = 'Welcome back!';
 const String signInCopy = 'Sign in to your account';
 const String phonNumberString = 'Phone Number';
 const String passwordString = 'Password';
@@ -77,8 +77,11 @@ const String goBackToString = 'Go back to ';
 const String loginString = 'Sign In';
 
 // Sign up page
+const String signupPageCopy = 'Enter your details below to create your account';
 const String firstNameString = 'First Name';
+const String firstNameHint = 'Enter your first name';
 const String lastNameString = 'Last Name';
+const String lastNameHint = 'Enter your last name';
 const String emailAddressString = 'Email Address';
 const String confirmPasswordString = 'Confirm Password';
 const String signUpWithGoogleString = 'Sign up with Google';

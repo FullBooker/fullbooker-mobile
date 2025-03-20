@@ -1,0 +1,290 @@
+import 'package:async_redux/async_redux.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:fullbooker/application/redux/states/app_state.dart';
+import 'package:fullbooker/application/redux/view_models/create_account_view_model.dart';
+import 'package:fullbooker/core/common/app_router.gr.dart';
+import 'package:fullbooker/core/common/constants.dart';
+import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
+import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
+import 'package:fullbooker/shared/entities/spaces.dart';
+import 'package:fullbooker/shared/widgets/custom_text_input.dart';
+import 'package:fullbooker/shared/validators.dart';
+import 'package:fullbooker/shared/widgets/primary_button.dart';
+import 'package:dartz/dartz.dart' as d;
+import 'package:heroicons/heroicons.dart';
+
+@RoutePage()
+class CreateAccountPage extends StatefulWidget {
+  const CreateAccountPage({super.key});
+
+  @override
+  State<StatefulWidget> createState() => CreateAccountPageState();
+}
+
+class CreateAccountPageState extends State<CreateAccountPage> {
+  final String appVersion = const String.fromEnvironment(
+    APPVERSION,
+    defaultValue: kDevBuild,
+  );
+
+  final TextEditingController confirmController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  String errorMessage = '';
+  // final OldLoginViewModel loginController = OldLoginViewModel();
+  bool isLoading = false;
+
+  final TextEditingController lastNameController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController phoneNumberController = TextEditingController();
+  bool signedUp = false;
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  // void signup(BuildContext context) {
+  //   if (_formKey.currentState!.validate()) {
+  //     _formKey.currentState!.save();
+  //     // final Future<String?> errFuture = loginController.signup(
+  //     //   emailController.value.text,
+  //     //   phoneNumberController.value.text,
+  //     //   '${nameController.value.text} ${lastNameController.value.text}',
+  //     //   passwordController.value.text,
+  //     // );
+  //     String? errOuter;
+  //     setState(() {
+  //       isLoading = true;
+  //       errorMessage = '';
+  //     });
+  //     errFuture.then((String? err) {
+  //       setState(() {
+  //         isLoading = false;
+  //         if (err != null) errorMessage = err;
+  //         if (err == null) signedUp = true;
+  //       });
+  //       errOuter = err;
+  //     });
+  //     if (errOuter == null && signedUp) context.router.replace(LoginRoute());
+  //   }
+  // }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (signedUp) context.router.replace(ConsumerHomeRoute());
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: StoreConnector<AppState, CreateAccountViewModel>(
+          converter: (Store<AppState> store) =>
+              CreateAccountViewModel.fromState(store.state),
+          builder: (BuildContext context, CreateAccountViewModel vm) {
+            return ListView(
+              children: <Widget>[
+                largeVerticalSizedBox,
+                SvgPicture.asset(appLogoFullSVGPath),
+                smallVerticalSizedBox,
+                Center(
+                  child: Column(
+                    spacing: 4,
+                    children: <Widget>[
+                      Text(
+                        letsGetStarted,
+                        style:
+                            Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                      ),
+                      Text(
+                        signupPageCopy,
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                    ],
+                  ),
+                ),
+                largeVerticalSizedBox,
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    spacing: 12,
+                    children: <Widget>[
+                      // First name
+                      CustomTextInput(
+                        hintText: firstNameHint,
+                        labelText: firstNameString,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (String? value) => validateName(
+                          value,
+                          fieldName: firstNameString.toLowerCase(),
+                        ),
+                        onChanged: (String value) {
+                          // context.dispatch(
+                          //   UpdateOnboardingStateAction(emailAddress: email),
+                          // );
+                        },
+                        keyboardType: TextInputType.name,
+                        prefixIconData: HeroIcons.user,
+                      ),
+
+                      // Last name
+                      CustomTextInput(
+                        hintText: lastNameHint,
+                        labelText: lastNameString,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (String? value) => validateName(
+                          value,
+                          fieldName: lastNameString.toLowerCase(),
+                        ),
+                        onChanged: (String value) {
+                          // context.dispatch(
+                          //   UpdateOnboardingStateAction(emailAddress: email),
+                          // );
+                        },
+                        keyboardType: TextInputType.name,
+                        prefixIconData: HeroIcons.user,
+                      ),
+
+                      // Email input
+                      CustomTextInput(
+                        hintText: emailAddressHint,
+                        labelText: emailAddressString,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (String? email) => validateEmail(email),
+                        onChanged: (String email) {
+                          // context.dispatch(
+                          //   UpdateOnboardingStateAction(emailAddress: email),
+                          // );
+                        },
+                        // hintText: newTransactionAmountHint,
+                        keyboardType: TextInputType.emailAddress,
+                        prefixIconData: HeroIcons.envelope,
+                      ),
+
+                      // Password
+                      CustomTextInput(
+                        labelText: passwordString,
+                        hintText: passwordHint,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (String? password) =>
+                            validatePassword(password),
+                        onChanged: (String v) {
+                          // context.dispatch(
+                          //   UpdateOnboardingStateAction(password: v.trim()),
+                          // );
+                        },
+                        // hintText: newTransactionAmountHint,
+                        keyboardType: TextInputType.visiblePassword,
+                        autofillHints: const <String>[
+                          AutofillHints.password,
+                        ],
+                        prefixIconData: HeroIcons.key,
+                        suffixIconData: HeroIcons.eyeSlash,
+                        suffixIconFunc: () {
+                          // context.dispatch(
+                          //   UpdateOnboardingStateAction(
+                          //     hidePassword: !vm.hidePassword,
+                          //   ),
+                          // );
+                        },
+                        // obscureText: vm.hidePassword,
+                      ),
+
+                      // Confirm password
+                      CustomTextInput(
+                        labelText: passwordString,
+                        hintText: passwordHint,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (String? confirm) =>
+                            validateConfirmPassword(confirm, confirm),
+                        onChanged: (String v) {
+                          // context.dispatch(
+                          //   UpdateOnboardingStateAction(password: v.trim()),
+                          // );
+                        },
+                        // hintText: newTransactionAmountHint,
+                        keyboardType: TextInputType.visiblePassword,
+                        autofillHints: const <String>[
+                          AutofillHints.password,
+                        ],
+                        prefixIconData: HeroIcons.key,
+                        suffixIconData: HeroIcons.eyeSlash,
+                        suffixIconFunc: () {
+                          // context.dispatch(
+                          //   UpdateOnboardingStateAction(
+                          //     hidePassword: !vm.hidePassword,
+                          //   ),
+                          // );
+                        },
+                        // obscureText: vm.hidePassword,
+                      ),
+
+                      PrimaryButton(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            // context.dispatch(
+                            //   LoginAction(
+                            //     onError: (String error) => showAlertDialog(
+                            //       context: context,
+                            //       assetPath: loginCredentialsSVGPath,
+                            //       description: error,
+                            //     ),
+                            //     onSuccess: () =>
+                            //         context.router.navigate(HostingHomeRoute()),
+                            //     client:
+                            //         AppWrapperBase.of(context)!.customClient,
+                            //   ),
+                            // );
+                          }
+                        },
+                        child: d.right(createAccount),
+                      ),
+                    ],
+                  ),
+                ),
+                mediumVerticalSizedBox,
+                Column(
+                  spacing: 12,
+                  children: <Widget>[
+                    RichText(
+                      text: TextSpan(
+                        children: <InlineSpan>[
+                          TextSpan(
+                            text: alreadyHaveAnAccountString,
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                          TextSpan(
+                            text: loginString,
+                            style:
+                                Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap =
+                                  () => context.router.replace(LoginRoute()),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Text(
+                      appVersionFormat(appVersion),
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  ],
+                ),
+              ],
+            );
+          },
+        ),
+      ),
+    );
+  }
+}

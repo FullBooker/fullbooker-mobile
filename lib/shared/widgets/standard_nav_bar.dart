@@ -4,6 +4,7 @@ import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 
+// TODO(abiud): remove this
 class StandardNavBar extends StatelessWidget implements PreferredSizeWidget {
   final bool showSearchBar;
   final Color iconsColor;
