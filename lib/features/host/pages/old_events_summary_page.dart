@@ -30,7 +30,7 @@ class _EventsSummaryPageState extends State<EventsSummaryPage> {
   void initState() {
     super.initState();
     productsController.repository
-        .post(<String, Object?>{}, hostsEndpoint).then((dynamic host) {
+        .post(<String, Object?>{}, kDevHostsEndpoint).then((dynamic host) {
       productsController.repository.pullMultiple(
         1,
         100,

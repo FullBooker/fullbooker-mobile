@@ -7,10 +7,11 @@ import 'package:fullbooker/application/redux/actions/update_user_state_action.da
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/domain/core/entities/login_response.dart';
+import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
-import 'package:fullbooker/domain/core/value_objects/endpoints.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/processed_response.dart';
+import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
 
 class CreateAccountAction extends ReduxAction<AppState> {
@@ -44,8 +45,10 @@ class CreateAccountAction extends ReduxAction<AppState> {
       'password': emailAddress,
     };
 
+    final String createAccountEndpoint =
+        GetIt.I.get<AppConfig>().googleSignInEndpoint;
+
     final Response httpResponse = await client.callRESTAPI(
-      // TODO(abiud): extract the endpoint from AppConfig
       endpoint: createAccountEndpoint,
       method: RestAPIMethods.POST.name.toUpperCase(),
       variables: data,

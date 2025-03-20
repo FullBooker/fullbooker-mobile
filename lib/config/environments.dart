@@ -26,7 +26,7 @@ class Flavour {
 }
 
 // TODO(abiud): this should come from
-Future<Flavour> development = Flavour.withDB(devAPIBaseURL);
+Future<Flavour> development = Flavour.withDB(kDevAPIBaseURL);
 
 late Flavour env;
 
