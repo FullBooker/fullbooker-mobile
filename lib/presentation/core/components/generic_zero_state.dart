@@ -53,6 +53,7 @@ class GenericZeroState extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyLarge,
             ),
             mediumVerticalSizedBox,
+            if(onCTATap!=null)
             PrimaryButton(
               buttonKey: ctaKey,
               onPressed: onCTATap,

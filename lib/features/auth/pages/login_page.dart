@@ -10,6 +10,7 @@ import 'package:fullbooker/application/redux/actions/update_onboarding_state_act
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/login_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
+import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
@@ -47,6 +48,11 @@ class LoginPageState extends State<LoginPage> {
     //   });
     // });
   }
+
+  final String appVersion = const String.fromEnvironment(
+    APPVERSION,
+    defaultValue: kDevBuild,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -211,32 +217,39 @@ class LoginPageState extends State<LoginPage> {
                     ],
                   ),
                 ),
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 40),
-                    child: RichText(
-                      text: TextSpan(
-                        children: <InlineSpan>[
-                          TextSpan(
-                            text: dontHaveAccountString,
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                          TextSpan(
-                            text: createAccount,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium
-                                ?.copyWith(
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap =
-                                  () => context.router.push(SignUpRoute()),
-                          ),
-                        ],
+                Column(
+                  spacing: 12,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(top: 40),
+                      child: RichText(
+                        text: TextSpan(
+                          children: <InlineSpan>[
+                            TextSpan(
+                              text: dontHaveAccountString,
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                            TextSpan(
+                              text: createAccount,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.copyWith(
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap =
+                                    () => context.router.push(SignUpRoute()),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
+                    Text(
+                      appVersionFormat(appVersion),
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  ],
                 ),
               ],
             );

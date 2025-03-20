@@ -344,6 +344,11 @@ const String noName = 'No name';
 
 const String madeByString = 'Made by Fullbooker';
 
-String copyright() => '© ${DateTime.now().year} Memoire. All rights reserved';
+String copyright() =>
+    '© ${DateTime.now().year} Fullbooker. All rights reserved';
 
 String appVersionFormat(String version) => 'Version: $version';
+
+const String comingSoonTitle = 'Coming soon';
+const String comingSoonCopy =
+    'We\'re working on something great. Check back soon for updates!';
