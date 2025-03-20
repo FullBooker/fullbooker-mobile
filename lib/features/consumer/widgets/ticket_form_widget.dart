@@ -111,12 +111,12 @@ class _TicketFormWidgetState extends State<TicketFormWidget> {
                     )
                   else
                     const SizedBox(),
-                  buildTextField(
-                    Icons.person,
-                    nameString,
-                    controller: nameController,
-                    validator: validateName,
-                  ),
+                  // buildTextField(
+                  //   Icons.person,
+                  //   nameString,
+                  //   controller: nameController,
+                  //   validator: validateName,
+                  // ),
                   buildTextField(
                     Icons.credit_card,
                     idNumber,

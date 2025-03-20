@@ -106,7 +106,7 @@ class OverviewPageState extends State<OverviewPage> {
                                     const EdgeInsets.symmetric(horizontal: 16),
                                 child: SecondaryButton(
                                   onPressed: () {
-                                    context.router.push(SignUpRoute());
+                                    context.router.push(CreateAccountRoute());
                                   },
                                   child: dz.right(createAccount),
                                 ),

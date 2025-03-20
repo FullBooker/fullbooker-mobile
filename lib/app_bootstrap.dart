@@ -66,11 +66,12 @@ Future<void> appBootStrap() async {
     // TODO(abiud): setup crashlytics
     // FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 
+    NavigateAction.setNavigatorKey(appGlobalNavigatorKey);
+
     runApp(
       AppEntryPoint(
         appStore: store,
         appName: appConfig.applicationName,
-        appNavigatorKey: appGlobalNavigatorKey,
       ),
     );
   }, (Object error, StackTrace stack) async {

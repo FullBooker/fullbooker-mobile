@@ -14,21 +14,21 @@ import 'package:flutter/foundation.dart' as _i35;
 import 'package:flutter/material.dart' as _i32;
 import 'package:fullbooker/features/auth/pages/change_password_page.dart'
     as _i6;
-import 'package:fullbooker/features/auth/pages/login_page.dart' as _i18;
-import 'package:fullbooker/features/auth/pages/request_otp_page.dart' as _i25;
-import 'package:fullbooker/features/auth/pages/sign_up_page.dart' as _i27;
+import 'package:fullbooker/features/auth/pages/create_account_page.dart' as _i8;
+import 'package:fullbooker/features/auth/pages/login_page.dart' as _i19;
+import 'package:fullbooker/features/auth/pages/request_otp_page.dart' as _i26;
 import 'package:fullbooker/features/auth/pages/verify_otp_page.dart' as _i29;
 import 'package:fullbooker/features/consumer/pages/consumer_home_page.dart'
     as _i7;
 import 'package:fullbooker/features/consumer/pages/event_details_page.dart'
-    as _i10;
-import 'package:fullbooker/features/consumer/pages/gallery_page.dart' as _i12;
+    as _i11;
+import 'package:fullbooker/features/consumer/pages/gallery_page.dart' as _i13;
 import 'package:fullbooker/features/consumer/pages/image_preview_page.dart'
-    as _i15;
+    as _i16;
 import 'package:fullbooker/features/consumer/pages/payment_confirmation_page.dart'
-    as _i20;
-import 'package:fullbooker/features/consumer/pages/payment_summary_page.dart'
     as _i21;
+import 'package:fullbooker/features/consumer/pages/payment_summary_page.dart'
+    as _i22;
 import 'package:fullbooker/features/host/models/currency.dart' as _i39;
 import 'package:fullbooker/features/host/models/product.dart' as _i33;
 import 'package:fullbooker/features/host/models/sub_category_model.dart'
@@ -43,21 +43,22 @@ import 'package:fullbooker/features/host/pages/activity_subscription_page.dart'
     as _i4;
 import 'package:fullbooker/features/host/pages/category_selection_page.dart'
     as _i5;
-import 'package:fullbooker/features/host/pages/date_selection_page.dart' as _i8;
-import 'package:fullbooker/features/host/pages/event_category_page.dart' as _i9;
+import 'package:fullbooker/features/host/pages/date_selection_page.dart' as _i9;
+import 'package:fullbooker/features/host/pages/event_category_page.dart'
+    as _i10;
 import 'package:fullbooker/features/host/pages/host_product_summary_page.dart'
-    as _i13;
-import 'package:fullbooker/features/host/pages/hosting_home_page.dart' as _i14;
+    as _i14;
+import 'package:fullbooker/features/host/pages/hosting_home_page.dart' as _i15;
 import 'package:fullbooker/features/host/pages/image_selection_page.dart'
-    as _i16;
-import 'package:fullbooker/features/host/pages/location_selection_page.dart'
     as _i17;
+import 'package:fullbooker/features/host/pages/location_selection_page.dart'
+    as _i18;
 import 'package:fullbooker/features/host/pages/old_events_summary_page.dart'
-    as _i11;
+    as _i12;
 import 'package:fullbooker/features/host/pages/product_details_page.dart'
-    as _i22;
-import 'package:fullbooker/features/host/pages/products_page.dart' as _i23;
-import 'package:fullbooker/features/host/pages/profile_page.dart' as _i24;
+    as _i23;
+import 'package:fullbooker/features/host/pages/products_page.dart' as _i24;
+import 'package:fullbooker/features/host/pages/profile_page.dart' as _i25;
 import 'package:fullbooker/features/host/pages/tickets_summary_page.dart'
     as _i28;
 import 'package:fullbooker/features/host/pages/video_selection_page.dart'
@@ -65,8 +66,8 @@ import 'package:fullbooker/features/host/pages/video_selection_page.dart'
 import 'package:fullbooker/shared/entities/enums.dart' as _i36;
 import 'package:fullbooker/shared/entities/session_pricing.dart' as _i34;
 import 'package:fullbooker/shared/entities/ticket.dart' as _i37;
-import 'package:fullbooker/shared/pages/overview_page.dart' as _i19;
-import 'package:fullbooker/shared/pages/shared_landing_page.dart' as _i26;
+import 'package:fullbooker/shared/pages/overview_page.dart' as _i20;
+import 'package:fullbooker/shared/pages/shared_landing_page.dart' as _i27;
 
 /// generated route for
 /// [_i1.ActivityDateSelectionPage]
@@ -341,7 +342,23 @@ class ConsumerHomeRoute extends _i31.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i8.DateSelectionPage]
+/// [_i8.CreateAccountPage]
+class CreateAccountRoute extends _i31.PageRouteInfo<void> {
+  const CreateAccountRoute({List<_i31.PageRouteInfo>? children})
+    : super(CreateAccountRoute.name, initialChildren: children);
+
+  static const String name = 'CreateAccountRoute';
+
+  static _i31.PageInfo page = _i31.PageInfo(
+    name,
+    builder: (data) {
+      return const _i8.CreateAccountPage();
+    },
+  );
+}
+
+/// generated route for
+/// [_i9.DateSelectionPage]
 class DateSelectionRoute extends _i31.PageRouteInfo<DateSelectionRouteArgs> {
   DateSelectionRoute({
     _i32.Key? key,
@@ -364,7 +381,7 @@ class DateSelectionRoute extends _i31.PageRouteInfo<DateSelectionRouteArgs> {
     name,
     builder: (data) {
       final args = data.argsAs<DateSelectionRouteArgs>();
-      return _i8.DateSelectionPage(
+      return _i9.DateSelectionPage(
         key: args.key,
         location: args.location,
         product: args.product,
@@ -393,7 +410,7 @@ class DateSelectionRouteArgs {
 }
 
 /// generated route for
-/// [_i9.EventCategoryPage]
+/// [_i10.EventCategoryPage]
 class EventCategoryRoute extends _i31.PageRouteInfo<EventCategoryRouteArgs> {
   EventCategoryRoute({
     _i32.Key? key,
@@ -411,7 +428,7 @@ class EventCategoryRoute extends _i31.PageRouteInfo<EventCategoryRouteArgs> {
     name,
     builder: (data) {
       final args = data.argsAs<EventCategoryRouteArgs>();
-      return _i9.EventCategoryPage(key: args.key, product: args.product);
+      return _i10.EventCategoryPage(key: args.key, product: args.product);
     },
   );
 }
@@ -430,7 +447,7 @@ class EventCategoryRouteArgs {
 }
 
 /// generated route for
-/// [_i10.EventDetailsPage]
+/// [_i11.EventDetailsPage]
 class EventDetailsRoute extends _i31.PageRouteInfo<EventDetailsRouteArgs> {
   EventDetailsRoute({
     _i35.Key? key,
@@ -453,7 +470,7 @@ class EventDetailsRoute extends _i31.PageRouteInfo<EventDetailsRouteArgs> {
     name,
     builder: (data) {
       final args = data.argsAs<EventDetailsRouteArgs>();
-      return _i10.EventDetailsPage(
+      return _i11.EventDetailsPage(
         key: args.key,
         event: args.event,
         productLocationName: args.productLocationName,
@@ -482,7 +499,7 @@ class EventDetailsRouteArgs {
 }
 
 /// generated route for
-/// [_i11.EventsSummaryPage]
+/// [_i12.EventsSummaryPage]
 class EventsSummaryRoute extends _i31.PageRouteInfo<void> {
   const EventsSummaryRoute({List<_i31.PageRouteInfo>? children})
     : super(EventsSummaryRoute.name, initialChildren: children);
@@ -492,13 +509,13 @@ class EventsSummaryRoute extends _i31.PageRouteInfo<void> {
   static _i31.PageInfo page = _i31.PageInfo(
     name,
     builder: (data) {
-      return const _i11.EventsSummaryPage();
+      return const _i12.EventsSummaryPage();
     },
   );
 }
 
 /// generated route for
-/// [_i12.GalleryPage]
+/// [_i13.GalleryPage]
 class GalleryRoute extends _i31.PageRouteInfo<GalleryRouteArgs> {
   GalleryRoute({
     _i32.Key? key,
@@ -516,7 +533,7 @@ class GalleryRoute extends _i31.PageRouteInfo<GalleryRouteArgs> {
     name,
     builder: (data) {
       final args = data.argsAs<GalleryRouteArgs>();
-      return _i12.GalleryPage(key: args.key, images: args.images);
+      return _i13.GalleryPage(key: args.key, images: args.images);
     },
   );
 }
@@ -535,7 +552,7 @@ class GalleryRouteArgs {
 }
 
 /// generated route for
-/// [_i13.HostProductSummaryPage]
+/// [_i14.HostProductSummaryPage]
 class HostProductSummaryRoute
     extends _i31.PageRouteInfo<HostProductSummaryRouteArgs> {
   HostProductSummaryRoute({
@@ -554,7 +571,7 @@ class HostProductSummaryRoute
     name,
     builder: (data) {
       final args = data.argsAs<HostProductSummaryRouteArgs>();
-      return _i13.HostProductSummaryPage(key: args.key, host: args.host);
+      return _i14.HostProductSummaryPage(key: args.key, host: args.host);
     },
   );
 }
@@ -573,7 +590,7 @@ class HostProductSummaryRouteArgs {
 }
 
 /// generated route for
-/// [_i14.HostingHomePage]
+/// [_i15.HostingHomePage]
 class HostingHomeRoute extends _i31.PageRouteInfo<void> {
   const HostingHomeRoute({List<_i31.PageRouteInfo>? children})
     : super(HostingHomeRoute.name, initialChildren: children);
@@ -583,13 +600,13 @@ class HostingHomeRoute extends _i31.PageRouteInfo<void> {
   static _i31.PageInfo page = _i31.PageInfo(
     name,
     builder: (data) {
-      return const _i14.HostingHomePage();
+      return const _i15.HostingHomePage();
     },
   );
 }
 
 /// generated route for
-/// [_i15.ImagePreviewPage]
+/// [_i16.ImagePreviewPage]
 class ImagePreviewRoute extends _i31.PageRouteInfo<ImagePreviewRouteArgs> {
   ImagePreviewRoute({
     _i32.Key? key,
@@ -607,7 +624,7 @@ class ImagePreviewRoute extends _i31.PageRouteInfo<ImagePreviewRouteArgs> {
     name,
     builder: (data) {
       final args = data.argsAs<ImagePreviewRouteArgs>();
-      return _i15.ImagePreviewPage(key: args.key, imageUrl: args.imageUrl);
+      return _i16.ImagePreviewPage(key: args.key, imageUrl: args.imageUrl);
     },
   );
 }
@@ -626,7 +643,7 @@ class ImagePreviewRouteArgs {
 }
 
 /// generated route for
-/// [_i16.ImageSelectionPage]
+/// [_i17.ImageSelectionPage]
 class ImageSelectionRoute extends _i31.PageRouteInfo<ImageSelectionRouteArgs> {
   ImageSelectionRoute({
     _i32.Key? key,
@@ -645,7 +662,7 @@ class ImageSelectionRoute extends _i31.PageRouteInfo<ImageSelectionRouteArgs> {
     name,
     builder: (data) {
       final args = data.argsAs<ImageSelectionRouteArgs>();
-      return _i16.ImageSelectionPage(
+      return _i17.ImageSelectionPage(
         key: args.key,
         product: args.product,
         type: args.type,
@@ -674,7 +691,7 @@ class ImageSelectionRouteArgs {
 }
 
 /// generated route for
-/// [_i17.LocationSelectionPage]
+/// [_i18.LocationSelectionPage]
 class LocationSelectionRoute
     extends _i31.PageRouteInfo<LocationSelectionRouteArgs> {
   LocationSelectionRoute({
@@ -698,7 +715,7 @@ class LocationSelectionRoute
     name,
     builder: (data) {
       final args = data.argsAs<LocationSelectionRouteArgs>();
-      return _i17.LocationSelectionPage(
+      return _i18.LocationSelectionPage(
         args.product,
         key: args.key,
         productType: args.productType,
@@ -727,7 +744,7 @@ class LocationSelectionRouteArgs {
 }
 
 /// generated route for
-/// [_i18.LoginPage]
+/// [_i19.LoginPage]
 class LoginRoute extends _i31.PageRouteInfo<void> {
   const LoginRoute({List<_i31.PageRouteInfo>? children})
     : super(LoginRoute.name, initialChildren: children);
@@ -737,13 +754,13 @@ class LoginRoute extends _i31.PageRouteInfo<void> {
   static _i31.PageInfo page = _i31.PageInfo(
     name,
     builder: (data) {
-      return const _i18.LoginPage();
+      return const _i19.LoginPage();
     },
   );
 }
 
 /// generated route for
-/// [_i19.OverviewPage]
+/// [_i20.OverviewPage]
 class OverviewRoute extends _i31.PageRouteInfo<void> {
   const OverviewRoute({List<_i31.PageRouteInfo>? children})
     : super(OverviewRoute.name, initialChildren: children);
@@ -753,13 +770,13 @@ class OverviewRoute extends _i31.PageRouteInfo<void> {
   static _i31.PageInfo page = _i31.PageInfo(
     name,
     builder: (data) {
-      return const _i19.OverviewPage();
+      return const _i20.OverviewPage();
     },
   );
 }
 
 /// generated route for
-/// [_i20.PaymentConfirmationPage]
+/// [_i21.PaymentConfirmationPage]
 class PaymentConfirmationRoute
     extends _i31.PageRouteInfo<PaymentConfirmationRouteArgs> {
   PaymentConfirmationRoute({
@@ -785,7 +802,7 @@ class PaymentConfirmationRoute
     name,
     builder: (data) {
       final args = data.argsAs<PaymentConfirmationRouteArgs>();
-      return _i20.PaymentConfirmationPage(
+      return _i21.PaymentConfirmationPage(
         key: args.key,
         product: args.product,
         locationName: args.locationName,
@@ -818,7 +835,7 @@ class PaymentConfirmationRouteArgs {
 }
 
 /// generated route for
-/// [_i21.PaymentSummaryPage]
+/// [_i22.PaymentSummaryPage]
 class PaymentSummaryRoute extends _i31.PageRouteInfo<PaymentSummaryRouteArgs> {
   PaymentSummaryRoute({
     _i32.Key? key,
@@ -845,7 +862,7 @@ class PaymentSummaryRoute extends _i31.PageRouteInfo<PaymentSummaryRouteArgs> {
     name,
     builder: (data) {
       final args = data.argsAs<PaymentSummaryRouteArgs>();
-      return _i21.PaymentSummaryPage(
+      return _i22.PaymentSummaryPage(
         key: args.key,
         product: args.product,
         locationName: args.locationName,
@@ -882,7 +899,7 @@ class PaymentSummaryRouteArgs {
 }
 
 /// generated route for
-/// [_i22.ProductDetailsPage]
+/// [_i23.ProductDetailsPage]
 class ProductDetailsRoute extends _i31.PageRouteInfo<ProductDetailsRouteArgs> {
   ProductDetailsRoute({
     required _i38.SubCategory category,
@@ -905,7 +922,7 @@ class ProductDetailsRoute extends _i31.PageRouteInfo<ProductDetailsRouteArgs> {
     name,
     builder: (data) {
       final args = data.argsAs<ProductDetailsRouteArgs>();
-      return _i22.ProductDetailsPage(
+      return _i23.ProductDetailsPage(
         args.category,
         key: args.key,
         productType: args.productType,
@@ -934,7 +951,7 @@ class ProductDetailsRouteArgs {
 }
 
 /// generated route for
-/// [_i23.ProductsPage]
+/// [_i24.ProductsPage]
 class ProductsRoute extends _i31.PageRouteInfo<void> {
   const ProductsRoute({List<_i31.PageRouteInfo>? children})
     : super(ProductsRoute.name, initialChildren: children);
@@ -944,13 +961,13 @@ class ProductsRoute extends _i31.PageRouteInfo<void> {
   static _i31.PageInfo page = _i31.PageInfo(
     name,
     builder: (data) {
-      return const _i23.ProductsPage();
+      return const _i24.ProductsPage();
     },
   );
 }
 
 /// generated route for
-/// [_i24.ProfilePage]
+/// [_i25.ProfilePage]
 class ProfileRoute extends _i31.PageRouteInfo<void> {
   const ProfileRoute({List<_i31.PageRouteInfo>? children})
     : super(ProfileRoute.name, initialChildren: children);
@@ -960,13 +977,13 @@ class ProfileRoute extends _i31.PageRouteInfo<void> {
   static _i31.PageInfo page = _i31.PageInfo(
     name,
     builder: (data) {
-      return const _i24.ProfilePage();
+      return const _i25.ProfilePage();
     },
   );
 }
 
 /// generated route for
-/// [_i25.RequestOTPPage]
+/// [_i26.RequestOTPPage]
 class RequestOTPRoute extends _i31.PageRouteInfo<void> {
   const RequestOTPRoute({List<_i31.PageRouteInfo>? children})
     : super(RequestOTPRoute.name, initialChildren: children);
@@ -976,13 +993,13 @@ class RequestOTPRoute extends _i31.PageRouteInfo<void> {
   static _i31.PageInfo page = _i31.PageInfo(
     name,
     builder: (data) {
-      return const _i25.RequestOTPPage();
+      return const _i26.RequestOTPPage();
     },
   );
 }
 
 /// generated route for
-/// [_i26.SharedLandingPage]
+/// [_i27.SharedLandingPage]
 class SharedLandingRoute extends _i31.PageRouteInfo<void> {
   const SharedLandingRoute({List<_i31.PageRouteInfo>? children})
     : super(SharedLandingRoute.name, initialChildren: children);
@@ -992,23 +1009,7 @@ class SharedLandingRoute extends _i31.PageRouteInfo<void> {
   static _i31.PageInfo page = _i31.PageInfo(
     name,
     builder: (data) {
-      return const _i26.SharedLandingPage();
-    },
-  );
-}
-
-/// generated route for
-/// [_i27.SignUpPage]
-class SignUpRoute extends _i31.PageRouteInfo<void> {
-  const SignUpRoute({List<_i31.PageRouteInfo>? children})
-    : super(SignUpRoute.name, initialChildren: children);
-
-  static const String name = 'SignUpRoute';
-
-  static _i31.PageInfo page = _i31.PageInfo(
-    name,
-    builder: (data) {
-      return const _i27.SignUpPage();
+      return const _i27.SharedLandingPage();
     },
   );
 }

@@ -16,18 +16,59 @@ String? validateEmail(String? email, {bool isOptional = false}) {
 }
 
 String? validatePassword(String? password) {
-  if (password == null || password.trim().isEmpty) {
+  final String? trimmedPass = password?.trim();
+
+  if (trimmedPass == null || trimmedPass.trim().isEmpty) {
     return 'Please enter your password.';
   }
 
-  if (password.length < 8) {
-    return 'Password must be at least 8 characters long.';
+  if (trimmedPass.length < 8) {
+    return 'Password must be at least 8 characters';
   }
 
   return null;
 }
 
-/// OTHERS
+String? validateConfirmPassword(
+  String? confirmPassword,
+  String? currentPassword,
+) {
+  final String? trimmedConfirmPass = confirmPassword?.trim();
+
+  if (trimmedConfirmPass == null || trimmedConfirmPass.isEmpty) {
+    return 'Please confirm your password.';
+  }
+
+  if (trimmedConfirmPass.length < 8) {
+    return 'Confirm password must be at least 8 characters';
+  }
+
+  if (currentPassword?.trim() != trimmedConfirmPass) {
+    return 'Passwords don\'t match.';
+  }
+
+  return null;
+}
+
+String? validateName(
+  String? name, {
+  required String fieldName,
+  bool isOptional = false,
+}) {
+  final String? trimmedName = name?.trim();
+
+  if (trimmedName == null || trimmedName.isEmpty) {
+    return isOptional ? null : 'Please enter your $fieldName.';
+  }
+
+  if (trimmedName.length < 2) {
+    return '$fieldName is too short.';
+  }
+
+  return null;
+}
+
+///------ OTHERS ------ REMOVE once done
 
 String? validateNotEmpty(String? val, {bool isOptional = false}) {
   if (isOptional) return null;
@@ -42,22 +83,5 @@ String? validatePhoneNumber(String? number, {bool isOptional = false}) {
   if (number == null) return 'Please enter your email';
   final bool isValidPhone = validPhoneRegex.hasMatch(number);
   if (!isValidPhone) return 'Please enter a valid phone number';
-  return null;
-}
-
-String? validateName(String? name, {bool isOptional = false}) {
-  if (name == null && !isOptional) return null;
-  if (name == null) return 'Please enter your user name';
-  if (name.isEmpty) return 'Please enter your user name';
-  if (name.split(' ').length < 2) return 'Please enter one or more names';
-  return null;
-}
-
-String? validateConfirmPassword(String? password, String? confirm) {
-  String? passConfirm = validatePassword(password);
-  if (passConfirm != null) return passConfirm;
-  passConfirm = validatePassword(confirm);
-  if (passConfirm != null) return passConfirm;
-  if (password != confirm) return 'Password do not match';
   return null;
 }

@@ -35,21 +35,6 @@ class LoginPage extends StatefulWidget {
 class LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  void loginWithGoogle() {
-    // final Future<String?> errFuture = loginController.signInWithGoogle();
-    // setState(() {
-    //   loading = true;
-    //   errorMessage = '';
-    // });
-    // errFuture.then((String? err) {
-    //   setState(() {
-    //     loading = false;
-    //     if (err != null) errorMessage = err;
-    //     if (err == null) loggedIn = true;
-    //   });
-    // });
-  }
-
   final String appVersion = const String.fromEnvironment(
     APPVERSION,
     defaultValue: kDevBuild,
@@ -60,7 +45,7 @@ class LoginPageState extends State<LoginPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(16),
         child: StoreConnector<AppState, LoginPageViewModel>(
           converter: (Store<AppState> store) =>
               LoginPageViewModel.fromState(store.state),
@@ -75,7 +60,7 @@ class LoginPageState extends State<LoginPage> {
                     spacing: 4,
                     children: <Widget>[
                       Text(
-                        letsGetStarted,
+                        welcomeString,
                         style:
                             Theme.of(context).textTheme.headlineSmall?.copyWith(
                                   color: Theme.of(context).primaryColor,
@@ -271,8 +256,8 @@ class LoginPageState extends State<LoginPage> {
                                     color: Theme.of(context).primaryColor,
                                   ),
                               recognizer: TapGestureRecognizer()
-                                ..onTap =
-                                    () => context.router.push(SignUpRoute()),
+                                ..onTap = () => context.router
+                                    .replace(CreateAccountRoute()),
                             ),
                           ],
                         ),

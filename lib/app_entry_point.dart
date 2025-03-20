@@ -11,13 +11,11 @@ class AppEntryPoint extends StatelessWidget {
   const AppEntryPoint({
     super.key,
     required this.appName,
-    required this.appNavigatorKey,
     required this.appStore,
     this.fcmToken,
   });
 
   final String appName;
-  final GlobalKey<NavigatorState> appNavigatorKey;
 
   final Store<AppState> appStore;
   final String? fcmToken;
