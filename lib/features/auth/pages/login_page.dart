@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
 import 'package:fullbooker/application/redux/actions/login_action.dart';
+import 'package:fullbooker/application/redux/actions/sign_in_with_google_action.dart';
 import 'package:fullbooker/application/redux/actions/update_onboarding_state_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/login_view_model.dart';
@@ -189,30 +190,55 @@ class LoginPageState extends State<LoginPage> {
                         padding: const EdgeInsets.symmetric(vertical: 24),
                         child: DividerWithText(text: orString),
                       ),
-                      SecondaryButton(
-                        onPressed: () {
-                          loginWithGoogle();
-                        },
-                        child: d.left(
-                          Center(
-                            child: Row(
-                              spacing: 8,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                SvgPicture.asset(googleIconSVGPath),
-                                Text(
-                                  signInWithGoogleString,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge
-                                      ?.copyWith(
-                                        color: Theme.of(context).primaryColor,
-                                      ),
+                      StoreConnector<AppState, LoginPageViewModel>(
+                        converter: (Store<AppState> store) =>
+                            LoginPageViewModel.fromState(store.state),
+                        builder: (
+                          BuildContext context,
+                          LoginPageViewModel snapshot,
+                        ) {
+                          if (context.isWaiting(SignInWithGoogleAction)) {
+                            return AppLoading();
+                          }
+                          return SecondaryButton(
+                            onPressed: () {
+                              context.dispatch(
+                                SignInWithGoogleAction(
+                                  onError: (String error) => showAlertDialog(
+                                    context: context,
+                                    assetPath: loginCredentialsSVGPath,
+                                    description: error,
+                                  ),
+                                  onSuccess: () => context.router
+                                      .navigate(HostingHomeRoute()),
+                                  client:
+                                      AppWrapperBase.of(context)!.customClient,
                                 ),
-                              ],
+                              );
+                            },
+                            child: d.left(
+                              Center(
+                                child: Row(
+                                  spacing: 8,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    SvgPicture.asset(googleIconSVGPath),
+                                    Text(
+                                      signInWithGoogleString,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge
+                                          ?.copyWith(
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                          ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
+                          );
+                        },
                       ),
                     ],
                   ),
