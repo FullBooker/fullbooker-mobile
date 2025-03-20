@@ -8,7 +8,7 @@ final List<String> googleSignInScopes = <String>[
 const String devAPIBaseURL = 'https://api.dev.fullbooker.co.ke';
 
 const String loginEndpoint = '$devAPIBaseURL/accounts/signin/';
-const String googleSignInEndpoint = '/accounts/google/';
+const String googleSignInEndpoint = '$devAPIBaseURL/accounts/google/';
 const String signUpEndpoint = '/accounts/signup/';
 const String requestOTPEndpoint = '/accounts/otp/request';
 const String verifyOTPEndpoint = '/accounts/otp/verify';
