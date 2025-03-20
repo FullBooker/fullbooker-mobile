@@ -335,5 +335,6 @@ const String defaultUserFriendlyMessage = 'Sorry, an '
     'help center.';
 
 // Product zero state
-const String noProducts = 'No products';
-const String noProductsCopy = 'Let’s create our first product';
+const String noProducts = 'No products added';
+const String noProductsCopy = 'Start building your catalog by adding your first product. Make it easy for customers to browse and purchase.';
+const String createProductString = 'Create Product ';

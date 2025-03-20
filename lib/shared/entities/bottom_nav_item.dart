@@ -28,12 +28,12 @@ final List<BottomNavItem> bottomNavItems = <BottomNavItem>[
     itemKey: 'bottom-nav-2',
     title: productsString,
     iconUrl: HeroIcons.cube,
-    route: const HostingHomeRoute(),
+    route: const ProductsRoute(),
   ),
   BottomNavItem(
     itemKey: 'bottom-nav-3',
     title: profileString,
     iconUrl: HeroIcons.user,
-    route: const HostingHomeRoute(),
+    route: const ProfileRoute(),
   ),
 ];
