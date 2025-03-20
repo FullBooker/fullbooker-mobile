@@ -5,18 +5,18 @@ class LoginPageViewModel extends Vm {
   LoginPageViewModel({
     required this.emailAddress,
     required this.password,
-    required this.showPassword,
-  }) : super(equals: <Object?>[emailAddress, password, showPassword]);
+    required this.hidePassword,
+  }) : super(equals: <Object?>[emailAddress, password, hidePassword]);
 
   final String? emailAddress;
   final String? password;
-  final bool showPassword;
+  final bool hidePassword;
 
   static LoginPageViewModel fromState(AppState state) {
     return LoginPageViewModel(
       emailAddress: state.onboardingState?.emailAddress,
       password: state.onboardingState?.password,
-      showPassword: state.onboardingState?.showPassword ?? false,
+      hidePassword: state.onboardingState!.hidePassword,
     );
   }
 }

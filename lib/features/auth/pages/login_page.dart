@@ -129,7 +129,14 @@ class LoginPageState extends State<LoginPage> {
                         ],
                         prefixIconData: HeroIcons.key,
                         suffixIconData: HeroIcons.eyeSlash,
-                        obscureText: vm.showPassword,
+                        suffixIconFunc: () {
+                          context.dispatch(
+                            UpdateOnboardingStateAction(
+                              hidePassword: !vm.hidePassword,
+                            ),
+                          );
+                        },
+                        obscureText: vm.hidePassword,
                       ),
                       SizedBox(
                         width: double.infinity,

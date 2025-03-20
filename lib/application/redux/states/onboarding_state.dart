@@ -14,7 +14,7 @@ class OnboardingState with _$OnboardingState {
 
     /// LOGIN VALUES
     @Default(false) bool invalidCredentials,
-    @Default(false) bool showPassword,
+    @Default(true) bool hidePassword,
 
     /// VERIFY PHONE VALUES
     @Default(false) bool invalidOTP,
