@@ -1,1 +1,1 @@
-flutter build apk --build-number=8 --build-name=1.0.8-dev --obfuscate --split-debug-info=dump/ --release --dart-define=APPVERSION=1.0.8-dev --dart-define=ENV=DEV
+flutter build apk --build-number=10 --build-name=1.0.10-dev --obfuscate --split-debug-info=dump/ --release --dart-define=APPVERSION=1.0.10-dev --dart-define=ENV=DEV
