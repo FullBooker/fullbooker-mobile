@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:fullbooker/application/redux/actions/logout_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/login_view_model.dart';
-import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/generic_zero_state.dart';
@@ -69,20 +68,9 @@ class _HostingHomePageState extends State<HostingHomePage> {
 
                 return GenericZeroState(
                   iconPath: productZeroStateSVGPath,
-                  title: noProducts,
-                  description: noProductsCopy,
-                  onCTATap: () {
-                    context.dispatch(
-                      LogoutAction(
-                        onDone: () {
-                          context.router.pushAndPopUntil(
-                            const LoginRoute(),
-                            predicate: (Route<dynamic> route) => false,
-                          );
-                        },
-                      ),
-                    );
-                  },
+                  title: comingSoonTitle,
+                  description: comingSoonCopy,
+                  onCTATap: null,
                   ctaText: logoutString,
                 );
               },
