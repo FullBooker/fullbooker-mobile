@@ -6,8 +6,8 @@ import 'package:fullbooker/application/redux/actions/update_auth_state_action.da
 import 'package:fullbooker/application/redux/actions/update_user_state_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/domain/core/entities/login_response.dart';
+import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
-import 'package:fullbooker/domain/core/value_objects/endpoints.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/processed_response.dart';
 import 'package:get_it/get_it.dart';
@@ -47,8 +47,10 @@ class SignInWithGoogleAction extends ReduxAction<AppState> {
         'access_token': auth.accessToken,
       };
 
+      final String googleSignInEndpoint =
+          GetIt.I.get<AppConfig>().googleSignInEndpoint;
+
       final Response httpResponse = await client.callRESTAPI(
-        // TODO(abiud): extract the endpoint from AppConfig
         endpoint: googleSignInEndpoint,
         method: RestAPIMethods.POST.name.toUpperCase(),
         variables: data,

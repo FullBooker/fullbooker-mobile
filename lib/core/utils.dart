@@ -8,6 +8,7 @@ import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
+import 'package:fullbooker/domain/core/value_objects/endpoints.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/regexes.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
@@ -173,6 +174,9 @@ final AppConfig devAppConfig = AppConfig(
   sentryDsn: '',
   environment: AppEnvironment.dev.name,
   applicationName: kDevAppName,
+  loginEndpoint: kDevLoginEndpoint,
+  createAccountEndpoint: kDevCreateAccountEndpoint,
+  googleSignInEndpoint: kDevGoogleSignInEndpoint,
 );
 
 final AppConfig prodAppConfig = AppConfig(
@@ -181,6 +185,9 @@ final AppConfig prodAppConfig = AppConfig(
   sentryDsn: '',
   environment: AppEnvironment.prod.name,
   applicationName: kAppName,
+  loginEndpoint: kProdLoginEndpoint,
+  createAccountEndpoint: kProdCreateAccountEndpoint,
+  googleSignInEndpoint: kProdGoogleSignInEndpoint,
 );
 
 final AppConfig testAppConfig = AppConfig(
@@ -189,6 +196,9 @@ final AppConfig testAppConfig = AppConfig(
   sentryDsn: '',
   environment: AppEnvironment.dev.name,
   applicationName: kDevAppName,
+  loginEndpoint: kTestLoginEndpoint,
+  createAccountEndpoint: kTestCreateAccountEndpoint,
+  googleSignInEndpoint: kTestGoogleSignInEndpoint,
 );
 
 String getFullName(String? firstName, String? lastName) {

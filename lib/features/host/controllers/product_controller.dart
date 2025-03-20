@@ -33,9 +33,9 @@ class ProductViewModel extends BaseViewModel<Product> {
     };
     if (description != null) productData['description'] = description;
     try {
-      repository.post(<String, Object?>{}, hostsEndpoint);
-      final dynamic response =
-          await repository.post(productData, productsEndpoint, serialize: true);
+      repository.post(<String, Object?>{}, kDevHostsEndpoint);
+      final dynamic response = await repository
+          .post(productData, kDevProductsEndpoint, serialize: true);
       return response as Product;
     } catch (exception) {
       return null;
@@ -55,7 +55,8 @@ class ProductViewModel extends BaseViewModel<Product> {
       'address': address,
     };
     try {
-      final dynamic response = await repository.post(objData, locationEndpoint);
+      final dynamic response =
+          await repository.post(objData, kDevLocationEndpoint);
       return response as Map<String, Object?>;
     } catch (exception) {
       return null;
@@ -100,7 +101,7 @@ class ProductViewModel extends BaseViewModel<Product> {
     };
     try {
       final dynamic response =
-          await repository.postWithImages(mediaData, images, mediaEndpoint);
+          await repository.postWithImages(mediaData, images, kDevMediaEndpoint);
       return response as Map<String, Object?>;
     } catch (exception) {
       return null;
@@ -128,7 +129,7 @@ class ProductViewModel extends BaseViewModel<Product> {
       };
       try {
         final dynamic response =
-            await repository.post(pricingData, pricingEndpoint);
+            await repository.post(pricingData, kDevPricingEndpoint);
         pricesCreated.add(response as Map<String, Object?>);
       } catch (exception) {
         pricesFailed.add(exception);
@@ -168,7 +169,7 @@ class ProductViewModel extends BaseViewModel<Product> {
     };
     try {
       final dynamic response =
-          await repository.post(availabilityData, availabilityEndpoint);
+          await repository.post(availabilityData, kDevAvailabilityEndpoint);
       return response as Map<String, Object?>;
     } catch (exception) {
       return null;
@@ -191,7 +192,7 @@ class ProductViewModel extends BaseViewModel<Product> {
     };
     try {
       final dynamic response =
-          await repository.post(sessionPricingData, pricingEndpoint);
+          await repository.post(sessionPricingData, kDevPricingEndpoint);
       responses.add(response as Map<String, Object?>);
     } catch (exception) {
       return null;
@@ -207,7 +208,7 @@ class ProductViewModel extends BaseViewModel<Product> {
       };
       try {
         final dynamic response =
-            await repository.post(dayPassPricingData, pricingEndpoint);
+            await repository.post(dayPassPricingData, kDevPricingEndpoint);
         responses.add(response as Map<String, Object?>);
       } catch (exception) {
         return null;

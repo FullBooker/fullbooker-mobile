@@ -26,7 +26,7 @@ class OldLoginViewModel extends BaseViewModel<Token> {
         'password': password,
       };
       final dynamic res =
-          await _repository.post(data, loginEndpoint, withHeaders: false);
+          await _repository.post(data, kDevLoginEndpoint, withHeaders: false);
       switch (res.runtimeType) {
         case final Token val:
           await repository.store.set(res);
@@ -57,7 +57,7 @@ class OldLoginViewModel extends BaseViewModel<Token> {
 
       final dynamic res = await _repository.post(
         data,
-        googleSignInEndpoint,
+        kDevGoogleSignInEndpoint,
         withHeaders: false,
       );
       switch (res.runtimeType) {
@@ -93,7 +93,8 @@ class OldLoginViewModel extends BaseViewModel<Token> {
       'password': password,
     };
     try {
-      final dynamic res = await _repository.post(data, createAccountEndpoint);
+      final dynamic res =
+          await _repository.post(data, kDevCreateAccountEndpoint);
       switch (res.runtimeType) {
         case final Token val:
           await repository.store.set(res);
@@ -112,7 +113,7 @@ class OldLoginViewModel extends BaseViewModel<Token> {
   Future<String?> resetPassword(String phone) async {
     final Map<String, String> data = <String, String>{'identifier': phone};
     try {
-      await _repository.post(data, requestOTPEndpoint);
+      await _repository.post(data, kDevRequestOTPEndpoint);
     } catch (exception) {
       return verifyNumberString;
     }
@@ -126,7 +127,7 @@ class OldLoginViewModel extends BaseViewModel<Token> {
     };
 
     try {
-      await _repository.post(data, verifyOTPEndpoint);
+      await _repository.post(data, kDevVerifyOTPEndpoint);
     } catch (exc) {
       return weCouldNotVerifyOTPString;
     }
@@ -140,7 +141,7 @@ class OldLoginViewModel extends BaseViewModel<Token> {
     };
 
     try {
-      await _repository.post(data, resetPasswordEndpoint);
+      await _repository.post(data, kDevResetPasswordEndpoint);
     } catch (exc) {
       return passwordTooCommonString;
     }

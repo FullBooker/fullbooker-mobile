@@ -7,6 +7,9 @@ class AppConfig {
     required this.sentryDsn,
     required this.databaseName,
     required this.environment,
+    required this.loginEndpoint,
+    required this.createAccountEndpoint,
+    required this.googleSignInEndpoint,
   });
 
   /// The context the app is running in
@@ -21,6 +24,14 @@ class AppConfig {
   // Local DB name
   final String databaseName;
 
-  /// The environment (e.g., 'dev', 'prod')
+  /// The environment ('dev', 'prod')
   final String environment;
+
+  /// App endpoints
+  final String loginEndpoint;
+  final String createAccountEndpoint;
+  final String googleSignInEndpoint;
+
+  // ---- Implemented
+  // TODO(abiud): add the rest
 }
