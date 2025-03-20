@@ -352,3 +352,7 @@ String appVersionFormat(String version) => 'Version: $version';
 const String comingSoonTitle = 'Coming soon';
 const String comingSoonCopy =
     'We\'re working on something great. Check back soon for updates!';
+
+const String signInCancelled =
+    'Sign-in canceled. Please select an account to continue.';
+const String signInFailed = 'Sign-in failed. Please try again.';
