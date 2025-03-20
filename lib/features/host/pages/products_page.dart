@@ -44,13 +44,7 @@ class _ProductsPageState extends State<ProductsPage> {
                   title: noProducts,
                   description: noProductsCopy,
                   onCTATap: () {
-                    context.dispatch(
-                      LogoutAction(
-                        onDone: () {
-                          // TODO(abiud): navigate to create product page
-                        },
-                      ),
-                    );
+                    // TODO(abiud): navigate to create product page
                   },
                   ctaText: createProductString,
                 );

@@ -25,6 +25,7 @@ mixin _$OnboardingState {
 
   /// LOGIN VALUES
   bool get invalidCredentials => throw _privateConstructorUsedError;
+  bool get showPassword => throw _privateConstructorUsedError;
 
   /// VERIFY PHONE VALUES
   bool get invalidOTP => throw _privateConstructorUsedError;
@@ -49,6 +50,7 @@ abstract class $OnboardingStateCopyWith<$Res> {
       {String emailAddress,
       String password,
       bool invalidCredentials,
+      bool showPassword,
       bool invalidOTP});
 }
 
@@ -70,6 +72,7 @@ class _$OnboardingStateCopyWithImpl<$Res, $Val extends OnboardingState>
     Object? emailAddress = null,
     Object? password = null,
     Object? invalidCredentials = null,
+    Object? showPassword = null,
     Object? invalidOTP = null,
   }) {
     return _then(_value.copyWith(
@@ -84,6 +87,10 @@ class _$OnboardingStateCopyWithImpl<$Res, $Val extends OnboardingState>
       invalidCredentials: null == invalidCredentials
           ? _value.invalidCredentials
           : invalidCredentials // ignore: cast_nullable_to_non_nullable
+              as bool,
+      showPassword: null == showPassword
+          ? _value.showPassword
+          : showPassword // ignore: cast_nullable_to_non_nullable
               as bool,
       invalidOTP: null == invalidOTP
           ? _value.invalidOTP
@@ -105,6 +112,7 @@ abstract class _$$OnboardingStateImplCopyWith<$Res>
       {String emailAddress,
       String password,
       bool invalidCredentials,
+      bool showPassword,
       bool invalidOTP});
 }
 
@@ -124,6 +132,7 @@ class __$$OnboardingStateImplCopyWithImpl<$Res>
     Object? emailAddress = null,
     Object? password = null,
     Object? invalidCredentials = null,
+    Object? showPassword = null,
     Object? invalidOTP = null,
   }) {
     return _then(_$OnboardingStateImpl(
@@ -138,6 +147,10 @@ class __$$OnboardingStateImplCopyWithImpl<$Res>
       invalidCredentials: null == invalidCredentials
           ? _value.invalidCredentials
           : invalidCredentials // ignore: cast_nullable_to_non_nullable
+              as bool,
+      showPassword: null == showPassword
+          ? _value.showPassword
+          : showPassword // ignore: cast_nullable_to_non_nullable
               as bool,
       invalidOTP: null == invalidOTP
           ? _value.invalidOTP
@@ -155,6 +168,7 @@ class _$OnboardingStateImpl implements _OnboardingState {
       {this.emailAddress = UNKNOWN,
       this.password = UNKNOWN,
       this.invalidCredentials = false,
+      this.showPassword = false,
       this.invalidOTP = false});
 
   factory _$OnboardingStateImpl.fromJson(Map<String, dynamic> json) =>
@@ -171,6 +185,9 @@ class _$OnboardingStateImpl implements _OnboardingState {
   @override
   @JsonKey()
   final bool invalidCredentials;
+  @override
+  @JsonKey()
+  final bool showPassword;
 
   /// VERIFY PHONE VALUES
   @override
@@ -179,7 +196,7 @@ class _$OnboardingStateImpl implements _OnboardingState {
 
   @override
   String toString() {
-    return 'OnboardingState(emailAddress: $emailAddress, password: $password, invalidCredentials: $invalidCredentials, invalidOTP: $invalidOTP)';
+    return 'OnboardingState(emailAddress: $emailAddress, password: $password, invalidCredentials: $invalidCredentials, showPassword: $showPassword, invalidOTP: $invalidOTP)';
   }
 
   @override
@@ -193,14 +210,16 @@ class _$OnboardingStateImpl implements _OnboardingState {
                 other.password == password) &&
             (identical(other.invalidCredentials, invalidCredentials) ||
                 other.invalidCredentials == invalidCredentials) &&
+            (identical(other.showPassword, showPassword) ||
+                other.showPassword == showPassword) &&
             (identical(other.invalidOTP, invalidOTP) ||
                 other.invalidOTP == invalidOTP));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, emailAddress, password, invalidCredentials, invalidOTP);
+  int get hashCode => Object.hash(runtimeType, emailAddress, password,
+      invalidCredentials, showPassword, invalidOTP);
 
   /// Create a copy of OnboardingState
   /// with the given fields replaced by the non-null parameter values.
@@ -224,6 +243,7 @@ abstract class _OnboardingState implements OnboardingState {
       {final String emailAddress,
       final String password,
       final bool invalidCredentials,
+      final bool showPassword,
       final bool invalidOTP}) = _$OnboardingStateImpl;
 
   factory _OnboardingState.fromJson(Map<String, dynamic> json) =
@@ -237,6 +257,8 @@ abstract class _OnboardingState implements OnboardingState {
   /// LOGIN VALUES
   @override
   bool get invalidCredentials;
+  @override
+  bool get showPassword;
 
   /// VERIFY PHONE VALUES
   @override
