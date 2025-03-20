@@ -12,6 +12,7 @@ _$OnboardingStateImpl _$$OnboardingStateImplFromJson(
       emailAddress: json['emailAddress'] as String? ?? UNKNOWN,
       password: json['password'] as String? ?? UNKNOWN,
       invalidCredentials: json['invalidCredentials'] as bool? ?? false,
+      showPassword: json['showPassword'] as bool? ?? false,
       invalidOTP: json['invalidOTP'] as bool? ?? false,
     );
 
@@ -21,5 +22,6 @@ Map<String, dynamic> _$$OnboardingStateImplToJson(
       'emailAddress': instance.emailAddress,
       'password': instance.password,
       'invalidCredentials': instance.invalidCredentials,
+      'showPassword': instance.showPassword,
       'invalidOTP': instance.invalidOTP,
     };

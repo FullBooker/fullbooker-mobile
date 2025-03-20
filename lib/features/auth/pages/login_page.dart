@@ -64,7 +64,7 @@ class LoginPageState extends State<LoginPage> {
         child: StoreConnector<AppState, LoginPageViewModel>(
           converter: (Store<AppState> store) =>
               LoginPageViewModel.fromState(store.state),
-          builder: (BuildContext context, LoginPageViewModel snapshot) {
+          builder: (BuildContext context, LoginPageViewModel vm) {
             return ListView(
               children: <Widget>[
                 largeVerticalSizedBox,
@@ -129,7 +129,7 @@ class LoginPageState extends State<LoginPage> {
                         ],
                         prefixIconData: HeroIcons.key,
                         suffixIconData: HeroIcons.eyeSlash,
-                        obscureText: true,
+                        obscureText: vm.showPassword,
                       ),
                       SizedBox(
                         width: double.infinity,
