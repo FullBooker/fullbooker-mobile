@@ -27,26 +27,35 @@ class CreateAccountAction extends ReduxAction<AppState> {
 
   @override
   Future<AppState?> reduce() async {
-    final String emailAddress = state.onboardingState?.emailAddress ?? '';
-    final String password = state.onboardingState?.password ?? '';
+    final String firstName = state.onboardingState?.firstName ?? '';
+    final String lastName = state.onboardingState?.lastName ?? '';
+    final String newEmailAddress = state.onboardingState?.newEmailAddress ?? '';
+    final String newPassword = state.onboardingState?.newPassword ?? '';
 
-    final bool isEmailEmpty = emailAddress.isEmpty || emailAddress == UNKNOWN;
-    final bool isPasswordEmpty = password.isEmpty || password == UNKNOWN;
+    final bool isFirstNameEmpty = firstName.isEmpty || firstName == UNKNOWN;
+    final bool isLastNameEmpty = lastName.isEmpty || lastName == UNKNOWN;
+    final bool isNewEmailEmpty =
+        newEmailAddress.isEmpty || newEmailAddress == UNKNOWN;
+    final bool isNewPasswordEmpty =
+        newPassword.isEmpty || newPassword == UNKNOWN;
 
-    if (isEmailEmpty || isPasswordEmpty) {
-      return onError?.call(credentialsPrompt);
+    if (isFirstNameEmpty ||
+        isLastNameEmpty ||
+        isNewPasswordEmpty ||
+        isNewEmailEmpty) {
+      return onError?.call(fillInAllFields);
     }
 
     final Map<String, String> data = <String, String>{
-      'phone_number': emailAddress,
-      'email': emailAddress,
-      'first_name': emailAddress,
-      'last_name': emailAddress,
-      'password': emailAddress,
+      'phone_number': '+254717356476',
+      'email': newEmailAddress,
+      'first_name': firstName,
+      'last_name': lastName,
+      'password': newPassword,
     };
 
     final String createAccountEndpoint =
-        GetIt.I.get<AppConfig>().googleSignInEndpoint;
+        GetIt.I.get<AppConfig>().createAccountEndpoint;
 
     final Response httpResponse = await client.callRESTAPI(
       endpoint: createAccountEndpoint,
@@ -80,7 +89,6 @@ class CreateAccountAction extends ReduxAction<AppState> {
     dispatch(UpdateUserStateAction(user: loginResponse.user));
 
     onSuccess?.call();
-
     return state;
   }
 }

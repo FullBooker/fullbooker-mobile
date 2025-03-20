@@ -69,7 +69,7 @@ class SignInWithGoogleAction extends ReduxAction<AppState> {
 
       final LoginResponse loginResponse = LoginResponse.fromJson(body);
 
-      // Update the auth state
+      // Update auth state
       dispatch(
         UpdateAuthStateAction(
           isSignedIn: true,

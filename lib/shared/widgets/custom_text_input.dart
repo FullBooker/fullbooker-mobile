@@ -84,7 +84,7 @@ class CustomTextInput extends StatelessWidget {
                       suffixIconData!,
                       size: 20,
                     ),
-                    onPressed: suffixIconFunc ?? () {},
+                    onPressed: suffixIconFunc,
                   )
                 : null,
             prefixIcon: prefixIconData != null
@@ -94,7 +94,7 @@ class CustomTextInput extends StatelessWidget {
                       color: AppColors.bodyTextColor,
                       size: 20,
                     ),
-                    onPressed: suffixIconFunc ?? () {},
+                    onPressed: suffixIconFunc,
                   )
                 : null,
           ),

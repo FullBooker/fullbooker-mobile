@@ -3,14 +3,18 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
+import 'package:fullbooker/application/redux/actions/create_account_action.dart';
 import 'package:fullbooker/application/redux/actions/update_onboarding_state_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/create_account_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/common/constants.dart';
+import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
+import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/custom_text_input.dart';
 import 'package:fullbooker/shared/validators.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
@@ -162,7 +166,7 @@ class CreateAccountPageState extends State<CreateAccountPage> {
                         validator: (String? email) => validateEmail(email),
                         onChanged: (String email) {
                           context.dispatch(
-                            UpdateOnboardingStateAction(emailAddress: email),
+                            UpdateOnboardingStateAction(newEmailAddress: email),
                           );
                         },
                         keyboardType: TextInputType.emailAddress,
@@ -228,25 +232,38 @@ class CreateAccountPageState extends State<CreateAccountPage> {
                         obscureText: vm.hideNewConfirmPassword,
                       ),
 
-                      PrimaryButton(
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            // context.dispatch(
-                            //   LoginAction(
-                            //     onError: (String error) => showAlertDialog(
-                            //       context: context,
-                            //       assetPath: loginCredentialsSVGPath,
-                            //       description: error,
-                            //     ),
-                            //     onSuccess: () =>
-                            //         context.router.navigate(HostingHomeRoute()),
-                            //     client:
-                            //         AppWrapperBase.of(context)!.customClient,
-                            //   ),
-                            // );
+                      StoreConnector<AppState, CreateAccountViewModel>(
+                        converter: (Store<AppState> store) =>
+                            CreateAccountViewModel.fromState(store.state),
+                        builder: (
+                          BuildContext context,
+                          CreateAccountViewModel snapshot,
+                        ) {
+                          if (context.isWaiting(CreateAccountAction)) {
+                            return AppLoading();
                           }
+
+                          return PrimaryButton(
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                context.dispatch(
+                                  CreateAccountAction(
+                                    onError: (String error) => showAlertDialog(
+                                      context: context,
+                                      assetPath: loginCredentialsSVGPath,
+                                      description: error,
+                                    ),
+                                    onSuccess: () => context.router
+                                        .navigate(HostingHomeRoute()),
+                                    client: AppWrapperBase.of(context)!
+                                        .customClient,
+                                  ),
+                                );
+                              }
+                            },
+                            child: d.right(createAccount),
+                          );
                         },
-                        child: d.right(createAccount),
                       ),
                     ],
                   ),
