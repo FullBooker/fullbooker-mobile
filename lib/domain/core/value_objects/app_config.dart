@@ -33,5 +33,5 @@ class AppConfig {
   final String googleSignInEndpoint;
 
   // ---- Implemented
-  // TODO(abiud): add the rest
+  // TODO(abiud): add the rest of the endpoints
 }
