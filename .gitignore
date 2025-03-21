@@ -47,3 +47,5 @@ coverage/
 env.sh
 
 /ios/build/*
+
+.env
