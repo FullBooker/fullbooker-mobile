@@ -42,15 +42,15 @@ jobs:
       - name: Analyze code
         run: flutter analyze
 
-      - name: Build release APK
+      - name: Build signed release APK
         run: |
           flutter build apk \
             --release \
             --obfuscate \
             --split-debug-info=dump/ \
-            --build-number=${{ github.run_id }} \
-            --build-name=1.0.${{ github.run_id }}-dev \
-            --dart-define=APPVERSION=1.0.${{ github.run_id }}-dev \
+            --build-number=${{ github.run_number }} \
+            --build-name=1.0.${{ github.run_number }}-dev \
+            --dart-define=APPVERSION=1.0.${{ github.run_number }}-dev \
             --dart-define=ENV=DEV
 
       - name: Upload APK to Firebase App Distribution
