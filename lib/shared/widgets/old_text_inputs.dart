@@ -51,7 +51,6 @@ class StandardTextInputState extends State<StandardTextInput> {
         decoration: InputDecoration(
           prefixIcon: Icon(widget.labelPrefix, color: Colors.black),
           hintText: widget.label,
-          hintStyle: const TextStyle(color: Color.fromARGB(255, 65, 65, 65)),
           filled: true,
           fillColor: const Color(0xf0F5F4F4),
           counter: const SizedBox(),

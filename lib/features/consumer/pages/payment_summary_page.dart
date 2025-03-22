@@ -49,7 +49,7 @@ class PaymentSummaryPage extends StatelessWidget {
   }
 
   // Method to build input fields
-  Widget buildInputField(String hint, String value) {
+  Widget buildInputField(String hint, String value, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Column(
@@ -59,22 +59,14 @@ class PaymentSummaryPage extends StatelessWidget {
             children: <Widget>[
               Text(
                 hint,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w400,
-                ),
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
               Flexible(
                 child: Text(
                   value,
                   softWrap: true,
                   textAlign: TextAlign.right,
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ),
             ],
@@ -187,10 +179,11 @@ class PaymentSummaryPage extends StatelessWidget {
                 ),
 
                 // Form fields
-                buildInputField(nameString, tickets.first.name),
+                buildInputField(nameString, tickets.first.name, context),
                 buildInputField(
                   dateAndTimeString,
                   DateFormat('E dd MMMM').format(selectedDateTime),
+                  context,
                 ),
                 buildInputField(
                   noOfTickets,
@@ -198,8 +191,9 @@ class PaymentSummaryPage extends StatelessWidget {
                           ? tickets.first.quantity
                           : tickets.length)
                       .toString(),
+                  context,
                 ),
-                buildInputField(totalHours, '8 hours'),
+                buildInputField(totalHours, '8 hours', context),
 
                 // Grand total
                 Padding(

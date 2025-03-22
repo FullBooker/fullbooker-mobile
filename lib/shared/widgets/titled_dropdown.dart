@@ -131,7 +131,7 @@ class _TitledDropDownState extends State<TitledDropdown> {
                   child: Center(
                     child: Text(
                       widget.title,
-                      style: const TextStyle(fontSize: 18),
+                      style: Theme.of(context).textTheme.bodyLarge,
                       textAlign: TextAlign.center,
                     ),
                   ),

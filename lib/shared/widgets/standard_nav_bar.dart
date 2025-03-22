@@ -60,10 +60,6 @@ class StandardNavBar extends StatelessWidget implements PreferredSizeWidget {
                             filled: false,
                             border: InputBorder.none,
                             hintText: searchForActivitiesString,
-                            hintStyle: TextStyle(
-                              fontSize: 18,
-                              color: Theme.of(context).primaryColor,
-                            ),
                             contentPadding:
                                 EdgeInsets.symmetric(horizontal: 24),
                           ),

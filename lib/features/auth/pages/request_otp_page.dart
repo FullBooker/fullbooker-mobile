@@ -3,7 +3,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
-import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/features/auth/controllers/old_login_controller.dart';
 import 'package:fullbooker/shared/widgets/divider_with_text.dart';
@@ -123,7 +122,12 @@ class RequestOTPPageState extends State<RequestOTPPage> {
                                   padding: const EdgeInsets.all(20),
                                   child: Text(
                                     errorMessage,
-                                    style: const TextStyle(color: Colors.red),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(
+                                          color: Theme.of(context).primaryColor,
+                                        ),
                                   ),
                                 ),
                         ),
@@ -156,15 +160,16 @@ class RequestOTPPageState extends State<RequestOTPPage> {
                     child: RichText(
                       text: TextSpan(
                         children: <InlineSpan>[
-                          const TextSpan(
+                          TextSpan(
                             text: goBackToString,
-                            style: TextStyle(color: Colors.black),
+                            style: Theme.of(context).textTheme.bodyLarge,
                           ),
                           TextSpan(
                             text: loginString.toLowerCase(),
-                            style: const TextStyle(
-                              color: AppColors.customBlueColor,
-                            ),
+                            style:
+                                Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                      color: Theme.of(context).primaryColor,
+                                    ),
                             recognizer: TapGestureRecognizer()
                               ..onTap =
                                   () => context.router.replace(LoginRoute()),

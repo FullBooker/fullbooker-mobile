@@ -125,9 +125,13 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
                                       padding: const EdgeInsets.all(20),
                                       child: Text(
                                         errorMessage,
-                                        style: const TextStyle(
-                                          color: Colors.red,
-                                        ),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                            ),
                                       ),
                                     ),
                             ),

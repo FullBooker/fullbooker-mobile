@@ -61,10 +61,7 @@ class CheckoutCard extends StatelessWidget {
                     child: Text(
                       noOfTickets,
                       softWrap: true,
-                      style: TextStyle(
-                        fontSize: screenWidth * 0.045,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   ),
                   Text(
@@ -87,10 +84,7 @@ class CheckoutCard extends StatelessWidget {
                     child: Text(
                       softWrap: true,
                       ticketPriceString,
-                      style: TextStyle(
-                        fontSize: screenWidth * 0.045,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   ),
                   Flexible(
@@ -99,10 +93,7 @@ class CheckoutCard extends StatelessWidget {
                           ? '_'
                           : 'KES ${pricing!.cost}  X  $quantity',
                       softWrap: true,
-                      style: TextStyle(
-                        fontSize: screenWidth * 0.045,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   ),
                 ],

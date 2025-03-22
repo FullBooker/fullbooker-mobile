@@ -4,7 +4,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
-import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/features/auth/controllers/old_login_controller.dart';
 import 'package:fullbooker/shared/widgets/old_buttons.dart';
@@ -152,16 +151,21 @@ class VerifyOTPPageState extends State<VerifyOTPPage> {
                                 ? RichText(
                                     text: TextSpan(
                                       children: <InlineSpan>[
-                                        const TextSpan(
+                                        TextSpan(
                                           text: resendCodeInString,
-                                          style: TextStyle(color: Colors.black),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge,
                                         ),
                                         TextSpan(
                                           text: timerText(),
-                                          style: TextStyle(
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                          ),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge
+                                              ?.copyWith(
+                                                color: Theme.of(context)
+                                                    .primaryColor,
+                                              ),
                                         ),
                                       ],
                                     ),
@@ -169,9 +173,13 @@ class VerifyOTPPageState extends State<VerifyOTPPage> {
                                 : RichText(
                                     text: TextSpan(
                                       text: resentOTPString,
-                                      style: const TextStyle(
-                                        color: AppColors.customBlueColor,
-                                      ),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge
+                                          ?.copyWith(
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                          ),
                                       recognizer: TapGestureRecognizer()
                                         ..onTap = () => resendOTP(context),
                                     ),
@@ -185,9 +193,8 @@ class VerifyOTPPageState extends State<VerifyOTPPage> {
                                   padding: const EdgeInsets.all(20),
                                   child: Text(
                                     errorMessage,
-                                    style: const TextStyle(
-                                      color: Colors.red,
-                                    ),
+                                    style:
+                                        Theme.of(context).textTheme.bodyLarge,
                                   ),
                                 ),
                         ),
@@ -220,15 +227,16 @@ class VerifyOTPPageState extends State<VerifyOTPPage> {
                     child: RichText(
                       text: TextSpan(
                         children: <InlineSpan>[
-                          const TextSpan(
+                          TextSpan(
                             text: useDifferentString,
-                            style: TextStyle(color: Colors.black),
+                            style: Theme.of(context).textTheme.bodyLarge,
                           ),
                           TextSpan(
                             text: emailOrPhoneString,
-                            style: const TextStyle(
-                              color: AppColors.customBlueColor,
-                            ),
+                            style:
+                                Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                      color: Theme.of(context).primaryColor,
+                                    ),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () =>
                                   context.router.replace(RequestOTPRoute()),
