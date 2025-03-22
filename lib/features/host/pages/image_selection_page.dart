@@ -232,7 +232,7 @@ class _ImageSelectionPageState extends State<ImageSelectionPage> {
                           child: OldButton(
                             selectImage,
                             actionLabel: browseString,
-                            color: const Color(0xff333333),
+                            color: Theme.of(context).primaryColor,
                           ),
                         ),
                       ],

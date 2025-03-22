@@ -63,7 +63,8 @@ class ReviewCardWidget extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             review['review'],
-            style: const TextStyle(fontSize: 14, color: Color(0xff808080)),
+            style:
+                TextStyle(fontSize: 14, color: Theme.of(context).primaryColor),
           ),
           const SizedBox(height: 8),
           Divider(color: Colors.grey[300]),

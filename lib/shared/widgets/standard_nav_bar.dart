@@ -50,7 +50,7 @@ class StandardNavBar extends StatelessWidget implements PreferredSizeWidget {
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  const Flexible(
+                  Flexible(
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 4),
                       child: SizedBox(
@@ -62,7 +62,7 @@ class StandardNavBar extends StatelessWidget implements PreferredSizeWidget {
                             hintText: searchForActivitiesString,
                             hintStyle: TextStyle(
                               fontSize: 18,
-                              color: Color(0xff808080),
+                              color: Theme.of(context).primaryColor,
                             ),
                             contentPadding:
                                 EdgeInsets.symmetric(horizontal: 24),

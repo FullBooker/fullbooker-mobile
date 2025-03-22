@@ -93,7 +93,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
       po.add(LatLng(currentPos.latitude, currentPos.longitude));
       final Polyline routePolylineSet = Polyline(
         polylineId: const PolylineId('Routes'),
-        color: const Color(0xff4a54cd),
+        color: Theme.of(context).primaryColor,
         width: 4,
         points: po,
       );
