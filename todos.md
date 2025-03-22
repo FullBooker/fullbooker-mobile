@@ -10,6 +10,7 @@
 - [ ] Extract text themes
 - [ ] Change app splash screen to have the full logo
 - [ ] Integrate password manager for email+password sign in
+- [ ] Remove all elevated buttons
 
 ## Architectural changes
 

@@ -64,10 +64,11 @@ class OldSecondaryButton extends StatelessWidget {
                         ),
                         Text(
                           actionLabel,
-                          style: TextStyle(
-                            fontSize: labelFontSize,
-                            color: actionLabelColor,
-                          ),
+                          style:
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    fontSize: labelFontSize,
+                                    color: actionLabelColor,
+                                  ),
                           textScaler: TextScaler.linear(
                             ScaleSize.textScaleFactor(
                               context,
@@ -79,11 +80,10 @@ class OldSecondaryButton extends StatelessWidget {
                     )
                   : Text(
                       actionLabel,
-                      style: TextStyle(
-                        fontSize: labelFontSize,
-                        color: color,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            fontSize: labelFontSize,
+                            color: color,
+                          ),
                     ),
         ),
       ),

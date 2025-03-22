@@ -373,3 +373,5 @@ const String pricePerPersonSub =
     'What is the price per person per subscription';
 
 const String chargesSummary = 'Charges Summary';
+
+const String confirmationNumber = 'Confirmation Number:';

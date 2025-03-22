@@ -26,10 +26,7 @@ class ReviewCardWidget extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       review['name'],
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
                     Row(
                       children: <Widget>[
@@ -47,10 +44,7 @@ class ReviewCardWidget extends StatelessWidget {
                         const SizedBox(width: 8),
                         Text(
                           review['timeAgo'],
-                          style: const TextStyle(
-                            color: Colors.grey,
-                            fontSize: 12,
-                          ),
+                          style: Theme.of(context).textTheme.bodySmall,
                         ),
                       ],
                     ),
@@ -63,8 +57,10 @@ class ReviewCardWidget extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             review['review'],
-            style:
-                TextStyle(fontSize: 14, color: Theme.of(context).primaryColor),
+            style: Theme.of(context)
+                .textTheme
+                .bodyMedium
+                ?.copyWith(color: Theme.of(context).primaryColor),
           ),
           const SizedBox(height: 8),
           Divider(color: Colors.grey[300]),

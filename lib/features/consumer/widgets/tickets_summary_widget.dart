@@ -43,10 +43,10 @@ class _TicketsSummaryWidgetState extends State<TicketsSummaryWidget> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           // Title
-          const Text(
+          Text(
             ticketSummaryString,
             textAlign: TextAlign.left,
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyLarge,
           ),
           smallVerticalSizedBox,
 
@@ -57,35 +57,35 @@ class _TicketsSummaryWidgetState extends State<TicketsSummaryWidget> {
               border: TableBorder.all(color: Colors.grey.shade400),
               headingRowHeight: 40,
               columnSpacing: 20,
-              columns: const <DataColumn>[
+              columns: <DataColumn>[
                 DataColumn(
                   label: Text(
                     nameString,
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ),
                 DataColumn(
                   label: Text(
                     idNumber,
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ),
                 DataColumn(
                   label: Text(
                     phonNumberString,
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ),
                 DataColumn(
                   label: Text(
                     emailAddressString,
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ),
                 DataColumn(
                   label: Text(
                     quantityString,
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ),
                 DataColumn(label: Text('')),
@@ -110,9 +110,9 @@ class _TicketsSummaryWidgetState extends State<TicketsSummaryWidget> {
                         visualDensity: VisualDensity.standard,
                       ),
                       onPressed: () => deleteTicket(index),
-                      child: const Text(
+                      child: Text(
                         deleteString,
-                        style: TextStyle(color: Colors.white),
+                        style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     ),
                   ),

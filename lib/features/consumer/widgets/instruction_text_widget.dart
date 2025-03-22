@@ -12,10 +12,7 @@ class InstructionText extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Text(
         text,
-        style: TextStyle(
-          fontSize: 14,
-          fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
-        ),
+        style: Theme.of(context).textTheme.bodyMedium,
       ),
     );
   }

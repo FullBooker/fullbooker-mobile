@@ -35,10 +35,7 @@ class _EventsSectionWidgetState extends State<EventsSectionWidget> {
                 child: Text(
                   widget.sectionName,
                   softWrap: true,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w900,
-                  ),
+                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
               ),
               if (widget.onSeAllClick == null)
@@ -46,10 +43,7 @@ class _EventsSectionWidgetState extends State<EventsSectionWidget> {
               else
                 Text(
                   seeAllString,
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Theme.of(context).primaryColor,
-                  ),
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
             ],
           ),

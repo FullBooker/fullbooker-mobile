@@ -46,14 +46,20 @@ class ActivitiesTableTable extends StatelessWidget {
                 DataCell(
                   Text(
                     product.active ? activeString : disabledString,
-                    style: TextStyle(
-                      color: product.active ? Colors.green : Colors.red,
-                    ),
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          color: product.active ? Colors.green : Colors.red,
+                        ),
                     textAlign: TextAlign.center,
                   ),
                 ),
-                const DataCell(
-                  Text(editString, style: TextStyle(color: Colors.orange)),
+                DataCell(
+                  Text(
+                    editString,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge
+                        ?.copyWith(color: Theme.of(context).primaryColor),
+                  ),
                 ),
               ],
             );

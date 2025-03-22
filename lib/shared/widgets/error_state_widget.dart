@@ -26,15 +26,15 @@ class ErrorStateWidget extends StatelessWidget {
               color: Colors.grey.shade400,
             ), // Changed icon
             mediumVerticalSizedBox,
-            const Text(
+            Text(
               noDataFound,
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.headlineSmall,
             ),
             smallVerticalSizedBox,
             Text(
               message,
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 16, color: Colors.grey.shade600),
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
             mediumVerticalSizedBox,
             ElevatedButton.icon(

@@ -30,11 +30,7 @@ class RoundedFloatingAction extends StatelessWidget {
           child: Center(
             child: Text(
               action,
-              style: TextStyle(
-                color: Color(actionColor),
-                fontSize: height / 2,
-                fontWeight: FontWeight.w600,
-              ),
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
           ),
         ),

@@ -20,9 +20,9 @@ class MpesaCheckoutInstructionsWidget extends StatelessWidget {
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           smallVerticalSizedBox,
-          const Text(
+          Text(
             paymentAlert,
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyLarge,
           ),
           smallVerticalSizedBox,
           Text(
@@ -61,10 +61,7 @@ class MpesaCheckoutInstructionsWidget extends StatelessWidget {
           Expanded(
             child: Text(
               text,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
-              ),
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
           ),
         ],

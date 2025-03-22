@@ -27,7 +27,7 @@ class _AmountSelectionDropdownState extends State<AmountSelectionDropdown> {
             // Label
             Text(
               selectNumberOfTicketsPrompt,
-              style: TextStyle(color: Colors.grey[700], fontSize: 14),
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
 
             // Dropdown Button
@@ -42,7 +42,7 @@ class _AmountSelectionDropdownState extends State<AmountSelectionDropdown> {
                   value: number,
                   child: Text(
                     number.toString(),
-                    style: const TextStyle(color: Colors.black),
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 );
               }).toList(),

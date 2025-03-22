@@ -290,7 +290,7 @@ class PaymentConfirmationPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   ScaleLockedText(
-                    'Confirmation Number:',
+                    confirmationNumber,
                     style: Theme.of(context).textTheme.bodySmall,
                     overflow: TextOverflow.ellipsis,
                   ),

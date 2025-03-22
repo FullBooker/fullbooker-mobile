@@ -49,10 +49,9 @@ class _PaymentFormState extends State<PaymentForm> {
                   if (icon != null) Icon(icon, color: Colors.black),
                   Text(
                     method['name'],
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: isSelected ? Colors.white : Colors.black,
-                    ),
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          color: isSelected ? Colors.white : Colors.black,
+                        ),
                   ),
                 ],
               ),
@@ -202,11 +201,10 @@ class _PaymentFormState extends State<PaymentForm> {
         onPressed: widget.onCompleteClick,
         child: Text(
           text,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
+          style: Theme.of(context)
+              .textTheme
+              .bodyLarge
+              ?.copyWith(color: Colors.white),
         ),
       ),
     );
@@ -217,9 +215,9 @@ class _PaymentFormState extends State<PaymentForm> {
     return Column(
       children: <Widget>[
         mediumVerticalSizedBox,
-        const Text(
+        Text(
           selectPaymentMethod,
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          style: Theme.of(context).textTheme.bodyLarge,
         ),
         const SizedBox(height: 15),
         _buildPaymentOptions(),

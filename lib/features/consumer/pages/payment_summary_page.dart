@@ -77,32 +77,6 @@ class PaymentSummaryPage extends StatelessWidget {
     );
   }
 
-  // Payment Button Widget
-  Widget paymentButton(
-    String text,
-    Color bgColor,
-    Color textColor,
-    double screenWidth, {
-    double borderSize = 1,
-    Color borderColor = Colors.grey,
-  }) {
-    return Container(
-      padding: EdgeInsets.symmetric(
-        vertical: screenWidth * 0.02,
-        horizontal: screenWidth * 0.05,
-      ),
-      decoration: BoxDecoration(
-        color: bgColor,
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: borderColor, width: borderSize),
-      ),
-      child: Text(
-        text,
-        style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
@@ -134,14 +108,10 @@ class PaymentSummaryPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 SizedBox(height: screenHeight * 0.02),
-                const Center(
+                Center(
                   child: Text(
                     summaryString,
-                    style: TextStyle(
-                      fontSize: 26,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
+                    style: Theme.of(context).textTheme.headlineMedium,
                   ),
                 ),
                 SizedBox(height: screenHeight * 0.02),
@@ -155,25 +125,17 @@ class PaymentSummaryPage extends StatelessWidget {
                   child: Center(
                     child: Text(
                       '${product.name}, $locationName',
-                      style: const TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
+                      style: Theme.of(context).textTheme.headlineSmall,
                     ),
                   ),
                 ),
                 SizedBox(height: screenHeight * 0.02),
-                const Center(
+                Center(
                   child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 15),
                     child: Text(
                       ticketDetailsString,
-                      style: TextStyle(
-                        fontSize: 26,
-                        fontWeight: FontWeight.bold,
-                        fontStyle: FontStyle.italic,
-                      ),
+                      style: Theme.of(context).textTheme.headlineMedium,
                     ),
                   ),
                 ),
@@ -205,22 +167,20 @@ class PaymentSummaryPage extends StatelessWidget {
                         child: Text(
                           grandTotal,
                           softWrap: true,
-                          style: TextStyle(
-                            fontSize: screenWidth * 0.05,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.green,
-                          ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge
+                              ?.copyWith(color: Theme.of(context).primaryColor),
                         ),
                       ),
                       Flexible(
                         child: Text(
                           'KES ${getGrandTotal()}',
                           softWrap: true,
-                          style: TextStyle(
-                            fontSize: screenWidth * 0.05,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.green,
-                          ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge
+                              ?.copyWith(color: Theme.of(context).primaryColor),
                         ),
                       ),
                     ],
@@ -241,10 +201,10 @@ class PaymentSummaryPage extends StatelessWidget {
                     children: <Widget>[
                       const Icon(Icons.card_giftcard, color: Colors.orange),
                       SizedBox(width: screenWidth * 0.02),
-                      const Expanded(
+                      Expanded(
                         child: Text(
                           promoCode,
-                          style: TextStyle(color: Colors.grey),
+                          style: Theme.of(context).textTheme.bodyLarge,
                         ),
                       ),
                     ],

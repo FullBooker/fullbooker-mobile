@@ -66,10 +66,7 @@ class CheckoutCard extends StatelessWidget {
                   ),
                   Text(
                     quantity.toString(),
-                    style: TextStyle(
-                      fontSize: screenWidth * 0.045,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ],
               ),
@@ -107,11 +104,7 @@ class CheckoutCard extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     totalString,
-                    style: TextStyle(
-                      fontSize: screenWidth * 0.05,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.green,
-                    ),
+                    style: Theme.of(context).textTheme.headlineSmall,
                   ),
                   Flexible(
                     child: Padding(
@@ -121,11 +114,7 @@ class CheckoutCard extends StatelessWidget {
                         quantity > 0 && pricing != null
                             ? 'KES ${pricing!.cost * quantity}'
                             : '_',
-                        style: TextStyle(
-                          fontSize: screenWidth * 0.05,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.green,
-                        ),
+                        style: Theme.of(context).textTheme.headlineSmall,
                       ),
                     ),
                   ),

@@ -13,13 +13,9 @@ class EventTitleWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        const Text(
+        Text(
           'Music Concert, Eras tour Taylor Swift',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
+          style: Theme.of(context).textTheme.headlineSmall,
         ),
         smallVerticalSizedBox,
         Row(
@@ -29,7 +25,7 @@ class EventTitleWidget extends StatelessWidget {
             Flexible(
               child: Text(
                 'Carnivore grounds, 7km away',
-                style: TextStyle(color: Colors.grey[400], fontSize: 14),
+                style: Theme.of(context).textTheme.bodySmall,
                 softWrap: true,
               ),
             ),
@@ -52,7 +48,7 @@ class EventTitleWidget extends StatelessWidget {
                   Flexible(
                     child: Text(
                       '22–24, Feb, 24',
-                      style: TextStyle(color: Colors.grey[400], fontSize: 14),
+                      style: Theme.of(context).textTheme.bodyLarge,
                       softWrap: true,
                     ),
                   ),
@@ -74,7 +70,7 @@ class EventTitleWidget extends StatelessWidget {
                     Flexible(
                       child: Text(
                         '2:30PM – 4:30AM',
-                        style: TextStyle(color: Colors.grey[400], fontSize: 14),
+                        style: Theme.of(context).textTheme.bodyMedium,
                         softWrap: true,
                       ),
                     ),

@@ -64,10 +64,11 @@ class OldButton extends StatelessWidget {
                         ),
                         Text(
                           actionLabel,
-                          style: TextStyle(
-                            fontSize: labelFontSize,
-                            color: actionLabelColor,
-                          ),
+                          style:
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    fontSize: labelFontSize,
+                                    color: actionLabelColor,
+                                  ),
                           textScaler: TextScaler.linear(
                             ScaleSize.textScaleFactor(
                               context,
@@ -80,11 +81,11 @@ class OldButton extends StatelessWidget {
                   : Text(
                       actionLabel,
                       softWrap: true,
-                      style: TextStyle(
-                        fontSize: labelFontSize,
-                        color: actionLabelColor,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            fontSize: labelFontSize,
+                            color: actionLabelColor,
+                            fontWeight: FontWeight.w600,
+                          ),
                     ),
         ),
       ),
@@ -139,13 +140,13 @@ class ExtendedTextButton extends StatelessWidget {
                         ),
                         Text(
                           actionLabel,
-                          style: TextStyle(fontSize: 16, color: color),
+                          style: Theme.of(context).textTheme.bodyLarge,
                         ),
                       ],
                     )
                   : Text(
                       actionLabel,
-                      style: TextStyle(fontSize: 17, color: color),
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
         ),
       ),

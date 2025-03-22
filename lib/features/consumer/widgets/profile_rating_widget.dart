@@ -34,8 +34,7 @@ class ProfileRatingWidget extends StatelessWidget {
                 softWrap: true,
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
-                style:
-                    const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
               Row(
                 children: List<Icon>.generate(totalStars, (int index) {

@@ -128,12 +128,9 @@ class _ActivitySubscription extends State<ActivitySubscriptionPage> {
                       children: <Widget>[
                         SizedBox(
                           width: width * 0.5,
-                          child: const Text(
+                          child: Text(
                             monthlySubscriptionPrompt,
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                            ),
+                            style: Theme.of(context).textTheme.bodyLarge,
                           ),
                         ),
                         CustomSwitchWidget(
@@ -200,7 +197,7 @@ class _ActivitySubscription extends State<ActivitySubscriptionPage> {
                     ),
                   ),
                 ),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.all(20),
                   child: Row(
                     children: <Widget>[
@@ -211,10 +208,7 @@ class _ActivitySubscription extends State<ActivitySubscriptionPage> {
                           child: Text(
                             monthlySubscriptionString,
                             softWrap: true,
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                            ),
+                            style: Theme.of(context).textTheme.bodyLarge,
                           ),
                         ),
                       ),
@@ -283,12 +277,9 @@ class _ActivitySubscription extends State<ActivitySubscriptionPage> {
                   child: CustomCard(
                     child: Column(
                       children: <Widget>[
-                        const Text(
+                        Text(
                           totalChargeableSession,
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                          ),
+                          style: Theme.of(context).textTheme.bodyLarge,
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 10),

@@ -42,11 +42,10 @@ class ProductSetupNavBar extends StatelessWidget
                     const EdgeInsets.symmetric(vertical: 20, horizontal: 8),
                 child: Text(
                   value.name,
-                  style: TextStyle(
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     shadows: const <Shadow>[
                       Shadow(color: Colors.white, offset: Offset(0, -5)),
                     ],
-                    fontSize: 14,
                     color: Colors.transparent,
                     decoration: value == step
                         ? TextDecoration.underline

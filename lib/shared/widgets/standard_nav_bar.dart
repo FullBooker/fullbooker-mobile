@@ -88,10 +88,10 @@ class StandardNavBar extends StatelessWidget implements PreferredSizeWidget {
                       ),
                       child: Text(
                         pageTitle!,
-                        style: TextStyle(
-                          fontSize: tileFontSize,
-                          fontWeight: titleFontWeight,
-                        ),
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                              fontSize: tileFontSize,
+                              fontWeight: titleFontWeight,
+                            ),
                       ),
                     ),
                   )
