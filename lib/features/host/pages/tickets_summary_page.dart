@@ -71,7 +71,7 @@ class _TicketsSummaryPageState extends State<TicketsSummaryPage> {
   @override
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
-    const double fontSize = 16;
+
     return Scaffold(
       appBar: const ProductSetupNavBar(step: ProductSteps.Products),
       bottomNavigationBar: const OldBottomNavBar(),
@@ -81,7 +81,7 @@ class _TicketsSummaryPageState extends State<TicketsSummaryPage> {
             child: ListView(
               children: <Widget>[
                 const PageHeader(
-                  'Charges Summary',
+                  chargesSummary,
                   '',
                   withLogo: false,
                   widthFactor: 0.9,
@@ -104,18 +104,12 @@ class _TicketsSummaryPageState extends State<TicketsSummaryPage> {
                             padding: const EdgeInsets.symmetric(vertical: 20),
                             child: Text(
                               '$category TICKET'.toUpperCase(),
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),
+                              style: Theme.of(context).textTheme.bodyLarge,
                             ),
                           ),
-                          const Text(
-                            'TOTAL CHARGEABLE (PER TICKET)',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
-                            ),
+                          Text(
+                            totalChargeableTicket,
+                            style: Theme.of(context).textTheme.bodyLarge,
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 10),
@@ -136,9 +130,9 @@ class _TicketsSummaryPageState extends State<TicketsSummaryPage> {
                                             alignment: Alignment.centerLeft,
                                             child: Text(
                                               'Amount (${widget.currency.code})',
-                                              style: const TextStyle(
-                                                fontSize: fontSize,
-                                              ),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyLarge,
                                               softWrap: true,
                                             ),
                                           ),
@@ -148,9 +142,9 @@ class _TicketsSummaryPageState extends State<TicketsSummaryPage> {
                                         alignment: Alignment.centerRight,
                                         child: Text(
                                           widget.prices[category]!.toString(),
-                                          style: const TextStyle(
-                                            fontSize: fontSize,
-                                          ),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge,
                                         ),
                                       ),
                                     ],
@@ -169,8 +163,9 @@ class _TicketsSummaryPageState extends State<TicketsSummaryPage> {
                                             child: Text(
                                               serviceFee(kPlatformServiceFee),
                                               softWrap: true,
-                                              style:
-                                                  TextStyle(fontSize: fontSize),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyLarge,
                                             ),
                                           ),
                                         ),
@@ -179,9 +174,9 @@ class _TicketsSummaryPageState extends State<TicketsSummaryPage> {
                                           child: Text(
                                             (widget.prices[category]! * 0.05)
                                                 .toString(),
-                                            style: const TextStyle(
-                                              fontSize: fontSize,
-                                            ),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge,
                                           ),
                                         ),
                                       ],
@@ -195,15 +190,13 @@ class _TicketsSummaryPageState extends State<TicketsSummaryPage> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: <Widget>[
-                                        const Align(
+                                        Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            'Total',
-                                            style: TextStyle(
-                                              color: Color(0xf008AE32),
-                                              fontSize: fontSize + 2,
-                                              fontWeight: FontWeight.w700,
-                                            ),
+                                            totalString,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headlineSmall,
                                           ),
                                         ),
                                         Align(
@@ -211,11 +204,9 @@ class _TicketsSummaryPageState extends State<TicketsSummaryPage> {
                                           child: Text(
                                             (widget.prices[category]! * 1.05)
                                                 .toString(),
-                                            style: const TextStyle(
-                                              color: Color(0xf008AE32),
-                                              fontSize: fontSize + 2,
-                                              fontWeight: FontWeight.w700,
-                                            ),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headlineSmall,
                                           ),
                                         ),
                                       ],
@@ -239,7 +230,7 @@ class _TicketsSummaryPageState extends State<TicketsSummaryPage> {
                   EdgeInsets.symmetric(horizontal: width / 8, vertical: 30),
               child: OldButton(
                 onContinueClick,
-                actionLabel: 'Publish',
+                actionLabel: publishString,
                 loading: isLoading,
               ),
             ),

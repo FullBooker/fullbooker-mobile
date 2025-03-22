@@ -63,10 +63,7 @@ class _ActivitySubscription extends State<ActivitySubscriptionPage> {
       if (priceController.text.isEmpty ||
           amountController.text.isEmpty ||
           selectedCurrency == null) {
-        showSnackBar(
-          'Please set the currency, price and maximum booking amount for the activity',
-          context,
-        );
+        showSnackBar(selectCurrencyPrompt, context);
         setState(() => isLoading = false);
         return;
       }
@@ -87,7 +84,7 @@ class _ActivitySubscription extends State<ActivitySubscriptionPage> {
         .then((List<Map<String, Object?>>? pricing) {
       if (pricing == null) {
         if (mounted) {
-          showSnackBar('Failed to create pricing data for activity', context);
+          showSnackBar(failedToCreatePricing, context);
         }
         setState(() => isLoading = false);
         return;
@@ -132,7 +129,7 @@ class _ActivitySubscription extends State<ActivitySubscriptionPage> {
                         SizedBox(
                           width: width * 0.5,
                           child: const Text(
-                            'Is there a monthly subscription',
+                            monthlySubscriptionPrompt,
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w600,
@@ -212,7 +209,7 @@ class _ActivitySubscription extends State<ActivitySubscriptionPage> {
                         child: Padding(
                           padding: EdgeInsets.symmetric(horizontal: 20),
                           child: Text(
-                            'Monthly Subscription',
+                            monthlySubscriptionString,
                             softWrap: true,
                             style: TextStyle(
                               fontSize: 18,
@@ -231,9 +228,9 @@ class _ActivitySubscription extends State<ActivitySubscriptionPage> {
                     children: <Widget>[
                       SizedBox(
                         width: (width - 20) * 0.5,
-                        child: const Text(
-                          'What is the price per person per subscription',
-                          style: TextStyle(fontSize: 16),
+                        child: Text(
+                          pricePerPersonSub,
+                          style: Theme.of(context).textTheme.bodyLarge,
                         ),
                       ),
                       Padding(
@@ -265,9 +262,9 @@ class _ActivitySubscription extends State<ActivitySubscriptionPage> {
                     children: <Widget>[
                       SizedBox(
                         width: (width - 20) * 0.5,
-                        child: const Text(
-                          'Maximum number of tickets per day pass',
-                          style: TextStyle(fontSize: 16),
+                        child: Text(
+                          maxTicketsPerDayPass,
+                          style: Theme.of(context).textTheme.bodyLarge,
                         ),
                       ),
                       Padding(
@@ -287,7 +284,7 @@ class _ActivitySubscription extends State<ActivitySubscriptionPage> {
                     child: Column(
                       children: <Widget>[
                         const Text(
-                          'TOTAL CHARGEABLE (PER SESSION)',
+                          totalChargeableSession,
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w400,
@@ -313,8 +310,9 @@ class _ActivitySubscription extends State<ActivitySubscriptionPage> {
                                           child: Text(
                                             "Amount (${selectedCurrency?.code ?? "_"})",
                                             softWrap: true,
-                                            style:
-                                                const TextStyle(fontSize: 18),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge,
                                           ),
                                         ),
                                       ),
@@ -325,7 +323,9 @@ class _ActivitySubscription extends State<ActivitySubscriptionPage> {
                                         priceController.text.isEmpty
                                             ? 0.toString()
                                             : priceController.text,
-                                        style: const TextStyle(fontSize: 18),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge,
                                       ),
                                     ),
                                   ],
@@ -343,7 +343,9 @@ class _ActivitySubscription extends State<ActivitySubscriptionPage> {
                                           child: Text(
                                             serviceFee(kPlatformServiceFee),
                                             softWrap: true,
-                                            style: TextStyle(fontSize: 18),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge,
                                           ),
                                         ),
                                       ),
@@ -357,7 +359,9 @@ class _ActivitySubscription extends State<ActivitySubscriptionPage> {
                                                       ) *
                                                       0.05)
                                               .toString(),
-                                          style: const TextStyle(fontSize: 18),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge,
                                         ),
                                       ),
                                     ],
@@ -370,15 +374,13 @@ class _ActivitySubscription extends State<ActivitySubscriptionPage> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
-                                      const Align(
+                                      Align(
                                         alignment: Alignment.centerLeft,
                                         child: Text(
-                                          'Total',
-                                          style: TextStyle(
-                                            color: Color(0xf008AE32),
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w700,
-                                          ),
+                                          totalString,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headlineSmall,
                                         ),
                                       ),
                                       Align(
@@ -391,11 +393,9 @@ class _ActivitySubscription extends State<ActivitySubscriptionPage> {
                                                       ) *
                                                       1.05)
                                               .toString(),
-                                          style: const TextStyle(
-                                            color: Color(0xf008AE32),
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w700,
-                                          ),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headlineSmall,
                                         ),
                                       ),
                                     ],
@@ -419,7 +419,7 @@ class _ActivitySubscription extends State<ActivitySubscriptionPage> {
                   EdgeInsets.symmetric(horizontal: width / 8, vertical: 30),
               child: OldButton(
                 onContinueClick,
-                actionLabel: publish,
+                actionLabel: publishString,
                 loading: isLoading,
               ),
             ),

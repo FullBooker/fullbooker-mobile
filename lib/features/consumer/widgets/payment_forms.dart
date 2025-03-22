@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/entities/data_mocks.dart';
+import 'package:fullbooker/shared/entities/spaces.dart';
 
 class PaymentForm extends StatefulWidget {
   const PaymentForm({super.key, this.onCompleteClick});
@@ -126,13 +127,13 @@ class _PaymentFormState extends State<PaymentForm> {
     return Column(
       children: <Widget>[
         _customTextField(label: cardHolderName, icon: Icons.person),
-        const SizedBox(height: 10),
+        smallVerticalSizedBox,
         _customTextField(
           label: cardNumber,
           icon: Icons.credit_card,
           isNumeric: true,
         ),
-        const SizedBox(height: 10),
+        smallVerticalSizedBox,
         Row(
           children: <Widget>[
             Expanded(
@@ -151,7 +152,7 @@ class _PaymentFormState extends State<PaymentForm> {
             ),
           ],
         ),
-        const SizedBox(height: 10),
+        smallVerticalSizedBox,
         _customTextField(
           label: billingAddress,
           icon: Icons.location_on,
@@ -215,7 +216,7 @@ class _PaymentFormState extends State<PaymentForm> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        const SizedBox(height: 20),
+        mediumVerticalSizedBox,
         const Text(
           selectPaymentMethod,
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),

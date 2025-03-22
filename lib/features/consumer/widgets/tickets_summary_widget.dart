@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
+import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/entities/ticket.dart';
 
 class TicketsSummaryWidget extends StatefulWidget {
@@ -47,7 +48,7 @@ class _TicketsSummaryWidgetState extends State<TicketsSummaryWidget> {
             textAlign: TextAlign.left,
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-          const SizedBox(height: 10),
+          smallVerticalSizedBox,
 
           // Table
           SingleChildScrollView(

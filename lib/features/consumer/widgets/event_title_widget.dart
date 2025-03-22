@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fullbooker/shared/entities/spaces.dart';
 
 // TODO!!(abiud): pass an event details object here and update the displays
 class EventTitleWidget extends StatelessWidget {
@@ -20,7 +21,7 @@ class EventTitleWidget extends StatelessWidget {
             color: Colors.white,
           ),
         ),
-        const SizedBox(height: 12),
+        smallVerticalSizedBox,
         Row(
           children: <Widget>[
             const Icon(Icons.pin_drop, color: Colors.grey, size: 16),
@@ -34,7 +35,7 @@ class EventTitleWidget extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 12),
+        smallVerticalSizedBox,
         Wrap(
           alignment: WrapAlignment.spaceBetween,
           children: <Widget>[

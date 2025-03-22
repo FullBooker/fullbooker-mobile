@@ -161,9 +161,9 @@ class _ActivityPricingPageState extends State<ActivityPricingPage> {
                     children: <Widget>[
                       SizedBox(
                         width: (width - 20) * 0.5,
-                        child: const Text(
+                        child: Text(
                           pricePerPersonPerSession,
-                          style: TextStyle(fontSize: 16),
+                          style: Theme.of(context).textTheme.bodyLarge,
                         ),
                       ),
                       Padding(
@@ -195,9 +195,9 @@ class _ActivityPricingPageState extends State<ActivityPricingPage> {
                     children: <Widget>[
                       SizedBox(
                         width: (width - 20) * 0.5,
-                        child: const Text(
+                        child: Text(
                           maxTicketsPerSession,
-                          style: TextStyle(fontSize: 16),
+                          style: Theme.of(context).textTheme.bodyLarge,
                         ),
                       ),
                       Padding(
@@ -217,7 +217,7 @@ class _ActivityPricingPageState extends State<ActivityPricingPage> {
                     child: Column(
                       children: <Widget>[
                         const Text(
-                          totalChargeable,
+                          totalChargeableSession,
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w400,

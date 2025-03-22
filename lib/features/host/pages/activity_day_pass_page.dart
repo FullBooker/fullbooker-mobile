@@ -210,9 +210,9 @@ class _ActivityDayPass extends State<ActivityDayPassPage> {
                     children: <Widget>[
                       SizedBox(
                         width: (width - 20) * 0.5,
-                        child: const Text(
+                        child: Text(
                           pricePerPerson,
-                          style: TextStyle(fontSize: 16),
+                          style: Theme.of(context).textTheme.bodyLarge,
                         ),
                       ),
                       Padding(
@@ -244,9 +244,9 @@ class _ActivityDayPass extends State<ActivityDayPassPage> {
                     children: <Widget>[
                       SizedBox(
                         width: (width - 20) * 0.5,
-                        child: const Text(
+                        child: Text(
                           dayPassMaxTickets,
-                          style: TextStyle(fontSize: 16),
+                          style: Theme.of(context).textTheme.bodyLarge,
                         ),
                       ),
                       Padding(
@@ -266,7 +266,7 @@ class _ActivityDayPass extends State<ActivityDayPassPage> {
                     child: Column(
                       children: <Widget>[
                         const Text(
-                          totalChargeable,
+                          totalChargeableSession,
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w400,

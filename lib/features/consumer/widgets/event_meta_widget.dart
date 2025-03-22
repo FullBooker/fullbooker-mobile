@@ -31,7 +31,7 @@ class EventMetaWidget extends StatelessWidget {
                 child: Text(
                   randomCategory(),
                   softWrap: true,
-                  style: const TextStyle(fontSize: 16),
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ),
             ),

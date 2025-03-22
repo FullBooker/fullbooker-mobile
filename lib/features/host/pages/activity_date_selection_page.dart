@@ -220,7 +220,8 @@ class _ActivityDateSelectionPageState extends State<ActivityDateSelectionPage> {
                                   Expanded(
                                     child: Text(
                                       day.name,
-                                      style: const TextStyle(fontSize: 16),
+                                      style:
+                                          Theme.of(context).textTheme.bodyLarge,
                                       textScaler: TextScaler.linear(
                                         ScaleSize.textScaleFactor(
                                           context,

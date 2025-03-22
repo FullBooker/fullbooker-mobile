@@ -186,12 +186,9 @@ class _EventCategoryPageState extends State<EventCategoryPage> {
                   child: CustomCard(
                     child: Column(
                       children: <Widget>[
-                        const Text(
+                        Text(
                           selectTicketCategories,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 22,
-                          ),
+                          style: Theme.of(context).textTheme.headlineSmall,
                         ),
                         Wrap(
                           children: categories.map((String category) {
@@ -236,12 +233,9 @@ class _EventCategoryPageState extends State<EventCategoryPage> {
                   child: CustomCard(
                     child: Column(
                       children: <Widget>[
-                        const Text(
+                        Text(
                           pricePerTicketCategory,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 22,
-                          ),
+                          style: Theme.of(context).textTheme.headlineSmall,
                         ),
                         Column(
                           children: selectedCategories.isEmpty
@@ -263,8 +257,9 @@ class _EventCategoryPageState extends State<EventCategoryPage> {
                                           width: width / 2.5,
                                           child: Text(
                                             selectedCategory,
-                                            style:
-                                                const TextStyle(fontSize: 16),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge,
                                           ),
                                         ),
                                         if (selectedCurrency == null)
@@ -300,12 +295,9 @@ class _EventCategoryPageState extends State<EventCategoryPage> {
                   child: CustomCard(
                     child: Column(
                       children: <Widget>[
-                        const Text(
+                        Text(
                           maxTicketsPerCategory,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 22,
-                          ),
+                          style: Theme.of(context).textTheme.headlineSmall,
                         ),
                         Column(
                           children: selectedCategories.isEmpty
@@ -327,8 +319,9 @@ class _EventCategoryPageState extends State<EventCategoryPage> {
                                           width: width / 2.5,
                                           child: Text(
                                             selectedCategory,
-                                            style:
-                                                const TextStyle(fontSize: 16),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge,
                                           ),
                                         ),
                                         SizedBox(

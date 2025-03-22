@@ -4,6 +4,7 @@ import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/features/consumer/painters.dart';
 import 'package:fullbooker/features/host/models/product.dart';
+import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/entities/ticket.dart';
 import 'package:fullbooker/shared/widgets/divider.dart';
 import 'package:fullbooker/shared/widgets/scale_locked_text.dart';
@@ -44,7 +45,7 @@ class PaymentConfirmationPage extends StatelessWidget {
               ),
             ),
             const Icon(Icons.check_circle, color: Colors.green, size: 80),
-            const SizedBox(height: 10),
+            smallVerticalSizedBox,
             SizedBox(
               width: width * 0.7,
               child: Text(
@@ -54,7 +55,7 @@ class PaymentConfirmationPage extends StatelessWidget {
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
             ),
-            const SizedBox(height: 20),
+            mediumVerticalSizedBox,
 
             // Payment Details Card
             Container(
@@ -81,7 +82,7 @@ class PaymentConfirmationPage extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 20),
+            mediumVerticalSizedBox,
 
             Container(
               padding: const EdgeInsets.all(12),
@@ -97,7 +98,7 @@ class PaymentConfirmationPage extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 10),
+            smallVerticalSizedBox,
 
             // Email Info
             Text.rich(
@@ -120,12 +121,12 @@ class PaymentConfirmationPage extends StatelessWidget {
               ),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 10),
+            smallVerticalSizedBox,
 
             // Ticket Card
             _ticketCard(context),
 
-            const SizedBox(height: 20),
+            mediumVerticalSizedBox,
 
             // Download Ticket Button
             ElevatedButton(
