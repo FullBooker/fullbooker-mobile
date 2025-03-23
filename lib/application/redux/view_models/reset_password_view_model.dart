@@ -3,18 +3,18 @@ import 'package:fullbooker/application/redux/states/app_state.dart';
 
 class ResetPasswordViewModel extends Vm {
   ResetPasswordViewModel({
-    required this.emailAddress,
+    required this.resetEmailAddress,
     required this.password,
     required this.hidePassword,
-  }) : super(equals: <Object?>[emailAddress, password, hidePassword]);
+  }) : super(equals: <Object?>[resetEmailAddress, password, hidePassword]);
 
-  final String? emailAddress;
+  final String resetEmailAddress;
   final String? password;
   final bool hidePassword;
 
   static ResetPasswordViewModel fromState(AppState state) {
     return ResetPasswordViewModel(
-      emailAddress: state.onboardingState?.emailAddress,
+      resetEmailAddress: state.onboardingState?.resetEmailAddress ?? '',
       password: state.onboardingState?.password,
       hidePassword: state.onboardingState!.hidePassword,
     );

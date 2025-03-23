@@ -87,7 +87,7 @@ class RequestOTPPageState extends State<RequestOTPPage> {
                               onChanged: (String email) {
                                 context.dispatch(
                                   UpdateOnboardingStateAction(
-                                    emailAddress: email,
+                                    resetEmailAddress: email,
                                   ),
                                 );
                               },
