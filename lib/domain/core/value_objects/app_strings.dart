@@ -89,11 +89,13 @@ const String signUpWithGoogleString = 'Sign up with Google';
 const String alreadyHaveAnAccountString = 'Already have an account? ';
 
 // Verify OTP page
-String otpSentCopy(String identifier) => 'Enter the OTP code sent to $identifier';
+String otpSentCopy(String identifier) =>
+    'Enter the OTP code sent to $identifier';
 const String resendCodeInString = 'Resend code in ';
-const String resentOTPString = 'Resend OTP code';
+const String resentOTPString = 'Resend OTP';
 const String useDifferentString = 'Use a different ';
 const String emailOrPhoneString = 'email / phone number';
+const String verifyOTPString = 'Verify OTP';
 
 // Consumer landing page
 const String popularNowString = 'Popular Now';

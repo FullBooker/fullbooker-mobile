@@ -11,9 +11,7 @@ import 'package:fullbooker/shared/widgets/old_text_inputs.dart';
 
 @RoutePage()
 class ChangePasswordPage extends StatefulWidget {
-  final String phoneNumber;
-
-  const ChangePasswordPage(this.phoneNumber, {super.key});
+  const ChangePasswordPage({super.key});
 
   @override
   State<StatefulWidget> createState() => ChangePasswordPageState();
@@ -28,6 +26,7 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
   final TextEditingController confirmController = TextEditingController();
   bool passwordChanged = false;
   bool modalOpened = false;
+  final String phoneNumber = '';
 
   Future<void> _dialogBuilder(BuildContext context) {
     return showDialog<void>(
@@ -58,7 +57,7 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
       _formKey.currentState!.save();
       final Future<String?> errFuture = loginController.changePassword(
         passwordController.value.text,
-        widget.phoneNumber,
+        phoneNumber,
       );
       setState(() {
         isLoading = true;

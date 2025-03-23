@@ -23,15 +23,12 @@ class PINInputField extends StatelessWidget {
   final void Function(String)? onDone;
   final Function(String)? onTextChanged;
   final bool? autoFocus;
-
   final bool hideCharacter;
   final int maxLength;
-
   final double? pinBoxHeight;
   final EdgeInsets pinBoxOuterPadding;
   final double pinBoxRadius;
   final double? pinBoxWidth;
-
   final WrapAlignment? wrapAlignment;
 
   @override

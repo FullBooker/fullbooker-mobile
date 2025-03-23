@@ -4,7 +4,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
-import 'package:fullbooker/application/redux/actions/create_account_action.dart';
 import 'package:fullbooker/application/redux/actions/request_otp_action.dart';
 import 'package:fullbooker/application/redux/actions/update_onboarding_state_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
@@ -113,7 +112,7 @@ class RequestOTPPageState extends State<RequestOTPPage> {
                     BuildContext context,
                     ResetPasswordViewModel vm,
                   ) {
-                    if (context.isWaiting(CreateAccountAction)) {
+                    if (context.isWaiting(RequestOtpAction)) {
                       return AppLoading();
                     }
 
