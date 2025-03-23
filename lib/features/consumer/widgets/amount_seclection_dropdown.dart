@@ -18,7 +18,7 @@ class _AmountSelectionDropdownState extends State<AmountSelectionDropdown> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12),
         decoration: BoxDecoration(
-          color: const Color(0xf0FADFCF),
+          color: Theme.of(context).primaryColor.withValues(alpha: .1),
           borderRadius: BorderRadius.circular(8),
         ),
         child: Row(

@@ -41,7 +41,7 @@ class PaymentSummaryPage extends StatelessWidget {
           ),
           height: 330,
           withSuccessTick: false,
-          topDividerColor: const Color(0xf02FBD6A),
+          topDividerColor: Theme.of(context).primaryColor,
           topDividerHeight: 20,
         );
       },

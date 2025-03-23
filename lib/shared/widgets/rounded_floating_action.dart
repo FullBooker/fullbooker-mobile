@@ -22,7 +22,7 @@ class RoundedFloatingAction extends StatelessWidget {
       child: DecoratedBox(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(height / 2)),
-          color: Color(color),
+          color: Theme.of(context).primaryColor,
         ),
         child: SizedBox(
           height: height,

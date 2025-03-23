@@ -136,10 +136,12 @@ class VerifyOTPPageState extends State<VerifyOTPPage> {
                             onChange: onPinChange,
                             otpPinFieldDecoration:
                                 OtpPinFieldDecoration.defaultPinBoxDecoration,
-                            otpPinFieldStyle: const OtpPinFieldStyle(
+                            otpPinFieldStyle: OtpPinFieldStyle(
                               fieldBorderRadius: 20,
-                              activeFieldBorderColor: Color(0xf0AE4808),
-                              filledFieldBorderColor: Color(0xf0AE4808),
+                              activeFieldBorderColor:
+                                  Theme.of(context).primaryColor,
+                              filledFieldBorderColor:
+                                  Theme.of(context).primaryColor,
                             ),
                           ),
                         ),

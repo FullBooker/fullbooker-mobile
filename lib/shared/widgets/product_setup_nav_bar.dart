@@ -30,7 +30,6 @@ class ProductSetupNavBar extends StatelessWidget
     return AppBar(
       leading: leading,
       leadingWidth: 0,
-      backgroundColor: const Color(0xf0191919),
       toolbarHeight: height,
       title: SingleChildScrollView(
         scrollDirection: Axis.horizontal,

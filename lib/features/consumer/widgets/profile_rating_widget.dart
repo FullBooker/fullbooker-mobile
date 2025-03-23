@@ -40,8 +40,9 @@ class ProfileRatingWidget extends StatelessWidget {
                 children: List<Icon>.generate(totalStars, (int index) {
                   return Icon(
                     index < rating ? Icons.star : Icons.star_border,
-                    color:
-                        index < rating ? const Color(0xf0E4A70A) : Colors.grey,
+                    color: index < rating
+                        ? Theme.of(context).primaryColor
+                        : Colors.grey,
                     size: 20,
                   );
                 }),
