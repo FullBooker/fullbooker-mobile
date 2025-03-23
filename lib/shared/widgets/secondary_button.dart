@@ -43,13 +43,14 @@ class SecondaryButton extends StatelessWidget {
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
           child: child.fold(
             id,
-            (String text) => Text(
-              text,
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: Theme.of(context).primaryColor,
-                    fontWeight: FontWeight.bold,
-                  ),
+            (String text) => Center(
+              child: Text(
+                text,
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      color: Theme.of(context).primaryColor,
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
             ),
           ),
         ),

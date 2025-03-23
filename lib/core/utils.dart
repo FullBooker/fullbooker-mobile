@@ -50,6 +50,8 @@ void showAlertDialog({
   required String? assetPath,
   String? title,
   String? description,
+  Function()? onConfirm,
+  String? confirmText,
 }) {
   showDialog(
     context: context,
@@ -90,8 +92,8 @@ void showAlertDialog({
               width: double.infinity,
               height: 48,
               child: PrimaryButton(
-                child: right(okThanksString),
-                onPressed: () => context.router.maybePop(),
+                child: right(confirmText ?? okThanksString),
+                onPressed: onConfirm ?? () => context.router.maybePop(),
               ),
             ),
           ],

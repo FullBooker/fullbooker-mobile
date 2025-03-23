@@ -165,8 +165,14 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
                                   assetPath: loginCredentialsSVGPath,
                                   description: error,
                                 ),
-                                onSuccess: () =>
-                                    context.router.navigate(LoginRoute()),
+                                onSuccess: () => showAlertDialog(
+                                  context: context,
+                                  assetPath: loginCredentialsSVGPath,
+                                  title: passwordUpdated,
+                                  description: passwordUpdatedCopy,
+                                  onConfirm: () =>
+                                      context.router.navigate(LoginRoute()),
+                                ),
                                 client:
                                     AppWrapperBase.of(context)!.customClient,
                               ),

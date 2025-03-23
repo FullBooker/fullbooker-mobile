@@ -1,7 +1,6 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:dartz/dartz.dart' as d;
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
@@ -190,7 +189,16 @@ class LoginPageState extends State<LoginPage> {
                               },
                             ),
 
-                            DividerWithText(text: orString),
+                            SecondaryButton(
+                              onPressed: () =>
+                                  context.router.replace(CreateAccountRoute()),
+                              child: d.right(createAccount),
+                            ),
+
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 16),
+                              child: DividerWithText(text: orString),
+                            ),
 
                             StoreConnector<AppState, LoginPageViewModel>(
                               converter: (Store<AppState> store) =>
@@ -252,37 +260,9 @@ class LoginPageState extends State<LoginPage> {
                 },
               ),
             ),
-            Column(
-              spacing: 12,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(top: 40),
-                  child: RichText(
-                    text: TextSpan(
-                      children: <InlineSpan>[
-                        TextSpan(
-                          text: dontHaveAccountString,
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
-                        TextSpan(
-                          text: createAccount,
-                          style:
-                              Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                    color: Theme.of(context).primaryColor,
-                                  ),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () =>
-                                context.router.replace(CreateAccountRoute()),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Text(
-                  appVersionFormat(appVersion),
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-              ],
+            Text(
+              appVersionFormat(appVersion),
+              style: Theme.of(context).textTheme.bodySmall,
             ),
           ],
         ),

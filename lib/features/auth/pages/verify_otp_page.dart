@@ -174,15 +174,16 @@ class VerifyOTPPageState extends State<VerifyOTPPage> {
                                 },
                                 fillColor: Colors.white,
                               ),
-                            Text(
-                              debugOTPValue(vm.resetPasswordDebugOTP),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodySmall
-                                  ?.copyWith(
-                                    color: Theme.of(context).primaryColor,
-                                  ),
-                            ),
+                            if (vm.resetPasswordDebugOTP != UNKNOWN)
+                              Text(
+                                debugOTPValue(vm.resetPasswordDebugOTP),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall
+                                    ?.copyWith(
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                              ),
                           ],
                         ),
                       ),

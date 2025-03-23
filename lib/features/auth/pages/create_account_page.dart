@@ -47,7 +47,7 @@ class CreateAccountPageState extends State<CreateAccountPage> {
           converter: (Store<AppState> store) =>
               CreateAccountViewModel.fromState(store.state),
           builder: (BuildContext context, CreateAccountViewModel vm) {
-              return ListView(
+            return ListView(
               children: <Widget>[
                 largeVerticalSizedBox,
                 SvgPicture.asset(appLogoFullSVGPath),
@@ -199,21 +199,26 @@ class CreateAccountPageState extends State<CreateAccountPage> {
 
                           return PrimaryButton(
                             onPressed: () {
-                              if (_formKey.currentState!.validate()) {
-                                context.dispatch(
-                                  CreateAccountAction(
-                                    onError: (String error) => showAlertDialog(
-                                      context: context,
-                                      assetPath: loginCredentialsSVGPath,
-                                      description: error,
-                                    ),
-                                    onSuccess: () => context.router
-                                        .navigate(HostingHomeRoute()),
-                                    client: AppWrapperBase.of(context)!
-                                        .customClient,
+                              context.dispatch(
+                                CreateAccountAction(
+                                  onError: (String error) => showAlertDialog(
+                                    context: context,
+                                    assetPath: loginCredentialsSVGPath,
+                                    description: error,
                                   ),
-                                );
-                              }
+                                  onSuccess: () => showAlertDialog(
+                                    context: context,
+                                    assetPath: loginCredentialsSVGPath,
+                                    title: accountCreated,
+                                    description: accountCreatedCopy,
+                                    confirmText: continueString,
+                                    onConfirm: () => context.router
+                                        .navigate(HostingHomeRoute()),
+                                  ),
+                                  client:
+                                      AppWrapperBase.of(context)!.customClient,
+                                ),
+                              );
                             },
                             child: d.right(createAccount),
                           );

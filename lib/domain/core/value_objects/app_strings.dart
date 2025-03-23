@@ -27,7 +27,6 @@ const String editString = 'Edit';
 const String nextString = 'Next';
 
 /// USER SIDE STRINGS
-///
 
 // Login
 const String letsGetStarted = 'Let’s get started!';
@@ -324,7 +323,7 @@ const String tryAgain = 'Try Again';
 const String hoursString = 'Hours';
 const String minutesString = 'Minutes';
 
-const String logoutString = 'Log out';
+const String logoutString = 'Logout';
 const String buyATicketString = 'Buy A Ticket';
 
 const String searchForActivitiesString = 'Search for activities and events';
@@ -404,3 +403,10 @@ const String setPasswordPrompt =
 
 const String errorChangingPassword =
     'Sorry, there was an error changing your password. Please try again later';
+
+const String accountCreated = 'Account created';
+const String accountCreatedCopy =
+    'Your account has been created successfully. Welcome to Fullbooker';
+
+const String passwordUpdated = 'Password Updated';
+const String passwordUpdatedCopy = 'Sign in with your new password to continue';

@@ -87,7 +87,8 @@ class CreateAccountAction extends ReduxAction<AppState> {
 
     dispatch(UpdateUserStateAction(user: loginResponse.user));
 
-    onSuccess?.call();
+    if (onSuccess != null) onSuccess!();
+
     return state;
   }
 }

@@ -3,11 +3,12 @@
 ## Other updates
 
 - [x] Update the app logo
+- [x] Extract colors
+- [x] Extract text themes
+- [x] Only show debug OTP when the value has been set
+- [x] add a success dialog when an account has been created
 - [ ] Setup CI/CD
-- [ ] add a success dialog when an account has been created
 - [ ] change logic in build methods for all widgets
-- [ ] Extract colors
-- [ ] Extract text themes
 - [ ] Change app splash screen to have the full logo
 - [ ] Integrate password manager for email+password sign in
 - [ ] Remove all elevated buttons
