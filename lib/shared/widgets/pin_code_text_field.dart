@@ -8,60 +8,45 @@ import 'package:pin_code_text_field/pin_code_text_field.dart';
 class PINInputField extends StatelessWidget {
   const PINInputField({
     super.key,
-    required this.maxLength,
+    this.maxLength = 4,
     required this.onDone,
     this.onTextChanged,
     this.autoFocus = false,
     this.wrapAlignment = WrapAlignment.spaceBetween,
     this.pinBoxHeight = 56.0,
     this.pinBoxWidth = 48.0,
-    this.controller,
-    this.keyboardType = TextInputType.number,
-    this.focusNode,
-    this.hasTextBorderColor,
-    this.defaultBorderColor,
-    this.pinBoxColor,
-    this.pinBoxRadius = 0.0,
-    this.showShadow = false,
+    this.pinBoxRadius = 8.0,
     this.hideCharacter = true,
-    this.pinBoxOuterPadding = const EdgeInsets.symmetric(horizontal: 4.0),
-    this.pinTextStyle,
+    this.pinBoxOuterPadding = const EdgeInsets.symmetric(horizontal: 8.0),
   });
-  final bool? autoFocus;
-  final TextEditingController? controller;
-  final FocusNode? focusNode;
-  final TextInputType keyboardType;
-  final int? maxLength;
+
   final void Function(String)? onDone;
   final Function(String)? onTextChanged;
-  final double? pinBoxHeight;
-  final double? pinBoxWidth;
-  final WrapAlignment? wrapAlignment;
-  final Color? hasTextBorderColor;
-  final Color? defaultBorderColor;
-  final Color? pinBoxColor;
-  final double pinBoxRadius;
-  final bool showShadow;
-  final EdgeInsets pinBoxOuterPadding;
+  final bool? autoFocus;
+
   final bool hideCharacter;
-  final TextStyle? pinTextStyle;
+  final int maxLength;
+
+  final double? pinBoxHeight;
+  final EdgeInsets pinBoxOuterPadding;
+  final double pinBoxRadius;
+  final double? pinBoxWidth;
+
+  final WrapAlignment? wrapAlignment;
 
   @override
   Widget build(BuildContext context) {
     return PinCodeTextField(
-      controller: controller,
       autofocus: autoFocus!,
       hideCharacter: hideCharacter,
       pinBoxBorderWidth: 1,
       highlight: true,
-      focusNode: focusNode,
-      highlightColor: Colors.white,
+      highlightColor: Theme.of(context).primaryColor,
       pinBoxOuterPadding: pinBoxOuterPadding,
-      defaultBorderColor: defaultBorderColor ??
-          Theme.of(context).primaryColor.withValues(alpha: 0.3),
-      hasTextBorderColor: hasTextBorderColor ?? Theme.of(context).primaryColor,
-      maxLength: maxLength ?? 6,
-      maskCharacter: '⚫',
+      defaultBorderColor: Theme.of(context).dividerColor,
+      hasTextBorderColor: Theme.of(context).primaryColor,
+      maxLength: maxLength,
+      maskCharacter: '•',
       pinBoxWidth: pinBoxWidth!,
       pinBoxHeight: pinBoxHeight!,
       wrapAlignment: wrapAlignment!,
@@ -72,48 +57,23 @@ class PINInputField extends StatelessWidget {
         double? borderWidth,
         double? radius,
       }) {
-        return customRoundedPinBoxDecoration(
-          borderColor,
-          pinBoxColor,
-          radius: radius == 0 ? null : radius,
-          borderWidth: borderWidth ?? 1,
-          showShadow: showShadow,
+        return BoxDecoration(
+          border: Border.all(color: borderColor),
+          color: pinBoxColor,
+          borderRadius: BorderRadius.all(Radius.circular(8)),
         );
       },
-      pinTextStyle: pinTextStyle ?? Theme.of(context).textTheme.bodyLarge,
+      pinTextStyle: Theme.of(context).textTheme.headlineLarge?.copyWith(
+            color: Theme.of(context).primaryColor,
+          ),
       pinTextAnimatedSwitcherTransition:
           ProvidedPinBoxTextAnimation.scalingTransition,
-      pinBoxColor: pinBoxColor ?? Theme.of(context).colorScheme.surface,
+      pinBoxColor: Theme.of(context).colorScheme.surface,
       pinTextAnimatedSwitcherDuration: const Duration(milliseconds: 300),
       highlightAnimationBeginColor: Colors.black,
       highlightAnimationEndColor: Colors.white12,
-      keyboardType: keyboardType,
       onDone: onDone,
       onTextChanged: onTextChanged,
     );
   }
-}
-
-BoxDecoration customRoundedPinBoxDecoration(
-  /// [BoxDecoration] box decoration for [PinCodeTextField] widget
-
-  Color borderColor,
-  Color pinBoxColor, {
-  double borderWidth = 1.0,
-  double? radius,
-  bool showShadow = false,
-}) {
-  return BoxDecoration(
-    border: Border.all(
-      color: showShadow ? pinBoxColor : borderColor,
-      width: borderWidth,
-    ),
-    color: pinBoxColor,
-    borderRadius: BorderRadius.all(Radius.circular(radius ?? 4)),
-    boxShadow: showShadow
-        ? <BoxShadow>[
-            BoxShadow(color: borderColor.withValues(alpha: 0.8), blurRadius: 3),
-          ]
-        : null,
-  );
 }

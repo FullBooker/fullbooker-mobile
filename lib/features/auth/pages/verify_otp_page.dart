@@ -151,9 +151,6 @@ class VerifyOTPPageState extends State<VerifyOTPPage> {
                           spacing: 12,
                           children: <Widget>[
                             PINInputField(
-                              maxLength: 4,
-                              pinTextStyle:
-                                  Theme.of(context).textTheme.bodyLarge!,
                               onDone: (String otp) {
                                 context.dispatch(
                                   UpdateOnboardingStateAction(
@@ -169,35 +166,6 @@ class VerifyOTPPageState extends State<VerifyOTPPage> {
                                 );
                               },
                             ),
-                            // OtpPinField(
-                            //   fieldHeight: 56,
-                            //   fieldWidth: 48,
-                            //   onSubmit: onPinChange,
-                            //   onChange: onPinChange,
-                            //   autoFillEnable: true,
-                            //   cursorColor: Theme.of(context).primaryColor,
-                            //   cursorWidth: 1,
-                            //   onCodeChanged: (String otp) {
-                            //     context.dispatch(
-                            //       UpdateOnboardingStateAction(
-                            //         resetPasswordOTP: otp,
-                            //       ),
-                            //     );
-                            //   },
-                            //   otpPinFieldDecoration:
-                            //       OtpPinFieldDecoration.defaultPinBoxDecoration,
-                            //   otpPinFieldStyle: OtpPinFieldStyle(
-                            //     fieldBorderWidth: 1,
-                            //     filledFieldBackgroundColor: Theme.of(context)
-                            //         .primaryColor
-                            //         .withValues(alpha: .1),
-                            //     fieldBorderRadius: 8,
-                            //     activeFieldBorderColor:
-                            //         Theme.of(context).primaryColor,
-                            //     filledFieldBorderColor:
-                            //         Theme.of(context).primaryColor,
-                            //   ),
-                            // ),
                             if (counter > 0)
                               RichText(
                                 text: TextSpan(
