@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "273711950325",
+    "project_id": "fullbooker-ddf43",
+    "storage_bucket": "fullbooker-ddf43.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:273711950325:android:52a1e99dd3c2e77166d8bc",
+        "android_client_info": {
+          "package_name": "com.fullbooker.fullbooker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "273711950325-679v9ejl8g260oigrl5nuf4oshnspgt5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fullbooker.fullbooker",
+            "certificate_hash": "c1d1b44110b0037410ae9a4de9bc872687f5c231"
+          }
+        },
+        {
+          "client_id": "273711950325-g8hrppriq20v5qenb0pckfrs0hl3dkl2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fullbooker.fullbooker",
+            "certificate_hash": "428b4ba17351498c96e316db997412d1036dab28"
+          }
+        },
+        {
+          "client_id": "273711950325-m62plnkrpco5tbn1j70sbvodo24dcfj4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCiNfKDNyfDuk9U8Y7lb9x8H3BY-r7NhPg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "273711950325-m62plnkrpco5tbn1j70sbvodo24dcfj4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "273711950325-06nu3ncq2pvrma95odiltrpjn5l2t79a.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.fullbooker.fullbooker"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
