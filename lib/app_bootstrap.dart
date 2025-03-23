@@ -1,7 +1,7 @@
 import 'dart:async';
-
 import 'package:async_redux/async_redux.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fullbooker/app_entry_point.dart';
@@ -21,14 +21,11 @@ Future<void> appBootStrap() async {
   runZonedGuarded(() async {
     WidgetsFlutterBinding.ensureInitialized();
 
-    // Load environment variables before accessing them
-    // await dotenv.load();
-
     const String appEnv = String.fromEnvironment('ENV');
 
     final AppConfig appConfig = getAppConfig(appEnv);
 
-    /// Force portrait orientation on devices
+    // Force portrait orientation on devices
     await SystemChrome.setPreferredOrientations(
       <DeviceOrientation>[DeviceOrientation.portraitUp],
     );
@@ -51,7 +48,6 @@ Future<void> appBootStrap() async {
       actionObservers: <ActionObserver<AppState>>[CustomActionObserver()],
     );
 
-    // Single instances used across the app
     GetIt.I.registerSingleton<AppConfig>(appConfig);
     GetIt.I.registerSingleton<GoogleSignIn>(
       GoogleSignIn(scopes: googleSignInScopes),
@@ -64,8 +60,7 @@ Future<void> appBootStrap() async {
 
     await AnalyticsService().init(environment: appConfig.environment);
 
-    // TODO(abiud): setup crashlytics
-    // FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 
     NavigateAction.setNavigatorKey(appGlobalNavigatorKey);
 
@@ -76,6 +71,6 @@ Future<void> appBootStrap() async {
       ),
     );
   }, (Object error, StackTrace stack) async {
-    // TODO(abiud): setup crashlytics and sentry here
+    FirebaseCrashlytics.instance.recordError(error, stack);
   });
 }
