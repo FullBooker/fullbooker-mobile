@@ -114,6 +114,11 @@ class VerifyOTPPageState extends State<VerifyOTPPage> {
               child: StoreConnector<AppState, ResetPasswordViewModel>(
                 converter: (Store<AppState> store) =>
                     ResetPasswordViewModel.fromState(store.state),
+                onInit: (Store<AppState> store) {
+                  context.dispatch(
+                    UpdateOnboardingStateAction(resetPasswordOTP: UNKNOWN),
+                  );
+                },
                 builder: (BuildContext context, ResetPasswordViewModel vm) {
                   return ListView(
                     children: <Widget>[

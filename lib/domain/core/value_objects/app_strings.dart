@@ -385,3 +385,6 @@ const String resetEmailPrompt =
     'Please enter an email address linked to your account';
 const String errorSendingOTP =
     'Sorry, there was an error sending an OTP. Please try again later';
+    const String errorVerifyingOTP =
+    'Sorry, there was an error verifying your OTP. Please try again later';
+const String otpEmptyPrompt = 'Please enter a 4 digit OTP';

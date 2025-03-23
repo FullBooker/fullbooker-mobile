@@ -11,6 +11,7 @@
 - [ ] Change app splash screen to have the full logo
 - [ ] Integrate password manager for email+password sign in
 - [ ] Remove all elevated buttons
+- [ ] Add cleanups for most onboarding workflows after success e.g removing state values
 
 ## Architectural changes
 

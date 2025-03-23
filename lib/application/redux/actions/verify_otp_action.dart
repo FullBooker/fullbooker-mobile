@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:async_redux/async_redux.dart';
-import 'package:flutter/foundation.dart';
 import 'package:fullbooker/application/core/services/i_custom_client.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/core/common/constants.dart';
@@ -26,18 +25,20 @@ class VerifyOTPAction extends ReduxAction<AppState> {
   @override
   Future<AppState?> reduce() async {
     final String emailAddress = state.onboardingState?.emailAddress ?? '';
+    final String otp = state.onboardingState?.resetPasswordOTP ?? '';
 
-    final bool isEmailEmpty = emailAddress.isEmpty || emailAddress == UNKNOWN;
+    final bool isOTPEmpty = otp.isEmpty || otp == UNKNOWN;
 
-    if (isEmailEmpty) {
-      return onError?.call(resetEmailPrompt);
+    if (isOTPEmpty) {
+      return onError?.call(otpEmptyPrompt);
     }
 
     final Map<String, String> data = <String, String>{
       'identifier': emailAddress,
+      'otp': otp,
     };
 
-    final String endpoint = GetIt.I.get<AppConfig>().requestOTPEndpoint;
+    final String endpoint = GetIt.I.get<AppConfig>().verifyOTPEndpoint;
 
     final Response httpResponse = await client.callRESTAPI(
       endpoint: endpoint,
@@ -56,14 +57,10 @@ class VerifyOTPAction extends ReduxAction<AppState> {
     final Map<String, dynamic> body =
         json.decode(processedResponse.response.body) as Map<String, dynamic>;
 
-    final bool isOTPSent = body.containsKey('detail');
+    final bool isOTPVerified = body.containsKey('detail');
 
-    if (kDebugMode) {
-      debugPrint(body['otp']);
-    }
-
-    if (!isOTPSent) {
-      return onError?.call(errorSendingOTP);
+    if (!isOTPVerified) {
+      return onError?.call(errorVerifyingOTP);
     }
 
     onSuccess?.call();

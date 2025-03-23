@@ -11,6 +11,7 @@ class AppConfig {
     required this.createAccountEndpoint,
     required this.googleSignInEndpoint,
     required this.requestOTPEndpoint,
+    required this.verifyOTPEndpoint,
   });
 
   /// The context the app is running in
@@ -33,6 +34,7 @@ class AppConfig {
   final String createAccountEndpoint;
   final String googleSignInEndpoint;
   final String requestOTPEndpoint;
+  final String verifyOTPEndpoint;
 
   // ---- Implemented
   // TODO(abiud): add the rest of the endpoints
