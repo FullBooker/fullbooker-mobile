@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
+import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/entities/ticket.dart';
 
 class MpesaCheckoutInstructionsWidget extends StatelessWidget {
@@ -16,49 +17,51 @@ class MpesaCheckoutInstructionsWidget extends StatelessWidget {
         children: <Widget>[
           Text(
             checkoutSentToString(ticket.phone),
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyLarge,
           ),
-          const SizedBox(height: 10),
-          const Text(
+          smallVerticalSizedBox,
+          Text(
             paymentAlert,
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyLarge,
           ),
-          const SizedBox(height: 10),
-          const Text(
+          smallVerticalSizedBox,
+          Text(
             followInstructions,
-            style: TextStyle(fontSize: 16),
+            style: Theme.of(context).textTheme.bodyLarge,
           ),
-          const SizedBox(height: 10),
-          const Text(
+          smallVerticalSizedBox,
+          Text(
             paymentInstructions,
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodyLarge,
           ),
           const SizedBox(height: 8),
           _buildBulletPoint(
             checkPopup,
+            context,
             isBold: true,
           ),
-          _buildBulletPoint(inputMpesaPIN, isBold: true),
-          _buildBulletPoint(mpesaConfirmation, isBold: true),
+          _buildBulletPoint(inputMpesaPIN, context, isBold: true),
+          _buildBulletPoint(mpesaConfirmation, context, isBold: true),
         ],
       ),
     );
   }
 
-  Widget _buildBulletPoint(String text, {bool isBold = false}) {
+  Widget _buildBulletPoint(
+    String text,
+    BuildContext context, {
+    bool isBold = false,
+  }) {
     return Padding(
       padding: const EdgeInsets.only(left: 10, bottom: 6),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          const Text('• ', style: TextStyle(fontSize: 16)),
+          Text('• ', style: Theme.of(context).textTheme.bodyLarge),
           Expanded(
             child: Text(
               text,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
-              ),
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
           ),
         ],

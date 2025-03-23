@@ -24,8 +24,8 @@ class ScaleLockedText extends StatelessWidget {
     final double fontSize = style?.fontSize == null
         ? 16 / MediaQuery.textScalerOf(context).scale(1)
         : style!.fontSize! / MediaQuery.textScalerOf(context).scale(1);
-    final TextStyle textStyle = style == null
-        ? TextStyle(fontSize: fontSize)
+    final TextStyle? textStyle = style == null
+        ? Theme.of(context).textTheme.bodyLarge?.copyWith(fontSize: fontSize)
         : style!.copyWith(fontSize: fontSize);
 
     return Text(

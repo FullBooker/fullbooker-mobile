@@ -195,29 +195,22 @@ class _EventCardWidgetState extends State<EventCardWidget> {
                       children: <Widget>[
                         Text(
                           widget.product.name,
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).primaryColor,
-                          ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge
+                              ?.copyWith(color: Theme.of(context).primaryColor),
                         ),
                         Text(
                           "$locationName, ${distanceFromEvent?.toStringAsFixed(0) ?? "_"} km away",
-                          style: TextStyle(
-                            color: Colors.grey[600],
-                            fontSize: 14,
-                          ),
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
                         Text(
                           '${getStartDate()} - ${getEndDate()}',
-                          style: TextStyle(
-                            color: Colors.grey[600],
-                            fontSize: 14,
-                          ),
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
                         Text(
                           'From KES ${getLowestPrice().cost}',
-                          style: const TextStyle(fontWeight: FontWeight.bold),
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
                         SizedBox(
                           width: double.infinity,

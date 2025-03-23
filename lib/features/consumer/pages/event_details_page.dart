@@ -93,7 +93,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
       po.add(LatLng(currentPos.latitude, currentPos.longitude));
       final Polyline routePolylineSet = Polyline(
         polylineId: const PolylineId('Routes'),
-        color: const Color(0xff4a54cd),
+        color: Theme.of(context).primaryColor,
         width: 4,
         points: po,
       );
@@ -200,13 +200,11 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  const Text(
+                                  Text(
                                     mapString,
                                     textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                    style:
+                                        Theme.of(context).textTheme.titleMedium,
                                   ),
                                   const SizedBox(height: 8),
                                   Text('${widget.event.name}, '

@@ -106,12 +106,12 @@ class CategorySelectionPageState extends State<CategorySelectionPage> {
                           pageHeaderFontSize: 17,
                           pageDescriptionFontSize: 0,
                         ),
-                        const Center(
+                        Center(
                           child: Padding(
                             padding: EdgeInsets.only(bottom: 5),
                             child: Text(
                               pickOneThatApplies,
-                              style: TextStyle(fontSize: 18),
+                              style: Theme.of(context).textTheme.bodyLarge,
                             ),
                           ),
                         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fullbooker/shared/entities/spaces.dart';
 
 // TODO!!(abiud): pass an event details object here and update the displays
 class EventTitleWidget extends StatelessWidget {
@@ -12,15 +13,11 @@ class EventTitleWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        const Text(
+        Text(
           'Music Concert, Eras tour Taylor Swift',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
+          style: Theme.of(context).textTheme.headlineSmall,
         ),
-        const SizedBox(height: 12),
+        smallVerticalSizedBox,
         Row(
           children: <Widget>[
             const Icon(Icons.pin_drop, color: Colors.grey, size: 16),
@@ -28,13 +25,13 @@ class EventTitleWidget extends StatelessWidget {
             Flexible(
               child: Text(
                 'Carnivore grounds, 7km away',
-                style: TextStyle(color: Colors.grey[400], fontSize: 14),
+                style: Theme.of(context).textTheme.bodySmall,
                 softWrap: true,
               ),
             ),
           ],
         ),
-        const SizedBox(height: 12),
+        smallVerticalSizedBox,
         Wrap(
           alignment: WrapAlignment.spaceBetween,
           children: <Widget>[
@@ -51,7 +48,7 @@ class EventTitleWidget extends StatelessWidget {
                   Flexible(
                     child: Text(
                       '22–24, Feb, 24',
-                      style: TextStyle(color: Colors.grey[400], fontSize: 14),
+                      style: Theme.of(context).textTheme.bodyLarge,
                       softWrap: true,
                     ),
                   ),
@@ -73,7 +70,7 @@ class EventTitleWidget extends StatelessWidget {
                     Flexible(
                       child: Text(
                         '2:30PM – 4:30AM',
-                        style: TextStyle(color: Colors.grey[400], fontSize: 14),
+                        style: Theme.of(context).textTheme.bodyMedium,
                         softWrap: true,
                       ),
                     ),

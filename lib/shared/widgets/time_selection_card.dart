@@ -19,9 +19,9 @@ class TimeSelectionCard extends StatelessWidget {
     return CustomCard(
       child: Column(
         children: <Widget>[
-          const Text(
+          Text(
             activityLengthString,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 21),
+            style: Theme.of(context).textTheme.headlineSmall,
           ),
           SizedBox(
             width: width - 40,

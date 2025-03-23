@@ -62,10 +62,7 @@ class InformationModal extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 20),
                     child: Text(
                       title,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: Theme.of(context).textTheme.headlineSmall,
                       textAlign: TextAlign.center,
                     ),
                   )

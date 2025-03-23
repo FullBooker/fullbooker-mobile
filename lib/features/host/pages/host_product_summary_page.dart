@@ -85,17 +85,16 @@ class _HostProductSummaryPageState extends State<HostProductSummaryPage> {
                                   padding: const EdgeInsets.all(10),
                                   child: Column(
                                     children: <Widget>[
-                                      const Center(
+                                      Center(
                                         child: Padding(
                                           padding: EdgeInsets.symmetric(
                                             vertical: 10,
                                           ),
                                           child: Text(
                                             activitiesString,
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 17,
-                                            ),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge,
                                           ),
                                         ),
                                       ),

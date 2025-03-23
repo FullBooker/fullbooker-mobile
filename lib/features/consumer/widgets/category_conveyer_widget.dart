@@ -99,10 +99,7 @@ class _CategoryConveyerWidgetState extends State<CategoryConveyerWidget> {
                         ),
                         ScaleLockedText(
                           category.category.title,
-                          style: const TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w500,
-                          ),
+                          style: Theme.of(context).textTheme.bodySmall,
                         ),
                       ],
                     ),

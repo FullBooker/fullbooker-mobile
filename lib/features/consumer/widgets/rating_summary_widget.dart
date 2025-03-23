@@ -43,10 +43,7 @@ class RatingSummaryWidget extends StatelessWidget {
                         children: <Widget>[
                           Text(
                             '${entry.key} ',
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: Theme.of(context).textTheme.bodyMedium,
                           ),
                           const Icon(
                             Icons.star,
@@ -74,10 +71,7 @@ class RatingSummaryWidget extends StatelessWidget {
                     children: <Widget>[
                       Text(
                         '$rating',
-                        style: const TextStyle(
-                          fontSize: 32,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: Theme.of(context).textTheme.headlineLarge,
                       ),
                       Row(
                         children: List<Icon>.generate(5, (int index) {
@@ -91,10 +85,7 @@ class RatingSummaryWidget extends StatelessWidget {
                       Text(
                         totalReviewCount(totalReviews),
                         softWrap: true,
-                        style: const TextStyle(
-                          fontSize: 12,
-                          color: Colors.grey,
-                        ),
+                        style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ],
                   ),

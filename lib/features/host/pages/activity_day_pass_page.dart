@@ -113,12 +113,9 @@ class _ActivityDayPass extends State<ActivityDayPassPage> {
                       children: <Widget>[
                         SizedBox(
                           width: width * 0.5,
-                          child: const Text(
+                          child: Text(
                             dayPassPrompt,
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                            ),
+                            style: Theme.of(context).textTheme.bodyLarge,
                           ),
                         ),
                         CustomSwitchWidget(
@@ -185,7 +182,7 @@ class _ActivityDayPass extends State<ActivityDayPassPage> {
                     ),
                   ),
                 ),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.all(20),
                   child: Row(
                     children: <Widget>[
@@ -194,10 +191,7 @@ class _ActivityDayPass extends State<ActivityDayPassPage> {
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         child: Text(
                           dayPassString,
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                          ),
+                          style: Theme.of(context).textTheme.bodyLarge,
                         ),
                       ),
                     ],
@@ -210,9 +204,9 @@ class _ActivityDayPass extends State<ActivityDayPassPage> {
                     children: <Widget>[
                       SizedBox(
                         width: (width - 20) * 0.5,
-                        child: const Text(
+                        child: Text(
                           pricePerPerson,
-                          style: TextStyle(fontSize: 16),
+                          style: Theme.of(context).textTheme.bodyLarge,
                         ),
                       ),
                       Padding(
@@ -244,9 +238,9 @@ class _ActivityDayPass extends State<ActivityDayPassPage> {
                     children: <Widget>[
                       SizedBox(
                         width: (width - 20) * 0.5,
-                        child: const Text(
+                        child: Text(
                           dayPassMaxTickets,
-                          style: TextStyle(fontSize: 16),
+                          style: Theme.of(context).textTheme.bodyLarge,
                         ),
                       ),
                       Padding(
@@ -265,12 +259,9 @@ class _ActivityDayPass extends State<ActivityDayPassPage> {
                   child: CustomCard(
                     child: Column(
                       children: <Widget>[
-                        const Text(
-                          totalChargeable,
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                          ),
+                        Text(
+                          totalChargeableSession,
+                          style: Theme.of(context).textTheme.bodyLarge,
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 10),
@@ -292,8 +283,9 @@ class _ActivityDayPass extends State<ActivityDayPassPage> {
                                           child: Text(
                                             "Amount (${selectedCurrency?.code ?? "_"})",
                                             softWrap: true,
-                                            style:
-                                                const TextStyle(fontSize: 18),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge,
                                           ),
                                         ),
                                       ),
@@ -304,7 +296,9 @@ class _ActivityDayPass extends State<ActivityDayPassPage> {
                                         priceController.text.isEmpty
                                             ? 0.toString()
                                             : priceController.text,
-                                        style: const TextStyle(fontSize: 18),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge,
                                       ),
                                     ),
                                   ],
@@ -322,7 +316,9 @@ class _ActivityDayPass extends State<ActivityDayPassPage> {
                                           child: Text(
                                             serviceFee(kPlatformServiceFee),
                                             softWrap: true,
-                                            style: TextStyle(fontSize: 18),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge,
                                           ),
                                         ),
                                       ),
@@ -336,7 +332,9 @@ class _ActivityDayPass extends State<ActivityDayPassPage> {
                                                       ) *
                                                       0.05)
                                               .toString(),
-                                          style: const TextStyle(fontSize: 18),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge,
                                         ),
                                       ),
                                     ],
@@ -349,15 +347,17 @@ class _ActivityDayPass extends State<ActivityDayPassPage> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
-                                      const Align(
+                                      Align(
                                         alignment: Alignment.centerLeft,
                                         child: Text(
                                           totalString,
-                                          style: TextStyle(
-                                            color: Color(0xf008AE32),
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w700,
-                                          ),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headlineSmall
+                                              ?.copyWith(
+                                                color: Theme.of(context)
+                                                    .primaryColor,
+                                              ),
                                         ),
                                       ),
                                       Align(
@@ -370,11 +370,13 @@ class _ActivityDayPass extends State<ActivityDayPassPage> {
                                                       ) *
                                                       1.05)
                                               .toString(),
-                                          style: const TextStyle(
-                                            color: Color(0xf008AE32),
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w700,
-                                          ),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headlineSmall
+                                              ?.copyWith(
+                                                color: Theme.of(context)
+                                                    .primaryColor,
+                                              ),
                                         ),
                                       ),
                                     ],

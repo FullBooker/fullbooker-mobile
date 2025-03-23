@@ -36,7 +36,7 @@ class _TitledDropDownState extends State<TitledDropdown> {
   DropDownOption? setValue;
 
   Color getHighlightColor() =>
-      selected ? const Color(0xf0F58C4A) : const Color(0xf0000000);
+      selected ? Theme.of(context).primaryColor : Colors.black;
 
   void toggleSelected() {
     setState(() {
@@ -131,7 +131,7 @@ class _TitledDropDownState extends State<TitledDropdown> {
                   child: Center(
                     child: Text(
                       widget.title,
-                      style: const TextStyle(fontSize: 18),
+                      style: Theme.of(context).textTheme.bodyLarge,
                       textAlign: TextAlign.center,
                     ),
                   ),

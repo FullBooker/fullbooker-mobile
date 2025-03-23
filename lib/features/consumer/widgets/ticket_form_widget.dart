@@ -82,10 +82,7 @@ class _TicketFormWidgetState extends State<TicketFormWidget> {
               child: Text(
                 ticketNumber(widget.index + 1),
                 textAlign: TextAlign.start,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
             ),
           )
@@ -160,10 +157,8 @@ class _TicketFormWidgetState extends State<TicketFormWidget> {
                                           ? addMoreTicketsString
                                           : saveString,
                                       softWrap: true,
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16,
-                                      ),
+                                      style:
+                                          Theme.of(context).textTheme.bodyLarge,
                                     ),
                                   ),
                                 ),

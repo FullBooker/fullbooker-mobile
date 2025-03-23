@@ -20,7 +20,7 @@ class _CustomSwitchWidgetState extends State<CustomSwitchWidget> {
       children: <Widget>[
         Text(
           isSwitchOn ? yesString : noString,
-          style: const TextStyle(fontSize: 18),
+          style: Theme.of(context).textTheme.bodyLarge,
         ),
         Switch(
           value: isSwitchOn,

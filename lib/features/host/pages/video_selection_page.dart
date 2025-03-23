@@ -191,7 +191,9 @@ class _VideoSelectionPageState extends State<VideoSelectionPage> {
                                             () => replaceVideo(idx),
                                             actionLabel: replaceString,
                                             labelFontSize: 13,
-                                            color: const Color(0xf0FCF2EB),
+                                            color: Theme.of(context)
+                                                .primaryColor
+                                                .withValues(alpha: .1),
                                             actionLabelColor: Colors.black,
                                             verticalPadding: 0,
                                           ),
@@ -204,7 +206,9 @@ class _VideoSelectionPageState extends State<VideoSelectionPage> {
                                             // TODO(abiud): replace this with an icon
                                             actionLabel: 'X',
                                             labelFontSize: 13,
-                                            color: const Color(0xf0FCF2EB),
+                                            color: Theme.of(context)
+                                                .primaryColor
+                                                .withValues(alpha: .1),
                                             actionLabelColor: Colors.black,
                                             verticalPadding: 0,
                                           ),
@@ -236,7 +240,7 @@ class _VideoSelectionPageState extends State<VideoSelectionPage> {
                           child: OldButton(
                             selectVideo,
                             actionLabel: browseString,
-                            color: const Color(0xf0333333),
+                            color: Colors.black,
                           ),
                         ),
                       ],

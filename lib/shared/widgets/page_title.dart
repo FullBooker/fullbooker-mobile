@@ -40,10 +40,10 @@ class PageHeader extends StatelessWidget {
             padding: EdgeInsets.only(bottom: pageTitleBottomPadding),
             child: Text(
               title,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: pageHeaderFontSize,
-              ),
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    fontSize: pageHeaderFontSize,
+                  ),
               textAlign: TextAlign.center,
             ),
           ),
@@ -61,7 +61,10 @@ class PageHeader extends StatelessWidget {
             ),
             child: Text(
               pageDescription,
-              style: TextStyle(fontSize: pageDescriptionFontSize),
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyLarge
+                  ?.copyWith(fontSize: pageDescriptionFontSize),
               textAlign: TextAlign.center,
             ),
           ),

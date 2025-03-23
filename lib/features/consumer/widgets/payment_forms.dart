@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/entities/data_mocks.dart';
+import 'package:fullbooker/shared/entities/spaces.dart';
 
 class PaymentForm extends StatefulWidget {
   const PaymentForm({super.key, this.onCompleteClick});
@@ -48,10 +49,9 @@ class _PaymentFormState extends State<PaymentForm> {
                   if (icon != null) Icon(icon, color: Colors.black),
                   Text(
                     method['name'],
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: isSelected ? Colors.white : Colors.black,
-                    ),
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          color: isSelected ? Colors.white : Colors.black,
+                        ),
                   ),
                 ],
               ),
@@ -126,13 +126,13 @@ class _PaymentFormState extends State<PaymentForm> {
     return Column(
       children: <Widget>[
         _customTextField(label: cardHolderName, icon: Icons.person),
-        const SizedBox(height: 10),
+        smallVerticalSizedBox,
         _customTextField(
           label: cardNumber,
           icon: Icons.credit_card,
           isNumeric: true,
         ),
-        const SizedBox(height: 10),
+        smallVerticalSizedBox,
         Row(
           children: <Widget>[
             Expanded(
@@ -151,7 +151,7 @@ class _PaymentFormState extends State<PaymentForm> {
             ),
           ],
         ),
-        const SizedBox(height: 10),
+        smallVerticalSizedBox,
         _customTextField(
           label: billingAddress,
           icon: Icons.location_on,
@@ -201,11 +201,10 @@ class _PaymentFormState extends State<PaymentForm> {
         onPressed: widget.onCompleteClick,
         child: Text(
           text,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
+          style: Theme.of(context)
+              .textTheme
+              .bodyLarge
+              ?.copyWith(color: Colors.white),
         ),
       ),
     );
@@ -215,10 +214,10 @@ class _PaymentFormState extends State<PaymentForm> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        const SizedBox(height: 20),
-        const Text(
+        mediumVerticalSizedBox,
+        Text(
           selectPaymentMethod,
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          style: Theme.of(context).textTheme.bodyLarge,
         ),
         const SizedBox(height: 15),
         _buildPaymentOptions(),

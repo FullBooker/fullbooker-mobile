@@ -12,8 +12,5 @@ class AppColors {
   static const Color backgroundColor = Colors.white;
   static const Color greyTextColor = Color(0xffA0A0A0);
 
-  // App custom colors
-  static const Color customBlueColor = Color(0xff15B9FF);
-
   static const Color borderColor = Color(0xFFE0E0E0);
 }

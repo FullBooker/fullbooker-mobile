@@ -30,10 +30,7 @@ class EventCreationStep extends StatelessWidget {
                   step.title,
                   textAlign: TextAlign.left,
                   softWrap: true,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ),
               SizedBox(
@@ -42,10 +39,7 @@ class EventCreationStep extends StatelessWidget {
                   step.description,
                   softWrap: true,
                   overflow: TextOverflow.visible,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w300,
-                  ),
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ),
             ],

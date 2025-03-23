@@ -1,15 +1,18 @@
 import 'dart:async';
-
 import 'package:async_redux/async_redux.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fullbooker/app_entry_point.dart';
+import 'package:fullbooker/application/core/services/analytics_service.dart';
 import 'package:fullbooker/application/redux/observers/custom_observer.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/endpoints.dart';
 import 'package:fullbooker/domain/core/value_objects/global_keys.dart';
+import 'package:fullbooker/firebase_options.dart';
 import 'package:fullbooker/infrastructure/repository/state_persistor.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -18,14 +21,11 @@ Future<void> appBootStrap() async {
   runZonedGuarded(() async {
     WidgetsFlutterBinding.ensureInitialized();
 
-    // Load environment variables before accessing them
-    // await dotenv.load();
-
     const String appEnv = String.fromEnvironment('ENV');
 
     final AppConfig appConfig = getAppConfig(appEnv);
 
-    /// Force portrait orientation on devices
+    // Force portrait orientation on devices
     await SystemChrome.setPreferredOrientations(
       <DeviceOrientation>[DeviceOrientation.portraitUp],
     );
@@ -48,23 +48,19 @@ Future<void> appBootStrap() async {
       actionObservers: <ActionObserver<AppState>>[CustomActionObserver()],
     );
 
-    // TODO(abiud): setup firebase
-    // await Firebase.initializeApp(
-    //   name: appConfig.applicationName,
-    //   options: DefaultFirebaseOptions.currentPlatform,
-    // );
-
-    // Single instances used across the app
     GetIt.I.registerSingleton<AppConfig>(appConfig);
     GetIt.I.registerSingleton<GoogleSignIn>(
       GoogleSignIn(scopes: googleSignInScopes),
     );
 
-    // TODO(abiud):setup google analytics service
-    // await AnalyticsService().init(environment: appConfig.environment);
+    await Firebase.initializeApp(
+      name: appConfig.applicationName,
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
 
-    // TODO(abiud): setup crashlytics
-    // FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+    await AnalyticsService().init(environment: appConfig.environment);
+
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 
     NavigateAction.setNavigatorKey(appGlobalNavigatorKey);
 
@@ -75,6 +71,6 @@ Future<void> appBootStrap() async {
       ),
     );
   }, (Object error, StackTrace stack) async {
-    // TODO(abiud): setup crashlytics and sentry here
+    FirebaseCrashlytics.instance.recordError(error, stack);
   });
 }

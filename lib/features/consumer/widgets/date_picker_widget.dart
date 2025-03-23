@@ -38,7 +38,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
             setDateTime == null
                 ? selectDateString
                 : '${setDateTime!.day}/${setDateTime!.month}/${setDateTime!.year}',
-            style: const TextStyle(fontSize: 14),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
         ),
         GestureDetector(

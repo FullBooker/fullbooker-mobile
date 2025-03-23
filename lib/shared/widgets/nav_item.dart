@@ -21,7 +21,7 @@ class NavItemWidget extends StatelessWidget {
             child: ScaleLockedText(
               title,
               textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 12),
+              style: Theme.of(context).textTheme.bodySmall,
               softWrap: true,
               overflow: TextOverflow.visible,
             ),

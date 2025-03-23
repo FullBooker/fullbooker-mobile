@@ -1,0 +1,30 @@
+{
+    "flutter": {
+        "platforms": {
+            "android": {
+                "default": {
+                    "projectId": "fullbooker-ddf43",
+                    "appId": "1:273711950325:android:52a1e99dd3c2e77166d8bc",
+                    "fileOutput": "android/app/google-services.json"
+                }
+            },
+            "ios": {
+                "default": {
+                    "projectId": "fullbooker-ddf43",
+                    "appId": "1:273711950325:ios:b157d8ef0daaa3dc66d8bc",
+                    "uploadDebugSymbols": false,
+                    "fileOutput": "ios/Runner/GoogleService-Info.plist"
+                }
+            },
+            "dart": {
+                "lib/firebase_options.dart": {
+                    "projectId": "fullbooker-ddf43",
+                    "configurations": {
+                        "android": "1:273711950325:android:52a1e99dd3c2e77166d8bc",
+                        "ios": "1:273711950325:ios:b157d8ef0daaa3dc66d8bc"
+                    }
+                }
+            }
+        }
+    }
+}

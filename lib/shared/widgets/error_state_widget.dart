@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
+import 'package:fullbooker/shared/entities/spaces.dart';
 
 class ErrorStateWidget extends StatelessWidget {
   const ErrorStateWidget({
@@ -24,18 +25,18 @@ class ErrorStateWidget extends StatelessWidget {
               size: 80,
               color: Colors.grey.shade400,
             ), // Changed icon
-            const SizedBox(height: 20),
-            const Text(
+            mediumVerticalSizedBox,
+            Text(
               noDataFound,
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.headlineSmall,
             ),
-            const SizedBox(height: 10),
+            smallVerticalSizedBox,
             Text(
               message,
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 16, color: Colors.grey.shade600),
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
-            const SizedBox(height: 20),
+            mediumVerticalSizedBox,
             ElevatedButton.icon(
               onPressed: onRetry,
               icon: const Icon(Icons.refresh),
@@ -43,7 +44,7 @@ class ErrorStateWidget extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                textStyle: const TextStyle(fontSize: 16),
+                textStyle: Theme.of(context).textTheme.bodyLarge,
               ),
             ),
           ],

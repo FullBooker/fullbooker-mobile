@@ -136,7 +136,7 @@ class _ActivityPricingPageState extends State<ActivityPricingPage> {
                     ),
                   ),
                 ),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.all(20),
                   child: Row(
                     children: <Widget>[
@@ -145,10 +145,7 @@ class _ActivityPricingPageState extends State<ActivityPricingPage> {
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         child: Text(
                           costPerSession,
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                          ),
+                          style: Theme.of(context).textTheme.bodyLarge,
                         ),
                       ),
                     ],
@@ -161,9 +158,9 @@ class _ActivityPricingPageState extends State<ActivityPricingPage> {
                     children: <Widget>[
                       SizedBox(
                         width: (width - 20) * 0.5,
-                        child: const Text(
+                        child: Text(
                           pricePerPersonPerSession,
-                          style: TextStyle(fontSize: 16),
+                          style: Theme.of(context).textTheme.bodyLarge,
                         ),
                       ),
                       Padding(
@@ -195,9 +192,9 @@ class _ActivityPricingPageState extends State<ActivityPricingPage> {
                     children: <Widget>[
                       SizedBox(
                         width: (width - 20) * 0.5,
-                        child: const Text(
+                        child: Text(
                           maxTicketsPerSession,
-                          style: TextStyle(fontSize: 16),
+                          style: Theme.of(context).textTheme.bodyLarge,
                         ),
                       ),
                       Padding(
@@ -216,12 +213,9 @@ class _ActivityPricingPageState extends State<ActivityPricingPage> {
                   child: CustomCard(
                     child: Column(
                       children: <Widget>[
-                        const Text(
-                          totalChargeable,
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                          ),
+                        Text(
+                          totalChargeableSession,
+                          style: Theme.of(context).textTheme.bodyLarge,
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 10),
@@ -243,8 +237,9 @@ class _ActivityPricingPageState extends State<ActivityPricingPage> {
                                           child: Text(
                                             "Amount (${selectedCurrency?.code ?? "_"})",
                                             softWrap: true,
-                                            style:
-                                                const TextStyle(fontSize: 18),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge,
                                           ),
                                         ),
                                       ),
@@ -255,7 +250,9 @@ class _ActivityPricingPageState extends State<ActivityPricingPage> {
                                         priceController.text.isEmpty
                                             ? 0.toString()
                                             : priceController.text,
-                                        style: const TextStyle(fontSize: 18),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge,
                                       ),
                                     ),
                                   ],
@@ -272,7 +269,9 @@ class _ActivityPricingPageState extends State<ActivityPricingPage> {
                                           alignment: Alignment.centerLeft,
                                           child: Text(
                                             serviceFee(kPlatformServiceFee),
-                                            style: TextStyle(fontSize: 18),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge,
                                           ),
                                         ),
                                       ),
@@ -286,7 +285,9 @@ class _ActivityPricingPageState extends State<ActivityPricingPage> {
                                                       ) *
                                                       0.05)
                                               .toString(),
-                                          style: const TextStyle(fontSize: 18),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge,
                                         ),
                                       ),
                                     ],
@@ -299,15 +300,17 @@ class _ActivityPricingPageState extends State<ActivityPricingPage> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
-                                      const Align(
+                                      Align(
                                         alignment: Alignment.centerLeft,
                                         child: Text(
-                                          'Total',
-                                          style: TextStyle(
-                                            color: Color(0xf008AE32),
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w700,
-                                          ),
+                                          totalString,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headlineSmall
+                                              ?.copyWith(
+                                                color: Theme.of(context)
+                                                    .primaryColor,
+                                              ),
                                         ),
                                       ),
                                       Align(
@@ -320,11 +323,13 @@ class _ActivityPricingPageState extends State<ActivityPricingPage> {
                                                       ) *
                                                       1.05)
                                               .toString(),
-                                          style: const TextStyle(
-                                            color: Color(0xf008AE32),
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w700,
-                                          ),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headlineSmall
+                                              ?.copyWith(
+                                                color: Theme.of(context)
+                                                    .primaryColor,
+                                              ),
                                         ),
                                       ),
                                     ],

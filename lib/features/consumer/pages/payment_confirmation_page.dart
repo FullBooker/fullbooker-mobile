@@ -4,6 +4,7 @@ import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/features/consumer/painters.dart';
 import 'package:fullbooker/features/host/models/product.dart';
+import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/entities/ticket.dart';
 import 'package:fullbooker/shared/widgets/divider.dart';
 import 'package:fullbooker/shared/widgets/scale_locked_text.dart';
@@ -44,17 +45,17 @@ class PaymentConfirmationPage extends StatelessWidget {
               ),
             ),
             const Icon(Icons.check_circle, color: Colors.green, size: 80),
-            const SizedBox(height: 10),
+            smallVerticalSizedBox,
             SizedBox(
               width: width * 0.7,
-              child: const Text(
+              child: Text(
                 thankYouForPayment,
                 softWrap: true,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                style: Theme.of(context).textTheme.headlineSmall,
               ),
             ),
-            const SizedBox(height: 20),
+            mediumVerticalSizedBox,
 
             // Payment Details Card
             Container(
@@ -73,14 +74,15 @@ class PaymentConfirmationPage extends StatelessWidget {
                   _paymentDetail(
                     'Payment Confirmation Number',
                     '473FHETGY3HF3',
+                    context,
                   ),
-                  _paymentDetail('Payment Amount', 'KES 20,000.00'),
-                  _paymentDetail('Payment Date', '19/02/2025'),
-                  _paymentDetail('From Mpesa No.', '+254701176895'),
+                  _paymentDetail('Payment Amount', 'KES 20,000.00', context),
+                  _paymentDetail('Payment Date', '19/02/2025', context),
+                  _paymentDetail('From Mpesa No.', '+254701176895', context),
                 ],
               ),
             ),
-            const SizedBox(height: 20),
+            mediumVerticalSizedBox,
 
             Container(
               padding: const EdgeInsets.all(12),
@@ -92,42 +94,39 @@ class PaymentConfirmationPage extends StatelessWidget {
               child: Center(
                 child: Text(
                   '${product.name}, $locationName',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ),
             ),
-            const SizedBox(height: 10),
+            smallVerticalSizedBox,
 
             // Email Info
             Text.rich(
               TextSpan(
                 text: downloadString,
-                style: const TextStyle(fontSize: 14),
+                style: Theme.of(context).textTheme.bodyMedium,
                 children: <InlineSpan>[
-                  const TextSpan(
+                  TextSpan(
                     text: yourTicketBelow,
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   const TextSpan(
                     text: orCheckEmailText,
                   ),
                   TextSpan(
                     text: ticket.email,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ],
               ),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 10),
+            smallVerticalSizedBox,
 
             // Ticket Card
-            _ticketCard(),
+            _ticketCard(context),
 
-            const SizedBox(height: 20),
+            mediumVerticalSizedBox,
 
             // Download Ticket Button
             ElevatedButton(
@@ -140,9 +139,12 @@ class PaymentConfirmationPage extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(vertical: 14, horizontal: 32),
               ),
-              child: const Text(
+              child: Text(
                 downloadTicket,
-                style: TextStyle(fontSize: 16, color: Colors.white),
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge
+                    ?.copyWith(color: Colors.white),
               ),
             ),
           ],
@@ -152,7 +154,7 @@ class PaymentConfirmationPage extends StatelessWidget {
   }
 
   // Helper function to create payment detail rows
-  Widget _paymentDetail(String title, String value) {
+  Widget _paymentDetail(String title, String value, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
@@ -162,14 +164,13 @@ class PaymentConfirmationPage extends StatelessWidget {
             child: Text(
               title,
               softWrap: true,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
           ),
           Flexible(
             child: Text(
               value,
               softWrap: true,
-              style: const TextStyle(fontSize: 14),
             ),
           ),
         ],
@@ -178,7 +179,7 @@ class PaymentConfirmationPage extends StatelessWidget {
   }
 
   // Ticket Card Widget
-  Widget _ticketCard() {
+  Widget _ticketCard(BuildContext context) {
     return Container(
       height: 190,
       decoration: const BoxDecoration(
@@ -195,13 +196,13 @@ class PaymentConfirmationPage extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.grey[400],
             ),
-            child: const Center(
+            child: Center(
               child: RotatedBox(
                 quarterTurns: 3,
                 // TODO(abiud): extract this value from AppConfig
                 child: ScaleLockedText(
                   kAppName,
-                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
               ),
             ),
@@ -219,21 +220,18 @@ class PaymentConfirmationPage extends StatelessWidget {
                 children: <Widget>[
                   ScaleLockedText(
                     product.name,
-                    style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
                   const SizedBox(height: 5),
                   ScaleLockedText(
                     'Name: ${ticket.name}',
                     textAlign: TextAlign.left,
-                    style: const TextStyle(fontSize: 7),
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
                   ScaleLockedText(
                     'ID: ${ticket.id}',
                     textAlign: TextAlign.left,
-                    style: const TextStyle(fontSize: 7),
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
                   const SizedBox(height: 8),
                   QrImageView(
@@ -267,59 +265,50 @@ class PaymentConfirmationPage extends StatelessWidget {
                     children: <Widget>[
                       ScaleLockedText(
                         product.name,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: Theme.of(context).textTheme.bodySmall,
                       ),
-                      const Column(
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: <Widget>[
                           ScaleLockedText(
                             '19TH',
                             softWrap: true,
-                            style: TextStyle(
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: Theme.of(context).textTheme.bodySmall,
                           ),
                           ScaleLockedText(
                             'February',
                             softWrap: true,
-                            style: TextStyle(
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: Theme.of(context).textTheme.bodySmall,
                           ),
                           ScaleLockedText(
                             '5PM - 1AM',
-                            style: TextStyle(fontSize: 11),
+                            style: Theme.of(context).textTheme.bodySmall,
                           ),
                         ],
                       ),
                     ],
                   ),
                   const SizedBox(height: 8),
-                  const ScaleLockedText(
-                    'Confirmation Number:',
-                    style: TextStyle(fontSize: 11),
+                  ScaleLockedText(
+                    confirmationNumber,
+                    style: Theme.of(context).textTheme.bodySmall,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  const ScaleLockedText(
+                  ScaleLockedText(
                     'FB25/01/001Rt',
-                    style: TextStyle(fontSize: 11),
+                    style: Theme.of(context).textTheme.bodySmall,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 4),
+                  SizedBox(height: 4),
                   ScaleLockedText(
                     'Name: ${ticket.name}',
-                    style: const TextStyle(fontSize: 11),
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
                   ScaleLockedText(
                     'ID: ${ticket.id}',
-                    style: const TextStyle(fontSize: 11),
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
-                  const Spacer(),
+                  Spacer(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
@@ -327,23 +316,20 @@ class PaymentConfirmationPage extends StatelessWidget {
                         // Allows the text to wrap properly
                         child: ScaleLockedText(
                           'Location: $locationName',
-                          style: const TextStyle(fontSize: 11),
+                          style: Theme.of(context).textTheme.bodySmall,
                           softWrap: true,
                         ),
                       ),
-                      const Column(
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: <Widget>[
                           ScaleLockedText(
                             'Emergency contact',
-                            style: TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: Theme.of(context).textTheme.bodySmall,
                           ),
                           ScaleLockedText(
                             '+254701176895',
-                            style: TextStyle(fontSize: 11),
+                            style: Theme.of(context).textTheme.bodySmall,
                           ),
                         ],
                       ),
@@ -360,12 +346,12 @@ class PaymentConfirmationPage extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.grey[400],
             ),
-            child: const Center(
+            child: Center(
               child: RotatedBox(
                 quarterTurns: 3,
                 child: ScaleLockedText(
                   'REGULAR',
-                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
               ),
             ),

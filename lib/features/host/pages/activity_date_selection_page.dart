@@ -169,12 +169,9 @@ class _ActivityDateSelectionPageState extends State<ActivityDateSelectionPage> {
                     child: CustomCard(
                       child: Column(
                         children: <Widget>[
-                          const Text(
+                          Text(
                             openWeekDays,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 21,
-                            ),
+                            style: Theme.of(context).textTheme.headlineSmall,
                           ),
                           if (days == null)
                             const Center(child: AppLoading())
@@ -220,7 +217,8 @@ class _ActivityDateSelectionPageState extends State<ActivityDateSelectionPage> {
                                   Expanded(
                                     child: Text(
                                       day.name,
-                                      style: const TextStyle(fontSize: 16),
+                                      style:
+                                          Theme.of(context).textTheme.bodyLarge,
                                       textScaler: TextScaler.linear(
                                         ScaleSize.textScaleFactor(
                                           context,
@@ -291,12 +289,9 @@ class _ActivityDateSelectionPageState extends State<ActivityDateSelectionPage> {
                     child: CustomCard(
                       child: Column(
                         children: <Widget>[
-                          const Text(
+                          Text(
                             closedTimeOfYearString,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 21,
-                            ),
+                            style: Theme.of(context).textTheme.headlineLarge,
                           ),
                           Center(
                             child: Row(

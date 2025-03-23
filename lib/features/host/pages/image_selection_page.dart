@@ -189,7 +189,9 @@ class _ImageSelectionPageState extends State<ImageSelectionPage> {
                                           () => replaceImage(idx),
                                           actionLabel: replaceString,
                                           labelFontSize: 13,
-                                          color: const Color(0xf0FCF2EB),
+                                          color: Theme.of(context)
+                                              .primaryColor
+                                              .withValues(alpha: .1),
                                           actionLabelColor: Colors.black,
                                           verticalPadding: 0,
                                         ),
@@ -201,7 +203,9 @@ class _ImageSelectionPageState extends State<ImageSelectionPage> {
                                           () => removeImage(idx),
                                           actionLabel: 'X',
                                           labelFontSize: 13,
-                                          color: const Color(0xf0FCF2EB),
+                                          color: Theme.of(context)
+                                              .primaryColor
+                                              .withValues(alpha: .1),
                                           actionLabelColor: Colors.black,
                                           verticalPadding: 0,
                                         ),
@@ -232,7 +236,7 @@ class _ImageSelectionPageState extends State<ImageSelectionPage> {
                           child: OldButton(
                             selectImage,
                             actionLabel: browseString,
-                            color: const Color(0xff333333),
+                            color: Theme.of(context).primaryColor,
                           ),
                         ),
                       ],

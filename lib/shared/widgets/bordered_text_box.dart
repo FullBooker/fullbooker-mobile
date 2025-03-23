@@ -49,7 +49,7 @@ class BorderedTextBoxState extends State<BorderedTextBox> {
                   maxLines: widget.maxLines,
                   cursorHeight: 18,
                   decoration: const InputDecoration(border: InputBorder.none),
-                  style: const TextStyle(),
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ),
             ],

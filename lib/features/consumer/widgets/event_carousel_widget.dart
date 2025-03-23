@@ -180,11 +180,7 @@ class _EventCarouselWidgetState extends State<EventCarouselWidget> {
                     child: Text(
                       // TODO(abiud): fix this. We can't show error in the distance to the user
                       "${widget.product.name}, $locationName, ${distanceFromEvent?.toStringAsFixed(0) ?? "Error"} km away",
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w800,
-                        fontSize: 16,
-                      ),
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   ),
                 ),
@@ -193,11 +189,10 @@ class _EventCarouselWidgetState extends State<EventCarouselWidget> {
                   child: Text(
                     'from KES ${getLowestPrice().cost}',
                     textAlign: TextAlign.left,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w800,
-                      fontSize: 16,
-                    ),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge
+                        ?.copyWith(color: Colors.white),
                   ),
                 ),
               ],

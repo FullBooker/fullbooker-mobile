@@ -215,7 +215,8 @@ const String closedTimeOfYearString =
     'Choose the specific days of the year when '
     'your activity will  remain closed (Optional)';
 const String activityNotOpen = 'Activity Not Open On';
-
+const String failedToCreatePricing =
+    'Failed to create pricing data for activity';
 // Activity day pass page
 
 const String selectCurrencyPrompt =
@@ -227,14 +228,16 @@ const String dayPassString = 'Day Pass';
 const String pricePerPerson = 'What is the price per person per day pass';
 const String currencySelectGeneralPrompt = 'Please select a currency';
 const String dayPassMaxTickets = 'Maximum number of tickets per day pass';
-const String totalChargeable = 'Total Chargeable (Per Session)';
+const String totalChargeableSession = 'Total Chargeable (Per Session)';
+const String totalChargeableTicket = 'Total Chargeable (Per Ticket)';
 String serviceFee(double value) => 'Service Fee ($value%)';
 const String activityPricePrompt = 'How much will the activity cost';
 const String costPerSession = 'Cost per session';
 const String pricePerPersonPerSession =
     'What is the price per person per session';
 const String maxTicketsPerSession = 'Maximum number of tickets per session';
-const String publish = 'Publish';
+const String maxTicketsPerDayPass = 'Maximum number of tickets per day pass';
+const String publishString = 'Publish';
 
 const String selectCategoryPrompt = 'Please select a category for your event';
 
@@ -363,3 +366,12 @@ const String signInFailed = 'Sign-in failed. Please try again.';
 const String createAccountFailedString =
     'Something went wrong while creating your account. Please try again later';
 const String fillInAllFields = 'Please fill in all required fields to continue';
+
+const String monthlySubscriptionPrompt = 'Is there a monthly subscription';
+const String monthlySubscriptionString = 'Monthly Subscription';
+const String pricePerPersonSub =
+    'What is the price per person per subscription';
+
+const String chargesSummary = 'Charges Summary';
+
+const String confirmationNumber = 'Confirmation Number:';

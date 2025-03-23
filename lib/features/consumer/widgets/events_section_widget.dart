@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/features/consumer/widgets/event_card_widget.dart';
 import 'package:fullbooker/features/host/models/product.dart';
+import 'package:fullbooker/shared/entities/spaces.dart';
 
 class EventsSectionWidget extends StatefulWidget {
   final String sectionName;
@@ -34,10 +35,7 @@ class _EventsSectionWidgetState extends State<EventsSectionWidget> {
                 child: Text(
                   widget.sectionName,
                   softWrap: true,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w900,
-                  ),
+                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
               ),
               if (widget.onSeAllClick == null)
@@ -45,14 +43,11 @@ class _EventsSectionWidgetState extends State<EventsSectionWidget> {
               else
                 Text(
                   seeAllString,
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Theme.of(context).primaryColor,
-                  ),
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
             ],
           ),
-          const SizedBox(height: 12),
+          smallVerticalSizedBox,
           Wrap(
             alignment: WrapAlignment.spaceBetween,
             runSpacing: 8,
