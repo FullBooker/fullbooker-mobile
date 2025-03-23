@@ -47,7 +47,7 @@ class CreateAccountPageState extends State<CreateAccountPage> {
           converter: (Store<AppState> store) =>
               CreateAccountViewModel.fromState(store.state),
           builder: (BuildContext context, CreateAccountViewModel vm) {
-            return ListView(
+              return ListView(
               children: <Widget>[
                 largeVerticalSizedBox,
                 SvgPicture.asset(appLogoFullSVGPath),

@@ -12,6 +12,7 @@
 - [ ] Integrate password manager for email+password sign in
 - [ ] Remove all elevated buttons
 - [ ] Add cleanups for most onboarding workflows after success e.g removing state values
+- [ ] Fix confirm password validator for all workflows
 
 ## Architectural changes
 

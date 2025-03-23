@@ -54,8 +54,7 @@ class LoginAction extends ReduxAction<AppState> {
         processHttpResponse(httpResponse);
 
     if (!processedResponse.ok) {
-      onError?.call(processedResponse.message ?? genericErrorString);
-      return null;
+      return onError?.call(processedResponse.message ?? genericErrorString);
     }
 
     final Map<String, dynamic> body =

@@ -29,6 +29,10 @@ class OnboardingState with _$OnboardingState {
     @Default(false) bool invalidOTP,
     @Default(UNKNOWN) String resetEmailAddress,
     @Default(UNKNOWN) String resetPasswordOTP,
+    @Default(UNKNOWN) String resetPassword,
+    @Default(UNKNOWN) String resetPasswordConfirm,
+    @Default(true) bool hideResetPassword,
+    @Default(true) bool hideResetConfirmPassword,
   }) = _OnboardingState;
 
   factory OnboardingState.initial() => const OnboardingState();

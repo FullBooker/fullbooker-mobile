@@ -11,8 +11,8 @@ import 'package:fullbooker/shared/entities/processed_response.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
 
-class VerifyOTPAction extends ReduxAction<AppState> {
-  VerifyOTPAction({
+class ChangePasswordAction extends ReduxAction<AppState> {
+  ChangePasswordAction({
     this.onSuccess,
     this.onError,
     required this.client,
@@ -35,10 +35,10 @@ class VerifyOTPAction extends ReduxAction<AppState> {
 
     final Map<String, String> data = <String, String>{
       'identifier': emailAddress,
-      'otp': otp,
+      'password': otp,
     };
 
-    final String endpoint = GetIt.I.get<AppConfig>().verifyOTPEndpoint;
+    final String endpoint = GetIt.I.get<AppConfig>().changePasswordEndpoint;
 
     final Response httpResponse = await client.callRESTAPI(
       endpoint: endpoint,

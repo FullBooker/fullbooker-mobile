@@ -54,25 +54,7 @@ class VerifyOTPPageState extends State<VerifyOTPPage> {
     return '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
   }
 
-  void validateOTP(BuildContext context) {
-    if (_formKey.currentState!.validate()) {
-      // _formKey.currentState!.save();
-      // final Future<String?> errFuture =
-      //     loginController.validateOtp(pin, phoneNumber);
-      // setState(() {
-      //   isLoading = true;
-      //   errorMessage = '';
-      // });
-      // errFuture.then((String? err) {
-      //   setState(() {
-      //     isLoading = false;
-      //     if (err != null) errorMessage = err;
-      //     if (err == null) otpVerified = true;
-      //   });
-      // });
-    }
-  }
-
+  // TODO(abiud): implement resent OTP code as an action
   void resendOTP(BuildContext context) {
     // final Future<String?> errFuture =
     //     loginController.resetPassword(phoneNumber);

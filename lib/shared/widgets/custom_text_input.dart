@@ -11,6 +11,7 @@ class CustomTextInput extends StatelessWidget {
     this.iconData,
     this.hintText,
     this.obscureText = false,
+    this.prefixIconFunc,
     this.validator,
     this.suffixIconData,
     this.keyboardType,
@@ -25,23 +26,23 @@ class CustomTextInput extends StatelessWidget {
     this.autofillHints,
   }) : super(key: inputKey);
 
-  final AutovalidateMode? autovalidateMode;
-
   final String? Function(String? value)? validator;
+  final void Function()? suffixIconFunc;
+  final void Function()? prefixIconFunc;
+  final bool? autoValidate;
+  final List<String>? autofillHints;
+  final AutovalidateMode? autovalidateMode;
   final String? hintText;
-  final String? labelText;
   final IconData? iconData;
+  final String? initialValue;
+  final List<TextInputFormatter>? inputFormatters;
+  final TextInputType? keyboardType;
+  final String? labelText;
+  final int? maxLines;
   final bool obscureText;
   final FormFieldCallback onChanged;
-  final HeroIcons? suffixIconData;
   final HeroIcons? prefixIconData;
-  final TextInputType? keyboardType;
-  final void Function()? suffixIconFunc;
-  final int? maxLines;
-  final bool? autoValidate;
-  final String? initialValue;
-  final List<String>? autofillHints;
-  final List<TextInputFormatter>? inputFormatters;
+  final HeroIcons? suffixIconData;
 
   @override
   Widget build(BuildContext context) {
@@ -80,6 +81,10 @@ class CustomTextInput extends StatelessWidget {
                 ?.copyWith(color: Colors.black),
             suffixIcon: suffixIconData != null
                 ? IconButton(
+                    splashColor:
+                        Theme.of(context).primaryColor.withValues(alpha: .1),
+                    highlightColor:
+                        Theme.of(context).primaryColor.withValues(alpha: .1),
                     icon: HeroIcon(
                       suffixIconData!,
                       size: 20,
@@ -89,12 +94,16 @@ class CustomTextInput extends StatelessWidget {
                 : null,
             prefixIcon: prefixIconData != null
                 ? IconButton(
+                    splashColor:
+                        Theme.of(context).primaryColor.withValues(alpha: .1),
+                    highlightColor:
+                        Theme.of(context).primaryColor.withValues(alpha: .1),
                     icon: HeroIcon(
                       prefixIconData!,
                       color: AppColors.bodyTextColor,
                       size: 20,
                     ),
-                    onPressed: suffixIconFunc,
+                    onPressed: prefixIconFunc,
                   )
                 : null,
           ),

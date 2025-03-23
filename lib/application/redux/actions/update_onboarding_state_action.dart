@@ -18,6 +18,8 @@ class UpdateOnboardingStateAction extends ReduxAction<AppState> {
     this.hideNewConfirmPassword,
     this.resetPasswordOTP,
     this.resetEmailAddress,
+    this.hideResetPassword,
+    this.hideResetConfirmPassword,
   });
 
   // Login
@@ -37,6 +39,8 @@ class UpdateOnboardingStateAction extends ReduxAction<AppState> {
   // Reset password
   final String? resetPasswordOTP;
   final String? resetEmailAddress;
+  final bool? hideResetPassword;
+  final bool? hideResetConfirmPassword;
 
   @override
   AppState? reduce() {
@@ -62,6 +66,10 @@ class UpdateOnboardingStateAction extends ReduxAction<AppState> {
           resetPasswordOTP ?? state.onboardingState!.resetPasswordOTP,
       resetEmailAddress:
           resetEmailAddress ?? state.onboardingState!.resetEmailAddress,
+      hideResetPassword:
+          hideResetPassword ?? state.onboardingState!.hideResetPassword,
+      hideResetConfirmPassword: hideResetConfirmPassword ??
+          state.onboardingState!.hideResetConfirmPassword,
     );
 
     return newState;

@@ -41,11 +41,16 @@ const String passwordTooCommonString =
 // Change password
 const String passwordChangedTitle = 'Password reset successfully';
 const String passwordChangedCopy = 'You have reset your password successfully';
-
 const String enterNewPasswordTitle = 'Please enter a new password below';
 const String enterNewPasswordString = 'Enter New Password';
 const String reEnterNewPasswordString = 'Re-enter New Password';
-const String changePasswordString = 'Change Password';
+
+const String changePasswordString = 'Set New Password';
+const String newPasswordLabel = 'New Password';
+const String newPasswordHint = 'Enter you new Password';
+const String confirmNewPasswordLabel = 'New Password';
+const String confirmNewPasswordHint = 'Confirm you new Password';
+const String setAndConfirmPassword = 'Set and confirm your new password';
 
 // Login page
 const String welcomeString = 'Welcome back!';
@@ -385,6 +390,9 @@ const String resetEmailPrompt =
     'Please enter an email address linked to your account';
 const String errorSendingOTP =
     'Sorry, there was an error sending an OTP. Please try again later';
-    const String errorVerifyingOTP =
+const String errorVerifyingOTP =
     'Sorry, there was an error verifying your OTP. Please try again later';
 const String otpEmptyPrompt = 'Please enter a 4 digit OTP';
+
+const String invalidOTP =
+    'The code you entered is invalid. Please check and try again';
