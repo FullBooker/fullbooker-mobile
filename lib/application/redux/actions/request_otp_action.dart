@@ -1,12 +1,11 @@
 import 'dart:convert';
 
 import 'package:async_redux/async_redux.dart';
+import 'package:flutter/foundation.dart';
 import 'package:fullbooker/application/core/services/i_custom_client.dart';
-import 'package:fullbooker/application/redux/actions/update_auth_state_action.dart';
-import 'package:fullbooker/application/redux/actions/update_user_state_action.dart';
+import 'package:fullbooker/application/redux/actions/update_onboarding_state_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/core/common/constants.dart';
-import 'package:fullbooker/domain/core/entities/login_response.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
@@ -14,8 +13,8 @@ import 'package:fullbooker/shared/entities/processed_response.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
 
-class LoginAction extends ReduxAction<AppState> {
-  LoginAction({
+class RequestOtpAction extends ReduxAction<AppState> {
+  RequestOtpAction({
     this.onSuccess,
     this.onError,
     required this.client,
@@ -27,25 +26,24 @@ class LoginAction extends ReduxAction<AppState> {
 
   @override
   Future<AppState?> reduce() async {
-    final String emailAddress = state.onboardingState?.emailAddress ?? '';
-    final String password = state.onboardingState?.password ?? '';
+    final String resetEmailAddress =
+        state.onboardingState?.resetEmailAddress ?? '';
 
-    final bool isEmailEmpty = emailAddress.isEmpty || emailAddress == UNKNOWN;
-    final bool isPasswordEmpty = password.isEmpty || password == UNKNOWN;
+    final bool isEmailEmpty =
+        resetEmailAddress.isEmpty || resetEmailAddress == UNKNOWN;
 
-    if (isEmailEmpty || isPasswordEmpty) {
-      return onError?.call(credentialsPrompt);
+    if (isEmailEmpty) {
+      return onError?.call(resetEmailPrompt);
     }
 
     final Map<String, String> data = <String, String>{
-      'email': emailAddress,
-      'password': password,
+      'identifier': resetEmailAddress,
     };
 
-    final String loginEndpoint = GetIt.I.get<AppConfig>().loginEndpoint;
+    final String endpoint = GetIt.I.get<AppConfig>().requestOTPEndpoint;
 
     final Response httpResponse = await client.callRESTAPI(
-      endpoint: loginEndpoint,
+      endpoint: endpoint,
       method: RestAPIMethods.POST.name.toUpperCase(),
       variables: data,
     );
@@ -60,19 +58,19 @@ class LoginAction extends ReduxAction<AppState> {
     final Map<String, dynamic> body =
         json.decode(processedResponse.response.body) as Map<String, dynamic>;
 
-    final LoginResponse loginResponse = LoginResponse.fromJson(body);
+    final bool isOTPSent = body.containsKey('detail');
 
-    // Update the auth state
-    dispatch(
-      UpdateAuthStateAction(
-        isSignedIn: true,
-        accessToken: loginResponse.accessToken,
-        refreshToken: loginResponse.refreshToken,
-        expiresAt: loginResponse.accessToken,
-      ),
-    );
+    if (!isOTPSent) {
+      return onError?.call(errorSendingOTP);
+    }
 
-    dispatch(UpdateUserStateAction(user: loginResponse.user));
+    // This will only run in debug mode
+    final String otp = body['otp'];
+    dispatch(UpdateOnboardingStateAction(resetPasswordDebugOTP: otp));
+
+    if (kDebugMode) {
+      debugPrint(otp);
+    }
 
     onSuccess?.call();
 

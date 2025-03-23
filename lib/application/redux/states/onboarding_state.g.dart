@@ -21,6 +21,15 @@ _$OnboardingStateImpl _$$OnboardingStateImplFromJson(
       newConfirmPassword: json['newConfirmPassword'] as String? ?? UNKNOWN,
       hideNewConfirmPassword: json['hideNewConfirmPassword'] as bool? ?? true,
       invalidOTP: json['invalidOTP'] as bool? ?? false,
+      resetEmailAddress: json['resetEmailAddress'] as String? ?? UNKNOWN,
+      resetPasswordOTP: json['resetPasswordOTP'] as String? ?? UNKNOWN,
+      resetPasswordDebugOTP:
+          json['resetPasswordDebugOTP'] as String? ?? UNKNOWN,
+      resetPassword: json['resetPassword'] as String? ?? UNKNOWN,
+      resetPasswordConfirm: json['resetPasswordConfirm'] as String? ?? UNKNOWN,
+      hideResetPassword: json['hideResetPassword'] as bool? ?? true,
+      hideResetConfirmPassword:
+          json['hideResetConfirmPassword'] as bool? ?? true,
     );
 
 Map<String, dynamic> _$$OnboardingStateImplToJson(
@@ -38,4 +47,11 @@ Map<String, dynamic> _$$OnboardingStateImplToJson(
       'newConfirmPassword': instance.newConfirmPassword,
       'hideNewConfirmPassword': instance.hideNewConfirmPassword,
       'invalidOTP': instance.invalidOTP,
+      'resetEmailAddress': instance.resetEmailAddress,
+      'resetPasswordOTP': instance.resetPasswordOTP,
+      'resetPasswordDebugOTP': instance.resetPasswordDebugOTP,
+      'resetPassword': instance.resetPassword,
+      'resetPasswordConfirm': instance.resetPasswordConfirm,
+      'hideResetPassword': instance.hideResetPassword,
+      'hideResetConfirmPassword': instance.hideResetConfirmPassword,
     };

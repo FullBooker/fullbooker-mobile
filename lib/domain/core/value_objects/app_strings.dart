@@ -27,7 +27,6 @@ const String editString = 'Edit';
 const String nextString = 'Next';
 
 /// USER SIDE STRINGS
-///
 
 // Login
 const String letsGetStarted = 'Let’s get started!';
@@ -41,11 +40,16 @@ const String passwordTooCommonString =
 // Change password
 const String passwordChangedTitle = 'Password reset successfully';
 const String passwordChangedCopy = 'You have reset your password successfully';
-
 const String enterNewPasswordTitle = 'Please enter a new password below';
 const String enterNewPasswordString = 'Enter New Password';
 const String reEnterNewPasswordString = 'Re-enter New Password';
-const String changePasswordString = 'Change Password';
+
+const String changePasswordString = 'Set New Password';
+const String newPasswordLabel = 'New Password';
+const String newPasswordHint = 'Enter you new Password';
+const String confirmNewPasswordLabel = 'New Password';
+const String confirmNewPasswordHint = 'Confirm you new Password';
+const String setAndConfirmPassword = 'Set and confirm your new password';
 
 // Login page
 const String welcomeString = 'Welcome back!';
@@ -89,11 +93,14 @@ const String signUpWithGoogleString = 'Sign up with Google';
 const String alreadyHaveAnAccountString = 'Already have an account? ';
 
 // Verify OTP page
-String otpSentCopy(String phone) => 'An OTP code has been sent to $phone';
+String otpSentCopy(String identifier) =>
+    'Enter the OTP code sent to $identifier';
 const String resendCodeInString = 'Resend code in ';
-const String resentOTPString = 'Resend OTP code';
+const String resentOTPString = 'Resend OTP';
 const String useDifferentString = 'Use a different ';
 const String emailOrPhoneString = 'email / phone number';
+const String verifyOTPString = 'Verify OTP';
+String debugOTPValue(String otp) => 'Debug OTP: $otp';
 
 // Consumer landing page
 const String popularNowString = 'Popular Now';
@@ -316,7 +323,7 @@ const String tryAgain = 'Try Again';
 const String hoursString = 'Hours';
 const String minutesString = 'Minutes';
 
-const String logoutString = 'Log out';
+const String logoutString = 'Logout';
 const String buyATicketString = 'Buy A Ticket';
 
 const String searchForActivitiesString = 'Search for activities and events';
@@ -375,3 +382,31 @@ const String pricePerPersonSub =
 const String chargesSummary = 'Charges Summary';
 
 const String confirmationNumber = 'Confirmation Number:';
+
+// Request OTP page
+const String resetYourPassword = 'Reset your password';
+const String requestOTPCopy = 'Enter the email address linked to your account';
+const String resetEmailPrompt =
+    'Please enter an email address linked to your account';
+const String errorSendingOTP =
+    'Sorry, there was an error sending an OTP. Please try again later';
+const String errorVerifyingOTP =
+    'Sorry, there was an error verifying your OTP. Please try again later';
+const String otpEmptyPrompt = 'Please enter a 4 digit OTP';
+
+const String invalidOTP =
+    'The code you entered is invalid. Please check and try again';
+
+// Set new password strings
+const String setPasswordPrompt =
+    'Please enter and confirm your new password to continue';
+
+const String errorChangingPassword =
+    'Sorry, there was an error changing your password. Please try again later';
+
+const String accountCreated = 'Account created';
+const String accountCreatedCopy =
+    'Your account has been created successfully. Welcome to Fullbooker';
+
+const String passwordUpdated = 'Password Updated';
+const String passwordUpdatedCopy = 'Sign in with your new password to continue';

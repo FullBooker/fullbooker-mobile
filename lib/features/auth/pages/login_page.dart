@@ -1,7 +1,6 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:dartz/dartz.dart' as d;
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
@@ -46,232 +45,226 @@ class LoginPageState extends State<LoginPage> {
       backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(16),
-        child: StoreConnector<AppState, LoginPageViewModel>(
-          converter: (Store<AppState> store) =>
-              LoginPageViewModel.fromState(store.state),
-          builder: (BuildContext context, LoginPageViewModel vm) {
-            return ListView(
-              children: <Widget>[
-                largeVerticalSizedBox,
-                SvgPicture.asset(appLogoFullSVGPath),
-                smallVerticalSizedBox,
-                Center(
-                  child: Column(
-                    spacing: 4,
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: StoreConnector<AppState, LoginPageViewModel>(
+                converter: (Store<AppState> store) =>
+                    LoginPageViewModel.fromState(store.state),
+                builder: (BuildContext context, LoginPageViewModel vm) {
+                  return ListView(
                     children: <Widget>[
-                      Text(
-                        welcomeString,
-                        style:
-                            Theme.of(context).textTheme.headlineSmall?.copyWith(
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                      ),
-                      Text(
-                        loginPageCopy,
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
-                    ],
-                  ),
-                ),
-                largeVerticalSizedBox,
-                Form(
-                  key: _formKey,
-                  child: Column(
-                    children: <Widget>[
-                      // Email input
-                      CustomTextInput(
-                        hintText: emailAddressHint,
-                        labelText: emailAddressString,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: (String? email) => validateEmail(email),
-                        onChanged: (String email) {
-                          context.dispatch(
-                            UpdateOnboardingStateAction(emailAddress: email),
-                          );
-                        },
-                        // hintText: newTransactionAmountHint,
-                        keyboardType: TextInputType.emailAddress,
-                        prefixIconData: HeroIcons.envelope,
-                      ),
-                      mediumVerticalSizedBox,
-
-                      // Password input
-                      CustomTextInput(
-                        labelText: passwordString,
-                        hintText: passwordHint,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: (String? password) =>
-                            validatePassword(password),
-                        onChanged: (String v) {
-                          context.dispatch(
-                            UpdateOnboardingStateAction(password: v.trim()),
-                          );
-                        },
-                        // hintText: newTransactionAmountHint,
-                        keyboardType: TextInputType.visiblePassword,
-                        autofillHints: const <String>[
-                          AutofillHints.password,
-                        ],
-                        prefixIconData: HeroIcons.key,
-                        suffixIconData: HeroIcons.eyeSlash,
-                        suffixIconFunc: () {
-                          context.dispatch(
-                            UpdateOnboardingStateAction(
-                              hidePassword: !vm.hidePassword,
-                            ),
-                          );
-                        },
-                        obscureText: vm.hidePassword,
-                      ),
-                      SizedBox(
-                        width: double.infinity,
-                        child: InkWell(
-                          // onTap: () => context.router.push(RequestOTPRoute()),
-                          child: Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Text(
-                              textAlign: TextAlign.right,
-                              forgotPasswordString,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge
-                                  ?.copyWith(
-                                    color: Theme.of(context).primaryColor,
-                                  ),
-                            ),
-                          ),
-                        ),
-                      ),
+                      largeVerticalSizedBox,
+                      SvgPicture.asset(appLogoFullSVGPath),
                       smallVerticalSizedBox,
-
-                      StoreConnector<AppState, LoginPageViewModel>(
-                        converter: (Store<AppState> store) =>
-                            LoginPageViewModel.fromState(store.state),
-                        builder: (
-                          BuildContext context,
-                          LoginPageViewModel snapshot,
-                        ) {
-                          if (context.isWaiting(LoginAction)) {
-                            return AppLoading();
-                          }
-
-                          return PrimaryButton(
-                            onPressed: () {
-                              if (_formKey.currentState!.validate()) {
-                                context.dispatch(
-                                  LoginAction(
-                                    onError: (String error) => showAlertDialog(
-                                      context: context,
-                                      assetPath: loginCredentialsSVGPath,
-                                      description: error,
-                                    ),
-                                    onSuccess: () => context.router
-                                        .navigate(HostingHomeRoute()),
-                                    client: AppWrapperBase.of(context)!
-                                        .customClient,
-                                  ),
-                                );
-                              }
-                            },
-                            child: d.right(loginString),
-                          );
-                        },
-                      ),
-
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 24),
-                        child: DividerWithText(text: orString),
-                      ),
-                      StoreConnector<AppState, LoginPageViewModel>(
-                        converter: (Store<AppState> store) =>
-                            LoginPageViewModel.fromState(store.state),
-                        builder: (
-                          BuildContext context,
-                          LoginPageViewModel snapshot,
-                        ) {
-                          if (context.isWaiting(SignInWithGoogleAction)) {
-                            return AppLoading();
-                          }
-                          return SecondaryButton(
-                            onPressed: () {
-                              context.dispatch(
-                                SignInWithGoogleAction(
-                                  onError: (String error) => showAlertDialog(
-                                    context: context,
-                                    assetPath: loginCredentialsSVGPath,
-                                    description: error,
-                                  ),
-                                  onSuccess: () => context.router
-                                      .navigate(HostingHomeRoute()),
-                                  client:
-                                      AppWrapperBase.of(context)!.customClient,
-                                ),
-                              );
-                            },
-                            child: d.left(
-                              Center(
-                                child: Row(
-                                  spacing: 8,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    SvgPicture.asset(googleIconSVGPath),
-                                    Text(
-                                      signInWithGoogleString,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                          ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-                Column(
-                  spacing: 12,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(top: 40),
-                      child: RichText(
-                        text: TextSpan(
-                          children: <InlineSpan>[
-                            TextSpan(
-                              text: dontHaveAccountString,
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                            TextSpan(
-                              text: createAccount,
+                      Center(
+                        child: Column(
+                          spacing: 4,
+                          children: <Widget>[
+                            Text(
+                              welcomeString,
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodyMedium
+                                  .headlineSmall
                                   ?.copyWith(
                                     color: Theme.of(context).primaryColor,
                                   ),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () => context.router
-                                    .replace(CreateAccountRoute()),
+                            ),
+                            Text(
+                              loginPageCopy,
+                              style: Theme.of(context).textTheme.bodyLarge,
                             ),
                           ],
                         ),
                       ),
-                    ),
-                    Text(
-                      appVersionFormat(appVersion),
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                  ],
-                ),
-              ],
-            );
-          },
+                      largeVerticalSizedBox,
+                      Form(
+                        key: _formKey,
+                        child: Column(
+                          spacing: 12,
+                          children: <Widget>[
+                            // Email input
+                            CustomTextInput(
+                              hintText: emailAddressHint,
+                              labelText: emailAddressString,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              validator: (String? email) =>
+                                  validateEmail(email),
+                              onChanged: (String email) {
+                                context.dispatch(
+                                  UpdateOnboardingStateAction(
+                                    emailAddress: email,
+                                  ),
+                                );
+                              },
+                              // hintText: newTransactionAmountHint,
+                              keyboardType: TextInputType.emailAddress,
+                              prefixIconData: HeroIcons.envelope,
+                            ),
+
+                            // Password input
+                            CustomTextInput(
+                              labelText: passwordString,
+                              hintText: passwordHint,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              validator: (String? password) =>
+                                  validatePassword(password),
+                              onChanged: (String v) {
+                                context.dispatch(
+                                  UpdateOnboardingStateAction(
+                                    password: v.trim(),
+                                  ),
+                                );
+                              },
+                              // hintText: newTransactionAmountHint,
+                              keyboardType: TextInputType.visiblePassword,
+                              autofillHints: const <String>[
+                                AutofillHints.password,
+                              ],
+                              prefixIconData: HeroIcons.key,
+                              suffixIconData: HeroIcons.eyeSlash,
+                              suffixIconFunc: () {
+                                context.dispatch(
+                                  UpdateOnboardingStateAction(
+                                    hidePassword: !vm.hidePassword,
+                                  ),
+                                );
+                              },
+                              obscureText: vm.hidePassword,
+                              suffixIconActive: vm.hidePassword,
+                            ),
+                            SecondaryButton(
+                              fillColor: Colors.transparent,
+                              onPressed: () =>
+                                  context.router.push(RequestOTPRoute()),
+                              child: d.left(
+                                Text(
+                                  textAlign: TextAlign.right,
+                                  forgotPasswordString,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
+                                        color: Theme.of(context).primaryColor,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                ),
+                              ),
+                            ),
+
+                            StoreConnector<AppState, LoginPageViewModel>(
+                              converter: (Store<AppState> store) =>
+                                  LoginPageViewModel.fromState(store.state),
+                              builder: (
+                                BuildContext context,
+                                LoginPageViewModel snapshot,
+                              ) {
+                                if (context.isWaiting(LoginAction)) {
+                                  return AppLoading();
+                                }
+
+                                return PrimaryButton(
+                                  onPressed: () {
+                                    if (_formKey.currentState!.validate()) {
+                                      context.dispatch(
+                                        LoginAction(
+                                          onError: (String error) =>
+                                              showAlertDialog(
+                                            context: context,
+                                            assetPath: loginCredentialsSVGPath,
+                                            description: error,
+                                          ),
+                                          onSuccess: () => context.router
+                                              .navigate(HostingHomeRoute()),
+                                          client: AppWrapperBase.of(context)!
+                                              .customClient,
+                                        ),
+                                      );
+                                    }
+                                  },
+                                  child: d.right(loginString),
+                                );
+                              },
+                            ),
+
+                            SecondaryButton(
+                              onPressed: () =>
+                                  context.router.replace(CreateAccountRoute()),
+                              child: d.right(createAccount),
+                            ),
+
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 16),
+                              child: DividerWithText(text: orString),
+                            ),
+
+                            StoreConnector<AppState, LoginPageViewModel>(
+                              converter: (Store<AppState> store) =>
+                                  LoginPageViewModel.fromState(store.state),
+                              builder: (
+                                BuildContext context,
+                                LoginPageViewModel snapshot,
+                              ) {
+                                if (context.isWaiting(SignInWithGoogleAction)) {
+                                  return AppLoading();
+                                }
+                                return SecondaryButton(
+                                  onPressed: () {
+                                    context.dispatch(
+                                      SignInWithGoogleAction(
+                                        onError: (String error) =>
+                                            showAlertDialog(
+                                          context: context,
+                                          assetPath: loginCredentialsSVGPath,
+                                          description: error,
+                                        ),
+                                        onSuccess: () => context.router
+                                            .navigate(HostingHomeRoute()),
+                                        client: AppWrapperBase.of(context)!
+                                            .customClient,
+                                      ),
+                                    );
+                                  },
+                                  child: d.left(
+                                    Center(
+                                      child: Row(
+                                        spacing: 8,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          SvgPicture.asset(googleIconSVGPath),
+                                          Text(
+                                            signInWithGoogleString,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge
+                                                ?.copyWith(
+                                                  color: Theme.of(context)
+                                                      .primaryColor,
+                                                ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ),
+            Text(
+              appVersionFormat(appVersion),
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+          ],
         ),
       ),
     );

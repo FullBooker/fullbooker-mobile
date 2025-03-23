@@ -50,6 +50,8 @@ void showAlertDialog({
   required String? assetPath,
   String? title,
   String? description,
+  Function()? onConfirm,
+  String? confirmText,
 }) {
   showDialog(
     context: context,
@@ -90,8 +92,8 @@ void showAlertDialog({
               width: double.infinity,
               height: 48,
               child: PrimaryButton(
-                child: right(okThanksString),
-                onPressed: () => context.router.maybePop(),
+                child: right(confirmText ?? okThanksString),
+                onPressed: onConfirm ?? () => context.router.maybePop(),
               ),
             ),
           ],
@@ -177,6 +179,9 @@ final AppConfig devAppConfig = AppConfig(
   loginEndpoint: kDevLoginEndpoint,
   createAccountEndpoint: kDevCreateAccountEndpoint,
   googleSignInEndpoint: kDevGoogleSignInEndpoint,
+  requestOTPEndpoint: kDevRequestOTPEndpoint,
+  verifyOTPEndpoint: kDevVerifyOTPEndpoint,
+  changePasswordEndpoint: kDevResetPasswordEndpoint,
 );
 
 final AppConfig prodAppConfig = AppConfig(
@@ -188,6 +193,9 @@ final AppConfig prodAppConfig = AppConfig(
   loginEndpoint: kProdLoginEndpoint,
   createAccountEndpoint: kProdCreateAccountEndpoint,
   googleSignInEndpoint: kProdGoogleSignInEndpoint,
+  requestOTPEndpoint: kProdRequestOTPEndpoint,
+  verifyOTPEndpoint: kProdVerifyOTPEndpoint,
+  changePasswordEndpoint: kProdResetPasswordEndpoint,
 );
 
 final AppConfig testAppConfig = AppConfig(
@@ -199,6 +207,9 @@ final AppConfig testAppConfig = AppConfig(
   loginEndpoint: kTestLoginEndpoint,
   createAccountEndpoint: kTestCreateAccountEndpoint,
   googleSignInEndpoint: kTestGoogleSignInEndpoint,
+  requestOTPEndpoint: kTestRequestOTPEndpoint,
+  verifyOTPEndpoint: kTestVerifyOTPEndpoint,
+  changePasswordEndpoint: kTestResetPasswordEndpoint,
 );
 
 String getFullName(String? firstName, String? lastName) {

@@ -1,6 +1,7 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:fullbooker/application/core/services/analytics_service.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/core/common/app_router.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
@@ -33,7 +34,7 @@ class FullbookerAppWidget extends StatelessWidget {
               );
             },
             navigatorObservers: () => <NavigatorObserver>[
-              // TODO(abiud): add sentry and google analytics observers
+              AnalyticsService().getAnalyticsObserver(),
             ],
           ),
           debugShowCheckedModeBanner: false,

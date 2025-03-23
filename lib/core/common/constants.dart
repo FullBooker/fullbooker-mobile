@@ -38,3 +38,5 @@ const Map<String, String> defaultRequestHeaders = <String, String>{
 
 const String APPVERSION = 'APPVERSION';
 const String kDevBuild = 'dev-build';
+
+const int kOTPRetryTimeout = 120;
