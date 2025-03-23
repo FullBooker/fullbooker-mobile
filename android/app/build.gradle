@@ -74,13 +74,12 @@ android {
         release {
             signingConfig signingConfigs.release
 
-            // TODO: revert this after switching out the opt package
              // Enables code shrinking, obfuscation, and optimization
-            minifyEnabled false
+            minifyEnabled true
 
             // Enables resource shrinking, which is performed by the
             // Android Gradle plugin.
-            shrinkResources false
+            shrinkResources true
 
             // Rules to follow when shrinking
             proguardFiles getDefaultProguardFile(

@@ -13,6 +13,7 @@ import 'package:fullbooker/application/redux/view_models/reset_password_view_mod
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/utils.dart';
+import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
@@ -21,6 +22,7 @@ import 'package:fullbooker/shared/widgets/pin_code_text_field.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
 import 'package:dartz/dartz.dart' as d;
+import 'package:get_it/get_it.dart';
 
 @RoutePage()
 class VerifyOTPPage extends StatefulWidget {
@@ -97,6 +99,10 @@ class VerifyOTPPageState extends State<VerifyOTPPage> {
                 converter: (Store<AppState> store) =>
                     ResetPasswordViewModel.fromState(store.state),
                 builder: (BuildContext context, ResetPasswordViewModel vm) {
+                  final bool showDebugOTP =
+                      GetIt.I.get<AppConfig>().environment.toLowerCase() ==
+                              'dev' &&
+                          vm.resetPasswordDebugOTP != UNKNOWN;
                   return ListView(
                     children: <Widget>[
                       largeVerticalSizedBox,
@@ -174,7 +180,7 @@ class VerifyOTPPageState extends State<VerifyOTPPage> {
                                 },
                                 fillColor: Colors.white,
                               ),
-                            if (vm.resetPasswordDebugOTP != UNKNOWN)
+                            if (showDebugOTP)
                               Text(
                                 debugOTPValue(vm.resetPasswordDebugOTP),
                                 style: Theme.of(context)

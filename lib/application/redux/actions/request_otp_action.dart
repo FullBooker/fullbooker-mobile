@@ -64,7 +64,7 @@ class RequestOtpAction extends ReduxAction<AppState> {
       return onError?.call(errorSendingOTP);
     }
 
-    // This will only run in debug mode
+    // This will run but only show in dev mode
     final String otp = body['otp'];
     dispatch(UpdateOnboardingStateAction(resetPasswordDebugOTP: otp));
 
