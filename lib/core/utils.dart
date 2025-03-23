@@ -177,6 +177,7 @@ final AppConfig devAppConfig = AppConfig(
   loginEndpoint: kDevLoginEndpoint,
   createAccountEndpoint: kDevCreateAccountEndpoint,
   googleSignInEndpoint: kDevGoogleSignInEndpoint,
+  requestOTPEndpoint: kDevRequestOTPEndpoint,
 );
 
 final AppConfig prodAppConfig = AppConfig(
@@ -188,6 +189,7 @@ final AppConfig prodAppConfig = AppConfig(
   loginEndpoint: kProdLoginEndpoint,
   createAccountEndpoint: kProdCreateAccountEndpoint,
   googleSignInEndpoint: kProdGoogleSignInEndpoint,
+  requestOTPEndpoint: kProdRequestOTPEndpoint,
 );
 
 final AppConfig testAppConfig = AppConfig(
@@ -199,6 +201,7 @@ final AppConfig testAppConfig = AppConfig(
   loginEndpoint: kTestLoginEndpoint,
   createAccountEndpoint: kTestCreateAccountEndpoint,
   googleSignInEndpoint: kTestGoogleSignInEndpoint,
+  requestOTPEndpoint: kTestRequestOTPEndpoint,
 );
 
 String getFullName(String? firstName, String? lastName) {

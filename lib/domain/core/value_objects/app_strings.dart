@@ -379,3 +379,7 @@ const String confirmationNumber = 'Confirmation Number:';
 // Request OTP page
 const String resetYourPassword = 'Reset your password';
 const String requestOTPCopy = 'Enter the email address linked to your account';
+const String resetEmailPrompt =
+    'Please enter an email address linked to your account';
+const String errorSendingOTP =
+    'Sorry, there was an error sending an OTP. Please try again later';

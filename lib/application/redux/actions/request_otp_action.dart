@@ -1,12 +1,10 @@
 import 'dart:convert';
 
 import 'package:async_redux/async_redux.dart';
+import 'package:flutter/foundation.dart';
 import 'package:fullbooker/application/core/services/i_custom_client.dart';
-import 'package:fullbooker/application/redux/actions/update_auth_state_action.dart';
-import 'package:fullbooker/application/redux/actions/update_user_state_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/core/common/constants.dart';
-import 'package:fullbooker/domain/core/entities/login_response.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
@@ -28,24 +26,21 @@ class RequestOtpAction extends ReduxAction<AppState> {
   @override
   Future<AppState?> reduce() async {
     final String emailAddress = state.onboardingState?.emailAddress ?? '';
-    final String password = state.onboardingState?.password ?? '';
 
     final bool isEmailEmpty = emailAddress.isEmpty || emailAddress == UNKNOWN;
-    final bool isPasswordEmpty = password.isEmpty || password == UNKNOWN;
 
-    if (isEmailEmpty || isPasswordEmpty) {
-      return onError?.call(credentialsPrompt);
+    if (isEmailEmpty) {
+      return onError?.call(resetEmailPrompt);
     }
 
     final Map<String, String> data = <String, String>{
-      'email': emailAddress,
-      'password': password,
+      'identifier': emailAddress,
     };
 
-    final String loginEndpoint = GetIt.I.get<AppConfig>().loginEndpoint;
+    final String endpoint = GetIt.I.get<AppConfig>().requestOTPEndpoint;
 
     final Response httpResponse = await client.callRESTAPI(
-      endpoint: loginEndpoint,
+      endpoint: endpoint,
       method: RestAPIMethods.POST.name.toUpperCase(),
       variables: data,
     );
@@ -61,19 +56,15 @@ class RequestOtpAction extends ReduxAction<AppState> {
     final Map<String, dynamic> body =
         json.decode(processedResponse.response.body) as Map<String, dynamic>;
 
-    final LoginResponse loginResponse = LoginResponse.fromJson(body);
+    final bool isOTPSent = body.containsKey('detail');
 
-    // Update the auth state
-    dispatch(
-      UpdateAuthStateAction(
-        isSignedIn: true,
-        accessToken: loginResponse.accessToken,
-        refreshToken: loginResponse.refreshToken,
-        expiresAt: loginResponse.accessToken,
-      ),
-    );
+    if (kDebugMode) {
+      debugPrint(body['otp']);
+    }
 
-    dispatch(UpdateUserStateAction(user: loginResponse.user));
+    if (!isOTPSent) {
+      return onError?.call(errorSendingOTP);
+    }
 
     onSuccess?.call();
 

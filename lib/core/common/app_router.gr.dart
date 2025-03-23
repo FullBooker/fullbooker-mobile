@@ -1086,39 +1086,18 @@ class TicketsSummaryRouteArgs {
 
 /// generated route for
 /// [_i29.VerifyOTPPage]
-class VerifyOTPRoute extends _i31.PageRouteInfo<VerifyOTPRouteArgs> {
-  VerifyOTPRoute({
-    required String phoneNumber,
-    _i32.Key? key,
-    List<_i31.PageRouteInfo>? children,
-  }) : super(
-         VerifyOTPRoute.name,
-         args: VerifyOTPRouteArgs(phoneNumber: phoneNumber, key: key),
-         initialChildren: children,
-       );
+class VerifyOTPRoute extends _i31.PageRouteInfo<void> {
+  const VerifyOTPRoute({List<_i31.PageRouteInfo>? children})
+    : super(VerifyOTPRoute.name, initialChildren: children);
 
   static const String name = 'VerifyOTPRoute';
 
   static _i31.PageInfo page = _i31.PageInfo(
     name,
     builder: (data) {
-      final args = data.argsAs<VerifyOTPRouteArgs>();
-      return _i29.VerifyOTPPage(args.phoneNumber, key: args.key);
+      return const _i29.VerifyOTPPage();
     },
   );
-}
-
-class VerifyOTPRouteArgs {
-  const VerifyOTPRouteArgs({required this.phoneNumber, this.key});
-
-  final String phoneNumber;
-
-  final _i32.Key? key;
-
-  @override
-  String toString() {
-    return 'VerifyOTPRouteArgs{phoneNumber: $phoneNumber, key: $key}';
-  }
 }
 
 /// generated route for

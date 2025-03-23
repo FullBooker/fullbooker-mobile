@@ -28,6 +28,7 @@ class OnboardingState with _$OnboardingState {
     /// RESET PASSWORD VALUES
     @Default(false) bool invalidOTP,
     @Default(UNKNOWN) String resetEmailAddress,
+    @Default(UNKNOWN) String resetPasswordOTP,
   }) = _OnboardingState;
 
   factory OnboardingState.initial() => const OnboardingState();

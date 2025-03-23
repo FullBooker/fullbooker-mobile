@@ -12,8 +12,7 @@ import 'package:otp_pin_field/otp_pin_field.dart';
 
 @RoutePage()
 class VerifyOTPPage extends StatefulWidget {
-  final String phoneNumber;
-  const VerifyOTPPage(this.phoneNumber, {super.key});
+  const VerifyOTPPage({super.key});
 
   @override
   State<StatefulWidget> createState() => VerifyOTPPageState();
@@ -28,6 +27,9 @@ class VerifyOTPPageState extends State<VerifyOTPPage> {
   bool isLoading = false;
   late Timer timer;
   int counter = 120;
+
+  // TODO(abiud): temp: remove this
+  final String phoneNumber = '1234';
 
   void onPinChange(String pin_) {
     if (pin_.length == 4) pin = pin_;
@@ -55,7 +57,7 @@ class VerifyOTPPageState extends State<VerifyOTPPage> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       final Future<String?> errFuture =
-          loginController.validateOtp(pin, widget.phoneNumber);
+          loginController.validateOtp(pin, phoneNumber);
       setState(() {
         isLoading = true;
         errorMessage = '';
@@ -72,7 +74,7 @@ class VerifyOTPPageState extends State<VerifyOTPPage> {
 
   void resendOTP(BuildContext context) {
     final Future<String?> errFuture =
-        loginController.resetPassword(widget.phoneNumber);
+        loginController.resetPassword(phoneNumber);
     setState(() {
       isLoading = true;
       errorMessage = '';
@@ -104,7 +106,7 @@ class VerifyOTPPageState extends State<VerifyOTPPage> {
     // TODO(abiud): this is wrong. change it in another refactor
     if (otpVerified) {
       context.router
-          .replace(ChangePasswordRoute(phoneNumber: widget.phoneNumber));
+          .replace(ChangePasswordRoute(phoneNumber: phoneNumber));
     }
 
     return Scaffold(
@@ -122,7 +124,7 @@ class VerifyOTPPageState extends State<VerifyOTPPage> {
                       children: <Widget>[
                         PageHeader(
                           '',
-                          otpSentCopy(widget.phoneNumber),
+                          otpSentCopy(phoneNumber),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(

@@ -39,6 +39,7 @@ mixin _$OnboardingState {
   /// RESET PASSWORD VALUES
   bool get invalidOTP => throw _privateConstructorUsedError;
   String get resetEmailAddress => throw _privateConstructorUsedError;
+  String get resetPasswordOTP => throw _privateConstructorUsedError;
 
   /// Serializes this OnboardingState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -69,7 +70,8 @@ abstract class $OnboardingStateCopyWith<$Res> {
       String newConfirmPassword,
       bool hideNewConfirmPassword,
       bool invalidOTP,
-      String resetEmailAddress});
+      String resetEmailAddress,
+      String resetPasswordOTP});
 }
 
 /// @nodoc
@@ -100,6 +102,7 @@ class _$OnboardingStateCopyWithImpl<$Res, $Val extends OnboardingState>
     Object? hideNewConfirmPassword = null,
     Object? invalidOTP = null,
     Object? resetEmailAddress = null,
+    Object? resetPasswordOTP = null,
   }) {
     return _then(_value.copyWith(
       emailAddress: null == emailAddress
@@ -154,6 +157,10 @@ class _$OnboardingStateCopyWithImpl<$Res, $Val extends OnboardingState>
           ? _value.resetEmailAddress
           : resetEmailAddress // ignore: cast_nullable_to_non_nullable
               as String,
+      resetPasswordOTP: null == resetPasswordOTP
+          ? _value.resetPasswordOTP
+          : resetPasswordOTP // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -179,7 +186,8 @@ abstract class _$$OnboardingStateImplCopyWith<$Res>
       String newConfirmPassword,
       bool hideNewConfirmPassword,
       bool invalidOTP,
-      String resetEmailAddress});
+      String resetEmailAddress,
+      String resetPasswordOTP});
 }
 
 /// @nodoc
@@ -208,6 +216,7 @@ class __$$OnboardingStateImplCopyWithImpl<$Res>
     Object? hideNewConfirmPassword = null,
     Object? invalidOTP = null,
     Object? resetEmailAddress = null,
+    Object? resetPasswordOTP = null,
   }) {
     return _then(_$OnboardingStateImpl(
       emailAddress: null == emailAddress
@@ -262,6 +271,10 @@ class __$$OnboardingStateImplCopyWithImpl<$Res>
           ? _value.resetEmailAddress
           : resetEmailAddress // ignore: cast_nullable_to_non_nullable
               as String,
+      resetPasswordOTP: null == resetPasswordOTP
+          ? _value.resetPasswordOTP
+          : resetPasswordOTP // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -283,7 +296,8 @@ class _$OnboardingStateImpl implements _OnboardingState {
       this.newConfirmPassword = UNKNOWN,
       this.hideNewConfirmPassword = true,
       this.invalidOTP = false,
-      this.resetEmailAddress = UNKNOWN});
+      this.resetEmailAddress = UNKNOWN,
+      this.resetPasswordOTP = UNKNOWN});
 
   factory _$OnboardingStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$OnboardingStateImplFromJson(json);
@@ -333,10 +347,13 @@ class _$OnboardingStateImpl implements _OnboardingState {
   @override
   @JsonKey()
   final String resetEmailAddress;
+  @override
+  @JsonKey()
+  final String resetPasswordOTP;
 
   @override
   String toString() {
-    return 'OnboardingState(emailAddress: $emailAddress, password: $password, invalidCredentials: $invalidCredentials, hidePassword: $hidePassword, firstName: $firstName, lastName: $lastName, newEmailAddress: $newEmailAddress, newPassword: $newPassword, hideNewPassword: $hideNewPassword, newConfirmPassword: $newConfirmPassword, hideNewConfirmPassword: $hideNewConfirmPassword, invalidOTP: $invalidOTP, resetEmailAddress: $resetEmailAddress)';
+    return 'OnboardingState(emailAddress: $emailAddress, password: $password, invalidCredentials: $invalidCredentials, hidePassword: $hidePassword, firstName: $firstName, lastName: $lastName, newEmailAddress: $newEmailAddress, newPassword: $newPassword, hideNewPassword: $hideNewPassword, newConfirmPassword: $newConfirmPassword, hideNewConfirmPassword: $hideNewConfirmPassword, invalidOTP: $invalidOTP, resetEmailAddress: $resetEmailAddress, resetPasswordOTP: $resetPasswordOTP)';
   }
 
   @override
@@ -369,7 +386,9 @@ class _$OnboardingStateImpl implements _OnboardingState {
             (identical(other.invalidOTP, invalidOTP) ||
                 other.invalidOTP == invalidOTP) &&
             (identical(other.resetEmailAddress, resetEmailAddress) ||
-                other.resetEmailAddress == resetEmailAddress));
+                other.resetEmailAddress == resetEmailAddress) &&
+            (identical(other.resetPasswordOTP, resetPasswordOTP) ||
+                other.resetPasswordOTP == resetPasswordOTP));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -388,7 +407,8 @@ class _$OnboardingStateImpl implements _OnboardingState {
       newConfirmPassword,
       hideNewConfirmPassword,
       invalidOTP,
-      resetEmailAddress);
+      resetEmailAddress,
+      resetPasswordOTP);
 
   /// Create a copy of OnboardingState
   /// with the given fields replaced by the non-null parameter values.
@@ -421,7 +441,8 @@ abstract class _OnboardingState implements OnboardingState {
       final String newConfirmPassword,
       final bool hideNewConfirmPassword,
       final bool invalidOTP,
-      final String resetEmailAddress}) = _$OnboardingStateImpl;
+      final String resetEmailAddress,
+      final String resetPasswordOTP}) = _$OnboardingStateImpl;
 
   factory _OnboardingState.fromJson(Map<String, dynamic> json) =
       _$OnboardingStateImpl.fromJson;
@@ -458,6 +479,8 @@ abstract class _OnboardingState implements OnboardingState {
   bool get invalidOTP;
   @override
   String get resetEmailAddress;
+  @override
+  String get resetPasswordOTP;
 
   /// Create a copy of OnboardingState
   /// with the given fields replaced by the non-null parameter values.
