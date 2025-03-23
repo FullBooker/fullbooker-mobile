@@ -375,3 +375,7 @@ const String pricePerPersonSub =
 const String chargesSummary = 'Charges Summary';
 
 const String confirmationNumber = 'Confirmation Number:';
+
+// Request OTP page
+const String resetYourPassword = 'Reset your password';
+const String requestOTPCopy = 'Enter the email address linked to your account';

@@ -25,8 +25,9 @@ class OnboardingState with _$OnboardingState {
     @Default(UNKNOWN) String newConfirmPassword,
     @Default(true) bool hideNewConfirmPassword,
 
-    /// VERIFY PHONE VALUES
+    /// RESET PASSWORD VALUES
     @Default(false) bool invalidOTP,
+    @Default(UNKNOWN) String resetEmailAddress,
   }) = _OnboardingState;
 
   factory OnboardingState.initial() => const OnboardingState();

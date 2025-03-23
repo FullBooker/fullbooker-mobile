@@ -37,21 +37,19 @@ class SecondaryButton extends StatelessWidget {
       child: InkWell(
         key: buttonKey,
         onTap: onPressed,
-        highlightColor: Theme.of(context).primaryColor.withValues(alpha: 0.1),
+        highlightColor: Theme.of(context).primaryColor.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(8),
         child: DecoratedBox(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-          ),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
           child: Center(
             child: child.fold(
               id,
               (String text) => Text(
                 text,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyLarge
-                    ?.copyWith(color: Theme.of(context).primaryColor),
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      color: Theme.of(context).primaryColor,
+                      fontWeight: FontWeight.bold,
+                    ),
               ),
             ),
           ),

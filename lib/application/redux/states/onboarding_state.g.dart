@@ -21,6 +21,7 @@ _$OnboardingStateImpl _$$OnboardingStateImplFromJson(
       newConfirmPassword: json['newConfirmPassword'] as String? ?? UNKNOWN,
       hideNewConfirmPassword: json['hideNewConfirmPassword'] as bool? ?? true,
       invalidOTP: json['invalidOTP'] as bool? ?? false,
+      resetEmailAddress: json['resetEmailAddress'] as String? ?? UNKNOWN,
     );
 
 Map<String, dynamic> _$$OnboardingStateImplToJson(
@@ -38,4 +39,5 @@ Map<String, dynamic> _$$OnboardingStateImplToJson(
       'newConfirmPassword': instance.newConfirmPassword,
       'hideNewConfirmPassword': instance.hideNewConfirmPassword,
       'invalidOTP': instance.invalidOTP,
+      'resetEmailAddress': instance.resetEmailAddress,
     };

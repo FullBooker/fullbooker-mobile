@@ -35,53 +35,7 @@ class CreateAccountPageState extends State<CreateAccountPage> {
     defaultValue: kDevBuild,
   );
 
-  final TextEditingController confirmController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  String errorMessage = '';
-  // final OldLoginViewModel loginController = OldLoginViewModel();
-  bool isLoading = false;
-
-  final TextEditingController lastNameController = TextEditingController();
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController phoneNumberController = TextEditingController();
-  bool signedUp = false;
-
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  // void signup(BuildContext context) {
-  //   if (_formKey.currentState!.validate()) {
-  //     _formKey.currentState!.save();
-  //     // final Future<String?> errFuture = loginController.signup(
-  //     //   emailController.value.text,
-  //     //   phoneNumberController.value.text,
-  //     //   '${nameController.value.text} ${lastNameController.value.text}',
-  //     //   passwordController.value.text,
-  //     // );
-  //     String? errOuter;
-  //     setState(() {
-  //       isLoading = true;
-  //       errorMessage = '';
-  //     });
-  //     errFuture.then((String? err) {
-  //       setState(() {
-  //         isLoading = false;
-  //         if (err != null) errorMessage = err;
-  //         if (err == null) signedUp = true;
-  //       });
-  //       errOuter = err;
-  //     });
-  //     if (errOuter == null && signedUp) context.router.replace(LoginRoute());
-  //   }
-  // }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (signedUp) context.router.replace(ConsumerHomeRoute());
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -237,7 +191,7 @@ class CreateAccountPageState extends State<CreateAccountPage> {
                             CreateAccountViewModel.fromState(store.state),
                         builder: (
                           BuildContext context,
-                          CreateAccountViewModel snapshot,
+                          CreateAccountViewModel vm,
                         ) {
                           if (context.isWaiting(CreateAccountAction)) {
                             return AppLoading();
