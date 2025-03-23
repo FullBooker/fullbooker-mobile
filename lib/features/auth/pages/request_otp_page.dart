@@ -133,7 +133,7 @@ class RequestOTPPageState extends State<RequestOTPPage> {
                           );
                         }
                       },
-                      child: d.right(createAccount),
+                      child: d.right(continueString),
                     );
                   },
                 ),

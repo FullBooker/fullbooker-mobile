@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:async_redux/async_redux.dart';
 import 'package:flutter/foundation.dart';
 import 'package:fullbooker/application/core/services/i_custom_client.dart';
+import 'package:fullbooker/application/redux/actions/update_onboarding_state_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
@@ -25,16 +26,18 @@ class RequestOtpAction extends ReduxAction<AppState> {
 
   @override
   Future<AppState?> reduce() async {
-    final String emailAddress = state.onboardingState?.emailAddress ?? '';
+    final String resetEmailAddress =
+        state.onboardingState?.resetEmailAddress ?? '';
 
-    final bool isEmailEmpty = emailAddress.isEmpty || emailAddress == UNKNOWN;
+    final bool isEmailEmpty =
+        resetEmailAddress.isEmpty || resetEmailAddress == UNKNOWN;
 
     if (isEmailEmpty) {
       return onError?.call(resetEmailPrompt);
     }
 
     final Map<String, String> data = <String, String>{
-      'identifier': emailAddress,
+      'identifier': resetEmailAddress,
     };
 
     final String endpoint = GetIt.I.get<AppConfig>().requestOTPEndpoint;
@@ -57,12 +60,16 @@ class RequestOtpAction extends ReduxAction<AppState> {
 
     final bool isOTPSent = body.containsKey('detail');
 
-    if (kDebugMode) {
-      debugPrint(body['otp']);
-    }
-
     if (!isOTPSent) {
       return onError?.call(errorSendingOTP);
+    }
+
+    // This will only run in debug mode
+    final String otp = body['otp'];
+    dispatch(UpdateOnboardingStateAction(resetPasswordDebugOTP: otp));
+
+    if (kDebugMode) {
+      debugPrint(otp);
     }
 
     onSuccess?.call();

@@ -40,6 +40,7 @@ mixin _$OnboardingState {
   bool get invalidOTP => throw _privateConstructorUsedError;
   String get resetEmailAddress => throw _privateConstructorUsedError;
   String get resetPasswordOTP => throw _privateConstructorUsedError;
+  String get resetPasswordDebugOTP => throw _privateConstructorUsedError;
   String get resetPassword => throw _privateConstructorUsedError;
   String get resetPasswordConfirm => throw _privateConstructorUsedError;
   bool get hideResetPassword => throw _privateConstructorUsedError;
@@ -76,6 +77,7 @@ abstract class $OnboardingStateCopyWith<$Res> {
       bool invalidOTP,
       String resetEmailAddress,
       String resetPasswordOTP,
+      String resetPasswordDebugOTP,
       String resetPassword,
       String resetPasswordConfirm,
       bool hideResetPassword,
@@ -111,6 +113,7 @@ class _$OnboardingStateCopyWithImpl<$Res, $Val extends OnboardingState>
     Object? invalidOTP = null,
     Object? resetEmailAddress = null,
     Object? resetPasswordOTP = null,
+    Object? resetPasswordDebugOTP = null,
     Object? resetPassword = null,
     Object? resetPasswordConfirm = null,
     Object? hideResetPassword = null,
@@ -173,6 +176,10 @@ class _$OnboardingStateCopyWithImpl<$Res, $Val extends OnboardingState>
           ? _value.resetPasswordOTP
           : resetPasswordOTP // ignore: cast_nullable_to_non_nullable
               as String,
+      resetPasswordDebugOTP: null == resetPasswordDebugOTP
+          ? _value.resetPasswordDebugOTP
+          : resetPasswordDebugOTP // ignore: cast_nullable_to_non_nullable
+              as String,
       resetPassword: null == resetPassword
           ? _value.resetPassword
           : resetPassword // ignore: cast_nullable_to_non_nullable
@@ -216,6 +223,7 @@ abstract class _$$OnboardingStateImplCopyWith<$Res>
       bool invalidOTP,
       String resetEmailAddress,
       String resetPasswordOTP,
+      String resetPasswordDebugOTP,
       String resetPassword,
       String resetPasswordConfirm,
       bool hideResetPassword,
@@ -249,6 +257,7 @@ class __$$OnboardingStateImplCopyWithImpl<$Res>
     Object? invalidOTP = null,
     Object? resetEmailAddress = null,
     Object? resetPasswordOTP = null,
+    Object? resetPasswordDebugOTP = null,
     Object? resetPassword = null,
     Object? resetPasswordConfirm = null,
     Object? hideResetPassword = null,
@@ -311,6 +320,10 @@ class __$$OnboardingStateImplCopyWithImpl<$Res>
           ? _value.resetPasswordOTP
           : resetPasswordOTP // ignore: cast_nullable_to_non_nullable
               as String,
+      resetPasswordDebugOTP: null == resetPasswordDebugOTP
+          ? _value.resetPasswordDebugOTP
+          : resetPasswordDebugOTP // ignore: cast_nullable_to_non_nullable
+              as String,
       resetPassword: null == resetPassword
           ? _value.resetPassword
           : resetPassword // ignore: cast_nullable_to_non_nullable
@@ -350,6 +363,7 @@ class _$OnboardingStateImpl implements _OnboardingState {
       this.invalidOTP = false,
       this.resetEmailAddress = UNKNOWN,
       this.resetPasswordOTP = UNKNOWN,
+      this.resetPasswordDebugOTP = UNKNOWN,
       this.resetPassword = UNKNOWN,
       this.resetPasswordConfirm = UNKNOWN,
       this.hideResetPassword = true,
@@ -408,6 +422,9 @@ class _$OnboardingStateImpl implements _OnboardingState {
   final String resetPasswordOTP;
   @override
   @JsonKey()
+  final String resetPasswordDebugOTP;
+  @override
+  @JsonKey()
   final String resetPassword;
   @override
   @JsonKey()
@@ -421,7 +438,7 @@ class _$OnboardingStateImpl implements _OnboardingState {
 
   @override
   String toString() {
-    return 'OnboardingState(emailAddress: $emailAddress, password: $password, invalidCredentials: $invalidCredentials, hidePassword: $hidePassword, firstName: $firstName, lastName: $lastName, newEmailAddress: $newEmailAddress, newPassword: $newPassword, hideNewPassword: $hideNewPassword, newConfirmPassword: $newConfirmPassword, hideNewConfirmPassword: $hideNewConfirmPassword, invalidOTP: $invalidOTP, resetEmailAddress: $resetEmailAddress, resetPasswordOTP: $resetPasswordOTP, resetPassword: $resetPassword, resetPasswordConfirm: $resetPasswordConfirm, hideResetPassword: $hideResetPassword, hideResetConfirmPassword: $hideResetConfirmPassword)';
+    return 'OnboardingState(emailAddress: $emailAddress, password: $password, invalidCredentials: $invalidCredentials, hidePassword: $hidePassword, firstName: $firstName, lastName: $lastName, newEmailAddress: $newEmailAddress, newPassword: $newPassword, hideNewPassword: $hideNewPassword, newConfirmPassword: $newConfirmPassword, hideNewConfirmPassword: $hideNewConfirmPassword, invalidOTP: $invalidOTP, resetEmailAddress: $resetEmailAddress, resetPasswordOTP: $resetPasswordOTP, resetPasswordDebugOTP: $resetPasswordDebugOTP, resetPassword: $resetPassword, resetPasswordConfirm: $resetPasswordConfirm, hideResetPassword: $hideResetPassword, hideResetConfirmPassword: $hideResetConfirmPassword)';
   }
 
   @override
@@ -457,6 +474,8 @@ class _$OnboardingStateImpl implements _OnboardingState {
                 other.resetEmailAddress == resetEmailAddress) &&
             (identical(other.resetPasswordOTP, resetPasswordOTP) ||
                 other.resetPasswordOTP == resetPasswordOTP) &&
+            (identical(other.resetPasswordDebugOTP, resetPasswordDebugOTP) ||
+                other.resetPasswordDebugOTP == resetPasswordDebugOTP) &&
             (identical(other.resetPassword, resetPassword) ||
                 other.resetPassword == resetPassword) &&
             (identical(other.resetPasswordConfirm, resetPasswordConfirm) ||
@@ -470,26 +489,28 @@ class _$OnboardingStateImpl implements _OnboardingState {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      emailAddress,
-      password,
-      invalidCredentials,
-      hidePassword,
-      firstName,
-      lastName,
-      newEmailAddress,
-      newPassword,
-      hideNewPassword,
-      newConfirmPassword,
-      hideNewConfirmPassword,
-      invalidOTP,
-      resetEmailAddress,
-      resetPasswordOTP,
-      resetPassword,
-      resetPasswordConfirm,
-      hideResetPassword,
-      hideResetConfirmPassword);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        emailAddress,
+        password,
+        invalidCredentials,
+        hidePassword,
+        firstName,
+        lastName,
+        newEmailAddress,
+        newPassword,
+        hideNewPassword,
+        newConfirmPassword,
+        hideNewConfirmPassword,
+        invalidOTP,
+        resetEmailAddress,
+        resetPasswordOTP,
+        resetPasswordDebugOTP,
+        resetPassword,
+        resetPasswordConfirm,
+        hideResetPassword,
+        hideResetConfirmPassword
+      ]);
 
   /// Create a copy of OnboardingState
   /// with the given fields replaced by the non-null parameter values.
@@ -524,6 +545,7 @@ abstract class _OnboardingState implements OnboardingState {
       final bool invalidOTP,
       final String resetEmailAddress,
       final String resetPasswordOTP,
+      final String resetPasswordDebugOTP,
       final String resetPassword,
       final String resetPasswordConfirm,
       final bool hideResetPassword,
@@ -566,6 +588,8 @@ abstract class _OnboardingState implements OnboardingState {
   String get resetEmailAddress;
   @override
   String get resetPasswordOTP;
+  @override
+  String get resetPasswordDebugOTP;
   @override
   String get resetPassword;
   @override

@@ -24,6 +24,8 @@ class CustomTextInput extends StatelessWidget {
     this.inputFormatters,
     this.autovalidateMode,
     this.autofillHints,
+    this.prefixIconActive = false,
+    this.suffixIconActive = false,
   }) : super(key: inputKey);
 
   final String? Function(String? value)? validator;
@@ -43,6 +45,8 @@ class CustomTextInput extends StatelessWidget {
   final FormFieldCallback onChanged;
   final HeroIcons? prefixIconData;
   final HeroIcons? suffixIconData;
+  final bool prefixIconActive;
+  final bool suffixIconActive;
 
   @override
   Widget build(BuildContext context) {
@@ -88,6 +92,9 @@ class CustomTextInput extends StatelessWidget {
                     icon: HeroIcon(
                       suffixIconData!,
                       size: 20,
+                      color: prefixIconActive
+                          ? Theme.of(context).primaryColor
+                          : AppColors.bodyTextColor,
                     ),
                     onPressed: suffixIconFunc,
                   )
@@ -100,7 +107,9 @@ class CustomTextInput extends StatelessWidget {
                         Theme.of(context).primaryColor.withValues(alpha: .1),
                     icon: HeroIcon(
                       prefixIconData!,
-                      color: AppColors.bodyTextColor,
+                      color: prefixIconActive
+                          ? Theme.of(context).primaryColor
+                          : AppColors.bodyTextColor,
                       size: 20,
                     ),
                     onPressed: prefixIconFunc,

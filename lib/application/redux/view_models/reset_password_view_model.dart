@@ -7,12 +7,16 @@ class ResetPasswordViewModel extends Vm {
     required this.password,
     required this.hideResetPassword,
     required this.hideResetConfirmPassword,
+    required this.resetPasswordOTP,
+    required this.resetPasswordDebugOTP,
   }) : super(
           equals: <Object?>[
             resetEmailAddress,
             password,
             hideResetPassword,
             hideResetConfirmPassword,
+            resetPasswordOTP,
+            resetPasswordDebugOTP,
           ],
         );
 
@@ -20,6 +24,8 @@ class ResetPasswordViewModel extends Vm {
   final String? password;
   final bool hideResetPassword;
   final bool hideResetConfirmPassword;
+  final String resetPasswordOTP;
+  final String resetPasswordDebugOTP;
 
   static ResetPasswordViewModel fromState(AppState state) {
     return ResetPasswordViewModel(
@@ -27,6 +33,8 @@ class ResetPasswordViewModel extends Vm {
       password: state.onboardingState?.password,
       hideResetPassword: state.onboardingState!.hideResetPassword,
       hideResetConfirmPassword: state.onboardingState!.hideResetConfirmPassword,
+      resetPasswordOTP: state.onboardingState!.resetPasswordOTP,
+      resetPasswordDebugOTP: state.onboardingState!.resetPasswordDebugOTP,
     );
   }
 }

@@ -24,18 +24,25 @@ class ChangePasswordAction extends ReduxAction<AppState> {
 
   @override
   Future<AppState?> reduce() async {
-    final String emailAddress = state.onboardingState?.emailAddress ?? '';
-    final String otp = state.onboardingState?.resetPasswordOTP ?? '';
+    final String resetEmailAddress =
+        state.onboardingState?.resetEmailAddress ?? '';
+    final String password = state.onboardingState?.resetPassword ?? '';
+    final String confirmPassword =
+        state.onboardingState?.resetPasswordConfirm ?? '';
 
-    final bool isOTPEmpty = otp.isEmpty || otp == UNKNOWN;
+    final bool isPasswordEmpty = password.isEmpty || password == UNKNOWN;
+    final bool isConformPasswordEmpty =
+        confirmPassword.isEmpty || confirmPassword == UNKNOWN;
 
-    if (isOTPEmpty) {
-      return onError?.call(otpEmptyPrompt);
+    if (isPasswordEmpty ||
+        isConformPasswordEmpty ||
+        (password != confirmPassword)) {
+      return onError?.call(setPasswordPrompt);
     }
 
     final Map<String, String> data = <String, String>{
-      'identifier': emailAddress,
-      'password': otp,
+      'identifier': resetEmailAddress,
+      'password': password,
     };
 
     final String endpoint = GetIt.I.get<AppConfig>().changePasswordEndpoint;
@@ -50,15 +57,15 @@ class ChangePasswordAction extends ReduxAction<AppState> {
         processHttpResponse(httpResponse);
 
     if (!processedResponse.ok) {
-      return onError?.call(invalidOTP);
+      return onError?.call(errorChangingPassword);
     }
 
     final Map<String, dynamic> body =
         json.decode(processedResponse.response.body) as Map<String, dynamic>;
 
-    final bool isOTPVerified = body.containsKey('detail');
+    final bool isPasswordChanged = body.containsKey('detail');
 
-    if (!isOTPVerified) {
+    if (!isPasswordChanged) {
       return onError?.call(errorVerifyingOTP);
     }
 

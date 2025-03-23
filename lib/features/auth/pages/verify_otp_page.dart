@@ -96,11 +96,6 @@ class VerifyOTPPageState extends State<VerifyOTPPage> {
               child: StoreConnector<AppState, ResetPasswordViewModel>(
                 converter: (Store<AppState> store) =>
                     ResetPasswordViewModel.fromState(store.state),
-                onInit: (Store<AppState> store) {
-                  context.dispatch(
-                    UpdateOnboardingStateAction(resetPasswordOTP: UNKNOWN),
-                  );
-                },
                 builder: (BuildContext context, ResetPasswordViewModel vm) {
                   return ListView(
                     children: <Widget>[
@@ -179,6 +174,15 @@ class VerifyOTPPageState extends State<VerifyOTPPage> {
                                 },
                                 fillColor: Colors.white,
                               ),
+                            Text(
+                              debugOTPValue(vm.resetPasswordDebugOTP),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall
+                                  ?.copyWith(
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                            ),
                           ],
                         ),
                       ),
@@ -210,8 +214,16 @@ class VerifyOTPPageState extends State<VerifyOTPPage> {
                               assetPath: loginCredentialsSVGPath,
                               description: error,
                             ),
-                            onSuccess: () =>
-                                context.router.navigate(ChangePasswordRoute()),
+                            onSuccess: () {
+                              // Clear the OTP
+                              context.dispatch(
+                                UpdateOnboardingStateAction(
+                                  resetPasswordOTP: UNKNOWN,
+                                  resetPasswordDebugOTP: UNKNOWN,
+                                ),
+                              );
+                              context.router.navigate(ChangePasswordRoute());
+                            },
                             client: AppWrapperBase.of(context)!.customClient,
                           ),
                         );

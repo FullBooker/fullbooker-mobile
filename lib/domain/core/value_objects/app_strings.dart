@@ -101,6 +101,7 @@ const String resentOTPString = 'Resend OTP';
 const String useDifferentString = 'Use a different ';
 const String emailOrPhoneString = 'email / phone number';
 const String verifyOTPString = 'Verify OTP';
+String debugOTPValue(String otp) => 'Debug OTP: $otp';
 
 // Consumer landing page
 const String popularNowString = 'Popular Now';
@@ -396,3 +397,10 @@ const String otpEmptyPrompt = 'Please enter a 4 digit OTP';
 
 const String invalidOTP =
     'The code you entered is invalid. Please check and try again';
+
+// Set new password strings
+const String setPasswordPrompt =
+    'Please enter and confirm your new password to continue';
+
+const String errorChangingPassword =
+    'Sorry, there was an error changing your password. Please try again later';

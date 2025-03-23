@@ -85,7 +85,7 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
                               onChanged: (String v) {
                                 context.dispatch(
                                   UpdateOnboardingStateAction(
-                                    newPassword: v.trim(),
+                                    resetPassword: v.trim(),
                                   ),
                                 );
                               },
@@ -116,7 +116,7 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
                               onChanged: (String v) {
                                 context.dispatch(
                                   UpdateOnboardingStateAction(
-                                    newConfirmPassword: v.trim(),
+                                    resetPasswordConfirm: v.trim(),
                                   ),
                                 );
                               },

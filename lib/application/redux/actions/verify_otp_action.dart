@@ -24,7 +24,8 @@ class VerifyOTPAction extends ReduxAction<AppState> {
 
   @override
   Future<AppState?> reduce() async {
-    final String emailAddress = state.onboardingState?.emailAddress ?? '';
+    final String resetEmailAddress =
+        state.onboardingState?.resetEmailAddress ?? '';
     final String otp = state.onboardingState?.resetPasswordOTP ?? '';
 
     final bool isOTPEmpty = otp.isEmpty || otp == UNKNOWN;
@@ -34,7 +35,7 @@ class VerifyOTPAction extends ReduxAction<AppState> {
     }
 
     final Map<String, String> data = <String, String>{
-      'identifier': emailAddress,
+      'identifier': resetEmailAddress,
       'otp': otp,
     };
 
