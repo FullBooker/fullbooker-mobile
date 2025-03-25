@@ -71,15 +71,15 @@ abstract class ICustomClient extends BaseClient {
     );
   }
 
-  /// Parses error messages from a response body.
+  /// Extracts an error message from the response body
   String? parseError(Map<String, dynamic>? body) {
     if (body == null || body.isEmpty) return null;
 
-    final dynamic error = body['non_field_errors'];
+    // Handle non_field_errors
+    final dynamic generalError = body['non_field_errors'];
 
-    if (error is List && error.isNotEmpty) {
-      final dynamic firstError = error.first;
-
+    if (generalError is List && generalError.isNotEmpty) {
+      final dynamic firstError = generalError.first;
       if (firstError is String) {
         return firstError.contains(RegExp('ID token', caseSensitive: false))
             ? kLoginLogoutPrompt
@@ -87,10 +87,21 @@ abstract class ICustomClient extends BaseClient {
       }
     }
 
-    if (error is String) {
-      return error.contains(RegExp('ID token', caseSensitive: false))
+    if (generalError is String) {
+      return generalError.contains(RegExp('ID token', caseSensitive: false))
           ? kLoginLogoutPrompt
-          : error;
+          : generalError;
+    }
+
+    // Field specific BE errors like {"email": ["error"]}
+    for (final MapEntry<String, dynamic> entry in body.entries) {
+      if (entry.value is List && (entry.value as List<dynamic>).isNotEmpty) {
+        final dynamic firstFieldError = (entry.value as List<dynamic>).first;
+        if (firstFieldError is String) return firstFieldError;
+      }
+      if (entry.value is String) {
+        return entry.value as String;
+      }
     }
 
     return null;

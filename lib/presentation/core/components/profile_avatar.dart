@@ -47,13 +47,13 @@ class ProfileAvatar extends StatelessWidget {
           shape: BoxShape.circle,
           color: Theme.of(context).primaryColor.withValues(alpha: 0.1),
         ),
-        padding: const EdgeInsets.all(15),
+        padding: const EdgeInsets.all(16),
         child: Center(
           child: Text(
             getInitials(displayName ?? noName).toUpperCase(),
             style: Theme.of(context)
                 .textTheme
-                .titleLarge
+                .headlineLarge
                 ?.copyWith(color: Theme.of(context).primaryColor),
           ),
         ),
