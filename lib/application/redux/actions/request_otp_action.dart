@@ -9,7 +9,6 @@ import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
-import 'package:fullbooker/shared/entities/processed_response.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
 
@@ -48,15 +47,14 @@ class RequestOtpAction extends ReduxAction<AppState> {
       variables: data,
     );
 
-    final ProcessedResponse processedResponse =
-        processHttpResponse(httpResponse);
-
-    if (!processedResponse.ok) {
-      return onError?.call(processedResponse.message ?? genericErrorString);
-    }
-
     final Map<String, dynamic> body =
-        json.decode(processedResponse.response.body) as Map<String, dynamic>;
+        json.decode(httpResponse.body) as Map<String, dynamic>;
+
+    if (httpResponse.statusCode >= 400) {
+      final String? error = client.parseError(body);
+
+      return onError?.call(error ?? defaultUserFriendlyMessage);
+    }
 
     final bool isOTPSent = body.containsKey('detail');
 
