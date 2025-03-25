@@ -34,7 +34,7 @@ class ImageSelectionPage extends StatefulWidget {
 class _ImageSelectionPageState extends State<ImageSelectionPage> {
   List<File> images = <File>[];
   bool isLoading = false;
-  ProductViewModel productViewModel = ProductViewModel();
+  ProductController productViewModel = ProductController();
 
   void showSnackBar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(

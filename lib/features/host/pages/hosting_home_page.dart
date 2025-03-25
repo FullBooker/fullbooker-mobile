@@ -1,9 +1,10 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:fullbooker/application/redux/actions/logout_action.dart';
+import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
+import 'package:fullbooker/application/redux/actions/fetch_products_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
-import 'package:fullbooker/application/redux/view_models/login_view_model.dart';
+import 'package:fullbooker/application/redux/view_models/hosting_home_view_model.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/generic_zero_state.dart';
@@ -11,19 +12,14 @@ import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
 
 @RoutePage()
-class HostingHomePage extends StatefulWidget {
+class HostingHomePage extends StatelessWidget {
   const HostingHomePage({super.key});
 
-  @override
-  State<StatefulWidget> createState() => _HostingHomePageState();
-}
-
-class _HostingHomePageState extends State<HostingHomePage> {
   // TODO(abiud): cleanup this code
   // bool hasLoaded = false;
   // ProductViewModel productsController = ProductViewModel();
 
-  // @override
+  @override
   // void initState() {
   //   super.initState();
   //   productsController.repository
@@ -55,14 +51,21 @@ class _HostingHomePageState extends State<HostingHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            StoreConnector<AppState, LoginPageViewModel>(
+            StoreConnector<AppState, HostingHomeViewModel>(
               converter: (Store<AppState> store) =>
-                  LoginPageViewModel.fromState(store.state),
+                  HostingHomeViewModel.fromState(store.state),
+              onInit: (Store<AppState> store) {
+                context.dispatch(
+                  FetchProductsAction(
+                    client: AppWrapperBase.of(context)!.customClient,
+                  ),
+                );
+              },
               builder: (
                 BuildContext context,
-                LoginPageViewModel snapshot,
+                HostingHomeViewModel snapshot,
               ) {
-                if (context.isWaiting(LogoutAction)) {
+                if (context.isWaiting(FetchProductsAction)) {
                   return AppLoading();
                 }
 

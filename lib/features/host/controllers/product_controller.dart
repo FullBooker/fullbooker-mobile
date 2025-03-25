@@ -8,8 +8,8 @@ import 'package:fullbooker/features/host/models/product.dart';
 import 'package:fullbooker/shared/entities/date_group.dart';
 import 'package:fullbooker/shared/entities/session_pricing.dart';
 
-class ProductViewModel extends BaseViewModel<Product> {
-  ProductViewModel() {
+class ProductController extends BaseViewModel<Product> {
+  ProductController() {
     repository = CRUDRepository<Product>('products', ProductSerializer());
   }
 

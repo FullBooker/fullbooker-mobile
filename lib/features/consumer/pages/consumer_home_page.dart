@@ -21,7 +21,7 @@ class ConsumerHomePage extends StatefulWidget {
 }
 
 class _ConsumerHomePageState extends State<ConsumerHomePage> {
-  ProductViewModel productsController = ProductViewModel();
+  ProductController productsController = ProductController();
   CategoryViewModel categoriesController = CategoryViewModel();
   List<Product>? products;
   Map<String, Category>? categories;

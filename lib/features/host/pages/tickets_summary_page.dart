@@ -37,7 +37,7 @@ class TicketsSummaryPage extends StatefulWidget {
 
 class _TicketsSummaryPageState extends State<TicketsSummaryPage> {
   bool isLoading = false;
-  ProductViewModel productController = ProductViewModel();
+  ProductController productController = ProductController();
 
   void onContinueClick() {
     setState(() => isLoading = true);

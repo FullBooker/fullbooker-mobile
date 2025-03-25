@@ -47,7 +47,7 @@ class _LocationSelectionPageState extends State<LocationSelectionPage> {
   bool isLoading = false;
   late String mapStyle;
   List<Placemark>? placeMarks;
-  ProductViewModel productController = ProductViewModel();
+  ProductController productController = ProductController();
   LatLng? selectedLocation;
 
   @override

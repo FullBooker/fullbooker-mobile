@@ -24,7 +24,7 @@ class EventsSummaryPage extends StatefulWidget {
 
 class _EventsSummaryPageState extends State<EventsSummaryPage> {
   bool hasLoaded = false;
-  ProductViewModel productsController = ProductViewModel();
+  ProductController productsController = ProductController();
 
   @override
   void initState() {

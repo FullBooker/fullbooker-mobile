@@ -10,7 +10,6 @@ import 'package:fullbooker/application/redux/observers/custom_observer.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
-import 'package:fullbooker/domain/core/value_objects/endpoints.dart';
 import 'package:fullbooker/domain/core/value_objects/global_keys.dart';
 import 'package:fullbooker/firebase_options.dart';
 import 'package:fullbooker/infrastructure/repository/state_persistor.dart';
@@ -49,9 +48,7 @@ Future<void> appBootStrap() async {
     );
 
     GetIt.I.registerSingleton<AppConfig>(appConfig);
-    GetIt.I.registerSingleton<GoogleSignIn>(
-      GoogleSignIn(scopes: googleSignInScopes),
-    );
+    GetIt.I.registerSingleton<GoogleSignIn>(GoogleSignIn());
 
     await Firebase.initializeApp(
       name: appConfig.applicationName,
