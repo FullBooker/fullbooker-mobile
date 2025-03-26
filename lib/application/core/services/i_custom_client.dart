@@ -9,7 +9,6 @@ abstract class ICustomClient extends BaseClient {
 
   @override
   Future<StreamedResponse> send(BaseRequest request) async {
-    request.headers.addAll(buildHeaders());
     return request.send();
   }
 
@@ -21,18 +20,19 @@ abstract class ICustomClient extends BaseClient {
   /// Authorization header
   Map<String, String> buildHeaders({
     Map<String, String>? customHeaders,
+    bool authenticated = true,
   }) {
     final Map<String, String> headers = <String, String>{
-      'Authorization': 'Bearer $accessToken',
       'Accept': 'application/json',
-      'content-type': 'application/json',
+      'Content-Type': 'application/json',
+      if (authenticated) 'Authorization': 'Bearer $accessToken',
       if (customHeaders != null) ...customHeaders,
     };
 
     return headers;
   }
 
-  /// Makes an unauthenticated REST API call with the [method] passed
+  /// Makes a REST API call with optional authentication
   Future<Response> callRESTAPI({
     required String endpoint,
     required String method,
@@ -40,6 +40,7 @@ abstract class ICustomClient extends BaseClient {
     Map<String, dynamic>? queryParams,
     Duration? timeout,
     Map<String, String>? customHeaders,
+    bool authenticated = true,
   }) async {
     Uri uri = fromUriOrString(endpoint);
     if (queryParams != null) {
@@ -47,7 +48,12 @@ abstract class ICustomClient extends BaseClient {
     }
 
     final Request request = Request(method, uri)
-      ..headers.addAll(customHeaders ?? defaultRequestHeaders);
+      ..headers.addAll(
+        buildHeaders(
+          customHeaders: customHeaders,
+          authenticated: authenticated,
+        ),
+      );
 
     if (variables != null) {
       request.body = json.encode(variables);
@@ -62,7 +68,8 @@ abstract class ICustomClient extends BaseClient {
             ByteStream.fromBytes(utf8.encode(timeoutBody)),
             408,
             headers: buildHeaders(
-              customHeaders: customHeaders ?? defaultRequestHeaders,
+              customHeaders: customHeaders,
+              authenticated: authenticated,
             ),
           );
         },
