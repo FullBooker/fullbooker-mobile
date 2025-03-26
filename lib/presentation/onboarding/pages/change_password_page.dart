@@ -69,74 +69,76 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
                         ),
                       ),
                       largeVerticalSizedBox,
-                      Form(
-                        key: _formKey,
-                        child: Column(
-                          spacing: 12,
-                          children: <Widget>[
-                            // Password
-                            CustomTextInput(
-                              labelText: newPasswordLabel,
-                              hintText: newPasswordHint,
-                              autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
-                              validator: (String? password) =>
-                                  validatePassword(password),
-                              onChanged: (String v) {
-                                context.dispatch(
-                                  UpdateOnboardingStateAction(
-                                    resetPassword: v.trim(),
-                                  ),
-                                );
-                              },
-                              keyboardType: TextInputType.visiblePassword,
-                              autofillHints: const <String>[
-                                AutofillHints.password,
-                              ],
-                              prefixIconData: HeroIcons.key,
-                              suffixIconData: HeroIcons.eyeSlash,
-                              suffixIconFunc: () {
-                                context.dispatch(
-                                  UpdateOnboardingStateAction(
-                                    hideResetPassword: !vm.hideResetPassword,
-                                  ),
-                                );
-                              },
-                              obscureText: vm.hideResetPassword,
-                            ),
+                      AutofillGroup(
+                        child: Form(
+                          key: _formKey,
+                          child: Column(
+                            spacing: 12,
+                            children: <Widget>[
+                              // Password
+                              CustomTextInput(
+                                labelText: newPasswordLabel,
+                                hintText: newPasswordHint,
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                validator: (String? password) =>
+                                    validatePassword(password),
+                                onChanged: (String v) {
+                                  context.dispatch(
+                                    UpdateOnboardingStateAction(
+                                      resetPassword: v.trim(),
+                                    ),
+                                  );
+                                },
+                                keyboardType: TextInputType.visiblePassword,
+                                autofillHints: const <String>[
+                                  AutofillHints.newPassword,
+                                ],
+                                prefixIconData: HeroIcons.key,
+                                suffixIconData: HeroIcons.eyeSlash,
+                                suffixIconFunc: () {
+                                  context.dispatch(
+                                    UpdateOnboardingStateAction(
+                                      hideResetPassword: !vm.hideResetPassword,
+                                    ),
+                                  );
+                                },
+                                obscureText: vm.hideResetPassword,
+                              ),
 
-                            // Confirm password
-                            CustomTextInput(
-                              labelText: confirmNewPasswordLabel,
-                              hintText: confirmNewPasswordHint,
-                              autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
-                              validator: (String? confirm) =>
-                                  validateConfirmPassword(confirm, confirm),
-                              onChanged: (String v) {
-                                context.dispatch(
-                                  UpdateOnboardingStateAction(
-                                    resetPasswordConfirm: v.trim(),
-                                  ),
-                                );
-                              },
-                              keyboardType: TextInputType.visiblePassword,
-                              autofillHints: const <String>[
-                                AutofillHints.password,
-                              ],
-                              prefixIconData: HeroIcons.key,
-                              suffixIconData: HeroIcons.eyeSlash,
-                              suffixIconFunc: () {
-                                context.dispatch(
-                                  UpdateOnboardingStateAction(
-                                    hideResetConfirmPassword:
-                                        !vm.hideResetConfirmPassword,
-                                  ),
-                                );
-                              },
-                              obscureText: vm.hideResetConfirmPassword,
-                            ),
-                          ],
+                              // Confirm password
+                              CustomTextInput(
+                                labelText: confirmNewPasswordLabel,
+                                hintText: confirmNewPasswordHint,
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                validator: (String? confirm) =>
+                                    validateConfirmPassword(confirm, confirm),
+                                onChanged: (String v) {
+                                  context.dispatch(
+                                    UpdateOnboardingStateAction(
+                                      resetPasswordConfirm: v.trim(),
+                                    ),
+                                  );
+                                },
+                                keyboardType: TextInputType.visiblePassword,
+                                autofillHints: const <String>[
+                                  AutofillHints.newPassword,
+                                ],
+                                prefixIconData: HeroIcons.key,
+                                suffixIconData: HeroIcons.eyeSlash,
+                                suffixIconFunc: () {
+                                  context.dispatch(
+                                    UpdateOnboardingStateAction(
+                                      hideResetConfirmPassword:
+                                          !vm.hideResetConfirmPassword,
+                                    ),
+                                  );
+                                },
+                                obscureText: vm.hideResetConfirmPassword,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],
