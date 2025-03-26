@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/core/services/i_custom_client.dart';
+import 'package:fullbooker/application/redux/actions/update_host_product_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
+import 'package:fullbooker/domain/core/entities/host_product_response.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
@@ -45,6 +47,10 @@ class FetchProductsAction extends ReduxAction<AppState> {
     }
 
     // TODO(abiud): update state with the fetched products
+    final HostProductResponse productsResponse =
+        HostProductResponse.fromJson(body);
+
+    dispatch(UpdateHostProductAction(products: productsResponse.results));
 
     return state;
   }

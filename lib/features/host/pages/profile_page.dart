@@ -55,7 +55,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       Center(
                         child: ProfileAvatar(
                           displayName: name,
-                          aviSize: 120,
+                          aviSize: 64,
                           avatarURI: '',
                         ),
                       ),

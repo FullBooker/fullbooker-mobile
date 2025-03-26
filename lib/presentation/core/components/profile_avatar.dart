@@ -53,7 +53,7 @@ class ProfileAvatar extends StatelessWidget {
             getInitials(displayName ?? noName).toUpperCase(),
             style: Theme.of(context)
                 .textTheme
-                .headlineLarge
+                .titleMedium
                 ?.copyWith(color: Theme.of(context).primaryColor),
           ),
         ),
