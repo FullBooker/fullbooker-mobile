@@ -22,6 +22,9 @@ _$AppStateImpl _$$AppStateImplFromJson(Map<String, dynamic> json) =>
           ? null
           : OnboardingState.fromJson(
               json['onboardingState'] as Map<String, dynamic>),
+      hostState: json['hostState'] == null
+          ? null
+          : HostState.fromJson(json['hostState'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$AppStateImplToJson(_$AppStateImpl instance) =>
@@ -30,4 +33,5 @@ Map<String, dynamic> _$$AppStateImplToJson(_$AppStateImpl instance) =>
       'userState': instance.userState?.toJson(),
       'bottomNavState': instance.bottomNavState?.toJson(),
       'onboardingState': instance.onboardingState?.toJson(),
+      'hostState': instance.hostState?.toJson(),
     };

@@ -12,12 +12,6 @@
 import 'package:auto_route/auto_route.dart' as _i31;
 import 'package:flutter/foundation.dart' as _i35;
 import 'package:flutter/material.dart' as _i32;
-import 'package:fullbooker/presentation/onboarding/pages/change_password_page.dart'
-    as _i6;
-import 'package:fullbooker/presentation/onboarding/pages/create_account_page.dart' as _i8;
-import 'package:fullbooker/presentation/onboarding/pages/login_page.dart' as _i19;
-import 'package:fullbooker/presentation/onboarding/pages/request_otp_page.dart' as _i26;
-import 'package:fullbooker/presentation/onboarding/pages/verify_otp_page.dart' as _i29;
 import 'package:fullbooker/features/consumer/pages/consumer_home_page.dart'
     as _i7;
 import 'package:fullbooker/features/consumer/pages/event_details_page.dart'
@@ -63,6 +57,16 @@ import 'package:fullbooker/features/host/pages/tickets_summary_page.dart'
     as _i28;
 import 'package:fullbooker/features/host/pages/video_selection_page.dart'
     as _i30;
+import 'package:fullbooker/presentation/onboarding/pages/change_password_page.dart'
+    as _i6;
+import 'package:fullbooker/presentation/onboarding/pages/create_account_page.dart'
+    as _i8;
+import 'package:fullbooker/presentation/onboarding/pages/login_page.dart'
+    as _i19;
+import 'package:fullbooker/presentation/onboarding/pages/request_otp_page.dart'
+    as _i26;
+import 'package:fullbooker/presentation/onboarding/pages/verify_otp_page.dart'
+    as _i29;
 import 'package:fullbooker/shared/entities/enums.dart' as _i36;
 import 'package:fullbooker/shared/entities/session_pricing.dart' as _i34;
 import 'package:fullbooker/shared/entities/ticket.dart' as _i37;

@@ -24,6 +24,7 @@ mixin _$AppState {
   UserState? get userState => throw _privateConstructorUsedError;
   BottomNavState? get bottomNavState => throw _privateConstructorUsedError;
   OnboardingState? get onboardingState => throw _privateConstructorUsedError;
+  HostState? get hostState => throw _privateConstructorUsedError;
 
   /// Serializes this AppState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -44,12 +45,14 @@ abstract class $AppStateCopyWith<$Res> {
       {AuthState? authState,
       UserState? userState,
       BottomNavState? bottomNavState,
-      OnboardingState? onboardingState});
+      OnboardingState? onboardingState,
+      HostState? hostState});
 
   $AuthStateCopyWith<$Res>? get authState;
   $UserStateCopyWith<$Res>? get userState;
   $BottomNavStateCopyWith<$Res>? get bottomNavState;
   $OnboardingStateCopyWith<$Res>? get onboardingState;
+  $HostStateCopyWith<$Res>? get hostState;
 }
 
 /// @nodoc
@@ -71,6 +74,7 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
     Object? userState = freezed,
     Object? bottomNavState = freezed,
     Object? onboardingState = freezed,
+    Object? hostState = freezed,
   }) {
     return _then(_value.copyWith(
       authState: freezed == authState
@@ -89,6 +93,10 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
           ? _value.onboardingState
           : onboardingState // ignore: cast_nullable_to_non_nullable
               as OnboardingState?,
+      hostState: freezed == hostState
+          ? _value.hostState
+          : hostState // ignore: cast_nullable_to_non_nullable
+              as HostState?,
     ) as $Val);
   }
 
@@ -147,6 +155,20 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
       return _then(_value.copyWith(onboardingState: value) as $Val);
     });
   }
+
+  /// Create a copy of AppState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $HostStateCopyWith<$Res>? get hostState {
+    if (_value.hostState == null) {
+      return null;
+    }
+
+    return $HostStateCopyWith<$Res>(_value.hostState!, (value) {
+      return _then(_value.copyWith(hostState: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -161,7 +183,8 @@ abstract class _$$AppStateImplCopyWith<$Res>
       {AuthState? authState,
       UserState? userState,
       BottomNavState? bottomNavState,
-      OnboardingState? onboardingState});
+      OnboardingState? onboardingState,
+      HostState? hostState});
 
   @override
   $AuthStateCopyWith<$Res>? get authState;
@@ -171,6 +194,8 @@ abstract class _$$AppStateImplCopyWith<$Res>
   $BottomNavStateCopyWith<$Res>? get bottomNavState;
   @override
   $OnboardingStateCopyWith<$Res>? get onboardingState;
+  @override
+  $HostStateCopyWith<$Res>? get hostState;
 }
 
 /// @nodoc
@@ -190,6 +215,7 @@ class __$$AppStateImplCopyWithImpl<$Res>
     Object? userState = freezed,
     Object? bottomNavState = freezed,
     Object? onboardingState = freezed,
+    Object? hostState = freezed,
   }) {
     return _then(_$AppStateImpl(
       authState: freezed == authState
@@ -208,6 +234,10 @@ class __$$AppStateImplCopyWithImpl<$Res>
           ? _value.onboardingState
           : onboardingState // ignore: cast_nullable_to_non_nullable
               as OnboardingState?,
+      hostState: freezed == hostState
+          ? _value.hostState
+          : hostState // ignore: cast_nullable_to_non_nullable
+              as HostState?,
     ));
   }
 }
@@ -220,7 +250,8 @@ class _$AppStateImpl implements _AppState {
       {this.authState,
       this.userState,
       this.bottomNavState,
-      this.onboardingState});
+      this.onboardingState,
+      this.hostState});
 
   factory _$AppStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$AppStateImplFromJson(json);
@@ -233,10 +264,12 @@ class _$AppStateImpl implements _AppState {
   final BottomNavState? bottomNavState;
   @override
   final OnboardingState? onboardingState;
+  @override
+  final HostState? hostState;
 
   @override
   String toString() {
-    return 'AppState(authState: $authState, userState: $userState, bottomNavState: $bottomNavState, onboardingState: $onboardingState)';
+    return 'AppState(authState: $authState, userState: $userState, bottomNavState: $bottomNavState, onboardingState: $onboardingState, hostState: $hostState)';
   }
 
   @override
@@ -251,13 +284,15 @@ class _$AppStateImpl implements _AppState {
             (identical(other.bottomNavState, bottomNavState) ||
                 other.bottomNavState == bottomNavState) &&
             (identical(other.onboardingState, onboardingState) ||
-                other.onboardingState == onboardingState));
+                other.onboardingState == onboardingState) &&
+            (identical(other.hostState, hostState) ||
+                other.hostState == hostState));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, authState, userState, bottomNavState, onboardingState);
+  int get hashCode => Object.hash(runtimeType, authState, userState,
+      bottomNavState, onboardingState, hostState);
 
   /// Create a copy of AppState
   /// with the given fields replaced by the non-null parameter values.
@@ -280,7 +315,8 @@ abstract class _AppState implements AppState {
       {final AuthState? authState,
       final UserState? userState,
       final BottomNavState? bottomNavState,
-      final OnboardingState? onboardingState}) = _$AppStateImpl;
+      final OnboardingState? onboardingState,
+      final HostState? hostState}) = _$AppStateImpl;
 
   factory _AppState.fromJson(Map<String, dynamic> json) =
       _$AppStateImpl.fromJson;
@@ -293,6 +329,8 @@ abstract class _AppState implements AppState {
   BottomNavState? get bottomNavState;
   @override
   OnboardingState? get onboardingState;
+  @override
+  HostState? get hostState;
 
   /// Create a copy of AppState
   /// with the given fields replaced by the non-null parameter values.
