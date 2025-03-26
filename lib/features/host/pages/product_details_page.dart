@@ -32,7 +32,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   bool isLoading = false;
   TextEditingController nameController = TextEditingController();
   bool nameValid = true;
-  ProductViewModel productController = ProductViewModel();
+  ProductController productController = ProductController();
 
   void onContinueClick() {
     setState(() {

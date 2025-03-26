@@ -42,7 +42,7 @@ class _ActivityDateSelectionPageState extends State<ActivityDateSelectionPage> {
   int? hourSelected;
   bool isLoading = false;
   int? minuteSelected;
-  ProductViewModel productController = ProductViewModel();
+  ProductController productController = ProductController();
   Map<String, TimeOfDay> startTimes = <String, TimeOfDay>{};
 
   @override

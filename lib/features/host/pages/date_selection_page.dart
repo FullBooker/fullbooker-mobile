@@ -31,7 +31,7 @@ class _DateSelectionPageState extends State<DateSelectionPage> {
   DateGroup? startDate;
   DateGroup? endDate;
   bool isLoading = false;
-  ProductViewModel productController = ProductViewModel();
+  ProductController productController = ProductController();
 
   void showSnackBar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(

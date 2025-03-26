@@ -10,8 +10,8 @@ import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
 
-class VerifyOTPAction extends ReduxAction<AppState> {
-  VerifyOTPAction({
+class FetchProductsAction extends ReduxAction<AppState> {
+  FetchProductsAction({
     this.onSuccess,
     this.onError,
     required this.client,
@@ -25,20 +25,19 @@ class VerifyOTPAction extends ReduxAction<AppState> {
   Future<AppState?> reduce() async {
     final String resetEmailAddress =
         state.onboardingState?.resetEmailAddress ?? '';
-    final String otp = state.onboardingState?.resetPasswordOTP ?? '';
 
-    final bool isOTPEmpty = otp.isEmpty || otp == UNKNOWN;
+    final bool isEmailEmpty =
+        resetEmailAddress.isEmpty || resetEmailAddress == UNKNOWN;
 
-    if (isOTPEmpty) {
-      return onError?.call(otpEmptyPrompt);
+    if (isEmailEmpty) {
+      return onError?.call(resetEmailPrompt);
     }
 
     final Map<String, String> data = <String, String>{
       'identifier': resetEmailAddress,
-      'otp': otp,
     };
 
-    final String endpoint = GetIt.I.get<AppConfig>().verifyOTPEndpoint;
+    final String endpoint = GetIt.I.get<AppConfig>().requestOTPEndpoint;
 
     final Response httpResponse = await client.callRESTAPI(
       endpoint: endpoint,
@@ -55,13 +54,7 @@ class VerifyOTPAction extends ReduxAction<AppState> {
       return onError?.call(error ?? defaultUserFriendlyMessage);
     }
 
-    final bool isOTPVerified = body.containsKey('detail');
-
-    if (!isOTPVerified) {
-      return onError?.call(errorVerifyingOTP);
-    }
-
-    onSuccess?.call();
+    // TODO(abiud): update state with the fetched products
 
     return state;
   }

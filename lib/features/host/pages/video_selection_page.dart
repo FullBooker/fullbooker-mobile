@@ -38,7 +38,7 @@ class _VideoSelectionPageState extends State<VideoSelectionPage> {
   List<File> videos = <File>[];
   int filesLoaded = 0;
   bool isLoading = false;
-  ProductViewModel productViewModel = ProductViewModel();
+  ProductController productViewModel = ProductController();
 
   Future<void> selectVideo() async {
     final FilePickerResult? result = await FilePicker.platform.pickFiles(

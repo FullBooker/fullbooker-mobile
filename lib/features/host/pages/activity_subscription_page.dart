@@ -53,7 +53,7 @@ class _ActivitySubscription extends State<ActivitySubscriptionPage> {
   Currency? selectedCurrency;
   TextEditingController priceController = TextEditingController();
   TextEditingController amountController = TextEditingController();
-  ProductViewModel productController = ProductViewModel();
+  ProductController productController = ProductController();
 
   void onContinueClick() {
     SessionPricing? subPricing;

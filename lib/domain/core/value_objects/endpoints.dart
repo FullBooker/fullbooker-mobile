@@ -1,10 +1,3 @@
-// Google sign in scopes
-
-final List<String> googleSignInScopes = <String>[
-  'email',
-  'https://www.googleapis.com/auth/contacts.readonly',
-];
-
 ///---- DEV Endpoints
 const String kDevAPIBaseURL = 'https://api.dev.fullbooker.co.ke';
 const String kDevLoginEndpoint = '$kDevAPIBaseURL/accounts/signin/';

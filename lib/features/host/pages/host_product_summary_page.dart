@@ -23,7 +23,7 @@ class HostProductSummaryPage extends StatefulWidget {
 
 class _HostProductSummaryPageState extends State<HostProductSummaryPage> {
   List<Product>? products;
-  ProductViewModel productsController = ProductViewModel();
+  ProductController productsController = ProductController();
 
   String? _errorMessage;
   bool _loading = true;
