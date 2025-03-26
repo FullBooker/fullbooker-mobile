@@ -2,6 +2,7 @@ import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:dartz/dartz.dart' as d;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
 import 'package:fullbooker/application/redux/actions/login_action.dart';
@@ -172,6 +173,7 @@ class LoginPageState extends State<LoginPage> {
                                   return PrimaryButton(
                                     onPressed: () {
                                       if (_formKey.currentState!.validate()) {
+                                        TextInput.finishAutofillContext();
                                         context.dispatch(
                                           LoginAction(
                                             onError: (String error) =>

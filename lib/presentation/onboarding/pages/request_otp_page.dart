@@ -2,6 +2,7 @@ import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
 import 'package:fullbooker/application/redux/actions/request_otp_action.dart';
@@ -124,6 +125,8 @@ class RequestOTPPageState extends State<RequestOTPPage> {
                     return PrimaryButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
+                          TextInput.finishAutofillContext();
+
                           context.dispatch(
                             RequestOtpAction(
                               onError: (String error) => showAlertDialog(
