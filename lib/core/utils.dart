@@ -4,12 +4,14 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fullbooker/config/environments.dart';
+import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/regexes.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
+import 'package:intl/intl.dart';
 import 'package:map_location_picker/map_location_picker.dart';
 
 String getFileExtension(String fileName) {
@@ -187,4 +189,77 @@ String getFullName(String? firstName, String? lastName) {
 /// otherwise returns false
 bool hasTokenExpired(DateTime expiresAt, DateTime now) {
   return expiresAt.difference(now).inMinutes < 10;
+}
+
+/// Generates a personalized greeting based on the current time and the provided [name].
+String greetings(String name, {DateTime? currentTime}) {
+  final DateTime time = currentTime ?? DateTime.now();
+
+  final int hour = time.hour;
+
+  String greeting;
+
+  if (hour < 12) {
+    greeting = 'Good morning';
+  } else if (hour < 18) {
+    greeting = 'Good afternoon';
+  } else {
+    greeting = 'Good evening';
+  }
+
+  return '$greeting, $name!';
+}
+
+/// A widget that displays a human-readable date string.
+///
+/// The [humanizeDate] function takes a date string and formats it into a human-readable format
+/// based on the provided options.
+///
+/// - [loadedDate]: The date string to be formatted.
+/// - [dateTextStyle]: Optional text style for the formatted date string.
+/// - [showTime]: If true, includes the time in the formatted string (default is false).
+/// - [showYear]: If true, includes the year in the formatted string (default is true).
+/// - [showMonthDate]: If true, includes the month and date in the formatted string (default is true).
+///
+/// Returns a [Text] widget with the formatted date string or an empty [SizedBox] if the date is unknown or empty.
+///
+/// Example usage:
+/// ```dart
+/// Widget example = humanizeDate(
+///   loadedDate: '2023-06-17T10:30:00',
+///   showTime: true,
+/// );
+/// ```
+Widget humanizeDate({
+  required String loadedDate,
+  TextStyle? dateTextStyle,
+  bool showTime = false,
+  bool showYear = true,
+  bool showMonthDate = true,
+}) {
+  if (loadedDate == UNKNOWN || loadedDate.isEmpty) {
+    return const SizedBox();
+  }
+
+  final DateTime parsedDate =
+      DateTime.tryParse(loadedDate)?.toLocal() ?? DateTime.now();
+
+  final List<String> formatStrings = <String>[];
+  if (showMonthDate) formatStrings.add('d MMM');
+  if (showYear) formatStrings.add('y');
+  if (showTime) formatStrings.add('h:mm a');
+
+  final DateFormat dateFormat = DateFormat(formatStrings.join(' '));
+  final String formattedDate = dateFormat.format(parsedDate);
+
+  return Text(
+    formattedDate,
+    style: dateTextStyle ??
+        TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.w200,
+          color: AppColors.bodyTextColor.withValues(alpha: .35),
+          fontStyle: FontStyle.italic,
+        ),
+  );
 }
