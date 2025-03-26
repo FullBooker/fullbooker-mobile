@@ -40,7 +40,7 @@ class VerifyOTPPageState extends State<VerifyOTPPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   late Timer timer;
-  int counter = 5;
+  int counter = kOTPRetryTimeout;
 
   void startTimer() {
     timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/i_custom_client.dart';
-import 'package:fullbooker/application/redux/states/auth_credentials.dart';
 import 'package:http/http.dart';
-import 'dart:convert';
 
 class CustomClient extends ICustomClient {
   CustomClient({
@@ -12,8 +10,11 @@ class CustomClient extends ICustomClient {
     this.authenticated = true,
     required this.refreshToken,
     required this.refreshTokenEndpoint,
-    Client? client,
-  }) : _client = client ?? Client() {
+    // Client? client,
+  })
+  // : _client = client ?? Client()
+
+  {
     super.accessToken = accessToken;
   }
 
@@ -23,7 +24,7 @@ class CustomClient extends ICustomClient {
   final String refreshToken;
   final String refreshTokenEndpoint;
 
-  final Client _client;
+  // final Client _client;
 
   @override
   Future<StreamedResponse> send(BaseRequest request) async {
@@ -70,30 +71,31 @@ class CustomClient extends ICustomClient {
     return request.send();
   }
 
-  Future<AuthCredentials?> _refreshUserToken(String refreshToken) async {
-    final String endpoint = super.endpoint;
-    final Map<String, dynamic> body = <String, dynamic>{
-      'refresh': refreshToken,
-    };
+  // TODO(abiud): restore this once the refresh token API is complete
+  // Future<AuthCredentials?> _refreshUserToken(String refreshToken) async {
+  //   final String endpoint = super.endpoint;
+  //   final Map<String, dynamic> body = <String, dynamic>{
+  //     'refresh': refreshToken,
+  //   };
 
-    final Map<String, String> headers = <String, String>{
-      'Accept': 'application/json',
-      'content-type': 'application/json',
-    };
+  //   final Map<String, String> headers = <String, String>{
+  //     'Accept': 'application/json',
+  //     'content-type': 'application/json',
+  //   };
 
-    final Response response = await _client.post(
-      Uri.parse(endpoint),
-      headers: headers,
-      body: json.encode(body),
-    );
+  //   final Response response = await _client.post(
+  //     Uri.parse(endpoint),
+  //     headers: headers,
+  //     body: json.encode(body),
+  //   );
 
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> data =
-          jsonDecode(response.body) as Map<String, dynamic>;
+  //   if (response.statusCode == 200) {
+  //     final Map<String, dynamic> data =
+  //         jsonDecode(response.body) as Map<String, dynamic>;
 
-      return AuthCredentials.fromJson(data);
-    }
+  //     return AuthCredentials.fromJson(data);
+  //   }
 
-    return null;
-  }
+  //   return null;
+  // }
 }
