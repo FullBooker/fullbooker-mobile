@@ -16,6 +16,7 @@ class AppConfig {
     required this.verifyOTPEndpoint,
     required this.changePasswordEndpoint,
     required this.getProductsEndpoint,
+    required this.refreshTokenEndpoint,
   });
 
   /// The context the app is running in
@@ -40,6 +41,7 @@ class AppConfig {
   final String requestOTPEndpoint;
   final String verifyOTPEndpoint;
   final String changePasswordEndpoint;
+  final String refreshTokenEndpoint;
 
   final String getProductsEndpoint;
 }
@@ -57,6 +59,7 @@ final AppConfig devAppConfig = AppConfig(
   verifyOTPEndpoint: kDevVerifyOTPEndpoint,
   changePasswordEndpoint: kDevResetPasswordEndpoint,
   getProductsEndpoint: kDevProductsEndpoint,
+  refreshTokenEndpoint: kDevRefreshTokenEndpoint,
 );
 
 final AppConfig prodAppConfig = AppConfig(
@@ -72,6 +75,7 @@ final AppConfig prodAppConfig = AppConfig(
   verifyOTPEndpoint: kProdVerifyOTPEndpoint,
   changePasswordEndpoint: kProdResetPasswordEndpoint,
   getProductsEndpoint: kProdProductsEndpoint,
+  refreshTokenEndpoint: kProdRefreshTokenEndpoint,
 );
 
 final AppConfig testAppConfig = AppConfig(
@@ -87,4 +91,5 @@ final AppConfig testAppConfig = AppConfig(
   verifyOTPEndpoint: kTestVerifyOTPEndpoint,
   changePasswordEndpoint: kTestResetPasswordEndpoint,
   getProductsEndpoint: kTestProductsEndpoint,
+  refreshTokenEndpoint: kTestRefreshTokenEndpoint,
 );

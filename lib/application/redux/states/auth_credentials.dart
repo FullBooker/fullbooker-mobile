@@ -11,7 +11,6 @@ class AuthCredentials with _$AuthCredentials {
     @Default(UNKNOWN) @JsonKey(name: 'access') String accessToken,
     @Default(UNKNOWN) @JsonKey(name: 'refresh') String refreshToken,
     @Default(UNKNOWN) @JsonKey(name: 'expires_at') String expiresAt,
-    @Default(kDefaultTokenExpiry) @JsonKey(name: 'expires_in') String expiresIn,
   }) = _AuthCredentials;
 
   factory AuthCredentials.initial() => AuthCredentials();

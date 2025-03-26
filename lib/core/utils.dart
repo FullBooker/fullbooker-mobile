@@ -181,3 +181,10 @@ String getFullName(String? firstName, String? lastName) {
 
   return '$fName $lName';
 }
+
+/// Checks if token has expired based on expiry date
+/// returns true if token expires in 10 minutes or less
+/// otherwise returns false
+bool hasTokenExpired(DateTime expiresAt, DateTime now) {
+  return expiresAt.difference(now).inMinutes < 10;
+}
