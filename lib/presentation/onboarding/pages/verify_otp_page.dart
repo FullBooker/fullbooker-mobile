@@ -6,6 +6,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
+import 'package:fullbooker/application/redux/actions/request_otp_action.dart';
 import 'package:fullbooker/application/redux/actions/update_onboarding_state_action.dart';
 import 'package:fullbooker/application/redux/actions/verify_otp_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
@@ -36,7 +37,7 @@ class VerifyOTPPageState extends State<VerifyOTPPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   late Timer timer;
-  int counter = kOTPRetryTimeout;
+  int counter = 5;
 
   void startTimer() {
     timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
@@ -54,22 +55,6 @@ class VerifyOTPPageState extends State<VerifyOTPPage> {
     final int minutes = counter ~/ 60;
     final int seconds = counter % 60;
     return '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
-  }
-
-  // TODO(abiud): implement resent OTP code as an action
-  void resendOTP(BuildContext context) {
-    // final Future<String?> errFuture =
-    //     loginController.resetPassword(phoneNumber);
-    // setState(() {
-    //   isLoading = true;
-    //   errorMessage = '';
-    // });
-    // errFuture.then((String? err) {
-    //   setState(() {
-    //     isLoading = false;
-    //     if (err != null) errorMessage = err;
-    //   });
-    // });
   }
 
   @override
@@ -173,12 +158,39 @@ class VerifyOTPPageState extends State<VerifyOTPPage> {
                                 ),
                               )
                             else
-                              SecondaryButton(
-                                child: d.right(resentOTPString),
-                                onPressed: () {
-                                  resendOTP(context);
+                              StoreConnector<AppState, ResetPasswordViewModel>(
+                                converter: (Store<AppState> store) =>
+                                    ResetPasswordViewModel.fromState(
+                                  store.state,
+                                ),
+                                builder: (
+                                  BuildContext context,
+                                  ResetPasswordViewModel vm,
+                                ) {
+                                  if (context.isWaiting(RequestOtpAction)) {
+                                    return AppLoading();
+                                  }
+
+                                  return Column(
+                                    children: <Widget>[
+                                      SecondaryButton(
+                                        child: d.right(resentOTPString),
+                                        onPressed: () {
+                                          context.dispatch(
+                                            RequestOtpAction(
+                                              onError: (String error) {},
+                                              onSuccess: () {},
+                                              client:
+                                                  AppWrapperBase.of(context)!
+                                                      .customClient,
+                                            ),
+                                          );
+                                        },
+                                        fillColor: Colors.transparent,
+                                      ),
+                                    ],
+                                  );
                                 },
-                                fillColor: Colors.white,
                               ),
                             if (showDebugOTP)
                               Text(

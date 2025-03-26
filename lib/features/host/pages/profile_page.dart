@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fullbooker/application/redux/actions/logout_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/profile_view_model.dart';
+import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
@@ -102,7 +103,12 @@ class _ProfilePageState extends State<ProfilePage> {
                       SecondaryButton(
                         onPressed: () async {
                           await context.dispatch(
-                            LogoutAction(),
+                            LogoutAction(
+                              onDone: () => context.router.pushAndPopUntil(
+                                const LoginRoute(),
+                                predicate: (Route<dynamic> route) => false,
+                              ),
+                            ),
                           );
                         },
                         child: d.right(logoutString),

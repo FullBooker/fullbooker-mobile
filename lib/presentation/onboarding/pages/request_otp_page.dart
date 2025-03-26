@@ -70,31 +70,36 @@ class RequestOTPPageState extends State<RequestOTPPage> {
                         ),
                       ),
                       largeVerticalSizedBox,
-                      Form(
-                        key: _formKey,
-                        child: Column(
-                          spacing: 12,
-                          children: <Widget>[
-                            // Email input
-                            CustomTextInput(
-                              hintText: emailAddressHint,
-                              labelText: emailAddressString,
-                              autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
-                              validator: (String? email) =>
-                                  validateEmail(email),
-                              onChanged: (String email) {
-                                context.dispatch(
-                                  UpdateOnboardingStateAction(
-                                    resetEmailAddress: email,
-                                  ),
-                                );
-                              },
-                              // hintText: newTransactionAmountHint,
-                              keyboardType: TextInputType.emailAddress,
-                              prefixIconData: HeroIcons.envelope,
-                            ),
-                          ],
+                      AutofillGroup(
+                        child: Form(
+                          key: _formKey,
+                          child: Column(
+                            spacing: 12,
+                            children: <Widget>[
+                              // Email input
+                              CustomTextInput(
+                                hintText: emailAddressHint,
+                                labelText: emailAddressString,
+                                autofillHints: const <String>[
+                                  AutofillHints.email,
+                                ],
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                validator: (String? email) =>
+                                    validateEmail(email),
+                                onChanged: (String email) {
+                                  context.dispatch(
+                                    UpdateOnboardingStateAction(
+                                      resetEmailAddress: email,
+                                    ),
+                                  );
+                                },
+                                // hintText: newTransactionAmountHint,
+                                keyboardType: TextInputType.emailAddress,
+                                prefixIconData: HeroIcons.envelope,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],
