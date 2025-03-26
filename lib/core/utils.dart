@@ -4,11 +4,9 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fullbooker/config/environments.dart';
-import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
-import 'package:fullbooker/domain/core/value_objects/endpoints.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/regexes.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
@@ -169,48 +167,6 @@ AppConfig getAppConfig(String env) {
       throw ArgumentError('Invalid environment: $env. Use DEV or PROD.');
   }
 }
-
-final AppConfig devAppConfig = AppConfig(
-  appContext: AppContext.dev,
-  databaseName: kDevDatabaseName,
-  sentryDsn: '',
-  environment: AppEnvironment.dev.name,
-  applicationName: kDevAppName,
-  loginEndpoint: kDevLoginEndpoint,
-  createAccountEndpoint: kDevCreateAccountEndpoint,
-  googleSignInEndpoint: kDevGoogleSignInEndpoint,
-  requestOTPEndpoint: kDevRequestOTPEndpoint,
-  verifyOTPEndpoint: kDevVerifyOTPEndpoint,
-  changePasswordEndpoint: kDevResetPasswordEndpoint,
-);
-
-final AppConfig prodAppConfig = AppConfig(
-  appContext: AppContext.prod,
-  databaseName: kProdDatabaseName,
-  sentryDsn: '',
-  environment: AppEnvironment.prod.name,
-  applicationName: kAppName,
-  loginEndpoint: kProdLoginEndpoint,
-  createAccountEndpoint: kProdCreateAccountEndpoint,
-  googleSignInEndpoint: kProdGoogleSignInEndpoint,
-  requestOTPEndpoint: kProdRequestOTPEndpoint,
-  verifyOTPEndpoint: kProdVerifyOTPEndpoint,
-  changePasswordEndpoint: kProdResetPasswordEndpoint,
-);
-
-final AppConfig testAppConfig = AppConfig(
-  appContext: AppContext.test,
-  databaseName: kDevDatabaseName,
-  sentryDsn: '',
-  environment: AppEnvironment.dev.name,
-  applicationName: kDevAppName,
-  loginEndpoint: kTestLoginEndpoint,
-  createAccountEndpoint: kTestCreateAccountEndpoint,
-  googleSignInEndpoint: kTestGoogleSignInEndpoint,
-  requestOTPEndpoint: kTestRequestOTPEndpoint,
-  verifyOTPEndpoint: kTestVerifyOTPEndpoint,
-  changePasswordEndpoint: kTestResetPasswordEndpoint,
-);
 
 String getFullName(String? firstName, String? lastName) {
   final String fName = firstName?.trim() ?? '';

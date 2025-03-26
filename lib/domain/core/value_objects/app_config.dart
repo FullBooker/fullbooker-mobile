@@ -1,3 +1,5 @@
+import 'package:fullbooker/core/common/constants.dart';
+import 'package:fullbooker/domain/core/value_objects/endpoints.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 
 class AppConfig {
@@ -13,6 +15,7 @@ class AppConfig {
     required this.requestOTPEndpoint,
     required this.verifyOTPEndpoint,
     required this.changePasswordEndpoint,
+    required this.getProductsEndpoint,
   });
 
   /// The context the app is running in
@@ -38,6 +41,50 @@ class AppConfig {
   final String verifyOTPEndpoint;
   final String changePasswordEndpoint;
 
-  // ---- Implemented
-  // TODO(abiud): add the rest of the endpoints
+  final String getProductsEndpoint;
 }
+
+final AppConfig devAppConfig = AppConfig(
+  appContext: AppContext.dev,
+  databaseName: kDevDatabaseName,
+  sentryDsn: '',
+  environment: AppEnvironment.dev.name,
+  applicationName: kDevAppName,
+  loginEndpoint: kDevLoginEndpoint,
+  createAccountEndpoint: kDevCreateAccountEndpoint,
+  googleSignInEndpoint: kDevGoogleSignInEndpoint,
+  requestOTPEndpoint: kDevRequestOTPEndpoint,
+  verifyOTPEndpoint: kDevVerifyOTPEndpoint,
+  changePasswordEndpoint: kDevResetPasswordEndpoint,
+  getProductsEndpoint: kDevProductsEndpoint,
+);
+
+final AppConfig prodAppConfig = AppConfig(
+  appContext: AppContext.prod,
+  databaseName: kProdDatabaseName,
+  sentryDsn: '',
+  environment: AppEnvironment.prod.name,
+  applicationName: kAppName,
+  loginEndpoint: kProdLoginEndpoint,
+  createAccountEndpoint: kProdCreateAccountEndpoint,
+  googleSignInEndpoint: kProdGoogleSignInEndpoint,
+  requestOTPEndpoint: kProdRequestOTPEndpoint,
+  verifyOTPEndpoint: kProdVerifyOTPEndpoint,
+  changePasswordEndpoint: kProdResetPasswordEndpoint,
+  getProductsEndpoint: kProdProductsEndpoint,
+);
+
+final AppConfig testAppConfig = AppConfig(
+  appContext: AppContext.test,
+  databaseName: kDevDatabaseName,
+  sentryDsn: '',
+  environment: AppEnvironment.dev.name,
+  applicationName: kDevAppName,
+  loginEndpoint: kTestLoginEndpoint,
+  createAccountEndpoint: kTestCreateAccountEndpoint,
+  googleSignInEndpoint: kTestGoogleSignInEndpoint,
+  requestOTPEndpoint: kTestRequestOTPEndpoint,
+  verifyOTPEndpoint: kTestVerifyOTPEndpoint,
+  changePasswordEndpoint: kTestResetPasswordEndpoint,
+  getProductsEndpoint: kTestProductsEndpoint,
+);

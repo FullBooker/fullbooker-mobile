@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/core/services/i_custom_client.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
-import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
@@ -23,13 +22,12 @@ class FetchProductsAction extends ReduxAction<AppState> {
 
   @override
   Future<AppState?> reduce() async {
-    
-    
-    final Map<String, String> data = <String, String>{
-      'identifier': resetEmailAddress,
+    final Map<String, dynamic> data = <String, dynamic>{
+      'page': 1,
+      'page_size': 10,
     };
 
-    final String endpoint = GetIt.I.get<AppConfig>().requestOTPEndpoint;
+    final String endpoint = GetIt.I.get<AppConfig>().getProductsEndpoint;
 
     final Response httpResponse = await client.callRESTAPI(
       endpoint: endpoint,

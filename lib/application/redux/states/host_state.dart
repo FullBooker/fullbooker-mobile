@@ -1,4 +1,5 @@
 // Package imports:
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:fullbooker/domain/core/entities/host_product_response.dart';
 
