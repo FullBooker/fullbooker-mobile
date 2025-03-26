@@ -11,3 +11,9 @@ enum ProductSteps { Overview, Products, Sales, Expenses, Goals }
 enum AppContext { dev, prod, test }
 
 enum RestAPIMethods { POST, GET, PUT, PATCH }
+
+enum AnalyticsEventType {
+  NAVIGATION,
+  AUTH,
+  ONBOARDING,
+}

@@ -3,6 +3,7 @@ import 'dart:async';
 
 // Package imports:
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:fullbooker/shared/entities/enums.dart';
 
 class AnalyticsService {
   final FirebaseAnalytics _analytics = FirebaseAnalytics.instance;
@@ -30,6 +31,9 @@ class AnalyticsService {
   Future<void> logEvent({
     required String name,
     Map<String, String>? parameters,
+
+    /// The type of the event being collected
+    required AnalyticsEventType eventType,
   }) async {
     await _analytics.logEvent(name: name, parameters: parameters);
   }

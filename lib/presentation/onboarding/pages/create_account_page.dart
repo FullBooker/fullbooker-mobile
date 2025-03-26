@@ -3,6 +3,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fullbooker/application/core/services/analytics_service.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
 import 'package:fullbooker/application/redux/actions/create_account_action.dart';
 import 'package:fullbooker/application/redux/actions/update_onboarding_state_action.dart';
@@ -11,8 +12,10 @@ import 'package:fullbooker/application/redux/view_models/create_account_view_mod
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/utils.dart';
+import 'package:fullbooker/domain/core/value_objects/analytics_events.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
+import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/custom_text_input.dart';
@@ -206,15 +209,22 @@ class CreateAccountPageState extends State<CreateAccountPage> {
                                     assetPath: loginCredentialsSVGPath,
                                     description: error,
                                   ),
-                                  onSuccess: () => showAlertDialog(
-                                    context: context,
-                                    assetPath: loginCredentialsSVGPath,
-                                    title: accountCreated,
-                                    description: accountCreatedCopy,
-                                    confirmText: continueString,
-                                    onConfirm: () => context.router
-                                        .navigate(HostingHomeRoute()),
-                                  ),
+                                  onSuccess: () async {
+                                    showAlertDialog(
+                                      context: context,
+                                      assetPath: loginCredentialsSVGPath,
+                                      title: accountCreated,
+                                      description: accountCreatedCopy,
+                                      confirmText: continueString,
+                                      onConfirm: () => context.router
+                                          .navigate(HostingHomeRoute()),
+                                    );
+
+                                    await AnalyticsService().logEvent(
+                                      name: createAccountEvent,
+                                      eventType: AnalyticsEventType.ONBOARDING,
+                                    );
+                                  },
                                   client:
                                       AppWrapperBase.of(context)!.customClient,
                                 ),
