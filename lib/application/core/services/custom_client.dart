@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/i_custom_client.dart';
 import 'package:fullbooker/application/redux/states/auth_credentials.dart';
-import 'package:fullbooker/core/utils.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
-
-import 'package:fullbooker/application/redux/actions/update_auth_state_action.dart';
-import 'package:fullbooker/application/redux/states/app_state.dart';
-import 'package:async_redux/async_redux.dart';
 
 class CustomClient extends ICustomClient {
   CustomClient({
@@ -22,50 +17,56 @@ class CustomClient extends ICustomClient {
     super.accessToken = accessToken;
   }
 
-  final Map<String, String>? headers;
-  final BuildContext context;
   final bool authenticated;
-  final Client _client;
+  final BuildContext context;
+  final Map<String, String>? headers;
   final String refreshToken;
   final String refreshTokenEndpoint;
+
+  final Client _client;
 
   @override
   Future<StreamedResponse> send(BaseRequest request) async {
     // Skip auth check for unauthenticated requests
-    if (authenticated) {
-      final AppState store = StoreProvider.state<AppState>(context);
-      final AuthCredentials? credentials = store.authState?.authCredentials;
-      final String? expiry = credentials?.expiresAt;
 
-      final DateTime expiryDate = expiry != null
-          ? DateTime.tryParse(expiry) ?? DateTime.now()
-          : DateTime.now();
+    // TODO(abiud): reenable refresh token checks once the API has been implemented
+    // if (authenticated) {
+    // final AppState store = StoreProvider.state<AppState>(context);
+    // final AuthCredentials? credentials = store.authState?.authCredentials;
+    // final String? expiry = credentials?.expiresAt;
 
-      final bool shouldRefreshToken =
-          (credentials?.accessToken.isEmpty ?? true) ||
-              hasTokenExpired(expiryDate, DateTime.now());
+    // final DateTime expiryDate = expiry != null
+    //     ? DateTime.tryParse(expiry) ?? DateTime.now()
+    //     : DateTime.now();
 
-      if (shouldRefreshToken &&
-          (credentials?.refreshToken.isNotEmpty ?? false)) {
-        final AuthCredentials? refreshedCredentials =
-            await _refreshUserToken(credentials!.refreshToken);
-        if (refreshedCredentials != null) {
-          StoreProvider.dispatch<AppState>(
-            context,
-            UpdateAuthStateAction(
-              accessToken: refreshedCredentials.accessToken,
-              refreshToken: refreshedCredentials.refreshToken,
-              expiresAt: refreshedCredentials.expiresAt,
-            ),
-          );
+    // final bool shouldRefreshToken =
+    //     (credentials?.accessToken.isEmpty ?? true) ||
+    //         hasTokenExpired(expiryDate, DateTime.now());
 
-          super.accessToken = refreshedCredentials.accessToken;
-        }
-      }
-    }
+    // if (shouldRefreshToken &&
+    //     (credentials?.refreshToken.isNotEmpty ?? false)) {
+    //   final AuthCredentials? refreshedCredentials =
+    //       await _refreshUserToken(credentials!.refreshToken);
+    //   if (refreshedCredentials != null) {
+    //     StoreProvider.dispatch<AppState>(
+    //       context,
+    //       UpdateAuthStateAction(
+    //         accessToken: refreshedCredentials.accessToken,
+    //         refreshToken: refreshedCredentials.refreshToken,
+    //         expiresAt: refreshedCredentials.expiresAt,
+    //       ),
+    //     );
+
+    //     super.accessToken = refreshedCredentials.accessToken;
+    //   }
+    // }
+    // }
 
     // Merge base headers with optional overrides
-    request.headers.addAll(buildHeaders(customHeaders: headers));
+    // request.headers.addAll(
+    //   buildHeaders(customHeaders: headers),
+    // );
+
     return request.send();
   }
 

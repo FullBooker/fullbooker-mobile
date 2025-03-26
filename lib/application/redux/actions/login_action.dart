@@ -44,6 +44,7 @@ class LoginAction extends ReduxAction<AppState> {
     final String loginEndpoint = GetIt.I.get<AppConfig>().loginEndpoint;
 
     final Response httpResponse = await client.callRESTAPI(
+      authenticated: false,
       endpoint: loginEndpoint,
       method: RestAPIMethods.POST.name.toUpperCase(),
       variables: data,
