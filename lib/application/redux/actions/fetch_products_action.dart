@@ -23,16 +23,8 @@ class FetchProductsAction extends ReduxAction<AppState> {
 
   @override
   Future<AppState?> reduce() async {
-    final String resetEmailAddress =
-        state.onboardingState?.resetEmailAddress ?? '';
-
-    final bool isEmailEmpty =
-        resetEmailAddress.isEmpty || resetEmailAddress == UNKNOWN;
-
-    if (isEmailEmpty) {
-      return onError?.call(resetEmailPrompt);
-    }
-
+    
+    
     final Map<String, String> data = <String, String>{
       'identifier': resetEmailAddress,
     };
