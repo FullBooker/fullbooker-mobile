@@ -7,6 +7,8 @@ const String kDevRequestOTPEndpoint = '$kDevAPIBaseURL/accounts/otp/request';
 const String kDevVerifyOTPEndpoint = '$kDevAPIBaseURL/accounts/otp/verify';
 const String kDevResetPasswordEndpoint =
     '$kDevAPIBaseURL/accounts/password/reset';
+const String kDevRefreshTokenEndpoint =
+    '$kDevAPIBaseURL/accounts/token/refresh';
 const String kDevProductsEndpoint = '$kDevAPIBaseURL/products/';
 // ---- Implemented
 const String kDevHostsEndpoint = '$kDevAPIBaseURL/hosts/';
@@ -24,6 +26,8 @@ const String kProdRequestOTPEndpoint = '$kProdAPIBaseURL/accounts/otp/request';
 const String kProdVerifyOTPEndpoint = '$kProdAPIBaseURL/accounts/otp/verify';
 const String kProdResetPasswordEndpoint =
     '$kProdAPIBaseURL/accounts/password/reset';
+const String kProdRefreshTokenEndpoint =
+    '$kProdAPIBaseURL/accounts/token/refresh';
 const String kProdProductsEndpoint = '$kProdAPIBaseURL/products/';
 // ---- Implemented
 const String kProdHostsEndpoint = '$kProdAPIBaseURL/hosts/';
@@ -41,6 +45,8 @@ const String kTestRequestOTPEndpoint = '$kTestAPIBaseURL/accounts/otp/request';
 const String kTestVerifyOTPEndpoint = '$kTestAPIBaseURL/accounts/otp/verify';
 const String kTestResetPasswordEndpoint =
     '$kTestAPIBaseURL/accounts/password/reset';
+const String kTestRefreshTokenEndpoint =
+    '$kTestAPIBaseURL/accounts/token/refresh';
 const String kTestProductsEndpoint = '$kTestAPIBaseURL/products/';
 // ---- Implemented
 const String kTestHostsEndpoint = '$kTestAPIBaseURL/hosts/';

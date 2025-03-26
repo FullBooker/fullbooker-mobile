@@ -5,7 +5,9 @@ import 'package:fullbooker/application/core/services/custom_client.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/app_entry_point_view_model.dart';
 import 'package:fullbooker/core/common/constants.dart';
+import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/fullbooker_app_widget.dart';
+import 'package:get_it/get_it.dart';
 
 class AppEntryPoint extends StatelessWidget {
   const AppEntryPoint({
@@ -28,10 +30,18 @@ class AppEntryPoint extends StatelessWidget {
         vm: () => AppEntryPointViewModelFactory(),
         builder: (BuildContext context, AppEntryPointViewModel vm) {
           final String accessToken = vm.accessToken ?? UNKNOWN;
+          final String refreshToken = vm.refreshToken ?? UNKNOWN;
+          final String refreshTokenEndpoint =
+              GetIt.I.get<AppConfig>().refreshTokenEndpoint;
 
           return AppWrapper(
             appName: appName,
-            customClient: CustomClient(accessToken: accessToken),
+            customClient: CustomClient(
+              accessToken: accessToken,
+              context: context,
+              refreshToken: refreshToken,
+              refreshTokenEndpoint: refreshTokenEndpoint,
+            ),
             child: FullbookerAppWidget(appStore: appStore),
           );
         },

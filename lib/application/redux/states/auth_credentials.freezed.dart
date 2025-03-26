@@ -26,8 +26,6 @@ mixin _$AuthCredentials {
   String get refreshToken => throw _privateConstructorUsedError;
   @JsonKey(name: 'expires_at')
   String get expiresAt => throw _privateConstructorUsedError;
-  @JsonKey(name: 'expires_in')
-  String get expiresIn => throw _privateConstructorUsedError;
 
   /// Serializes this AuthCredentials to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -48,8 +46,7 @@ abstract class $AuthCredentialsCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: 'access') String accessToken,
       @JsonKey(name: 'refresh') String refreshToken,
-      @JsonKey(name: 'expires_at') String expiresAt,
-      @JsonKey(name: 'expires_in') String expiresIn});
+      @JsonKey(name: 'expires_at') String expiresAt});
 }
 
 /// @nodoc
@@ -70,7 +67,6 @@ class _$AuthCredentialsCopyWithImpl<$Res, $Val extends AuthCredentials>
     Object? accessToken = null,
     Object? refreshToken = null,
     Object? expiresAt = null,
-    Object? expiresIn = null,
   }) {
     return _then(_value.copyWith(
       accessToken: null == accessToken
@@ -84,10 +80,6 @@ class _$AuthCredentialsCopyWithImpl<$Res, $Val extends AuthCredentials>
       expiresAt: null == expiresAt
           ? _value.expiresAt
           : expiresAt // ignore: cast_nullable_to_non_nullable
-              as String,
-      expiresIn: null == expiresIn
-          ? _value.expiresIn
-          : expiresIn // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -104,8 +96,7 @@ abstract class _$$AuthCredentialsImplCopyWith<$Res>
   $Res call(
       {@JsonKey(name: 'access') String accessToken,
       @JsonKey(name: 'refresh') String refreshToken,
-      @JsonKey(name: 'expires_at') String expiresAt,
-      @JsonKey(name: 'expires_in') String expiresIn});
+      @JsonKey(name: 'expires_at') String expiresAt});
 }
 
 /// @nodoc
@@ -124,7 +115,6 @@ class __$$AuthCredentialsImplCopyWithImpl<$Res>
     Object? accessToken = null,
     Object? refreshToken = null,
     Object? expiresAt = null,
-    Object? expiresIn = null,
   }) {
     return _then(_$AuthCredentialsImpl(
       accessToken: null == accessToken
@@ -139,10 +129,6 @@ class __$$AuthCredentialsImplCopyWithImpl<$Res>
           ? _value.expiresAt
           : expiresAt // ignore: cast_nullable_to_non_nullable
               as String,
-      expiresIn: null == expiresIn
-          ? _value.expiresIn
-          : expiresIn // ignore: cast_nullable_to_non_nullable
-              as String,
     ));
   }
 }
@@ -154,8 +140,7 @@ class _$AuthCredentialsImpl implements _AuthCredentials {
   _$AuthCredentialsImpl(
       {@JsonKey(name: 'access') this.accessToken = UNKNOWN,
       @JsonKey(name: 'refresh') this.refreshToken = UNKNOWN,
-      @JsonKey(name: 'expires_at') this.expiresAt = UNKNOWN,
-      @JsonKey(name: 'expires_in') this.expiresIn = kDefaultTokenExpiry});
+      @JsonKey(name: 'expires_at') this.expiresAt = UNKNOWN});
 
   factory _$AuthCredentialsImpl.fromJson(Map<String, dynamic> json) =>
       _$$AuthCredentialsImplFromJson(json);
@@ -169,13 +154,10 @@ class _$AuthCredentialsImpl implements _AuthCredentials {
   @override
   @JsonKey(name: 'expires_at')
   final String expiresAt;
-  @override
-  @JsonKey(name: 'expires_in')
-  final String expiresIn;
 
   @override
   String toString() {
-    return 'AuthCredentials(accessToken: $accessToken, refreshToken: $refreshToken, expiresAt: $expiresAt, expiresIn: $expiresIn)';
+    return 'AuthCredentials(accessToken: $accessToken, refreshToken: $refreshToken, expiresAt: $expiresAt)';
   }
 
   @override
@@ -188,15 +170,13 @@ class _$AuthCredentialsImpl implements _AuthCredentials {
             (identical(other.refreshToken, refreshToken) ||
                 other.refreshToken == refreshToken) &&
             (identical(other.expiresAt, expiresAt) ||
-                other.expiresAt == expiresAt) &&
-            (identical(other.expiresIn, expiresIn) ||
-                other.expiresIn == expiresIn));
+                other.expiresAt == expiresAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, accessToken, refreshToken, expiresAt, expiresIn);
+      Object.hash(runtimeType, accessToken, refreshToken, expiresAt);
 
   /// Create a copy of AuthCredentials
   /// with the given fields replaced by the non-null parameter values.
@@ -219,8 +199,7 @@ abstract class _AuthCredentials implements AuthCredentials {
   factory _AuthCredentials(
           {@JsonKey(name: 'access') final String accessToken,
           @JsonKey(name: 'refresh') final String refreshToken,
-          @JsonKey(name: 'expires_at') final String expiresAt,
-          @JsonKey(name: 'expires_in') final String expiresIn}) =
+          @JsonKey(name: 'expires_at') final String expiresAt}) =
       _$AuthCredentialsImpl;
 
   factory _AuthCredentials.fromJson(Map<String, dynamic> json) =
@@ -235,9 +214,6 @@ abstract class _AuthCredentials implements AuthCredentials {
   @override
   @JsonKey(name: 'expires_at')
   String get expiresAt;
-  @override
-  @JsonKey(name: 'expires_in')
-  String get expiresIn;
 
   /// Create a copy of AuthCredentials
   /// with the given fields replaced by the non-null parameter values.

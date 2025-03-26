@@ -1,114 +1,98 @@
+import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/i_custom_client.dart';
+import 'package:fullbooker/application/redux/states/auth_credentials.dart';
+import 'package:fullbooker/core/utils.dart';
 import 'package:http/http.dart';
+import 'dart:convert';
+
+import 'package:fullbooker/application/redux/actions/update_auth_state_action.dart';
+import 'package:fullbooker/application/redux/states/app_state.dart';
+import 'package:async_redux/async_redux.dart';
 
 class CustomClient extends ICustomClient {
   CustomClient({
+    required this.context,
     required String accessToken,
     this.headers,
-  }) {
-    super.idToken = accessToken;
+    this.authenticated = true,
+    required this.refreshToken,
+    required this.refreshTokenEndpoint,
+    Client? client,
+  }) : _client = client ?? Client() {
+    super.accessToken = accessToken;
   }
 
   final Map<String, String>? headers;
-  // final String refreshToken;
-  // final String refreshTokenEndpoint;
-
-  // final Client _client;
+  final BuildContext context;
+  final bool authenticated;
+  final Client _client;
+  final String refreshToken;
+  final String refreshTokenEndpoint;
 
   @override
   Future<StreamedResponse> send(BaseRequest request) async {
-    // final String requestUrl = request.url.toString();
+    // Skip auth check for unauthenticated requests
+    if (authenticated) {
+      final AppState store = StoreProvider.state<AppState>(context);
+      final AuthCredentials? credentials = store.authState?.authCredentials;
+      final String? expiry = credentials?.expiresAt;
 
-    //   request.headers.addAll(<String, String>{...?headers});
-    //   return request.send();
-    // }
+      final DateTime expiryDate = expiry != null
+          ? DateTime.tryParse(expiry) ?? DateTime.now()
+          : DateTime.now();
 
-    request.headers.addAll(<String, String>{...?headers});
+      final bool shouldRefreshToken =
+          (credentials?.accessToken.isEmpty ?? true) ||
+              hasTokenExpired(expiryDate, DateTime.now());
 
-    // final String? expiryDateString = StoreProvider.state<AppState>(context)
-    //     .authState
-    //     ?.authCredentials
-    //     ?.expiresAt;
+      if (shouldRefreshToken &&
+          (credentials?.refreshToken.isNotEmpty ?? false)) {
+        final AuthCredentials? refreshedCredentials =
+            await _refreshUserToken(credentials!.refreshToken);
+        if (refreshedCredentials != null) {
+          StoreProvider.dispatch<AppState>(
+            context,
+            UpdateAuthStateAction(
+              accessToken: refreshedCredentials.accessToken,
+              refreshToken: refreshedCredentials.refreshToken,
+              expiresAt: refreshedCredentials.expiresAt,
+            ),
+          );
 
-    // Safely parse the expiry date, defaulting to DateTime.now() if invalid or empty
-    // final DateTime expiryDateTime = ((expiryDateString?.isNotEmpty ?? false)
-    //         ? DateTime.tryParse(expiryDateString!)
-    //         : null) ??
-    //     DateTime.now();
+          super.accessToken = refreshedCredentials.accessToken;
+        }
+      }
+    }
 
-    // // Determine if the token should be refreshed
-    // final bool shouldRefreshToken = isSignedIn &&
-    //     (hasTokenExpired(expiryDateTime, DateTime.now()) || idToken.isEmpty);
-
-    // // Return the request if no refresh is needed
-    // if (!shouldRefreshToken) return request.send();
-
-    // AuthCredentials? authCredentials = await refreshUserToken();
-
-    // if (authCredentials?.idToken != null &&
-    //     authCredentials?.expiresIn != null &&
-    //     authCredentials?.refreshToken != null) {
-    //   request.headers.addAll(<String, String>{
-    //     'Authorization': 'Bearer ${authCredentials?.idToken}',
-    //   });
-
-    //   final DateTime expiryTimestamp =
-    //       getTokenExpiryTimestamp(authCredentials?.expiresIn);
-
-    //   authCredentials = authCredentials?.copyWith(
-    //     tokenExpiryTimestamp: expiryTimestamp.toIso8601String(),
-    //   );
-
-    //   context.dispatch(
-    //     UpdateAuthStateAction(
-    //       idToken: authCredentials?.idToken,
-    //       refreshToken: authCredentials?.refreshToken,
-    //       expiresIn: authCredentials?.expiresIn,
-    //       tokenExpiryTimestamp: authCredentials?.tokenExpiryTimestamp,
-    //     ),
-    //   );
-    // }
-
+    // Merge base headers with optional overrides
+    request.headers.addAll(buildHeaders(customHeaders: headers));
     return request.send();
   }
 
-  // Future<AuthCredentials?> refreshUserToken() async {
-  //   final Map<String, dynamic> body = <String, dynamic>{
-  //     'query': refreshTokenMutation,
-  //     'variables': <String, String>{'refreshToken': refreshToken},
-  //   };
-  //   final Map<String, String> headers = <String, String>{
-  //     'Accept': 'application/json',
-  //     'content-type': 'application/json',
-  //     'X-Variant': appVariant,
-  //   };
-  //   final Response refreshTokenResponse = await _client.post(
-  //     Uri.parse(endpoint),
-  //     headers: headers,
-  //     body: json.encode(body),
-  //   );
+  Future<AuthCredentials?> _refreshUserToken(String refreshToken) async {
+    final String endpoint = super.endpoint;
+    final Map<String, dynamic> body = <String, dynamic>{
+      'refresh': refreshToken,
+    };
 
-  //   AuthCredentials? credentials =
-  //       StoreProvider.state<AppState>(context).authState?.authCredentials;
+    final Map<String, String> headers = <String, String>{
+      'Accept': 'application/json',
+      'content-type': 'application/json',
+    };
 
-  //   if (refreshTokenResponse.statusCode == 200) {
-  //     final Map<String, dynamic> body =
-  //         jsonDecode(refreshTokenResponse.body) as Map<String, dynamic>;
+    final Response response = await _client.post(
+      Uri.parse(endpoint),
+      headers: headers,
+      body: json.encode(body),
+    );
 
-  //     final AuthCredentials tempAuthCredentials =
-  //         AuthCredentials.fromJson(body['data']['refreshToken']);
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data =
+          jsonDecode(response.body) as Map<String, dynamic>;
 
-  //     final DateTime expiryTimestamp =
-  //         getTokenExpiryTimestamp(tempAuthCredentials.expiresIn);
+      return AuthCredentials.fromJson(data);
+    }
 
-  //     credentials = credentials?.copyWith(
-  //       refreshToken: tempAuthCredentials.refreshToken,
-  //       idToken: tempAuthCredentials.idToken,
-  //       expiresIn: tempAuthCredentials.expiresIn,
-  //       tokenExpiryTimestamp: expiryTimestamp.toIso8601String(),
-  //     );
-  //   }
-
-  //   return credentials;
-  // }
+    return null;
+  }
 }

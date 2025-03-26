@@ -5,7 +5,7 @@ import 'package:http/http.dart';
 
 abstract class ICustomClient extends BaseClient {
   late String endpoint;
-  late String idToken;
+  late String accessToken;
 
   @override
   Future<StreamedResponse> send(BaseRequest request) async {
@@ -20,11 +20,10 @@ abstract class ICustomClient extends BaseClient {
   /// Constructs default request headers, optionally excluding the
   /// Authorization header
   Map<String, String> buildHeaders({
-    bool authenticated = true,
     Map<String, String>? customHeaders,
   }) {
     final Map<String, String> headers = <String, String>{
-      if (authenticated) 'Authorization': 'Bearer $idToken',
+      'Authorization': 'Bearer $accessToken',
       'Accept': 'application/json',
       'content-type': 'application/json',
       if (customHeaders != null) ...customHeaders,

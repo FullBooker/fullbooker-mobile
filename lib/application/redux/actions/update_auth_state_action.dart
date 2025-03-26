@@ -9,10 +9,10 @@ class UpdateAuthStateAction extends ReduxAction<AppState> {
     this.refreshToken,
   });
 
-  final bool? isSignedIn;
   String? accessToken;
-  String? refreshToken;
   String? expiresAt;
+  final bool? isSignedIn;
+  String? refreshToken;
 
   @override
   AppState? reduce() {

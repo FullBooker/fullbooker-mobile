@@ -8,6 +8,7 @@ class AppEntryPointViewModelFactory
   AppEntryPointViewModel fromStore() {
     return AppEntryPointViewModel(
       accessToken: state.authState?.authCredentials?.accessToken,
+      refreshToken: state.authState?.authCredentials?.refreshToken,
     );
   }
 }
@@ -15,7 +16,9 @@ class AppEntryPointViewModelFactory
 class AppEntryPointViewModel extends Vm {
   AppEntryPointViewModel({
     required this.accessToken,
-  }) : super(equals: <Object?>[accessToken]);
+    required this.refreshToken,
+  }) : super(equals: <Object?>[accessToken, refreshToken]);
 
   final String? accessToken;
+  final String? refreshToken;
 }
