@@ -4,6 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fullbooker/application/core/services/analytics_service.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
 import 'package:fullbooker/application/redux/actions/request_otp_action.dart';
 import 'package:fullbooker/application/redux/actions/update_onboarding_state_action.dart';
@@ -11,8 +12,10 @@ import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/reset_password_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/utils.dart';
+import 'package:fullbooker/domain/core/value_objects/analytics_events.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
+import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/custom_text_input.dart';
@@ -133,8 +136,13 @@ class RequestOTPPageState extends State<RequestOTPPage> {
                                 assetPath: loginCredentialsSVGPath,
                                 description: error,
                               ),
-                              onSuccess: () =>
-                                  context.router.navigate(VerifyOTPRoute()),
+                              onSuccess: () async {
+                                await AnalyticsService().logEvent(
+                                  name: requestOTPEvent,
+                                  eventType: AnalyticsEventType.ONBOARDING,
+                                );
+                                return context.router.push(VerifyOTPRoute());
+                              },
                               client: AppWrapperBase.of(context)!.customClient,
                             ),
                           );

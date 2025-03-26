@@ -3,6 +3,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fullbooker/application/core/services/analytics_service.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
 import 'package:fullbooker/application/redux/actions/change_password_action.dart';
 import 'package:fullbooker/application/redux/actions/update_onboarding_state_action.dart';
@@ -10,8 +11,10 @@ import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/reset_password_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/utils.dart';
+import 'package:fullbooker/domain/core/value_objects/analytics_events.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
+import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/validators.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
@@ -167,14 +170,21 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
                                   assetPath: loginCredentialsSVGPath,
                                   description: error,
                                 ),
-                                onSuccess: () => showAlertDialog(
-                                  context: context,
-                                  assetPath: loginCredentialsSVGPath,
-                                  title: passwordUpdated,
-                                  description: passwordUpdatedCopy,
-                                  onConfirm: () =>
-                                      context.router.navigate(LoginRoute()),
-                                ),
+                                onSuccess: () async {
+                                  showAlertDialog(
+                                    context: context,
+                                    assetPath: loginCredentialsSVGPath,
+                                    title: passwordUpdated,
+                                    description: passwordUpdatedCopy,
+                                    onConfirm: () =>
+                                        context.router.push(LoginRoute()),
+                                  );
+
+                                  await AnalyticsService().logEvent(
+                                    name: changePasswordEvent,
+                                    eventType: AnalyticsEventType.ONBOARDING,
+                                  );
+                                },
                                 client:
                                     AppWrapperBase.of(context)!.customClient,
                               ),

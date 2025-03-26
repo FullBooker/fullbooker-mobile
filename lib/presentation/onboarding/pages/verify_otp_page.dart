@@ -5,6 +5,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fullbooker/application/core/services/analytics_service.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
 import 'package:fullbooker/application/redux/actions/request_otp_action.dart';
 import 'package:fullbooker/application/redux/actions/update_onboarding_state_action.dart';
@@ -14,9 +15,11 @@ import 'package:fullbooker/application/redux/view_models/reset_password_view_mod
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/utils.dart';
+import 'package:fullbooker/domain/core/value_objects/analytics_events.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
+import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/pin_code_text_field.dart';
@@ -179,7 +182,14 @@ class VerifyOTPPageState extends State<VerifyOTPPage> {
                                           context.dispatch(
                                             RequestOtpAction(
                                               onError: (String error) {},
-                                              onSuccess: () {},
+                                              onSuccess: () async {
+                                                await AnalyticsService()
+                                                    .logEvent(
+                                                  name: resendOTPEvent,
+                                                  eventType: AnalyticsEventType
+                                                      .ONBOARDING,
+                                                );
+                                              },
                                               client:
                                                   AppWrapperBase.of(context)!
                                                       .customClient,
@@ -233,15 +243,18 @@ class VerifyOTPPageState extends State<VerifyOTPPage> {
                               assetPath: loginCredentialsSVGPath,
                               description: error,
                             ),
-                            onSuccess: () {
-                              // Clear the OTP
+                            onSuccess: () async {
+                              await AnalyticsService().logEvent(
+                                name: verifyOTPEvent,
+                                eventType: AnalyticsEventType.ONBOARDING,
+                              );
                               context.dispatch(
                                 UpdateOnboardingStateAction(
                                   resetPasswordOTP: UNKNOWN,
                                   resetPasswordDebugOTP: UNKNOWN,
                                 ),
                               );
-                              context.router.navigate(ChangePasswordRoute());
+                              context.router.push(ChangePasswordRoute());
                             },
                             client: AppWrapperBase.of(context)!.customClient,
                           ),

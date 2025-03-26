@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart' as d;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fullbooker/application/core/services/analytics_service.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
 import 'package:fullbooker/application/redux/actions/login_action.dart';
 import 'package:fullbooker/application/redux/actions/sign_in_with_google_action.dart';
@@ -13,8 +14,10 @@ import 'package:fullbooker/application/redux/view_models/login_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/utils.dart';
+import 'package:fullbooker/domain/core/value_objects/analytics_events.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
+import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/validators.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
@@ -181,8 +184,15 @@ class LoginPageState extends State<LoginPage> {
                                                   loginCredentialsSVGPath,
                                               description: error,
                                             ),
-                                            onSuccess: () => context.router
-                                                .navigate(HostingHomeRoute()),
+                                            onSuccess: () async {
+                                              context.router
+                                                  .navigate(HostingHomeRoute());
+                                              await AnalyticsService().logEvent(
+                                                name: loginEvent,
+                                                eventType: AnalyticsEventType
+                                                    .ONBOARDING,
+                                              );
+                                            },
                                             client: AppWrapperBase.of(context)!
                                                 .customClient,
                                           ),
@@ -227,8 +237,16 @@ class LoginPageState extends State<LoginPage> {
                                             assetPath: loginCredentialsSVGPath,
                                             description: error,
                                           ),
-                                          onSuccess: () => context.router
-                                              .navigate(HostingHomeRoute()),
+                                          onSuccess: () async {
+                                            await AnalyticsService().logEvent(
+                                              name: signInWithGoogleEvent,
+                                              eventType:
+                                                  AnalyticsEventType.ONBOARDING,
+                                            );
+
+                                            return context.router
+                                                .navigate(HostingHomeRoute());
+                                          },
                                           client: AppWrapperBase.of(context)!
                                               .customClient,
                                         ),
