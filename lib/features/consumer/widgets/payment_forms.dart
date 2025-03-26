@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/entities/data_mocks.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
+import 'package:fullbooker/shared/widgets/primary_button.dart';
+import 'package:dartz/dartz.dart' as d;
 
 class PaymentForm extends StatefulWidget {
   const PaymentForm({super.key, this.onCompleteClick});
@@ -191,20 +192,16 @@ class _PaymentFormState extends State<PaymentForm> {
     return SizedBox(
       width: double.infinity,
       height: 50,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.primaryColor,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
+      child: PrimaryButton(
         onPressed: widget.onCompleteClick,
-        child: Text(
-          text,
-          style: Theme.of(context)
-              .textTheme
-              .bodyLarge
-              ?.copyWith(color: Colors.white),
+        child: d.left(
+          Text(
+            text,
+            style: Theme.of(context)
+                .textTheme
+                .bodyLarge
+                ?.copyWith(color: Colors.white),
+          ),
         ),
       ),
     );

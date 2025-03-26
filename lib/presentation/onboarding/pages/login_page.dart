@@ -100,7 +100,6 @@ class LoginPageState extends State<LoginPage> {
                                     ),
                                   );
                                 },
-                                // hintText: newTransactionAmountHint,
                                 keyboardType: TextInputType.emailAddress,
                                 prefixIconData: HeroIcons.envelope,
                                 autofillHints: const <String>[
@@ -123,7 +122,6 @@ class LoginPageState extends State<LoginPage> {
                                     ),
                                   );
                                 },
-                                // hintText: newTransactionAmountHint,
                                 keyboardType: TextInputType.visiblePassword,
                                 autofillHints: const <String>[
                                   AutofillHints.password,
