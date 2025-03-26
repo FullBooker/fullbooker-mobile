@@ -51,6 +51,7 @@ class SignInWithGoogleAction extends ReduxAction<AppState> {
 
       final Response httpResponse = await client.callRESTAPI(
         endpoint: googleSignInEndpoint,
+        authenticated: false,
         method: RestAPIMethods.POST.name.toUpperCase(),
         variables: data,
       );
