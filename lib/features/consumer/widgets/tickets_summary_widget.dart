@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/entities/ticket.dart';
+import 'package:fullbooker/shared/widgets/primary_button.dart';
+import 'package:dartz/dartz.dart' as d;
 
 class TicketsSummaryWidget extends StatefulWidget {
   final List<Ticket> tickets;
@@ -101,18 +102,13 @@ class _TicketsSummaryWidgetState extends State<TicketsSummaryWidget> {
                   DataCell(Text(ticket.email)),
                   DataCell(Text(ticket.quantity.toString())),
                   DataCell(
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primaryColor,
-                        padding: EdgeInsets.zero,
-                        shape: const RoundedRectangleBorder(),
-                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        visualDensity: VisualDensity.standard,
-                      ),
+                    PrimaryButton(
                       onPressed: () => deleteTicket(index),
-                      child: Text(
-                        deleteString,
-                        style: Theme.of(context).textTheme.bodyLarge,
+                      child: d.left(
+                        Text(
+                          deleteString,
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
                       ),
                     ),
                   ),

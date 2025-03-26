@@ -95,7 +95,6 @@ class RequestOTPPageState extends State<RequestOTPPage> {
                                     ),
                                   );
                                 },
-                                // hintText: newTransactionAmountHint,
                                 keyboardType: TextInputType.emailAddress,
                                 prefixIconData: HeroIcons.envelope,
                               ),

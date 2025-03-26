@@ -7,9 +7,11 @@ import 'package:fullbooker/features/host/models/product.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/entities/ticket.dart';
 import 'package:fullbooker/shared/widgets/divider.dart';
+import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:fullbooker/shared/widgets/scale_locked_text.dart';
 import 'package:fullbooker/shared/widgets/standard_nav_bar.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:dartz/dartz.dart' as d;
 
 // TODO(abiud): replace the values in this page with mock data for now
 @RoutePage()
@@ -129,22 +131,16 @@ class PaymentConfirmationPage extends StatelessWidget {
             mediumVerticalSizedBox,
 
             // Download Ticket Button
-            ElevatedButton(
+            PrimaryButton(
               onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Theme.of(context).primaryColor,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
+              child: d.left(
+                Text(
+                  downloadTicket,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyLarge
+                      ?.copyWith(color: Colors.white),
                 ),
-                padding:
-                    const EdgeInsets.symmetric(vertical: 14, horizontal: 32),
-              ),
-              child: Text(
-                downloadTicket,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyLarge
-                    ?.copyWith(color: Colors.white),
               ),
             ),
           ],
