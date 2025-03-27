@@ -414,7 +414,7 @@ const String passwordUpdatedCopy = 'Sign in with your new password to continue';
 // Setup product type page
 
 const String setupProductType = 'Setup Product Type';
-const String oneOfTwo = '1 of 2';
+const String categoryStep1 = '1 of 2';
 const String productType = 'Product type';
 const String productTypeCopy =
     'Select the type of the product you want to create';
@@ -426,3 +426,20 @@ const String activities = 'Activities';
 const String activitiesCopy = 'Gyms, hiking';
 
 const String cancelString = 'Cancel';
+
+// Setup product category page
+const String categoryStep2 = '2 of 2';
+const String setupProductCategory = 'Setup Product Category';
+const String productCategory = 'Product category';
+const String productCategoryCopy =
+    'Categorize your product for easier searching';
+const String searchProductCopy = 'Search product categories...';
+String showingResultsFor(String searchParam) =>
+    'Showing results for “$searchParam”';
+
+const String kidsString = 'Kids';
+const String safari = 'Safari';
+const String gym = 'Gym ';
+const String concert = 'Concert';
+const String wineAndDine = 'Wine & Dine';
+const String hiking = 'hiking';
