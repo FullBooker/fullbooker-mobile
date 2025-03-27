@@ -473,3 +473,8 @@ const String productBasicDetailsCopy =
 const String nameYourProduct = 'Name your product';
 const String productDescription = 'Description';
 const String productDescriptionCopy = 'Describe your product';
+
+// Location page
+const String searchLocation = 'Search Locations...';
+const String kicc = 'KICC';
+const String nairobi = 'Nairobi';
