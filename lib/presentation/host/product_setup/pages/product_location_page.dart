@@ -8,10 +8,11 @@ import 'package:fullbooker/shared/validators.dart';
 import 'package:fullbooker/shared/widgets/custom_text_input.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
+import 'package:heroicons/heroicons.dart';
 
 @RoutePage()
-class ProductBasicDetailsPage extends StatelessWidget {
-  const ProductBasicDetailsPage({super.key});
+class ProductLocationPage extends StatelessWidget {
+  const ProductLocationPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,39 +37,55 @@ class ProductBasicDetailsPage extends StatelessWidget {
                     spacing: 8,
                     children: <Widget>[
                       Text(
-                        productBasicDetails,
+                        location,
                         style: Theme.of(context).textTheme.headlineSmall,
                       ),
                       Text(
-                        productBasicDetailsCopy,
+                        locationCopy,
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ],
                   ),
                   CustomTextInput(
-                    hintText: nameYourProduct,
-                    labelText: nameString,
+                    hintText: searchLocation,
+                    labelText: location,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (String? value) => validateProductName(
                       value,
                     ),
                     onChanged: (String value) {},
                     keyboardType: TextInputType.name,
+                    prefixIconData: HeroIcons.mapPin,
                   ),
-                  CustomTextInput(
-                    hintText: productDescriptionCopy,
-                    labelText: productDescription,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    onChanged: (String value) {},
-                    maxLines: 3,
-                    keyboardType: TextInputType.name,
+                  Container(
+                    height: 200,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        color: Theme.of(context).dividerColor,
+                      ),
+                    ),
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    spacing: 8,
+                    children: <Widget>[
+                      Text(
+                        kicc,
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      Text(
+                        nairobi,
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                    ],
                   ),
                 ],
               ),
             ),
             PrimaryButton(
               onPressed: () {
-                context.router.push(ProductLocationRoute());
+                context.router.push(SetupProductCategoryRoute());
               },
               child: d.right(continueString),
             ),
