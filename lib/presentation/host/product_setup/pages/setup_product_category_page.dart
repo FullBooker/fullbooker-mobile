@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:dartz/dartz.dart' as d;
@@ -91,11 +92,15 @@ class SetupProductCategoryPage extends StatelessWidget {
               ),
             ),
             PrimaryButton(
-              onPressed: () {},
+              onPressed: () {
+                context.router.push(ProductSetupPreviewRoute());
+              },
               child: d.right(continueString),
             ),
             SecondaryButton(
-              onPressed: () {},
+              onPressed: () {
+                context.router.maybePop();
+              },
               child: d.right(cancelString),
               fillColor: Colors.transparent,
             ),

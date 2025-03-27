@@ -3,6 +3,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/login_view_model.dart';
+import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/generic_zero_state.dart';
@@ -38,7 +39,7 @@ class _ProductsPageState extends State<ProductsPage> {
                   title: noProducts,
                   description: noProductsCopy,
                   onCTATap: () {
-                    // TODO(abiud): navigate to create product page
+                    context.router.push(SetupProductTypeRoute());
                   },
                   ctaText: createProductString,
                 );
