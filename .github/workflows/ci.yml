@@ -2,11 +2,14 @@ name: Fullbooker CI/CD Workflow
 
 on:
   push:
+    branches:
+      - main
+      - prod
 
 jobs:
   deploy_to_app_tester:
     name: Deploy APK to AppTester
-    if: github.ref == 'refs/heads/develop'
+    if: github.ref == 'refs/heads/main'
     timeout-minutes: 15
     runs-on: ubuntu-latest
 
