@@ -28,3 +28,4 @@ const String googleIconSVGPath = 'assets/icons/google_icon.svg';
 const String appLogoFullSVGPath = 'assets/images/app_logo_full.svg';
 const String loginCredentialsSVGPath = 'assets/vectors/login_credentials.svg';
 const String productZeroStateSVGPath = 'assets/vectors/products_zero_state.svg';
+const String addPhotosIconSVGPath = 'assets/vectors/add_photos_icon.svg';
