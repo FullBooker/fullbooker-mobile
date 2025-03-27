@@ -410,3 +410,19 @@ const String accountCreatedCopy =
 
 const String passwordUpdated = 'Password Updated';
 const String passwordUpdatedCopy = 'Sign in with your new password to continue';
+
+// Setup product type page
+
+const String setupProductType = 'Setup Product Type';
+const String oneOfTwo = '1 of 2';
+const String productType = 'Product type';
+const String productTypeCopy =
+    'Select the type of the product you want to create';
+
+const String eventsName = 'Events';
+const String eventDescription =
+    'Music concerts, trade shows, seminars, product launches';
+const String activities = 'Activities';
+const String activitiesCopy = 'Gyms, hiking';
+
+const String cancelString = 'Cancel';
