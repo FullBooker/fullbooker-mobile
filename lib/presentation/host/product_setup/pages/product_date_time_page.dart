@@ -11,8 +11,8 @@ import 'package:fullbooker/shared/widgets/secondary_button.dart';
 import 'package:heroicons/heroicons.dart';
 
 @RoutePage()
-class ProductLocationPage extends StatelessWidget {
-  const ProductLocationPage({super.key});
+class ProductDateTimePagePage extends StatelessWidget {
+  const ProductDateTimePagePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -37,46 +37,54 @@ class ProductLocationPage extends StatelessWidget {
                     spacing: 8,
                     children: <Widget>[
                       Text(
-                        location,
+                        dateAndTime,
                         style: Theme.of(context).textTheme.headlineSmall,
                       ),
                       Text(
-                        locationCopy,
+                        dateAndTimeCopy,
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ],
                   ),
                   CustomTextInput(
-                    hintText: searchLocation,
-                    labelText: location,
+                    hintText: selectDateHint,
+                    labelText: dateString,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (String? value) => validateProductName(
                       value,
                     ),
                     onChanged: (String value) {},
                     keyboardType: TextInputType.name,
-                    prefixIconData: HeroIcons.mapPin,
+                    prefixIconData: HeroIcons.calendar,
                   ),
-                  Container(
-                    height: 200,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(
-                        color: Theme.of(context).dividerColor,
-                      ),
-                    ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    spacing: 8,
+                  Row(
+                    spacing: 16,
                     children: <Widget>[
-                      Text(
-                        kicc,
-                        style: Theme.of(context).textTheme.titleMedium,
+                      Expanded(
+                        child: CustomTextInput(
+                          hintText: chooseTime,
+                          labelText: starting,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          validator: (String? value) => validateProductName(
+                            value,
+                          ),
+                          onChanged: (String value) {},
+                          keyboardType: TextInputType.text,
+                          prefixIconData: HeroIcons.calendar,
+                        ),
                       ),
-                      Text(
-                        nairobi,
-                        style: Theme.of(context).textTheme.bodySmall,
+                      Expanded(
+                        child: CustomTextInput(
+                          hintText: chooseTime,
+                          labelText: ending,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          validator: (String? value) => validateProductName(
+                            value,
+                          ),
+                          onChanged: (String value) {},
+                          keyboardType: TextInputType.text,
+                          prefixIconData: HeroIcons.calendar,
+                        ),
                       ),
                     ],
                   ),
@@ -85,7 +93,7 @@ class ProductLocationPage extends StatelessWidget {
             ),
             PrimaryButton(
               onPressed: () {
-                context.router.push(ProductDateTimeRouteRoute());
+                context.router.push(SetupProductCategoryRoute());
               },
               child: d.right(continueString),
             ),
