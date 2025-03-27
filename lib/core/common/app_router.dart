@@ -8,7 +8,10 @@ class AppRouter extends RootStackRouter {
 
   @override
   List<AutoRoute> get routes => <AutoRoute>[
-        AutoRoute(page: ConsumerHomeRoute.page, initial: true),
+        // Home pages
+        AutoRoute(page: ConsumerHomeRoute.page),
+        AutoRoute(page: HostingHomeRoute.page, initial: true),
+
         AutoRoute(page: SharedLandingRoute.page),
         AutoRoute(page: OverviewRoute.page),
         AutoRoute(page: EventDetailsRoute.page),
@@ -34,9 +37,11 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: ProductDetailsRoute.page),
         AutoRoute(page: TicketsSummaryRoute.page),
         AutoRoute(page: VideoSelectionRoute.page),
-        AutoRoute(page: HostingHomeRoute.page),
         AutoRoute(page: GalleryRoute.page),
         AutoRoute(page: ProductsRoute.page),
         AutoRoute(page: ProfileRoute.page),
+
+        // Hosting side product setup
+        AutoRoute(page: SetupProductTypeRoute.page),
       ];
 }
