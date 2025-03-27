@@ -484,3 +484,8 @@ const String selectDateHint = 'Select date';
 const String starting = 'Starting';
 const String ending = 'Ending';
 const String chooseTime = 'Choose time';
+
+// Photos page
+const String photos = 'Photos';
+const String photosCopy = 'Add at least 6 high quality photos of your event';
+const String addPhoto = 'Add Photo';

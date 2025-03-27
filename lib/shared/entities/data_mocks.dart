@@ -142,3 +142,15 @@ final List<String> mockImageUrls = <String>[
   'https://i.imgur.com/dnrQX0i.png',
   'https://i.imgur.com/wVU5Evt.png',
 ];
+
+final List<String> mockProductSetupImageURLs = <String>[
+  'https://spotme.com/wp-content/uploads/2020/07/Hero-1.jpg',
+  'https://www.eventbookings.com/wp-content/uploads/2018/03/event-ideas-for-party-eventbookings.jpg',
+  'https://cdn.pixabay.com/photo/2016/11/23/15/48/audience-1853662_640.jpg',
+  'https://img.freepik.com/free-photo/black-silhouettes-music-concert-poster-concept_1194-617147.jpg',
+  'https://media.istockphoto.com/id/1806011581/photo/overjoyed-happy-young-people-dancing-jumping-and-singing-during-concert-of-favorite-group.jpg?s=612x612&w=0&k=20&c=cMFdhX403-yKneupEN-VWSfFdy6UWf1H0zqo6QBChP4=',
+  'https://images.pexels.com/photos/1763075/pexels-photo-1763075.jpeg?cs=srgb&dl=pexels-sebastian-ervi-866902-1763075.jpg&fm=jpg',
+  'https://media.self.com/photos/5e70f72443731c000882cfe7/4:3/w_2560%2Cc_limit/GettyImages-125112134.jpg',
+  'https://www.shutterstock.com/image-vector/jazz-music-icon-vector-stylish-600nw-2477870937.jpg',
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1cUVUujb6ipmwMRtKyiMI9riPE_Pbclfa3aI3ogscotNmFkWai0u0ZwhgEy1fZFNM1Jo&usqp=CAU',
+];

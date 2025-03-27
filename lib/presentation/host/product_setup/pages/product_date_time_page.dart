@@ -93,7 +93,7 @@ class ProductDateTimePagePage extends StatelessWidget {
             ),
             PrimaryButton(
               onPressed: () {
-                context.router.push(SetupProductCategoryRoute());
+                context.router.push(ProductPhotosRoute());
               },
               child: d.right(continueString),
             ),
