@@ -478,3 +478,9 @@ const String productDescriptionCopy = 'Describe your product';
 const String searchLocation = 'Search Locations...';
 const String kicc = 'KICC';
 const String nairobi = 'Nairobi';
+
+const String dateString = 'Date';
+const String selectDateHint = 'Select date';
+const String starting = 'Starting';
+const String ending = 'Ending';
+const String chooseTime = 'Choose time';
