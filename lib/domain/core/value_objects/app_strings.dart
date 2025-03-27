@@ -465,3 +465,11 @@ const String pricing = 'Pricing';
 const String pricingCopy = 'Setup product price';
 const String review = 'Review and publish';
 const String reviewCopy = 'Final tweaks before you publishing';
+
+// Basic details
+const String productBasicDetails = 'Basic details';
+const String productBasicDetailsCopy =
+    'Let’s describe your event. Enter a catchy name and description of your event';
+const String nameYourProduct = 'Name your product';
+const String productDescription = 'Description';
+const String productDescriptionCopy = 'Describe your product';

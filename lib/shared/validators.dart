@@ -68,6 +68,23 @@ String? validateName(
   return null;
 }
 
+String? validateProductName(
+  String? name, {
+  bool isOptional = false,
+}) {
+  final String? trimmedName = name?.trim();
+
+  if (trimmedName == null || trimmedName.isEmpty) {
+    return isOptional ? null : 'Please name your product';
+  }
+
+  if (trimmedName.length < 3) {
+    return 'Product name is too short.';
+  }
+
+  return null;
+}
+
 ///------ OTHERS ------ REMOVE once done
 
 String? validateNotEmpty(String? val, {bool isOptional = false}) {
