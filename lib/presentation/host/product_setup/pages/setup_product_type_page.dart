@@ -34,7 +34,7 @@ class SetupProductTypePage extends StatelessWidget {
                     spacing: 8,
                     children: <Widget>[
                       Text(
-                        oneOfTwo,
+                        categoryStep1,
                         style: Theme.of(context).textTheme.titleSmall,
                       ),
                       Text(
