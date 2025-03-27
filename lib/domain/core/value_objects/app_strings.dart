@@ -489,3 +489,16 @@ const String chooseTime = 'Choose time';
 const String photos = 'Photos';
 const String photosCopy = 'Add at least 6 high quality photos of your event';
 const String addPhoto = 'Add Photo';
+
+// Pricing page
+const String addPricingErrorMsg = 'Add at least one pricing option to continue';
+
+const String earlyBird = 'Early Bird';
+const String standard = 'Standard';
+const String vip = 'VIP';
+const String vvip = 'VVIP';
+
+String discountValue(double value) => '$value% discount';
+String maxAllowedTickets(int value) => '$value tickets allocated';
+String priceValue(double value) => 'KES ${value.toStringAsFixed(0)}';
+const String addPrice = 'Add Price';

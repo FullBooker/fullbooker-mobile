@@ -88,7 +88,7 @@ class ProductPhotosPage extends StatelessWidget {
             ),
             PrimaryButton(
               onPressed: () {
-                context.router.push(SetupProductCategoryRoute());
+                context.router.push(ProductPricingRoute());
               },
               child: d.right(continueString),
             ),
