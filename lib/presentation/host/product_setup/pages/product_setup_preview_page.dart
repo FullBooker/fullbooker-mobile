@@ -163,7 +163,9 @@ class ProductSetupPreviewPage extends StatelessWidget {
               child: d.right(beginString),
             ),
             SecondaryButton(
-              onPressed: () {},
+              onPressed: () {
+                context.router.maybePop();
+              },
               child: d.right(cancelString),
               fillColor: Colors.transparent,
             ),
