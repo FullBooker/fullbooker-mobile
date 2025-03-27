@@ -443,3 +443,25 @@ const String gym = 'Gym ';
 const String concert = 'Concert';
 const String wineAndDine = 'Wine & Dine';
 const String hiking = 'hiking';
+
+// Product Preview
+const String setupEvent = 'Setup Event';
+const String whatYouNeed = 'What you’ll need';
+const String whatYouNeedCopy = '5 easy steps. Here’s what you will need';
+
+const String beginString = 'Begin';
+const String productCategoryAndType = 'Product category and type';
+const String changeString = 'Change';
+
+const String basicDetails = 'Basic details';
+const String basicDetailsCopy = 'Describe your product';
+const String location = 'Location';
+const String locationCopy = 'Tell us where your event will be located';
+const String dateAndTime = 'Date & time';
+const String dateAndTimeCopy = 'When the event will happen';
+const String media = 'Media';
+const String mediaCopy = 'Photos of your event';
+const String pricing = 'Pricing';
+const String pricingCopy = 'Setup product price';
+const String review = 'Review and publish';
+const String reviewCopy = 'Final tweaks before you publishing';

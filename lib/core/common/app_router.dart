@@ -44,5 +44,6 @@ class AppRouter extends RootStackRouter {
         // Hosting side product setup
         AutoRoute(page: SetupProductTypeRoute.page),
         AutoRoute(page: SetupProductCategoryRoute.page),
+        AutoRoute(page: ProductSetupPreviewRoute.page),
       ];
 }
