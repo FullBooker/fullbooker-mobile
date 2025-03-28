@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
 import 'package:dartz/dartz.dart' as d;
@@ -73,7 +75,9 @@ class PricingCardWidget extends StatelessWidget {
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                 SecondaryButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.router.push(AddProductPricingRoute());
+                  },
                   child: d.right(hasPrice ? changeString : addPrice),
                 ),
               ],

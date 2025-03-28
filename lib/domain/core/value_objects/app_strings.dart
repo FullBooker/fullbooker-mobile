@@ -502,3 +502,21 @@ String discountValue(double value) => '$value% discount';
 String maxAllowedTickets(int value) => '$value tickets allocated';
 String priceValue(double value) => 'KES ${value.toStringAsFixed(0)}';
 const String addPrice = 'Add Price';
+
+// Add ticket price page
+
+const String addTicketPrice = 'Add ticket price';
+const String setupTickerPrice = 'Set your ticket price';
+const String setupTickerPriceCopy = 'Customize your ticket pricing';
+
+String serviceFeeDisclaimer(double percentage) =>
+    'We charge a %% service fee on each sale';
+
+const String priceHint = 'Enter an amount';
+
+String maximumTickets(String ticketType) =>
+    'Maximum number of $ticketType tickets';
+const String maxTicketsHint = 'Enter a number';
+
+const String discountLabel = 'Discount(optional)';
+const String discountHint = 'Enter discount';
