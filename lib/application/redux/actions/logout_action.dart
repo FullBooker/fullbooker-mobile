@@ -18,12 +18,10 @@ class LogoutAction extends ReduxAction<AppState> {
 
     try {
       await googleSignIn.signOut();
+      return AppState.initial();
     } catch (e) {
       onDone?.call();
       return AppState.initial();
     }
-
-    onDone?.call();
-    return AppState.initial();
   }
 }

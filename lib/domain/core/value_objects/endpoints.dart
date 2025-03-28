@@ -10,6 +10,8 @@ const String kDevResetPasswordEndpoint =
 const String kDevRefreshTokenEndpoint =
     '$kDevAPIBaseURL/accounts/token/refresh';
 const String kDevProductsEndpoint = '$kDevAPIBaseURL/products/';
+const String kDevProfileEndpoint = '$kDevAPIBaseURL/accounts/profile';
+
 // ---- Implemented
 const String kDevHostsEndpoint = '$kDevAPIBaseURL/hosts/';
 const String kDevLocationEndpoint = '$kDevAPIBaseURL/location/';
@@ -29,6 +31,8 @@ const String kProdResetPasswordEndpoint =
 const String kProdRefreshTokenEndpoint =
     '$kProdAPIBaseURL/accounts/token/refresh';
 const String kProdProductsEndpoint = '$kProdAPIBaseURL/products/';
+const String kProdProfileEndpoint = '$kProdAPIBaseURL/accounts/profile';
+
 // ---- Implemented
 const String kProdHostsEndpoint = '$kProdAPIBaseURL/hosts/';
 const String kProdLocationEndpoint = '$kProdAPIBaseURL/location/';
@@ -48,6 +52,8 @@ const String kTestResetPasswordEndpoint =
 const String kTestRefreshTokenEndpoint =
     '$kTestAPIBaseURL/accounts/token/refresh';
 const String kTestProductsEndpoint = '$kTestAPIBaseURL/products/';
+const String kTestProfileEndpoint = '$kTestAPIBaseURL/accounts/profile';
+
 // ---- Implemented
 const String kTestHostsEndpoint = '$kTestAPIBaseURL/hosts/';
 const String kTestLocationEndpoint = '$kTestAPIBaseURL/location/';

@@ -17,6 +17,7 @@ class AppConfig {
     required this.changePasswordEndpoint,
     required this.getProductsEndpoint,
     required this.refreshTokenEndpoint,
+    required this.getProfileEndpoint,
   });
 
   /// The context the app is running in
@@ -44,6 +45,8 @@ class AppConfig {
   final String refreshTokenEndpoint;
 
   final String getProductsEndpoint;
+
+  final String getProfileEndpoint;
 }
 
 final AppConfig devAppConfig = AppConfig(
@@ -60,6 +63,7 @@ final AppConfig devAppConfig = AppConfig(
   changePasswordEndpoint: kDevResetPasswordEndpoint,
   getProductsEndpoint: kDevProductsEndpoint,
   refreshTokenEndpoint: kDevRefreshTokenEndpoint,
+  getProfileEndpoint: kDevProfileEndpoint,
 );
 
 final AppConfig prodAppConfig = AppConfig(
@@ -76,6 +80,7 @@ final AppConfig prodAppConfig = AppConfig(
   changePasswordEndpoint: kProdResetPasswordEndpoint,
   getProductsEndpoint: kProdProductsEndpoint,
   refreshTokenEndpoint: kProdRefreshTokenEndpoint,
+  getProfileEndpoint: kProdProfileEndpoint,
 );
 
 final AppConfig testAppConfig = AppConfig(
@@ -92,4 +97,5 @@ final AppConfig testAppConfig = AppConfig(
   changePasswordEndpoint: kTestResetPasswordEndpoint,
   getProductsEndpoint: kTestProductsEndpoint,
   refreshTokenEndpoint: kTestRefreshTokenEndpoint,
+  getProfileEndpoint: kTestProfileEndpoint,
 );

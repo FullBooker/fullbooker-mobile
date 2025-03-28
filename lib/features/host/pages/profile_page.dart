@@ -6,7 +6,6 @@ import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/profile_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/common/constants.dart';
-import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:fullbooker/presentation/core/components/profile_avatar.dart';
@@ -41,8 +40,7 @@ class _ProfilePageState extends State<ProfilePage> {
           converter: (Store<AppState> store) =>
               ProfileViewModel.fromStore(store),
           builder: (BuildContext context, ProfileViewModel vm) {
-            final String name =
-                getFullName(vm.user?.firstName, vm.user?.lastName);
+            final String name = vm.fullName;
             final String email = vm.user?.emailAddress ?? '';
 
             return Column(
