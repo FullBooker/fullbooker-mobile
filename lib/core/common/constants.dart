@@ -12,7 +12,7 @@ const String masterSchemaTableName = 'sqlite_master';
 const String kDevDatabaseName = 'fullbooker.dev.store.db';
 const String kProdDatabaseName = 'fullbooker.store.db';
 
-const double kPlatformServiceFee = 5;
+const double kPlatformServiceFee = 6;
 
 const List<String> kAllowedImageExtensions = <String>['jpg', 'png'];
 const List<String> kAllowedVideoExtensions = <String>['mp4'];

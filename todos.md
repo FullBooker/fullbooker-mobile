@@ -10,10 +10,10 @@
 - [x] Integrate password manager for email+password sign in
 - [x] Remove all elevated buttons
 - [x] Setup CI/CD
-- [ ] change logic in build methods for all widgets
-- [ ] Change app splash screen to have the full logo
-- [ ] Add cleanups for most onboarding workflows after success e.g removing state values
+- [x] change logic in build methods for all widgets
+- [x] Change app splash screen to have the full logo
+- [x] Add cleanups for most onboarding workflows after success e.g removing state values
 
-## Page changes
+## Page changes (can be done later)
 
 - [ ] Remove reviews page
