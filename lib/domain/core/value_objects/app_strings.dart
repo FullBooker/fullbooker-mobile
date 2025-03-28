@@ -520,3 +520,10 @@ const String maxTicketsHint = 'Enter a number';
 
 const String discountLabel = 'Discount(optional)';
 const String discountHint = 'Enter discount';
+
+// Review and publish page
+
+const String reviewAndPublish = 'Review and publish';
+
+const String testProductDescription =
+    'Experience the unforgettable journey of Taylor  Swift’s Eras Tour, a celebration of her music, artistry,  and storytelling...';
