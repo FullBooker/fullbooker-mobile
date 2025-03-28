@@ -33,7 +33,7 @@ class FetchProductsAction extends ReduxAction<AppState> {
 
     final Response httpResponse = await client.callRESTAPI(
       endpoint: endpoint,
-      method: RestAPIMethods.GET.name.toUpperCase(),
+      method: APIMethods.GET.name.toUpperCase(),
       variables: data,
     );
 

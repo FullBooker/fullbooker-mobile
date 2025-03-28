@@ -1,6 +1,8 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
+import 'package:fullbooker/application/redux/actions/fetch_profile_action.dart';
 import 'package:fullbooker/application/redux/actions/logout_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/profile_view_model.dart';
@@ -16,14 +18,9 @@ import 'package:fullbooker/shared/widgets/secondary_button.dart';
 import 'package:dartz/dartz.dart' as d;
 
 @RoutePage()
-class ProfilePage extends StatefulWidget {
+class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
 
-  @override
-  State<StatefulWidget> createState() => _ProfilePageState();
-}
-
-class _ProfilePageState extends State<ProfilePage> {
   final String appVersion = const String.fromEnvironment(
     APPVERSION,
     defaultValue: kDevBuild,
@@ -39,9 +36,21 @@ class _ProfilePageState extends State<ProfilePage> {
         child: StoreConnector<AppState, ProfileViewModel>(
           converter: (Store<AppState> store) =>
               ProfileViewModel.fromStore(store),
+          onInit: (Store<AppState> store) {
+            context.dispatch(
+              FetchProfileAction(
+                client: AppWrapperBase.of(context)!.customClient,
+              ),
+            );
+          },
           builder: (BuildContext context, ProfileViewModel vm) {
             final String name = vm.fullName;
             final String email = vm.user?.emailAddress ?? '';
+            final String profileURL = vm.user?.profileURL ?? UNKNOWN;
+
+            if (context.isWaiting(FetchProfileAction)) {
+              return AppLoading();
+            }
 
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -53,8 +62,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       Center(
                         child: ProfileAvatar(
                           displayName: name,
-                          aviSize: 64,
-                          avatarURI: '',
+                          aviSize: 100,
+                          avatarURI: profileURL,
                         ),
                       ),
                       Center(
@@ -111,7 +120,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         },
                         child: d.right(logoutString),
                       ),
-                    smallVerticalSizedBox,
+                    verySmallVerticalSizedBox,
                   ],
                 ),
               ],
