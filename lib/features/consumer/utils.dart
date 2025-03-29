@@ -1,7 +1,7 @@
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/features/auth/models/login.dart';
 import 'package:fullbooker/features/host/models/categories.dart';
-import 'package:fullbooker/features/host/models/product.dart';
+import 'package:fullbooker/features/host/models/old_product.dart';
 import 'package:fullbooker/features/host/models/sub_category_model.dart';
 import 'package:fullbooker/shared/entities/data_mocks.dart';
 import 'package:uuid/uuid.dart';
@@ -88,7 +88,7 @@ ProductLocation getProductLocation() {
 
 Map<String, dynamic> getAvailability() => availabilityMockResponse;
 
-Product getProduct({
+OldProduct getProduct({
   String? imageUrl,
   SubCategory? subCategory,
   List<ProductPricing>? pricingOptions,
@@ -97,7 +97,7 @@ Product getProduct({
   String? name,
   String? subCategoryName,
 }) {
-  return Product(
+  return OldProduct(
     uuid.v4(),
     name ?? randomString(),
     randomString(),
@@ -123,8 +123,8 @@ final List<String> subCategories = <String>[
   'Yoga',
 ];
 
-List<Product> getMultipleProducts() {
-  return List<Product>.generate(productImages.length, (int idx) {
+List<OldProduct> getMultipleProducts() {
+  return List<OldProduct>.generate(productImages.length, (int idx) {
     return getProduct(
       imageUrl: productImages[idx],
       name: 'Rock Concert',

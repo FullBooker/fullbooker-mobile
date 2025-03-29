@@ -7,7 +7,7 @@ import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/features/host/controllers/currency_controller.dart';
 import 'package:fullbooker/features/host/controllers/product_controller.dart';
 import 'package:fullbooker/features/host/models/currency.dart';
-import 'package:fullbooker/features/host/models/product.dart';
+import 'package:fullbooker/features/host/models/old_product.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/session_pricing.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
@@ -23,7 +23,7 @@ import 'package:fullbooker/shared/widgets/old_text_inputs.dart';
 
 @RoutePage()
 class ActivitySubscriptionPage extends StatefulWidget {
-  final Product product;
+  final OldProduct product;
   final SessionPricing sessionPricing;
   final SessionPricing? dayPassPricing;
 

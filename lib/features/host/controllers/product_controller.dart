@@ -4,25 +4,25 @@ import 'package:flutter/material.dart';
 import 'package:fullbooker/core/repository.dart';
 import 'package:fullbooker/core/view_model.dart';
 import 'package:fullbooker/domain/core/value_objects/endpoints.dart';
-import 'package:fullbooker/features/host/models/product.dart';
+import 'package:fullbooker/features/host/models/old_product.dart';
 import 'package:fullbooker/shared/entities/date_group.dart';
 import 'package:fullbooker/shared/entities/session_pricing.dart';
 
-class ProductController extends BaseViewModel<Product> {
+class ProductController extends BaseViewModel<OldProduct> {
   ProductController() {
-    repository = CRUDRepository<Product>('products', ProductSerializer());
+    repository = CRUDRepository<OldProduct>('products', ProductSerializer());
   }
 
-  late CRUDRepository<Product> _repository;
+  late CRUDRepository<OldProduct> _repository;
 
   @override
-  CRUDRepository<Product> get repository => _repository;
+  CRUDRepository<OldProduct> get repository => _repository;
 
   @override
-  set repository(CRUDRepository<Product> repository) =>
+  set repository(CRUDRepository<OldProduct> repository) =>
       _repository = repository;
 
-  Future<Product?> createProduct(
+  Future<OldProduct?> createProduct(
     String name,
     String? description,
     String subcategory,
@@ -36,7 +36,7 @@ class ProductController extends BaseViewModel<Product> {
       repository.post(<String, Object?>{}, kDevHostsEndpoint);
       final dynamic response = await repository
           .post(productData, kDevProductsEndpoint, serialize: true);
-      return response as Product;
+      return response as OldProduct;
     } catch (exception) {
       return null;
     }

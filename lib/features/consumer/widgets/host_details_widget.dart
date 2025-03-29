@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fullbooker/features/consumer/widgets/profile_rating_widget.dart';
-import 'package:fullbooker/features/host/models/product.dart';
+import 'package:fullbooker/features/host/models/old_product.dart';
 import 'package:shimmer/shimmer.dart';
 
 class HostDetailsWidget extends StatefulWidget {
-  final Product product;
+  final OldProduct product;
   final double width;
 
   const HostDetailsWidget({

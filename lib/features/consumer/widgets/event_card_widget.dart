@@ -6,7 +6,7 @@ import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/features/consumer/widgets/event_meta_widget.dart';
-import 'package:fullbooker/features/host/models/product.dart';
+import 'package:fullbooker/features/host/models/old_product.dart';
 import 'package:fullbooker/presentation/core/components/shimmers.dart';
 import 'package:fullbooker/shared/widgets/old_buttons.dart';
 import 'package:geocoding/geocoding.dart';
@@ -17,7 +17,7 @@ class EventCardWidget extends StatefulWidget {
   const EventCardWidget({super.key, required this.product, this.onBuyClick});
 
   final VoidCallback? onBuyClick;
-  final Product product;
+  final OldProduct product;
 
   @override
   State<StatefulWidget> createState() => _EventCardWidgetState();

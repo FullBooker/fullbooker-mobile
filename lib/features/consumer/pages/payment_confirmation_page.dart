@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/features/consumer/painters.dart';
-import 'package:fullbooker/features/host/models/product.dart';
+import 'package:fullbooker/features/host/models/old_product.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/entities/ticket.dart';
 import 'package:fullbooker/shared/widgets/divider.dart';
@@ -16,7 +16,7 @@ import 'package:dartz/dartz.dart' as d;
 // TODO(abiud): replace the values in this page with mock data for now
 @RoutePage()
 class PaymentConfirmationPage extends StatelessWidget {
-  final Product product;
+  final OldProduct product;
   final String locationName;
   final Ticket ticket;
 

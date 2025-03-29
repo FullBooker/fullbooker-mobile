@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
-import 'package:fullbooker/features/host/models/product.dart';
+import 'package:fullbooker/features/host/models/old_product.dart';
 
 class DatePickerWidget extends StatefulWidget {
-  final Product product;
+  final OldProduct product;
   final Function(DateTime?)? onDateSelected;
 
   const DatePickerWidget({

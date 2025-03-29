@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/features/host/controllers/product_controller.dart';
-import 'package:fullbooker/features/host/models/product.dart';
+import 'package:fullbooker/features/host/models/old_product.dart';
 import 'package:fullbooker/shared/entities/date_group.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/event_time_selection_card.dart';
@@ -14,7 +14,7 @@ import 'package:fullbooker/shared/widgets/page_title.dart';
 
 @RoutePage()
 class DateSelectionPage extends StatefulWidget {
-  final Product product;
+  final OldProduct product;
   final Map<String, Object?> location;
 
   const DateSelectionPage({

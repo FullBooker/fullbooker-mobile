@@ -4,7 +4,7 @@ import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/endpoints.dart';
 import 'package:fullbooker/features/host/controllers/product_controller.dart';
-import 'package:fullbooker/features/host/models/product.dart';
+import 'package:fullbooker/features/host/models/old_product.dart';
 import 'package:fullbooker/shared/entities/data_mocks.dart';
 import 'package:fullbooker/shared/entities/event_creation_model.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
@@ -36,7 +36,7 @@ class _EventsSummaryPageState extends State<EventsSummaryPage> {
         100,
         processResponseAsPage: true,
         filters: <String, dynamic>{'host': host['id']},
-      ).then((List<Product> products_) {
+      ).then((List<OldProduct> products_) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           if (products_.isEmpty) {
             setState(() => hasLoaded = true);

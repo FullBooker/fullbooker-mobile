@@ -1,4 +1,4 @@
-import 'package:fullbooker/features/host/models/product.dart';
+import 'package:fullbooker/features/host/models/old_product.dart';
 
 class Ticket {
   String name;

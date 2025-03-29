@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/features/host/controllers/product_controller.dart';
-import 'package:fullbooker/features/host/models/product.dart';
+import 'package:fullbooker/features/host/models/old_product.dart';
 import 'package:fullbooker/shared/widgets/activities_table_widget.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
@@ -22,7 +22,7 @@ class HostProductSummaryPage extends StatefulWidget {
 }
 
 class _HostProductSummaryPageState extends State<HostProductSummaryPage> {
-  List<Product>? products;
+  List<OldProduct>? products;
   ProductController productsController = ProductController();
 
   String? _errorMessage;
@@ -36,7 +36,7 @@ class _HostProductSummaryPageState extends State<HostProductSummaryPage> {
 
   Future<void> _fetchProducts() async {
     try {
-      final List<Product> fetchedProducts =
+      final List<OldProduct> fetchedProducts =
           await productsController.repository.pullMultiple(
         1,
         100,

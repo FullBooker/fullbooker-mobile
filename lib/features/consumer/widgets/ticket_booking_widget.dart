@@ -6,13 +6,13 @@ import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/features/consumer/widgets/checkout_card_widget.dart';
 import 'package:fullbooker/features/consumer/widgets/ticket_form_widget.dart';
 import 'package:fullbooker/features/consumer/widgets/tickets_summary_widget.dart';
-import 'package:fullbooker/features/host/models/product.dart';
+import 'package:fullbooker/features/host/models/old_product.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/ticket.dart';
 import 'package:fullbooker/shared/widgets/old_secondary_button.dart';
 
 class TicketBookingWidget extends StatefulWidget {
-  final Product product;
+  final OldProduct product;
   final String productLocationName;
   final DateTime? selectedDate;
 
