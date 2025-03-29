@@ -1,12 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
+import 'package:fullbooker/domain/core/entities/host_product_response.dart';
 import 'package:fullbooker/presentation/core/components/custom_badge_widget.dart';
 import 'package:fullbooker/shared/entities/data_mocks.dart';
 import 'package:heroicons/heroicons.dart';
 
 class NewProductCard extends StatelessWidget {
-  const NewProductCard({super.key});
+  const NewProductCard({super.key, required this.product});
+
+  final HostProduct product;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +45,7 @@ class NewProductCard extends StatelessWidget {
                 top: 12,
                 left: 12,
                 child: CustomBadgeWidget(
-                  text: 'Musical Concert',
+                  text: product.name.split(' ').last,
                   color: Colors.white,
                 ),
               ),
@@ -59,7 +62,7 @@ class NewProductCard extends StatelessWidget {
                   children: <Widget>[
                     Expanded(
                       child: Text(
-                        'Musical Concert, Eras Tour, Taylor Swift',
+                        product.name,
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                     ),
@@ -85,7 +88,7 @@ class NewProductCard extends StatelessWidget {
                           size: 20,
                         ),
                         Text(
-                          'Carnivore grounds',
+                          product.locations.first.address,
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ],
@@ -101,7 +104,7 @@ class NewProductCard extends StatelessWidget {
                           size: 20,
                         ),
                         Text(
-                          '22 Feb 25',
+                          product.availability.start,
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ],
@@ -118,7 +121,7 @@ class NewProductCard extends StatelessWidget {
                           size: 20,
                         ),
                         Text(
-                          '8:00PM',
+                          '${product.availability.startTime} - ${product.availability.endTime}',
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ],
