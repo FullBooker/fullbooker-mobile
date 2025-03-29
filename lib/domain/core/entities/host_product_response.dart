@@ -11,7 +11,7 @@ class HostProductResponse with _$HostProductResponse {
     @Default(0) int count,
     String? next,
     String? previous,
-    @JsonKey(name: 'results') List<HostProduct?>? results,
+    @JsonKey(name: 'results') List<HostProduct>? results,
   }) = _HostProductResponse;
 
   factory HostProductResponse.fromJson(Map<String, dynamic> json) =>

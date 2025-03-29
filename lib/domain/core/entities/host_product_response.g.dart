@@ -13,9 +13,7 @@ _$HostProductResponseImpl _$$HostProductResponseImplFromJson(
       next: json['next'] as String?,
       previous: json['previous'] as String?,
       results: (json['results'] as List<dynamic>?)
-          ?.map((e) => e == null
-              ? null
-              : HostProduct.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => HostProduct.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
@@ -25,7 +23,7 @@ Map<String, dynamic> _$$HostProductResponseImplToJson(
       'count': instance.count,
       'next': instance.next,
       'previous': instance.previous,
-      'results': instance.results?.map((e) => e?.toJson()).toList(),
+      'results': instance.results?.map((e) => e.toJson()).toList(),
     };
 
 _$HostProductImpl _$$HostProductImplFromJson(Map<String, dynamic> json) =>

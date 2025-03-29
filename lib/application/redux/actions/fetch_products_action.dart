@@ -46,7 +46,6 @@ class FetchProductsAction extends ReduxAction<AppState> {
       return onError?.call(error ?? defaultUserFriendlyMessage);
     }
 
-    // TODO(abiud): update state with the fetched products
     final HostProductResponse productsResponse =
         HostProductResponse.fromJson(body);
 

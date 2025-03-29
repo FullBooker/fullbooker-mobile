@@ -8,10 +8,12 @@ import 'package:fullbooker/application/redux/view_models/hosting_home_view_model
 import 'package:fullbooker/application/redux/view_models/profile_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/common/constants.dart';
+import 'package:fullbooker/domain/core/entities/host_product_response.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:fullbooker/presentation/core/components/generic_zero_state.dart';
+import 'package:fullbooker/presentation/core/components/new_product_card.dart';
 import 'package:fullbooker/presentation/core/components/profile_avatar.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
@@ -64,9 +66,8 @@ class HostingHomePage extends StatelessWidget {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(12.0),
+        padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             StoreConnector<AppState, HostingHomeViewModel>(
               converter: (Store<AppState> store) =>
@@ -78,20 +79,32 @@ class HostingHomePage extends StatelessWidget {
                   ),
                 );
               },
-              builder: (
-                BuildContext context,
-                HostingHomeViewModel snapshot,
-              ) {
+              builder: (BuildContext context, HostingHomeViewModel vm) {
                 if (context.isWaiting(FetchProductsAction)) {
                   return AppLoading();
                 }
+                final List<HostProduct>? products = vm.products;
 
-                return GenericZeroState(
-                  iconPath: productZeroStateSVGPath,
-                  title: comingSoonTitle,
-                  description: comingSoonCopy,
-                  onCTATap: null,
-                  ctaText: logoutString,
+                if (products?.isEmpty ?? true) {
+                  return GenericZeroState(
+                    iconPath: productZeroStateSVGPath,
+                    title: noProducts,
+                    description: noProductsCopy,
+                    onCTATap: () {
+                      context.router.push(SetupProductTypeRoute());
+                    },
+                    ctaText: createProductString,
+                  );
+                }
+
+                return ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: products?.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final HostProduct currentProduct = products![index];
+
+                    return NewProductCard(product: currentProduct);
+                  },
                 );
               },
             ),

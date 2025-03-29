@@ -20,7 +20,7 @@ HostState _$HostStateFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$HostState {
-  List<HostProduct?>? get products => throw _privateConstructorUsedError;
+  List<HostProduct>? get products => throw _privateConstructorUsedError;
 
   /// Serializes this HostState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -37,7 +37,7 @@ abstract class $HostStateCopyWith<$Res> {
   factory $HostStateCopyWith(HostState value, $Res Function(HostState) then) =
       _$HostStateCopyWithImpl<$Res, HostState>;
   @useResult
-  $Res call({List<HostProduct?>? products});
+  $Res call({List<HostProduct>? products});
 }
 
 /// @nodoc
@@ -61,7 +61,7 @@ class _$HostStateCopyWithImpl<$Res, $Val extends HostState>
       products: freezed == products
           ? _value.products
           : products // ignore: cast_nullable_to_non_nullable
-              as List<HostProduct?>?,
+              as List<HostProduct>?,
     ) as $Val);
   }
 }
@@ -74,7 +74,7 @@ abstract class _$$HostStateImplCopyWith<$Res>
       __$$HostStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<HostProduct?>? products});
+  $Res call({List<HostProduct>? products});
 }
 
 /// @nodoc
@@ -96,7 +96,7 @@ class __$$HostStateImplCopyWithImpl<$Res>
       products: freezed == products
           ? _value.products
           : products // ignore: cast_nullable_to_non_nullable
-              as List<HostProduct?>?,
+              as List<HostProduct>?,
     ));
   }
 }
@@ -112,7 +112,7 @@ class _$HostStateImpl implements _HostState {
 
   @override
   @JsonKey()
-  final List<HostProduct?>? products;
+  final List<HostProduct>? products;
 
   @override
   String toString() {
@@ -149,13 +149,13 @@ class _$HostStateImpl implements _HostState {
 }
 
 abstract class _HostState implements HostState {
-  factory _HostState({final List<HostProduct?>? products}) = _$HostStateImpl;
+  factory _HostState({final List<HostProduct>? products}) = _$HostStateImpl;
 
   factory _HostState.fromJson(Map<String, dynamic> json) =
       _$HostStateImpl.fromJson;
 
   @override
-  List<HostProduct?>? get products;
+  List<HostProduct>? get products;
 
   /// Create a copy of HostState
   /// with the given fields replaced by the non-null parameter values.

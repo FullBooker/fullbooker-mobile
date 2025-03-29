@@ -27,5 +27,6 @@ class AppState with _$AppState {
         bottomNavState: BottomNavState.initial(),
         userState: UserState.initial(),
         onboardingState: OnboardingState.initial(),
+        hostState: HostState.initial(),
       );
 }
