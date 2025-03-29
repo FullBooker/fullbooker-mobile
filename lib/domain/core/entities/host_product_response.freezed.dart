@@ -24,7 +24,7 @@ mixin _$HostProductResponse {
   String? get next => throw _privateConstructorUsedError;
   String? get previous => throw _privateConstructorUsedError;
   @JsonKey(name: 'results')
-  List<HostProduct?>? get results => throw _privateConstructorUsedError;
+  List<HostProduct>? get results => throw _privateConstructorUsedError;
 
   /// Serializes this HostProductResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -46,7 +46,7 @@ abstract class $HostProductResponseCopyWith<$Res> {
       {int count,
       String? next,
       String? previous,
-      @JsonKey(name: 'results') List<HostProduct?>? results});
+      @JsonKey(name: 'results') List<HostProduct>? results});
 }
 
 /// @nodoc
@@ -85,7 +85,7 @@ class _$HostProductResponseCopyWithImpl<$Res, $Val extends HostProductResponse>
       results: freezed == results
           ? _value.results
           : results // ignore: cast_nullable_to_non_nullable
-              as List<HostProduct?>?,
+              as List<HostProduct>?,
     ) as $Val);
   }
 }
@@ -102,7 +102,7 @@ abstract class _$$HostProductResponseImplCopyWith<$Res>
       {int count,
       String? next,
       String? previous,
-      @JsonKey(name: 'results') List<HostProduct?>? results});
+      @JsonKey(name: 'results') List<HostProduct>? results});
 }
 
 /// @nodoc
@@ -139,7 +139,7 @@ class __$$HostProductResponseImplCopyWithImpl<$Res>
       results: freezed == results
           ? _value.results
           : results // ignore: cast_nullable_to_non_nullable
-              as List<HostProduct?>?,
+              as List<HostProduct>?,
     ));
   }
 }
@@ -166,7 +166,7 @@ class _$HostProductResponseImpl implements _HostProductResponse {
   final String? previous;
   @override
   @JsonKey(name: 'results')
-  final List<HostProduct?>? results;
+  final List<HostProduct>? results;
 
   @override
   String toString() {
@@ -212,7 +212,7 @@ abstract class _HostProductResponse implements HostProductResponse {
           {final int count,
           final String? next,
           final String? previous,
-          @JsonKey(name: 'results') final List<HostProduct?>? results}) =
+          @JsonKey(name: 'results') final List<HostProduct>? results}) =
       _$HostProductResponseImpl;
 
   factory _HostProductResponse.fromJson(Map<String, dynamic> json) =
@@ -226,7 +226,7 @@ abstract class _HostProductResponse implements HostProductResponse {
   String? get previous;
   @override
   @JsonKey(name: 'results')
-  List<HostProduct?>? get results;
+  List<HostProduct>? get results;
 
   /// Create a copy of HostProductResponse
   /// with the given fields replaced by the non-null parameter values.
