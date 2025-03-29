@@ -14,6 +14,7 @@ class PricingCardWidget extends StatelessWidget {
     this.discount = 0,
     required this.maxTickets,
     required this.svgIconPath,
+    this.onAddOrEdit,
   });
 
   final String ticketType;
@@ -21,6 +22,7 @@ class PricingCardWidget extends StatelessWidget {
   final double? discount;
   final int maxTickets;
   final String svgIconPath;
+  final Function()? onAddOrEdit;
 
   @override
   Widget build(BuildContext context) {
@@ -74,12 +76,13 @@ class PricingCardWidget extends StatelessWidget {
                     priceValue(price!),
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
-                SecondaryButton(
-                  onPressed: () {
-                    context.router.push(AddProductPricingRoute());
-                  },
-                  child: d.right(hasPrice ? changeString : addPrice),
-                ),
+                if (onAddOrEdit != null)
+                  SecondaryButton(
+                    onPressed: () {
+                      context.router.push(AddProductPricingRoute());
+                    },
+                    child: d.right(hasPrice ? changeString : addPrice),
+                  ),
               ],
             ),
           ),
