@@ -464,7 +464,7 @@ const String mediaCopy = 'Photos of your event';
 const String pricing = 'Pricing';
 const String pricingCopy = 'Setup product price';
 const String review = 'Review and publish';
-const String reviewCopy = 'Final tweaks before you publishing';
+const String reviewCopy = 'Final tweaks before publishing';
 
 // Basic details
 const String productBasicDetails = 'Basic details';
@@ -527,3 +527,9 @@ const String reviewAndPublish = 'Review and publish';
 
 const String testProductDescription =
     'Experience the unforgettable journey of Taylor  Swift’s Eras Tour, a celebration of her music, artistry,  and storytelling...';
+
+const String testEventName = 'Music Concert, Eras tour Taylor swift ';
+const String testLocation = 'George Padmore Road';
+const String testDate = '22 Feb 2025';
+const String testTime = '2 - 5 PM';
+String photosAdded(int number) => '$number photos added';

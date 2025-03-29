@@ -1,13 +1,19 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
+import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:dartz/dartz.dart' as d;
 import 'package:fullbooker/presentation/host/product_setup/components/preview_header_widget.dart';
+import 'package:fullbooker/presentation/host/product_setup/components/pricing_card_widget.dart';
+import 'package:fullbooker/shared/entities/data_mocks.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
+import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
+import 'package:heroicons/heroicons.dart';
 
 @RoutePage()
 class ProductReviewAndPublishPage extends StatelessWidget {
@@ -15,6 +21,7 @@ class ProductReviewAndPublishPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double photoSize = (MediaQuery.of(context).size.width - 32) / 4.5;
     return Scaffold(
       appBar: CustomAppBar(
         showBell: false,
@@ -42,12 +49,12 @@ class ProductReviewAndPublishPage extends StatelessWidget {
                             style: Theme.of(context).textTheme.headlineSmall,
                           ),
                           Text(
-                            setupTickerPriceCopy,
+                            reviewCopy,
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ],
                       ),
-                      verySmallVerticalSizedBox,
+                      Divider(),
                       PreviewHeaderWidget(
                         title: basicDetails,
                         copy: basicDetailsCopy,
@@ -58,7 +65,7 @@ class ProductReviewAndPublishPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            basicDetails,
+                            testEventName,
                             style: Theme.of(context).textTheme.titleMedium,
                           ),
                           Text(
@@ -67,83 +74,154 @@ class ProductReviewAndPublishPage extends StatelessWidget {
                           ),
                         ],
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        spacing: 4,
+                      Divider(),
+                      PreviewHeaderWidget(
+                        title: location,
+                        copy: locationCopy,
+                        onEdit: () {},
+                      ),
+                      Text(
+                        testLocation,
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                      Container(
+                        height: 100,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          border:
+                              Border.all(color: Theme.of(context).primaryColor),
+                        ),
+                      ),
+                      Divider(),
+                      PreviewHeaderWidget(
+                        title: dateAndTime,
+                        copy: dateAndTimeCopy,
+                        onEdit: () {},
+                      ),
+                      Wrap(
+                        runSpacing: 12,
+                        spacing: 12,
+                        crossAxisAlignment: WrapCrossAlignment.center,
                         children: <Widget>[
-                          Text(
-                            location,
-                            style:
-                                Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                      color: Theme.of(context).primaryColor,
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            spacing: 8,
+                            children: <Widget>[
+                              HeroIcon(HeroIcons.calendar, size: 20),
+                              Text(
+                                testDate,
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              ),
+                            ],
                           ),
-                          Text(
-                            locationCopy,
-                            style: Theme.of(context).textTheme.bodyMedium,
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            spacing: 8,
+                            children: <Widget>[
+                              HeroIcon(HeroIcons.clock, size: 20),
+                              Text(
+                                testTime,
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        spacing: 4,
+                      Divider(),
+                      PreviewHeaderWidget(
+                        title: photos,
+                        copy: photosAdded(15),
+                        onEdit: () {},
+                      ),
+                      Row(
                         children: <Widget>[
-                          Text(
-                            dateAndTime,
-                            style:
-                                Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                      color: Theme.of(context).primaryColor,
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                          ...mockProductSetupImageURLs.take(3).map(
+                            (String url) {
+                              return Padding(
+                                padding: const EdgeInsets.only(right: 8.0),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(8),
+                                  child: CachedNetworkImage(
+                                    imageUrl: url,
+                                    width: photoSize,
+                                    height: photoSize,
+                                    fit: BoxFit.cover,
+                                    progressIndicatorBuilder: (
+                                      BuildContext context,
+                                      String url,
+                                      DownloadProgress progress,
+                                    ) =>
+                                        Center(child: AppLoading()),
+                                  ),
+                                ),
+                              );
+                            },
                           ),
-                          Text(
-                            dateAndTimeCopy,
-                            style: Theme.of(context).textTheme.bodyMedium,
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: <Widget>[
+                                CachedNetworkImage(
+                                  imageUrl: mockProductSetupImageURLs.last,
+                                  width: photoSize,
+                                  height: photoSize,
+                                  fit: BoxFit.cover,
+                                  placeholder: (
+                                    BuildContext context,
+                                    String url,
+                                  ) =>
+                                      Container(color: Colors.grey.shade300),
+                                  errorWidget: (
+                                    BuildContext context,
+                                    String url,
+                                    Object error,
+                                  ) =>
+                                      const Icon(Icons.error),
+                                ),
+                                Container(
+                                  width: photoSize,
+                                  height: photoSize,
+                                  color: Colors.black.withValues(alpha: 0.5),
+                                  child: const Center(
+                                    child: Text(
+                                      '+ 12',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        spacing: 4,
-                        children: <Widget>[
-                          Text(
-                            photos,
-                            style:
-                                Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                      color: Theme.of(context).primaryColor,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                          ),
-                          Text(
-                            productDescriptionCopy,
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                        ],
+                      Divider(),
+                      PreviewHeaderWidget(
+                        title: pricing,
+                        copy: pricingCopy,
+                        onEdit: () {},
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        spacing: 4,
-                        children: <Widget>[
-                          Text(
-                            pricing,
-                            style:
-                                Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                      color: Theme.of(context).primaryColor,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                          ),
-                          Text(
-                            pricingCopy,
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                        ],
+                      PricingCardWidget(
+                        ticketType: vip,
+                        price: 2000,
+                        maxTickets: 300,
+                        svgIconPath: regularTicketIconSVGPath,
+                      ),
+                      PricingCardWidget(
+                        ticketType: standard,
+                        price: 2000,
+                        maxTickets: 300,
+                        svgIconPath: regularTicketIconSVGPath,
                       ),
                     ],
                   ),
                 ],
               ),
             ),
+            smallVerticalSizedBox,
             PrimaryButton(
               onPressed: () {
                 context.router.push(ProductPricingRoute());
@@ -157,6 +235,7 @@ class ProductReviewAndPublishPage extends StatelessWidget {
               child: d.right(cancelString),
               fillColor: Colors.transparent,
             ),
+            verySmallVerticalSizedBox,
           ],
         ),
       ),
