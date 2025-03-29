@@ -5,6 +5,7 @@ import 'package:fullbooker/application/core/services/analytics_service.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/core/common/app_router.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
+import 'package:fullbooker/features/host/pages/products_page.dart';
 import 'package:fullbooker/presentation/core/theme/app_theme.dart';
 
 class FullbookerAppWidget extends StatelessWidget {
@@ -30,7 +31,7 @@ class FullbookerAppWidget extends StatelessWidget {
                 );
               }
               return DeepLink(
-                <PageRouteInfo<dynamic>>[ProductReviewAndPublishRoute()],
+                <PageRouteInfo<dynamic>>[ProductsRoute()],
               );
             },
             navigatorObservers: () => <NavigatorObserver>[

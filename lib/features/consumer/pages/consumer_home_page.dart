@@ -8,7 +8,7 @@ import 'package:fullbooker/features/consumer/widgets/events_section_widget.dart'
 import 'package:fullbooker/features/host/controllers/category_controller.dart';
 import 'package:fullbooker/features/host/controllers/product_controller.dart';
 import 'package:fullbooker/features/host/models/categories.dart';
-import 'package:fullbooker/features/host/models/product.dart';
+import 'package:fullbooker/features/host/models/old_product.dart';
 import 'package:fullbooker/presentation/core/components/shimmers.dart';
 import 'package:fullbooker/shared/widgets/standard_nav_bar.dart';
 
@@ -23,7 +23,7 @@ class ConsumerHomePage extends StatefulWidget {
 class _ConsumerHomePageState extends State<ConsumerHomePage> {
   ProductController productsController = ProductController();
   CategoryViewModel categoriesController = CategoryViewModel();
-  List<Product>? products;
+  List<OldProduct>? products;
   Map<String, Category>? categories;
   bool isLoading = false;
 

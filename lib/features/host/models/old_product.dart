@@ -1,7 +1,7 @@
 import 'package:fullbooker/core/models.dart';
 import 'package:fullbooker/features/auth/models/login.dart';
 
-class Product implements Model {
+class OldProduct implements Model {
   String id;
   String name;
   String? description;
@@ -14,7 +14,7 @@ class Product implements Model {
   List<ProductLocation> locations;
   Map<String, dynamic>? availability;
 
-  Product(
+  OldProduct(
     this.id,
     this.name,
     this.description,
@@ -32,9 +32,9 @@ class Product implements Model {
   String getId() => id;
 }
 
-class ProductSerializer implements Serializer<Product> {
+class ProductSerializer implements Serializer<OldProduct> {
   @override
-  Product fromJson(Map<String, dynamic> json) {
+  OldProduct fromJson(Map<String, dynamic> json) {
     final List<ProductPricing> pricings = <ProductPricing>[];
     for (dynamic pricing in json['pricing'] ?? <dynamic>[]) {
       pricings.add(ProductPricingSerializer().fromJson(pricing));
@@ -43,7 +43,7 @@ class ProductSerializer implements Serializer<Product> {
     for (dynamic location in json['locations'] ?? <dynamic>[]) {
       locations.add(ProductLocationSerializer().fromJson(location));
     }
-    return Product(
+    return OldProduct(
       json['id'] as String,
       json['name'] as String,
       json['description'] as String?,
@@ -61,7 +61,7 @@ class ProductSerializer implements Serializer<Product> {
   }
 
   @override
-  Map<String, Object?> toJson(Product object) {
+  Map<String, Object?> toJson(OldProduct object) {
     return <String, Object?>{
       'name': object.name,
       'description': object.description,

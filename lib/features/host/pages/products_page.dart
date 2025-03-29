@@ -3,10 +3,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/login_view_model.dart';
-import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
-import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
-import 'package:fullbooker/presentation/core/components/generic_zero_state.dart';
+import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
+import 'package:fullbooker/presentation/core/components/new_product_card.dart';
+import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
 
 @RoutePage()
@@ -22,27 +22,28 @@ class _ProductsPageState extends State<ProductsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: const BottomNavBar(),
+      appBar: CustomAppBar(
+        showBell: false,
+        title: productsString,
+      ),
       body: Padding(
-        padding: const EdgeInsets.all(12.0),
+        padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             StoreConnector<AppState, LoginPageViewModel>(
               converter: (Store<AppState> store) =>
                   LoginPageViewModel.fromState(store.state),
-              builder: (
-                BuildContext context,
-                LoginPageViewModel snapshot,
-              ) {
-                return GenericZeroState(
-                  iconPath: productZeroStateSVGPath,
-                  title: noProducts,
-                  description: noProductsCopy,
-                  onCTATap: () {
-                    context.router.push(SetupProductTypeRoute());
-                  },
-                  ctaText: createProductString,
-                );
+              builder: (BuildContext context, LoginPageViewModel vm) {
+                return NewProductCard();
+                // return GenericZeroState(
+                //   iconPath: productZeroStateSVGPath,
+                //   title: noProducts,
+                //   description: noProductsCopy,
+                //   onCTATap: () {
+                //     context.router.push(SetupProductTypeRoute());
+                //   },
+                //   ctaText: createProductString,
+                // );
               },
             ),
           ],

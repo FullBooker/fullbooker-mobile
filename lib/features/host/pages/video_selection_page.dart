@@ -9,7 +9,7 @@ import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/features/host/controllers/product_controller.dart';
-import 'package:fullbooker/features/host/models/product.dart';
+import 'package:fullbooker/features/host/models/old_product.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
@@ -20,7 +20,7 @@ import 'package:video_player/video_player.dart';
 
 @RoutePage()
 class VideoSelectionPage extends StatefulWidget {
-  final Product product;
+  final OldProduct product;
   final ProductTypes type;
 
   const VideoSelectionPage({

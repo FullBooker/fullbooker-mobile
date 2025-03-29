@@ -4,7 +4,7 @@ import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/features/consumer/widgets/mpesa_checkout_instructions_widget.dart';
 import 'package:fullbooker/features/consumer/widgets/payment_forms.dart';
-import 'package:fullbooker/features/host/models/product.dart';
+import 'package:fullbooker/features/host/models/old_product.dart';
 import 'package:fullbooker/shared/entities/ticket.dart';
 import 'package:fullbooker/shared/widgets/information_modal.dart';
 import 'package:fullbooker/shared/widgets/standard_nav_bar.dart';
@@ -21,7 +21,7 @@ class PaymentSummaryPage extends StatelessWidget {
   });
 
   final String locationName;
-  final Product product;
+  final OldProduct product;
   final DateTime selectedDateTime;
   final List<Ticket> tickets;
 

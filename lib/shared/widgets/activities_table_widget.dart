@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
-import 'package:fullbooker/features/host/models/product.dart';
+import 'package:fullbooker/features/host/models/old_product.dart';
 import 'package:fullbooker/shared/entities/table_header_test.dart';
 
 class ActivitiesTableTable extends StatelessWidget {
-  const ActivitiesTableTable({super.key, this.products = const <Product>[]});
+  const ActivitiesTableTable({super.key, this.products = const <OldProduct>[]});
 
-  final List<Product> products;
+  final List<OldProduct> products;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class ActivitiesTableTable extends StatelessWidget {
           DataColumn(label: TableHeaderText(nextActionsString)),
         ],
         rows: products.map(
-          (Product product) {
+          (OldProduct product) {
             return DataRow(
               cells: <DataCell>[
                 DataCell(

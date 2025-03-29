@@ -4,14 +4,14 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
-import 'package:fullbooker/features/host/models/product.dart';
+import 'package:fullbooker/features/host/models/old_product.dart';
 import 'package:fullbooker/presentation/core/components/shimmers.dart';
 import 'package:fullbooker/shared/widgets/old_buttons.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:map_location_picker/map_location_picker.dart';
 
 class EventCarouselWidget extends StatefulWidget {
-  final Product product;
+  final OldProduct product;
   final String actionLabel;
   final Function(String) onActionClick;
 

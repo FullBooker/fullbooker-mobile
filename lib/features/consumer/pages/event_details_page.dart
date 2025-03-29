@@ -11,7 +11,7 @@ import 'package:fullbooker/features/consumer/widgets/host_details_widget.dart';
 import 'package:fullbooker/features/consumer/widgets/rating_summary_widget.dart';
 import 'package:fullbooker/features/consumer/widgets/review_card_widget.dart';
 import 'package:fullbooker/features/consumer/widgets/ticket_booking_widget.dart';
-import 'package:fullbooker/features/host/models/product.dart';
+import 'package:fullbooker/features/host/models/old_product.dart';
 import 'package:fullbooker/presentation/core/components/shimmers.dart';
 import 'package:fullbooker/shared/entities/data_mocks.dart';
 import 'package:fullbooker/shared/widgets/old_secondary_button.dart';
@@ -26,7 +26,7 @@ class EventDetailsPage extends StatefulWidget {
     required this.productLocationName,
   });
 
-  final Product event;
+  final OldProduct event;
   final String productLocationName;
 
   @override

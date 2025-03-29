@@ -24,7 +24,7 @@ import 'package:fullbooker/features/consumer/pages/payment_confirmation_page.dar
 import 'package:fullbooker/features/consumer/pages/payment_summary_page.dart'
     as _i23;
 import 'package:fullbooker/features/host/models/currency.dart' as _i49;
-import 'package:fullbooker/features/host/models/product.dart' as _i43;
+import 'package:fullbooker/features/host/models/old_product.dart' as _i43;
 import 'package:fullbooker/features/host/models/sub_category_model.dart'
     as _i48;
 import 'package:fullbooker/features/host/pages/activity_date_selection_page.dart'
@@ -100,18 +100,18 @@ class ActivityDateSelectionRoute
     extends _i41.PageRouteInfo<ActivityDateSelectionRouteArgs> {
   ActivityDateSelectionRoute({
     _i42.Key? key,
-    required _i43.Product product,
+    required _i43.OldProduct product,
     required Map<String, Object?> location,
     List<_i41.PageRouteInfo>? children,
   }) : super(
-         ActivityDateSelectionRoute.name,
-         args: ActivityDateSelectionRouteArgs(
-           key: key,
-           product: product,
-           location: location,
-         ),
-         initialChildren: children,
-       );
+          ActivityDateSelectionRoute.name,
+          args: ActivityDateSelectionRouteArgs(
+            key: key,
+            product: product,
+            location: location,
+          ),
+          initialChildren: children,
+        );
 
   static const String name = 'ActivityDateSelectionRoute';
 
@@ -137,7 +137,7 @@ class ActivityDateSelectionRouteArgs {
 
   final _i42.Key? key;
 
-  final _i43.Product product;
+  final _i43.OldProduct product;
 
   final Map<String, Object?> location;
 
@@ -153,18 +153,18 @@ class ActivityDayPassRoute
     extends _i41.PageRouteInfo<ActivityDayPassRouteArgs> {
   ActivityDayPassRoute({
     _i42.Key? key,
-    required _i43.Product product,
+    required _i43.OldProduct product,
     required _i44.SessionPricing sessionPricing,
     List<_i41.PageRouteInfo>? children,
   }) : super(
-         ActivityDayPassRoute.name,
-         args: ActivityDayPassRouteArgs(
-           key: key,
-           product: product,
-           sessionPricing: sessionPricing,
-         ),
-         initialChildren: children,
-       );
+          ActivityDayPassRoute.name,
+          args: ActivityDayPassRouteArgs(
+            key: key,
+            product: product,
+            sessionPricing: sessionPricing,
+          ),
+          initialChildren: children,
+        );
 
   static const String name = 'ActivityDayPassRoute';
 
@@ -190,7 +190,7 @@ class ActivityDayPassRouteArgs {
 
   final _i42.Key? key;
 
-  final _i43.Product product;
+  final _i43.OldProduct product;
 
   final _i44.SessionPricing sessionPricing;
 
@@ -206,13 +206,13 @@ class ActivityPricingRoute
     extends _i41.PageRouteInfo<ActivityPricingRouteArgs> {
   ActivityPricingRoute({
     _i42.Key? key,
-    required _i43.Product product,
+    required _i43.OldProduct product,
     List<_i41.PageRouteInfo>? children,
   }) : super(
-         ActivityPricingRoute.name,
-         args: ActivityPricingRouteArgs(key: key, product: product),
-         initialChildren: children,
-       );
+          ActivityPricingRoute.name,
+          args: ActivityPricingRouteArgs(key: key, product: product),
+          initialChildren: children,
+        );
 
   static const String name = 'ActivityPricingRoute';
 
@@ -230,7 +230,7 @@ class ActivityPricingRouteArgs {
 
   final _i42.Key? key;
 
-  final _i43.Product product;
+  final _i43.OldProduct product;
 
   @override
   String toString() {
@@ -244,20 +244,20 @@ class ActivitySubscriptionRoute
     extends _i41.PageRouteInfo<ActivitySubscriptionRouteArgs> {
   ActivitySubscriptionRoute({
     _i42.Key? key,
-    required _i43.Product product,
+    required _i43.OldProduct product,
     required _i44.SessionPricing sessionPricing,
     _i44.SessionPricing? dayPassPricing,
     List<_i41.PageRouteInfo>? children,
   }) : super(
-         ActivitySubscriptionRoute.name,
-         args: ActivitySubscriptionRouteArgs(
-           key: key,
-           product: product,
-           sessionPricing: sessionPricing,
-           dayPassPricing: dayPassPricing,
-         ),
-         initialChildren: children,
-       );
+          ActivitySubscriptionRoute.name,
+          args: ActivitySubscriptionRouteArgs(
+            key: key,
+            product: product,
+            sessionPricing: sessionPricing,
+            dayPassPricing: dayPassPricing,
+          ),
+          initialChildren: children,
+        );
 
   static const String name = 'ActivitySubscriptionRoute';
 
@@ -285,7 +285,7 @@ class ActivitySubscriptionRouteArgs {
 
   final _i42.Key? key;
 
-  final _i43.Product product;
+  final _i43.OldProduct product;
 
   final _i44.SessionPricing sessionPricing;
 
@@ -301,7 +301,7 @@ class ActivitySubscriptionRouteArgs {
 /// [_i5.AddProductPricingPage]
 class AddProductPricingRoute extends _i41.PageRouteInfo<void> {
   const AddProductPricingRoute({List<_i41.PageRouteInfo>? children})
-    : super(AddProductPricingRoute.name, initialChildren: children);
+      : super(AddProductPricingRoute.name, initialChildren: children);
 
   static const String name = 'AddProductPricingRoute';
 
@@ -317,7 +317,7 @@ class AddProductPricingRoute extends _i41.PageRouteInfo<void> {
 /// [_i6.CategorySelectionPage]
 class CategorySelectionRoute extends _i41.PageRouteInfo<void> {
   const CategorySelectionRoute({List<_i41.PageRouteInfo>? children})
-    : super(CategorySelectionRoute.name, initialChildren: children);
+      : super(CategorySelectionRoute.name, initialChildren: children);
 
   static const String name = 'CategorySelectionRoute';
 
@@ -333,7 +333,7 @@ class CategorySelectionRoute extends _i41.PageRouteInfo<void> {
 /// [_i7.ChangePasswordPage]
 class ChangePasswordRoute extends _i41.PageRouteInfo<void> {
   const ChangePasswordRoute({List<_i41.PageRouteInfo>? children})
-    : super(ChangePasswordRoute.name, initialChildren: children);
+      : super(ChangePasswordRoute.name, initialChildren: children);
 
   static const String name = 'ChangePasswordRoute';
 
@@ -349,7 +349,7 @@ class ChangePasswordRoute extends _i41.PageRouteInfo<void> {
 /// [_i8.ConsumerHomePage]
 class ConsumerHomeRoute extends _i41.PageRouteInfo<void> {
   const ConsumerHomeRoute({List<_i41.PageRouteInfo>? children})
-    : super(ConsumerHomeRoute.name, initialChildren: children);
+      : super(ConsumerHomeRoute.name, initialChildren: children);
 
   static const String name = 'ConsumerHomeRoute';
 
@@ -365,7 +365,7 @@ class ConsumerHomeRoute extends _i41.PageRouteInfo<void> {
 /// [_i9.CreateAccountPage]
 class CreateAccountRoute extends _i41.PageRouteInfo<void> {
   const CreateAccountRoute({List<_i41.PageRouteInfo>? children})
-    : super(CreateAccountRoute.name, initialChildren: children);
+      : super(CreateAccountRoute.name, initialChildren: children);
 
   static const String name = 'CreateAccountRoute';
 
@@ -383,17 +383,17 @@ class DateSelectionRoute extends _i41.PageRouteInfo<DateSelectionRouteArgs> {
   DateSelectionRoute({
     _i42.Key? key,
     required Map<String, Object?> location,
-    required _i43.Product product,
+    required _i43.OldProduct product,
     List<_i41.PageRouteInfo>? children,
   }) : super(
-         DateSelectionRoute.name,
-         args: DateSelectionRouteArgs(
-           key: key,
-           location: location,
-           product: product,
-         ),
-         initialChildren: children,
-       );
+          DateSelectionRoute.name,
+          args: DateSelectionRouteArgs(
+            key: key,
+            location: location,
+            product: product,
+          ),
+          initialChildren: children,
+        );
 
   static const String name = 'DateSelectionRoute';
 
@@ -421,7 +421,7 @@ class DateSelectionRouteArgs {
 
   final Map<String, Object?> location;
 
-  final _i43.Product product;
+  final _i43.OldProduct product;
 
   @override
   String toString() {
@@ -434,13 +434,13 @@ class DateSelectionRouteArgs {
 class EventCategoryRoute extends _i41.PageRouteInfo<EventCategoryRouteArgs> {
   EventCategoryRoute({
     _i42.Key? key,
-    required _i43.Product product,
+    required _i43.OldProduct product,
     List<_i41.PageRouteInfo>? children,
   }) : super(
-         EventCategoryRoute.name,
-         args: EventCategoryRouteArgs(key: key, product: product),
-         initialChildren: children,
-       );
+          EventCategoryRoute.name,
+          args: EventCategoryRouteArgs(key: key, product: product),
+          initialChildren: children,
+        );
 
   static const String name = 'EventCategoryRoute';
 
@@ -458,7 +458,7 @@ class EventCategoryRouteArgs {
 
   final _i42.Key? key;
 
-  final _i43.Product product;
+  final _i43.OldProduct product;
 
   @override
   String toString() {
@@ -471,18 +471,18 @@ class EventCategoryRouteArgs {
 class EventDetailsRoute extends _i41.PageRouteInfo<EventDetailsRouteArgs> {
   EventDetailsRoute({
     _i45.Key? key,
-    required _i43.Product event,
+    required _i43.OldProduct event,
     required String productLocationName,
     List<_i41.PageRouteInfo>? children,
   }) : super(
-         EventDetailsRoute.name,
-         args: EventDetailsRouteArgs(
-           key: key,
-           event: event,
-           productLocationName: productLocationName,
-         ),
-         initialChildren: children,
-       );
+          EventDetailsRoute.name,
+          args: EventDetailsRouteArgs(
+            key: key,
+            event: event,
+            productLocationName: productLocationName,
+          ),
+          initialChildren: children,
+        );
 
   static const String name = 'EventDetailsRoute';
 
@@ -508,7 +508,7 @@ class EventDetailsRouteArgs {
 
   final _i45.Key? key;
 
-  final _i43.Product event;
+  final _i43.OldProduct event;
 
   final String productLocationName;
 
@@ -522,7 +522,7 @@ class EventDetailsRouteArgs {
 /// [_i13.EventsSummaryPage]
 class EventsSummaryRoute extends _i41.PageRouteInfo<void> {
   const EventsSummaryRoute({List<_i41.PageRouteInfo>? children})
-    : super(EventsSummaryRoute.name, initialChildren: children);
+      : super(EventsSummaryRoute.name, initialChildren: children);
 
   static const String name = 'EventsSummaryRoute';
 
@@ -542,10 +542,10 @@ class GalleryRoute extends _i41.PageRouteInfo<GalleryRouteArgs> {
     required List<String> images,
     List<_i41.PageRouteInfo>? children,
   }) : super(
-         GalleryRoute.name,
-         args: GalleryRouteArgs(key: key, images: images),
-         initialChildren: children,
-       );
+          GalleryRoute.name,
+          args: GalleryRouteArgs(key: key, images: images),
+          initialChildren: children,
+        );
 
   static const String name = 'GalleryRoute';
 
@@ -580,10 +580,10 @@ class HostProductSummaryRoute
     required String host,
     List<_i41.PageRouteInfo>? children,
   }) : super(
-         HostProductSummaryRoute.name,
-         args: HostProductSummaryRouteArgs(key: key, host: host),
-         initialChildren: children,
-       );
+          HostProductSummaryRoute.name,
+          args: HostProductSummaryRouteArgs(key: key, host: host),
+          initialChildren: children,
+        );
 
   static const String name = 'HostProductSummaryRoute';
 
@@ -613,7 +613,7 @@ class HostProductSummaryRouteArgs {
 /// [_i16.HostingHomePage]
 class HostingHomeRoute extends _i41.PageRouteInfo<void> {
   const HostingHomeRoute({List<_i41.PageRouteInfo>? children})
-    : super(HostingHomeRoute.name, initialChildren: children);
+      : super(HostingHomeRoute.name, initialChildren: children);
 
   static const String name = 'HostingHomeRoute';
 
@@ -633,10 +633,10 @@ class ImagePreviewRoute extends _i41.PageRouteInfo<ImagePreviewRouteArgs> {
     required String imageUrl,
     List<_i41.PageRouteInfo>? children,
   }) : super(
-         ImagePreviewRoute.name,
-         args: ImagePreviewRouteArgs(key: key, imageUrl: imageUrl),
-         initialChildren: children,
-       );
+          ImagePreviewRoute.name,
+          args: ImagePreviewRouteArgs(key: key, imageUrl: imageUrl),
+          initialChildren: children,
+        );
 
   static const String name = 'ImagePreviewRoute';
 
@@ -667,14 +667,14 @@ class ImagePreviewRouteArgs {
 class ImageSelectionRoute extends _i41.PageRouteInfo<ImageSelectionRouteArgs> {
   ImageSelectionRoute({
     _i42.Key? key,
-    required _i43.Product product,
+    required _i43.OldProduct product,
     _i46.ProductTypes type = _i46.ProductTypes.Event,
     List<_i41.PageRouteInfo>? children,
   }) : super(
-         ImageSelectionRoute.name,
-         args: ImageSelectionRouteArgs(key: key, product: product, type: type),
-         initialChildren: children,
-       );
+          ImageSelectionRoute.name,
+          args: ImageSelectionRouteArgs(key: key, product: product, type: type),
+          initialChildren: children,
+        );
 
   static const String name = 'ImageSelectionRoute';
 
@@ -700,7 +700,7 @@ class ImageSelectionRouteArgs {
 
   final _i42.Key? key;
 
-  final _i43.Product product;
+  final _i43.OldProduct product;
 
   final _i46.ProductTypes type;
 
@@ -715,19 +715,19 @@ class ImageSelectionRouteArgs {
 class LocationSelectionRoute
     extends _i41.PageRouteInfo<LocationSelectionRouteArgs> {
   LocationSelectionRoute({
-    required _i43.Product product,
+    required _i43.OldProduct product,
     _i42.Key? key,
     required _i46.ProductTypes productType,
     List<_i41.PageRouteInfo>? children,
   }) : super(
-         LocationSelectionRoute.name,
-         args: LocationSelectionRouteArgs(
-           product: product,
-           key: key,
-           productType: productType,
-         ),
-         initialChildren: children,
-       );
+          LocationSelectionRoute.name,
+          args: LocationSelectionRouteArgs(
+            product: product,
+            key: key,
+            productType: productType,
+          ),
+          initialChildren: children,
+        );
 
   static const String name = 'LocationSelectionRoute';
 
@@ -751,7 +751,7 @@ class LocationSelectionRouteArgs {
     required this.productType,
   });
 
-  final _i43.Product product;
+  final _i43.OldProduct product;
 
   final _i42.Key? key;
 
@@ -767,7 +767,7 @@ class LocationSelectionRouteArgs {
 /// [_i20.LoginPage]
 class LoginRoute extends _i41.PageRouteInfo<void> {
   const LoginRoute({List<_i41.PageRouteInfo>? children})
-    : super(LoginRoute.name, initialChildren: children);
+      : super(LoginRoute.name, initialChildren: children);
 
   static const String name = 'LoginRoute';
 
@@ -783,7 +783,7 @@ class LoginRoute extends _i41.PageRouteInfo<void> {
 /// [_i21.OverviewPage]
 class OverviewRoute extends _i41.PageRouteInfo<void> {
   const OverviewRoute({List<_i41.PageRouteInfo>? children})
-    : super(OverviewRoute.name, initialChildren: children);
+      : super(OverviewRoute.name, initialChildren: children);
 
   static const String name = 'OverviewRoute';
 
@@ -801,20 +801,20 @@ class PaymentConfirmationRoute
     extends _i41.PageRouteInfo<PaymentConfirmationRouteArgs> {
   PaymentConfirmationRoute({
     _i42.Key? key,
-    required _i43.Product product,
+    required _i43.OldProduct product,
     required String locationName,
     required _i47.Ticket ticket,
     List<_i41.PageRouteInfo>? children,
   }) : super(
-         PaymentConfirmationRoute.name,
-         args: PaymentConfirmationRouteArgs(
-           key: key,
-           product: product,
-           locationName: locationName,
-           ticket: ticket,
-         ),
-         initialChildren: children,
-       );
+          PaymentConfirmationRoute.name,
+          args: PaymentConfirmationRouteArgs(
+            key: key,
+            product: product,
+            locationName: locationName,
+            ticket: ticket,
+          ),
+          initialChildren: children,
+        );
 
   static const String name = 'PaymentConfirmationRoute';
 
@@ -842,7 +842,7 @@ class PaymentConfirmationRouteArgs {
 
   final _i42.Key? key;
 
-  final _i43.Product product;
+  final _i43.OldProduct product;
 
   final String locationName;
 
@@ -859,22 +859,22 @@ class PaymentConfirmationRouteArgs {
 class PaymentSummaryRoute extends _i41.PageRouteInfo<PaymentSummaryRouteArgs> {
   PaymentSummaryRoute({
     _i42.Key? key,
-    required _i43.Product product,
+    required _i43.OldProduct product,
     required String locationName,
     required List<_i47.Ticket> tickets,
     required DateTime selectedDateTime,
     List<_i41.PageRouteInfo>? children,
   }) : super(
-         PaymentSummaryRoute.name,
-         args: PaymentSummaryRouteArgs(
-           key: key,
-           product: product,
-           locationName: locationName,
-           tickets: tickets,
-           selectedDateTime: selectedDateTime,
-         ),
-         initialChildren: children,
-       );
+          PaymentSummaryRoute.name,
+          args: PaymentSummaryRouteArgs(
+            key: key,
+            product: product,
+            locationName: locationName,
+            tickets: tickets,
+            selectedDateTime: selectedDateTime,
+          ),
+          initialChildren: children,
+        );
 
   static const String name = 'PaymentSummaryRoute';
 
@@ -904,7 +904,7 @@ class PaymentSummaryRouteArgs {
 
   final _i42.Key? key;
 
-  final _i43.Product product;
+  final _i43.OldProduct product;
 
   final String locationName;
 
@@ -922,7 +922,7 @@ class PaymentSummaryRouteArgs {
 /// [_i24.ProductBasicDetailsPage]
 class ProductBasicDetailsRoute extends _i41.PageRouteInfo<void> {
   const ProductBasicDetailsRoute({List<_i41.PageRouteInfo>? children})
-    : super(ProductBasicDetailsRoute.name, initialChildren: children);
+      : super(ProductBasicDetailsRoute.name, initialChildren: children);
 
   static const String name = 'ProductBasicDetailsRoute';
 
@@ -938,7 +938,7 @@ class ProductBasicDetailsRoute extends _i41.PageRouteInfo<void> {
 /// [_i25.ProductDateTimePagePage]
 class ProductDateTimeRouteRoute extends _i41.PageRouteInfo<void> {
   const ProductDateTimeRouteRoute({List<_i41.PageRouteInfo>? children})
-    : super(ProductDateTimeRouteRoute.name, initialChildren: children);
+      : super(ProductDateTimeRouteRoute.name, initialChildren: children);
 
   static const String name = 'ProductDateTimeRouteRoute';
 
@@ -959,14 +959,14 @@ class ProductDetailsRoute extends _i41.PageRouteInfo<ProductDetailsRouteArgs> {
     required _i46.ProductTypes productType,
     List<_i41.PageRouteInfo>? children,
   }) : super(
-         ProductDetailsRoute.name,
-         args: ProductDetailsRouteArgs(
-           category: category,
-           key: key,
-           productType: productType,
-         ),
-         initialChildren: children,
-       );
+          ProductDetailsRoute.name,
+          args: ProductDetailsRouteArgs(
+            category: category,
+            key: key,
+            productType: productType,
+          ),
+          initialChildren: children,
+        );
 
   static const String name = 'ProductDetailsRoute';
 
@@ -1006,7 +1006,7 @@ class ProductDetailsRouteArgs {
 /// [_i27.ProductLocationPage]
 class ProductLocationRoute extends _i41.PageRouteInfo<void> {
   const ProductLocationRoute({List<_i41.PageRouteInfo>? children})
-    : super(ProductLocationRoute.name, initialChildren: children);
+      : super(ProductLocationRoute.name, initialChildren: children);
 
   static const String name = 'ProductLocationRoute';
 
@@ -1022,7 +1022,7 @@ class ProductLocationRoute extends _i41.PageRouteInfo<void> {
 /// [_i28.ProductPhotosPage]
 class ProductPhotosRoute extends _i41.PageRouteInfo<void> {
   const ProductPhotosRoute({List<_i41.PageRouteInfo>? children})
-    : super(ProductPhotosRoute.name, initialChildren: children);
+      : super(ProductPhotosRoute.name, initialChildren: children);
 
   static const String name = 'ProductPhotosRoute';
 
@@ -1038,7 +1038,7 @@ class ProductPhotosRoute extends _i41.PageRouteInfo<void> {
 /// [_i29.ProductPricingPage]
 class ProductPricingRoute extends _i41.PageRouteInfo<void> {
   const ProductPricingRoute({List<_i41.PageRouteInfo>? children})
-    : super(ProductPricingRoute.name, initialChildren: children);
+      : super(ProductPricingRoute.name, initialChildren: children);
 
   static const String name = 'ProductPricingRoute';
 
@@ -1054,7 +1054,7 @@ class ProductPricingRoute extends _i41.PageRouteInfo<void> {
 /// [_i30.ProductReviewAndPublishPage]
 class ProductReviewAndPublishRoute extends _i41.PageRouteInfo<void> {
   const ProductReviewAndPublishRoute({List<_i41.PageRouteInfo>? children})
-    : super(ProductReviewAndPublishRoute.name, initialChildren: children);
+      : super(ProductReviewAndPublishRoute.name, initialChildren: children);
 
   static const String name = 'ProductReviewAndPublishRoute';
 
@@ -1070,7 +1070,7 @@ class ProductReviewAndPublishRoute extends _i41.PageRouteInfo<void> {
 /// [_i31.ProductSetupPreviewPage]
 class ProductSetupPreviewRoute extends _i41.PageRouteInfo<void> {
   const ProductSetupPreviewRoute({List<_i41.PageRouteInfo>? children})
-    : super(ProductSetupPreviewRoute.name, initialChildren: children);
+      : super(ProductSetupPreviewRoute.name, initialChildren: children);
 
   static const String name = 'ProductSetupPreviewRoute';
 
@@ -1086,7 +1086,7 @@ class ProductSetupPreviewRoute extends _i41.PageRouteInfo<void> {
 /// [_i32.ProductsPage]
 class ProductsRoute extends _i41.PageRouteInfo<void> {
   const ProductsRoute({List<_i41.PageRouteInfo>? children})
-    : super(ProductsRoute.name, initialChildren: children);
+      : super(ProductsRoute.name, initialChildren: children);
 
   static const String name = 'ProductsRoute';
 
@@ -1102,7 +1102,7 @@ class ProductsRoute extends _i41.PageRouteInfo<void> {
 /// [_i33.ProfilePage]
 class ProfileRoute extends _i41.PageRouteInfo<void> {
   const ProfileRoute({List<_i41.PageRouteInfo>? children})
-    : super(ProfileRoute.name, initialChildren: children);
+      : super(ProfileRoute.name, initialChildren: children);
 
   static const String name = 'ProfileRoute';
 
@@ -1118,7 +1118,7 @@ class ProfileRoute extends _i41.PageRouteInfo<void> {
 /// [_i34.RequestOTPPage]
 class RequestOTPRoute extends _i41.PageRouteInfo<void> {
   const RequestOTPRoute({List<_i41.PageRouteInfo>? children})
-    : super(RequestOTPRoute.name, initialChildren: children);
+      : super(RequestOTPRoute.name, initialChildren: children);
 
   static const String name = 'RequestOTPRoute';
 
@@ -1134,7 +1134,7 @@ class RequestOTPRoute extends _i41.PageRouteInfo<void> {
 /// [_i35.SetupProductCategoryPage]
 class SetupProductCategoryRoute extends _i41.PageRouteInfo<void> {
   const SetupProductCategoryRoute({List<_i41.PageRouteInfo>? children})
-    : super(SetupProductCategoryRoute.name, initialChildren: children);
+      : super(SetupProductCategoryRoute.name, initialChildren: children);
 
   static const String name = 'SetupProductCategoryRoute';
 
@@ -1150,7 +1150,7 @@ class SetupProductCategoryRoute extends _i41.PageRouteInfo<void> {
 /// [_i36.SetupProductTypePage]
 class SetupProductTypeRoute extends _i41.PageRouteInfo<void> {
   const SetupProductTypeRoute({List<_i41.PageRouteInfo>? children})
-    : super(SetupProductTypeRoute.name, initialChildren: children);
+      : super(SetupProductTypeRoute.name, initialChildren: children);
 
   static const String name = 'SetupProductTypeRoute';
 
@@ -1166,7 +1166,7 @@ class SetupProductTypeRoute extends _i41.PageRouteInfo<void> {
 /// [_i37.SharedLandingPage]
 class SharedLandingRoute extends _i41.PageRouteInfo<void> {
   const SharedLandingRoute({List<_i41.PageRouteInfo>? children})
-    : super(SharedLandingRoute.name, initialChildren: children);
+      : super(SharedLandingRoute.name, initialChildren: children);
 
   static const String name = 'SharedLandingRoute';
 
@@ -1183,24 +1183,24 @@ class SharedLandingRoute extends _i41.PageRouteInfo<void> {
 class TicketsSummaryRoute extends _i41.PageRouteInfo<TicketsSummaryRouteArgs> {
   TicketsSummaryRoute({
     _i42.Key? key,
-    required _i43.Product product,
+    required _i43.OldProduct product,
     required Map<String, double> prices,
     required Map<String, int> amounts,
     required _i49.Currency currency,
     required List<String> selectedCategories,
     List<_i41.PageRouteInfo>? children,
   }) : super(
-         TicketsSummaryRoute.name,
-         args: TicketsSummaryRouteArgs(
-           key: key,
-           product: product,
-           prices: prices,
-           amounts: amounts,
-           currency: currency,
-           selectedCategories: selectedCategories,
-         ),
-         initialChildren: children,
-       );
+          TicketsSummaryRoute.name,
+          args: TicketsSummaryRouteArgs(
+            key: key,
+            product: product,
+            prices: prices,
+            amounts: amounts,
+            currency: currency,
+            selectedCategories: selectedCategories,
+          ),
+          initialChildren: children,
+        );
 
   static const String name = 'TicketsSummaryRoute';
 
@@ -1232,7 +1232,7 @@ class TicketsSummaryRouteArgs {
 
   final _i42.Key? key;
 
-  final _i43.Product product;
+  final _i43.OldProduct product;
 
   final Map<String, double> prices;
 
@@ -1252,7 +1252,7 @@ class TicketsSummaryRouteArgs {
 /// [_i39.VerifyOTPPage]
 class VerifyOTPRoute extends _i41.PageRouteInfo<void> {
   const VerifyOTPRoute({List<_i41.PageRouteInfo>? children})
-    : super(VerifyOTPRoute.name, initialChildren: children);
+      : super(VerifyOTPRoute.name, initialChildren: children);
 
   static const String name = 'VerifyOTPRoute';
 
@@ -1269,14 +1269,14 @@ class VerifyOTPRoute extends _i41.PageRouteInfo<void> {
 class VideoSelectionRoute extends _i41.PageRouteInfo<VideoSelectionRouteArgs> {
   VideoSelectionRoute({
     _i42.Key? key,
-    required _i43.Product product,
+    required _i43.OldProduct product,
     required _i46.ProductTypes type,
     List<_i41.PageRouteInfo>? children,
   }) : super(
-         VideoSelectionRoute.name,
-         args: VideoSelectionRouteArgs(key: key, product: product, type: type),
-         initialChildren: children,
-       );
+          VideoSelectionRoute.name,
+          args: VideoSelectionRouteArgs(key: key, product: product, type: type),
+          initialChildren: children,
+        );
 
   static const String name = 'VideoSelectionRoute';
 
@@ -1302,7 +1302,7 @@ class VideoSelectionRouteArgs {
 
   final _i42.Key? key;
 
-  final _i43.Product product;
+  final _i43.OldProduct product;
 
   final _i46.ProductTypes type;
 
