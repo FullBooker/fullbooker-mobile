@@ -6,7 +6,7 @@ import 'package:fullbooker/application/redux/view_models/login_view_model.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:fullbooker/presentation/core/components/new_product_card.dart';
-import 'package:fullbooker/shared/entities/spaces.dart';
+import 'package:fullbooker/shared/entities/data_mocks.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
 
 @RoutePage()
@@ -34,7 +34,9 @@ class _ProductsPageState extends State<ProductsPage> {
               converter: (Store<AppState> store) =>
                   LoginPageViewModel.fromState(store.state),
               builder: (BuildContext context, LoginPageViewModel vm) {
-                return NewProductCard();
+                return NewProductCard(
+                  product: mockHostProduct!,
+                );
                 // return GenericZeroState(
                 //   iconPath: productZeroStateSVGPath,
                 //   title: noProducts,
