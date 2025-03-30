@@ -541,3 +541,9 @@ const String setEventLocation = 'Set your event’s location';
 const String locationZeroStateCopy =
     'Make it easy for guests to find you by selecting your exact spot';
 const String pickLocation = 'Pick Location';
+const String enableLocation = 'Enable Location';
+const String openSettings = 'Open Settings';
+
+const String locationPermsTitle = 'We Need Your Location';
+const String locationPermsCopy =
+    'We need your location to pin your event and help guests find it';

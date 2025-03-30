@@ -1,5 +1,6 @@
 // location_handler.dart
 import 'dart:convert';
+import 'package:fullbooker/shared/entities/location_perms_result.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
@@ -88,5 +89,22 @@ class LocationHandler {
       return null;
     }
     return null;
+  }
+
+  static Future<LocationPermsResult> checkLocationPermission() async {
+    LocationPermission permission = await Geolocator.checkPermission();
+
+    if (permission == LocationPermission.denied ||
+        permission == LocationPermission.unableToDetermine) {
+      permission = await Geolocator.requestPermission();
+    }
+
+    final bool deniedForever = permission == LocationPermission.deniedForever;
+    final bool denied = permission == LocationPermission.denied;
+
+    return LocationPermsResult(
+      denied: denied,
+      deniedForever: deniedForever,
+    );
   }
 }
