@@ -1,8 +1,8 @@
-import 'dart:convert';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
+import 'package:fullbooker/infrastructure/location/location_handler.dart';
 import 'package:fullbooker/shared/widgets/custom_text_input.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:map_location_picker/map_location_picker.dart';
@@ -12,7 +12,6 @@ import 'package:dartz/dartz.dart' as d;
 import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:http/http.dart' as http;
 
 @RoutePage()
 class NewChooseLocationPage extends StatefulWidget {
@@ -23,76 +22,77 @@ class NewChooseLocationPage extends StatefulWidget {
 }
 
 class _NewChooseLocationPageState extends State<NewChooseLocationPage> {
-  LatLng selectedLatLng = const LatLng(-1.228003, 36.900032);
+  late String selectedAddress;
+  late String selectedCity;
+
+  LatLng selectedLatLng = kDefaultLocation;
+
   late GoogleMapController _mapController;
-
-  String selectedAddress = 'KICC';
-  String selectedCity = 'Nairobi';
-
   final TextEditingController _searchController = TextEditingController();
   final List<Map<String, dynamic>> _searchResults = <Map<String, dynamic>>[];
   bool _showSearchResults = false;
 
+  @override
+  void initState() {
+    super.initState();
+    selectedAddress = '';
+    selectedCity = '';
+
+    _setUserLocation();
+  }
+
+  Future<void> _setUserLocation() async {
+    final LatLng location = await LocationHandler.getUserLocation();
+    setState(() {
+      selectedLatLng = location;
+    });
+  }
+
   Future<void> _onSearchChanged(String value) async {
-    if (value.trim().isEmpty) {
-      setState(() => _showSearchResults = false);
-      return;
-    }
-
-    const String apiKey = kMapsAPIKey;
-    final Uri url = Uri.parse(
-      'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$value&components=country:ke&location=-1.286389,36.817223&radius=50000&strictbounds=true&key=$apiKey',
-    );
-
-    try {
-      final http.Response response = await http.get(url);
-      if (response.statusCode == 200) {
-        final List<dynamic> predictions =
-            json.decode(response.body)['predictions'];
-        setState(() {
-          _searchResults.clear();
-          _searchResults.addAll(
-            predictions.take(4).map(
-                  (dynamic item) => <String, dynamic>{
-                    'description': item['description'],
-                    'place_id': item['place_id'],
-                  },
-                ),
-          );
-          _showSearchResults = _searchResults.isNotEmpty;
-        });
-      }
-    } catch (_) {}
+    final List<Map<String, dynamic>> results =
+        await LocationHandler.searchLocation(value);
+    setState(() {
+      _searchResults.clear();
+      _searchResults.addAll(results);
+      _showSearchResults = results.isNotEmpty;
+    });
   }
 
   Future<void> _selectLocation(Map<String, dynamic> location) async {
-    const String apiKey = kMapsAPIKey;
-    final Uri detailsUrl = Uri.parse(
-      'https://maps.googleapis.com/maps/api/place/details/json?place_id=${location['place_id']}&key=$apiKey',
-    );
+    final Map<String, dynamic>? result =
+        await LocationHandler.resolvePlace(location['place_id']);
 
-    try {
-      final http.Response detailsResponse = await http.get(detailsUrl);
-      if (detailsResponse.statusCode == 200) {
-        final dynamic result = json.decode(detailsResponse.body)['result'];
-        final LatLng latLng = LatLng(
-          result['geometry']['location']['lat'],
-          result['geometry']['location']['lng'],
-        );
+    if (result != null) {
+      final LatLng latLng = LatLng(
+        result['geometry']['location']['lat'],
+        result['geometry']['location']['lng'],
+      );
 
-        setState(() {
-          selectedLatLng = latLng;
-          selectedAddress = result['name'] ?? location['description'];
-          selectedCity = result['formatted_address'] ?? '';
-          _searchController.text = location['description'];
-          _showSearchResults = false;
-        });
+      setState(() {
+        selectedLatLng = latLng;
+        selectedAddress = result['name'] ?? location['description'];
+        selectedCity = result['formatted_address'] ?? '';
+        _searchController.text = location['description'];
+        _showSearchResults = false;
+      });
 
-        await _mapController.animateCamera(
-          CameraUpdate.newLatLng(latLng),
-        );
-      }
-    } catch (_) {}
+      await _mapController.animateCamera(
+        CameraUpdate.newLatLng(latLng),
+      );
+    }
+  }
+
+  Future<void> _onMapTapped(LatLng latLng) async {
+    final Map<String, dynamic>? result =
+        await LocationHandler.reverseGeocode(latLng);
+    setState(() {
+      selectedLatLng = latLng;
+      selectedAddress = result?['address_components']?.first['long_name'] ??
+          'Selected location';
+      selectedCity = result?['formatted_address'] ??
+          '${latLng.latitude.toStringAsFixed(5)}, ${latLng.longitude.toStringAsFixed(5)}';
+      _showSearchResults = false;
+    });
   }
 
   @override
@@ -122,15 +122,13 @@ class _NewChooseLocationPageState extends State<NewChooseLocationPage> {
                           _searchResults[index];
                       final String description = location['description'] ?? '';
                       return GestureDetector(
-                        onTap: () {
-                          _selectLocation(location);
-                        },
+                        onTap: () => _selectLocation(location),
                         child: Padding(
                           padding: const EdgeInsets.all(12.0),
                           child: Row(
-                            spacing: 8,
                             children: <Widget>[
                               const HeroIcon(HeroIcons.mapPin, size: 32),
+                              const SizedBox(width: 8),
                               Expanded(
                                 child: Text(
                                   description,
@@ -154,44 +152,10 @@ class _NewChooseLocationPageState extends State<NewChooseLocationPage> {
                 target: selectedLatLng,
                 zoom: 15,
               ),
+              myLocationEnabled: true,
               onMapCreated: (GoogleMapController controller) =>
                   _mapController = controller,
-              onTap: (LatLng latLng) async {
-                const String apiKey = kMapsAPIKey;
-                final Uri reverseGeocodeUrl = Uri.parse(
-                  'https://maps.googleapis.com/maps/api/geocode/json?latlng=${latLng.latitude},${latLng.longitude}&key=$apiKey',
-                );
-
-                try {
-                  final http.Response response =
-                      await http.get(reverseGeocodeUrl);
-                  if (response.statusCode == 200) {
-                    final List results =
-                        json.decode(response.body)['results'] as List<dynamic>;
-                    if (results.isNotEmpty) {
-                      final result = results.first;
-                      setState(() {
-                        selectedLatLng = latLng;
-                        selectedAddress =
-                            result['address_components'].first['long_name'] ??
-                                'Selected location';
-                        selectedCity = result['formatted_address'] ??
-                            '${latLng.latitude.toStringAsFixed(5)}, ${latLng.longitude.toStringAsFixed(5)}';
-                        _showSearchResults = false;
-                      });
-                      return;
-                    }
-                  }
-                } catch (_) {}
-
-                setState(() {
-                  selectedLatLng = latLng;
-                  selectedAddress = 'Selected location';
-                  selectedCity =
-                      '${latLng.latitude.toStringAsFixed(5)}, ${latLng.longitude.toStringAsFixed(5)}';
-                  _showSearchResults = false;
-                });
-              },
+              onTap: _onMapTapped,
               markers: <Marker>{
                 Marker(
                   markerId: const MarkerId('selected'),
@@ -207,28 +171,35 @@ class _NewChooseLocationPageState extends State<NewChooseLocationPage> {
               color: Colors.white,
               boxShadow: <BoxShadow>[
                 BoxShadow(
-                  color: AppColors.bodyTextColor.withValues(alpha: .1),
+                  color: AppColors.bodyTextColor.withAlpha(25),
                   blurRadius: 6,
-                  offset: Offset(0, -2),
+                  offset: const Offset(0, -2),
                 ),
               ],
             ),
             child: Column(
+              spacing: 12,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(
-                  selectedAddress,
-                  style: Theme.of(context).textTheme.titleMedium,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  spacing: 8,
+                  children: <Widget>[
+                    if (selectedAddress.isNotEmpty)
+                      Text(
+                        selectedAddress,
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                    if (selectedCity.isNotEmpty)
+                      Text(
+                        selectedCity,
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                  ],
                 ),
-                const SizedBox(height: 4),
-                Text(
-                  selectedCity,
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                const SizedBox(height: 16),
                 PrimaryButton(
                   onPressed: () {
-                    // TODO(abiud): pop and save the selected location
+                    // TODO(abiud): set the location and pop
                   },
                   child: d.right(continueString),
                 ),
