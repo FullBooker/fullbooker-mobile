@@ -1,6 +1,7 @@
 // Package imports:
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:fullbooker/core/common/constants.dart';
+import 'package:fullbooker/shared/entities/enums.dart';
 
 part 'onboarding_state.freezed.dart';
 part 'onboarding_state.g.dart';
@@ -9,6 +10,7 @@ part 'onboarding_state.g.dart';
 class OnboardingState with _$OnboardingState {
   @JsonSerializable(explicitToJson: true)
   const factory OnboardingState({
+    @Default(SignInMethod.EMAIL) SignInMethod signInMethod,
     @Default(UNKNOWN) String emailAddress,
     @Default(UNKNOWN) String password,
 

@@ -9,6 +9,9 @@ part of 'onboarding_state.dart';
 _$OnboardingStateImpl _$$OnboardingStateImplFromJson(
         Map<String, dynamic> json) =>
     _$OnboardingStateImpl(
+      signInMethod:
+          $enumDecodeNullable(_$SignInMethodEnumMap, json['signInMethod']) ??
+              SignInMethod.EMAIL,
       emailAddress: json['emailAddress'] as String? ?? UNKNOWN,
       password: json['password'] as String? ?? UNKNOWN,
       invalidCredentials: json['invalidCredentials'] as bool? ?? false,
@@ -35,6 +38,7 @@ _$OnboardingStateImpl _$$OnboardingStateImplFromJson(
 Map<String, dynamic> _$$OnboardingStateImplToJson(
         _$OnboardingStateImpl instance) =>
     <String, dynamic>{
+      'signInMethod': _$SignInMethodEnumMap[instance.signInMethod]!,
       'emailAddress': instance.emailAddress,
       'password': instance.password,
       'invalidCredentials': instance.invalidCredentials,
@@ -55,3 +59,8 @@ Map<String, dynamic> _$$OnboardingStateImplToJson(
       'hideResetPassword': instance.hideResetPassword,
       'hideResetConfirmPassword': instance.hideResetConfirmPassword,
     };
+
+const _$SignInMethodEnumMap = {
+  SignInMethod.EMAIL: 'EMAIL',
+  SignInMethod.GOOGLE: 'GOOGLE',
+};

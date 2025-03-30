@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/core/services/i_custom_client.dart';
+import 'package:fullbooker/application/redux/actions/set_sign_in_method_action.dart';
 import 'package:fullbooker/application/redux/actions/update_auth_state_action.dart';
 import 'package:fullbooker/application/redux/actions/update_user_state_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
@@ -23,6 +24,11 @@ class LoginAction extends ReduxAction<AppState> {
   final Function(String error)? onError;
   final Function()? onSuccess;
   final ICustomClient client;
+
+  @override
+  void before() {
+    dispatch(SetSignInMethodAction(signInMethod: SignInMethod.EMAIL));
+  }
 
   @override
   Future<AppState?> reduce() async {

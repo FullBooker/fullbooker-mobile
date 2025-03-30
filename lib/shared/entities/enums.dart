@@ -17,3 +17,5 @@ enum AnalyticsEventType {
   AUTH,
   ONBOARDING,
 }
+
+enum SignInMethod { EMAIL, GOOGLE }
