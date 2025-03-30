@@ -229,10 +229,8 @@ class ProductReviewAndPublishPage extends StatelessWidget {
               child: d.right(publishString),
             ),
             SecondaryButton(
-              onPressed: () {
-                context.router.maybePop();
-              },
-              child: d.right(cancelString),
+              onPressed: () => context.router.maybePop(),
+              child: d.right(previousString),
               fillColor: Colors.transparent,
             ),
             verySmallVerticalSizedBox,
