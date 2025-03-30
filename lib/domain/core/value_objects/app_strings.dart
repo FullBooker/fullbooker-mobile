@@ -536,3 +536,8 @@ const String testTime = '2 - 5 PM';
 String photosAdded(int number) => '$number photos added';
 
 const String enterPhone = 'Enter phone number';
+
+const String setEventLocation = 'Set your event’s location';
+const String locationZeroStateCopy =
+    'Make it easy for guests to find you by selecting your exact spot';
+const String pickLocation = 'Pick Location';

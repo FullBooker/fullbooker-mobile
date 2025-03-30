@@ -4,11 +4,8 @@ import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:dartz/dartz.dart' as d;
-import 'package:fullbooker/shared/validators.dart';
-import 'package:fullbooker/shared/widgets/custom_text_input.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
-import 'package:heroicons/heroicons.dart';
 
 @RoutePage()
 class ProductLocationPage extends StatelessWidget {
@@ -49,19 +46,18 @@ class ProductLocationPage extends StatelessWidget {
                           ),
                         ],
                       ),
-                      CustomTextInput(
-                        hintText: searchLocation,
-                        labelText: location,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: (String? value) => validateProductName(
-                          value,
-                        ),
-                        onChanged: (String value) {},
-                        keyboardType: TextInputType.name,
-                        prefixIconData: HeroIcons.mapPin,
-                      ),
+                      // GenericZeroState(
+                      //   iconPath: productZeroStateSVGPath,
+                      //   title: setEventLocation,
+                      //   description: locationZeroStateCopy,
+                      //   onCTATap: () {
+                      //     // TODO(abiud): open map
+                      //   },
+                      //   ctaText: pickLocation,
+                      // ),
+                    
                       Container(
-                        height: MediaQuery.of(context).size.height / 3,
+                        height: 200,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
                           border: Border.all(
@@ -95,8 +91,10 @@ class ProductLocationPage extends StatelessWidget {
               child: d.right(continueString),
             ),
             SecondaryButton(
-              onPressed: () => context.router.maybePop(),
-              child: d.right(previousString),
+              onPressed: () {
+                context.router.maybePop();
+              },
+              child: d.right(cancelString),
               fillColor: Colors.transparent,
             ),
           ],
