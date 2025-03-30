@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
@@ -108,15 +109,13 @@ class ProductPricingPage extends StatelessWidget {
             ),
             PrimaryButton(
               onPressed: () {
-                // context.router.push(ProductDateTimeRouteRoute());
+                context.router.push(ProductReviewAndPublishRoute());
               },
               child: d.right(continueString),
             ),
-            SecondaryButton(
-              onPressed: () {
-                context.router.maybePop();
-              },
-              child: d.right(cancelString),
+             SecondaryButton(
+              onPressed: () => context.router.maybePop(),
+              child: d.right(previousString),
               fillColor: Colors.transparent,
             ),
           ],

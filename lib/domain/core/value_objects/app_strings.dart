@@ -426,6 +426,7 @@ const String activities = 'Activities';
 const String activitiesCopy = 'Gyms, hiking';
 
 const String cancelString = 'Cancel';
+const String previousString = 'Previous';
 
 // Setup product category page
 const String categoryStep2 = '2 of 2';

@@ -28,55 +28,60 @@ class ProductLocationPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: 12,
+              child: ListView(
+                shrinkWrap: true,
                 children: <Widget>[
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    spacing: 8,
+                    spacing: 12,
                     children: <Widget>[
-                      Text(
-                        location,
-                        style: Theme.of(context).textTheme.headlineSmall,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        spacing: 8,
+                        children: <Widget>[
+                          Text(
+                            location,
+                            style: Theme.of(context).textTheme.headlineSmall,
+                          ),
+                          Text(
+                            locationCopy,
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                        ],
                       ),
-                      Text(
-                        locationCopy,
-                        style: Theme.of(context).textTheme.bodyMedium,
+                      CustomTextInput(
+                        hintText: searchLocation,
+                        labelText: location,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (String? value) => validateProductName(
+                          value,
+                        ),
+                        onChanged: (String value) {},
+                        keyboardType: TextInputType.name,
+                        prefixIconData: HeroIcons.mapPin,
                       ),
-                    ],
-                  ),
-                  CustomTextInput(
-                    hintText: searchLocation,
-                    labelText: location,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (String? value) => validateProductName(
-                      value,
-                    ),
-                    onChanged: (String value) {},
-                    keyboardType: TextInputType.name,
-                    prefixIconData: HeroIcons.mapPin,
-                  ),
-                  Container(
-                    height: 200,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(
-                        color: Theme.of(context).dividerColor,
+                      Container(
+                        height: MediaQuery.of(context).size.height / 3,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(
+                            color: Theme.of(context).dividerColor,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    spacing: 8,
-                    children: <Widget>[
-                      Text(
-                        kicc,
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                      Text(
-                        nairobi,
-                        style: Theme.of(context).textTheme.bodySmall,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        spacing: 8,
+                        children: <Widget>[
+                          Text(
+                            kicc,
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                          Text(
+                            nairobi,
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -90,10 +95,8 @@ class ProductLocationPage extends StatelessWidget {
               child: d.right(continueString),
             ),
             SecondaryButton(
-              onPressed: () {
-                context.router.maybePop();
-              },
-              child: d.right(cancelString),
+              onPressed: () => context.router.maybePop(),
+              child: d.right(previousString),
               fillColor: Colors.transparent,
             ),
           ],

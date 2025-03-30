@@ -92,11 +92,9 @@ class ProductPhotosPage extends StatelessWidget {
               },
               child: d.right(continueString),
             ),
-            SecondaryButton(
-              onPressed: () {
-                context.router.maybePop();
-              },
-              child: d.right(cancelString),
+             SecondaryButton(
+              onPressed: () => context.router.maybePop(),
+              child: d.right(previousString),
               fillColor: Colors.transparent,
             ),
           ],
