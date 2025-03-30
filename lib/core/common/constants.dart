@@ -35,3 +35,5 @@ const String APPVERSION = 'APPVERSION';
 const String kDevBuild = 'dev-build';
 
 const int kOTPRetryTimeout = 120;
+
+const List<String> allowedPhoneNumberCountries = <String>['KE', 'UG', 'TZ'];

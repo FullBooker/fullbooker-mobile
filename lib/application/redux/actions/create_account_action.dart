@@ -29,24 +29,27 @@ class CreateAccountAction extends ReduxAction<AppState> {
     final String firstName = state.onboardingState?.firstName ?? '';
     final String lastName = state.onboardingState?.lastName ?? '';
     final String newEmailAddress = state.onboardingState?.newEmailAddress ?? '';
+    final String newPhone = state.onboardingState?.phoneNumber ?? '';
     final String newPassword = state.onboardingState?.newPassword ?? '';
 
     final bool isFirstNameEmpty = firstName.isEmpty || firstName == UNKNOWN;
     final bool isLastNameEmpty = lastName.isEmpty || lastName == UNKNOWN;
     final bool isNewEmailEmpty =
         newEmailAddress.isEmpty || newEmailAddress == UNKNOWN;
+    final bool isPhoneEmpty = newPhone.isEmpty || newPhone == UNKNOWN;
     final bool isNewPasswordEmpty =
         newPassword.isEmpty || newPassword == UNKNOWN;
 
     if (isFirstNameEmpty ||
         isLastNameEmpty ||
         isNewPasswordEmpty ||
-        isNewEmailEmpty) {
+        isNewEmailEmpty ||
+        isPhoneEmpty) {
       return onError?.call(fillInAllFields);
     }
 
     final Map<String, String> data = <String, String>{
-      'phone_number': '+254717356476',
+      'phone_number': newPhone,
       'email': newEmailAddress,
       'first_name': firstName,
       'last_name': lastName,

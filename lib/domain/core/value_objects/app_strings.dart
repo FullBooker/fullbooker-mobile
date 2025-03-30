@@ -533,3 +533,5 @@ const String testLocation = 'George Padmore Road';
 const String testDate = '22 Feb 2025';
 const String testTime = '2 - 5 PM';
 String photosAdded(int number) => '$number photos added';
+
+const String enterPhone = 'Enter phone number';

@@ -22,6 +22,7 @@ class OnboardingState with _$OnboardingState {
     @Default(UNKNOWN) String firstName,
     @Default(UNKNOWN) String lastName,
     @Default(UNKNOWN) String newEmailAddress,
+    @Default(UNKNOWN) String phoneNumber,
     @Default(UNKNOWN) String newPassword,
     @Default(true) bool hideNewPassword,
     @Default(UNKNOWN) String newConfirmPassword,
