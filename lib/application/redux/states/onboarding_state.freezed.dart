@@ -32,6 +32,7 @@ mixin _$OnboardingState {
   String get firstName => throw _privateConstructorUsedError;
   String get lastName => throw _privateConstructorUsedError;
   String get newEmailAddress => throw _privateConstructorUsedError;
+  String get phoneNumber => throw _privateConstructorUsedError;
   String get newPassword => throw _privateConstructorUsedError;
   bool get hideNewPassword => throw _privateConstructorUsedError;
   String get newConfirmPassword => throw _privateConstructorUsedError;
@@ -72,6 +73,7 @@ abstract class $OnboardingStateCopyWith<$Res> {
       String firstName,
       String lastName,
       String newEmailAddress,
+      String phoneNumber,
       String newPassword,
       bool hideNewPassword,
       String newConfirmPassword,
@@ -109,6 +111,7 @@ class _$OnboardingStateCopyWithImpl<$Res, $Val extends OnboardingState>
     Object? firstName = null,
     Object? lastName = null,
     Object? newEmailAddress = null,
+    Object? phoneNumber = null,
     Object? newPassword = null,
     Object? hideNewPassword = null,
     Object? newConfirmPassword = null,
@@ -154,6 +157,10 @@ class _$OnboardingStateCopyWithImpl<$Res, $Val extends OnboardingState>
       newEmailAddress: null == newEmailAddress
           ? _value.newEmailAddress
           : newEmailAddress // ignore: cast_nullable_to_non_nullable
+              as String,
+      phoneNumber: null == phoneNumber
+          ? _value.phoneNumber
+          : phoneNumber // ignore: cast_nullable_to_non_nullable
               as String,
       newPassword: null == newPassword
           ? _value.newPassword
@@ -224,6 +231,7 @@ abstract class _$$OnboardingStateImplCopyWith<$Res>
       String firstName,
       String lastName,
       String newEmailAddress,
+      String phoneNumber,
       String newPassword,
       bool hideNewPassword,
       String newConfirmPassword,
@@ -259,6 +267,7 @@ class __$$OnboardingStateImplCopyWithImpl<$Res>
     Object? firstName = null,
     Object? lastName = null,
     Object? newEmailAddress = null,
+    Object? phoneNumber = null,
     Object? newPassword = null,
     Object? hideNewPassword = null,
     Object? newConfirmPassword = null,
@@ -304,6 +313,10 @@ class __$$OnboardingStateImplCopyWithImpl<$Res>
       newEmailAddress: null == newEmailAddress
           ? _value.newEmailAddress
           : newEmailAddress // ignore: cast_nullable_to_non_nullable
+              as String,
+      phoneNumber: null == phoneNumber
+          ? _value.phoneNumber
+          : phoneNumber // ignore: cast_nullable_to_non_nullable
               as String,
       newPassword: null == newPassword
           ? _value.newPassword
@@ -370,6 +383,7 @@ class _$OnboardingStateImpl implements _OnboardingState {
       this.firstName = UNKNOWN,
       this.lastName = UNKNOWN,
       this.newEmailAddress = UNKNOWN,
+      this.phoneNumber = UNKNOWN,
       this.newPassword = UNKNOWN,
       this.hideNewPassword = true,
       this.newConfirmPassword = UNKNOWN,
@@ -416,6 +430,9 @@ class _$OnboardingStateImpl implements _OnboardingState {
   final String newEmailAddress;
   @override
   @JsonKey()
+  final String phoneNumber;
+  @override
+  @JsonKey()
   final String newPassword;
   @override
   @JsonKey()
@@ -455,7 +472,7 @@ class _$OnboardingStateImpl implements _OnboardingState {
 
   @override
   String toString() {
-    return 'OnboardingState(signInMethod: $signInMethod, emailAddress: $emailAddress, password: $password, invalidCredentials: $invalidCredentials, hidePassword: $hidePassword, firstName: $firstName, lastName: $lastName, newEmailAddress: $newEmailAddress, newPassword: $newPassword, hideNewPassword: $hideNewPassword, newConfirmPassword: $newConfirmPassword, hideNewConfirmPassword: $hideNewConfirmPassword, invalidOTP: $invalidOTP, resetEmailAddress: $resetEmailAddress, resetPasswordOTP: $resetPasswordOTP, resetPasswordDebugOTP: $resetPasswordDebugOTP, resetPassword: $resetPassword, resetPasswordConfirm: $resetPasswordConfirm, hideResetPassword: $hideResetPassword, hideResetConfirmPassword: $hideResetConfirmPassword)';
+    return 'OnboardingState(signInMethod: $signInMethod, emailAddress: $emailAddress, password: $password, invalidCredentials: $invalidCredentials, hidePassword: $hidePassword, firstName: $firstName, lastName: $lastName, newEmailAddress: $newEmailAddress, phoneNumber: $phoneNumber, newPassword: $newPassword, hideNewPassword: $hideNewPassword, newConfirmPassword: $newConfirmPassword, hideNewConfirmPassword: $hideNewConfirmPassword, invalidOTP: $invalidOTP, resetEmailAddress: $resetEmailAddress, resetPasswordOTP: $resetPasswordOTP, resetPasswordDebugOTP: $resetPasswordDebugOTP, resetPassword: $resetPassword, resetPasswordConfirm: $resetPasswordConfirm, hideResetPassword: $hideResetPassword, hideResetConfirmPassword: $hideResetConfirmPassword)';
   }
 
   @override
@@ -479,6 +496,8 @@ class _$OnboardingStateImpl implements _OnboardingState {
                 other.lastName == lastName) &&
             (identical(other.newEmailAddress, newEmailAddress) ||
                 other.newEmailAddress == newEmailAddress) &&
+            (identical(other.phoneNumber, phoneNumber) ||
+                other.phoneNumber == phoneNumber) &&
             (identical(other.newPassword, newPassword) ||
                 other.newPassword == newPassword) &&
             (identical(other.hideNewPassword, hideNewPassword) ||
@@ -518,6 +537,7 @@ class _$OnboardingStateImpl implements _OnboardingState {
         firstName,
         lastName,
         newEmailAddress,
+        phoneNumber,
         newPassword,
         hideNewPassword,
         newConfirmPassword,
@@ -559,6 +579,7 @@ abstract class _OnboardingState implements OnboardingState {
       final String firstName,
       final String lastName,
       final String newEmailAddress,
+      final String phoneNumber,
       final String newPassword,
       final bool hideNewPassword,
       final String newConfirmPassword,
@@ -595,6 +616,8 @@ abstract class _OnboardingState implements OnboardingState {
   String get lastName;
   @override
   String get newEmailAddress;
+  @override
+  String get phoneNumber;
   @override
   String get newPassword;
   @override

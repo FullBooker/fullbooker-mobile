@@ -18,11 +18,13 @@ import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
+import 'package:fullbooker/shared/widgets/custom_phone_number_input.dart';
 import 'package:fullbooker/shared/widgets/custom_text_input.dart';
 import 'package:fullbooker/shared/validators.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:dartz/dartz.dart' as d;
 import 'package:heroicons/heroicons.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 @RoutePage()
 class CreateAccountPage extends StatefulWidget {
@@ -128,6 +130,18 @@ class CreateAccountPageState extends State<CreateAccountPage> {
                         },
                         keyboardType: TextInputType.emailAddress,
                         prefixIconData: HeroIcons.envelope,
+                      ),
+
+                      // Phone number input
+                      CustomPhoneInput(
+                        labelText: phonNumberString,
+                        onInputChanged: (PhoneNumber phone) {
+                          context.dispatch(
+                            UpdateOnboardingStateAction(
+                              newPhone: phone.phoneNumber,
+                            ),
+                          );
+                        },
                       ),
 
                       // Password

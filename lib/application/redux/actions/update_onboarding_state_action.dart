@@ -11,11 +11,14 @@ class UpdateOnboardingStateAction extends ReduxAction<AppState> {
     // Create account
     this.firstName,
     this.lastName,
+    this.newPhone,
     this.newEmailAddress,
     this.newPassword,
     this.hideNewPassword,
     this.newConfirmPassword,
     this.hideNewConfirmPassword,
+
+    // Reset password
     this.resetPasswordOTP,
     this.resetEmailAddress,
     this.hideResetPassword,
@@ -33,6 +36,7 @@ class UpdateOnboardingStateAction extends ReduxAction<AppState> {
   // Create account
   final String? firstName;
   final String? lastName;
+  final String? newPhone;
   final String? newEmailAddress;
   final String? newPassword;
   final bool? hideNewPassword;
@@ -81,6 +85,7 @@ class UpdateOnboardingStateAction extends ReduxAction<AppState> {
       resetPassword: resetPassword ?? state.onboardingState!.resetPassword,
       resetPasswordConfirm:
           resetPasswordConfirm ?? state.onboardingState!.resetPasswordConfirm,
+      phoneNumber: newPhone ?? state.onboardingState!.phoneNumber,
     );
 
     return newState;
