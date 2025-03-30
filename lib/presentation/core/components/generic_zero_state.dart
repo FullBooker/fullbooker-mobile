@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:dartz/dartz.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
 
 class GenericZeroState extends StatelessWidget {
@@ -30,15 +29,15 @@ class GenericZeroState extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Column(
+          spacing: 12,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             SvgPicture.asset(
               iconPath,
               width: MediaQuery.of(context).size.width / 2,
             ),
-            smallVerticalSizedBox,
             Text(
               title,
               style: Theme.of(context)
@@ -46,20 +45,17 @@ class GenericZeroState extends StatelessWidget {
                   .titleLarge
                   ?.copyWith(color: Theme.of(context).primaryColor),
             ),
-            smallVerticalSizedBox,
             Text(
               description,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyLarge,
             ),
-            mediumVerticalSizedBox,
-            if(onCTATap!=null)
-            PrimaryButton(
-              buttonKey: ctaKey,
-              onPressed: onCTATap,
-              child: right(ctaText),
-              customHeight: 48,
-            ),
+            if (onCTATap != null)
+              PrimaryButton(
+                buttonKey: ctaKey,
+                onPressed: onCTATap,
+                child: right(ctaText),
+              ),
           ],
         ),
       ),
