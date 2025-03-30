@@ -20,6 +20,7 @@ OnboardingState _$OnboardingStateFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$OnboardingState {
+  SignInMethod get signInMethod => throw _privateConstructorUsedError;
   String get emailAddress => throw _privateConstructorUsedError;
   String get password => throw _privateConstructorUsedError;
 
@@ -63,7 +64,8 @@ abstract class $OnboardingStateCopyWith<$Res> {
       _$OnboardingStateCopyWithImpl<$Res, OnboardingState>;
   @useResult
   $Res call(
-      {String emailAddress,
+      {SignInMethod signInMethod,
+      String emailAddress,
       String password,
       bool invalidCredentials,
       bool hidePassword,
@@ -99,6 +101,7 @@ class _$OnboardingStateCopyWithImpl<$Res, $Val extends OnboardingState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? signInMethod = null,
     Object? emailAddress = null,
     Object? password = null,
     Object? invalidCredentials = null,
@@ -120,6 +123,10 @@ class _$OnboardingStateCopyWithImpl<$Res, $Val extends OnboardingState>
     Object? hideResetConfirmPassword = null,
   }) {
     return _then(_value.copyWith(
+      signInMethod: null == signInMethod
+          ? _value.signInMethod
+          : signInMethod // ignore: cast_nullable_to_non_nullable
+              as SignInMethod,
       emailAddress: null == emailAddress
           ? _value.emailAddress
           : emailAddress // ignore: cast_nullable_to_non_nullable
@@ -209,7 +216,8 @@ abstract class _$$OnboardingStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String emailAddress,
+      {SignInMethod signInMethod,
+      String emailAddress,
       String password,
       bool invalidCredentials,
       bool hidePassword,
@@ -243,6 +251,7 @@ class __$$OnboardingStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? signInMethod = null,
     Object? emailAddress = null,
     Object? password = null,
     Object? invalidCredentials = null,
@@ -264,6 +273,10 @@ class __$$OnboardingStateImplCopyWithImpl<$Res>
     Object? hideResetConfirmPassword = null,
   }) {
     return _then(_$OnboardingStateImpl(
+      signInMethod: null == signInMethod
+          ? _value.signInMethod
+          : signInMethod // ignore: cast_nullable_to_non_nullable
+              as SignInMethod,
       emailAddress: null == emailAddress
           ? _value.emailAddress
           : emailAddress // ignore: cast_nullable_to_non_nullable
@@ -349,7 +362,8 @@ class __$$OnboardingStateImplCopyWithImpl<$Res>
 @JsonSerializable(explicitToJson: true)
 class _$OnboardingStateImpl implements _OnboardingState {
   const _$OnboardingStateImpl(
-      {this.emailAddress = UNKNOWN,
+      {this.signInMethod = SignInMethod.EMAIL,
+      this.emailAddress = UNKNOWN,
       this.password = UNKNOWN,
       this.invalidCredentials = false,
       this.hidePassword = true,
@@ -372,6 +386,9 @@ class _$OnboardingStateImpl implements _OnboardingState {
   factory _$OnboardingStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$OnboardingStateImplFromJson(json);
 
+  @override
+  @JsonKey()
+  final SignInMethod signInMethod;
   @override
   @JsonKey()
   final String emailAddress;
@@ -438,7 +455,7 @@ class _$OnboardingStateImpl implements _OnboardingState {
 
   @override
   String toString() {
-    return 'OnboardingState(emailAddress: $emailAddress, password: $password, invalidCredentials: $invalidCredentials, hidePassword: $hidePassword, firstName: $firstName, lastName: $lastName, newEmailAddress: $newEmailAddress, newPassword: $newPassword, hideNewPassword: $hideNewPassword, newConfirmPassword: $newConfirmPassword, hideNewConfirmPassword: $hideNewConfirmPassword, invalidOTP: $invalidOTP, resetEmailAddress: $resetEmailAddress, resetPasswordOTP: $resetPasswordOTP, resetPasswordDebugOTP: $resetPasswordDebugOTP, resetPassword: $resetPassword, resetPasswordConfirm: $resetPasswordConfirm, hideResetPassword: $hideResetPassword, hideResetConfirmPassword: $hideResetConfirmPassword)';
+    return 'OnboardingState(signInMethod: $signInMethod, emailAddress: $emailAddress, password: $password, invalidCredentials: $invalidCredentials, hidePassword: $hidePassword, firstName: $firstName, lastName: $lastName, newEmailAddress: $newEmailAddress, newPassword: $newPassword, hideNewPassword: $hideNewPassword, newConfirmPassword: $newConfirmPassword, hideNewConfirmPassword: $hideNewConfirmPassword, invalidOTP: $invalidOTP, resetEmailAddress: $resetEmailAddress, resetPasswordOTP: $resetPasswordOTP, resetPasswordDebugOTP: $resetPasswordDebugOTP, resetPassword: $resetPassword, resetPasswordConfirm: $resetPasswordConfirm, hideResetPassword: $hideResetPassword, hideResetConfirmPassword: $hideResetConfirmPassword)';
   }
 
   @override
@@ -446,6 +463,8 @@ class _$OnboardingStateImpl implements _OnboardingState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$OnboardingStateImpl &&
+            (identical(other.signInMethod, signInMethod) ||
+                other.signInMethod == signInMethod) &&
             (identical(other.emailAddress, emailAddress) ||
                 other.emailAddress == emailAddress) &&
             (identical(other.password, password) ||
@@ -491,6 +510,7 @@ class _$OnboardingStateImpl implements _OnboardingState {
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
+        signInMethod,
         emailAddress,
         password,
         invalidCredentials,
@@ -531,7 +551,8 @@ class _$OnboardingStateImpl implements _OnboardingState {
 
 abstract class _OnboardingState implements OnboardingState {
   const factory _OnboardingState(
-      {final String emailAddress,
+      {final SignInMethod signInMethod,
+      final String emailAddress,
       final String password,
       final bool invalidCredentials,
       final bool hidePassword,
@@ -554,6 +575,8 @@ abstract class _OnboardingState implements OnboardingState {
   factory _OnboardingState.fromJson(Map<String, dynamic> json) =
       _$OnboardingStateImpl.fromJson;
 
+  @override
+  SignInMethod get signInMethod;
   @override
   String get emailAddress;
   @override
