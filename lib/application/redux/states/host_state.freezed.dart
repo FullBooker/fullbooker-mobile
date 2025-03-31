@@ -22,6 +22,7 @@ HostState _$HostStateFromJson(Map<String, dynamic> json) {
 mixin _$HostState {
   List<HostProduct>? get products => throw _privateConstructorUsedError;
   HostProduct? get currentProduct => throw _privateConstructorUsedError;
+  HostProduct? get selectedProduct => throw _privateConstructorUsedError;
 
   /// Serializes this HostState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -38,9 +39,13 @@ abstract class $HostStateCopyWith<$Res> {
   factory $HostStateCopyWith(HostState value, $Res Function(HostState) then) =
       _$HostStateCopyWithImpl<$Res, HostState>;
   @useResult
-  $Res call({List<HostProduct>? products, HostProduct? currentProduct});
+  $Res call(
+      {List<HostProduct>? products,
+      HostProduct? currentProduct,
+      HostProduct? selectedProduct});
 
   $HostProductCopyWith<$Res>? get currentProduct;
+  $HostProductCopyWith<$Res>? get selectedProduct;
 }
 
 /// @nodoc
@@ -60,6 +65,7 @@ class _$HostStateCopyWithImpl<$Res, $Val extends HostState>
   $Res call({
     Object? products = freezed,
     Object? currentProduct = freezed,
+    Object? selectedProduct = freezed,
   }) {
     return _then(_value.copyWith(
       products: freezed == products
@@ -69,6 +75,10 @@ class _$HostStateCopyWithImpl<$Res, $Val extends HostState>
       currentProduct: freezed == currentProduct
           ? _value.currentProduct
           : currentProduct // ignore: cast_nullable_to_non_nullable
+              as HostProduct?,
+      selectedProduct: freezed == selectedProduct
+          ? _value.selectedProduct
+          : selectedProduct // ignore: cast_nullable_to_non_nullable
               as HostProduct?,
     ) as $Val);
   }
@@ -86,6 +96,20 @@ class _$HostStateCopyWithImpl<$Res, $Val extends HostState>
       return _then(_value.copyWith(currentProduct: value) as $Val);
     });
   }
+
+  /// Create a copy of HostState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $HostProductCopyWith<$Res>? get selectedProduct {
+    if (_value.selectedProduct == null) {
+      return null;
+    }
+
+    return $HostProductCopyWith<$Res>(_value.selectedProduct!, (value) {
+      return _then(_value.copyWith(selectedProduct: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -96,10 +120,15 @@ abstract class _$$HostStateImplCopyWith<$Res>
       __$$HostStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<HostProduct>? products, HostProduct? currentProduct});
+  $Res call(
+      {List<HostProduct>? products,
+      HostProduct? currentProduct,
+      HostProduct? selectedProduct});
 
   @override
   $HostProductCopyWith<$Res>? get currentProduct;
+  @override
+  $HostProductCopyWith<$Res>? get selectedProduct;
 }
 
 /// @nodoc
@@ -117,6 +146,7 @@ class __$$HostStateImplCopyWithImpl<$Res>
   $Res call({
     Object? products = freezed,
     Object? currentProduct = freezed,
+    Object? selectedProduct = freezed,
   }) {
     return _then(_$HostStateImpl(
       products: freezed == products
@@ -127,6 +157,10 @@ class __$$HostStateImplCopyWithImpl<$Res>
           ? _value.currentProduct
           : currentProduct // ignore: cast_nullable_to_non_nullable
               as HostProduct?,
+      selectedProduct: freezed == selectedProduct
+          ? _value.selectedProduct
+          : selectedProduct // ignore: cast_nullable_to_non_nullable
+              as HostProduct?,
     ));
   }
 }
@@ -135,7 +169,10 @@ class __$$HostStateImplCopyWithImpl<$Res>
 
 @JsonSerializable(explicitToJson: true)
 class _$HostStateImpl implements _HostState {
-  _$HostStateImpl({this.products = const <HostProduct>[], this.currentProduct});
+  _$HostStateImpl(
+      {this.products = const <HostProduct>[],
+      this.currentProduct,
+      this.selectedProduct});
 
   factory _$HostStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$HostStateImplFromJson(json);
@@ -145,10 +182,12 @@ class _$HostStateImpl implements _HostState {
   final List<HostProduct>? products;
   @override
   final HostProduct? currentProduct;
+  @override
+  final HostProduct? selectedProduct;
 
   @override
   String toString() {
-    return 'HostState(products: $products, currentProduct: $currentProduct)';
+    return 'HostState(products: $products, currentProduct: $currentProduct, selectedProduct: $selectedProduct)';
   }
 
   @override
@@ -158,13 +197,18 @@ class _$HostStateImpl implements _HostState {
             other is _$HostStateImpl &&
             const DeepCollectionEquality().equals(other.products, products) &&
             (identical(other.currentProduct, currentProduct) ||
-                other.currentProduct == currentProduct));
+                other.currentProduct == currentProduct) &&
+            (identical(other.selectedProduct, selectedProduct) ||
+                other.selectedProduct == selectedProduct));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(products), currentProduct);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(products),
+      currentProduct,
+      selectedProduct);
 
   /// Create a copy of HostState
   /// with the given fields replaced by the non-null parameter values.
@@ -185,7 +229,8 @@ class _$HostStateImpl implements _HostState {
 abstract class _HostState implements HostState {
   factory _HostState(
       {final List<HostProduct>? products,
-      final HostProduct? currentProduct}) = _$HostStateImpl;
+      final HostProduct? currentProduct,
+      final HostProduct? selectedProduct}) = _$HostStateImpl;
 
   factory _HostState.fromJson(Map<String, dynamic> json) =
       _$HostStateImpl.fromJson;
@@ -194,6 +239,8 @@ abstract class _HostState implements HostState {
   List<HostProduct>? get products;
   @override
   HostProduct? get currentProduct;
+  @override
+  HostProduct? get selectedProduct;
 
   /// Create a copy of HostState
   /// with the given fields replaced by the non-null parameter values.

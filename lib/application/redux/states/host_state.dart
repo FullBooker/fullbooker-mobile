@@ -12,6 +12,7 @@ class HostState with _$HostState {
   factory HostState({
     @Default(<HostProduct>[]) List<HostProduct>? products,
     HostProduct? currentProduct,
+    HostProduct? selectedProduct,
   }) = _HostState;
 
   factory HostState.initial() => HostState();

@@ -16,14 +16,9 @@ import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
 
 @RoutePage()
-class ProductsPage extends StatefulWidget {
+class ProductsPage extends StatelessWidget {
   const ProductsPage({super.key});
 
-  @override
-  State<StatefulWidget> createState() => _ProductsPageState();
-}
-
-class _ProductsPageState extends State<ProductsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
