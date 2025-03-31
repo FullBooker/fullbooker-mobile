@@ -263,3 +263,20 @@ Widget humanizeDate({
         ),
   );
 }
+
+Widget formatTime({required String rawTime, TextStyle? textStyle}) {
+  if (rawTime.isEmpty) return const SizedBox();
+
+  final DateTime parsedTime = DateFormat('HH:mm:ss').parse(rawTime);
+  final String formatted = DateFormat('h:mm a').format(parsedTime);
+  return Text(
+    formatted,
+    style: textStyle ??
+        TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.w200,
+          color: AppColors.bodyTextColor.withValues(alpha: .35),
+          fontStyle: FontStyle.italic,
+        ),
+  );
+}
