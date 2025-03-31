@@ -1,5 +1,9 @@
+import 'package:async_redux/async_redux.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:fullbooker/application/redux/actions/select_product_action.dart';
+import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/entities/host_product_response.dart';
@@ -16,7 +20,10 @@ class NewProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        context.dispatch(SelectProductAction(product: product));
+        context.router.push(ProductDetailRoute());
+      },
       child: Container(
         decoration: BoxDecoration(
           color: Theme.of(context).cardColor,
@@ -74,7 +81,7 @@ class NewProductCard extends StatelessWidget {
                         ),
                       ),
                       CustomBadgeWidget(
-                        text: 'Published',
+                        text: publishedString,
                         backgroundColor: AppColors.greenColor,
                         textColor: AppColors.greenColor,
                       ),
