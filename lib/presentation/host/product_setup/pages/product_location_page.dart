@@ -100,7 +100,7 @@ class _ProductLocationPageState extends State<ProductLocationPage> {
                         title: setEventLocation,
                         description: locationZeroStateCopy,
                         onCTATap: () {
-                          // TODO(abiud): open map
+                          context.router.push(NewChooseLocationRoute());
                         },
                         ctaText: pickLocation,
                       ),

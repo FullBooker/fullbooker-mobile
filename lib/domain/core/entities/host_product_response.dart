@@ -53,7 +53,7 @@ class Availability with _$Availability {
     required String end,
     @JsonKey(name: 'start_time') required String startTime,
     @JsonKey(name: 'end_time') required String endTime,
-    String? duration,
+    int? duration,
     @Default(<dynamic>[]) @JsonKey(name: 'open_days') List<dynamic> openDays,
     @Default(<dynamic>[])
     @JsonKey(name: 'closed_dates')

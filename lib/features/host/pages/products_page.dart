@@ -32,6 +32,17 @@ class _ProductsPageState extends State<ProductsPage> {
         showBell: false,
         title: productsString,
       ),
+      floatingActionButton: GestureDetector(
+        onTap: () => context.router.push(SetupProductTypeRoute()),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).primaryColor,
+            shape: BoxShape.circle,
+          ),
+          padding: const EdgeInsets.all(20),
+          child: const Icon(Icons.add, color: Colors.white),
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Column(
