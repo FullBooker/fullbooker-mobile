@@ -1,8 +1,12 @@
+import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
+import 'package:fullbooker/application/redux/states/app_state.dart';
+import 'package:fullbooker/application/redux/view_models/products_page_view_model.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/core/utils.dart';
+import 'package:fullbooker/domain/core/entities/host_product_response.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:fullbooker/presentation/core/components/custom_badge_widget.dart';
@@ -26,136 +30,159 @@ class ProductDetailPage extends StatelessWidget {
         showBell: false,
         title: productsString,
       ),
-      body: Column(
-        children: <Widget>[
-          ProductCarouselWidget(imageUrls: mockProductSetupImageURLs),
-          Expanded(
-            child: ListView(
-              shrinkWrap: true,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    spacing: 12,
-                    children: <Widget>[
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Expanded(
-                            child: Text(
-                              mockProduct?.name ?? '',
-                              style: Theme.of(context).textTheme.titleMedium,
-                            ),
-                          ),
-                          CustomBadgeWidget(
-                            text: 'Published',
-                            backgroundColor: AppColors.greenColor,
-                            textColor: AppColors.greenColor,
-                          ),
-                        ],
-                      ),
-                      Wrap(
-                        runSpacing: 12,
+      body: StoreConnector<AppState, ProductsPageViewModel>(
+        converter: (Store<AppState> store) =>
+            ProductsPageViewModel.fromState(store.state),
+        builder: (BuildContext context, ProductsPageViewModel vm) {
+          final HostProduct? selectedProduct = vm.selectedProduct;
+
+          final List<String?> imageURLs = <String?>[
+            selectedProduct?.image?.file,
+            ...mockProductSetupImageURLs,
+          ];
+
+          return Column(
+            children: <Widget>[
+              // TODO(abiud): fetch the actual product images from the API
+              ProductCarouselWidget(imageUrls: imageURLs),
+              Expanded(
+                child: ListView(
+                  shrinkWrap: true,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
                         spacing: 12,
                         children: <Widget>[
-                          // Location
                           Row(
-                            mainAxisSize: MainAxisSize.min,
-                            spacing: 4,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              HeroIcon(
-                                HeroIcons.mapPin,
-                                color: Colors.grey,
-                                size: 20,
+                              Expanded(
+                                child: Text(
+                                  selectedProduct?.name ?? '',
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
+                                ),
                               ),
-                              Text(
-                                mockProduct?.locations.first.address ?? '',
-                                style: Theme.of(context).textTheme.bodyMedium,
+                              CustomBadgeWidget(
+                                text: publishedString,
+                                backgroundColor: AppColors.greenColor,
+                                textColor: AppColors.greenColor,
                               ),
                             ],
                           ),
-                          // Date
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            spacing: 4,
+                          Wrap(
+                            runSpacing: 12,
+                            spacing: 12,
                             children: <Widget>[
-                              HeroIcon(
-                                HeroIcons.calendar,
-                                color: Colors.grey,
-                                size: 20,
+                              // Location
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                spacing: 4,
+                                children: <Widget>[
+                                  HeroIcon(
+                                    HeroIcons.mapPin,
+                                    color: Colors.grey,
+                                    size: 20,
+                                  ),
+                                  Text(
+                                    selectedProduct?.locations.first.address ??
+                                        '',
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium,
+                                  ),
+                                ],
                               ),
-                              humanizeDate(
-                                loadedDate: mockProduct!.availability.start,
-                                dateTextStyle:
-                                    Theme.of(context).textTheme.bodyMedium,
+                              // Date
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                spacing: 4,
+                                children: <Widget>[
+                                  HeroIcon(
+                                    HeroIcons.calendar,
+                                    color: Colors.grey,
+                                    size: 20,
+                                  ),
+                                  humanizeDate(
+                                    loadedDate:
+                                        selectedProduct!.availability.start,
+                                    dateTextStyle:
+                                        Theme.of(context).textTheme.bodyMedium,
+                                  ),
+                                  Text(
+                                    to,
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium,
+                                  ),
+                                  humanizeDate(
+                                    loadedDate:
+                                        selectedProduct.availability.end,
+                                    dateTextStyle:
+                                        Theme.of(context).textTheme.bodyMedium,
+                                  ),
+                                ],
                               ),
-                              Text(
-                                to,
-                                style: Theme.of(context).textTheme.bodyMedium,
-                              ),
-                              humanizeDate(
-                                loadedDate: mockProduct!.availability.end,
-                                dateTextStyle:
-                                    Theme.of(context).textTheme.bodyMedium,
-                              ),
-                            ],
-                          ),
 
-                          // Time
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            spacing: 4,
-                            children: <Widget>[
-                              HeroIcon(
-                                HeroIcons.clock,
-                                color: Colors.grey,
-                                size: 20,
-                              ),
-                              formatTime(
-                                rawTime: mockProduct!.availability.startTime,
-                                textStyle:
-                                    Theme.of(context).textTheme.bodyMedium,
-                              ),
-                              Text(
-                                to,
-                                style: Theme.of(context).textTheme.bodyMedium,
-                              ),
-                              formatTime(
-                                rawTime: mockProduct!.availability.endTime,
-                                textStyle:
-                                    Theme.of(context).textTheme.bodyMedium,
+                              // Time
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                spacing: 4,
+                                children: <Widget>[
+                                  HeroIcon(
+                                    HeroIcons.clock,
+                                    color: Colors.grey,
+                                    size: 20,
+                                  ),
+                                  formatTime(
+                                    rawTime:
+                                        selectedProduct.availability.startTime,
+                                    textStyle:
+                                        Theme.of(context).textTheme.bodyMedium,
+                                  ),
+                                  Text(
+                                    to,
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium,
+                                  ),
+                                  formatTime(
+                                    rawTime:
+                                        selectedProduct.availability.endTime,
+                                    textStyle:
+                                        Theme.of(context).textTheme.bodyMedium,
+                                  ),
+                                ],
                               ),
                             ],
+                          ),
+                          verySmallVerticalSizedBox,
+                          ProductDetailItemWidget(
+                            text: bookings,
+                            value: '300',
+                            onTap: () {},
+                          ),
+                          ProductDetailItemWidget(
+                            text: payments,
+                            value: 'KES 300, 000',
+                            onTap: () {},
                           ),
                         ],
                       ),
-                      verySmallVerticalSizedBox,
-                      ProductDetailItemWidget(
-                        text: bookings,
-                        value: '300',
-                        onTap: () {},
-                      ),
-                      ProductDetailItemWidget(
-                        text: payments,
-                        value: 'KES 300, 000',
-                        onTap: () {},
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: SecondaryButton(
-              fillColor: AppColors.redColor.withValues(alpha: .1),
-              textColor: AppColors.redColor,
-              onPressed: () {},
-              child: right(deactivateProduct),
-            ),
-          ),
-        ],
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: SecondaryButton(
+                  fillColor: AppColors.redColor.withValues(alpha: .1),
+                  textColor: AppColors.redColor,
+                  onPressed: () {},
+                  child: right(deactivateProduct),
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

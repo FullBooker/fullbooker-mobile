@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:fullbooker/shared/entities/data_mocks.dart';
 
 class ProductCarouselWidget extends StatefulWidget {
   const ProductCarouselWidget({super.key, required this.imageUrls});
 
-  final List<String> imageUrls;
+  final List<String?>? imageUrls;
 
   @override
   State<ProductCarouselWidget> createState() => _ProductCarouselWidgetState();
@@ -30,9 +31,10 @@ class _ProductCarouselWidgetState extends State<ProductCarouselWidget> {
               setState(() => _currentIndex = index);
             },
           ),
-          items: widget.imageUrls.map((String imageUrl) {
+          items: widget.imageUrls?.map((String? imageUrl) {
             return CachedNetworkImage(
-              imageUrl: imageUrl,
+              // TODO(abiud): in future, replace with a default product image
+              imageUrl: imageUrl ?? mockProductSetupImageURLs.first,
               fit: BoxFit.cover,
               width: double.infinity,
               placeholder: (BuildContext context, String url) =>
@@ -52,8 +54,8 @@ class _ProductCarouselWidgetState extends State<ProductCarouselWidget> {
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children:
-                  List<Widget>.generate(widget.imageUrls.length, (int index) {
+              children: List<Widget>.generate(widget.imageUrls?.length ?? 0,
+                  (int index) {
                 final bool isActive = index == _currentIndex;
                 return AnimatedContainer(
                   duration: const Duration(milliseconds: 300),

@@ -556,3 +556,5 @@ const String bookings = 'Bookings';
 const String payments = 'Payments';
 
 const String deactivateProduct = 'Deactivate Product';
+
+const String publishedString = 'Published';
