@@ -52,7 +52,7 @@ import 'package:fullbooker/features/host/pages/old_events_summary_page.dart'
     as _i13;
 import 'package:fullbooker/features/host/pages/product_details_page.dart'
     as _i28;
-import 'package:fullbooker/features/host/pages/profile_page.dart' as _i35;
+import 'package:fullbooker/presentation/profile/pages/profile_page.dart' as _i35;
 import 'package:fullbooker/features/host/pages/tickets_summary_page.dart'
     as _i40;
 import 'package:fullbooker/features/host/pages/video_selection_page.dart'

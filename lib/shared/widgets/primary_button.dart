@@ -14,6 +14,7 @@ class PrimaryButton extends StatelessWidget {
     this.customHeight,
     this.customWidth,
     this.buttonKey,
+    this.customRadius,
   });
 
   final void Function()? onPressed;
@@ -28,6 +29,7 @@ class PrimaryButton extends StatelessWidget {
   final Color? textColor;
 
   final Key? buttonKey;
+  final double? customRadius;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +46,7 @@ class PrimaryButton extends StatelessWidget {
         elevation: 0,
         splashColor: color ?? Theme.of(context).primaryColor,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0),
+          borderRadius: BorderRadius.circular(customRadius ?? 8),
         ),
         child: child.fold(
           id,

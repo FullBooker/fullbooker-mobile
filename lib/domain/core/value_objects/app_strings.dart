@@ -558,3 +558,13 @@ const String payments = 'Payments';
 const String deactivateProduct = 'Deactivate Product';
 
 const String publishedString = 'Published';
+
+const String switchToHosting = 'Switch To Hosting';
+const String switchToHostingCopy =
+    'Switch to hosting to setup your products, view your earnings, and more';
+
+const String legal = 'Legal';
+const String legalCopy = 'Terms and conditions, opt-out';
+
+const String changePassword = 'Change Password';
+const String changePasswordCopy = 'Update your password';
