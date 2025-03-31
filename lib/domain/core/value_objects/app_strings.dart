@@ -549,3 +549,10 @@ const String openSettings = 'Open Settings';
 const String locationPermsTitle = 'We Need Your Location';
 const String locationPermsCopy =
     'We need your location to pin your event and help guests find it';
+
+const String viewString = 'View';
+
+const String bookings = 'Bookings';
+const String payments = 'Payments';
+
+const String deactivateProduct = 'Deactivate Product';

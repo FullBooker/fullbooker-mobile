@@ -16,10 +16,15 @@ _$HostStateImpl _$$HostStateImplFromJson(Map<String, dynamic> json) =>
           ? null
           : HostProduct.fromJson(
               json['currentProduct'] as Map<String, dynamic>),
+      selectedProduct: json['selectedProduct'] == null
+          ? null
+          : HostProduct.fromJson(
+              json['selectedProduct'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$HostStateImplToJson(_$HostStateImpl instance) =>
     <String, dynamic>{
       'products': instance.products?.map((e) => e.toJson()).toList(),
       'currentProduct': instance.currentProduct?.toJson(),
+      'selectedProduct': instance.selectedProduct?.toJson(),
     };

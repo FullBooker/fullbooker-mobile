@@ -16,7 +16,7 @@ class NewProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){},
+      onTap: () {},
       child: Container(
         decoration: BoxDecoration(
           color: Theme.of(context).cardColor,
@@ -57,10 +57,11 @@ class NewProductCard extends StatelessWidget {
                 ),
               ],
             ),
-      
+
             Padding(
               padding: const EdgeInsets.all(16),
               child: Column(
+                spacing: 12,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Row(
@@ -79,7 +80,6 @@ class NewProductCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 12),
                   Wrap(
                     runSpacing: 12,
                     spacing: 12,
@@ -112,7 +112,8 @@ class NewProductCard extends StatelessWidget {
                           ),
                           humanizeDate(
                             loadedDate: product.availability.start,
-                            dateTextStyle: Theme.of(context).textTheme.bodyMedium,
+                            dateTextStyle:
+                                Theme.of(context).textTheme.bodyMedium,
                           ),
                           Text(
                             to,
@@ -120,11 +121,12 @@ class NewProductCard extends StatelessWidget {
                           ),
                           humanizeDate(
                             loadedDate: product.availability.end,
-                            dateTextStyle: Theme.of(context).textTheme.bodyMedium,
+                            dateTextStyle:
+                                Theme.of(context).textTheme.bodyMedium,
                           ),
                         ],
                       ),
-      
+
                       // Time
                       Row(
                         mainAxisSize: MainAxisSize.min,
