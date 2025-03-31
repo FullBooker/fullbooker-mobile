@@ -21,6 +21,7 @@ HostState _$HostStateFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$HostState {
   List<HostProduct>? get products => throw _privateConstructorUsedError;
+  HostProduct? get currentProduct => throw _privateConstructorUsedError;
 
   /// Serializes this HostState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -37,7 +38,9 @@ abstract class $HostStateCopyWith<$Res> {
   factory $HostStateCopyWith(HostState value, $Res Function(HostState) then) =
       _$HostStateCopyWithImpl<$Res, HostState>;
   @useResult
-  $Res call({List<HostProduct>? products});
+  $Res call({List<HostProduct>? products, HostProduct? currentProduct});
+
+  $HostProductCopyWith<$Res>? get currentProduct;
 }
 
 /// @nodoc
@@ -56,13 +59,32 @@ class _$HostStateCopyWithImpl<$Res, $Val extends HostState>
   @override
   $Res call({
     Object? products = freezed,
+    Object? currentProduct = freezed,
   }) {
     return _then(_value.copyWith(
       products: freezed == products
           ? _value.products
           : products // ignore: cast_nullable_to_non_nullable
               as List<HostProduct>?,
+      currentProduct: freezed == currentProduct
+          ? _value.currentProduct
+          : currentProduct // ignore: cast_nullable_to_non_nullable
+              as HostProduct?,
     ) as $Val);
+  }
+
+  /// Create a copy of HostState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $HostProductCopyWith<$Res>? get currentProduct {
+    if (_value.currentProduct == null) {
+      return null;
+    }
+
+    return $HostProductCopyWith<$Res>(_value.currentProduct!, (value) {
+      return _then(_value.copyWith(currentProduct: value) as $Val);
+    });
   }
 }
 
@@ -74,7 +96,10 @@ abstract class _$$HostStateImplCopyWith<$Res>
       __$$HostStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<HostProduct>? products});
+  $Res call({List<HostProduct>? products, HostProduct? currentProduct});
+
+  @override
+  $HostProductCopyWith<$Res>? get currentProduct;
 }
 
 /// @nodoc
@@ -91,12 +116,17 @@ class __$$HostStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? products = freezed,
+    Object? currentProduct = freezed,
   }) {
     return _then(_$HostStateImpl(
       products: freezed == products
           ? _value.products
           : products // ignore: cast_nullable_to_non_nullable
               as List<HostProduct>?,
+      currentProduct: freezed == currentProduct
+          ? _value.currentProduct
+          : currentProduct // ignore: cast_nullable_to_non_nullable
+              as HostProduct?,
     ));
   }
 }
@@ -105,7 +135,7 @@ class __$$HostStateImplCopyWithImpl<$Res>
 
 @JsonSerializable(explicitToJson: true)
 class _$HostStateImpl implements _HostState {
-  _$HostStateImpl({this.products = const <HostProduct>[]});
+  _$HostStateImpl({this.products = const <HostProduct>[], this.currentProduct});
 
   factory _$HostStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$HostStateImplFromJson(json);
@@ -113,10 +143,12 @@ class _$HostStateImpl implements _HostState {
   @override
   @JsonKey()
   final List<HostProduct>? products;
+  @override
+  final HostProduct? currentProduct;
 
   @override
   String toString() {
-    return 'HostState(products: $products)';
+    return 'HostState(products: $products, currentProduct: $currentProduct)';
   }
 
   @override
@@ -124,13 +156,15 @@ class _$HostStateImpl implements _HostState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$HostStateImpl &&
-            const DeepCollectionEquality().equals(other.products, products));
+            const DeepCollectionEquality().equals(other.products, products) &&
+            (identical(other.currentProduct, currentProduct) ||
+                other.currentProduct == currentProduct));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(products));
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(products), currentProduct);
 
   /// Create a copy of HostState
   /// with the given fields replaced by the non-null parameter values.
@@ -149,13 +183,17 @@ class _$HostStateImpl implements _HostState {
 }
 
 abstract class _HostState implements HostState {
-  factory _HostState({final List<HostProduct>? products}) = _$HostStateImpl;
+  factory _HostState(
+      {final List<HostProduct>? products,
+      final HostProduct? currentProduct}) = _$HostStateImpl;
 
   factory _HostState.fromJson(Map<String, dynamic> json) =
       _$HostStateImpl.fromJson;
 
   @override
   List<HostProduct>? get products;
+  @override
+  HostProduct? get currentProduct;
 
   /// Create a copy of HostState
   /// with the given fields replaced by the non-null parameter values.

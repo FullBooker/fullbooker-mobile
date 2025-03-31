@@ -80,7 +80,7 @@ _$AvailabilityImpl _$$AvailabilityImplFromJson(Map<String, dynamic> json) =>
       end: json['end'] as String,
       startTime: json['start_time'] as String,
       endTime: json['end_time'] as String,
-      duration: json['duration'] as String?,
+      duration: (json['duration'] as num?)?.toInt(),
       openDays: json['open_days'] as List<dynamic>? ?? const <dynamic>[],
       closedDates: json['closed_dates'] as List<dynamic>? ?? const <dynamic>[],
     );

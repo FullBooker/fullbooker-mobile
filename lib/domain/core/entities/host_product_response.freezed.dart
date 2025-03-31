@@ -773,7 +773,7 @@ mixin _$Availability {
   String get startTime => throw _privateConstructorUsedError;
   @JsonKey(name: 'end_time')
   String get endTime => throw _privateConstructorUsedError;
-  String? get duration => throw _privateConstructorUsedError;
+  int? get duration => throw _privateConstructorUsedError;
   @JsonKey(name: 'open_days')
   List<dynamic> get openDays => throw _privateConstructorUsedError;
   @JsonKey(name: 'closed_dates')
@@ -803,7 +803,7 @@ abstract class $AvailabilityCopyWith<$Res> {
       String end,
       @JsonKey(name: 'start_time') String startTime,
       @JsonKey(name: 'end_time') String endTime,
-      String? duration,
+      int? duration,
       @JsonKey(name: 'open_days') List<dynamic> openDays,
       @JsonKey(name: 'closed_dates') List<dynamic> closedDates});
 }
@@ -866,7 +866,7 @@ class _$AvailabilityCopyWithImpl<$Res, $Val extends Availability>
       duration: freezed == duration
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       openDays: null == openDays
           ? _value.openDays
           : openDays // ignore: cast_nullable_to_non_nullable
@@ -895,7 +895,7 @@ abstract class _$$AvailabilityImplCopyWith<$Res>
       String end,
       @JsonKey(name: 'start_time') String startTime,
       @JsonKey(name: 'end_time') String endTime,
-      String? duration,
+      int? duration,
       @JsonKey(name: 'open_days') List<dynamic> openDays,
       @JsonKey(name: 'closed_dates') List<dynamic> closedDates});
 }
@@ -956,7 +956,7 @@ class __$$AvailabilityImplCopyWithImpl<$Res>
       duration: freezed == duration
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       openDays: null == openDays
           ? _value._openDays
           : openDays // ignore: cast_nullable_to_non_nullable
@@ -1009,7 +1009,7 @@ class _$AvailabilityImpl implements _Availability {
   @JsonKey(name: 'end_time')
   final String endTime;
   @override
-  final String? duration;
+  final int? duration;
   final List<dynamic> _openDays;
   @override
   @JsonKey(name: 'open_days')
@@ -1094,7 +1094,7 @@ abstract class _Availability implements Availability {
           required final String end,
           @JsonKey(name: 'start_time') required final String startTime,
           @JsonKey(name: 'end_time') required final String endTime,
-          final String? duration,
+          final int? duration,
           @JsonKey(name: 'open_days') final List<dynamic> openDays,
           @JsonKey(name: 'closed_dates') final List<dynamic> closedDates}) =
       _$AvailabilityImpl;
@@ -1120,7 +1120,7 @@ abstract class _Availability implements Availability {
   @JsonKey(name: 'end_time')
   String get endTime;
   @override
-  String? get duration;
+  int? get duration;
   @override
   @JsonKey(name: 'open_days')
   List<dynamic> get openDays;

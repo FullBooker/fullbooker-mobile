@@ -11,6 +11,7 @@ class HostState with _$HostState {
   @JsonSerializable(explicitToJson: true)
   factory HostState({
     @Default(<HostProduct>[]) List<HostProduct>? products,
+    HostProduct? currentProduct,
   }) = _HostState;
 
   factory HostState.initial() => HostState();
