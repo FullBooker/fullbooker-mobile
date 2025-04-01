@@ -485,7 +485,8 @@ const String nairobi = 'Nairobi';
 const String dateString = 'Date';
 const String selectDateHint = 'Select date';
 const String starting = 'Starting';
-const String ending = 'Ending';
+const String ending = 'Ends on';
+const String atString = 'at';
 const String chooseTime = 'Choose time';
 
 // Photos page

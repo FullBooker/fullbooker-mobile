@@ -125,7 +125,7 @@ class _ProductLocationPageState extends State<ProductLocationPage> {
             ),
             PrimaryButton(
               onPressed: () {
-                context.router.push(ProductDateTimeRouteRoute());
+                context.router.push(ProductDateTimeRoute());
               },
               child: d.right(continueString),
             ),

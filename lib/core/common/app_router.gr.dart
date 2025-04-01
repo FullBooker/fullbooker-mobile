@@ -957,17 +957,17 @@ class ProductBasicDetailsRoute extends _i43.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i26.ProductDateTimePagePage]
-class ProductDateTimeRouteRoute extends _i43.PageRouteInfo<void> {
-  const ProductDateTimeRouteRoute({List<_i43.PageRouteInfo>? children})
-    : super(ProductDateTimeRouteRoute.name, initialChildren: children);
+/// [_i26.ProductDateTimePage]
+class ProductDateTimeRoute extends _i43.PageRouteInfo<void> {
+  const ProductDateTimeRoute({List<_i43.PageRouteInfo>? children})
+    : super(ProductDateTimeRoute.name, initialChildren: children);
 
-  static const String name = 'ProductDateTimeRouteRoute';
+  static const String name = 'ProductDateTimeRoute';
 
   static _i43.PageInfo page = _i43.PageInfo(
     name,
     builder: (data) {
-      return const _i26.ProductDateTimePagePage();
+      return const _i26.ProductDateTimePage();
     },
   );
 }
