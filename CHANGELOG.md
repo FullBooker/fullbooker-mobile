@@ -1,8 +1,374 @@
 # CHANGELOG
 
+- feat: scaffold new profile items
+  - add new profile items
+  - setup switching to hosting banner
+  - add legal and change password page
+
+## 0.0.200
+
+- feat: link product details page to api
+
+## 0.0.199
+
+- feat: scaffold product details page
+  - create product details page
+  - add new product carousel widget with dummy images
+  - add mock product response
+  - fix secondary button text color
+  - setup product details page router
+
+## 0.0.198
+
+- feat: improve event details formatting
+  - add new product card to be a gesturedetector
+
+## 0.0.197
+
+- feat: add current product state variable
+
+## 0.0.196
+
+- feat: wire up permission checks in location selection page
+  - add location zero state image
+
+## 0.0.195
+
+- feat: Google map enhancements
+  - improve location selection page UI
+  - defaults to a constant location of no permissions have been set
+  - extract all UI logic into handler class
+
+## 0.0.194
+
+- feat: add location selection page
+  - implement location search
+  - implement location selection on a map
+  - make the search autocomplete api results more relevant
+
+## 0.0.193
+
+- feat: fix homepage appbar
+  - fix appbar on home page
+  - add previous navigation for product pages
+
+## 0.0.192
+
+- feat: collect a phone number during creation of an account
+
+## 0.0.191
+
+- fix(signout): record signin method for optimized signout
+
+## 0.0.190
+
+- feat: show products in the home page
+  - link products page to API
+  - show products in the home page
+
+## 0.0.189
+
+- feat: scaffold some products in the product page
+
+## 0.0.188
+
+- feat: scaffold new product card
+
+## 0.0.187
+
+- feat: scaffold product summary page
+
+## 0.0.186
+
+- feat: fetch the profile from backend when getting to the profile page
+
+## 0.0.185
+
+- feat: scaffold product preview page
+  - extract the full name from the same profile view model
+  - match the home page to the design
+  - add profile endpoints
+  - setup fetch profile action
+  - fix profile scaffolding
+
+## 0.0.184
+
+- feat: scaffold add ticket price page
+
+## 0.0.183
+
+- feat: scaffold product pricing page
+
+## 0.0.182
+
+- feat: scaffold product photos page
+  - add image prompt svg
+  - add mock network images
+
+## 0.0.181
+
+- feat: scaffold product date and time
+
+## 0.0.180
+
+- feat: scaffold location page
+
+## 0.0.179
+
+- feat: scaffold basic details page
+
+## 0.0.178
+
+- feat: fix CI deployment
+
+## 0.0.177
+
+- feat: link the product setup pages
+
+## 0.0.176
+
+- feat: finalize scaffolding the product setup summary page
+
+## 0.0.175
+
+- feat: scaffold product category page
+
+## 0.0.174
+
+- feat: scaffold product type page
+
+## 0.0.173
+
+- feat: setup deployment to Google Play Store
+  - setup deployment to dev and prod based on the branch
+
+## 0.0.172
+
+- feat: setup custom appbar on the home page
+
+## 0.0.171
+
+- feat: make all login endpoints unauthenticated in custom client
+
+## 0.0.170
+
+- feat: finalize custom client fixes
+  - add refresh token logic (flagged until API is available)
+  - pass authorization token based on whether a request is authenticated or not
+  - make login endpoint unauthenticated
+
+## 0.0.169
+
+- feat: cleanup app client
+  - add refresh token to the custom client
+  - setup refresh token endpoint
+  - add refresh token logic to custom client
+  - remove unused variables to auth credentials object
+  - add token expiry checks
+
+## 0.0.168
+
+- feat: setup product endpoints on AppConfig
+
+## 0.0.167
+
+- feat: setup host state in app state middleware
+
+## 0.0.166
+
+- feat: setup host app state
+
+## 0.0.165
+
+- feat: add custom app onboarding events
+
+## 0.0.164
+
+- feat: resume app scaffolding
+  - remove all instances of elevated button and replace with a button component
+  - remove error state widget
+  - update app TODOs
+
+## 0.0.163
+
+- feat: add password autofill (#38)
+
+## 0.0.162
+
+- Merge branch 'main' into add-password-autofill
+
+## 0.0.161
+
+- feat: move all login pages to presentation folder (#37)
+
+## 0.0.160
+
+- feat: add TextInput.finishAutofillContext() to gracefully complete Autofill context
+
+## 0.0.159
+
+- feat: add email and password autofill
+  - setup password autofill in login page and forgot pin page
+  - cleanup navigation after logout in logout action
+  - remove logout from products page
+
+## 0.0.158
+
+- feat: propagate field level responses from the backend
+
+## 0.0.157
+
+- feat: propagate errors from the backend onto the UI
+  - remove processHTTPResponse function
+  - add middleware to handle missing response codes
+  - enhance error parsing in custom client
+  - apply error propagation from backend across all actions
+
+## 0.0.156
+
+- feat: fix app name to start with a capital F
+
+## 0.0.155
+
+- feat: remove unnecessary scopes during google sign in
+
+## 0.0.154
+
+- feat: move all login pages to presentation folder
+
+## 0.0.153
+
+- feat: restore code shrinking and build optimization (#36)
+  - add sample release note starters
+  - reduce app bundle size
+  - enable code shrinking in build.gradle file
+  - show debug OTP only in dev mode
+
+## 0.0.152
+
+- feat: restore code shrinking and build optimization
+  - add sample release note starters
+  - reduce app bundle size
+  - enable code shrinking in build.gradle file
+  - show debug OTP only in dev mode
+
+## 0.0.151
+
+- feat: scaffold password reset (#35)
+  - cleanup create account page
+  - scaffold request OTP page
+  - create request otp action
+  - update onboarding state with otp value
+  - update verify otp page route config
+  - add debug print to print otp to console in dev mode
+  - remove old pin input package that caused issues
+  - add new pin_code_text_field package
+  - wrap new OTP workflows
+  - fix pin input code text field ui
+  - finalize verify OTP page scaffolding
+  - fix otp verification logic
+  - add set new password action
+  - add new password view model values to onboarding state
+  - fix error handling in all actions when a 400 is returned from the
+  - server
+  - add new missing endpoints in app config
+  - improve custom text input UI
+
+## 0.0.150
+
+- fix: apply onboarding bug fixes
+
+## 0.0.149
+
+- feat: pply onboarding fixes
+  - use correct email address and password when changing the password
+  - add a debug OTP widget to show the debug otp
+  - setup reset password show/hide bools in onboarding state
+  - use correct email address when verifying otp
+
+## 0.0.148
+
+- feat: scaffold set new password page
+  - add set new password action
+  - add new password view model values to onboarding state
+  - fix error handling in all actions when a 400 is returned from the server
+  - add new missing endpoints in app config
+  - improve custom text input UI
+
+## 0.0.147
+
+- feat: fix otp verification logic
+
+## 0.0.146
+
+- feat: finalize verify OTP page scaffolding
+
+## 0.0.145
+
+- feat: fix pin input code text field ui
+
+## 0.0.144
+
+- feat: scaffold pin verification page
+  - remove old pin input package that caused issues
+  - add new pin_code_text_field package
+  - wrap new OTP workflows
+
+## 0.0.143
+
+- feat: finalize reset otp page scaffold
+  - create request otp action
+  - update onboarding state with otp value
+  - update verify otp page route config
+  - add debug print to print otp to console in dev mode
+
+## 0.0.142
+
+- feat: scaffold reset password pages
+  - cleanup create account page
+  - scaffold request OTP page
+
+## 0.0.141
+
+- feat: app fixes (#34)
+
+## 0.0.140
+
+- feat: setup Firebase Crashlytics on the app
+
+## 0.0.139
+
+- feat: setup Firebase analytics
+
+## 0.0.138
+
+- feat: fix app colors
+
+## 0.0.137
+
+- feat: finalize textStyle fixes for the whole app
+
+## 0.0.136
+
+- feat: unify app spaces
+  - apply consistent spacing for all app widgets
+
+## 0.0.135
+
+- feat: cleanup text widgets
+
+## 0.0.134
+
+- feat: cleanup all app colors
+
+## 0.0.133
+
+- feat: generate changelog (#32)
+
 ## 0.0.132
 
 - feat: generate product changelog
+  - run deployment scripts on main branch as well
 
 ## 0.0.131
 
