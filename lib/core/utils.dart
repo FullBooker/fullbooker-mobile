@@ -264,11 +264,29 @@ Widget humanizeDate({
   );
 }
 
-Widget formatTime({required String rawTime, TextStyle? textStyle}) {
-  if (rawTime.isEmpty) return const SizedBox();
+Widget formatTime({
+  String? rawTime,
+  TimeOfDay? timeOfDay,
+  TextStyle? textStyle,
+}) {
+  if ((rawTime == null || rawTime.isEmpty) && timeOfDay == null) {
+    return const SizedBox();
+  }
 
-  final DateTime parsedTime = DateFormat('HH:mm:ss').parse(rawTime);
+  late DateTime parsedTime;
+
+  if (timeOfDay != null) {
+    parsedTime = DateTime(0, 1, 1, timeOfDay.hour, timeOfDay.minute);
+  } else {
+    try {
+      parsedTime = DateFormat('HH:mm:ss').parse(rawTime!);
+    } catch (_) {
+      return const SizedBox();
+    }
+  }
+
   final String formatted = DateFormat('h:mm a').format(parsedTime);
+
   return Text(
     formatted,
     style: textStyle ??
