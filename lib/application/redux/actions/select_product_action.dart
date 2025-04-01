@@ -1,11 +1,11 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
-import 'package:fullbooker/domain/core/entities/host_product_response.dart';
+import 'package:fullbooker/domain/core/entities/product.dart';
 
 class SelectProductAction extends ReduxAction<AppState> {
   SelectProductAction({this.product});
 
-  HostProduct? product;
+  Product? product;
 
   @override
   AppState? reduce() {

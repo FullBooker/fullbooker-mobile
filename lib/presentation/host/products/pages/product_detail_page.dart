@@ -6,7 +6,7 @@ import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/products_page_view_model.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/core/utils.dart';
-import 'package:fullbooker/domain/core/entities/host_product_response.dart';
+import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:fullbooker/presentation/core/components/custom_badge_widget.dart';
@@ -34,7 +34,7 @@ class ProductDetailPage extends StatelessWidget {
         converter: (Store<AppState> store) =>
             ProductsPageViewModel.fromState(store.state),
         builder: (BuildContext context, ProductsPageViewModel vm) {
-          final HostProduct? selectedProduct = vm.selectedProduct;
+          final Product? selectedProduct = vm.selectedProduct;
 
           final List<String?> imageURLs = <String?>[
             selectedProduct?.image?.file,

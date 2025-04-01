@@ -1,6 +1,6 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
-import 'package:fullbooker/domain/core/entities/host_product_response.dart';
+import 'package:fullbooker/domain/core/entities/product.dart';
 
 class HostingHomeViewModel extends Vm {
   HostingHomeViewModel({
@@ -13,14 +13,14 @@ class HostingHomeViewModel extends Vm {
   final String? emailAddress;
   final String? password;
   final bool hidePassword;
-  final List<HostProduct>? products;
+  final List<Product>? products;
 
   static HostingHomeViewModel fromState(AppState state) {
     return HostingHomeViewModel(
       emailAddress: state.onboardingState?.emailAddress,
       password: state.onboardingState?.password,
       hidePassword: state.onboardingState!.hidePassword,
-      products: state.hostState?.products ?? <HostProduct>[],
+      products: state.hostState?.products ?? <Product>[],
     );
   }
 }

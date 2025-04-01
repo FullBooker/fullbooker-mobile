@@ -20,9 +20,9 @@ HostState _$HostStateFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$HostState {
-  List<HostProduct>? get products => throw _privateConstructorUsedError;
-  HostProduct? get currentProduct => throw _privateConstructorUsedError;
-  HostProduct? get selectedProduct => throw _privateConstructorUsedError;
+  List<Product>? get products => throw _privateConstructorUsedError;
+  Product? get currentProduct => throw _privateConstructorUsedError;
+  Product? get selectedProduct => throw _privateConstructorUsedError;
 
   /// Serializes this HostState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -40,12 +40,12 @@ abstract class $HostStateCopyWith<$Res> {
       _$HostStateCopyWithImpl<$Res, HostState>;
   @useResult
   $Res call(
-      {List<HostProduct>? products,
-      HostProduct? currentProduct,
-      HostProduct? selectedProduct});
+      {List<Product>? products,
+      Product? currentProduct,
+      Product? selectedProduct});
 
-  $HostProductCopyWith<$Res>? get currentProduct;
-  $HostProductCopyWith<$Res>? get selectedProduct;
+  $ProductCopyWith<$Res>? get currentProduct;
+  $ProductCopyWith<$Res>? get selectedProduct;
 }
 
 /// @nodoc
@@ -71,15 +71,15 @@ class _$HostStateCopyWithImpl<$Res, $Val extends HostState>
       products: freezed == products
           ? _value.products
           : products // ignore: cast_nullable_to_non_nullable
-              as List<HostProduct>?,
+              as List<Product>?,
       currentProduct: freezed == currentProduct
           ? _value.currentProduct
           : currentProduct // ignore: cast_nullable_to_non_nullable
-              as HostProduct?,
+              as Product?,
       selectedProduct: freezed == selectedProduct
           ? _value.selectedProduct
           : selectedProduct // ignore: cast_nullable_to_non_nullable
-              as HostProduct?,
+              as Product?,
     ) as $Val);
   }
 
@@ -87,12 +87,12 @@ class _$HostStateCopyWithImpl<$Res, $Val extends HostState>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $HostProductCopyWith<$Res>? get currentProduct {
+  $ProductCopyWith<$Res>? get currentProduct {
     if (_value.currentProduct == null) {
       return null;
     }
 
-    return $HostProductCopyWith<$Res>(_value.currentProduct!, (value) {
+    return $ProductCopyWith<$Res>(_value.currentProduct!, (value) {
       return _then(_value.copyWith(currentProduct: value) as $Val);
     });
   }
@@ -101,12 +101,12 @@ class _$HostStateCopyWithImpl<$Res, $Val extends HostState>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $HostProductCopyWith<$Res>? get selectedProduct {
+  $ProductCopyWith<$Res>? get selectedProduct {
     if (_value.selectedProduct == null) {
       return null;
     }
 
-    return $HostProductCopyWith<$Res>(_value.selectedProduct!, (value) {
+    return $ProductCopyWith<$Res>(_value.selectedProduct!, (value) {
       return _then(_value.copyWith(selectedProduct: value) as $Val);
     });
   }
@@ -121,14 +121,14 @@ abstract class _$$HostStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<HostProduct>? products,
-      HostProduct? currentProduct,
-      HostProduct? selectedProduct});
+      {List<Product>? products,
+      Product? currentProduct,
+      Product? selectedProduct});
 
   @override
-  $HostProductCopyWith<$Res>? get currentProduct;
+  $ProductCopyWith<$Res>? get currentProduct;
   @override
-  $HostProductCopyWith<$Res>? get selectedProduct;
+  $ProductCopyWith<$Res>? get selectedProduct;
 }
 
 /// @nodoc
@@ -152,15 +152,15 @@ class __$$HostStateImplCopyWithImpl<$Res>
       products: freezed == products
           ? _value.products
           : products // ignore: cast_nullable_to_non_nullable
-              as List<HostProduct>?,
+              as List<Product>?,
       currentProduct: freezed == currentProduct
           ? _value.currentProduct
           : currentProduct // ignore: cast_nullable_to_non_nullable
-              as HostProduct?,
+              as Product?,
       selectedProduct: freezed == selectedProduct
           ? _value.selectedProduct
           : selectedProduct // ignore: cast_nullable_to_non_nullable
-              as HostProduct?,
+              as Product?,
     ));
   }
 }
@@ -170,7 +170,7 @@ class __$$HostStateImplCopyWithImpl<$Res>
 @JsonSerializable(explicitToJson: true)
 class _$HostStateImpl implements _HostState {
   _$HostStateImpl(
-      {this.products = const <HostProduct>[],
+      {this.products = const <Product>[],
       this.currentProduct,
       this.selectedProduct});
 
@@ -179,11 +179,11 @@ class _$HostStateImpl implements _HostState {
 
   @override
   @JsonKey()
-  final List<HostProduct>? products;
+  final List<Product>? products;
   @override
-  final HostProduct? currentProduct;
+  final Product? currentProduct;
   @override
-  final HostProduct? selectedProduct;
+  final Product? selectedProduct;
 
   @override
   String toString() {
@@ -228,19 +228,19 @@ class _$HostStateImpl implements _HostState {
 
 abstract class _HostState implements HostState {
   factory _HostState(
-      {final List<HostProduct>? products,
-      final HostProduct? currentProduct,
-      final HostProduct? selectedProduct}) = _$HostStateImpl;
+      {final List<Product>? products,
+      final Product? currentProduct,
+      final Product? selectedProduct}) = _$HostStateImpl;
 
   factory _HostState.fromJson(Map<String, dynamic> json) =
       _$HostStateImpl.fromJson;
 
   @override
-  List<HostProduct>? get products;
+  List<Product>? get products;
   @override
-  HostProduct? get currentProduct;
+  Product? get currentProduct;
   @override
-  HostProduct? get selectedProduct;
+  Product? get selectedProduct;
 
   /// Create a copy of HostState
   /// with the given fields replaced by the non-null parameter values.

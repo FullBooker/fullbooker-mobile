@@ -1,7 +1,7 @@
 // Package imports:
 
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:fullbooker/domain/core/entities/host_product_response.dart';
+import 'package:fullbooker/domain/core/entities/product.dart';
 
 part 'host_state.freezed.dart';
 part 'host_state.g.dart';
@@ -10,9 +10,9 @@ part 'host_state.g.dart';
 class HostState with _$HostState {
   @JsonSerializable(explicitToJson: true)
   factory HostState({
-    @Default(<HostProduct>[]) List<HostProduct>? products,
-    HostProduct? currentProduct,
-    HostProduct? selectedProduct,
+    @Default(<Product>[]) List<Product>? products,
+    Product? currentProduct,
+    Product? selectedProduct,
   }) = _HostState;
 
   factory HostState.initial() => HostState();
