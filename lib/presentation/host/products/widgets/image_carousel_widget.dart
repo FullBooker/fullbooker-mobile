@@ -3,22 +3,22 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fullbooker/shared/entities/data_mocks.dart';
 
-class ProductCarouselWidget extends StatefulWidget {
-  const ProductCarouselWidget({super.key, required this.imageUrls});
+class ImageCarouselWidget extends StatefulWidget {
+  const ImageCarouselWidget({super.key, required this.imageUrls});
 
   final List<String?>? imageUrls;
 
   @override
-  State<ProductCarouselWidget> createState() => _ProductCarouselWidgetState();
+  State<ImageCarouselWidget> createState() => _ImageCarouselWidgetState();
 }
 
-class _ProductCarouselWidgetState extends State<ProductCarouselWidget> {
+class _ImageCarouselWidgetState extends State<ImageCarouselWidget> {
   int _currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.bottomCenter,
+    return Column(
+      spacing: 12,
       children: <Widget>[
         CarouselSlider(
           options: CarouselOptions(
@@ -44,34 +44,24 @@ class _ProductCarouselWidgetState extends State<ProductCarouselWidget> {
             );
           }).toList(),
         ),
-        Positioned(
-          bottom: 12,
-          child: Container(
-            padding: EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: Colors.black.withValues(alpha: .6),
-              borderRadius: BorderRadius.circular(56),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List<Widget>.generate(widget.imageUrls?.length ?? 0,
-                  (int index) {
-                final bool isActive = index == _currentIndex;
-                return AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
-                  margin: const EdgeInsets.symmetric(horizontal: 4),
-                  height: 10,
-                  width: 10,
-                  decoration: BoxDecoration(
-                    color: isActive
-                        ? Colors.white.withValues(alpha: .7)
-                        : Colors.white.withValues(alpha: .2),
-                    shape: BoxShape.circle,
-                  ),
-                );
-              }),
-            ),
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children:
+              List<Widget>.generate(widget.imageUrls?.length ?? 0, (int index) {
+            final bool isActive = index == _currentIndex;
+            return AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              margin: const EdgeInsets.symmetric(horizontal: 4),
+              height: 8,
+              width: 8,
+              decoration: BoxDecoration(
+                color: isActive
+                    ? Theme.of(context).primaryColor
+                    : Theme.of(context).dividerColor,
+                shape: BoxShape.circle,
+              ),
+            );
+          }),
         ),
       ],
     );
