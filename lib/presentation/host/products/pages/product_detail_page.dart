@@ -10,7 +10,7 @@ import 'package:fullbooker/domain/core/entities/host_product_response.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:fullbooker/presentation/core/components/custom_badge_widget.dart';
-import 'package:fullbooker/presentation/host/products/widgets/product_carousel_widget.dart';
+import 'package:fullbooker/presentation/host/products/widgets/image_carousel_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_detail_item_widget.dart';
 import 'package:fullbooker/shared/entities/data_mocks.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
@@ -44,7 +44,7 @@ class ProductDetailPage extends StatelessWidget {
           return Column(
             children: <Widget>[
               // TODO(abiud): fetch the actual product images from the API
-              ProductCarouselWidget(imageUrls: imageURLs),
+              ImageCarouselWidget(imageUrls: imageURLs),
               Expanded(
                 child: ListView(
                   shrinkWrap: true,
