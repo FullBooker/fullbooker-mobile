@@ -24,7 +24,7 @@ class _ProductCarouselWidgetState extends State<ProductCarouselWidget> {
           options: CarouselOptions(
             height: MediaQuery.of(context).size.height * .3,
             autoPlay: true,
-            autoPlayInterval: Duration(seconds: 10),
+            autoPlayInterval: Duration(seconds: 5),
             autoPlayCurve: Curves.easeInOut,
             viewportFraction: 1.0,
             onPageChanged: (int index, CarouselPageChangedReason reason) {

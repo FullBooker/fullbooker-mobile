@@ -2,10 +2,16 @@ Welcome to FullBooker! We’re constantly improving the app to enhance your expe
 
 What's New:
 
-1. Sign in with email and password
-2. Sign in with Google
-3. Create an account and sign in instantly
-4. Reset your password  
-5. UI enhancements – Enjoy a cleaner, more polished look throughout the app.
+1. Your sign in credentials can be auto-filled from your favorite password manager
+2. Your phone number is now recorded during account creation
+3. Improved button design for accessibility
+4. A custom appbar on the home page and across all pages
+5. You can now view your products as a host from the home page
+6. The product page now lists your products
+7. New product setup scaffolds have been added
+8. Other minor technical enhancements
+
+
+Spacing on the UI has been improved
 
 Need help or have feedback? Contact us at +254717356476
