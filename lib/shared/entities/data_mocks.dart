@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fullbooker/domain/core/entities/host_product_response.dart';
+import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/shared/entities/event_creation_model.dart';
 
 final List<Map<String, dynamic>> eventReviewsDummyData = <Map<String, dynamic>>[
@@ -308,5 +309,5 @@ final Map<String, dynamic> productMockResponse = <String, dynamic>{
   ],
 };
 
-final HostProduct? mockProduct =
+final Product? mockProduct =
     HostProductResponse.fromJson(productMockResponse).results?.first;

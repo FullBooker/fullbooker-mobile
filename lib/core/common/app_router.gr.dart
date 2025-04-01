@@ -52,7 +52,6 @@ import 'package:fullbooker/features/host/pages/old_events_summary_page.dart'
     as _i13;
 import 'package:fullbooker/features/host/pages/product_details_page.dart'
     as _i28;
-import 'package:fullbooker/presentation/profile/pages/profile_page.dart' as _i35;
 import 'package:fullbooker/features/host/pages/tickets_summary_page.dart'
     as _i40;
 import 'package:fullbooker/features/host/pages/video_selection_page.dart'
@@ -93,6 +92,8 @@ import 'package:fullbooker/presentation/onboarding/pages/request_otp_page.dart'
     as _i36;
 import 'package:fullbooker/presentation/onboarding/pages/verify_otp_page.dart'
     as _i41;
+import 'package:fullbooker/presentation/profile/pages/profile_page.dart'
+    as _i35;
 import 'package:fullbooker/shared/entities/enums.dart' as _i48;
 import 'package:fullbooker/shared/entities/session_pricing.dart' as _i46;
 import 'package:fullbooker/shared/entities/ticket.dart' as _i49;

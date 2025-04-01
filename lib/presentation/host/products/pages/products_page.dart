@@ -6,7 +6,7 @@ import 'package:fullbooker/application/redux/actions/fetch_products_action.dart'
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/products_page_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
-import 'package:fullbooker/domain/core/entities/host_product_response.dart';
+import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
@@ -57,7 +57,7 @@ class ProductsPage extends StatelessWidget {
                   return AppLoading();
                 }
 
-                final List<HostProduct>? products = vm.products;
+                final List<Product>? products = vm.products;
 
                 if (products?.isEmpty ?? true) {
                   return GenericZeroState(
@@ -75,9 +75,9 @@ class ProductsPage extends StatelessWidget {
                   shrinkWrap: true,
                   itemCount: products?.length,
                   itemBuilder: (BuildContext context, int index) {
-                    final HostProduct currentProduct = products![index];
+                    final Product product = products![index];
 
-                    return NewProductCard(product: currentProduct);
+                    return NewProductCard(product: product);
                   },
                 );
               },

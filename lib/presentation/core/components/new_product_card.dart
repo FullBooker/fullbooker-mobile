@@ -6,7 +6,7 @@ import 'package:fullbooker/application/redux/actions/select_product_action.dart'
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/core/utils.dart';
-import 'package:fullbooker/domain/core/entities/host_product_response.dart';
+import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/presentation/core/components/custom_badge_widget.dart';
 import 'package:fullbooker/shared/entities/data_mocks.dart';
@@ -15,7 +15,7 @@ import 'package:heroicons/heroicons.dart';
 class NewProductCard extends StatelessWidget {
   const NewProductCard({super.key, required this.product});
 
-  final HostProduct product;
+  final Product product;
 
   @override
   Widget build(BuildContext context) {
