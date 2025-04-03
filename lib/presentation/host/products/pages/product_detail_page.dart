@@ -53,6 +53,7 @@ class ProductDetailPage extends StatelessWidget {
                       padding: const EdgeInsets.all(16),
                       child: Column(
                         spacing: 12,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
