@@ -36,12 +36,15 @@ class Product with _$Product {
 
     /// Temp values used to create the product
     ProductCategory? selectedProductCategory,
+    ProductCategory? selectedProductSubCategory,
   }) = _Product;
 
   factory Product.initial() => Product(
         host: UserState.initial(),
         availability: ProductAvailability.initial(),
         image: ProductImage.initial(),
+        selectedProductCategory: ProductCategory.initial(),
+        selectedProductSubCategory: ProductCategory.initial(),
       );
 
   factory Product.fromJson(Map<String, dynamic> json) =>
