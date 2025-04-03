@@ -8,28 +8,38 @@ part of 'product.dart';
 
 _$ProductImpl _$$ProductImplFromJson(Map<String, dynamic> json) =>
     _$ProductImpl(
-      id: json['id'] as String,
-      createdAt: json['created_at'] as String,
-      updatedAt: json['updated_at'] as String,
-      active: json['active'] as bool,
-      host: UserState.fromJson(json['host'] as Map<String, dynamic>),
-      name: json['name'] as String,
-      description: json['description'] as String,
-      number: json['number'] as String,
-      category: json['category'] as String,
-      subcategory: json['subcategory'] as String,
-      availability: ProductAvailability.fromJson(
-          json['availability'] as Map<String, dynamic>),
-      pricing: (json['pricing'] as List<dynamic>)
-          .map((e) => ProductPricing.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      id: json['id'] as String? ?? UNKNOWN,
+      createdAt: json['created_at'] as String? ?? UNKNOWN,
+      updatedAt: json['updated_at'] as String? ?? UNKNOWN,
+      active: json['active'] as bool? ?? false,
+      host: json['host'] == null
+          ? null
+          : UserState.fromJson(json['host'] as Map<String, dynamic>),
+      name: json['name'] as String? ?? UNKNOWN,
+      description: json['description'] as String? ?? UNKNOWN,
+      number: json['number'] as String? ?? UNKNOWN,
+      category: json['category'] as String? ?? UNKNOWN,
+      subcategory: json['subcategory'] as String? ?? UNKNOWN,
+      availability: json['availability'] == null
+          ? null
+          : ProductAvailability.fromJson(
+              json['availability'] as Map<String, dynamic>),
+      pricing: (json['pricing'] as List<dynamic>?)
+              ?.map((e) => ProductPricing.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const <ProductPricing>[],
       image: json['image'] == null
           ? null
           : ProductImage.fromJson(json['image'] as Map<String, dynamic>),
       video: json['video'],
-      locations: (json['locations'] as List<dynamic>)
-          .map((e) => ProductLocation.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      locations: (json['locations'] as List<dynamic>?)
+              ?.map((e) => ProductLocation.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const <ProductLocation>[],
+      selectedProductCategory: json['selectedProductCategory'] == null
+          ? null
+          : ProductCategory.fromJson(
+              json['selectedProductCategory'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$ProductImplToJson(_$ProductImpl instance) =>
@@ -38,15 +48,16 @@ Map<String, dynamic> _$$ProductImplToJson(_$ProductImpl instance) =>
       'created_at': instance.createdAt,
       'updated_at': instance.updatedAt,
       'active': instance.active,
-      'host': instance.host.toJson(),
+      'host': instance.host?.toJson(),
       'name': instance.name,
       'description': instance.description,
       'number': instance.number,
       'category': instance.category,
       'subcategory': instance.subcategory,
-      'availability': instance.availability.toJson(),
-      'pricing': instance.pricing.map((e) => e.toJson()).toList(),
+      'availability': instance.availability?.toJson(),
+      'pricing': instance.pricing?.map((e) => e.toJson()).toList(),
       'image': instance.image?.toJson(),
       'video': instance.video,
-      'locations': instance.locations.map((e) => e.toJson()).toList(),
+      'locations': instance.locations?.map((e) => e.toJson()).toList(),
+      'selectedProductCategory': instance.selectedProductCategory?.toJson(),
     };

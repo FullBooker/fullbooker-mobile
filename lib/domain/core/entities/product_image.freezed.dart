@@ -20,18 +20,18 @@ ProductImage _$ProductImageFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ProductImage {
-  String get id => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_at')
-  String get createdAt => throw _privateConstructorUsedError;
+  String? get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'updated_at')
-  String get updatedAt => throw _privateConstructorUsedError;
-  bool get active => throw _privateConstructorUsedError;
-  String get host => throw _privateConstructorUsedError;
+  String? get updatedAt => throw _privateConstructorUsedError;
+  bool? get active => throw _privateConstructorUsedError;
+  String? get host => throw _privateConstructorUsedError;
   @JsonKey(name: 'media_type')
-  String get mediaType => throw _privateConstructorUsedError;
-  String get file => throw _privateConstructorUsedError;
+  String? get mediaType => throw _privateConstructorUsedError;
+  String? get file => throw _privateConstructorUsedError;
   @JsonKey(name: 'uploaded_at')
-  String get uploadedAt => throw _privateConstructorUsedError;
+  String? get uploadedAt => throw _privateConstructorUsedError;
 
   /// Serializes this ProductImage to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -50,14 +50,14 @@ abstract class $ProductImageCopyWith<$Res> {
       _$ProductImageCopyWithImpl<$Res, ProductImage>;
   @useResult
   $Res call(
-      {String id,
-      @JsonKey(name: 'created_at') String createdAt,
-      @JsonKey(name: 'updated_at') String updatedAt,
-      bool active,
-      String host,
-      @JsonKey(name: 'media_type') String mediaType,
-      String file,
-      @JsonKey(name: 'uploaded_at') String uploadedAt});
+      {String? id,
+      @JsonKey(name: 'created_at') String? createdAt,
+      @JsonKey(name: 'updated_at') String? updatedAt,
+      bool? active,
+      String? host,
+      @JsonKey(name: 'media_type') String? mediaType,
+      String? file,
+      @JsonKey(name: 'uploaded_at') String? uploadedAt});
 }
 
 /// @nodoc
@@ -75,48 +75,48 @@ class _$ProductImageCopyWithImpl<$Res, $Val extends ProductImage>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? createdAt = null,
-    Object? updatedAt = null,
-    Object? active = null,
-    Object? host = null,
-    Object? mediaType = null,
-    Object? file = null,
-    Object? uploadedAt = null,
+    Object? id = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+    Object? active = freezed,
+    Object? host = freezed,
+    Object? mediaType = freezed,
+    Object? file = freezed,
+    Object? uploadedAt = freezed,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      createdAt: null == createdAt
+              as String?,
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as String,
-      updatedAt: null == updatedAt
+              as String?,
+      updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
-              as String,
-      active: null == active
+              as String?,
+      active: freezed == active
           ? _value.active
           : active // ignore: cast_nullable_to_non_nullable
-              as bool,
-      host: null == host
+              as bool?,
+      host: freezed == host
           ? _value.host
           : host // ignore: cast_nullable_to_non_nullable
-              as String,
-      mediaType: null == mediaType
+              as String?,
+      mediaType: freezed == mediaType
           ? _value.mediaType
           : mediaType // ignore: cast_nullable_to_non_nullable
-              as String,
-      file: null == file
+              as String?,
+      file: freezed == file
           ? _value.file
           : file // ignore: cast_nullable_to_non_nullable
-              as String,
-      uploadedAt: null == uploadedAt
+              as String?,
+      uploadedAt: freezed == uploadedAt
           ? _value.uploadedAt
           : uploadedAt // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -130,14 +130,14 @@ abstract class _$$ProductImageImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String id,
-      @JsonKey(name: 'created_at') String createdAt,
-      @JsonKey(name: 'updated_at') String updatedAt,
-      bool active,
-      String host,
-      @JsonKey(name: 'media_type') String mediaType,
-      String file,
-      @JsonKey(name: 'uploaded_at') String uploadedAt});
+      {String? id,
+      @JsonKey(name: 'created_at') String? createdAt,
+      @JsonKey(name: 'updated_at') String? updatedAt,
+      bool? active,
+      String? host,
+      @JsonKey(name: 'media_type') String? mediaType,
+      String? file,
+      @JsonKey(name: 'uploaded_at') String? uploadedAt});
 }
 
 /// @nodoc
@@ -153,88 +153,93 @@ class __$$ProductImageImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? createdAt = null,
-    Object? updatedAt = null,
-    Object? active = null,
-    Object? host = null,
-    Object? mediaType = null,
-    Object? file = null,
-    Object? uploadedAt = null,
+    Object? id = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+    Object? active = freezed,
+    Object? host = freezed,
+    Object? mediaType = freezed,
+    Object? file = freezed,
+    Object? uploadedAt = freezed,
   }) {
     return _then(_$ProductImageImpl(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      createdAt: null == createdAt
+              as String?,
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as String,
-      updatedAt: null == updatedAt
+              as String?,
+      updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
-              as String,
-      active: null == active
+              as String?,
+      active: freezed == active
           ? _value.active
           : active // ignore: cast_nullable_to_non_nullable
-              as bool,
-      host: null == host
+              as bool?,
+      host: freezed == host
           ? _value.host
           : host // ignore: cast_nullable_to_non_nullable
-              as String,
-      mediaType: null == mediaType
+              as String?,
+      mediaType: freezed == mediaType
           ? _value.mediaType
           : mediaType // ignore: cast_nullable_to_non_nullable
-              as String,
-      file: null == file
+              as String?,
+      file: freezed == file
           ? _value.file
           : file // ignore: cast_nullable_to_non_nullable
-              as String,
-      uploadedAt: null == uploadedAt
+              as String?,
+      uploadedAt: freezed == uploadedAt
           ? _value.uploadedAt
           : uploadedAt // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(explicitToJson: true)
 class _$ProductImageImpl implements _ProductImage {
   _$ProductImageImpl(
-      {required this.id,
-      @JsonKey(name: 'created_at') required this.createdAt,
-      @JsonKey(name: 'updated_at') required this.updatedAt,
-      required this.active,
-      required this.host,
-      @JsonKey(name: 'media_type') required this.mediaType,
-      required this.file,
-      @JsonKey(name: 'uploaded_at') required this.uploadedAt});
+      {this.id = UNKNOWN,
+      @JsonKey(name: 'created_at') this.createdAt = UNKNOWN,
+      @JsonKey(name: 'updated_at') this.updatedAt = UNKNOWN,
+      this.active = false,
+      this.host = UNKNOWN,
+      @JsonKey(name: 'media_type') this.mediaType = UNKNOWN,
+      this.file = UNKNOWN,
+      @JsonKey(name: 'uploaded_at') this.uploadedAt = UNKNOWN});
 
   factory _$ProductImageImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProductImageImplFromJson(json);
 
   @override
-  final String id;
+  @JsonKey()
+  final String? id;
   @override
   @JsonKey(name: 'created_at')
-  final String createdAt;
+  final String? createdAt;
   @override
   @JsonKey(name: 'updated_at')
-  final String updatedAt;
+  final String? updatedAt;
   @override
-  final bool active;
+  @JsonKey()
+  final bool? active;
   @override
-  final String host;
+  @JsonKey()
+  final String? host;
   @override
   @JsonKey(name: 'media_type')
-  final String mediaType;
+  final String? mediaType;
   @override
-  final String file;
+  @JsonKey()
+  final String? file;
   @override
   @JsonKey(name: 'uploaded_at')
-  final String uploadedAt;
+  final String? uploadedAt;
 
   @override
   String toString() {
@@ -283,39 +288,39 @@ class _$ProductImageImpl implements _ProductImage {
 
 abstract class _ProductImage implements ProductImage {
   factory _ProductImage(
-          {required final String id,
-          @JsonKey(name: 'created_at') required final String createdAt,
-          @JsonKey(name: 'updated_at') required final String updatedAt,
-          required final bool active,
-          required final String host,
-          @JsonKey(name: 'media_type') required final String mediaType,
-          required final String file,
-          @JsonKey(name: 'uploaded_at') required final String uploadedAt}) =
+          {final String? id,
+          @JsonKey(name: 'created_at') final String? createdAt,
+          @JsonKey(name: 'updated_at') final String? updatedAt,
+          final bool? active,
+          final String? host,
+          @JsonKey(name: 'media_type') final String? mediaType,
+          final String? file,
+          @JsonKey(name: 'uploaded_at') final String? uploadedAt}) =
       _$ProductImageImpl;
 
   factory _ProductImage.fromJson(Map<String, dynamic> json) =
       _$ProductImageImpl.fromJson;
 
   @override
-  String get id;
+  String? get id;
   @override
   @JsonKey(name: 'created_at')
-  String get createdAt;
+  String? get createdAt;
   @override
   @JsonKey(name: 'updated_at')
-  String get updatedAt;
+  String? get updatedAt;
   @override
-  bool get active;
+  bool? get active;
   @override
-  String get host;
+  String? get host;
   @override
   @JsonKey(name: 'media_type')
-  String get mediaType;
+  String? get mediaType;
   @override
-  String get file;
+  String? get file;
   @override
   @JsonKey(name: 'uploaded_at')
-  String get uploadedAt;
+  String? get uploadedAt;
 
   /// Create a copy of ProductImage
   /// with the given fields replaced by the non-null parameter values.

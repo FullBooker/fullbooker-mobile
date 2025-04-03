@@ -198,22 +198,24 @@ class __$$ProductLocationImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(explicitToJson: true)
 class _$ProductLocationImpl implements _ProductLocation {
   _$ProductLocationImpl(
-      {required this.id,
-      @JsonKey(name: 'created_at') required this.createdAt,
-      @JsonKey(name: 'updated_at') required this.updatedAt,
-      required this.active,
-      required this.host,
-      required this.product,
-      required this.coordinates,
-      required this.address});
+      {this.id = UNKNOWN,
+      @JsonKey(name: 'created_at') this.createdAt = UNKNOWN,
+      @JsonKey(name: 'updated_at') this.updatedAt = UNKNOWN,
+      this.active = false,
+      this.host = UNKNOWN,
+      this.product = UNKNOWN,
+      this.coordinates = UNKNOWN,
+      this.address = UNKNOWN});
 
   factory _$ProductLocationImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProductLocationImplFromJson(json);
 
   @override
+  @JsonKey()
   final String id;
   @override
   @JsonKey(name: 'created_at')
@@ -222,14 +224,19 @@ class _$ProductLocationImpl implements _ProductLocation {
   @JsonKey(name: 'updated_at')
   final String updatedAt;
   @override
+  @JsonKey()
   final bool active;
   @override
+  @JsonKey()
   final String host;
   @override
+  @JsonKey()
   final String product;
   @override
+  @JsonKey()
   final String coordinates;
   @override
+  @JsonKey()
   final String address;
 
   @override
@@ -279,14 +286,14 @@ class _$ProductLocationImpl implements _ProductLocation {
 
 abstract class _ProductLocation implements ProductLocation {
   factory _ProductLocation(
-      {required final String id,
-      @JsonKey(name: 'created_at') required final String createdAt,
-      @JsonKey(name: 'updated_at') required final String updatedAt,
-      required final bool active,
-      required final String host,
-      required final String product,
-      required final String coordinates,
-      required final String address}) = _$ProductLocationImpl;
+      {final String id,
+      @JsonKey(name: 'created_at') final String createdAt,
+      @JsonKey(name: 'updated_at') final String updatedAt,
+      final bool active,
+      final String host,
+      final String product,
+      final String coordinates,
+      final String address}) = _$ProductLocationImpl;
 
   factory _ProductLocation.fromJson(Map<String, dynamic> json) =
       _$ProductLocationImpl.fromJson;

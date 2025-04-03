@@ -20,26 +20,26 @@ ProductPricing _$ProductPricingFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ProductPricing {
-  String get id => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_at')
-  String get createdAt => throw _privateConstructorUsedError;
+  String? get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'updated_at')
-  String get updatedAt => throw _privateConstructorUsedError;
-  bool get active => throw _privateConstructorUsedError;
-  String get host => throw _privateConstructorUsedError;
+  String? get updatedAt => throw _privateConstructorUsedError;
+  bool? get active => throw _privateConstructorUsedError;
+  String? get host => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
-  String get product => throw _privateConstructorUsedError;
-  String get currency => throw _privateConstructorUsedError;
-  String get cost => throw _privateConstructorUsedError;
-  String get type => throw _privateConstructorUsedError;
+  String? get product => throw _privateConstructorUsedError;
+  String? get currency => throw _privateConstructorUsedError;
+  String? get cost => throw _privateConstructorUsedError;
+  String? get type => throw _privateConstructorUsedError;
   @JsonKey(name: 'ticket_tier')
-  String get ticketTier => throw _privateConstructorUsedError;
+  String? get ticketTier => throw _privateConstructorUsedError;
   @JsonKey(name: 'maximum_number_of_tickets')
-  int get maxTickets => throw _privateConstructorUsedError;
+  int? get maxTickets => throw _privateConstructorUsedError;
   @JsonKey(name: 'remaining_tickets')
-  int get remainingTickets => throw _privateConstructorUsedError;
+  int? get remainingTickets => throw _privateConstructorUsedError;
   @JsonKey(name: 'sold_tickets')
-  int get soldTickets => throw _privateConstructorUsedError;
+  int? get soldTickets => throw _privateConstructorUsedError;
 
   /// Serializes this ProductPricing to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -58,20 +58,20 @@ abstract class $ProductPricingCopyWith<$Res> {
       _$ProductPricingCopyWithImpl<$Res, ProductPricing>;
   @useResult
   $Res call(
-      {String id,
-      @JsonKey(name: 'created_at') String createdAt,
-      @JsonKey(name: 'updated_at') String updatedAt,
-      bool active,
-      String host,
+      {String? id,
+      @JsonKey(name: 'created_at') String? createdAt,
+      @JsonKey(name: 'updated_at') String? updatedAt,
+      bool? active,
+      String? host,
       String? name,
-      String product,
-      String currency,
-      String cost,
-      String type,
-      @JsonKey(name: 'ticket_tier') String ticketTier,
-      @JsonKey(name: 'maximum_number_of_tickets') int maxTickets,
-      @JsonKey(name: 'remaining_tickets') int remainingTickets,
-      @JsonKey(name: 'sold_tickets') int soldTickets});
+      String? product,
+      String? currency,
+      String? cost,
+      String? type,
+      @JsonKey(name: 'ticket_tier') String? ticketTier,
+      @JsonKey(name: 'maximum_number_of_tickets') int? maxTickets,
+      @JsonKey(name: 'remaining_tickets') int? remainingTickets,
+      @JsonKey(name: 'sold_tickets') int? soldTickets});
 }
 
 /// @nodoc
@@ -89,78 +89,78 @@ class _$ProductPricingCopyWithImpl<$Res, $Val extends ProductPricing>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? createdAt = null,
-    Object? updatedAt = null,
-    Object? active = null,
-    Object? host = null,
+    Object? id = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+    Object? active = freezed,
+    Object? host = freezed,
     Object? name = freezed,
-    Object? product = null,
-    Object? currency = null,
-    Object? cost = null,
-    Object? type = null,
-    Object? ticketTier = null,
-    Object? maxTickets = null,
-    Object? remainingTickets = null,
-    Object? soldTickets = null,
+    Object? product = freezed,
+    Object? currency = freezed,
+    Object? cost = freezed,
+    Object? type = freezed,
+    Object? ticketTier = freezed,
+    Object? maxTickets = freezed,
+    Object? remainingTickets = freezed,
+    Object? soldTickets = freezed,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      createdAt: null == createdAt
+              as String?,
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as String,
-      updatedAt: null == updatedAt
+              as String?,
+      updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
-              as String,
-      active: null == active
+              as String?,
+      active: freezed == active
           ? _value.active
           : active // ignore: cast_nullable_to_non_nullable
-              as bool,
-      host: null == host
+              as bool?,
+      host: freezed == host
           ? _value.host
           : host // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      product: null == product
+      product: freezed == product
           ? _value.product
           : product // ignore: cast_nullable_to_non_nullable
-              as String,
-      currency: null == currency
+              as String?,
+      currency: freezed == currency
           ? _value.currency
           : currency // ignore: cast_nullable_to_non_nullable
-              as String,
-      cost: null == cost
+              as String?,
+      cost: freezed == cost
           ? _value.cost
           : cost // ignore: cast_nullable_to_non_nullable
-              as String,
-      type: null == type
+              as String?,
+      type: freezed == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
-              as String,
-      ticketTier: null == ticketTier
+              as String?,
+      ticketTier: freezed == ticketTier
           ? _value.ticketTier
           : ticketTier // ignore: cast_nullable_to_non_nullable
-              as String,
-      maxTickets: null == maxTickets
+              as String?,
+      maxTickets: freezed == maxTickets
           ? _value.maxTickets
           : maxTickets // ignore: cast_nullable_to_non_nullable
-              as int,
-      remainingTickets: null == remainingTickets
+              as int?,
+      remainingTickets: freezed == remainingTickets
           ? _value.remainingTickets
           : remainingTickets // ignore: cast_nullable_to_non_nullable
-              as int,
-      soldTickets: null == soldTickets
+              as int?,
+      soldTickets: freezed == soldTickets
           ? _value.soldTickets
           : soldTickets // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
     ) as $Val);
   }
 }
@@ -174,20 +174,20 @@ abstract class _$$ProductPricingImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String id,
-      @JsonKey(name: 'created_at') String createdAt,
-      @JsonKey(name: 'updated_at') String updatedAt,
-      bool active,
-      String host,
+      {String? id,
+      @JsonKey(name: 'created_at') String? createdAt,
+      @JsonKey(name: 'updated_at') String? updatedAt,
+      bool? active,
+      String? host,
       String? name,
-      String product,
-      String currency,
-      String cost,
-      String type,
-      @JsonKey(name: 'ticket_tier') String ticketTier,
-      @JsonKey(name: 'maximum_number_of_tickets') int maxTickets,
-      @JsonKey(name: 'remaining_tickets') int remainingTickets,
-      @JsonKey(name: 'sold_tickets') int soldTickets});
+      String? product,
+      String? currency,
+      String? cost,
+      String? type,
+      @JsonKey(name: 'ticket_tier') String? ticketTier,
+      @JsonKey(name: 'maximum_number_of_tickets') int? maxTickets,
+      @JsonKey(name: 'remaining_tickets') int? remainingTickets,
+      @JsonKey(name: 'sold_tickets') int? soldTickets});
 }
 
 /// @nodoc
@@ -203,78 +203,78 @@ class __$$ProductPricingImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? createdAt = null,
-    Object? updatedAt = null,
-    Object? active = null,
-    Object? host = null,
+    Object? id = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+    Object? active = freezed,
+    Object? host = freezed,
     Object? name = freezed,
-    Object? product = null,
-    Object? currency = null,
-    Object? cost = null,
-    Object? type = null,
-    Object? ticketTier = null,
-    Object? maxTickets = null,
-    Object? remainingTickets = null,
-    Object? soldTickets = null,
+    Object? product = freezed,
+    Object? currency = freezed,
+    Object? cost = freezed,
+    Object? type = freezed,
+    Object? ticketTier = freezed,
+    Object? maxTickets = freezed,
+    Object? remainingTickets = freezed,
+    Object? soldTickets = freezed,
   }) {
     return _then(_$ProductPricingImpl(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      createdAt: null == createdAt
+              as String?,
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as String,
-      updatedAt: null == updatedAt
+              as String?,
+      updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
-              as String,
-      active: null == active
+              as String?,
+      active: freezed == active
           ? _value.active
           : active // ignore: cast_nullable_to_non_nullable
-              as bool,
-      host: null == host
+              as bool?,
+      host: freezed == host
           ? _value.host
           : host // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      product: null == product
+      product: freezed == product
           ? _value.product
           : product // ignore: cast_nullable_to_non_nullable
-              as String,
-      currency: null == currency
+              as String?,
+      currency: freezed == currency
           ? _value.currency
           : currency // ignore: cast_nullable_to_non_nullable
-              as String,
-      cost: null == cost
+              as String?,
+      cost: freezed == cost
           ? _value.cost
           : cost // ignore: cast_nullable_to_non_nullable
-              as String,
-      type: null == type
+              as String?,
+      type: freezed == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
-              as String,
-      ticketTier: null == ticketTier
+              as String?,
+      ticketTier: freezed == ticketTier
           ? _value.ticketTier
           : ticketTier // ignore: cast_nullable_to_non_nullable
-              as String,
-      maxTickets: null == maxTickets
+              as String?,
+      maxTickets: freezed == maxTickets
           ? _value.maxTickets
           : maxTickets // ignore: cast_nullable_to_non_nullable
-              as int,
-      remainingTickets: null == remainingTickets
+              as int?,
+      remainingTickets: freezed == remainingTickets
           ? _value.remainingTickets
           : remainingTickets // ignore: cast_nullable_to_non_nullable
-              as int,
-      soldTickets: null == soldTickets
+              as int?,
+      soldTickets: freezed == soldTickets
           ? _value.soldTickets
           : soldTickets // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
     ));
   }
 }
@@ -284,58 +284,66 @@ class __$$ProductPricingImplCopyWithImpl<$Res>
 @JsonSerializable(explicitToJson: true)
 class _$ProductPricingImpl implements _ProductPricing {
   _$ProductPricingImpl(
-      {required this.id,
-      @JsonKey(name: 'created_at') required this.createdAt,
-      @JsonKey(name: 'updated_at') required this.updatedAt,
-      required this.active,
-      required this.host,
-      this.name,
-      required this.product,
-      required this.currency,
-      required this.cost,
-      required this.type,
-      @JsonKey(name: 'ticket_tier') required this.ticketTier,
-      @JsonKey(name: 'maximum_number_of_tickets') required this.maxTickets,
-      @JsonKey(name: 'remaining_tickets') required this.remainingTickets,
-      @JsonKey(name: 'sold_tickets') required this.soldTickets});
+      {this.id = UNKNOWN,
+      @JsonKey(name: 'created_at') this.createdAt = UNKNOWN,
+      @JsonKey(name: 'updated_at') this.updatedAt = UNKNOWN,
+      this.active = false,
+      this.host = UNKNOWN,
+      this.name = UNKNOWN,
+      this.product = UNKNOWN,
+      this.currency = UNKNOWN,
+      this.cost = UNKNOWN,
+      this.type = UNKNOWN,
+      @JsonKey(name: 'ticket_tier') this.ticketTier = UNKNOWN,
+      @JsonKey(name: 'maximum_number_of_tickets') this.maxTickets = 0,
+      @JsonKey(name: 'remaining_tickets') this.remainingTickets = 0,
+      @JsonKey(name: 'sold_tickets') this.soldTickets = 0});
 
   factory _$ProductPricingImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProductPricingImplFromJson(json);
 
   @override
-  final String id;
+  @JsonKey()
+  final String? id;
   @override
   @JsonKey(name: 'created_at')
-  final String createdAt;
+  final String? createdAt;
   @override
   @JsonKey(name: 'updated_at')
-  final String updatedAt;
+  final String? updatedAt;
   @override
-  final bool active;
+  @JsonKey()
+  final bool? active;
   @override
-  final String host;
+  @JsonKey()
+  final String? host;
   @override
+  @JsonKey()
   final String? name;
   @override
-  final String product;
+  @JsonKey()
+  final String? product;
   @override
-  final String currency;
+  @JsonKey()
+  final String? currency;
   @override
-  final String cost;
+  @JsonKey()
+  final String? cost;
   @override
-  final String type;
+  @JsonKey()
+  final String? type;
   @override
   @JsonKey(name: 'ticket_tier')
-  final String ticketTier;
+  final String? ticketTier;
   @override
   @JsonKey(name: 'maximum_number_of_tickets')
-  final int maxTickets;
+  final int? maxTickets;
   @override
   @JsonKey(name: 'remaining_tickets')
-  final int remainingTickets;
+  final int? remainingTickets;
   @override
   @JsonKey(name: 'sold_tickets')
-  final int soldTickets;
+  final int? soldTickets;
 
   @override
   String toString() {
@@ -408,59 +416,59 @@ class _$ProductPricingImpl implements _ProductPricing {
 
 abstract class _ProductPricing implements ProductPricing {
   factory _ProductPricing(
-      {required final String id,
-      @JsonKey(name: 'created_at') required final String createdAt,
-      @JsonKey(name: 'updated_at') required final String updatedAt,
-      required final bool active,
-      required final String host,
-      final String? name,
-      required final String product,
-      required final String currency,
-      required final String cost,
-      required final String type,
-      @JsonKey(name: 'ticket_tier') required final String ticketTier,
-      @JsonKey(name: 'maximum_number_of_tickets') required final int maxTickets,
-      @JsonKey(name: 'remaining_tickets') required final int remainingTickets,
-      @JsonKey(name: 'sold_tickets')
-      required final int soldTickets}) = _$ProductPricingImpl;
+          {final String? id,
+          @JsonKey(name: 'created_at') final String? createdAt,
+          @JsonKey(name: 'updated_at') final String? updatedAt,
+          final bool? active,
+          final String? host,
+          final String? name,
+          final String? product,
+          final String? currency,
+          final String? cost,
+          final String? type,
+          @JsonKey(name: 'ticket_tier') final String? ticketTier,
+          @JsonKey(name: 'maximum_number_of_tickets') final int? maxTickets,
+          @JsonKey(name: 'remaining_tickets') final int? remainingTickets,
+          @JsonKey(name: 'sold_tickets') final int? soldTickets}) =
+      _$ProductPricingImpl;
 
   factory _ProductPricing.fromJson(Map<String, dynamic> json) =
       _$ProductPricingImpl.fromJson;
 
   @override
-  String get id;
+  String? get id;
   @override
   @JsonKey(name: 'created_at')
-  String get createdAt;
+  String? get createdAt;
   @override
   @JsonKey(name: 'updated_at')
-  String get updatedAt;
+  String? get updatedAt;
   @override
-  bool get active;
+  bool? get active;
   @override
-  String get host;
+  String? get host;
   @override
   String? get name;
   @override
-  String get product;
+  String? get product;
   @override
-  String get currency;
+  String? get currency;
   @override
-  String get cost;
+  String? get cost;
   @override
-  String get type;
+  String? get type;
   @override
   @JsonKey(name: 'ticket_tier')
-  String get ticketTier;
+  String? get ticketTier;
   @override
   @JsonKey(name: 'maximum_number_of_tickets')
-  int get maxTickets;
+  int? get maxTickets;
   @override
   @JsonKey(name: 'remaining_tickets')
-  int get remainingTickets;
+  int? get remainingTickets;
   @override
   @JsonKey(name: 'sold_tickets')
-  int get soldTickets;
+  int? get soldTickets;
 
   /// Create a copy of ProductPricing
   /// with the given fields replaced by the non-null parameter values.

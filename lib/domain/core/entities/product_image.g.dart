@@ -8,14 +8,14 @@ part of 'product_image.dart';
 
 _$ProductImageImpl _$$ProductImageImplFromJson(Map<String, dynamic> json) =>
     _$ProductImageImpl(
-      id: json['id'] as String,
-      createdAt: json['created_at'] as String,
-      updatedAt: json['updated_at'] as String,
-      active: json['active'] as bool,
-      host: json['host'] as String,
-      mediaType: json['media_type'] as String,
-      file: json['file'] as String,
-      uploadedAt: json['uploaded_at'] as String,
+      id: json['id'] as String? ?? UNKNOWN,
+      createdAt: json['created_at'] as String? ?? UNKNOWN,
+      updatedAt: json['updated_at'] as String? ?? UNKNOWN,
+      active: json['active'] as bool? ?? false,
+      host: json['host'] as String? ?? UNKNOWN,
+      mediaType: json['media_type'] as String? ?? UNKNOWN,
+      file: json['file'] as String? ?? UNKNOWN,
+      uploadedAt: json['uploaded_at'] as String? ?? UNKNOWN,
     );
 
 Map<String, dynamic> _$$ProductImageImplToJson(_$ProductImageImpl instance) =>

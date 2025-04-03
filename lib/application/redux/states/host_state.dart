@@ -17,7 +17,10 @@ class HostState with _$HostState {
     @Default(<ProductCategory>[]) List<ProductCategory>? productCategories,
   }) = _HostState;
 
-  factory HostState.initial() => HostState();
+  factory HostState.initial() => HostState(
+        currentProduct: Product.initial(),
+        selectedProduct: Product.initial(),
+      );
 
   factory HostState.fromJson(Map<String, dynamic> json) =>
       _$HostStateFromJson(json);

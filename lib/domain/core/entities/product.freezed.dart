@@ -20,27 +20,31 @@ Product _$ProductFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Product {
-  String get id => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_at')
-  String get createdAt => throw _privateConstructorUsedError;
+  String? get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'updated_at')
-  String get updatedAt => throw _privateConstructorUsedError;
-  bool get active => throw _privateConstructorUsedError;
-  UserState get host => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-  String get description => throw _privateConstructorUsedError;
-  String get number => throw _privateConstructorUsedError;
-  String get category => throw _privateConstructorUsedError;
-  String get subcategory => throw _privateConstructorUsedError;
+  String? get updatedAt => throw _privateConstructorUsedError;
+  bool? get active => throw _privateConstructorUsedError;
+  UserState? get host => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+  String? get description => throw _privateConstructorUsedError;
+  String? get number => throw _privateConstructorUsedError;
+  String? get category => throw _privateConstructorUsedError;
+  String? get subcategory => throw _privateConstructorUsedError;
   @JsonKey(name: 'availability')
-  ProductAvailability get availability => throw _privateConstructorUsedError;
+  ProductAvailability? get availability => throw _privateConstructorUsedError;
   @JsonKey(name: 'pricing')
-  List<ProductPricing> get pricing => throw _privateConstructorUsedError;
+  List<ProductPricing>? get pricing => throw _privateConstructorUsedError;
   @JsonKey(name: 'image')
   ProductImage? get image => throw _privateConstructorUsedError;
   dynamic get video => throw _privateConstructorUsedError;
   @JsonKey(name: 'locations')
-  List<ProductLocation> get locations => throw _privateConstructorUsedError;
+  List<ProductLocation>? get locations => throw _privateConstructorUsedError;
+
+  /// Temp values used to create the product
+  ProductCategory? get selectedProductCategory =>
+      throw _privateConstructorUsedError;
 
   /// Serializes this Product to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -57,25 +61,27 @@ abstract class $ProductCopyWith<$Res> {
       _$ProductCopyWithImpl<$Res, Product>;
   @useResult
   $Res call(
-      {String id,
-      @JsonKey(name: 'created_at') String createdAt,
-      @JsonKey(name: 'updated_at') String updatedAt,
-      bool active,
-      UserState host,
-      String name,
-      String description,
-      String number,
-      String category,
-      String subcategory,
-      @JsonKey(name: 'availability') ProductAvailability availability,
-      @JsonKey(name: 'pricing') List<ProductPricing> pricing,
+      {String? id,
+      @JsonKey(name: 'created_at') String? createdAt,
+      @JsonKey(name: 'updated_at') String? updatedAt,
+      bool? active,
+      UserState? host,
+      String? name,
+      String? description,
+      String? number,
+      String? category,
+      String? subcategory,
+      @JsonKey(name: 'availability') ProductAvailability? availability,
+      @JsonKey(name: 'pricing') List<ProductPricing>? pricing,
       @JsonKey(name: 'image') ProductImage? image,
       dynamic video,
-      @JsonKey(name: 'locations') List<ProductLocation> locations});
+      @JsonKey(name: 'locations') List<ProductLocation>? locations,
+      ProductCategory? selectedProductCategory});
 
-  $UserStateCopyWith<$Res> get host;
-  $ProductAvailabilityCopyWith<$Res> get availability;
+  $UserStateCopyWith<$Res>? get host;
+  $ProductAvailabilityCopyWith<$Res>? get availability;
   $ProductImageCopyWith<$Res>? get image;
+  $ProductCategoryCopyWith<$Res>? get selectedProductCategory;
 }
 
 /// @nodoc
@@ -93,71 +99,72 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? createdAt = null,
-    Object? updatedAt = null,
-    Object? active = null,
-    Object? host = null,
-    Object? name = null,
-    Object? description = null,
-    Object? number = null,
-    Object? category = null,
-    Object? subcategory = null,
-    Object? availability = null,
-    Object? pricing = null,
+    Object? id = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+    Object? active = freezed,
+    Object? host = freezed,
+    Object? name = freezed,
+    Object? description = freezed,
+    Object? number = freezed,
+    Object? category = freezed,
+    Object? subcategory = freezed,
+    Object? availability = freezed,
+    Object? pricing = freezed,
     Object? image = freezed,
     Object? video = freezed,
-    Object? locations = null,
+    Object? locations = freezed,
+    Object? selectedProductCategory = freezed,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      createdAt: null == createdAt
+              as String?,
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as String,
-      updatedAt: null == updatedAt
+              as String?,
+      updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
-              as String,
-      active: null == active
+              as String?,
+      active: freezed == active
           ? _value.active
           : active // ignore: cast_nullable_to_non_nullable
-              as bool,
-      host: null == host
+              as bool?,
+      host: freezed == host
           ? _value.host
           : host // ignore: cast_nullable_to_non_nullable
-              as UserState,
-      name: null == name
+              as UserState?,
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: null == description
+              as String?,
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
-              as String,
-      number: null == number
+              as String?,
+      number: freezed == number
           ? _value.number
           : number // ignore: cast_nullable_to_non_nullable
-              as String,
-      category: null == category
+              as String?,
+      category: freezed == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as String,
-      subcategory: null == subcategory
+              as String?,
+      subcategory: freezed == subcategory
           ? _value.subcategory
           : subcategory // ignore: cast_nullable_to_non_nullable
-              as String,
-      availability: null == availability
+              as String?,
+      availability: freezed == availability
           ? _value.availability
           : availability // ignore: cast_nullable_to_non_nullable
-              as ProductAvailability,
-      pricing: null == pricing
+              as ProductAvailability?,
+      pricing: freezed == pricing
           ? _value.pricing
           : pricing // ignore: cast_nullable_to_non_nullable
-              as List<ProductPricing>,
+              as List<ProductPricing>?,
       image: freezed == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
@@ -166,10 +173,14 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
           ? _value.video
           : video // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      locations: null == locations
+      locations: freezed == locations
           ? _value.locations
           : locations // ignore: cast_nullable_to_non_nullable
-              as List<ProductLocation>,
+              as List<ProductLocation>?,
+      selectedProductCategory: freezed == selectedProductCategory
+          ? _value.selectedProductCategory
+          : selectedProductCategory // ignore: cast_nullable_to_non_nullable
+              as ProductCategory?,
     ) as $Val);
   }
 
@@ -177,8 +188,12 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $UserStateCopyWith<$Res> get host {
-    return $UserStateCopyWith<$Res>(_value.host, (value) {
+  $UserStateCopyWith<$Res>? get host {
+    if (_value.host == null) {
+      return null;
+    }
+
+    return $UserStateCopyWith<$Res>(_value.host!, (value) {
       return _then(_value.copyWith(host: value) as $Val);
     });
   }
@@ -187,8 +202,12 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $ProductAvailabilityCopyWith<$Res> get availability {
-    return $ProductAvailabilityCopyWith<$Res>(_value.availability, (value) {
+  $ProductAvailabilityCopyWith<$Res>? get availability {
+    if (_value.availability == null) {
+      return null;
+    }
+
+    return $ProductAvailabilityCopyWith<$Res>(_value.availability!, (value) {
       return _then(_value.copyWith(availability: value) as $Val);
     });
   }
@@ -206,6 +225,21 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
       return _then(_value.copyWith(image: value) as $Val);
     });
   }
+
+  /// Create a copy of Product
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ProductCategoryCopyWith<$Res>? get selectedProductCategory {
+    if (_value.selectedProductCategory == null) {
+      return null;
+    }
+
+    return $ProductCategoryCopyWith<$Res>(_value.selectedProductCategory!,
+        (value) {
+      return _then(_value.copyWith(selectedProductCategory: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -216,28 +250,31 @@ abstract class _$$ProductImplCopyWith<$Res> implements $ProductCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String id,
-      @JsonKey(name: 'created_at') String createdAt,
-      @JsonKey(name: 'updated_at') String updatedAt,
-      bool active,
-      UserState host,
-      String name,
-      String description,
-      String number,
-      String category,
-      String subcategory,
-      @JsonKey(name: 'availability') ProductAvailability availability,
-      @JsonKey(name: 'pricing') List<ProductPricing> pricing,
+      {String? id,
+      @JsonKey(name: 'created_at') String? createdAt,
+      @JsonKey(name: 'updated_at') String? updatedAt,
+      bool? active,
+      UserState? host,
+      String? name,
+      String? description,
+      String? number,
+      String? category,
+      String? subcategory,
+      @JsonKey(name: 'availability') ProductAvailability? availability,
+      @JsonKey(name: 'pricing') List<ProductPricing>? pricing,
       @JsonKey(name: 'image') ProductImage? image,
       dynamic video,
-      @JsonKey(name: 'locations') List<ProductLocation> locations});
+      @JsonKey(name: 'locations') List<ProductLocation>? locations,
+      ProductCategory? selectedProductCategory});
 
   @override
-  $UserStateCopyWith<$Res> get host;
+  $UserStateCopyWith<$Res>? get host;
   @override
-  $ProductAvailabilityCopyWith<$Res> get availability;
+  $ProductAvailabilityCopyWith<$Res>? get availability;
   @override
   $ProductImageCopyWith<$Res>? get image;
+  @override
+  $ProductCategoryCopyWith<$Res>? get selectedProductCategory;
 }
 
 /// @nodoc
@@ -253,71 +290,72 @@ class __$$ProductImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? createdAt = null,
-    Object? updatedAt = null,
-    Object? active = null,
-    Object? host = null,
-    Object? name = null,
-    Object? description = null,
-    Object? number = null,
-    Object? category = null,
-    Object? subcategory = null,
-    Object? availability = null,
-    Object? pricing = null,
+    Object? id = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+    Object? active = freezed,
+    Object? host = freezed,
+    Object? name = freezed,
+    Object? description = freezed,
+    Object? number = freezed,
+    Object? category = freezed,
+    Object? subcategory = freezed,
+    Object? availability = freezed,
+    Object? pricing = freezed,
     Object? image = freezed,
     Object? video = freezed,
-    Object? locations = null,
+    Object? locations = freezed,
+    Object? selectedProductCategory = freezed,
   }) {
     return _then(_$ProductImpl(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      createdAt: null == createdAt
+              as String?,
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as String,
-      updatedAt: null == updatedAt
+              as String?,
+      updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
-              as String,
-      active: null == active
+              as String?,
+      active: freezed == active
           ? _value.active
           : active // ignore: cast_nullable_to_non_nullable
-              as bool,
-      host: null == host
+              as bool?,
+      host: freezed == host
           ? _value.host
           : host // ignore: cast_nullable_to_non_nullable
-              as UserState,
-      name: null == name
+              as UserState?,
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: null == description
+              as String?,
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
-              as String,
-      number: null == number
+              as String?,
+      number: freezed == number
           ? _value.number
           : number // ignore: cast_nullable_to_non_nullable
-              as String,
-      category: null == category
+              as String?,
+      category: freezed == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as String,
-      subcategory: null == subcategory
+              as String?,
+      subcategory: freezed == subcategory
           ? _value.subcategory
           : subcategory // ignore: cast_nullable_to_non_nullable
-              as String,
-      availability: null == availability
+              as String?,
+      availability: freezed == availability
           ? _value.availability
           : availability // ignore: cast_nullable_to_non_nullable
-              as ProductAvailability,
-      pricing: null == pricing
+              as ProductAvailability?,
+      pricing: freezed == pricing
           ? _value._pricing
           : pricing // ignore: cast_nullable_to_non_nullable
-              as List<ProductPricing>,
+              as List<ProductPricing>?,
       image: freezed == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
@@ -326,10 +364,14 @@ class __$$ProductImplCopyWithImpl<$Res>
           ? _value.video
           : video // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      locations: null == locations
+      locations: freezed == locations
           ? _value._locations
           : locations // ignore: cast_nullable_to_non_nullable
-              as List<ProductLocation>,
+              as List<ProductLocation>?,
+      selectedProductCategory: freezed == selectedProductCategory
+          ? _value.selectedProductCategory
+          : selectedProductCategory // ignore: cast_nullable_to_non_nullable
+              as ProductCategory?,
     ));
   }
 }
@@ -339,22 +381,24 @@ class __$$ProductImplCopyWithImpl<$Res>
 @JsonSerializable(explicitToJson: true)
 class _$ProductImpl implements _Product {
   _$ProductImpl(
-      {required this.id,
-      @JsonKey(name: 'created_at') required this.createdAt,
-      @JsonKey(name: 'updated_at') required this.updatedAt,
-      required this.active,
+      {this.id = UNKNOWN,
+      @JsonKey(name: 'created_at') this.createdAt = UNKNOWN,
+      @JsonKey(name: 'updated_at') this.updatedAt = UNKNOWN,
+      this.active = false,
       required this.host,
-      required this.name,
-      required this.description,
-      required this.number,
-      required this.category,
-      required this.subcategory,
-      @JsonKey(name: 'availability') required this.availability,
-      @JsonKey(name: 'pricing') required final List<ProductPricing> pricing,
+      this.name = UNKNOWN,
+      this.description = UNKNOWN,
+      this.number = UNKNOWN,
+      this.category = UNKNOWN,
+      this.subcategory = UNKNOWN,
+      @JsonKey(name: 'availability') this.availability,
+      @JsonKey(name: 'pricing')
+      final List<ProductPricing>? pricing = const <ProductPricing>[],
       @JsonKey(name: 'image') this.image,
       this.video,
       @JsonKey(name: 'locations')
-      required final List<ProductLocation> locations})
+      final List<ProductLocation>? locations = const <ProductLocation>[],
+      this.selectedProductCategory})
       : _pricing = pricing,
         _locations = locations;
 
@@ -362,37 +406,46 @@ class _$ProductImpl implements _Product {
       _$$ProductImplFromJson(json);
 
   @override
-  final String id;
+  @JsonKey()
+  final String? id;
   @override
   @JsonKey(name: 'created_at')
-  final String createdAt;
+  final String? createdAt;
   @override
   @JsonKey(name: 'updated_at')
-  final String updatedAt;
+  final String? updatedAt;
   @override
-  final bool active;
+  @JsonKey()
+  final bool? active;
   @override
-  final UserState host;
+  final UserState? host;
   @override
-  final String name;
+  @JsonKey()
+  final String? name;
   @override
-  final String description;
+  @JsonKey()
+  final String? description;
   @override
-  final String number;
+  @JsonKey()
+  final String? number;
   @override
-  final String category;
+  @JsonKey()
+  final String? category;
   @override
-  final String subcategory;
+  @JsonKey()
+  final String? subcategory;
   @override
   @JsonKey(name: 'availability')
-  final ProductAvailability availability;
-  final List<ProductPricing> _pricing;
+  final ProductAvailability? availability;
+  final List<ProductPricing>? _pricing;
   @override
   @JsonKey(name: 'pricing')
-  List<ProductPricing> get pricing {
+  List<ProductPricing>? get pricing {
+    final value = _pricing;
+    if (value == null) return null;
     if (_pricing is EqualUnmodifiableListView) return _pricing;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_pricing);
+    return EqualUnmodifiableListView(value);
   }
 
   @override
@@ -400,18 +453,24 @@ class _$ProductImpl implements _Product {
   final ProductImage? image;
   @override
   final dynamic video;
-  final List<ProductLocation> _locations;
+  final List<ProductLocation>? _locations;
   @override
   @JsonKey(name: 'locations')
-  List<ProductLocation> get locations {
+  List<ProductLocation>? get locations {
+    final value = _locations;
+    if (value == null) return null;
     if (_locations is EqualUnmodifiableListView) return _locations;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_locations);
+    return EqualUnmodifiableListView(value);
   }
+
+  /// Temp values used to create the product
+  @override
+  final ProductCategory? selectedProductCategory;
 
   @override
   String toString() {
-    return 'Product(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, active: $active, host: $host, name: $name, description: $description, number: $number, category: $category, subcategory: $subcategory, availability: $availability, pricing: $pricing, image: $image, video: $video, locations: $locations)';
+    return 'Product(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, active: $active, host: $host, name: $name, description: $description, number: $number, category: $category, subcategory: $subcategory, availability: $availability, pricing: $pricing, image: $image, video: $video, locations: $locations, selectedProductCategory: $selectedProductCategory)';
   }
 
   @override
@@ -440,7 +499,10 @@ class _$ProductImpl implements _Product {
             (identical(other.image, image) || other.image == image) &&
             const DeepCollectionEquality().equals(other.video, video) &&
             const DeepCollectionEquality()
-                .equals(other._locations, _locations));
+                .equals(other._locations, _locations) &&
+            (identical(
+                    other.selectedProductCategory, selectedProductCategory) ||
+                other.selectedProductCategory == selectedProductCategory));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -461,7 +523,8 @@ class _$ProductImpl implements _Product {
       const DeepCollectionEquality().hash(_pricing),
       image,
       const DeepCollectionEquality().hash(video),
-      const DeepCollectionEquality().hash(_locations));
+      const DeepCollectionEquality().hash(_locations),
+      selectedProductCategory);
 
   /// Create a copy of Product
   /// with the given fields replaced by the non-null parameter values.
@@ -481,54 +544,53 @@ class _$ProductImpl implements _Product {
 
 abstract class _Product implements Product {
   factory _Product(
-      {required final String id,
-      @JsonKey(name: 'created_at') required final String createdAt,
-      @JsonKey(name: 'updated_at') required final String updatedAt,
-      required final bool active,
-      required final UserState host,
-      required final String name,
-      required final String description,
-      required final String number,
-      required final String category,
-      required final String subcategory,
-      @JsonKey(name: 'availability')
-      required final ProductAvailability availability,
-      @JsonKey(name: 'pricing') required final List<ProductPricing> pricing,
+      {final String? id,
+      @JsonKey(name: 'created_at') final String? createdAt,
+      @JsonKey(name: 'updated_at') final String? updatedAt,
+      final bool? active,
+      required final UserState? host,
+      final String? name,
+      final String? description,
+      final String? number,
+      final String? category,
+      final String? subcategory,
+      @JsonKey(name: 'availability') final ProductAvailability? availability,
+      @JsonKey(name: 'pricing') final List<ProductPricing>? pricing,
       @JsonKey(name: 'image') final ProductImage? image,
       final dynamic video,
-      @JsonKey(name: 'locations')
-      required final List<ProductLocation> locations}) = _$ProductImpl;
+      @JsonKey(name: 'locations') final List<ProductLocation>? locations,
+      final ProductCategory? selectedProductCategory}) = _$ProductImpl;
 
   factory _Product.fromJson(Map<String, dynamic> json) = _$ProductImpl.fromJson;
 
   @override
-  String get id;
+  String? get id;
   @override
   @JsonKey(name: 'created_at')
-  String get createdAt;
+  String? get createdAt;
   @override
   @JsonKey(name: 'updated_at')
-  String get updatedAt;
+  String? get updatedAt;
   @override
-  bool get active;
+  bool? get active;
   @override
-  UserState get host;
+  UserState? get host;
   @override
-  String get name;
+  String? get name;
   @override
-  String get description;
+  String? get description;
   @override
-  String get number;
+  String? get number;
   @override
-  String get category;
+  String? get category;
   @override
-  String get subcategory;
+  String? get subcategory;
   @override
   @JsonKey(name: 'availability')
-  ProductAvailability get availability;
+  ProductAvailability? get availability;
   @override
   @JsonKey(name: 'pricing')
-  List<ProductPricing> get pricing;
+  List<ProductPricing>? get pricing;
   @override
   @JsonKey(name: 'image')
   ProductImage? get image;
@@ -536,7 +598,11 @@ abstract class _Product implements Product {
   dynamic get video;
   @override
   @JsonKey(name: 'locations')
-  List<ProductLocation> get locations;
+  List<ProductLocation>? get locations;
+
+  /// Temp values used to create the product
+  @override
+  ProductCategory? get selectedProductCategory;
 
   /// Create a copy of Product
   /// with the given fields replaced by the non-null parameter values.

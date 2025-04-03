@@ -86,7 +86,7 @@ class ProductDetailPage extends StatelessWidget {
                                     size: 20,
                                   ),
                                   Text(
-                                    selectedProduct?.locations.first.address ??
+                                    selectedProduct?.locations?.first.address ??
                                         '',
                                     style:
                                         Theme.of(context).textTheme.bodyMedium,
@@ -105,7 +105,8 @@ class ProductDetailPage extends StatelessWidget {
                                   ),
                                   humanizeDate(
                                     loadedDate:
-                                        selectedProduct!.availability.start,
+                                        selectedProduct?.availability?.start ??
+                                            '',
                                     dateTextStyle:
                                         Theme.of(context).textTheme.bodyMedium,
                                   ),
@@ -116,7 +117,8 @@ class ProductDetailPage extends StatelessWidget {
                                   ),
                                   humanizeDate(
                                     loadedDate:
-                                        selectedProduct.availability.end,
+                                        selectedProduct?.availability?.end ??
+                                            '',
                                     dateTextStyle:
                                         Theme.of(context).textTheme.bodyMedium,
                                   ),
@@ -134,8 +136,8 @@ class ProductDetailPage extends StatelessWidget {
                                     size: 20,
                                   ),
                                   formatTime(
-                                    rawTime:
-                                        selectedProduct.availability.startTime,
+                                    rawTime: selectedProduct
+                                        ?.availability?.startTime,
                                     textStyle:
                                         Theme.of(context).textTheme.bodyMedium,
                                   ),
@@ -146,7 +148,7 @@ class ProductDetailPage extends StatelessWidget {
                                   ),
                                   formatTime(
                                     rawTime:
-                                        selectedProduct.availability.endTime,
+                                        selectedProduct?.availability?.endTime,
                                     textStyle:
                                         Theme.of(context).textTheme.bodyMedium,
                                   ),

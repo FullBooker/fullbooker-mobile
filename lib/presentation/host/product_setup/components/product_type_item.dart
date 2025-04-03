@@ -7,10 +7,11 @@ class ProductTypeItem extends StatelessWidget {
     super.key,
     required this.category,
     this.isSelected = false,
+    required this.onTap,
   });
 
+  final Function()? onTap;
   final ProductCategory category;
-
   final bool isSelected;
 
   @override
@@ -18,9 +19,7 @@ class ProductTypeItem extends StatelessWidget {
     return InkWell(
       highlightColor: Theme.of(context).primaryColor.withValues(alpha: 0.1),
       borderRadius: BorderRadius.circular(8),
-      onTap: () {
-        // TODO(abiud): update the selected product ID
-      },
+      onTap: onTap,
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(

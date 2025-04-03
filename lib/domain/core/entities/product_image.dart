@@ -1,20 +1,24 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:fullbooker/core/common/constants.dart';
 
 part 'product_image.freezed.dart';
 part 'product_image.g.dart';
 
 @freezed
 class ProductImage with _$ProductImage {
+  @JsonSerializable(explicitToJson: true)
   factory ProductImage({
-    required String id,
-    @JsonKey(name: 'created_at') required String createdAt,
-    @JsonKey(name: 'updated_at') required String updatedAt,
-    required bool active,
-    required String host,
-    @JsonKey(name: 'media_type') required String mediaType,
-    required String file,
-    @JsonKey(name: 'uploaded_at') required String uploadedAt,
+    @Default(UNKNOWN) String? id,
+    @Default(UNKNOWN) @JsonKey(name: 'created_at') String? createdAt,
+    @Default(UNKNOWN) @JsonKey(name: 'updated_at') String? updatedAt,
+    @Default(false) bool? active,
+    @Default(UNKNOWN) String? host,
+    @Default(UNKNOWN) @JsonKey(name: 'media_type') String? mediaType,
+    @Default(UNKNOWN) String? file,
+    @Default(UNKNOWN) @JsonKey(name: 'uploaded_at') String? uploadedAt,
   }) = _ProductImage;
+
+  factory ProductImage.initial() => ProductImage();
 
   factory ProductImage.fromJson(Map<String, dynamic> json) =>
       _$ProductImageFromJson(json);

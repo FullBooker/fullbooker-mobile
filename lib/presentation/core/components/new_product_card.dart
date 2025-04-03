@@ -57,7 +57,7 @@ class NewProductCard extends StatelessWidget {
                   top: 12,
                   left: 12,
                   child: CustomBadgeWidget(
-                    text: product.name.split(' ').last,
+                    text: product.name?.split(' ').last ?? '',
                     textColor: Colors.white,
                     backgroundColor: Colors.black,
                   ),
@@ -76,7 +76,7 @@ class NewProductCard extends StatelessWidget {
                     children: <Widget>[
                       Expanded(
                         child: Text(
-                          product.name,
+                          product.name ?? '',
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ),
@@ -102,7 +102,7 @@ class NewProductCard extends StatelessWidget {
                             size: 20,
                           ),
                           Text(
-                            product.locations.first.address,
+                            product.locations?.first.address ?? '',
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ],
@@ -118,7 +118,7 @@ class NewProductCard extends StatelessWidget {
                             size: 20,
                           ),
                           humanizeDate(
-                            loadedDate: product.availability.start,
+                            loadedDate: product.availability?.start ?? '',
                             dateTextStyle:
                                 Theme.of(context).textTheme.bodyMedium,
                           ),
@@ -127,7 +127,7 @@ class NewProductCard extends StatelessWidget {
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
                           humanizeDate(
-                            loadedDate: product.availability.end,
+                            loadedDate: product.availability?.end ?? '',
                             dateTextStyle:
                                 Theme.of(context).textTheme.bodyMedium,
                           ),
@@ -145,7 +145,7 @@ class NewProductCard extends StatelessWidget {
                             size: 20,
                           ),
                           formatTime(
-                            rawTime: product.availability.startTime,
+                            rawTime: product.availability?.startTime,
                             textStyle: Theme.of(context).textTheme.bodyMedium,
                           ),
                           Text(
@@ -153,7 +153,7 @@ class NewProductCard extends StatelessWidget {
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
                           formatTime(
-                            rawTime: product.availability.endTime,
+                            rawTime: product.availability?.endTime,
                             textStyle: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ],

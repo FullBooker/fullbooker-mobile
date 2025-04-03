@@ -20,21 +20,21 @@ ProductAvailability _$ProductAvailabilityFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ProductAvailability {
-  String get id => throw _privateConstructorUsedError;
-  String get product => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
+  String? get product => throw _privateConstructorUsedError;
   @JsonKey(name: 'product_name')
-  String get productName => throw _privateConstructorUsedError;
-  String get start => throw _privateConstructorUsedError;
-  String get end => throw _privateConstructorUsedError;
+  String? get productName => throw _privateConstructorUsedError;
+  String? get start => throw _privateConstructorUsedError;
+  String? get end => throw _privateConstructorUsedError;
   @JsonKey(name: 'start_time')
-  String get startTime => throw _privateConstructorUsedError;
+  String? get startTime => throw _privateConstructorUsedError;
   @JsonKey(name: 'end_time')
-  String get endTime => throw _privateConstructorUsedError;
+  String? get endTime => throw _privateConstructorUsedError;
   int? get duration => throw _privateConstructorUsedError;
   @JsonKey(name: 'open_days')
-  List<dynamic> get openDays => throw _privateConstructorUsedError;
+  List<dynamic>? get openDays => throw _privateConstructorUsedError;
   @JsonKey(name: 'closed_dates')
-  List<dynamic> get closedDates => throw _privateConstructorUsedError;
+  List<dynamic>? get closedDates => throw _privateConstructorUsedError;
 
   /// Serializes this ProductAvailability to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -53,16 +53,16 @@ abstract class $ProductAvailabilityCopyWith<$Res> {
       _$ProductAvailabilityCopyWithImpl<$Res, ProductAvailability>;
   @useResult
   $Res call(
-      {String id,
-      String product,
-      @JsonKey(name: 'product_name') String productName,
-      String start,
-      String end,
-      @JsonKey(name: 'start_time') String startTime,
-      @JsonKey(name: 'end_time') String endTime,
+      {String? id,
+      String? product,
+      @JsonKey(name: 'product_name') String? productName,
+      String? start,
+      String? end,
+      @JsonKey(name: 'start_time') String? startTime,
+      @JsonKey(name: 'end_time') String? endTime,
       int? duration,
-      @JsonKey(name: 'open_days') List<dynamic> openDays,
-      @JsonKey(name: 'closed_dates') List<dynamic> closedDates});
+      @JsonKey(name: 'open_days') List<dynamic>? openDays,
+      @JsonKey(name: 'closed_dates') List<dynamic>? closedDates});
 }
 
 /// @nodoc
@@ -80,58 +80,58 @@ class _$ProductAvailabilityCopyWithImpl<$Res, $Val extends ProductAvailability>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? product = null,
-    Object? productName = null,
-    Object? start = null,
-    Object? end = null,
-    Object? startTime = null,
-    Object? endTime = null,
+    Object? id = freezed,
+    Object? product = freezed,
+    Object? productName = freezed,
+    Object? start = freezed,
+    Object? end = freezed,
+    Object? startTime = freezed,
+    Object? endTime = freezed,
     Object? duration = freezed,
-    Object? openDays = null,
-    Object? closedDates = null,
+    Object? openDays = freezed,
+    Object? closedDates = freezed,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      product: null == product
+              as String?,
+      product: freezed == product
           ? _value.product
           : product // ignore: cast_nullable_to_non_nullable
-              as String,
-      productName: null == productName
+              as String?,
+      productName: freezed == productName
           ? _value.productName
           : productName // ignore: cast_nullable_to_non_nullable
-              as String,
-      start: null == start
+              as String?,
+      start: freezed == start
           ? _value.start
           : start // ignore: cast_nullable_to_non_nullable
-              as String,
-      end: null == end
+              as String?,
+      end: freezed == end
           ? _value.end
           : end // ignore: cast_nullable_to_non_nullable
-              as String,
-      startTime: null == startTime
+              as String?,
+      startTime: freezed == startTime
           ? _value.startTime
           : startTime // ignore: cast_nullable_to_non_nullable
-              as String,
-      endTime: null == endTime
+              as String?,
+      endTime: freezed == endTime
           ? _value.endTime
           : endTime // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       duration: freezed == duration
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
               as int?,
-      openDays: null == openDays
+      openDays: freezed == openDays
           ? _value.openDays
           : openDays // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>,
-      closedDates: null == closedDates
+              as List<dynamic>?,
+      closedDates: freezed == closedDates
           ? _value.closedDates
           : closedDates // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>,
+              as List<dynamic>?,
     ) as $Val);
   }
 }
@@ -145,16 +145,16 @@ abstract class _$$ProductAvailabilityImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String id,
-      String product,
-      @JsonKey(name: 'product_name') String productName,
-      String start,
-      String end,
-      @JsonKey(name: 'start_time') String startTime,
-      @JsonKey(name: 'end_time') String endTime,
+      {String? id,
+      String? product,
+      @JsonKey(name: 'product_name') String? productName,
+      String? start,
+      String? end,
+      @JsonKey(name: 'start_time') String? startTime,
+      @JsonKey(name: 'end_time') String? endTime,
       int? duration,
-      @JsonKey(name: 'open_days') List<dynamic> openDays,
-      @JsonKey(name: 'closed_dates') List<dynamic> closedDates});
+      @JsonKey(name: 'open_days') List<dynamic>? openDays,
+      @JsonKey(name: 'closed_dates') List<dynamic>? closedDates});
 }
 
 /// @nodoc
@@ -170,78 +170,79 @@ class __$$ProductAvailabilityImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? product = null,
-    Object? productName = null,
-    Object? start = null,
-    Object? end = null,
-    Object? startTime = null,
-    Object? endTime = null,
+    Object? id = freezed,
+    Object? product = freezed,
+    Object? productName = freezed,
+    Object? start = freezed,
+    Object? end = freezed,
+    Object? startTime = freezed,
+    Object? endTime = freezed,
     Object? duration = freezed,
-    Object? openDays = null,
-    Object? closedDates = null,
+    Object? openDays = freezed,
+    Object? closedDates = freezed,
   }) {
     return _then(_$ProductAvailabilityImpl(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      product: null == product
+              as String?,
+      product: freezed == product
           ? _value.product
           : product // ignore: cast_nullable_to_non_nullable
-              as String,
-      productName: null == productName
+              as String?,
+      productName: freezed == productName
           ? _value.productName
           : productName // ignore: cast_nullable_to_non_nullable
-              as String,
-      start: null == start
+              as String?,
+      start: freezed == start
           ? _value.start
           : start // ignore: cast_nullable_to_non_nullable
-              as String,
-      end: null == end
+              as String?,
+      end: freezed == end
           ? _value.end
           : end // ignore: cast_nullable_to_non_nullable
-              as String,
-      startTime: null == startTime
+              as String?,
+      startTime: freezed == startTime
           ? _value.startTime
           : startTime // ignore: cast_nullable_to_non_nullable
-              as String,
-      endTime: null == endTime
+              as String?,
+      endTime: freezed == endTime
           ? _value.endTime
           : endTime // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       duration: freezed == duration
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
               as int?,
-      openDays: null == openDays
+      openDays: freezed == openDays
           ? _value._openDays
           : openDays // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>,
-      closedDates: null == closedDates
+              as List<dynamic>?,
+      closedDates: freezed == closedDates
           ? _value._closedDates
           : closedDates // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>,
+              as List<dynamic>?,
     ));
   }
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(explicitToJson: true)
 class _$ProductAvailabilityImpl implements _ProductAvailability {
   _$ProductAvailabilityImpl(
-      {required this.id,
-      required this.product,
-      @JsonKey(name: 'product_name') required this.productName,
-      required this.start,
-      required this.end,
-      @JsonKey(name: 'start_time') required this.startTime,
-      @JsonKey(name: 'end_time') required this.endTime,
-      this.duration,
+      {this.id = UNKNOWN,
+      this.product = UNKNOWN,
+      @JsonKey(name: 'product_name') this.productName = UNKNOWN,
+      this.start = UNKNOWN,
+      this.end = UNKNOWN,
+      @JsonKey(name: 'start_time') this.startTime = UNKNOWN,
+      @JsonKey(name: 'end_time') this.endTime = UNKNOWN,
+      this.duration = 0,
       @JsonKey(name: 'open_days')
-      final List<dynamic> openDays = const <dynamic>[],
+      final List<dynamic>? openDays = const <dynamic>[],
       @JsonKey(name: 'closed_dates')
-      final List<dynamic> closedDates = const <dynamic>[]})
+      final List<dynamic>? closedDates = const <dynamic>[]})
       : _openDays = openDays,
         _closedDates = closedDates;
 
@@ -249,40 +250,49 @@ class _$ProductAvailabilityImpl implements _ProductAvailability {
       _$$ProductAvailabilityImplFromJson(json);
 
   @override
-  final String id;
+  @JsonKey()
+  final String? id;
   @override
-  final String product;
+  @JsonKey()
+  final String? product;
   @override
   @JsonKey(name: 'product_name')
-  final String productName;
+  final String? productName;
   @override
-  final String start;
+  @JsonKey()
+  final String? start;
   @override
-  final String end;
+  @JsonKey()
+  final String? end;
   @override
   @JsonKey(name: 'start_time')
-  final String startTime;
+  final String? startTime;
   @override
   @JsonKey(name: 'end_time')
-  final String endTime;
+  final String? endTime;
   @override
+  @JsonKey()
   final int? duration;
-  final List<dynamic> _openDays;
+  final List<dynamic>? _openDays;
   @override
   @JsonKey(name: 'open_days')
-  List<dynamic> get openDays {
+  List<dynamic>? get openDays {
+    final value = _openDays;
+    if (value == null) return null;
     if (_openDays is EqualUnmodifiableListView) return _openDays;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_openDays);
+    return EqualUnmodifiableListView(value);
   }
 
-  final List<dynamic> _closedDates;
+  final List<dynamic>? _closedDates;
   @override
   @JsonKey(name: 'closed_dates')
-  List<dynamic> get closedDates {
+  List<dynamic>? get closedDates {
+    final value = _closedDates;
+    if (value == null) return null;
     if (_closedDates is EqualUnmodifiableListView) return _closedDates;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_closedDates);
+    return EqualUnmodifiableListView(value);
   }
 
   @override
@@ -345,46 +355,46 @@ class _$ProductAvailabilityImpl implements _ProductAvailability {
 
 abstract class _ProductAvailability implements ProductAvailability {
   factory _ProductAvailability(
-          {required final String id,
-          required final String product,
-          @JsonKey(name: 'product_name') required final String productName,
-          required final String start,
-          required final String end,
-          @JsonKey(name: 'start_time') required final String startTime,
-          @JsonKey(name: 'end_time') required final String endTime,
+          {final String? id,
+          final String? product,
+          @JsonKey(name: 'product_name') final String? productName,
+          final String? start,
+          final String? end,
+          @JsonKey(name: 'start_time') final String? startTime,
+          @JsonKey(name: 'end_time') final String? endTime,
           final int? duration,
-          @JsonKey(name: 'open_days') final List<dynamic> openDays,
-          @JsonKey(name: 'closed_dates') final List<dynamic> closedDates}) =
+          @JsonKey(name: 'open_days') final List<dynamic>? openDays,
+          @JsonKey(name: 'closed_dates') final List<dynamic>? closedDates}) =
       _$ProductAvailabilityImpl;
 
   factory _ProductAvailability.fromJson(Map<String, dynamic> json) =
       _$ProductAvailabilityImpl.fromJson;
 
   @override
-  String get id;
+  String? get id;
   @override
-  String get product;
+  String? get product;
   @override
   @JsonKey(name: 'product_name')
-  String get productName;
+  String? get productName;
   @override
-  String get start;
+  String? get start;
   @override
-  String get end;
+  String? get end;
   @override
   @JsonKey(name: 'start_time')
-  String get startTime;
+  String? get startTime;
   @override
   @JsonKey(name: 'end_time')
-  String get endTime;
+  String? get endTime;
   @override
   int? get duration;
   @override
   @JsonKey(name: 'open_days')
-  List<dynamic> get openDays;
+  List<dynamic>? get openDays;
   @override
   @JsonKey(name: 'closed_dates')
-  List<dynamic> get closedDates;
+  List<dynamic>? get closedDates;
 
   /// Create a copy of ProductAvailability
   /// with the given fields replaced by the non-null parameter values.
