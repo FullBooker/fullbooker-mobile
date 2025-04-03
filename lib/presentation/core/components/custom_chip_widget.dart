@@ -11,12 +11,12 @@ class CustomChipWidget extends StatelessWidget {
 
   final String value;
   final bool isSelected;
-  final VoidCallback? onTap;
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => onTap?.call(),
+      onTap: onTap,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         margin: const EdgeInsets.symmetric(horizontal: 5),
@@ -29,7 +29,6 @@ class CustomChipWidget extends StatelessWidget {
           ),
         ),
         child: Row(
-          spacing: 8,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             if (isSelected)

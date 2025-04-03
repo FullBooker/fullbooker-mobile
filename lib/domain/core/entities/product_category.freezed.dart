@@ -30,7 +30,9 @@ mixin _$ProductCategory {
   String get description => throw _privateConstructorUsedError;
   String get category => throw _privateConstructorUsedError;
   String? get parent => throw _privateConstructorUsedError;
-  List<ProductCategory>? get children => throw _privateConstructorUsedError;
+  @JsonKey(name: 'children')
+  List<ProductCategory>? get subcategories =>
+      throw _privateConstructorUsedError;
   List<String>? get tags => throw _privateConstructorUsedError;
 
   /// Serializes this ProductCategory to a JSON map.
@@ -58,7 +60,7 @@ abstract class $ProductCategoryCopyWith<$Res> {
       String description,
       String category,
       String? parent,
-      List<ProductCategory>? children,
+      @JsonKey(name: 'children') List<ProductCategory>? subcategories,
       List<String>? tags});
 }
 
@@ -85,7 +87,7 @@ class _$ProductCategoryCopyWithImpl<$Res, $Val extends ProductCategory>
     Object? description = null,
     Object? category = null,
     Object? parent = freezed,
-    Object? children = freezed,
+    Object? subcategories = freezed,
     Object? tags = freezed,
   }) {
     return _then(_value.copyWith(
@@ -121,9 +123,9 @@ class _$ProductCategoryCopyWithImpl<$Res, $Val extends ProductCategory>
           ? _value.parent
           : parent // ignore: cast_nullable_to_non_nullable
               as String?,
-      children: freezed == children
-          ? _value.children
-          : children // ignore: cast_nullable_to_non_nullable
+      subcategories: freezed == subcategories
+          ? _value.subcategories
+          : subcategories // ignore: cast_nullable_to_non_nullable
               as List<ProductCategory>?,
       tags: freezed == tags
           ? _value.tags
@@ -150,7 +152,7 @@ abstract class _$$ProductCategoryImplCopyWith<$Res>
       String description,
       String category,
       String? parent,
-      List<ProductCategory>? children,
+      @JsonKey(name: 'children') List<ProductCategory>? subcategories,
       List<String>? tags});
 }
 
@@ -175,7 +177,7 @@ class __$$ProductCategoryImplCopyWithImpl<$Res>
     Object? description = null,
     Object? category = null,
     Object? parent = freezed,
-    Object? children = freezed,
+    Object? subcategories = freezed,
     Object? tags = freezed,
   }) {
     return _then(_$ProductCategoryImpl(
@@ -211,9 +213,9 @@ class __$$ProductCategoryImplCopyWithImpl<$Res>
           ? _value.parent
           : parent // ignore: cast_nullable_to_non_nullable
               as String?,
-      children: freezed == children
-          ? _value.children
-          : children // ignore: cast_nullable_to_non_nullable
+      subcategories: freezed == subcategories
+          ? _value.subcategories
+          : subcategories // ignore: cast_nullable_to_non_nullable
               as List<ProductCategory>?,
       tags: freezed == tags
           ? _value.tags
@@ -228,21 +230,22 @@ class __$$ProductCategoryImplCopyWithImpl<$Res>
 @JsonSerializable(explicitToJson: true)
 class _$ProductCategoryImpl implements _ProductCategory {
   _$ProductCategoryImpl(
-      {required this.id,
-      @JsonKey(name: 'created_at') required this.createdAt,
-      @JsonKey(name: 'updated_at') required this.updatedAt,
-      required this.active,
-      required this.name,
-      required this.description,
-      required this.category,
-      this.parent,
-      this.children,
+      {this.id = UNKNOWN,
+      @JsonKey(name: 'created_at') this.createdAt = UNKNOWN,
+      @JsonKey(name: 'updated_at') this.updatedAt = UNKNOWN,
+      this.active = false,
+      this.name = UNKNOWN,
+      this.description = UNKNOWN,
+      this.category = UNKNOWN,
+      this.parent = UNKNOWN,
+      @JsonKey(name: 'children') this.subcategories,
       this.tags});
 
   factory _$ProductCategoryImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProductCategoryImplFromJson(json);
 
   @override
+  @JsonKey()
   final String id;
   @override
   @JsonKey(name: 'created_at')
@@ -251,23 +254,29 @@ class _$ProductCategoryImpl implements _ProductCategory {
   @JsonKey(name: 'updated_at')
   final String updatedAt;
   @override
+  @JsonKey()
   final bool active;
   @override
+  @JsonKey()
   final String name;
   @override
+  @JsonKey()
   final String description;
   @override
+  @JsonKey()
   final String category;
   @override
+  @JsonKey()
   final String? parent;
   @override
-  final List<ProductCategory>? children;
+  @JsonKey(name: 'children')
+  final List<ProductCategory>? subcategories;
   @override
   final List<String>? tags;
 
   @override
   String toString() {
-    return 'ProductCategory(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, active: $active, name: $name, description: $description, category: $category, parent: $parent, children: $children, tags: $tags)';
+    return 'ProductCategory(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, active: $active, name: $name, description: $description, category: $category, parent: $parent, subcategories: $subcategories, tags: $tags)';
   }
 
   @override
@@ -287,7 +296,8 @@ class _$ProductCategoryImpl implements _ProductCategory {
             (identical(other.category, category) ||
                 other.category == category) &&
             (identical(other.parent, parent) || other.parent == parent) &&
-            const DeepCollectionEquality().equals(other.children, children) &&
+            const DeepCollectionEquality()
+                .equals(other.subcategories, subcategories) &&
             const DeepCollectionEquality().equals(other.tags, tags));
   }
 
@@ -303,7 +313,7 @@ class _$ProductCategoryImpl implements _ProductCategory {
       description,
       category,
       parent,
-      const DeepCollectionEquality().hash(children),
+      const DeepCollectionEquality().hash(subcategories),
       const DeepCollectionEquality().hash(tags));
 
   /// Create a copy of ProductCategory
@@ -325,15 +335,15 @@ class _$ProductCategoryImpl implements _ProductCategory {
 
 abstract class _ProductCategory implements ProductCategory {
   factory _ProductCategory(
-      {required final String id,
-      @JsonKey(name: 'created_at') required final String createdAt,
-      @JsonKey(name: 'updated_at') required final String updatedAt,
-      required final bool active,
-      required final String name,
-      required final String description,
-      required final String category,
+      {final String id,
+      @JsonKey(name: 'created_at') final String createdAt,
+      @JsonKey(name: 'updated_at') final String updatedAt,
+      final bool active,
+      final String name,
+      final String description,
+      final String category,
       final String? parent,
-      final List<ProductCategory>? children,
+      @JsonKey(name: 'children') final List<ProductCategory>? subcategories,
       final List<String>? tags}) = _$ProductCategoryImpl;
 
   factory _ProductCategory.fromJson(Map<String, dynamic> json) =
@@ -358,7 +368,8 @@ abstract class _ProductCategory implements ProductCategory {
   @override
   String? get parent;
   @override
-  List<ProductCategory>? get children;
+  @JsonKey(name: 'children')
+  List<ProductCategory>? get subcategories;
   @override
   List<String>? get tags;
 
