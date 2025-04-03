@@ -19,6 +19,7 @@ class AppConfig {
     required this.refreshTokenEndpoint,
     required this.getProfileEndpoint,
     required this.productCategoriesEndpoint,
+    required this.productSubCategoriesEndpoint,
   });
 
   /// The context the app is running in
@@ -48,6 +49,7 @@ class AppConfig {
   /// Host side endpoints
   final String getProductsEndpoint;
   final String productCategoriesEndpoint;
+  final String productSubCategoriesEndpoint;
 
   /// Profile endpoints
   final String getProfileEndpoint;
@@ -69,6 +71,7 @@ final AppConfig devAppConfig = AppConfig(
   refreshTokenEndpoint: kDevRefreshTokenEndpoint,
   getProfileEndpoint: kDevProfileEndpoint,
   productCategoriesEndpoint: kDevProductCategoriesEndpoint,
+  productSubCategoriesEndpoint: kDevProductSubCategoriesEndpoint,
 );
 
 final AppConfig prodAppConfig = AppConfig(
@@ -87,6 +90,7 @@ final AppConfig prodAppConfig = AppConfig(
   refreshTokenEndpoint: kProdRefreshTokenEndpoint,
   getProfileEndpoint: kProdProfileEndpoint,
   productCategoriesEndpoint: kProdProductCategoriesEndpoint,
+  productSubCategoriesEndpoint: kProdProductSubCategoriesEndpoint,
 );
 
 final AppConfig testAppConfig = AppConfig(
@@ -105,4 +109,5 @@ final AppConfig testAppConfig = AppConfig(
   refreshTokenEndpoint: kTestRefreshTokenEndpoint,
   getProfileEndpoint: kTestProfileEndpoint,
   productCategoriesEndpoint: kTestProductCategoriesEndpoint,
+  productSubCategoriesEndpoint: kTestProductSubCategoriesEndpoint,
 );

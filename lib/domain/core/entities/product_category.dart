@@ -8,16 +8,18 @@ part 'product_category.g.dart';
 class ProductCategory with _$ProductCategory {
   @JsonSerializable(explicitToJson: true)
   factory ProductCategory({
-    @Default(UNKNOWN) String id,
-    @JsonKey(name: 'created_at') @Default(UNKNOWN) String createdAt,
-    @JsonKey(name: 'updated_at') @Default(UNKNOWN) String updatedAt,
+    @Default(UNKNOWN) String? id,
+    @JsonKey(name: 'created_at') @Default(UNKNOWN) String? createdAt,
+    @JsonKey(name: 'updated_at') @Default(UNKNOWN) String? updatedAt,
     @Default(false) bool active,
-    @Default(UNKNOWN) String name,
-    @Default(UNKNOWN) String description,
-    @Default(UNKNOWN) String category,
+    @Default(UNKNOWN) String? name,
+    @Default(UNKNOWN) String? description,
+    @Default(UNKNOWN) String? category,
     @Default(UNKNOWN) String? parent,
-    @JsonKey(name: 'children') List<ProductCategory>? subcategories,
-    List<String>? tags,
+    @Default(<ProductCategory>[])
+    @JsonKey(name: 'subcategories')
+    List<ProductCategory>? subcategories,
+    List<String?>? tags,
   }) = _ProductCategory;
 
   factory ProductCategory.initial() => ProductCategory();

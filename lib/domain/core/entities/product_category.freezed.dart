@@ -20,20 +20,20 @@ ProductCategory _$ProductCategoryFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ProductCategory {
-  String get id => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_at')
-  String get createdAt => throw _privateConstructorUsedError;
+  String? get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'updated_at')
-  String get updatedAt => throw _privateConstructorUsedError;
+  String? get updatedAt => throw _privateConstructorUsedError;
   bool get active => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-  String get description => throw _privateConstructorUsedError;
-  String get category => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+  String? get description => throw _privateConstructorUsedError;
+  String? get category => throw _privateConstructorUsedError;
   String? get parent => throw _privateConstructorUsedError;
-  @JsonKey(name: 'children')
+  @JsonKey(name: 'subcategories')
   List<ProductCategory>? get subcategories =>
       throw _privateConstructorUsedError;
-  List<String>? get tags => throw _privateConstructorUsedError;
+  List<String?>? get tags => throw _privateConstructorUsedError;
 
   /// Serializes this ProductCategory to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -52,16 +52,16 @@ abstract class $ProductCategoryCopyWith<$Res> {
       _$ProductCategoryCopyWithImpl<$Res, ProductCategory>;
   @useResult
   $Res call(
-      {String id,
-      @JsonKey(name: 'created_at') String createdAt,
-      @JsonKey(name: 'updated_at') String updatedAt,
+      {String? id,
+      @JsonKey(name: 'created_at') String? createdAt,
+      @JsonKey(name: 'updated_at') String? updatedAt,
       bool active,
-      String name,
-      String description,
-      String category,
+      String? name,
+      String? description,
+      String? category,
       String? parent,
-      @JsonKey(name: 'children') List<ProductCategory>? subcategories,
-      List<String>? tags});
+      @JsonKey(name: 'subcategories') List<ProductCategory>? subcategories,
+      List<String?>? tags});
 }
 
 /// @nodoc
@@ -79,46 +79,46 @@ class _$ProductCategoryCopyWithImpl<$Res, $Val extends ProductCategory>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? createdAt = null,
-    Object? updatedAt = null,
+    Object? id = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
     Object? active = null,
-    Object? name = null,
-    Object? description = null,
-    Object? category = null,
+    Object? name = freezed,
+    Object? description = freezed,
+    Object? category = freezed,
     Object? parent = freezed,
     Object? subcategories = freezed,
     Object? tags = freezed,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      createdAt: null == createdAt
+              as String?,
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as String,
-      updatedAt: null == updatedAt
+              as String?,
+      updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       active: null == active
           ? _value.active
           : active // ignore: cast_nullable_to_non_nullable
               as bool,
-      name: null == name
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: null == description
+              as String?,
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
-              as String,
-      category: null == category
+              as String?,
+      category: freezed == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       parent: freezed == parent
           ? _value.parent
           : parent // ignore: cast_nullable_to_non_nullable
@@ -130,7 +130,7 @@ class _$ProductCategoryCopyWithImpl<$Res, $Val extends ProductCategory>
       tags: freezed == tags
           ? _value.tags
           : tags // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+              as List<String?>?,
     ) as $Val);
   }
 }
@@ -144,16 +144,16 @@ abstract class _$$ProductCategoryImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String id,
-      @JsonKey(name: 'created_at') String createdAt,
-      @JsonKey(name: 'updated_at') String updatedAt,
+      {String? id,
+      @JsonKey(name: 'created_at') String? createdAt,
+      @JsonKey(name: 'updated_at') String? updatedAt,
       bool active,
-      String name,
-      String description,
-      String category,
+      String? name,
+      String? description,
+      String? category,
       String? parent,
-      @JsonKey(name: 'children') List<ProductCategory>? subcategories,
-      List<String>? tags});
+      @JsonKey(name: 'subcategories') List<ProductCategory>? subcategories,
+      List<String?>? tags});
 }
 
 /// @nodoc
@@ -169,46 +169,46 @@ class __$$ProductCategoryImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? createdAt = null,
-    Object? updatedAt = null,
+    Object? id = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
     Object? active = null,
-    Object? name = null,
-    Object? description = null,
-    Object? category = null,
+    Object? name = freezed,
+    Object? description = freezed,
+    Object? category = freezed,
     Object? parent = freezed,
     Object? subcategories = freezed,
     Object? tags = freezed,
   }) {
     return _then(_$ProductCategoryImpl(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      createdAt: null == createdAt
+              as String?,
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as String,
-      updatedAt: null == updatedAt
+              as String?,
+      updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       active: null == active
           ? _value.active
           : active // ignore: cast_nullable_to_non_nullable
               as bool,
-      name: null == name
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: null == description
+              as String?,
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
-              as String,
-      category: null == category
+              as String?,
+      category: freezed == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       parent: freezed == parent
           ? _value.parent
           : parent // ignore: cast_nullable_to_non_nullable
@@ -220,7 +220,7 @@ class __$$ProductCategoryImplCopyWithImpl<$Res>
       tags: freezed == tags
           ? _value.tags
           : tags // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+              as List<String?>?,
     ));
   }
 }
@@ -238,7 +238,8 @@ class _$ProductCategoryImpl implements _ProductCategory {
       this.description = UNKNOWN,
       this.category = UNKNOWN,
       this.parent = UNKNOWN,
-      @JsonKey(name: 'children') this.subcategories,
+      @JsonKey(name: 'subcategories')
+      this.subcategories = const <ProductCategory>[],
       this.tags});
 
   factory _$ProductCategoryImpl.fromJson(Map<String, dynamic> json) =>
@@ -246,33 +247,33 @@ class _$ProductCategoryImpl implements _ProductCategory {
 
   @override
   @JsonKey()
-  final String id;
+  final String? id;
   @override
   @JsonKey(name: 'created_at')
-  final String createdAt;
+  final String? createdAt;
   @override
   @JsonKey(name: 'updated_at')
-  final String updatedAt;
+  final String? updatedAt;
   @override
   @JsonKey()
   final bool active;
   @override
   @JsonKey()
-  final String name;
+  final String? name;
   @override
   @JsonKey()
-  final String description;
+  final String? description;
   @override
   @JsonKey()
-  final String category;
+  final String? category;
   @override
   @JsonKey()
   final String? parent;
   @override
-  @JsonKey(name: 'children')
+  @JsonKey(name: 'subcategories')
   final List<ProductCategory>? subcategories;
   @override
-  final List<String>? tags;
+  final List<String?>? tags;
 
   @override
   String toString() {
@@ -335,43 +336,44 @@ class _$ProductCategoryImpl implements _ProductCategory {
 
 abstract class _ProductCategory implements ProductCategory {
   factory _ProductCategory(
-      {final String id,
-      @JsonKey(name: 'created_at') final String createdAt,
-      @JsonKey(name: 'updated_at') final String updatedAt,
+      {final String? id,
+      @JsonKey(name: 'created_at') final String? createdAt,
+      @JsonKey(name: 'updated_at') final String? updatedAt,
       final bool active,
-      final String name,
-      final String description,
-      final String category,
+      final String? name,
+      final String? description,
+      final String? category,
       final String? parent,
-      @JsonKey(name: 'children') final List<ProductCategory>? subcategories,
-      final List<String>? tags}) = _$ProductCategoryImpl;
+      @JsonKey(name: 'subcategories')
+      final List<ProductCategory>? subcategories,
+      final List<String?>? tags}) = _$ProductCategoryImpl;
 
   factory _ProductCategory.fromJson(Map<String, dynamic> json) =
       _$ProductCategoryImpl.fromJson;
 
   @override
-  String get id;
+  String? get id;
   @override
   @JsonKey(name: 'created_at')
-  String get createdAt;
+  String? get createdAt;
   @override
   @JsonKey(name: 'updated_at')
-  String get updatedAt;
+  String? get updatedAt;
   @override
   bool get active;
   @override
-  String get name;
+  String? get name;
   @override
-  String get description;
+  String? get description;
   @override
-  String get category;
+  String? get category;
   @override
   String? get parent;
   @override
-  @JsonKey(name: 'children')
+  @JsonKey(name: 'subcategories')
   List<ProductCategory>? get subcategories;
   @override
-  List<String>? get tags;
+  List<String?>? get tags;
 
   /// Create a copy of ProductCategory
   /// with the given fields replaced by the non-null parameter values.
