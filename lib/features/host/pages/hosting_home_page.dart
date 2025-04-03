@@ -28,20 +28,23 @@ class HostingHomePage extends StatelessWidget {
       bottomNavigationBar: const BottomNavBar(),
       appBar: CustomAppBar(
         preferredSize: const Size(double.infinity, 80),
-        leading: GestureDetector(
-          onTap: () => context.router.push(const ProfileRoute()),
-          child: StoreConnector<AppState, ProfileViewModel>(
-            converter: (Store<AppState> store) =>
-                ProfileViewModel.fromStore(store),
-            builder: (BuildContext context, ProfileViewModel vm) {
-              final String photoURL = vm.user?.profileURL ?? UNKNOWN;
+        leading: Padding(
+          padding: const EdgeInsets.all(8),
+          child: GestureDetector(
+            onTap: () => context.router.push(const ProfileRoute()),
+            child: StoreConnector<AppState, ProfileViewModel>(
+              converter: (Store<AppState> store) =>
+                  ProfileViewModel.fromStore(store),
+              builder: (BuildContext context, ProfileViewModel vm) {
+                final String photoURL = vm.user?.profileURL ?? UNKNOWN;
 
-              return ProfileAvatar(
-                avatarURI: photoURL,
-                displayName: vm.fullName,
-                aviSize: 48,
-              );
-            },
+                return ProfileAvatar(
+                  avatarURI: photoURL,
+                  displayName: vm.fullName,
+                  aviSize: 48,
+                );
+              },
+            ),
           ),
         ),
         bodyWidget: Column(
