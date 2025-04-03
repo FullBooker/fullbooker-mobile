@@ -104,9 +104,11 @@ class SetupProductTypePage extends StatelessWidget {
                               final ProductCategory current =
                                   categories![index];
 
-                              return ProductTypeItem(
-                                title: current.name,
-                                description: current.description,
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 12),
+                                child: ProductTypeItem(
+                                  category: current,
+                                ),
                               );
                             },
                           );
