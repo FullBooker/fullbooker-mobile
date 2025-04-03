@@ -26,8 +26,7 @@ class FullbookerAppWidget extends StatelessWidget {
             deepLinkBuilder: (PlatformDeepLink deepLink) {
               if (isSignedIn) {
                 return const DeepLink(
-                  // <PageRouteInfo<dynamic>>[SetupProductCategoryRoute()],
-                  <PageRouteInfo<dynamic>>[SetupProductTypeRoute()],
+                  <PageRouteInfo<dynamic>>[HostingHomeRoute()],
                 );
               }
               return const DeepLink(

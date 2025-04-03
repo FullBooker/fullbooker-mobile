@@ -82,7 +82,7 @@ class SetupProductTypePage extends StatelessWidget {
 
                           if (categories?.isEmpty ?? true) {
                             return GenericZeroState(
-                              iconPath: productZeroStateSVGPath,
+                              iconPath: setupZeroStateSVGPath,
                               title: noCategoriesFound,
                               description: noCategoriesFoundCopy,
                               onCTATap: () {

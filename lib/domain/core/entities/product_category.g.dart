@@ -17,10 +17,11 @@ _$ProductCategoryImpl _$$ProductCategoryImplFromJson(
       description: json['description'] as String? ?? UNKNOWN,
       category: json['category'] as String? ?? UNKNOWN,
       parent: json['parent'] as String? ?? UNKNOWN,
-      subcategories: (json['children'] as List<dynamic>?)
-          ?.map((e) => ProductCategory.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      tags: (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      subcategories: (json['subcategories'] as List<dynamic>?)
+              ?.map((e) => ProductCategory.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const <ProductCategory>[],
+      tags: (json['tags'] as List<dynamic>?)?.map((e) => e as String?).toList(),
     );
 
 Map<String, dynamic> _$$ProductCategoryImplToJson(
@@ -34,6 +35,6 @@ Map<String, dynamic> _$$ProductCategoryImplToJson(
       'description': instance.description,
       'category': instance.category,
       'parent': instance.parent,
-      'children': instance.subcategories?.map((e) => e.toJson()).toList(),
+      'subcategories': instance.subcategories?.map((e) => e.toJson()).toList(),
       'tags': instance.tags,
     };

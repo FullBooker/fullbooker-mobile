@@ -70,14 +70,14 @@ class SetupProductCategoryPage extends StatelessWidget {
                             ProductSetupViewModel.fromState(store.state),
                         builder:
                             (BuildContext context, ProductSetupViewModel vm) {
-                          final List<ProductCategory>? subCategories = vm
+                          final List<ProductCategory?>? subCategories = vm
                               .currentProduct
                               ?.selectedProductCategory
                               ?.subcategories;
 
                           if (subCategories?.isEmpty ?? true) {
                             return GenericZeroState(
-                              iconPath: productZeroStateSVGPath,
+                              iconPath: setupZeroStateSVGPath,
                               title: noCategoriesFound,
                               description: noCategoriesFoundCopy,
                               onCTATap: () {},
@@ -89,13 +89,13 @@ class SetupProductCategoryPage extends StatelessWidget {
                             spacing: 8,
                             runSpacing: 8,
                             children:
-                                subCategories?.map((ProductCategory current) {
-                                      final bool selected = current.id ==
+                                subCategories?.map((ProductCategory? current) {
+                                      final bool selected = current?.id ==
                                           vm.currentProduct
                                               ?.selectedProductSubCategory?.id;
 
                                       return CustomChipWidget(
-                                        value: current.name,
+                                        value: current?.name ?? '',
                                         isSelected: selected,
                                         onTap: () => context.dispatch(
                                           UpdateCurrentProductAction(

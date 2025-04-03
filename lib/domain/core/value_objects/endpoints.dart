@@ -11,7 +11,8 @@ const String kDevRefreshTokenEndpoint =
     '$kDevAPIBaseURL/accounts/token/refresh';
 const String kDevProductsEndpoint = '$kDevAPIBaseURL/products/';
 const String kDevProfileEndpoint = '$kDevAPIBaseURL/accounts/profile';
-const String kDevProductCategoriesEndpoint = '$kDevAPIBaseURL/subcategories';
+const String kDevProductCategoriesEndpoint = '$kDevAPIBaseURL/categories';
+const String kDevProductSubCategoriesEndpoint = '$kDevAPIBaseURL/subcategories';
 
 // ---- Implemented
 const String kDevHostsEndpoint = '$kDevAPIBaseURL/hosts/';
@@ -33,7 +34,9 @@ const String kProdRefreshTokenEndpoint =
     '$kProdAPIBaseURL/accounts/token/refresh';
 const String kProdProductsEndpoint = '$kProdAPIBaseURL/products/';
 const String kProdProfileEndpoint = '$kProdAPIBaseURL/accounts/profile';
-const String kProdProductCategoriesEndpoint = '$kProdAPIBaseURL/subcategories';
+const String kProdProductCategoriesEndpoint = '$kProdAPIBaseURL/categories';
+const String kProdProductSubCategoriesEndpoint =
+    '$kProdAPIBaseURL/subcategories';
 
 // ---- Implemented
 const String kProdHostsEndpoint = '$kProdAPIBaseURL/hosts/';
@@ -55,7 +58,9 @@ const String kTestRefreshTokenEndpoint =
     '$kTestAPIBaseURL/accounts/token/refresh';
 const String kTestProductsEndpoint = '$kTestAPIBaseURL/products/';
 const String kTestProfileEndpoint = '$kTestAPIBaseURL/accounts/profile';
-const String kTestProductCategoriesEndpoint = '$kTestAPIBaseURL/subcategories';
+const String kTestProductCategoriesEndpoint = '$kTestAPIBaseURL/categories';
+const String kTestProductSubCategoriesEndpoint =
+    '$kTestAPIBaseURL/subcategories';
 
 // ---- Implemented
 const String kTestHostsEndpoint = '$kTestAPIBaseURL/hosts/';

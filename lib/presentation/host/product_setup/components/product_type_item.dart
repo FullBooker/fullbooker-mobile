@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/domain/core/entities/product_category.dart';
 
@@ -39,16 +40,16 @@ class ProductTypeItem extends StatelessWidget {
                 spacing: 4,
                 children: <Widget>[
                   Text(
-                    category.name,
+                    category.name ?? UNKNOWN,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                           color: isSelected
                               ? Theme.of(context).primaryColor
                               : AppColors.textBlackColor,
                         ),
                   ),
-                  if (category.description.isNotEmpty)
+                  if (category.description?.isNotEmpty ?? false)
                     Text(
-                      category.description,
+                      category.description ?? '',
                       softWrap: true,
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
