@@ -1,6 +1,8 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:fullbooker/application/redux/states/user_state.dart';
+import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/domain/core/entities/product_availability.dart';
+import 'package:fullbooker/domain/core/entities/product_category.dart';
 import 'package:fullbooker/domain/core/entities/product_image.dart';
 import 'package:fullbooker/domain/core/entities/product_location.dart';
 import 'package:fullbooker/domain/core/entities/product_pricing.dart';
@@ -12,22 +14,35 @@ part 'product.g.dart';
 class Product with _$Product {
   @JsonSerializable(explicitToJson: true)
   factory Product({
-    required String id,
-    @JsonKey(name: 'created_at') required String createdAt,
-    @JsonKey(name: 'updated_at') required String updatedAt,
-    required bool active,
-    required UserState host,
-    required String name,
-    required String description,
-    required String number,
-    required String category,
-    required String subcategory,
-    @JsonKey(name: 'availability') required ProductAvailability availability,
-    @JsonKey(name: 'pricing') required List<ProductPricing> pricing,
+    @Default(UNKNOWN) String? id,
+    @Default(UNKNOWN) @JsonKey(name: 'created_at') String? createdAt,
+    @Default(UNKNOWN) @JsonKey(name: 'updated_at') String? updatedAt,
+    @Default(false) bool? active,
+    required UserState? host,
+    @Default(UNKNOWN) String? name,
+    @Default(UNKNOWN) String? description,
+    @Default(UNKNOWN) String? number,
+    @Default(UNKNOWN) String? category,
+    @Default(UNKNOWN) String? subcategory,
+    @JsonKey(name: 'availability') ProductAvailability? availability,
+    @Default(<ProductPricing>[])
+    @JsonKey(name: 'pricing')
+    List<ProductPricing>? pricing,
     @JsonKey(name: 'image') ProductImage? image,
     dynamic video,
-    @JsonKey(name: 'locations') required List<ProductLocation> locations,
+    @Default(<ProductLocation>[])
+    @JsonKey(name: 'locations')
+    List<ProductLocation>? locations,
+
+    /// Temp values used to create the product
+    ProductCategory? selectedProductCategory,
   }) = _Product;
+
+  factory Product.initial() => Product(
+        host: UserState.initial(),
+        availability: ProductAvailability.initial(),
+        image: ProductImage.initial(),
+      );
 
   factory Product.fromJson(Map<String, dynamic> json) =>
       _$ProductFromJson(json);

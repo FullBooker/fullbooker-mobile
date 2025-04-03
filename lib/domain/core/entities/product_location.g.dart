@@ -9,14 +9,14 @@ part of 'product_location.dart';
 _$ProductLocationImpl _$$ProductLocationImplFromJson(
         Map<String, dynamic> json) =>
     _$ProductLocationImpl(
-      id: json['id'] as String,
-      createdAt: json['created_at'] as String,
-      updatedAt: json['updated_at'] as String,
-      active: json['active'] as bool,
-      host: json['host'] as String,
-      product: json['product'] as String,
-      coordinates: json['coordinates'] as String,
-      address: json['address'] as String,
+      id: json['id'] as String? ?? UNKNOWN,
+      createdAt: json['created_at'] as String? ?? UNKNOWN,
+      updatedAt: json['updated_at'] as String? ?? UNKNOWN,
+      active: json['active'] as bool? ?? false,
+      host: json['host'] as String? ?? UNKNOWN,
+      product: json['product'] as String? ?? UNKNOWN,
+      coordinates: json['coordinates'] as String? ?? UNKNOWN,
+      address: json['address'] as String? ?? UNKNOWN,
     );
 
 Map<String, dynamic> _$$ProductLocationImplToJson(

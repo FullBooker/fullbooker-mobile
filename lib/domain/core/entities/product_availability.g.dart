@@ -9,14 +9,14 @@ part of 'product_availability.dart';
 _$ProductAvailabilityImpl _$$ProductAvailabilityImplFromJson(
         Map<String, dynamic> json) =>
     _$ProductAvailabilityImpl(
-      id: json['id'] as String,
-      product: json['product'] as String,
-      productName: json['product_name'] as String,
-      start: json['start'] as String,
-      end: json['end'] as String,
-      startTime: json['start_time'] as String,
-      endTime: json['end_time'] as String,
-      duration: (json['duration'] as num?)?.toInt(),
+      id: json['id'] as String? ?? UNKNOWN,
+      product: json['product'] as String? ?? UNKNOWN,
+      productName: json['product_name'] as String? ?? UNKNOWN,
+      start: json['start'] as String? ?? UNKNOWN,
+      end: json['end'] as String? ?? UNKNOWN,
+      startTime: json['start_time'] as String? ?? UNKNOWN,
+      endTime: json['end_time'] as String? ?? UNKNOWN,
+      duration: (json['duration'] as num?)?.toInt() ?? 0,
       openDays: json['open_days'] as List<dynamic>? ?? const <dynamic>[],
       closedDates: json['closed_dates'] as List<dynamic>? ?? const <dynamic>[],
     );

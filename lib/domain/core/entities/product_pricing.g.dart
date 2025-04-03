@@ -8,20 +8,20 @@ part of 'product_pricing.dart';
 
 _$ProductPricingImpl _$$ProductPricingImplFromJson(Map<String, dynamic> json) =>
     _$ProductPricingImpl(
-      id: json['id'] as String,
-      createdAt: json['created_at'] as String,
-      updatedAt: json['updated_at'] as String,
-      active: json['active'] as bool,
-      host: json['host'] as String,
-      name: json['name'] as String?,
-      product: json['product'] as String,
-      currency: json['currency'] as String,
-      cost: json['cost'] as String,
-      type: json['type'] as String,
-      ticketTier: json['ticket_tier'] as String,
-      maxTickets: (json['maximum_number_of_tickets'] as num).toInt(),
-      remainingTickets: (json['remaining_tickets'] as num).toInt(),
-      soldTickets: (json['sold_tickets'] as num).toInt(),
+      id: json['id'] as String? ?? UNKNOWN,
+      createdAt: json['created_at'] as String? ?? UNKNOWN,
+      updatedAt: json['updated_at'] as String? ?? UNKNOWN,
+      active: json['active'] as bool? ?? false,
+      host: json['host'] as String? ?? UNKNOWN,
+      name: json['name'] as String? ?? UNKNOWN,
+      product: json['product'] as String? ?? UNKNOWN,
+      currency: json['currency'] as String? ?? UNKNOWN,
+      cost: json['cost'] as String? ?? UNKNOWN,
+      type: json['type'] as String? ?? UNKNOWN,
+      ticketTier: json['ticket_tier'] as String? ?? UNKNOWN,
+      maxTickets: (json['maximum_number_of_tickets'] as num?)?.toInt() ?? 0,
+      remainingTickets: (json['remaining_tickets'] as num?)?.toInt() ?? 0,
+      soldTickets: (json['sold_tickets'] as num?)?.toInt() ?? 0,
     );
 
 Map<String, dynamic> _$$ProductPricingImplToJson(
