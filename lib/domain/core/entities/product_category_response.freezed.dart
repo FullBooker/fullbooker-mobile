@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'host_product_response.dart';
+part of 'product_category_response.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,48 +14,53 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-HostProductResponse _$HostProductResponseFromJson(Map<String, dynamic> json) {
-  return _HostProductResponse.fromJson(json);
+ProductCategoryResponse _$ProductCategoryResponseFromJson(
+    Map<String, dynamic> json) {
+  return _ProductCategoryResponse.fromJson(json);
 }
 
 /// @nodoc
-mixin _$HostProductResponse {
+mixin _$ProductCategoryResponse {
   int get count => throw _privateConstructorUsedError;
   String? get next => throw _privateConstructorUsedError;
   String? get previous => throw _privateConstructorUsedError;
-  List<Product>? get results => throw _privateConstructorUsedError;
+  List<ProductCategory>? get results => throw _privateConstructorUsedError;
 
-  /// Serializes this HostProductResponse to a JSON map.
+  /// Serializes this ProductCategoryResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of HostProductResponse
+  /// Create a copy of ProductCategoryResponse
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $HostProductResponseCopyWith<HostProductResponse> get copyWith =>
+  $ProductCategoryResponseCopyWith<ProductCategoryResponse> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $HostProductResponseCopyWith<$Res> {
-  factory $HostProductResponseCopyWith(
-          HostProductResponse value, $Res Function(HostProductResponse) then) =
-      _$HostProductResponseCopyWithImpl<$Res, HostProductResponse>;
+abstract class $ProductCategoryResponseCopyWith<$Res> {
+  factory $ProductCategoryResponseCopyWith(ProductCategoryResponse value,
+          $Res Function(ProductCategoryResponse) then) =
+      _$ProductCategoryResponseCopyWithImpl<$Res, ProductCategoryResponse>;
   @useResult
   $Res call(
-      {int count, String? next, String? previous, List<Product>? results});
+      {int count,
+      String? next,
+      String? previous,
+      List<ProductCategory>? results});
 }
 
 /// @nodoc
-class _$HostProductResponseCopyWithImpl<$Res, $Val extends HostProductResponse>
-    implements $HostProductResponseCopyWith<$Res> {
-  _$HostProductResponseCopyWithImpl(this._value, this._then);
+class _$ProductCategoryResponseCopyWithImpl<$Res,
+        $Val extends ProductCategoryResponse>
+    implements $ProductCategoryResponseCopyWith<$Res> {
+  _$ProductCategoryResponseCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of HostProductResponse
+  /// Create a copy of ProductCategoryResponse
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -81,32 +86,38 @@ class _$HostProductResponseCopyWithImpl<$Res, $Val extends HostProductResponse>
       results: freezed == results
           ? _value.results
           : results // ignore: cast_nullable_to_non_nullable
-              as List<Product>?,
+              as List<ProductCategory>?,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$HostProductResponseImplCopyWith<$Res>
-    implements $HostProductResponseCopyWith<$Res> {
-  factory _$$HostProductResponseImplCopyWith(_$HostProductResponseImpl value,
-          $Res Function(_$HostProductResponseImpl) then) =
-      __$$HostProductResponseImplCopyWithImpl<$Res>;
+abstract class _$$ProductCategoryResponseImplCopyWith<$Res>
+    implements $ProductCategoryResponseCopyWith<$Res> {
+  factory _$$ProductCategoryResponseImplCopyWith(
+          _$ProductCategoryResponseImpl value,
+          $Res Function(_$ProductCategoryResponseImpl) then) =
+      __$$ProductCategoryResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
-      {int count, String? next, String? previous, List<Product>? results});
+      {int count,
+      String? next,
+      String? previous,
+      List<ProductCategory>? results});
 }
 
 /// @nodoc
-class __$$HostProductResponseImplCopyWithImpl<$Res>
-    extends _$HostProductResponseCopyWithImpl<$Res, _$HostProductResponseImpl>
-    implements _$$HostProductResponseImplCopyWith<$Res> {
-  __$$HostProductResponseImplCopyWithImpl(_$HostProductResponseImpl _value,
-      $Res Function(_$HostProductResponseImpl) _then)
+class __$$ProductCategoryResponseImplCopyWithImpl<$Res>
+    extends _$ProductCategoryResponseCopyWithImpl<$Res,
+        _$ProductCategoryResponseImpl>
+    implements _$$ProductCategoryResponseImplCopyWith<$Res> {
+  __$$ProductCategoryResponseImplCopyWithImpl(
+      _$ProductCategoryResponseImpl _value,
+      $Res Function(_$ProductCategoryResponseImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of HostProductResponse
+  /// Create a copy of ProductCategoryResponse
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -116,7 +127,7 @@ class __$$HostProductResponseImplCopyWithImpl<$Res>
     Object? previous = freezed,
     Object? results = freezed,
   }) {
-    return _then(_$HostProductResponseImpl(
+    return _then(_$ProductCategoryResponseImpl(
       count: null == count
           ? _value.count
           : count // ignore: cast_nullable_to_non_nullable
@@ -132,7 +143,7 @@ class __$$HostProductResponseImplCopyWithImpl<$Res>
       results: freezed == results
           ? _value.results
           : results // ignore: cast_nullable_to_non_nullable
-              as List<Product>?,
+              as List<ProductCategory>?,
     ));
   }
 }
@@ -140,12 +151,12 @@ class __$$HostProductResponseImplCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(explicitToJson: true)
-class _$HostProductResponseImpl implements _HostProductResponse {
-  _$HostProductResponseImpl(
+class _$ProductCategoryResponseImpl implements _ProductCategoryResponse {
+  _$ProductCategoryResponseImpl(
       {this.count = 0, this.next, this.previous, this.results});
 
-  factory _$HostProductResponseImpl.fromJson(Map<String, dynamic> json) =>
-      _$$HostProductResponseImplFromJson(json);
+  factory _$ProductCategoryResponseImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ProductCategoryResponseImplFromJson(json);
 
   @override
   @JsonKey()
@@ -155,18 +166,18 @@ class _$HostProductResponseImpl implements _HostProductResponse {
   @override
   final String? previous;
   @override
-  final List<Product>? results;
+  final List<ProductCategory>? results;
 
   @override
   String toString() {
-    return 'HostProductResponse(count: $count, next: $next, previous: $previous, results: $results)';
+    return 'ProductCategoryResponse(count: $count, next: $next, previous: $previous, results: $results)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$HostProductResponseImpl &&
+            other is _$ProductCategoryResponseImpl &&
             (identical(other.count, count) || other.count == count) &&
             (identical(other.next, next) || other.next == next) &&
             (identical(other.previous, previous) ||
@@ -179,32 +190,32 @@ class _$HostProductResponseImpl implements _HostProductResponse {
   int get hashCode => Object.hash(runtimeType, count, next, previous,
       const DeepCollectionEquality().hash(results));
 
-  /// Create a copy of HostProductResponse
+  /// Create a copy of ProductCategoryResponse
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$HostProductResponseImplCopyWith<_$HostProductResponseImpl> get copyWith =>
-      __$$HostProductResponseImplCopyWithImpl<_$HostProductResponseImpl>(
-          this, _$identity);
+  _$$ProductCategoryResponseImplCopyWith<_$ProductCategoryResponseImpl>
+      get copyWith => __$$ProductCategoryResponseImplCopyWithImpl<
+          _$ProductCategoryResponseImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$HostProductResponseImplToJson(
+    return _$$ProductCategoryResponseImplToJson(
       this,
     );
   }
 }
 
-abstract class _HostProductResponse implements HostProductResponse {
-  factory _HostProductResponse(
+abstract class _ProductCategoryResponse implements ProductCategoryResponse {
+  factory _ProductCategoryResponse(
       {final int count,
       final String? next,
       final String? previous,
-      final List<Product>? results}) = _$HostProductResponseImpl;
+      final List<ProductCategory>? results}) = _$ProductCategoryResponseImpl;
 
-  factory _HostProductResponse.fromJson(Map<String, dynamic> json) =
-      _$HostProductResponseImpl.fromJson;
+  factory _ProductCategoryResponse.fromJson(Map<String, dynamic> json) =
+      _$ProductCategoryResponseImpl.fromJson;
 
   @override
   int get count;
@@ -213,12 +224,12 @@ abstract class _HostProductResponse implements HostProductResponse {
   @override
   String? get previous;
   @override
-  List<Product>? get results;
+  List<ProductCategory>? get results;
 
-  /// Create a copy of HostProductResponse
+  /// Create a copy of ProductCategoryResponse
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$HostProductResponseImplCopyWith<_$HostProductResponseImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$ProductCategoryResponseImplCopyWith<_$ProductCategoryResponseImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
