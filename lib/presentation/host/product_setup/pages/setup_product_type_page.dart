@@ -1,10 +1,19 @@
+import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
+import 'package:fullbooker/application/redux/actions/fetch_product_categories_action.dart';
+import 'package:fullbooker/application/redux/states/app_state.dart';
+import 'package:fullbooker/application/redux/view_models/product_setup_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
+import 'package:fullbooker/domain/core/entities/product_category.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
+import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
+import 'package:fullbooker/presentation/core/components/generic_zero_state.dart';
 import 'package:fullbooker/presentation/host/product_setup/components/product_type_item.dart';
 import 'package:dartz/dartz.dart' as d;
+import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
 
@@ -26,36 +35,84 @@ class SetupProductTypePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: 12,
+              child: ListView(
+                shrinkWrap: true,
+                physics: AlwaysScrollableScrollPhysics(),
                 children: <Widget>[
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    spacing: 8,
+                    spacing: 12,
                     children: <Widget>[
-                      Text(
-                        categoryStep1,
-                        style: Theme.of(context).textTheme.titleSmall,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        spacing: 8,
+                        children: <Widget>[
+                          Text(
+                            categoryStep1,
+                            style: Theme.of(context).textTheme.titleSmall,
+                          ),
+                          Text(
+                            productType,
+                            style: Theme.of(context).textTheme.headlineSmall,
+                          ),
+                          Text(
+                            productTypeCopy,
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                        ],
                       ),
-                      Text(
-                        productType,
-                        style: Theme.of(context).textTheme.headlineSmall,
-                      ),
-                      Text(
-                        productTypeCopy,
-                        style: Theme.of(context).textTheme.bodyMedium,
+                      StoreConnector<AppState, ProductSetupViewModel>(
+                        converter: (Store<AppState> store) =>
+                            ProductSetupViewModel.fromState(store.state),
+                        onInit: (Store<AppState> store) {
+                          context.dispatch(
+                            FetchProductCategoriesAction(
+                              client: AppWrapperBase.of(context)!.customClient,
+                            ),
+                          );
+                        },
+                        builder:
+                            (BuildContext context, ProductSetupViewModel vm) {
+                          if (context.isWaiting(FetchProductCategoriesAction)) {
+                            return AppLoading();
+                          }
+                          final List<ProductCategory>? categories =
+                              vm.productCategories;
+
+                          if (categories?.isEmpty ?? true) {
+                            return GenericZeroState(
+                              iconPath: productZeroStateSVGPath,
+                              title: noCategoriesFound,
+                              description: noCategoriesFoundCopy,
+                              onCTATap: () {
+                                context.dispatch(
+                                  FetchProductCategoriesAction(
+                                    client: AppWrapperBase.of(context)!
+                                        .customClient,
+                                  ),
+                                );
+                              },
+                              ctaText: tryAgain,
+                            );
+                          }
+
+                          return ListView.builder(
+                            itemCount: categories?.length,
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemBuilder: (BuildContext context, int index) {
+                              final ProductCategory current =
+                                  categories![index];
+
+                              return ProductTypeItem(
+                                title: current.name,
+                                description: current.description,
+                              );
+                            },
+                          );
+                        },
                       ),
                     ],
-                  ),
-                  ProductTypeItem(
-                    title: eventsName,
-                    description: eventDescription,
-                    isSelected: true,
-                  ),
-                  ProductTypeItem(
-                    title: activities,
-                    description: activitiesCopy,
                   ),
                 ],
               ),

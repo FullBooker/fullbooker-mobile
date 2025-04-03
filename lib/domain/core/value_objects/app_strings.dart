@@ -569,3 +569,7 @@ const String legalCopy = 'Terms and conditions, opt-out';
 
 const String changePassword = 'Change Password';
 const String changePasswordCopy = 'Update your password';
+
+const String noCategoriesFound = 'No categories found';
+const String noCategoriesFoundCopy =
+    'Try again later or adjust your filters to see more options.';
