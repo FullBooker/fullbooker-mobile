@@ -10,7 +10,7 @@ jobs:
   deploy_to_app_tester:
     name: Deploy APK to AppTester
     if: github.ref == 'refs/heads/main'
-    timeout-minutes: 15
+    timeout-minutes: 20
     runs-on: ubuntu-latest
 
     steps:
