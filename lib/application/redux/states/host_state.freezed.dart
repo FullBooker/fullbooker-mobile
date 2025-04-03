@@ -23,6 +23,8 @@ mixin _$HostState {
   List<Product>? get products => throw _privateConstructorUsedError;
   Product? get currentProduct => throw _privateConstructorUsedError;
   Product? get selectedProduct => throw _privateConstructorUsedError;
+  List<ProductCategory>? get productCategories =>
+      throw _privateConstructorUsedError;
 
   /// Serializes this HostState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -42,7 +44,8 @@ abstract class $HostStateCopyWith<$Res> {
   $Res call(
       {List<Product>? products,
       Product? currentProduct,
-      Product? selectedProduct});
+      Product? selectedProduct,
+      List<ProductCategory>? productCategories});
 
   $ProductCopyWith<$Res>? get currentProduct;
   $ProductCopyWith<$Res>? get selectedProduct;
@@ -66,6 +69,7 @@ class _$HostStateCopyWithImpl<$Res, $Val extends HostState>
     Object? products = freezed,
     Object? currentProduct = freezed,
     Object? selectedProduct = freezed,
+    Object? productCategories = freezed,
   }) {
     return _then(_value.copyWith(
       products: freezed == products
@@ -80,6 +84,10 @@ class _$HostStateCopyWithImpl<$Res, $Val extends HostState>
           ? _value.selectedProduct
           : selectedProduct // ignore: cast_nullable_to_non_nullable
               as Product?,
+      productCategories: freezed == productCategories
+          ? _value.productCategories
+          : productCategories // ignore: cast_nullable_to_non_nullable
+              as List<ProductCategory>?,
     ) as $Val);
   }
 
@@ -123,7 +131,8 @@ abstract class _$$HostStateImplCopyWith<$Res>
   $Res call(
       {List<Product>? products,
       Product? currentProduct,
-      Product? selectedProduct});
+      Product? selectedProduct,
+      List<ProductCategory>? productCategories});
 
   @override
   $ProductCopyWith<$Res>? get currentProduct;
@@ -147,6 +156,7 @@ class __$$HostStateImplCopyWithImpl<$Res>
     Object? products = freezed,
     Object? currentProduct = freezed,
     Object? selectedProduct = freezed,
+    Object? productCategories = freezed,
   }) {
     return _then(_$HostStateImpl(
       products: freezed == products
@@ -161,6 +171,10 @@ class __$$HostStateImplCopyWithImpl<$Res>
           ? _value.selectedProduct
           : selectedProduct // ignore: cast_nullable_to_non_nullable
               as Product?,
+      productCategories: freezed == productCategories
+          ? _value.productCategories
+          : productCategories // ignore: cast_nullable_to_non_nullable
+              as List<ProductCategory>?,
     ));
   }
 }
@@ -172,7 +186,8 @@ class _$HostStateImpl implements _HostState {
   _$HostStateImpl(
       {this.products = const <Product>[],
       this.currentProduct,
-      this.selectedProduct});
+      this.selectedProduct,
+      this.productCategories = const <ProductCategory>[]});
 
   factory _$HostStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$HostStateImplFromJson(json);
@@ -184,10 +199,13 @@ class _$HostStateImpl implements _HostState {
   final Product? currentProduct;
   @override
   final Product? selectedProduct;
+  @override
+  @JsonKey()
+  final List<ProductCategory>? productCategories;
 
   @override
   String toString() {
-    return 'HostState(products: $products, currentProduct: $currentProduct, selectedProduct: $selectedProduct)';
+    return 'HostState(products: $products, currentProduct: $currentProduct, selectedProduct: $selectedProduct, productCategories: $productCategories)';
   }
 
   @override
@@ -199,7 +217,9 @@ class _$HostStateImpl implements _HostState {
             (identical(other.currentProduct, currentProduct) ||
                 other.currentProduct == currentProduct) &&
             (identical(other.selectedProduct, selectedProduct) ||
-                other.selectedProduct == selectedProduct));
+                other.selectedProduct == selectedProduct) &&
+            const DeepCollectionEquality()
+                .equals(other.productCategories, productCategories));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -208,7 +228,8 @@ class _$HostStateImpl implements _HostState {
       runtimeType,
       const DeepCollectionEquality().hash(products),
       currentProduct,
-      selectedProduct);
+      selectedProduct,
+      const DeepCollectionEquality().hash(productCategories));
 
   /// Create a copy of HostState
   /// with the given fields replaced by the non-null parameter values.
@@ -230,7 +251,8 @@ abstract class _HostState implements HostState {
   factory _HostState(
       {final List<Product>? products,
       final Product? currentProduct,
-      final Product? selectedProduct}) = _$HostStateImpl;
+      final Product? selectedProduct,
+      final List<ProductCategory>? productCategories}) = _$HostStateImpl;
 
   factory _HostState.fromJson(Map<String, dynamic> json) =
       _$HostStateImpl.fromJson;
@@ -241,6 +263,8 @@ abstract class _HostState implements HostState {
   Product? get currentProduct;
   @override
   Product? get selectedProduct;
+  @override
+  List<ProductCategory>? get productCategories;
 
   /// Create a copy of HostState
   /// with the given fields replaced by the non-null parameter values.

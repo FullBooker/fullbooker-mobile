@@ -18,6 +18,7 @@ class AppConfig {
     required this.getProductsEndpoint,
     required this.refreshTokenEndpoint,
     required this.getProfileEndpoint,
+    required this.productCategoriesEndpoint,
   });
 
   /// The context the app is running in
@@ -35,7 +36,7 @@ class AppConfig {
   /// The environment ('dev', 'prod')
   final String environment;
 
-  /// App endpoints
+  /// Onboarding endpoints
   final String loginEndpoint;
   final String createAccountEndpoint;
   final String googleSignInEndpoint;
@@ -44,8 +45,11 @@ class AppConfig {
   final String changePasswordEndpoint;
   final String refreshTokenEndpoint;
 
+  /// Host side endpoints
   final String getProductsEndpoint;
+  final String productCategoriesEndpoint;
 
+  /// Profile endpoints
   final String getProfileEndpoint;
 }
 
@@ -64,6 +68,7 @@ final AppConfig devAppConfig = AppConfig(
   getProductsEndpoint: kDevProductsEndpoint,
   refreshTokenEndpoint: kDevRefreshTokenEndpoint,
   getProfileEndpoint: kDevProfileEndpoint,
+  productCategoriesEndpoint: kDevProductCategoriesEndpoint,
 );
 
 final AppConfig prodAppConfig = AppConfig(
@@ -81,6 +86,7 @@ final AppConfig prodAppConfig = AppConfig(
   getProductsEndpoint: kProdProductsEndpoint,
   refreshTokenEndpoint: kProdRefreshTokenEndpoint,
   getProfileEndpoint: kProdProfileEndpoint,
+  productCategoriesEndpoint: kProdProductCategoriesEndpoint,
 );
 
 final AppConfig testAppConfig = AppConfig(
@@ -98,4 +104,5 @@ final AppConfig testAppConfig = AppConfig(
   getProductsEndpoint: kTestProductsEndpoint,
   refreshTokenEndpoint: kTestRefreshTokenEndpoint,
   getProfileEndpoint: kTestProfileEndpoint,
+  productCategoriesEndpoint: kTestProductCategoriesEndpoint,
 );
