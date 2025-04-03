@@ -1,5 +1,55 @@
 # CHANGELOG
 
+- feat: fix product category fetching from the API
+  - fix product model serialization logic
+  - add new zero state paths
+  - update caegory and subcategory endpoints
+  - fix product setup page UI
+
+## 0.0.210
+
+- feat: link category, type and preview to API
+
+## 0.0.209
+
+- feat: make the product models more user friendly
+
+## 0.0.208
+
+- feat: update product type item to take a product category object
+
+## 0.0.207
+
+- feat: link product categories to the UI
+  - add fetch product categories action
+  - update product categories in state
+  - setup product categories endpoint
+  - fix overflows in product type item widget
+
+## 0.0.206
+
+- feat: setup product category models
+
+## 0.0.205
+
+- feat: fix date and time picker
+
+## 0.0.204
+
+- feat: link product setup pages to API
+  - unify product models since they are the same btn host and user
+
+## 0.0.203
+
+- feat: fix carousel slider indicator UI
+
+## 0.0.202
+
+- feat: apply review fixes
+  - update product carousel image slide duration to 5s
+
+## 0.0.201
+
 - feat: scaffold new profile items
   - add new profile items
   - setup switching to hosting banner
