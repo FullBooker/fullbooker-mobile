@@ -573,3 +573,5 @@ const String changePasswordCopy = 'Update your password';
 const String noCategoriesFound = 'No categories found';
 const String noCategoriesFoundCopy =
     'Try again later or adjust your filters to see more options.';
+
+const String completeSetup = 'Complete Setup';
