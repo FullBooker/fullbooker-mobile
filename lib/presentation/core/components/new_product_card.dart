@@ -188,6 +188,7 @@ class NewProductCard extends StatelessWidget {
                   else
                     SecondaryButton(
                       onPressed: () {
+                        context.dispatch(SelectProductAction(product: product));
                         navigateToNextProductStep(
                           context: context,
                           product: product,

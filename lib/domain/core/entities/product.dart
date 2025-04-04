@@ -47,6 +47,7 @@ class Product with _$Product {
         image: ProductImage.initial(),
         selectedProductCategory: ProductCategory.initial(),
         selectedProductSubCategory: ProductCategory.initial(),
+        currentLocation: ProductLocation.initial(),
       );
 
   factory Product.fromJson(Map<String, dynamic> json) =>
