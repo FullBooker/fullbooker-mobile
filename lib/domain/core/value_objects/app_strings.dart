@@ -575,3 +575,6 @@ const String noCategoriesFoundCopy =
     'Try again later or adjust your filters to see more options.';
 
 const String completeSetup = 'Complete Setup';
+
+const String createProductError =
+    'Please provide a name, description and a subcategory to continue';
