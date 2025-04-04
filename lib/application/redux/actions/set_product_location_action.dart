@@ -2,16 +2,18 @@ import 'dart:convert';
 
 import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/core/services/i_custom_client.dart';
+import 'package:fullbooker/application/redux/actions/select_product_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/core/common/constants.dart';
+import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
 
-class VerifyOTPAction extends ReduxAction<AppState> {
-  VerifyOTPAction({
+class SetProductLocationAction extends ReduxAction<AppState> {
+  SetProductLocationAction({
     this.onSuccess,
     this.onError,
     required this.client,
@@ -23,24 +25,30 @@ class VerifyOTPAction extends ReduxAction<AppState> {
 
   @override
   Future<AppState?> reduce() async {
-    final String resetEmailAddress =
-        state.onboardingState?.resetEmailAddress ?? '';
-    final String otp = state.onboardingState?.resetPasswordOTP ?? '';
+    final String productID = state.hostState?.currentProduct?.id ?? UNKNOWN;
+    final String lat =
+        state.hostState?.currentProduct?.locations?.first.lat ?? UNKNOWN;
+    final String long =
+        state.hostState?.currentProduct?.locations?.first.long ?? UNKNOWN;
+    final String address =
+        state.hostState?.currentProduct?.locations?.first.address ?? UNKNOWN;
 
-    final bool isOTPEmpty = otp.isEmpty || otp == UNKNOWN;
-
-    if (isOTPEmpty) {
-      return onError?.call(otpEmptyPrompt);
+    if (productID == UNKNOWN ||
+        lat == UNKNOWN ||
+        long == UNKNOWN ||
+        productID == UNKNOWN) {
+      return onError?.call(addLocationError);
     }
 
     final Map<String, String> data = <String, String>{
-      'identifier': resetEmailAddress,
-      'otp': otp,
+      'product': productID,
+      'lat': lat,
+      'long': long,
+      'address': address,
     };
 
     final Response httpResponse = await client.callRESTAPI(
-      endpoint: GetIt.I.get<AppConfig>().verifyOTPEndpoint,
-      authenticated: false,
+      endpoint: GetIt.I.get<AppConfig>().productLocationEndpoint,
       method: APIMethods.POST.name.toUpperCase(),
       variables: data,
     );
@@ -54,11 +62,9 @@ class VerifyOTPAction extends ReduxAction<AppState> {
       return onError?.call(error ?? defaultUserFriendlyMessage);
     }
 
-    final bool isOTPVerified = body.containsKey('detail');
+    final Product createdProduct = Product.fromJson(body);
 
-    if (!isOTPVerified) {
-      return onError?.call(errorVerifyingOTP);
-    }
+    dispatch(SelectProductAction(product: createdProduct));
 
     onSuccess?.call();
 

@@ -24,10 +24,8 @@ class FetchProductCategoriesAction extends ReduxAction<AppState> {
 
   @override
   Future<AppState?> reduce() async {
-    final String endpoint = GetIt.I.get<AppConfig>().productCategoriesEndpoint;
-
     final Response httpResponse = await client.callRESTAPI(
-      endpoint: endpoint,
+      endpoint: GetIt.I.get<AppConfig>().productCategoriesEndpoint,
       method: APIMethods.GET.name.toUpperCase(),
     );
 

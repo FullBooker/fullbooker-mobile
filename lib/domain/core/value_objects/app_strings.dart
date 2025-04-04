@@ -578,3 +578,6 @@ const String completeSetup = 'Complete Setup';
 
 const String createProductError =
     'Please provide a name, description and a subcategory to continue';
+
+const String addLocationError =
+    'Please provide a location for your event to continue';

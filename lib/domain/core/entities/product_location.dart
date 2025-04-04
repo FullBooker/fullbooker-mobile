@@ -16,6 +16,10 @@ class ProductLocation with _$ProductLocation {
     @Default(UNKNOWN) String? product,
     @Default(UNKNOWN) String? coordinates,
     @Default(UNKNOWN) String? address,
+
+    // Used during creation
+    @Default(UNKNOWN) String? lat,
+    @Default(UNKNOWN) String? long,
   }) = _ProductLocation;
 
   factory ProductLocation.initial() => ProductLocation();

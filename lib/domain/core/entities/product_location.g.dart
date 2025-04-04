@@ -17,6 +17,8 @@ _$ProductLocationImpl _$$ProductLocationImplFromJson(
       product: json['product'] as String? ?? UNKNOWN,
       coordinates: json['coordinates'] as String? ?? UNKNOWN,
       address: json['address'] as String? ?? UNKNOWN,
+      lat: json['lat'] as String? ?? UNKNOWN,
+      long: json['long'] as String? ?? UNKNOWN,
     );
 
 Map<String, dynamic> _$$ProductLocationImplToJson(
@@ -30,4 +32,6 @@ Map<String, dynamic> _$$ProductLocationImplToJson(
       'product': instance.product,
       'coordinates': instance.coordinates,
       'address': instance.address,
+      'lat': instance.lat,
+      'long': instance.long,
     };

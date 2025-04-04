@@ -29,10 +29,8 @@ class FetchProductsAction extends ReduxAction<AppState> {
       'page_size': 10,
     };
 
-    final String endpoint = GetIt.I.get<AppConfig>().getProductsEndpoint;
-
     final Response httpResponse = await client.callRESTAPI(
-      endpoint: endpoint,
+      endpoint: GetIt.I.get<AppConfig>().getProductsEndpoint,
       method: APIMethods.GET.name.toUpperCase(),
       variables: data,
     );
