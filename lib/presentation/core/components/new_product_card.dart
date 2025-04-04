@@ -8,8 +8,8 @@ import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
+import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_badge_widget.dart';
-import 'package:fullbooker/shared/entities/data_mocks.dart';
 import 'package:dartz/dartz.dart' as d;
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
 import 'package:heroicons/heroicons.dart';
@@ -24,10 +24,12 @@ class NewProductCard extends StatelessWidget {
     final bool complete = product.completed ?? false;
 
     return GestureDetector(
-      onTap: () {
-        context.dispatch(SelectProductAction(product: product));
-        context.router.push(ProductDetailRoute());
-      },
+      onTap: complete
+          ? () {
+              context.dispatch(SelectProductAction(product: product));
+              context.router.push(ProductDetailRoute());
+            }
+          : null,
       child: Container(
         decoration: BoxDecoration(
           color: Theme.of(context).cardColor,
@@ -46,12 +48,22 @@ class NewProductCard extends StatelessWidget {
             // Image + Category
             Stack(
               children: <Widget>[
+                if (product.image?.file != null)
+                  ClipRRect(
+                    borderRadius:
+                        const BorderRadius.vertical(top: Radius.circular(12)),
+                    child: CachedNetworkImage(
+                      imageUrl: product.image?.file ?? '',
+                      height: MediaQuery.of(context).size.height * .2,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ClipRRect(
                   borderRadius:
                       const BorderRadius.vertical(top: Radius.circular(12)),
-                  child: CachedNetworkImage(
-                    imageUrl:
-                        product.image?.file ?? mockProductSetupImageURLs.first,
+                  child: Image.asset(
+                    productImageZeroState,
                     height: MediaQuery.of(context).size.height * .2,
                     width: double.infinity,
                     fit: BoxFit.cover,
