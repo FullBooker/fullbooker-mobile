@@ -24,8 +24,7 @@ const String appOverView2ImagePath = 'assets/images/overview_2.png';
 const String appOverView3ImagePath = 'assets/images/overview_3.png';
 
 // Zero state image
-const String productImageZeroState =
-    'assets/images/default_zero_state_image.png';
+const String productImageZeroState = 'assets/images/default_product_image.png';
 
 // SVGs
 const String googleIconSVGPath = 'assets/icons/google_icon.svg';

@@ -38,6 +38,7 @@ class Product with _$Product {
     /// Temp values used to create the product
     ProductCategory? selectedProductCategory,
     ProductCategory? selectedProductSubCategory,
+    ProductLocation? currentLocation,
   }) = _Product;
 
   factory Product.initial() => Product(
