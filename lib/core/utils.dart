@@ -4,8 +4,10 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fullbooker/config/environments.dart';
+import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
+import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
@@ -297,4 +299,47 @@ Widget formatTime({
           fontStyle: FontStyle.italic,
         ),
   );
+}
+
+void navigateToNextProductStep(BuildContext context, Product product) {
+  if (product.completed ?? false) {
+    context.router.push(const ProductDetailRoute());
+  }
+
+  if ((product.name?.isEmpty ?? true) ||
+      (product.description?.isEmpty ?? true)) {
+    context.router.push(const ProductBasicDetailsRoute());
+    return;
+  }
+
+  if (product.locations == null || product.locations!.isEmpty) {
+    context.router.push(const ProductLocationRoute());
+    return;
+  }
+
+  final bool hasAvailability = product.availability != null &&
+      (product.availability?.start?.isNotEmpty ?? false) &&
+      (product.availability?.end?.isNotEmpty ?? false);
+
+  if (!hasAvailability) {
+    context.router.push(const ProductDateTimeRoute());
+    return;
+  }
+
+  if (product.image == null ||
+      product.image?.file == null ||
+      product.image?.file == UNKNOWN) {
+    context.router.push(const ProductPhotosRoute());
+    return;
+  }
+
+  if (product.pricing == null || product.pricing!.isEmpty) {
+    context.router.push(const ProductPricingRoute());
+    return;
+  }
+
+  if (product.completed != true) {
+    context.router.push(const ProductReviewAndPublishRoute());
+    return;
+  }
 }
