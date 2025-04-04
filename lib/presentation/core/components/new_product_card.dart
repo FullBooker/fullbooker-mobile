@@ -19,6 +19,8 @@ class NewProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool complete = product.completed ?? false;
+
     return GestureDetector(
       onTap: () {
         context.dispatch(SelectProductAction(product: product));
@@ -81,9 +83,13 @@ class NewProductCard extends StatelessWidget {
                         ),
                       ),
                       CustomBadgeWidget(
-                        text: publishedString,
-                        backgroundColor: AppColors.greenColor,
-                        textColor: AppColors.greenColor,
+                        text: complete ? publishedString : draftString,
+                        backgroundColor: complete
+                            ? AppColors.greenColor
+                            : AppColors.greyTextColor,
+                        textColor: complete
+                            ? AppColors.greenColor
+                            : AppColors.greyTextColor,
                       ),
                     ],
                   ),
@@ -92,72 +98,75 @@ class NewProductCard extends StatelessWidget {
                     spacing: 12,
                     children: <Widget>[
                       // Location
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        spacing: 4,
-                        children: <Widget>[
-                          HeroIcon(
-                            HeroIcons.mapPin,
-                            color: Colors.grey,
-                            size: 20,
-                          ),
-                          Text(
-                            product.locations?.first.address ?? '',
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                        ],
-                      ),
+                      if (product.locations?.isNotEmpty ?? false)
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          spacing: 4,
+                          children: <Widget>[
+                            HeroIcon(
+                              HeroIcons.mapPin,
+                              color: Colors.grey,
+                              size: 20,
+                            ),
+                            Text(
+                              product.locations?.first.address ?? '',
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                          ],
+                        ),
                       // Date
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        spacing: 4,
-                        children: <Widget>[
-                          HeroIcon(
-                            HeroIcons.calendar,
-                            color: Colors.grey,
-                            size: 20,
-                          ),
-                          humanizeDate(
-                            loadedDate: product.availability?.start ?? '',
-                            dateTextStyle:
-                                Theme.of(context).textTheme.bodyMedium,
-                          ),
-                          Text(
-                            to,
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                          humanizeDate(
-                            loadedDate: product.availability?.end ?? '',
-                            dateTextStyle:
-                                Theme.of(context).textTheme.bodyMedium,
-                          ),
-                        ],
-                      ),
+                      if (product.availability != null)
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          spacing: 4,
+                          children: <Widget>[
+                            HeroIcon(
+                              HeroIcons.calendar,
+                              color: Colors.grey,
+                              size: 20,
+                            ),
+                            humanizeDate(
+                              loadedDate: product.availability?.start ?? '',
+                              dateTextStyle:
+                                  Theme.of(context).textTheme.bodyMedium,
+                            ),
+                            Text(
+                              to,
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                            humanizeDate(
+                              loadedDate: product.availability?.end ?? '',
+                              dateTextStyle:
+                                  Theme.of(context).textTheme.bodyMedium,
+                            ),
+                          ],
+                        ),
 
                       // Time
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        spacing: 4,
-                        children: <Widget>[
-                          HeroIcon(
-                            HeroIcons.clock,
-                            color: Colors.grey,
-                            size: 20,
-                          ),
-                          formatTime(
-                            rawTime: product.availability?.startTime,
-                            textStyle: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                          Text(
-                            to,
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                          formatTime(
-                            rawTime: product.availability?.endTime,
-                            textStyle: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                        ],
-                      ),
+                      if (product.availability != null)
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          spacing: 4,
+                          children: <Widget>[
+                            HeroIcon(
+                              HeroIcons.clock,
+                              color: Colors.grey,
+                              size: 20,
+                            ),
+                            formatTime(
+                              rawTime: product.availability?.startTime,
+                              textStyle: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                            Text(
+                              to,
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                            formatTime(
+                              rawTime: product.availability?.endTime,
+                              textStyle: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                          ],
+                        ),
                     ],
                   ),
                 ],

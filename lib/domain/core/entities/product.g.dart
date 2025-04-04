@@ -36,6 +36,7 @@ _$ProductImpl _$$ProductImplFromJson(Map<String, dynamic> json) =>
               ?.map((e) => ProductLocation.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const <ProductLocation>[],
+      completed: json['completed'] as bool? ?? false,
       selectedProductCategory: json['selectedProductCategory'] == null
           ? null
           : ProductCategory.fromJson(
@@ -63,6 +64,7 @@ Map<String, dynamic> _$$ProductImplToJson(_$ProductImpl instance) =>
       'image': instance.image?.toJson(),
       'video': instance.video,
       'locations': instance.locations?.map((e) => e.toJson()).toList(),
+      'completed': instance.completed,
       'selectedProductCategory': instance.selectedProductCategory?.toJson(),
       'selectedProductSubCategory':
           instance.selectedProductSubCategory?.toJson(),

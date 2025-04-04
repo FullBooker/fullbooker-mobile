@@ -558,6 +558,7 @@ const String payments = 'Payments';
 const String deactivateProduct = 'Deactivate Product';
 
 const String publishedString = 'Published';
+const String draftString = 'Draft';
 
 const String switchToHosting = 'Switch To Hosting';
 const String switchToHostingCopy =
