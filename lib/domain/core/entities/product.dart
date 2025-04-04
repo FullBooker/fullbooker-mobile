@@ -33,6 +33,7 @@ class Product with _$Product {
     @Default(<ProductLocation>[])
     @JsonKey(name: 'locations')
     List<ProductLocation>? locations,
+    @Default(false) bool? completed,
 
     /// Temp values used to create the product
     ProductCategory? selectedProductCategory,

@@ -20,16 +20,16 @@ ProductLocation _$ProductLocationFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ProductLocation {
-  String get id => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_at')
-  String get createdAt => throw _privateConstructorUsedError;
+  String? get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'updated_at')
-  String get updatedAt => throw _privateConstructorUsedError;
-  bool get active => throw _privateConstructorUsedError;
-  String get host => throw _privateConstructorUsedError;
-  String get product => throw _privateConstructorUsedError;
-  String get coordinates => throw _privateConstructorUsedError;
-  String get address => throw _privateConstructorUsedError;
+  String? get updatedAt => throw _privateConstructorUsedError;
+  bool? get active => throw _privateConstructorUsedError;
+  String? get host => throw _privateConstructorUsedError;
+  String? get product => throw _privateConstructorUsedError;
+  String? get coordinates => throw _privateConstructorUsedError;
+  String? get address => throw _privateConstructorUsedError;
 
   /// Serializes this ProductLocation to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -48,14 +48,14 @@ abstract class $ProductLocationCopyWith<$Res> {
       _$ProductLocationCopyWithImpl<$Res, ProductLocation>;
   @useResult
   $Res call(
-      {String id,
-      @JsonKey(name: 'created_at') String createdAt,
-      @JsonKey(name: 'updated_at') String updatedAt,
-      bool active,
-      String host,
-      String product,
-      String coordinates,
-      String address});
+      {String? id,
+      @JsonKey(name: 'created_at') String? createdAt,
+      @JsonKey(name: 'updated_at') String? updatedAt,
+      bool? active,
+      String? host,
+      String? product,
+      String? coordinates,
+      String? address});
 }
 
 /// @nodoc
@@ -73,48 +73,48 @@ class _$ProductLocationCopyWithImpl<$Res, $Val extends ProductLocation>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? createdAt = null,
-    Object? updatedAt = null,
-    Object? active = null,
-    Object? host = null,
-    Object? product = null,
-    Object? coordinates = null,
-    Object? address = null,
+    Object? id = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+    Object? active = freezed,
+    Object? host = freezed,
+    Object? product = freezed,
+    Object? coordinates = freezed,
+    Object? address = freezed,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      createdAt: null == createdAt
+              as String?,
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as String,
-      updatedAt: null == updatedAt
+              as String?,
+      updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
-              as String,
-      active: null == active
+              as String?,
+      active: freezed == active
           ? _value.active
           : active // ignore: cast_nullable_to_non_nullable
-              as bool,
-      host: null == host
+              as bool?,
+      host: freezed == host
           ? _value.host
           : host // ignore: cast_nullable_to_non_nullable
-              as String,
-      product: null == product
+              as String?,
+      product: freezed == product
           ? _value.product
           : product // ignore: cast_nullable_to_non_nullable
-              as String,
-      coordinates: null == coordinates
+              as String?,
+      coordinates: freezed == coordinates
           ? _value.coordinates
           : coordinates // ignore: cast_nullable_to_non_nullable
-              as String,
-      address: null == address
+              as String?,
+      address: freezed == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -128,14 +128,14 @@ abstract class _$$ProductLocationImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String id,
-      @JsonKey(name: 'created_at') String createdAt,
-      @JsonKey(name: 'updated_at') String updatedAt,
-      bool active,
-      String host,
-      String product,
-      String coordinates,
-      String address});
+      {String? id,
+      @JsonKey(name: 'created_at') String? createdAt,
+      @JsonKey(name: 'updated_at') String? updatedAt,
+      bool? active,
+      String? host,
+      String? product,
+      String? coordinates,
+      String? address});
 }
 
 /// @nodoc
@@ -151,48 +151,48 @@ class __$$ProductLocationImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? createdAt = null,
-    Object? updatedAt = null,
-    Object? active = null,
-    Object? host = null,
-    Object? product = null,
-    Object? coordinates = null,
-    Object? address = null,
+    Object? id = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+    Object? active = freezed,
+    Object? host = freezed,
+    Object? product = freezed,
+    Object? coordinates = freezed,
+    Object? address = freezed,
   }) {
     return _then(_$ProductLocationImpl(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      createdAt: null == createdAt
+              as String?,
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as String,
-      updatedAt: null == updatedAt
+              as String?,
+      updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
-              as String,
-      active: null == active
+              as String?,
+      active: freezed == active
           ? _value.active
           : active // ignore: cast_nullable_to_non_nullable
-              as bool,
-      host: null == host
+              as bool?,
+      host: freezed == host
           ? _value.host
           : host // ignore: cast_nullable_to_non_nullable
-              as String,
-      product: null == product
+              as String?,
+      product: freezed == product
           ? _value.product
           : product // ignore: cast_nullable_to_non_nullable
-              as String,
-      coordinates: null == coordinates
+              as String?,
+      coordinates: freezed == coordinates
           ? _value.coordinates
           : coordinates // ignore: cast_nullable_to_non_nullable
-              as String,
-      address: null == address
+              as String?,
+      address: freezed == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -216,28 +216,28 @@ class _$ProductLocationImpl implements _ProductLocation {
 
   @override
   @JsonKey()
-  final String id;
+  final String? id;
   @override
   @JsonKey(name: 'created_at')
-  final String createdAt;
+  final String? createdAt;
   @override
   @JsonKey(name: 'updated_at')
-  final String updatedAt;
+  final String? updatedAt;
   @override
   @JsonKey()
-  final bool active;
+  final bool? active;
   @override
   @JsonKey()
-  final String host;
+  final String? host;
   @override
   @JsonKey()
-  final String product;
+  final String? product;
   @override
   @JsonKey()
-  final String coordinates;
+  final String? coordinates;
   @override
   @JsonKey()
-  final String address;
+  final String? address;
 
   @override
   String toString() {
@@ -286,36 +286,36 @@ class _$ProductLocationImpl implements _ProductLocation {
 
 abstract class _ProductLocation implements ProductLocation {
   factory _ProductLocation(
-      {final String id,
-      @JsonKey(name: 'created_at') final String createdAt,
-      @JsonKey(name: 'updated_at') final String updatedAt,
-      final bool active,
-      final String host,
-      final String product,
-      final String coordinates,
-      final String address}) = _$ProductLocationImpl;
+      {final String? id,
+      @JsonKey(name: 'created_at') final String? createdAt,
+      @JsonKey(name: 'updated_at') final String? updatedAt,
+      final bool? active,
+      final String? host,
+      final String? product,
+      final String? coordinates,
+      final String? address}) = _$ProductLocationImpl;
 
   factory _ProductLocation.fromJson(Map<String, dynamic> json) =
       _$ProductLocationImpl.fromJson;
 
   @override
-  String get id;
+  String? get id;
   @override
   @JsonKey(name: 'created_at')
-  String get createdAt;
+  String? get createdAt;
   @override
   @JsonKey(name: 'updated_at')
-  String get updatedAt;
+  String? get updatedAt;
   @override
-  bool get active;
+  bool? get active;
   @override
-  String get host;
+  String? get host;
   @override
-  String get product;
+  String? get product;
   @override
-  String get coordinates;
+  String? get coordinates;
   @override
-  String get address;
+  String? get address;
 
   /// Create a copy of ProductLocation
   /// with the given fields replaced by the non-null parameter values.

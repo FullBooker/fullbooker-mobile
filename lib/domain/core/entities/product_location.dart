@@ -8,14 +8,14 @@ part 'product_location.g.dart';
 class ProductLocation with _$ProductLocation {
   @JsonSerializable(explicitToJson: true)
   factory ProductLocation({
-    @Default(UNKNOWN) String id,
-    @JsonKey(name: 'created_at') @Default(UNKNOWN) String createdAt,
-    @JsonKey(name: 'updated_at') @Default(UNKNOWN) String updatedAt,
-    @Default(false) bool active,
-    @Default(UNKNOWN) String host,
-    @Default(UNKNOWN) String product,
-    @Default(UNKNOWN) String coordinates,
-    @Default(UNKNOWN) String address,
+    @Default(UNKNOWN) String? id,
+    @JsonKey(name: 'created_at') @Default(UNKNOWN) String? createdAt,
+    @JsonKey(name: 'updated_at') @Default(UNKNOWN) String? updatedAt,
+    @Default(false) bool? active,
+    @Default(UNKNOWN) String? host,
+    @Default(UNKNOWN) String? product,
+    @Default(UNKNOWN) String? coordinates,
+    @Default(UNKNOWN) String? address,
   }) = _ProductLocation;
 
   factory ProductLocation.initial() => ProductLocation();
