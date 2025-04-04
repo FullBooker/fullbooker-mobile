@@ -1,7 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
-import 'package:fullbooker/application/redux/actions/set_product_location_action.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
@@ -222,6 +220,14 @@ class _NewChooseLocationPageState extends State<NewChooseLocationPage> {
                 ),
                 PrimaryButton(
                   onPressed: () {
+                    context.dispatch(
+                      UpdateCurrentProductAction(
+                        lat: selectedLatLng.latitude.toString(),
+                        long: selectedLatLng.longitude.toString(),
+                        address: selectedAddress,
+                        city: selectedCity,
+                      ),
+                    );
                     context.router.push(ProductLocationRoute());
                   },
                   child: d.right(continueString),

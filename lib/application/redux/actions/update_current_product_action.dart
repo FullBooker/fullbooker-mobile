@@ -11,6 +11,7 @@ class UpdateCurrentProductAction extends ReduxAction<AppState> {
     this.lat,
     this.long,
     this.address,
+    this.city,
   });
 
   final ProductCategory? selectedCategory;
@@ -21,6 +22,7 @@ class UpdateCurrentProductAction extends ReduxAction<AppState> {
   final String? lat;
   final String? long;
   final String? address;
+  final String? city;
 
   @override
   AppState? reduce() {
@@ -37,6 +39,7 @@ class UpdateCurrentProductAction extends ReduxAction<AppState> {
         long: long ?? state.hostState?.currentProduct?.currentLocation?.long,
         address: address ??
             state.hostState?.currentProduct?.currentLocation?.address,
+        city: city ?? state.hostState?.currentProduct?.currentLocation?.city,
       ),
     );
 

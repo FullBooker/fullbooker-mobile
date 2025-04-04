@@ -23,15 +23,14 @@ class SetupSummaryItem extends StatelessWidget {
           padding: EdgeInsets.all(16),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
-            color: Theme.of(context).primaryColor.withValues(alpha: .1),
+            border: Border.all(
+              color: Theme.of(context).dividerColor,
+            ),
           ),
           child: Center(
             child: Text(
               stepNumber.toString(),
-              style: Theme.of(context)
-                  .textTheme
-                  .titleLarge
-                  ?.copyWith(color: Theme.of(context).primaryColor),
+              style: Theme.of(context).textTheme.titleMedium,
             ),
           ),
         ),
