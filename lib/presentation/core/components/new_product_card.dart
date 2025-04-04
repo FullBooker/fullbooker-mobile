@@ -10,6 +10,8 @@ import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/presentation/core/components/custom_badge_widget.dart';
 import 'package:fullbooker/shared/entities/data_mocks.dart';
+import 'package:dartz/dartz.dart' as d;
+import 'package:fullbooker/shared/widgets/secondary_button.dart';
 import 'package:heroicons/heroicons.dart';
 
 class NewProductCard extends StatelessWidget {
@@ -74,7 +76,6 @@ class NewProductCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Expanded(
                         child: Text(
@@ -93,82 +94,98 @@ class NewProductCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Wrap(
-                    runSpacing: 12,
-                    spacing: 12,
-                    children: <Widget>[
-                      // Location
-                      if (product.locations?.isNotEmpty ?? false)
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          spacing: 4,
-                          children: <Widget>[
-                            HeroIcon(
-                              HeroIcons.mapPin,
-                              color: Colors.grey,
-                              size: 20,
-                            ),
-                            Text(
-                              product.locations?.first.address ?? '',
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                          ],
-                        ),
-                      // Date
-                      if (product.availability != null)
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          spacing: 4,
-                          children: <Widget>[
-                            HeroIcon(
-                              HeroIcons.calendar,
-                              color: Colors.grey,
-                              size: 20,
-                            ),
-                            humanizeDate(
-                              loadedDate: product.availability?.start ?? '',
-                              dateTextStyle:
-                                  Theme.of(context).textTheme.bodyMedium,
-                            ),
-                            Text(
-                              to,
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                            humanizeDate(
-                              loadedDate: product.availability?.end ?? '',
-                              dateTextStyle:
-                                  Theme.of(context).textTheme.bodyMedium,
-                            ),
-                          ],
-                        ),
+                  if (complete)
+                    Wrap(
+                      runSpacing: 12,
+                      spacing: 12,
+                      children: <Widget>[
+                        // Location
+                        if (product.locations?.isNotEmpty ?? false)
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            spacing: 4,
+                            children: <Widget>[
+                              HeroIcon(
+                                HeroIcons.mapPin,
+                                color: Colors.grey,
+                                size: 20,
+                              ),
+                              Text(
+                                product.locations?.first.address ?? '',
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              ),
+                            ],
+                          ),
+                        // Date
+                        if (product.availability != null)
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            spacing: 4,
+                            children: <Widget>[
+                              HeroIcon(
+                                HeroIcons.calendar,
+                                color: Colors.grey,
+                                size: 20,
+                              ),
+                              humanizeDate(
+                                loadedDate: product.availability?.start ?? '',
+                                dateTextStyle:
+                                    Theme.of(context).textTheme.bodyMedium,
+                              ),
+                              Text(
+                                to,
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              ),
+                              humanizeDate(
+                                loadedDate: product.availability?.end ?? '',
+                                dateTextStyle:
+                                    Theme.of(context).textTheme.bodyMedium,
+                              ),
+                            ],
+                          ),
 
-                      // Time
-                      if (product.availability != null)
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          spacing: 4,
-                          children: <Widget>[
-                            HeroIcon(
-                              HeroIcons.clock,
-                              color: Colors.grey,
-                              size: 20,
+                        // Time
+                        if (product.availability != null)
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            spacing: 4,
+                            children: <Widget>[
+                              HeroIcon(
+                                HeroIcons.clock,
+                                color: Colors.grey,
+                                size: 20,
+                              ),
+                              formatTime(
+                                rawTime: product.availability?.startTime,
+                                textStyle:
+                                    Theme.of(context).textTheme.bodyMedium,
+                              ),
+                              Text(
+                                to,
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              ),
+                              formatTime(
+                                rawTime: product.availability?.endTime,
+                                textStyle:
+                                    Theme.of(context).textTheme.bodyMedium,
+                              ),
+                            ],
+                          ),
+                      ],
+                    )
+                  else
+                    SecondaryButton(
+                      onPressed: () {
+                        ScaffoldMessenger.of(context)
+                          ..hideCurrentSnackBar()
+                          ..showSnackBar(
+                            const SnackBar(
+                              content: Text(comingSoonTitle),
                             ),
-                            formatTime(
-                              rawTime: product.availability?.startTime,
-                              textStyle: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                            Text(
-                              to,
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                            formatTime(
-                              rawTime: product.availability?.endTime,
-                              textStyle: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                          ],
-                        ),
-                    ],
-                  ),
+                          );
+                      },
+                      child: d.right(completeSetup),
+                    ),
                 ],
               ),
             ),
