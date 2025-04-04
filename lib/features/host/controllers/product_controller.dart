@@ -22,25 +22,7 @@ class ProductController extends BaseViewModel<OldProduct> {
   set repository(CRUDRepository<OldProduct> repository) =>
       _repository = repository;
 
-  Future<OldProduct?> createProduct(
-    String name,
-    String? description,
-    String subcategory,
-  ) async {
-    final Map<String, String> productData = <String, String>{
-      'name': name,
-      'subcategory': subcategory,
-    };
-    if (description != null) productData['description'] = description;
-    try {
-      repository.post(<String, Object?>{}, kDevHostsEndpoint);
-      final dynamic response = await repository
-          .post(productData, kDevProductsEndpoint, serialize: true);
-      return response as OldProduct;
-    } catch (exception) {
-      return null;
-    }
-  }
+  
 
   Future<Map<String, Object?>?> createLocation(
     String product,
