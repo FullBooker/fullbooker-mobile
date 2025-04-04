@@ -11,7 +11,6 @@ import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/event_creation_steps.dart';
 import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
-import 'package:fullbooker/shared/widgets/old_buttons.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
 
 @RoutePage()
@@ -51,7 +50,6 @@ class _EventsSummaryPageState extends State<EventsSummaryPage> {
 
   @override
   Widget build(BuildContext context) {
-    final double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: const ProductSetupNavBar(),
       bottomNavigationBar: const OldBottomNavBar(),
@@ -74,19 +72,6 @@ class _EventsSummaryPageState extends State<EventsSummaryPage> {
                           child: EventCreationStep(step),
                         ),
                     ],
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: width / 8,
-                      vertical: 30,
-                    ),
-                    child: OldButton(
-                      () => context.router.push(CategorySelectionRoute()),
-                      actionLabel: continueString,
-                    ),
                   ),
                 ),
               ],

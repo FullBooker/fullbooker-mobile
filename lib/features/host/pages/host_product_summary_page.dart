@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/features/host/controllers/product_controller.dart';
 import 'package:fullbooker/features/host/models/old_product.dart';
@@ -9,7 +8,6 @@ import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
-import 'package:fullbooker/shared/widgets/old_buttons.dart';
 
 @RoutePage()
 class HostProductSummaryPage extends StatefulWidget {
@@ -106,17 +104,6 @@ class _HostProductSummaryPageState extends State<HostProductSummaryPage> {
                   ),
                 ),
               ],
-            ),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding:
-                  EdgeInsets.symmetric(horizontal: width / 8, vertical: 30),
-              child: OldButton(
-                () => context.router.push(CategorySelectionRoute()),
-                actionLabel: newProductString,
-              ),
             ),
           ),
         ],
