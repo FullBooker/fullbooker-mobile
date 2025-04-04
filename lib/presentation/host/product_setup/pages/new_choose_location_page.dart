@@ -1,5 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
+import 'package:fullbooker/application/redux/actions/set_product_location_action.dart';
+import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/infrastructure/location/location_handler.dart';
@@ -12,6 +15,8 @@ import 'package:dartz/dartz.dart' as d;
 import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:async_redux/async_redux.dart';
+import 'package:fullbooker/application/redux/actions/update_current_product_action.dart';
 
 @RoutePage()
 class NewChooseLocationPage extends StatefulWidget {
@@ -76,23 +81,18 @@ class _NewChooseLocationPageState extends State<NewChooseLocationPage> {
         _showSearchResults = false;
       });
 
+      context.dispatch(
+        UpdateCurrentProductAction(
+          lat: latLng.latitude.toString(),
+          long: latLng.longitude.toString(),
+          address: selectedAddress,
+        ),
+      );
+
       await _mapController.animateCamera(
         CameraUpdate.newLatLng(latLng),
       );
     }
-  }
-
-  Future<void> _onMapTapped(LatLng latLng) async {
-    final Map<String, dynamic>? result =
-        await LocationHandler.reverseGeocode(latLng);
-    setState(() {
-      selectedLatLng = latLng;
-      selectedAddress = result?['address_components']?.first['long_name'] ??
-          'Selected location';
-      selectedCity = result?['formatted_address'] ??
-          '${latLng.latitude.toStringAsFixed(5)}, ${latLng.longitude.toStringAsFixed(5)}';
-      _showSearchResults = false;
-    });
   }
 
   @override
@@ -155,7 +155,30 @@ class _NewChooseLocationPageState extends State<NewChooseLocationPage> {
               myLocationEnabled: true,
               onMapCreated: (GoogleMapController controller) =>
                   _mapController = controller,
-              onTap: _onMapTapped,
+              onTap: (LatLng latLng) async {
+                final Map<String, dynamic>? result =
+                    await LocationHandler.reverseGeocode(latLng);
+                final String address =
+                    result?['address_components']?.first['long_name'] ??
+                        'Selected location';
+                final String city = result?['formatted_address'] ??
+                    '${latLng.latitude.toStringAsFixed(5)}, ${latLng.longitude.toStringAsFixed(5)}';
+
+                setState(() {
+                  selectedLatLng = latLng;
+                  selectedAddress = address;
+                  selectedCity = city;
+                  _showSearchResults = false;
+                });
+
+                context.dispatch(
+                  UpdateCurrentProductAction(
+                    lat: latLng.latitude.toString(),
+                    long: latLng.longitude.toString(),
+                    address: address,
+                  ),
+                );
+              },
               markers: <Marker>{
                 Marker(
                   markerId: const MarkerId('selected'),
@@ -199,7 +222,7 @@ class _NewChooseLocationPageState extends State<NewChooseLocationPage> {
                 ),
                 PrimaryButton(
                   onPressed: () {
-                    // TODO(abiud): set the location and pop
+                    context.router.push(ProductLocationRoute());
                   },
                   child: d.right(continueString),
                 ),

@@ -106,7 +106,10 @@ class HostingHomePage extends StatelessWidget {
                   itemBuilder: (BuildContext context, int index) {
                     final Product product = products![index];
 
-                    return NewProductCard(product: product);
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      child: NewProductCard(product: product),
+                    );
                   },
                 );
               },
