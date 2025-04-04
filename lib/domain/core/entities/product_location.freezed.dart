@@ -29,7 +29,10 @@ mixin _$ProductLocation {
   String? get host => throw _privateConstructorUsedError;
   String? get product => throw _privateConstructorUsedError;
   String? get coordinates => throw _privateConstructorUsedError;
-  String? get address => throw _privateConstructorUsedError;
+  String? get address =>
+      throw _privateConstructorUsedError; // Used during creation
+  String? get lat => throw _privateConstructorUsedError;
+  String? get long => throw _privateConstructorUsedError;
 
   /// Serializes this ProductLocation to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -55,7 +58,9 @@ abstract class $ProductLocationCopyWith<$Res> {
       String? host,
       String? product,
       String? coordinates,
-      String? address});
+      String? address,
+      String? lat,
+      String? long});
 }
 
 /// @nodoc
@@ -81,6 +86,8 @@ class _$ProductLocationCopyWithImpl<$Res, $Val extends ProductLocation>
     Object? product = freezed,
     Object? coordinates = freezed,
     Object? address = freezed,
+    Object? lat = freezed,
+    Object? long = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -115,6 +122,14 @@ class _$ProductLocationCopyWithImpl<$Res, $Val extends ProductLocation>
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String?,
+      lat: freezed == lat
+          ? _value.lat
+          : lat // ignore: cast_nullable_to_non_nullable
+              as String?,
+      long: freezed == long
+          ? _value.long
+          : long // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -135,7 +150,9 @@ abstract class _$$ProductLocationImplCopyWith<$Res>
       String? host,
       String? product,
       String? coordinates,
-      String? address});
+      String? address,
+      String? lat,
+      String? long});
 }
 
 /// @nodoc
@@ -159,6 +176,8 @@ class __$$ProductLocationImplCopyWithImpl<$Res>
     Object? product = freezed,
     Object? coordinates = freezed,
     Object? address = freezed,
+    Object? lat = freezed,
+    Object? long = freezed,
   }) {
     return _then(_$ProductLocationImpl(
       id: freezed == id
@@ -193,6 +212,14 @@ class __$$ProductLocationImplCopyWithImpl<$Res>
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String?,
+      lat: freezed == lat
+          ? _value.lat
+          : lat // ignore: cast_nullable_to_non_nullable
+              as String?,
+      long: freezed == long
+          ? _value.long
+          : long // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -209,7 +236,9 @@ class _$ProductLocationImpl implements _ProductLocation {
       this.host = UNKNOWN,
       this.product = UNKNOWN,
       this.coordinates = UNKNOWN,
-      this.address = UNKNOWN});
+      this.address = UNKNOWN,
+      this.lat = UNKNOWN,
+      this.long = UNKNOWN});
 
   factory _$ProductLocationImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProductLocationImplFromJson(json);
@@ -238,10 +267,17 @@ class _$ProductLocationImpl implements _ProductLocation {
   @override
   @JsonKey()
   final String? address;
+// Used during creation
+  @override
+  @JsonKey()
+  final String? lat;
+  @override
+  @JsonKey()
+  final String? long;
 
   @override
   String toString() {
-    return 'ProductLocation(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, active: $active, host: $host, product: $product, coordinates: $coordinates, address: $address)';
+    return 'ProductLocation(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, active: $active, host: $host, product: $product, coordinates: $coordinates, address: $address, lat: $lat, long: $long)';
   }
 
   @override
@@ -259,13 +295,15 @@ class _$ProductLocationImpl implements _ProductLocation {
             (identical(other.product, product) || other.product == product) &&
             (identical(other.coordinates, coordinates) ||
                 other.coordinates == coordinates) &&
-            (identical(other.address, address) || other.address == address));
+            (identical(other.address, address) || other.address == address) &&
+            (identical(other.lat, lat) || other.lat == lat) &&
+            (identical(other.long, long) || other.long == long));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, createdAt, updatedAt, active,
-      host, product, coordinates, address);
+      host, product, coordinates, address, lat, long);
 
   /// Create a copy of ProductLocation
   /// with the given fields replaced by the non-null parameter values.
@@ -293,7 +331,9 @@ abstract class _ProductLocation implements ProductLocation {
       final String? host,
       final String? product,
       final String? coordinates,
-      final String? address}) = _$ProductLocationImpl;
+      final String? address,
+      final String? lat,
+      final String? long}) = _$ProductLocationImpl;
 
   factory _ProductLocation.fromJson(Map<String, dynamic> json) =
       _$ProductLocationImpl.fromJson;
@@ -315,7 +355,11 @@ abstract class _ProductLocation implements ProductLocation {
   @override
   String? get coordinates;
   @override
-  String? get address;
+  String? get address; // Used during creation
+  @override
+  String? get lat;
+  @override
+  String? get long;
 
   /// Create a copy of ProductLocation
   /// with the given fields replaced by the non-null parameter values.

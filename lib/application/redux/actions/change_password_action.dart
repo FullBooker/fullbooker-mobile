@@ -44,10 +44,8 @@ class ChangePasswordAction extends ReduxAction<AppState> {
       'password': password,
     };
 
-    final String endpoint = GetIt.I.get<AppConfig>().changePasswordEndpoint;
-
     final Response httpResponse = await client.callRESTAPI(
-      endpoint: endpoint,
+      endpoint: GetIt.I.get<AppConfig>().changePasswordEndpoint,
       authenticated: false,
       method: APIMethods.POST.name.toUpperCase(),
       variables: data,

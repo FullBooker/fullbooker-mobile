@@ -25,8 +25,6 @@ class CreateProductAction extends ReduxAction<AppState> {
 
   @override
   Future<AppState?> reduce() async {
-    final String endpoint = GetIt.I.get<AppConfig>().getProductsEndpoint;
-
     final String name = state.hostState?.currentProduct?.name ?? UNKNOWN;
     final String description =
         state.hostState?.currentProduct?.description ?? UNKNOWN;
@@ -45,7 +43,7 @@ class CreateProductAction extends ReduxAction<AppState> {
     };
 
     final Response httpResponse = await client.callRESTAPI(
-      endpoint: endpoint,
+      endpoint: GetIt.I.get<AppConfig>().getProductsEndpoint,
       method: APIMethods.POST.name.toUpperCase(),
       variables: data,
     );

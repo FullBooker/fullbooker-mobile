@@ -24,10 +24,8 @@ class FetchProfileAction extends ReduxAction<AppState> {
 
   @override
   Future<AppState?> reduce() async {
-    final String endpoint = GetIt.I.get<AppConfig>().getProfileEndpoint;
-
     final Response httpResponse = await client.callRESTAPI(
-      endpoint: endpoint,
+      endpoint: GetIt.I.get<AppConfig>().getProfileEndpoint,
       method: APIMethods.GET.name.toUpperCase(),
     );
 

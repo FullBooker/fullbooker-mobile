@@ -1,5 +1,8 @@
+import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
+import 'package:fullbooker/application/redux/actions/set_product_location_action.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
@@ -125,7 +128,14 @@ class _ProductLocationPageState extends State<ProductLocationPage> {
             ),
             PrimaryButton(
               onPressed: () {
-                context.router.push(ProductDateTimeRoute());
+                context.dispatch(
+                  SetProductLocationAction(
+                    onSuccess: () {
+                      context.router.push(ProductDateTimeRoute());
+                    },
+                    client: AppWrapperBase.of(context)!.customClient,
+                  ),
+                );
               },
               child: d.right(continueString),
             ),
