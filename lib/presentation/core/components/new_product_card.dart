@@ -188,13 +188,10 @@ class NewProductCard extends StatelessWidget {
                   else
                     SecondaryButton(
                       onPressed: () {
-                        ScaffoldMessenger.of(context)
-                          ..hideCurrentSnackBar()
-                          ..showSnackBar(
-                            const SnackBar(
-                              content: Text(comingSoonTitle),
-                            ),
-                          );
+                        navigateToNextProductStep(
+                          context: context,
+                          product: product,
+                        );
                       },
                       child: d.right(completeSetup),
                     ),

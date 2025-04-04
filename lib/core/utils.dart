@@ -301,7 +301,7 @@ Widget formatTime({
   );
 }
 
-void navigateToNextProductStep(BuildContext context, Product product) {
+void navigateToNextProductStep({required BuildContext context,required Product product}) {
   if (product.completed ?? false) {
     context.router.push(const ProductDetailRoute());
   }
