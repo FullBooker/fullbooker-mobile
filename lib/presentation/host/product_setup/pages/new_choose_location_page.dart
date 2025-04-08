@@ -94,6 +94,13 @@ class _NewChooseLocationPageState extends State<NewChooseLocationPage> {
   }
 
   @override
+  void dispose() {
+    _mapController.dispose();
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(showBell: false, title: pickLocation),
@@ -158,7 +165,7 @@ class _NewChooseLocationPageState extends State<NewChooseLocationPage> {
                     await LocationHandler.reverseGeocode(latLng);
                 final String address =
                     result?['address_components']?.first['long_name'] ??
-                        'Selected location';
+                        UNKNOWN;
                 final String city = result?['formatted_address'] ??
                     '${latLng.latitude.toStringAsFixed(5)}, ${latLng.longitude.toStringAsFixed(5)}';
 

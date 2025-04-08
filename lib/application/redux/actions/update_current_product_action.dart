@@ -14,15 +14,14 @@ class UpdateCurrentProductAction extends ReduxAction<AppState> {
     this.city,
   });
 
-  final ProductCategory? selectedCategory;
-  final ProductCategory? selectedSubCategory;
-  final String? name;
-  final String? description;
-
-  final String? lat;
-  final String? long;
   final String? address;
   final String? city;
+  final String? description;
+  final String? lat;
+  final String? long;
+  final String? name;
+  final ProductCategory? selectedCategory;
+  final ProductCategory? selectedSubCategory;
 
   @override
   AppState? reduce() {

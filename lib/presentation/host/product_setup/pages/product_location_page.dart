@@ -3,6 +3,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
 import 'package:fullbooker/application/redux/actions/set_product_location_action.dart';
+import 'package:fullbooker/application/redux/actions/update_current_product_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_setup_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
@@ -62,6 +63,17 @@ class _ProductLocationPageState extends State<ProductLocationPage> {
         child: StoreConnector<AppState, ProductSetupViewModel>(
           converter: (Store<AppState> store) =>
               ProductSetupViewModel.fromState(store.state),
+          onInit: (Store<AppState> store) {
+            // Reset initial values. If the user was navigated here it means
+            // the product doesn't have a location set
+            context.dispatch(
+              UpdateCurrentProductAction(
+                lat: UNKNOWN,
+                long: UNKNOWN,
+                address: UNKNOWN,
+              ),
+            );
+          },
           builder: (BuildContext context, ProductSetupViewModel vm) {
             final bool isLocationAdded =
                 vm.currentProduct?.currentLocation?.lat != null &&

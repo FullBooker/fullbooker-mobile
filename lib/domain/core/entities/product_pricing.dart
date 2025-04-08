@@ -4,7 +4,7 @@ import 'package:fullbooker/core/common/constants.dart';
 part 'product_pricing.freezed.dart';
 part 'product_pricing.g.dart';
 
-@freezed
+@Freezed(makeCollectionsUnmodifiable: false)
 class ProductPricing with _$ProductPricing {
   @JsonSerializable(explicitToJson: true)
   factory ProductPricing({

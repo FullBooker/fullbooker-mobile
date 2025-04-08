@@ -10,7 +10,7 @@ import 'package:fullbooker/domain/core/entities/product_pricing.dart';
 part 'product.freezed.dart';
 part 'product.g.dart';
 
-@freezed
+@Freezed(makeCollectionsUnmodifiable: false)
 class Product with _$Product {
   @JsonSerializable(explicitToJson: true)
   factory Product({
