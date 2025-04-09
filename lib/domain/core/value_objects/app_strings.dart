@@ -583,3 +583,11 @@ const String addLocationError =
     'Please provide a location for your event to continue';
 
 const String selectCurrencyHint = 'Choose currency';
+
+const String pricingBreakdown = 'Pricing breakdown';
+
+const String serviceFeeLabel = 'Service fee (KES 150 + 7%)';
+const String yourBuyers = 'Your Buyers Pay';
+const String yourRevenue = 'Your Revenue';
+
+const String iWantBuyersToPay = 'I want my buyers to pay the service fee';
