@@ -7,6 +7,7 @@ import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:dartz/dartz.dart' as d;
+import 'package:fullbooker/shared/widgets/custom_dropdown.dart';
 import 'package:fullbooker/shared/widgets/custom_text_input.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
@@ -77,14 +78,38 @@ class AddProductPricingPage extends StatelessWidget {
                       ),
 
                       // TODO(abiud): add currency dropdown
-
-                      CustomTextInput(
-                        hintText: priceHint,
-                        labelText: priceString,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        onChanged: (String value) {},
-                        keyboardType: TextInputType.number,
-                        prefixIconData: HeroIcons.currencyDollar,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        spacing: 12,
+                        children: <Widget>[
+                          Text(
+                            priceString,
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                          Row(
+                            spacing: 12,
+                            children: <Widget>[
+                              Flexible(
+                                flex: 3,
+                                child: CustomDropdown(
+                                  options: allowedCurrencies,
+                                  value: allowedCurrencies.first,
+                                  onChanged: (String? value) {},
+                                ),
+                              ),
+                              Flexible(
+                                flex: 9,
+                                child: CustomTextInput(
+                                  hintText: priceHint,
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  onChanged: (String value) {},
+                                  keyboardType: TextInputType.number,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
 
                       Container(

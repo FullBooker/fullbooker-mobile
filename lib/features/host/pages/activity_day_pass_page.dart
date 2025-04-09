@@ -152,17 +152,17 @@ class _ActivityDayPass extends State<ActivityDayPassPage> {
                           SizedBox(
                             width: width * 0.4,
                             height: 30,
-                            child: CustomDropdown(
+                            child: OldCustomDropdown(
                               options: currencies
                                   .map(
-                                    (Currency currency) => DropDownOption(
+                                    (Currency currency) => OldDropDownOption(
                                       currency.code,
                                       currency.id,
                                       () {},
                                     ),
                                   )
                                   .toList(),
-                              onChanged: (DropDownOption? option) {
+                              onChanged: (OldDropDownOption? option) {
                                 if (option != null) {
                                   WidgetsBinding.instance
                                       .addPostFrameCallback((_) {

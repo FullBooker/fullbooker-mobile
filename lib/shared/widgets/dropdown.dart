@@ -1,32 +1,32 @@
 import 'package:flutter/material.dart';
 
-class DropDownOption {
-  DropDownOption(this.name, this.id, this.onClick);
+class OldDropDownOption {
+  OldDropDownOption(this.name, this.id, this.onClick);
 
   String id;
   String name;
   VoidCallback onClick;
 }
 
-class CustomDropdown extends StatefulWidget {
-  const CustomDropdown({
+class OldCustomDropdown extends StatefulWidget {
+  const OldCustomDropdown({
     super.key,
     this.width = 340,
     this.height = 55,
     this.label = '',
     this.onClick,
-    this.options = const <DropDownOption>[],
+    this.options = const <OldDropDownOption>[],
     this.withNullOption = true,
     this.onlyLabelContent = false,
     this.onChanged,
   });
 
-  final Function(DropDownOption?)? onChanged;
+  final Function(OldDropDownOption?)? onChanged;
   final double height;
   final String label;
   final Function? onClick;
   final bool onlyLabelContent;
-  final List<DropDownOption> options;
+  final List<OldDropDownOption> options;
   final double width;
   final bool withNullOption;
 
@@ -34,11 +34,11 @@ class CustomDropdown extends StatefulWidget {
   State<StatefulWidget> createState() => _CustomDropDownState();
 }
 
-class _CustomDropDownState extends State<CustomDropdown> {
+class _CustomDropDownState extends State<OldCustomDropdown> {
   int focusChanged = 0;
   final FocusNode focusNode = FocusNode();
   bool selected = false;
-  DropDownOption? setValue;
+  OldDropDownOption? setValue;
 
   final GlobalKey<State<StatefulWidget>> _dropdownKey = GlobalKey();
 
@@ -98,7 +98,7 @@ class _CustomDropDownState extends State<CustomDropdown> {
     });
   }
 
-  void onChanged(DropDownOption? option) {
+  void onChanged(OldDropDownOption? option) {
     setState(() {
       setValue = option;
       selected = false;
@@ -108,9 +108,9 @@ class _CustomDropDownState extends State<CustomDropdown> {
 
   @override
   Widget build(BuildContext context) {
-    final List<DropdownMenuItem<DropDownOption>> items =
-        widget.options.map((DropDownOption option) {
-      return DropdownMenuItem<DropDownOption>(
+    final List<DropdownMenuItem<OldDropDownOption>> items =
+        widget.options.map((OldDropDownOption option) {
+      return DropdownMenuItem<OldDropDownOption>(
         value: option,
         onTap: option.onClick,
         child: Text(option.name),
@@ -119,7 +119,7 @@ class _CustomDropDownState extends State<CustomDropdown> {
     if (widget.withNullOption) {
       items.insert(
         0,
-        const DropdownMenuItem<DropDownOption>(child: Text('----')),
+        const DropdownMenuItem<OldDropDownOption>(child: Text('----')),
       );
     }
     return GestureDetector(
@@ -141,7 +141,7 @@ class _CustomDropDownState extends State<CustomDropdown> {
                 ),
               ),
               Offstage(
-                child: DropdownButton<DropDownOption>(
+                child: DropdownButton<OldDropDownOption>(
                   key: _dropdownKey,
                   focusNode: focusNode,
                   onChanged: onChanged,

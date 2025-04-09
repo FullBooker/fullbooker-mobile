@@ -234,7 +234,7 @@ class _ActivityDateSelectionPageState extends State<ActivityDateSelectionPage> {
                                     child: SizedBox(
                                       width: (width - 30) / 4,
                                       height: 42,
-                                      child: CustomDropdown(
+                                      child: OldCustomDropdown(
                                         onlyLabelContent: true,
                                         label: startTimes[day.id] != null
                                             ? startTimes[day.id]!
@@ -258,7 +258,7 @@ class _ActivityDateSelectionPageState extends State<ActivityDateSelectionPage> {
                                     child: SizedBox(
                                       width: (width - 30) / 4,
                                       height: 42,
-                                      child: CustomDropdown(
+                                      child: OldCustomDropdown(
                                         onlyLabelContent: true,
                                         label: endTimes[day.id] != null
                                             ? endTimes[day.id]!.format(context)
@@ -312,7 +312,7 @@ class _ActivityDateSelectionPageState extends State<ActivityDateSelectionPage> {
                                       SizedBox(
                                         width: (width - 40) / 4,
                                         height: 25,
-                                        child: CustomDropdown(
+                                        child: OldCustomDropdown(
                                           onClick: () async {
                                             final DateTime? date =
                                                 await showDatePicker(

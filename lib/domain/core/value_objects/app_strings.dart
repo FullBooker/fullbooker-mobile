@@ -513,7 +513,7 @@ const String setupTickerPrice = 'Set your ticket price';
 const String setupTickerPriceCopy = 'Customize your ticket pricing';
 
 String serviceFeeDisclaimer(double percentage) =>
-    'We charge a %% service fee on each sale';
+    'We charge a ${percentage.toInt()}% service fee on each sale';
 
 const String priceHint = 'Enter an amount';
 
@@ -581,3 +581,5 @@ const String createProductError =
 
 const String addLocationError =
     'Please provide a location for your event to continue';
+
+const String selectCurrencyHint = 'Choose currency';
