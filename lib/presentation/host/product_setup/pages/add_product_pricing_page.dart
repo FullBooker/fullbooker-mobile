@@ -62,7 +62,7 @@ class AddProductPricingPage extends StatelessWidget {
                         child: Row(
                           spacing: 12,
                           children: <Widget>[
-                            SvgPicture.asset(regularTicketIconSVGPath),
+                            SvgPicture.asset(standardTicketIconSVGPath),
                             Text(
                               vip,
                               style: Theme.of(context)

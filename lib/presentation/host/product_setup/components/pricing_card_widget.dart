@@ -41,6 +41,7 @@ class PricingCardWidget extends StatelessWidget {
         children: <Widget>[
           SvgPicture.asset(svgIconPath),
           Expanded(
+            flex: 6,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               spacing: 4,
@@ -54,13 +55,12 @@ class PricingCardWidget extends StatelessWidget {
                     discountValue(discount!),
                     style: Theme.of(context)
                         .textTheme
-                        .titleSmall
+                        .bodySmall
                         ?.copyWith(color: Theme.of(context).primaryColor),
                   ),
                 Text(
                   maxAllowedTickets(maxTickets),
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        fontSize: 10,
                         fontStyle: FontStyle.italic,
                       ),
                 ),
@@ -68,6 +68,7 @@ class PricingCardWidget extends StatelessWidget {
             ),
           ),
           Expanded(
+            flex: 3,
             child: Column(
               spacing: 8,
               children: <Widget>[
@@ -78,6 +79,7 @@ class PricingCardWidget extends StatelessWidget {
                   ),
                 if (onAddOrEdit != null)
                   SecondaryButton(
+                    customHeight: 36,
                     onPressed: () {
                       context.router.push(AddProductPricingRoute());
                     },
