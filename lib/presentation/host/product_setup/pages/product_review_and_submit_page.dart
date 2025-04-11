@@ -256,8 +256,7 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                 confirmText: backToProducts,
                 cancelText: viewProduct,
                 onConfirm: () {
-                  context.router.maybePop();
-                  // TODO(abiud): navigate to products page
+                  context.router.popAndPush(ProductsRoute());
                 },
                 onCancel: () {
                   context.router.maybePop();

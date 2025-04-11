@@ -316,7 +316,7 @@ void navigateToNextProductStep({
   required BuildContext context,
   required Product product,
 }) {
-  if (product.completed ?? false) {
+  if (!(product.completed ?? true)) {
     context.router.push(const ProductDetailRoute());
 
     return;
@@ -358,4 +358,9 @@ void navigateToNextProductStep({
     context.router.push(const ProductReviewAndSubmitRoute());
     return;
   }
+}
+
+Color getProductColor({bool complete = false}) {
+  if (complete) return AppColors.greenColor;
+  return AppColors.amberColor;
 }

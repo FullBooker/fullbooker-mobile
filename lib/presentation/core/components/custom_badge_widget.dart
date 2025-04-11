@@ -26,6 +26,7 @@ class CustomBadgeWidget extends StatelessWidget {
         text,
         style: Theme.of(context).textTheme.bodySmall?.copyWith(
               color: textColor ?? Theme.of(context).primaryColor,
+              fontWeight: FontWeight.bold,
             ),
       ),
     );

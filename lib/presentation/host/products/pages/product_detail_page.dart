@@ -35,12 +35,14 @@ class ProductDetailPage extends StatelessWidget {
         converter: (Store<AppState> store) =>
             ProductsPageViewModel.fromState(store.state),
         builder: (BuildContext context, ProductsPageViewModel vm) {
-          final Product? selectedProduct = vm.selectedProduct;
+          final Product? product = vm.selectedProduct;
 
           final List<String?> imageURLs = <String?>[
-            selectedProduct?.image?.file,
+            product?.image?.file,
             ...mockProductSetupImageURLs,
           ];
+
+          final bool isComplete = product?.completed ?? false;
 
           return Column(
             children: <Widget>[
@@ -60,15 +62,21 @@ class ProductDetailPage extends StatelessWidget {
                             children: <Widget>[
                               Expanded(
                                 child: Text(
-                                  selectedProduct?.name ?? '',
+                                  product?.name ?? '',
                                   style:
                                       Theme.of(context).textTheme.titleMedium,
                                 ),
                               ),
                               CustomBadgeWidget(
-                                text: publishedString,
-                                backgroundColor: AppColors.greenColor,
-                                textColor: AppColors.greenColor,
+                                text: isComplete
+                                    ? publishedString
+                                    : inReviewString,
+                                backgroundColor: getProductColor(
+                                  complete: isComplete,
+                                ),
+                                textColor: getProductColor(
+                                  complete: isComplete,
+                                ),
                               ),
                             ],
                           ),
@@ -83,12 +91,11 @@ class ProductDetailPage extends StatelessWidget {
                                 children: <Widget>[
                                   HeroIcon(
                                     HeroIcons.mapPin,
-                                    color: Colors.grey,
+                                    color: AppColors.greyTextColor,
                                     size: 20,
                                   ),
                                   Text(
-                                    selectedProduct?.locations?.first.address ??
-                                        '',
+                                    product?.locations?.first.address ?? '',
                                     style:
                                         Theme.of(context).textTheme.bodyMedium,
                                   ),
@@ -101,13 +108,12 @@ class ProductDetailPage extends StatelessWidget {
                                 children: <Widget>[
                                   HeroIcon(
                                     HeroIcons.calendar,
-                                    color: Colors.grey,
+                                    color: AppColors.greyTextColor,
                                     size: 20,
                                   ),
                                   humanizeDate(
                                     loadedDate:
-                                        selectedProduct?.availability?.start ??
-                                            '',
+                                        product?.availability?.start ?? '',
                                     dateTextStyle:
                                         Theme.of(context).textTheme.bodyMedium,
                                   ),
@@ -118,8 +124,7 @@ class ProductDetailPage extends StatelessWidget {
                                   ),
                                   humanizeDate(
                                     loadedDate:
-                                        selectedProduct?.availability?.end ??
-                                            '',
+                                        product?.availability?.end ?? '',
                                     dateTextStyle:
                                         Theme.of(context).textTheme.bodyMedium,
                                   ),
@@ -133,12 +138,11 @@ class ProductDetailPage extends StatelessWidget {
                                 children: <Widget>[
                                   HeroIcon(
                                     HeroIcons.clock,
-                                    color: Colors.grey,
+                                    color: AppColors.greyTextColor,
                                     size: 20,
                                   ),
                                   formatTime(
-                                    rawTime: selectedProduct
-                                        ?.availability?.startTime,
+                                    rawTime: product?.availability?.startTime,
                                     textStyle:
                                         Theme.of(context).textTheme.bodyMedium,
                                   ),
@@ -148,8 +152,7 @@ class ProductDetailPage extends StatelessWidget {
                                         Theme.of(context).textTheme.bodyMedium,
                                   ),
                                   formatTime(
-                                    rawTime:
-                                        selectedProduct?.availability?.endTime,
+                                    rawTime: product?.availability?.endTime,
                                     textStyle:
                                         Theme.of(context).textTheme.bodyMedium,
                                   ),
@@ -157,22 +160,38 @@ class ProductDetailPage extends StatelessWidget {
                               ),
                             ],
                           ),
+                          ProductAlertWidget(
+                            title: productInReview,
+                            description: productInReviewCopy,
+                            iconData: HeroIcons.clipboardDocumentList,
+                          ),
                           verySmallVerticalSizedBox,
-                          if (selectedProduct?.active ?? false)
-                            ProductAlertWidget(
-                              title: productInReview,
-                              description: productInReviewCopy,
-                              iconData: HeroIcons.clipboardDocumentList,
-                            ),
-                          smallVerticalSizedBox,
+                          Text(
+                            stats,
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            spacing: 8,
+                            children: <Widget>[
+                              Text(
+                                totalRevenue,
+                                style: Theme.of(context).textTheme.bodySmall,
+                              ),
+                              Text(
+                                'KES 300, 000',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleLarge
+                                    ?.copyWith(
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                              ),
+                            ],
+                          ),
                           ProductDetailItemWidget(
                             text: bookings,
                             value: '300',
-                            onTap: () {},
-                          ),
-                          ProductDetailItemWidget(
-                            text: payments,
-                            value: 'KES 300, 000',
                             onTap: () {},
                           ),
                         ],

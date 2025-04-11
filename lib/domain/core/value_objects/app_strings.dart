@@ -561,6 +561,7 @@ const String deactivateProduct = 'Deactivate Product';
 
 const String publishedString = 'Published';
 const String draftString = 'Draft';
+const String inReviewString = 'In Review';
 
 const String switchToHosting = 'Switch To Hosting';
 const String switchToHostingCopy =
@@ -604,3 +605,6 @@ const String productSubmitCopy =
 
 const String backToProducts = 'Back to Products';
 const String viewProduct = 'View Product';
+
+const String stats = 'Stats';
+const String totalRevenue  = 'Total Revenue';

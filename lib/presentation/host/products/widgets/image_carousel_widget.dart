@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/shared/entities/data_mocks.dart';
 
 class ImageCarouselWidget extends StatefulWidget {
@@ -22,7 +23,7 @@ class _ImageCarouselWidgetState extends State<ImageCarouselWidget> {
       children: <Widget>[
         CarouselSlider(
           options: CarouselOptions(
-            height: MediaQuery.of(context).size.height * .3,
+            height: MediaQuery.of(context).size.height * .25,
             autoPlay: true,
             autoPlayInterval: Duration(seconds: 5),
             autoPlayCurve: Curves.easeInOut,
@@ -32,16 +33,22 @@ class _ImageCarouselWidgetState extends State<ImageCarouselWidget> {
             },
           ),
           items: widget.imageUrls?.map((String? imageUrl) {
-            return CachedNetworkImage(
-              // TODO(abiud): in future, replace with a default product image
-              imageUrl: imageUrl ?? mockProductSetupImageURLs.first,
-              fit: BoxFit.cover,
-              width: double.infinity,
-              placeholder: (BuildContext context, String url) =>
-                  const Center(child: CircularProgressIndicator()),
-              errorWidget: (BuildContext context, String url, Object error) =>
-                  const Icon(Icons.error),
-            );
+            if (imageUrl != null) {
+              return CachedNetworkImage(
+                imageUrl: imageUrl,
+                fit: BoxFit.cover,
+                width: double.infinity,
+                placeholder: (BuildContext context, String url) =>
+                    const Center(child: CircularProgressIndicator()),
+                errorWidget: (BuildContext context, String url, Object error) =>
+                    const Icon(Icons.error),
+              );
+            } else {
+              return Image.asset(
+                productImageZeroState,
+                fit: BoxFit.cover,
+              );
+            }
           }).toList(),
         ),
         Row(
