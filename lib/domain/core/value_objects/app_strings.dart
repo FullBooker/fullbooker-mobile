@@ -591,3 +591,7 @@ const String yourBuyers = 'Your Buyers Pay';
 const String yourRevenue = 'Your Revenue';
 
 const String iWantBuyersToPay = 'I want my buyers to pay the service fee';
+
+const String productInReview = 'Product in review';
+const String productInReviewCopy =
+    'Your product is in review and will be live within 48 hours';

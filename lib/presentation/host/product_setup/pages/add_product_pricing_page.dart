@@ -19,7 +19,6 @@ class AddProductPricingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const bool buyersPayFee = true == true;
     const double buyerPay = 2825;
     const double revenue = 2500;
     const double serviceFee = 2500;
@@ -182,21 +181,34 @@ class AddProductPricingPage extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            CheckboxListTile(
-                              title: Text(
-                                iWantBuyersToPay,
-                                style: Theme.of(context).textTheme.bodyMedium,
-                              ),
-                              value: buyersPayFee,
-                              checkColor: Colors.white,
-                              activeColor: Theme.of(context).primaryColor,
-                              controlAffinity: ListTileControlAffinity.leading,
-                              onChanged: (bool? value) {},
-                              contentPadding: EdgeInsets.zero,
-                              side: BorderSide(
-                                color: buyersPayFee
-                                    ? Theme.of(context).primaryColor
-                                    : Theme.of(context).dividerColor,
+                            InkWell(
+                              onTap: () {
+                                // TODO(abiud): save this value to state for the current product
+                              },
+                              highlightColor: Theme.of(context)
+                                  .primaryColor
+                                  .withValues(alpha: 0.1),
+                              splashColor: Theme.of(context)
+                                  .primaryColor
+                                  .withValues(alpha: 0.1),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 4),
+                                child: Row(
+                                  spacing: 12,
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.check_box,
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                                    Text(
+                                      iWantBuyersToPay,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium,
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                             Row(

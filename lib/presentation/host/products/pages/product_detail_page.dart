@@ -11,6 +11,7 @@ import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:fullbooker/presentation/core/components/custom_badge_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/image_carousel_widget.dart';
+import 'package:fullbooker/presentation/host/products/widgets/product_alert_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_detail_item_widget.dart';
 import 'package:fullbooker/shared/entities/data_mocks.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
@@ -43,7 +44,6 @@ class ProductDetailPage extends StatelessWidget {
 
           return Column(
             children: <Widget>[
-              // TODO(abiud): fetch the actual product images from the API
               ImageCarouselWidget(imageUrls: imageURLs),
               Expanded(
                 child: ListView(
@@ -158,6 +158,13 @@ class ProductDetailPage extends StatelessWidget {
                             ],
                           ),
                           verySmallVerticalSizedBox,
+                          if (selectedProduct?.active ?? false)
+                            ProductAlertWidget(
+                              title: productInReview,
+                              description: productInReviewCopy,
+                              iconData: HeroIcons.clipboardDocumentList,
+                            ),
+                          smallVerticalSizedBox,
                           ProductDetailItemWidget(
                             text: bookings,
                             value: '300',
