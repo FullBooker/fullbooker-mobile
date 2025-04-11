@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
-import 'package:fullbooker/shared/entities/data_mocks.dart';
 
 class ImageCarouselWidget extends StatefulWidget {
   const ImageCarouselWidget({super.key, required this.imageUrls});

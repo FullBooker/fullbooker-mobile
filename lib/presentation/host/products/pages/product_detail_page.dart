@@ -8,8 +8,10 @@ import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
+import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:fullbooker/presentation/core/components/custom_badge_widget.dart';
+import 'package:fullbooker/presentation/host/product_setup/components/pricing_card_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/image_carousel_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_alert_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_detail_item_widget.dart';
@@ -193,6 +195,24 @@ class ProductDetailPage extends StatelessWidget {
                             text: bookings,
                             value: '300',
                             onTap: () {},
+                          ),
+                          Text(
+                            pricing,
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                          PricingCardWidget(
+                            ticketType: vip,
+                            maxTickets: 300,
+                            price: 3000,
+                            svgIconPath: vvipTicketIconSVGPath,
+                            // onAddOrEdit: () {},
+                          ),
+                          PricingCardWidget(
+                            ticketType: vvip,
+                            maxTickets: 20,
+                            price: 5000,
+                            svgIconPath: vvipTicketIconSVGPath,
+                            // onAddOrEdit: () {},
                           ),
                         ],
                       ),

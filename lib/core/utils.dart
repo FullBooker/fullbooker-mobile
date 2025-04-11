@@ -316,6 +316,7 @@ void navigateToNextProductStep({
   required BuildContext context,
   required Product product,
 }) {
+  // TODO(abiud): revert this change once done testing
   if (!(product.completed ?? true)) {
     context.router.push(const ProductDetailRoute());
 
