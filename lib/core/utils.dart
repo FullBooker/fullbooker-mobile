@@ -13,6 +13,7 @@ import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/regexes.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
+import 'package:fullbooker/shared/widgets/secondary_button.dart';
 import 'package:intl/intl.dart';
 import 'package:map_location_picker/map_location_picker.dart';
 
@@ -53,14 +54,16 @@ void showAlertDialog({
   String? title,
   String? description,
   Function()? onConfirm,
+  Function()? onCancel,
   String? confirmText,
+  String? cancelText,
 }) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
         content: Column(
-          spacing: 16,
+          spacing: 12,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             if (assetPath != null)
@@ -96,6 +99,14 @@ void showAlertDialog({
               child: PrimaryButton(
                 child: right(confirmText ?? okThanksString),
                 onPressed: onConfirm ?? () => context.router.maybePop(),
+              ),
+            ),
+            SizedBox(
+              width: double.infinity,
+              height: 48,
+              child: SecondaryButton(
+                child: right(cancelText ?? okThanksString),
+                onPressed: onCancel ?? () => context.router.maybePop(),
               ),
             ),
           ],
@@ -301,9 +312,14 @@ Widget formatTime({
   );
 }
 
-void navigateToNextProductStep({required BuildContext context,required Product product}) {
+void navigateToNextProductStep({
+  required BuildContext context,
+  required Product product,
+}) {
   if (product.completed ?? false) {
     context.router.push(const ProductDetailRoute());
+
+    return;
   }
 
   if ((product.name?.isEmpty ?? true) ||
@@ -312,7 +328,7 @@ void navigateToNextProductStep({required BuildContext context,required Product p
     return;
   }
 
-  if (product.locations == null || product.locations!.isEmpty) {
+  if (product.locations?.isEmpty ?? true) {
     context.router.push(const ProductLocationRoute());
     return;
   }
@@ -339,7 +355,12 @@ void navigateToNextProductStep({required BuildContext context,required Product p
   }
 
   if (product.completed != true) {
-    context.router.push(const ProductReviewAndPublishRoute());
+    context.router.push(const ProductReviewAndSubmitRoute());
     return;
   }
+}
+
+Color getProductColor({bool complete = false}) {
+  if (complete) return AppColors.greenColor;
+  return AppColors.amberColor;
 }

@@ -14,7 +14,7 @@ const String masterSchemaTableName = 'sqlite_master';
 const String kDevDatabaseName = 'fullbooker.dev.store.db';
 const String kProdDatabaseName = 'fullbooker.store.db';
 
-const double kPlatformServiceFee = 6;
+const double kPlatformServiceFee = 7;
 
 const List<String> kAllowedImageExtensions = <String>['jpg', 'png'];
 const List<String> kAllowedVideoExtensions = <String>['mp4'];
@@ -41,3 +41,8 @@ const int kOTPRetryTimeout = 120;
 const List<String> allowedPhoneNumberCountries = <String>['KE', 'UG', 'TZ'];
 
 const LatLng kDefaultLocation = LatLng(-1.228003, 36.900032);
+
+const List<String> kAllowedCurrencies = <String>['KES', 'USD', 'AED'];
+const List<String> kAllowedDiscountOptions = <String>['Percentage', 'Amount'];
+
+const String kSupportLine = '0700 394 444';

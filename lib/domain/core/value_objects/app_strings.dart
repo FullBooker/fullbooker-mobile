@@ -1,5 +1,7 @@
 // Onboarding strings
 // TODO(abiud): improve this copy
+import 'package:fullbooker/core/common/constants.dart';
+
 const String overview1Title = 'Find your favorite events and activities';
 const String overview1Copy = 'Discover, book, and enjoy your favorite events';
 const String overview2Title = 'Find events and activities events nearby';
@@ -17,7 +19,7 @@ const String notFoundString =
 const String serverError = 'Server error';
 
 const String genericErrorString =
-    'Oops! Something went wrong on our end, please try again';
+    'Oops! Something went wrong on our end, please try again or contact us on $kSupportLine';
 
 // Shared
 const String okThanksString = 'Ok, Thanks';
@@ -246,7 +248,7 @@ const String pricePerPersonPerSession =
     'What is the price per person per session';
 const String maxTicketsPerSession = 'Maximum number of tickets per session';
 const String maxTicketsPerDayPass = 'Maximum number of tickets per day pass';
-const String publishString = 'Publish';
+const String submitString = 'Submit';
 
 const String selectCategoryPrompt = 'Please select a category for your event';
 
@@ -453,6 +455,7 @@ const String whatYouNeedCopy = '5 easy steps. Here’s what you will need';
 
 const String beginString = 'Begin';
 const String productCategoryAndType = 'Product category and type';
+const String categoryAndType = 'Category and type';
 const String changeString = 'Change';
 
 const String basicDetails = 'Basic details';
@@ -465,8 +468,8 @@ const String media = 'Media';
 const String mediaCopy = 'Photos of your event';
 const String pricing = 'Pricing';
 const String pricingCopy = 'Setup product price';
-const String review = 'Review and publish';
-const String reviewCopy = 'Final tweaks before publishing';
+const String review = 'Review and submit';
+const String reviewCopy = 'Final tweaks before submitting for review';
 
 // Basic details
 const String productBasicDetails = 'Basic details';
@@ -513,7 +516,7 @@ const String setupTickerPrice = 'Set your ticket price';
 const String setupTickerPriceCopy = 'Customize your ticket pricing';
 
 String serviceFeeDisclaimer(double percentage) =>
-    'We charge a %% service fee on each sale';
+    'We charge a ${percentage.toInt()}% service fee on each sale';
 
 const String priceHint = 'Enter an amount';
 
@@ -524,9 +527,8 @@ const String maxTicketsHint = 'Enter a number';
 const String discountLabel = 'Discount(optional)';
 const String discountHint = 'Enter discount';
 
-// Review and publish page
-
-const String reviewAndPublish = 'Review and publish';
+// Review and submit page
+const String reviewAndSubmit = 'Review and submit';
 
 const String testProductDescription =
     'Experience the unforgettable journey of Taylor  Swift’s Eras Tour, a celebration of her music, artistry,  and storytelling...';
@@ -556,9 +558,12 @@ const String bookings = 'Bookings';
 const String payments = 'Payments';
 
 const String deactivateProduct = 'Deactivate Product';
+const String deactivateProductCopy =
+    'Are you sure you want to deactivate this product? You can activate it later';
 
 const String publishedString = 'Published';
 const String draftString = 'Draft';
+const String inReviewString = 'In Review';
 
 const String switchToHosting = 'Switch To Hosting';
 const String switchToHostingCopy =
@@ -581,3 +586,38 @@ const String createProductError =
 
 const String addLocationError =
     'Please provide a location for your event to continue';
+
+const String selectCurrencyHint = 'Choose currency';
+
+const String pricingBreakdown = 'Pricing breakdown';
+
+const String serviceFeeLabel = 'Service fee (KES 150 + 7%)';
+const String yourBuyers = 'Your Buyers Pay';
+const String yourRevenue = 'Your Revenue';
+
+const String iWantBuyersToPay = 'I want my buyers to pay the service fee';
+
+const String productInReview = 'Product in review';
+const String productInReviewCopy =
+    'Your product is in review and will be live within 48 hours';
+
+const String productSubmit = 'You\'re All Set!';
+const String productSubmitCopy =
+    'We’ve received your product. It’s now under review and will be live within 48 hours. For help, contact support on $kSupportLine';
+
+const String backToProducts = 'Back to Products';
+const String viewProduct = 'View Product';
+
+const String stats = 'Stats';
+const String totalRevenue = 'Total Revenue';
+
+const String scanTickets = 'Scan Tickets';
+
+const String noGoBack = 'No, Go Back';
+
+const String productBookings = 'Product Bookings';
+
+const String searchBookingsHint = 'Search bookings...';
+
+const String verifiedString = 'Verified';
+const String verifyString = 'Verify';

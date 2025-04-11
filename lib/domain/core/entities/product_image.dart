@@ -4,7 +4,7 @@ import 'package:fullbooker/core/common/constants.dart';
 part 'product_image.freezed.dart';
 part 'product_image.g.dart';
 
-@freezed
+@Freezed(makeCollectionsUnmodifiable: false)
 class ProductImage with _$ProductImage {
   @JsonSerializable(explicitToJson: true)
   factory ProductImage({

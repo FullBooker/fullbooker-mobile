@@ -167,17 +167,17 @@ class _ActivitySubscription extends State<ActivitySubscriptionPage> {
                           SizedBox(
                             width: width * 0.4,
                             height: 30,
-                            child: CustomDropdown(
+                            child: OldCustomDropdown(
                               options: currencies
                                   .map(
-                                    (Currency currency) => DropDownOption(
+                                    (Currency currency) => OldDropDownOption(
                                       currency.code,
                                       currency.id,
                                       () {},
                                     ),
                                   )
                                   .toList(),
-                              onChanged: (DropDownOption? option) {
+                              onChanged: (OldDropDownOption? option) {
                                 if (option != null) {
                                   WidgetsBinding.instance
                                       .addPostFrameCallback((_) {
@@ -410,7 +410,7 @@ class _ActivitySubscription extends State<ActivitySubscriptionPage> {
                   EdgeInsets.symmetric(horizontal: width / 8, vertical: 30),
               child: OldButton(
                 onContinueClick,
-                actionLabel: publishString,
+                actionLabel: submitString,
                 loading: isLoading,
               ),
             ),

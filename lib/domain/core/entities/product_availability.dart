@@ -4,7 +4,7 @@ import 'package:fullbooker/core/common/constants.dart';
 part 'product_availability.freezed.dart';
 part 'product_availability.g.dart';
 
-@freezed
+@Freezed(makeCollectionsUnmodifiable: false)
 class ProductAvailability with _$ProductAvailability {
   @JsonSerializable(explicitToJson: true)
   factory ProductAvailability({

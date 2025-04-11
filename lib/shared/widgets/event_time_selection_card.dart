@@ -61,7 +61,7 @@ class _EventTimeSelectionCard extends State<EventTimeSelectionCard> {
                 SizedBox(
                   width: 160,
                   height: 25,
-                  child: CustomDropdown(
+                  child: OldCustomDropdown(
                     label: selectedDate == null ? '' : selectedDate.toString(),
                     onClick: () async {
                       final DateTime? date = await showDatePicker(
@@ -86,17 +86,17 @@ class _EventTimeSelectionCard extends State<EventTimeSelectionCard> {
                   SizedBox(
                     width: (widget.width) / 2.5,
                     height: 42,
-                    child: CustomDropdown(
+                    child: OldCustomDropdown(
                       label: hoursString,
-                      options: List<DropDownOption>.generate(
+                      options: List<OldDropDownOption>.generate(
                         23,
-                        (int idx) => DropDownOption(
+                        (int idx) => OldDropDownOption(
                           (idx + 1).toString(),
                           idx.toString(),
                           () {},
                         ),
                       ),
-                      onChanged: (DropDownOption? hour) => setState(() {
+                      onChanged: (OldDropDownOption? hour) => setState(() {
                         if (hour != null) {
                           hourSelected = int.parse(hour.name);
                         }
@@ -106,17 +106,17 @@ class _EventTimeSelectionCard extends State<EventTimeSelectionCard> {
                   SizedBox(
                     width: (widget.width) / 2.5,
                     height: 42,
-                    child: CustomDropdown(
+                    child: OldCustomDropdown(
                       label: minutesString,
-                      options: List<DropDownOption>.generate(
+                      options: List<OldDropDownOption>.generate(
                         59,
-                        (int idx) => DropDownOption(
+                        (int idx) => OldDropDownOption(
                           (idx + 1).toString(),
                           idx.toString(),
                           () {},
                         ),
                       ),
-                      onChanged: (DropDownOption? minutes) => setState(() {
+                      onChanged: (OldDropDownOption? minutes) => setState(() {
                         if (minutes != null) {
                           minuteSelected = int.parse(minutes.name);
                         }

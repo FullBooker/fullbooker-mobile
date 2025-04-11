@@ -80,26 +80,26 @@ class ProductPricingPage extends StatelessWidget {
                         price: 1500,
                         discount: 20,
                         maxTickets: 300,
-                        svgIconPath: regularTicketIconSVGPath,
+                        svgIconPath: earlyBirdTicketIconSVGPath,
                         onAddOrEdit: () {},
                       ),
                       PricingCardWidget(
                         ticketType: standard,
                         price: 2000,
                         maxTickets: 300,
-                        svgIconPath: regularTicketIconSVGPath,
+                        svgIconPath: standardTicketIconSVGPath,
                         onAddOrEdit: () {},
                       ),
                       PricingCardWidget(
                         ticketType: vip,
                         maxTickets: 300,
-                        svgIconPath: regularTicketIconSVGPath,
+                        svgIconPath: vvipTicketIconSVGPath,
                         onAddOrEdit: () {},
                       ),
                       PricingCardWidget(
                         ticketType: vvip,
                         maxTickets: 300,
-                        svgIconPath: regularTicketIconSVGPath,
+                        svgIconPath: vipTicketIconSVGPath,
                         onAddOrEdit: () {},
                       ),
                     ],
@@ -109,11 +109,11 @@ class ProductPricingPage extends StatelessWidget {
             ),
             PrimaryButton(
               onPressed: () {
-                context.router.push(ProductReviewAndPublishRoute());
+                context.router.push(ProductReviewAndSubmitRoute());
               },
               child: d.right(continueString),
             ),
-             SecondaryButton(
+            SecondaryButton(
               onPressed: () => context.router.maybePop(),
               child: d.right(previousString),
               fillColor: Colors.transparent,

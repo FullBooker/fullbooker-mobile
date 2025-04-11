@@ -33,17 +33,17 @@ class TimeSelectionCard extends StatelessWidget {
                   SizedBox(
                     width: width / 2.8,
                     height: 42,
-                    child: CustomDropdown(
+                    child: OldCustomDropdown(
                       label: hoursString,
-                      options: List<DropDownOption>.generate(
+                      options: List<OldDropDownOption>.generate(
                         23,
-                        (int idx) => DropDownOption(
+                        (int idx) => OldDropDownOption(
                           (idx + 1).toString(),
                           idx.toString(),
                           () {},
                         ),
                       ),
-                      onChanged: (DropDownOption? hour) {
+                      onChanged: (OldDropDownOption? hour) {
                         if (hour != null && onHourSelected != null) {
                           onHourSelected!(int.parse(hour.name));
                         }
@@ -53,17 +53,17 @@ class TimeSelectionCard extends StatelessWidget {
                   SizedBox(
                     width: width / 2.8,
                     height: 42,
-                    child: CustomDropdown(
+                    child: OldCustomDropdown(
                       label: minutesString,
-                      options: List<DropDownOption>.generate(
+                      options: List<OldDropDownOption>.generate(
                         59,
-                        (int idx) => DropDownOption(
+                        (int idx) => OldDropDownOption(
                           (idx + 1).toString(),
                           idx.toString(),
                           () {},
                         ),
                       ),
-                      onChanged: (DropDownOption? minutes) {
+                      onChanged: (OldDropDownOption? minutes) {
                         if (minutes != null && onMinuteSelected != null) {
                           onMinuteSelected!(int.parse(minutes.name));
                         }

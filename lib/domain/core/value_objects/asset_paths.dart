@@ -34,5 +34,14 @@ const String productZeroStateSVGPath = 'assets/vectors/products_zero_state.svg';
 const String setupZeroStateSVGPath = 'assets/vectors/no_categories_svg.svg';
 const String locationSVGPath = 'assets/vectors/location_zero_state_svg.svg';
 const String addPhotosIconSVGPath = 'assets/vectors/add_photos_icon.svg';
-const String regularTicketIconSVGPath =
-    'assets/vectors/regular_ticket_icon.svg';
+const String productSetupSuccessSVGPath =
+    'assets/vectors/product_setup_complete_svg.svg';
+const String deleteProductSVGPath = 'assets/vectors/delete_product.svg';
+
+// Ticket icons
+const String earlyBirdTicketIconSVGPath =
+    'assets/vectors/early_bird_ticket_icon.svg';
+const String standardTicketIconSVGPath =
+    'assets/vectors/standard_ticket_icon.svg';
+const String vvipTicketIconSVGPath = 'assets/vectors/vip_ticket_icon.svg';
+const String vipTicketIconSVGPath = 'assets/vectors/vvip_ticket_icon.svg';

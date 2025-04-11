@@ -54,17 +54,6 @@ class SetupProductCategoryPage extends StatelessWidget {
                           ),
                         ],
                       ),
-                      // CustomTextInput(
-                      //   hintText: searchProductCopy,
-                      //   autovalidateMode: AutovalidateMode.onUserInteraction,
-                      //   onChanged: (String email) {},
-                      //   prefixIconData: HeroIcons.magnifyingGlass,
-                      // ),
-                      // Text(
-                      //   showingResultsFor(kidsString),
-                      //   style: Theme.of(context).textTheme.bodyMedium,
-                      // ),
-
                       StoreConnector<AppState, ProductSetupViewModel>(
                         converter: (Store<AppState> store) =>
                             ProductSetupViewModel.fromState(store.state),

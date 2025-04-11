@@ -215,11 +215,11 @@ class __$$ProductAvailabilityImplCopyWithImpl<$Res>
           : duration // ignore: cast_nullable_to_non_nullable
               as int?,
       openDays: freezed == openDays
-          ? _value._openDays
+          ? _value.openDays
           : openDays // ignore: cast_nullable_to_non_nullable
               as List<dynamic>?,
       closedDates: freezed == closedDates
-          ? _value._closedDates
+          ? _value.closedDates
           : closedDates // ignore: cast_nullable_to_non_nullable
               as List<dynamic>?,
     ));
@@ -239,12 +239,8 @@ class _$ProductAvailabilityImpl implements _ProductAvailability {
       @JsonKey(name: 'start_time') this.startTime = UNKNOWN,
       @JsonKey(name: 'end_time') this.endTime = UNKNOWN,
       this.duration = 0,
-      @JsonKey(name: 'open_days')
-      final List<dynamic>? openDays = const <dynamic>[],
-      @JsonKey(name: 'closed_dates')
-      final List<dynamic>? closedDates = const <dynamic>[]})
-      : _openDays = openDays,
-        _closedDates = closedDates;
+      @JsonKey(name: 'open_days') this.openDays = const <dynamic>[],
+      @JsonKey(name: 'closed_dates') this.closedDates = const <dynamic>[]});
 
   factory _$ProductAvailabilityImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProductAvailabilityImplFromJson(json);
@@ -273,27 +269,12 @@ class _$ProductAvailabilityImpl implements _ProductAvailability {
   @override
   @JsonKey()
   final int? duration;
-  final List<dynamic>? _openDays;
   @override
   @JsonKey(name: 'open_days')
-  List<dynamic>? get openDays {
-    final value = _openDays;
-    if (value == null) return null;
-    if (_openDays is EqualUnmodifiableListView) return _openDays;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
-  final List<dynamic>? _closedDates;
+  final List<dynamic>? openDays;
   @override
   @JsonKey(name: 'closed_dates')
-  List<dynamic>? get closedDates {
-    final value = _closedDates;
-    if (value == null) return null;
-    if (_closedDates is EqualUnmodifiableListView) return _closedDates;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
+  final List<dynamic>? closedDates;
 
   @override
   String toString() {
@@ -316,9 +297,9 @@ class _$ProductAvailabilityImpl implements _ProductAvailability {
             (identical(other.endTime, endTime) || other.endTime == endTime) &&
             (identical(other.duration, duration) ||
                 other.duration == duration) &&
-            const DeepCollectionEquality().equals(other._openDays, _openDays) &&
+            const DeepCollectionEquality().equals(other.openDays, openDays) &&
             const DeepCollectionEquality()
-                .equals(other._closedDates, _closedDates));
+                .equals(other.closedDates, closedDates));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -333,8 +314,8 @@ class _$ProductAvailabilityImpl implements _ProductAvailability {
       startTime,
       endTime,
       duration,
-      const DeepCollectionEquality().hash(_openDays),
-      const DeepCollectionEquality().hash(_closedDates));
+      const DeepCollectionEquality().hash(openDays),
+      const DeepCollectionEquality().hash(closedDates));
 
   /// Create a copy of ProductAvailability
   /// with the given fields replaced by the non-null parameter values.

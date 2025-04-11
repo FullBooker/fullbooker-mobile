@@ -14,6 +14,7 @@ import 'package:fullbooker/presentation/core/components/generic_zero_state.dart'
 import 'package:fullbooker/presentation/core/components/new_product_card.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
+import 'package:heroicons/heroicons.dart';
 
 @RoutePage()
 class ProductsPage extends StatelessWidget {
@@ -34,8 +35,12 @@ class ProductsPage extends StatelessWidget {
             color: Theme.of(context).primaryColor,
             shape: BoxShape.circle,
           ),
-          padding: const EdgeInsets.all(20),
-          child: const Icon(Icons.add, color: Colors.white),
+          padding: const EdgeInsets.all(16),
+          child: HeroIcon(
+            HeroIcons.plus,
+            color: Colors.white,
+            size: 32,
+          ),
         ),
       ),
       body: Padding(

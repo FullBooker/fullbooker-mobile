@@ -24,12 +24,17 @@ class NewProductCard extends StatelessWidget {
     final bool complete = product.completed ?? false;
 
     return GestureDetector(
-      onTap: complete
-          ? () {
-              context.dispatch(SelectProductAction(product: product));
-              context.router.push(ProductDetailRoute());
-            }
-          : null,
+      // onTap: complete
+      //     ? () {
+      //         context.dispatch(SelectProductAction(product: product));
+      //         context.router.push(ProductDetailRoute());
+      //       }
+      //     : null,
+      onTap: () {
+        context.dispatch(SelectProductAction(product: product));
+        context.router.push(ProductDetailRoute());
+      },
+
       child: Container(
         decoration: BoxDecoration(
           color: Theme.of(context).cardColor,

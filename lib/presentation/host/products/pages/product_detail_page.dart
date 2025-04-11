@@ -8,13 +8,17 @@ import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
+import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:fullbooker/presentation/core/components/custom_badge_widget.dart';
+import 'package:fullbooker/presentation/host/product_setup/components/pricing_card_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/image_carousel_widget.dart';
+import 'package:fullbooker/presentation/host/products/widgets/product_alert_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_detail_item_widget.dart';
 import 'package:fullbooker/shared/entities/data_mocks.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
+import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
 import 'package:heroicons/heroicons.dart';
 
@@ -34,16 +38,17 @@ class ProductDetailPage extends StatelessWidget {
         converter: (Store<AppState> store) =>
             ProductsPageViewModel.fromState(store.state),
         builder: (BuildContext context, ProductsPageViewModel vm) {
-          final Product? selectedProduct = vm.selectedProduct;
+          final Product? product = vm.selectedProduct;
 
           final List<String?> imageURLs = <String?>[
-            selectedProduct?.image?.file,
+            product?.image?.file,
             ...mockProductSetupImageURLs,
           ];
 
+          final bool isComplete = product?.completed ?? false;
+
           return Column(
             children: <Widget>[
-              // TODO(abiud): fetch the actual product images from the API
               ImageCarouselWidget(imageUrls: imageURLs),
               Expanded(
                 child: ListView(
@@ -60,15 +65,21 @@ class ProductDetailPage extends StatelessWidget {
                             children: <Widget>[
                               Expanded(
                                 child: Text(
-                                  selectedProduct?.name ?? '',
+                                  product?.name ?? '',
                                   style:
                                       Theme.of(context).textTheme.titleMedium,
                                 ),
                               ),
                               CustomBadgeWidget(
-                                text: publishedString,
-                                backgroundColor: AppColors.greenColor,
-                                textColor: AppColors.greenColor,
+                                text: isComplete
+                                    ? publishedString
+                                    : inReviewString,
+                                backgroundColor: getProductColor(
+                                  complete: isComplete,
+                                ),
+                                textColor: getProductColor(
+                                  complete: isComplete,
+                                ),
                               ),
                             ],
                           ),
@@ -83,12 +94,11 @@ class ProductDetailPage extends StatelessWidget {
                                 children: <Widget>[
                                   HeroIcon(
                                     HeroIcons.mapPin,
-                                    color: Colors.grey,
+                                    color: AppColors.greyTextColor,
                                     size: 20,
                                   ),
                                   Text(
-                                    selectedProduct?.locations?.first.address ??
-                                        '',
+                                    product?.locations?.first.address ?? '',
                                     style:
                                         Theme.of(context).textTheme.bodyMedium,
                                   ),
@@ -101,13 +111,12 @@ class ProductDetailPage extends StatelessWidget {
                                 children: <Widget>[
                                   HeroIcon(
                                     HeroIcons.calendar,
-                                    color: Colors.grey,
+                                    color: AppColors.greyTextColor,
                                     size: 20,
                                   ),
                                   humanizeDate(
                                     loadedDate:
-                                        selectedProduct?.availability?.start ??
-                                            '',
+                                        product?.availability?.start ?? '',
                                     dateTextStyle:
                                         Theme.of(context).textTheme.bodyMedium,
                                   ),
@@ -118,8 +127,7 @@ class ProductDetailPage extends StatelessWidget {
                                   ),
                                   humanizeDate(
                                     loadedDate:
-                                        selectedProduct?.availability?.end ??
-                                            '',
+                                        product?.availability?.end ?? '',
                                     dateTextStyle:
                                         Theme.of(context).textTheme.bodyMedium,
                                   ),
@@ -133,12 +141,11 @@ class ProductDetailPage extends StatelessWidget {
                                 children: <Widget>[
                                   HeroIcon(
                                     HeroIcons.clock,
-                                    color: Colors.grey,
+                                    color: AppColors.greyTextColor,
                                     size: 20,
                                   ),
                                   formatTime(
-                                    rawTime: selectedProduct
-                                        ?.availability?.startTime,
+                                    rawTime: product?.availability?.startTime,
                                     textStyle:
                                         Theme.of(context).textTheme.bodyMedium,
                                   ),
@@ -148,8 +155,7 @@ class ProductDetailPage extends StatelessWidget {
                                         Theme.of(context).textTheme.bodyMedium,
                                   ),
                                   formatTime(
-                                    rawTime:
-                                        selectedProduct?.availability?.endTime,
+                                    rawTime: product?.availability?.endTime,
                                     textStyle:
                                         Theme.of(context).textTheme.bodyMedium,
                                   ),
@@ -157,16 +163,82 @@ class ProductDetailPage extends StatelessWidget {
                               ),
                             ],
                           ),
+                          ProductAlertWidget(
+                            title: productInReview,
+                            description: productInReviewCopy,
+                            iconData: HeroIcons.clipboardDocumentList,
+                          ),
                           verySmallVerticalSizedBox,
+                          Text(
+                            stats,
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            spacing: 8,
+                            children: <Widget>[
+                              Text(
+                                totalRevenue,
+                                style: Theme.of(context).textTheme.bodySmall,
+                              ),
+                              Text(
+                                'KES 300, 000',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleLarge
+                                    ?.copyWith(
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                              ),
+                            ],
+                          ),
                           ProductDetailItemWidget(
                             text: bookings,
                             value: '300',
                             onTap: () {},
                           ),
-                          ProductDetailItemWidget(
-                            text: payments,
-                            value: 'KES 300, 000',
-                            onTap: () {},
+                          Text(
+                            pricing,
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                          PricingCardWidget(
+                            ticketType: vip,
+                            maxTickets: 300,
+                            price: 3000,
+                            svgIconPath: vvipTicketIconSVGPath,
+                            // onAddOrEdit: () {},
+                          ),
+                          PricingCardWidget(
+                            ticketType: vvip,
+                            maxTickets: 20,
+                            price: 5000,
+                            svgIconPath: vvipTicketIconSVGPath,
+                            // onAddOrEdit: () {},
+                          ),
+                          SecondaryButton(
+                            fillColor: AppColors.redColor.withValues(alpha: .1),
+                            textColor: AppColors.redColor,
+                            onPressed: () => showAlertDialog(
+                              context: context,
+                              assetPath: deleteProductSVGPath,
+                              title: '$deactivateProduct?',
+                              description: deactivateProductCopy,
+                              confirmText: deactivateProduct,
+                              cancelText: noGoBack,
+                              onConfirm: () {
+                                // TODO(abiud): deactivate a product
+                                context.router.maybePop();
+                                ScaffoldMessenger.of(context)
+                                  ..hideCurrentSnackBar()
+                                  ..showSnackBar(
+                                    const SnackBar(
+                                      content: Text(comingSoonTitle),
+                                    ),
+                                  );
+                              },
+                              onCancel: () => context.router.maybePop(),
+                            ),
+                            child: right(deactivateProduct),
                           ),
                         ],
                       ),
@@ -176,11 +248,38 @@ class ProductDetailPage extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: SecondaryButton(
-                  fillColor: AppColors.redColor.withValues(alpha: .1),
-                  textColor: AppColors.redColor,
-                  onPressed: () {},
-                  child: right(deactivateProduct),
+                child: PrimaryButton(
+                  onPressed: () {
+                    ScaffoldMessenger.of(context)
+                      ..hideCurrentSnackBar()
+                      ..showSnackBar(
+                        const SnackBar(
+                          content: Text(comingSoonTitle),
+                        ),
+                      );
+                  },
+                  customRadius: 100,
+                  child: left(
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      spacing: 12,
+                      children: <Widget>[
+                        HeroIcon(
+                          HeroIcons.camera,
+                          color: Colors.white,
+                          size: 24,
+                        ),
+                        Text(
+                          scanTickets,
+                          style:
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ],

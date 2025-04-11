@@ -416,7 +416,7 @@ class __$$ProductImplCopyWithImpl<$Res>
           : availability // ignore: cast_nullable_to_non_nullable
               as ProductAvailability?,
       pricing: freezed == pricing
-          ? _value._pricing
+          ? _value.pricing
           : pricing // ignore: cast_nullable_to_non_nullable
               as List<ProductPricing>?,
       image: freezed == image
@@ -428,7 +428,7 @@ class __$$ProductImplCopyWithImpl<$Res>
           : video // ignore: cast_nullable_to_non_nullable
               as dynamic,
       locations: freezed == locations
-          ? _value._locations
+          ? _value.locations
           : locations // ignore: cast_nullable_to_non_nullable
               as List<ProductLocation>?,
       completed: freezed == completed
@@ -467,18 +467,14 @@ class _$ProductImpl implements _Product {
       this.category = UNKNOWN,
       this.subcategory = UNKNOWN,
       @JsonKey(name: 'availability') this.availability,
-      @JsonKey(name: 'pricing')
-      final List<ProductPricing>? pricing = const <ProductPricing>[],
+      @JsonKey(name: 'pricing') this.pricing = const <ProductPricing>[],
       @JsonKey(name: 'image') this.image,
       this.video,
-      @JsonKey(name: 'locations')
-      final List<ProductLocation>? locations = const <ProductLocation>[],
+      @JsonKey(name: 'locations') this.locations = const <ProductLocation>[],
       this.completed = false,
       this.selectedProductCategory,
       this.selectedProductSubCategory,
-      this.currentLocation})
-      : _pricing = pricing,
-        _locations = locations;
+      this.currentLocation});
 
   factory _$ProductImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProductImplFromJson(json);
@@ -515,33 +511,17 @@ class _$ProductImpl implements _Product {
   @override
   @JsonKey(name: 'availability')
   final ProductAvailability? availability;
-  final List<ProductPricing>? _pricing;
   @override
   @JsonKey(name: 'pricing')
-  List<ProductPricing>? get pricing {
-    final value = _pricing;
-    if (value == null) return null;
-    if (_pricing is EqualUnmodifiableListView) return _pricing;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
+  final List<ProductPricing>? pricing;
   @override
   @JsonKey(name: 'image')
   final ProductImage? image;
   @override
   final dynamic video;
-  final List<ProductLocation>? _locations;
   @override
   @JsonKey(name: 'locations')
-  List<ProductLocation>? get locations {
-    final value = _locations;
-    if (value == null) return null;
-    if (_locations is EqualUnmodifiableListView) return _locations;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
+  final List<ProductLocation>? locations;
   @override
   @JsonKey()
   final bool? completed;
@@ -581,11 +561,10 @@ class _$ProductImpl implements _Product {
                 other.subcategory == subcategory) &&
             (identical(other.availability, availability) ||
                 other.availability == availability) &&
-            const DeepCollectionEquality().equals(other._pricing, _pricing) &&
+            const DeepCollectionEquality().equals(other.pricing, pricing) &&
             (identical(other.image, image) || other.image == image) &&
             const DeepCollectionEquality().equals(other.video, video) &&
-            const DeepCollectionEquality()
-                .equals(other._locations, _locations) &&
+            const DeepCollectionEquality().equals(other.locations, locations) &&
             (identical(other.completed, completed) ||
                 other.completed == completed) &&
             (identical(
@@ -614,10 +593,10 @@ class _$ProductImpl implements _Product {
         category,
         subcategory,
         availability,
-        const DeepCollectionEquality().hash(_pricing),
+        const DeepCollectionEquality().hash(pricing),
         image,
         const DeepCollectionEquality().hash(video),
-        const DeepCollectionEquality().hash(_locations),
+        const DeepCollectionEquality().hash(locations),
         completed,
         selectedProductCategory,
         selectedProductSubCategory,

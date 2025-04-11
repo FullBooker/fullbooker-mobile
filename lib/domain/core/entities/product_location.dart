@@ -4,7 +4,7 @@ import 'package:fullbooker/core/common/constants.dart';
 part 'product_location.freezed.dart';
 part 'product_location.g.dart';
 
-@freezed
+@Freezed(makeCollectionsUnmodifiable: false)
 class ProductLocation with _$ProductLocation {
   @JsonSerializable(explicitToJson: true)
   factory ProductLocation({

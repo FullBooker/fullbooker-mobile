@@ -3,14 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/common/constants.dart';
+import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:dartz/dartz.dart' as d;
+import 'package:fullbooker/shared/widgets/custom_dropdown.dart';
 import 'package:fullbooker/shared/widgets/custom_text_input.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
-import 'package:heroicons/heroicons.dart';
 
 @RoutePage()
 class AddProductPricingPage extends StatelessWidget {
@@ -18,6 +19,11 @@ class AddProductPricingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const double buyerPay = 2825;
+    const double revenue = 2500;
+    const double serviceFee = 2500;
+    const double totalPrice = 2825;
+
     return Scaffold(
       appBar: CustomAppBar(
         showBell: false,
@@ -50,7 +56,6 @@ class AddProductPricingPage extends StatelessWidget {
                           ),
                         ],
                       ),
-
                       Container(
                         padding: EdgeInsets.all(12),
                         decoration: BoxDecoration(
@@ -62,7 +67,7 @@ class AddProductPricingPage extends StatelessWidget {
                         child: Row(
                           spacing: 12,
                           children: <Widget>[
-                            SvgPicture.asset(regularTicketIconSVGPath),
+                            SvgPicture.asset(standardTicketIconSVGPath),
                             Text(
                               vip,
                               style: Theme.of(context)
@@ -76,40 +81,156 @@ class AddProductPricingPage extends StatelessWidget {
                         ),
                       ),
 
-                      // TODO(abiud): add currency dropdown
-
-                      CustomTextInput(
-                        hintText: priceHint,
-                        labelText: priceString,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        onChanged: (String value) {},
-                        keyboardType: TextInputType.number,
-                        prefixIconData: HeroIcons.currencyDollar,
+                      // Currency dropdown
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        spacing: 12,
+                        children: <Widget>[
+                          Text(
+                            priceString,
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                          Row(
+                            spacing: 12,
+                            children: <Widget>[
+                              Flexible(
+                                flex: 3,
+                                child: CustomDropdown(
+                                  options: kAllowedCurrencies,
+                                  value: kAllowedCurrencies.first,
+                                  onChanged: (String? value) {},
+                                ),
+                              ),
+                              Flexible(
+                                flex: 9,
+                                child: CustomTextInput(
+                                  hintText: priceHint,
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  onChanged: (String value) {},
+                                  keyboardType: TextInputType.number,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
 
                       Container(
-                        padding: EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Theme.of(context).primaryColor,
+                          ), // Orange border
                           borderRadius: BorderRadius.circular(8),
-                          color: Theme.of(context)
-                              .primaryColor
-                              .withValues(alpha: .1),
                         ),
-                        child: Row(
-                          spacing: 8,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          spacing: 16,
                           children: <Widget>[
-                            HeroIcon(
-                              HeroIcons.informationCircle,
-                              color: Theme.of(context).primaryColor,
-                            ),
                             Text(
-                              serviceFeeDisclaimer(kPlatformServiceFee),
+                              pricingBreakdown,
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodySmall
+                                  .titleMedium
                                   ?.copyWith(
                                     color: Theme.of(context).primaryColor,
                                   ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text(
+                                  serviceFeeLabel,
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                ),
+                                Text(
+                                  serviceFee.toStringAsFixed(0),
+                                  style: TextStyle(color: Colors.grey),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text(
+                                  yourBuyers,
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                ),
+                                Text(
+                                  buyerPay.toStringAsFixed(0),
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text(
+                                  yourRevenue,
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                ),
+                                Text(
+                                  revenue.toStringAsFixed(0),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleSmall
+                                      ?.copyWith(
+                                        color: AppColors.greenColor,
+                                      ),
+                                ),
+                              ],
+                            ),
+                            InkWell(
+                              onTap: () {
+                                // TODO(abiud): save this value to state for the current product
+                              },
+                              highlightColor: Theme.of(context)
+                                  .primaryColor
+                                  .withValues(alpha: 0.1),
+                              splashColor: Theme.of(context)
+                                  .primaryColor
+                                  .withValues(alpha: 0.1),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 4),
+                                child: Row(
+                                  spacing: 12,
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.check_box,
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                                    Text(
+                                      iWantBuyersToPay,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text(
+                                  totalString,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                                ),
+                                Text(
+                                  totalPrice.toStringAsFixed(0),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleSmall
+                                      ?.copyWith(
+                                        color: Theme.of(context).primaryColor,
+                                      ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
@@ -122,13 +243,38 @@ class AddProductPricingPage extends StatelessWidget {
                         onChanged: (String value) {},
                         keyboardType: TextInputType.number,
                       ),
-
-                      CustomTextInput(
-                        hintText: discountHint,
-                        labelText: discountLabel,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        onChanged: (String value) {},
-                        keyboardType: TextInputType.number,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        spacing: 12,
+                        children: <Widget>[
+                          Text(
+                            discountLabel,
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                          Row(
+                            spacing: 12,
+                            children: <Widget>[
+                              Flexible(
+                                flex: 4,
+                                child: CustomDropdown(
+                                  options: kAllowedDiscountOptions,
+                                  value: kAllowedDiscountOptions.first,
+                                  onChanged: (String? value) {},
+                                ),
+                              ),
+                              Flexible(
+                                flex: 8,
+                                child: CustomTextInput(
+                                  hintText: priceHint,
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  onChanged: (String value) {},
+                                  keyboardType: TextInputType.number,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ],
                   ),

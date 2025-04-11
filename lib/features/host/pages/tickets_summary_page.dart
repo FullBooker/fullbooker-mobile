@@ -230,7 +230,7 @@ class _TicketsSummaryPageState extends State<TicketsSummaryPage> {
                   EdgeInsets.symmetric(horizontal: width / 8, vertical: 30),
               child: OldButton(
                 onContinueClick,
-                actionLabel: publishString,
+                actionLabel: submitString,
                 loading: isLoading,
               ),
             ),
