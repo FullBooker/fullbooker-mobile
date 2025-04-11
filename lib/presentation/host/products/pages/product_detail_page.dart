@@ -218,7 +218,26 @@ class ProductDetailPage extends StatelessWidget {
                           SecondaryButton(
                             fillColor: AppColors.redColor.withValues(alpha: .1),
                             textColor: AppColors.redColor,
-                            onPressed: () {},
+                            onPressed: () => showAlertDialog(
+                              context: context,
+                              assetPath: deleteProductSVGPath,
+                              title: '$deactivateProduct?',
+                              description: deactivateProductCopy,
+                              confirmText: deactivateProduct,
+                              cancelText: noGoBack,
+                              onConfirm: () {
+                                // TODO(abiud): deactivate a product
+                                context.router.maybePop();
+                                ScaffoldMessenger.of(context)
+                                  ..hideCurrentSnackBar()
+                                  ..showSnackBar(
+                                    const SnackBar(
+                                      content: Text(comingSoonTitle),
+                                    ),
+                                  );
+                              },
+                              onCancel: () => context.router.maybePop(),
+                            ),
                             child: right(deactivateProduct),
                           ),
                         ],

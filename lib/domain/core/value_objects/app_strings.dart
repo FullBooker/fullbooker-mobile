@@ -558,6 +558,8 @@ const String bookings = 'Bookings';
 const String payments = 'Payments';
 
 const String deactivateProduct = 'Deactivate Product';
+const String deactivateProductCopy =
+    'Are you sure you want to deactivate this product? You can activate it later';
 
 const String publishedString = 'Published';
 const String draftString = 'Draft';
@@ -610,3 +612,5 @@ const String stats = 'Stats';
 const String totalRevenue = 'Total Revenue';
 
 const String scanTickets = 'Scan Tickets';
+
+const String noGoBack = 'No, Go Back';
