@@ -301,7 +301,10 @@ Widget formatTime({
   );
 }
 
-void navigateToNextProductStep({required BuildContext context,required Product product}) {
+void navigateToNextProductStep({
+  required BuildContext context,
+  required Product product,
+}) {
   if (product.completed ?? false) {
     context.router.push(const ProductDetailRoute());
   }
@@ -339,7 +342,7 @@ void navigateToNextProductStep({required BuildContext context,required Product p
   }
 
   if (product.completed != true) {
-    context.router.push(const ProductReviewAndPublishRoute());
+    context.router.push(const ProductReviewAndSubmitRoute());
     return;
   }
 }

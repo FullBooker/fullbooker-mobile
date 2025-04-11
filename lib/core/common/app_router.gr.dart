@@ -63,7 +63,7 @@ import 'package:fullbooker/presentation/host/product_setup/pages/product_photos_
     as _i28;
 import 'package:fullbooker/presentation/host/product_setup/pages/product_pricing_page.dart'
     as _i29;
-import 'package:fullbooker/presentation/host/product_setup/pages/product_review_and_publish_page.dart'
+import 'package:fullbooker/presentation/host/product_setup/pages/product_review_and_submit_page.dart'
     as _i30;
 import 'package:fullbooker/presentation/host/product_setup/pages/product_setup_preview_page.dart'
     as _i31;
@@ -1014,17 +1014,17 @@ class ProductPricingRoute extends _i41.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i30.ProductReviewAndPublishPage]
-class ProductReviewAndPublishRoute extends _i41.PageRouteInfo<void> {
-  const ProductReviewAndPublishRoute({List<_i41.PageRouteInfo>? children})
-    : super(ProductReviewAndPublishRoute.name, initialChildren: children);
+/// [_i30.ProductReviewAndSubmitPage]
+class ProductReviewAndSubmitRoute extends _i41.PageRouteInfo<void> {
+  const ProductReviewAndSubmitRoute({List<_i41.PageRouteInfo>? children})
+    : super(ProductReviewAndSubmitRoute.name, initialChildren: children);
 
-  static const String name = 'ProductReviewAndPublishRoute';
+  static const String name = 'ProductReviewAndSubmitRoute';
 
   static _i41.PageInfo page = _i41.PageInfo(
     name,
     builder: (data) {
-      return const _i30.ProductReviewAndPublishPage();
+      return const _i30.ProductReviewAndSubmitPage();
     },
   );
 }

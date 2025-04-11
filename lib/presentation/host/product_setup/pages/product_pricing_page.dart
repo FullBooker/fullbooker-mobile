@@ -109,7 +109,7 @@ class ProductPricingPage extends StatelessWidget {
             ),
             PrimaryButton(
               onPressed: () {
-                context.router.push(ProductReviewAndPublishRoute());
+                context.router.push(ProductReviewAndSubmitRoute());
               },
               child: d.right(continueString),
             ),

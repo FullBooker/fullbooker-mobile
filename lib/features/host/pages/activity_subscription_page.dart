@@ -410,7 +410,7 @@ class _ActivitySubscription extends State<ActivitySubscriptionPage> {
                   EdgeInsets.symmetric(horizontal: width / 8, vertical: 30),
               child: OldButton(
                 onContinueClick,
-                actionLabel: publishString,
+                actionLabel: submitString,
                 loading: isLoading,
               ),
             ),

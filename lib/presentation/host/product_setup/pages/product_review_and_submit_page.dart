@@ -16,8 +16,8 @@ import 'package:fullbooker/shared/widgets/secondary_button.dart';
 import 'package:heroicons/heroicons.dart';
 
 @RoutePage()
-class ProductReviewAndPublishPage extends StatelessWidget {
-  const ProductReviewAndPublishPage({super.key});
+class ProductReviewAndSubmitPage extends StatelessWidget {
+  const ProductReviewAndSubmitPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,7 @@ class ProductReviewAndPublishPage extends StatelessWidget {
                         spacing: 8,
                         children: <Widget>[
                           Text(
-                            reviewAndPublish,
+                            reviewAndSubmit,
                             style: Theme.of(context).textTheme.headlineSmall,
                           ),
                           Text(
@@ -226,7 +226,7 @@ class ProductReviewAndPublishPage extends StatelessWidget {
               onPressed: () {
                 context.router.push(ProductPricingRoute());
               },
-              child: d.right(publishString),
+              child: d.right(submitString),
             ),
             SecondaryButton(
               onPressed: () => context.router.maybePop(),

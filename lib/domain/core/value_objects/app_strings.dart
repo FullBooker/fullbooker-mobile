@@ -246,7 +246,7 @@ const String pricePerPersonPerSession =
     'What is the price per person per session';
 const String maxTicketsPerSession = 'Maximum number of tickets per session';
 const String maxTicketsPerDayPass = 'Maximum number of tickets per day pass';
-const String publishString = 'Publish';
+const String submitString = 'Submit';
 
 const String selectCategoryPrompt = 'Please select a category for your event';
 
@@ -465,8 +465,8 @@ const String media = 'Media';
 const String mediaCopy = 'Photos of your event';
 const String pricing = 'Pricing';
 const String pricingCopy = 'Setup product price';
-const String review = 'Review and publish';
-const String reviewCopy = 'Final tweaks before publishing';
+const String review = 'Review and submit';
+const String reviewCopy = 'Final tweaks before submitting for review';
 
 // Basic details
 const String productBasicDetails = 'Basic details';
@@ -524,9 +524,8 @@ const String maxTicketsHint = 'Enter a number';
 const String discountLabel = 'Discount(optional)';
 const String discountHint = 'Enter discount';
 
-// Review and publish page
-
-const String reviewAndPublish = 'Review and publish';
+// Review and submit page
+const String reviewAndSubmit = 'Review and submit';
 
 const String testProductDescription =
     'Experience the unforgettable journey of Taylor  Swift’s Eras Tour, a celebration of her music, artistry,  and storytelling...';
