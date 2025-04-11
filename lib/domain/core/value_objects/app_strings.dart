@@ -621,3 +621,6 @@ const String searchBookingsHint = 'Search bookings...';
 
 const String verifiedString = 'Verified';
 const String verifyString = 'Verify';
+
+const String homeNudgeCopy = 'Ready to host your first experience?';
+const String setupNow = 'Set Up Now';

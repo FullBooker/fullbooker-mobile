@@ -1,5 +1,6 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
 import 'package:fullbooker/application/redux/actions/fetch_products_action.dart';
@@ -17,6 +18,7 @@ import 'package:fullbooker/presentation/core/components/new_product_card.dart';
 import 'package:fullbooker/presentation/core/components/profile_avatar.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
+import 'package:fullbooker/shared/widgets/primary_button.dart';
 
 @RoutePage()
 class HostingHomePage extends StatelessWidget {
@@ -71,7 +73,57 @@ class HostingHomePage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Column(
+          spacing: 12,
           children: <Widget>[
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                color: Theme.of(context).cardColor,
+                boxShadow: <BoxShadow>[
+                  BoxShadow(
+                    color: Theme.of(context).dividerColor.withValues(alpha: .5),
+                    offset: Offset(0, 8),
+                    blurRadius: 30,
+                  ),
+                ],
+              ),
+              child: Row(
+                children: <Widget>[
+                  ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(16),
+                      bottomLeft: Radius.circular(16),
+                    ),
+                    child: Image.asset(
+                      homeNudgeImagePath,
+                      fit: BoxFit.cover,
+                      height: MediaQuery.of(context).size.height * .15,
+                      width: MediaQuery.of(context).size.height * .18,
+                    ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+                      child: Column(
+                        spacing: 8,
+                        children: <Widget>[
+                          Text(
+                            homeNudgeCopy,
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                          PrimaryButton(
+                            onPressed: () =>
+                                context.router.push(SetupProductTypeRoute()),
+                            child: right(setupNow),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
             StoreConnector<AppState, HostingHomeViewModel>(
               converter: (Store<AppState> store) =>
                   HostingHomeViewModel.fromState(store.state),

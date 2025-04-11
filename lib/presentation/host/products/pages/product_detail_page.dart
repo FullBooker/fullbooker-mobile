@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/products_page_view_model.dart';
+import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/entities/product.dart';
@@ -195,7 +196,8 @@ class ProductDetailPage extends StatelessWidget {
                           ProductDetailItemWidget(
                             text: bookings,
                             value: '300',
-                            onTap: () {},
+                            onTap: () =>
+                                context.router.push(ProductBookingsRoute()),
                           ),
                           Text(
                             pricing,

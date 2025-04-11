@@ -364,3 +364,13 @@ Color getProductColor({bool complete = false}) {
   if (complete) return AppColors.greenColor;
   return AppColors.amberColor;
 }
+
+String formatCurrency(dynamic number) {
+  final NumberFormat currency = NumberFormat.currency(
+    decimalDigits: 0,
+    symbol: 'Ksh. ',
+    locale: 'en-US',
+  );
+
+  return currency.format(number);
+}
