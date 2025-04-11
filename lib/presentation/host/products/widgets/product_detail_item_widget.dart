@@ -48,7 +48,7 @@ class ProductDetailItemWidget extends StatelessWidget {
           ),
           Flexible(
             flex: 2,
-            child: SecondaryButton(onPressed: () {}, child: right(viewString)),
+            child: SecondaryButton(onPressed: onTap, child: right(viewString)),
           ),
         ],
       ),
