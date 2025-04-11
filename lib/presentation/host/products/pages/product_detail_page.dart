@@ -18,6 +18,7 @@ import 'package:fullbooker/presentation/host/products/widgets/product_detail_ite
 import 'package:fullbooker/shared/entities/data_mocks.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
+import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
 import 'package:heroicons/heroicons.dart';
 
@@ -214,6 +215,12 @@ class ProductDetailPage extends StatelessWidget {
                             svgIconPath: vvipTicketIconSVGPath,
                             // onAddOrEdit: () {},
                           ),
+                          SecondaryButton(
+                            fillColor: AppColors.redColor.withValues(alpha: .1),
+                            textColor: AppColors.redColor,
+                            onPressed: () {},
+                            child: right(deactivateProduct),
+                          ),
                         ],
                       ),
                     ),
@@ -222,11 +229,38 @@ class ProductDetailPage extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: SecondaryButton(
-                  fillColor: AppColors.redColor.withValues(alpha: .1),
-                  textColor: AppColors.redColor,
-                  onPressed: () {},
-                  child: right(deactivateProduct),
+                child: PrimaryButton(
+                  onPressed: () {
+                    ScaffoldMessenger.of(context)
+                      ..hideCurrentSnackBar()
+                      ..showSnackBar(
+                        const SnackBar(
+                          content: Text(comingSoonTitle),
+                        ),
+                      );
+                  },
+                  customRadius: 100,
+                  child: left(
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      spacing: 12,
+                      children: <Widget>[
+                        HeroIcon(
+                          HeroIcons.camera,
+                          color: Colors.white,
+                          size: 24,
+                        ),
+                        Text(
+                          scanTickets,
+                          style:
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ],

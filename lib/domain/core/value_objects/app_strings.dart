@@ -607,4 +607,6 @@ const String backToProducts = 'Back to Products';
 const String viewProduct = 'View Product';
 
 const String stats = 'Stats';
-const String totalRevenue  = 'Total Revenue';
+const String totalRevenue = 'Total Revenue';
+
+const String scanTickets = 'Scan Tickets';
