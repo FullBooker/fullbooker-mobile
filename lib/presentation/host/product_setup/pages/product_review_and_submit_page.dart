@@ -2,12 +2,16 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
+import 'package:fullbooker/domain/core/entities/product_category.dart';
+import 'package:fullbooker/domain/core/entities/product_location.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:dartz/dartz.dart' as d;
+import 'package:fullbooker/presentation/host/product_setup/components/location_preview_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/components/preview_header_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/components/pricing_card_widget.dart';
+import 'package:fullbooker/presentation/host/product_setup/components/product_type_item.dart';
 import 'package:fullbooker/shared/entities/data_mocks.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
@@ -55,9 +59,27 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                         ],
                       ),
                       Divider(),
+
+                      // Category and type
+                      PreviewHeaderWidget(
+                        title: categoryAndType,
+                        onEdit: () {},
+                      ),
+
+                      ProductTypeItem(
+                        category: ProductCategory.initial().copyWith(
+                          name: activities,
+                          description: activitiesString,
+                        ),
+                        isSelected: true,
+                        onTap: () {},
+                      ),
+
+                      Divider(),
+
+                      // Basic details
                       PreviewHeaderWidget(
                         title: basicDetails,
-                        copy: basicDetailsCopy,
                         onEdit: () {},
                       ),
                       Column(
@@ -66,36 +88,36 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                         children: <Widget>[
                           Text(
                             testEventName,
-                            style: Theme.of(context).textTheme.titleMedium,
+                            style: Theme.of(context).textTheme.titleSmall,
                           ),
                           Text(
                             testProductDescription,
-                            style: Theme.of(context).textTheme.bodySmall,
+                            style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ],
                       ),
                       Divider(),
+
+                      // Location
                       PreviewHeaderWidget(
                         title: location,
-                        copy: locationCopy,
                         onEdit: () {},
                       ),
-                      Text(
-                        testLocation,
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                      Container(
-                        height: 100,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          border:
-                              Border.all(color: Theme.of(context).primaryColor),
+
+                      LocationPreviewWidget(
+                        // TODO(abiud): replace this dynamically from the product details object
+                        location: ProductLocation.initial().copyWith(
+                          lat: '-1.288939',
+                          long: '36.8201716',
+                          address: 'KICC',
+                          city: 'Nairobi',
                         ),
                       ),
+
+                      // Date and time
                       Divider(),
                       PreviewHeaderWidget(
                         title: dateAndTime,
-                        copy: dateAndTimeCopy,
                         onEdit: () {},
                       ),
                       Wrap(
@@ -128,9 +150,10 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                         ],
                       ),
                       Divider(),
+
+                      // Photos
                       PreviewHeaderWidget(
                         title: photos,
-                        copy: photosAdded(15),
                         onEdit: () {},
                       ),
                       Row(
@@ -199,9 +222,10 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                         ],
                       ),
                       Divider(),
+
+                      // Pricing
                       PreviewHeaderWidget(
                         title: pricing,
-                        copy: pricingCopy,
                         onEdit: () {},
                       ),
                       PricingCardWidget(

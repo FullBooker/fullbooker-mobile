@@ -9,12 +9,10 @@ class PreviewHeaderWidget extends StatelessWidget {
   const PreviewHeaderWidget({
     super.key,
     required this.title,
-    required this.copy,
     required this.onEdit,
   });
 
   final String title;
-  final String copy;
   final Function() onEdit;
 
   @override
@@ -24,22 +22,12 @@ class PreviewHeaderWidget extends StatelessWidget {
       children: <Widget>[
         Expanded(
           flex: 4,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 4,
-            children: <Widget>[
-              Text(
-                title,
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: Theme.of(context).primaryColor,
-                      fontWeight: FontWeight.w600,
-                    ),
-              ),
-              Text(
-                copy,
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-            ],
+          child: Text(
+            title,
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  color: Theme.of(context).primaryColor,
+                  fontWeight: FontWeight.w600,
+                ),
           ),
         ),
         Expanded(

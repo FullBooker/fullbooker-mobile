@@ -453,6 +453,7 @@ const String whatYouNeedCopy = '5 easy steps. Here’s what you will need';
 
 const String beginString = 'Begin';
 const String productCategoryAndType = 'Product category and type';
+const String categoryAndType = 'Category and type';
 const String changeString = 'Change';
 
 const String basicDetails = 'Basic details';
