@@ -44,127 +44,125 @@ class ProductBookingsPage extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          children: <Widget>[
-            StoreConnector<AppState, ProductsPageViewModel>(
-              converter: (Store<AppState> store) =>
-                  ProductsPageViewModel.fromState(store.state),
-              onInit: (Store<AppState> store) {
-                // TODO(abiud): dispatch get product bookings action
-                // context.dispatch(
-                //   FetchProductsAction(
-                //     client: AppWrapperBase.of(context)!.customClient,
-                //   ),
-                // );
-              },
-              builder: (BuildContext context, ProductsPageViewModel vm) {
-                // TODO(abiud): restore this code when linking to the API
+        child: SingleChildScrollView(
+          physics: NeverScrollableScrollPhysics(),
+          child: Column(
+            children: <Widget>[
+              StoreConnector<AppState, ProductsPageViewModel>(
+                converter: (Store<AppState> store) =>
+                    ProductsPageViewModel.fromState(store.state),
+                onInit: (Store<AppState> store) {
+                  // TODO(abiud): dispatch get product bookings action
+                  // context.dispatch(
+                  //   FetchProductsAction(
+                  //     client: AppWrapperBase.of(context)!.customClient,
+                  //   ),
+                  // );
+                },
+                builder: (BuildContext context, ProductsPageViewModel vm) {
+                  // TODO(abiud): restore this code when linking to the API
 
-                // if (context.isWaiting(FetchProductsAction)) {
-                //   return AppLoading();
-                // }
+                  // if (context.isWaiting(FetchProductsAction)) {
+                  //   return AppLoading();
+                  // }
 
-                // final List<Product>? products = vm.products;
+                  // final List<Product>? products = vm.products;
 
-                // if (products?.isEmpty ?? true) {
-                //   return GenericZeroState(
-                //     iconPath: productZeroStateSVGPath,
-                //     title: noProducts,
-                //     description: noProductsCopy,
-                //     onCTATap: () {
-                //       context.router.push(SetupProductTypeRoute());
-                //     },
-                //     ctaText: createProductString,
-                //   );
-                // }
+                  // if (products?.isEmpty ?? true) {
+                  //   return GenericZeroState(
+                  //     iconPath: productZeroStateSVGPath,
+                  //     title: noProducts,
+                  //     description: noProductsCopy,
+                  //     onCTATap: () {
+                  //       context.router.push(SetupProductTypeRoute());
+                  //     },
+                  //     ctaText: createProductString,
+                  //   );
+                  // }
 
-                // return ListView.builder(
-                //   shrinkWrap: true,
-                //   itemCount: products?.length,
-                //   itemBuilder: (BuildContext context, int index) {
-                //     final Product product = products![index];
+                  // return ListView.builder(
+                  //   shrinkWrap: true,
+                  //   itemCount: products?.length,
+                  //   itemBuilder: (BuildContext context, int index) {
+                  //     final Product product = products![index];
 
-                //     return Padding(
-                //       padding: const EdgeInsets.symmetric(vertical: 12),
-                //       child: NewProductCard(product: product),
-                //     );
-                //   },
-                // );
+                  //     return Padding(
+                  //       padding: const EdgeInsets.symmetric(vertical: 12),
+                  //       child: NewProductCard(product: product),
+                  //     );
+                  //   },
+                  // );
 
-                return ListView(
-                  shrinkWrap: true,
-                  children: <Widget>[
-                    Column(
-                      spacing: 24,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          spacing: 12,
-                          children: <Widget>[
-                            Text(
-                              testEventName,
-                              style: Theme.of(context).textTheme.titleMedium,
-                            ),
-                            Text(
-                              '400 $bookings',
-                              style: Theme.of(context).textTheme.bodySmall,
-                            ),
-                            Text(
-                              'KES 300, 000',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge
-                                  ?.copyWith(
-                                    color: Theme.of(context).primaryColor,
-                                  ),
-                            ),
+                  return Column(
+                    spacing: 24,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        spacing: 12,
+                        children: <Widget>[
+                          Text(
+                            testEventName,
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                          Text(
+                            '400 $bookings',
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                          Text(
+                            'KES 300, 000',
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge
+                                ?.copyWith(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                          ),
 
-                            // TODO(abiud): add filter groups here
+                          // TODO(abiud): add filter groups here
 
-                            CustomTextInput(
-                              hintText: searchBookingsHint,
-                              autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
-                              onChanged: (String param) {},
-                              keyboardType: TextInputType.name,
-                              prefixIconData: HeroIcons.magnifyingGlass,
-                            ),
+                          CustomTextInput(
+                            hintText: searchBookingsHint,
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            onChanged: (String param) {},
+                            keyboardType: TextInputType.name,
+                            prefixIconData: HeroIcons.magnifyingGlass,
+                          ),
 
-                            // Bookings
-                            ListView.builder(
-                              itemCount: mockBookings.length,
-                              shrinkWrap: true,
-                              itemBuilder: (BuildContext context, int index) {
-                                final Booking current = mockBookings[index];
+                          // Bookings
+                          ListView.builder(
+                            itemCount: mockBookings.length,
+                            physics: AlwaysScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemBuilder: (BuildContext context, int index) {
+                              final Booking current = mockBookings[index];
 
-                                return Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 8),
-                                  child: BookingListItem(
-                                    booking: Booking.initial().copyWith(
-                                      bookedOn:
-                                          DateTime.now().toIso8601String(),
-                                      user: UserState(
-                                        firstName: current.user?.firstName,
-                                        lastName: current.user?.lastName,
-                                      ),
-                                      bookingType: current.bookingType,
-                                      price: current.price,
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 4),
+                                child: BookingListItem(
+                                  booking: Booking.initial().copyWith(
+                                    bookedOn: DateTime.now().toIso8601String(),
+                                    user: UserState(
+                                      firstName: current.user?.firstName,
+                                      lastName: current.user?.lastName,
                                     ),
+                                    bookingType: current.bookingType,
+                                    price: current.price,
                                   ),
-                                );
-                              },
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
-                );
-              },
-            ),
-          ],
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

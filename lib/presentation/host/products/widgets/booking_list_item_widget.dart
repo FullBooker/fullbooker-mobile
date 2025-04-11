@@ -26,8 +26,8 @@ class BookingListItem extends StatelessWidget {
         children: <Widget>[
           // Avatar
           Container(
-            width: 48,
-            height: 48,
+            width: 56,
+            height: 56,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: AppColors.primaryColor.withValues(alpha: .1),
@@ -80,6 +80,7 @@ class BookingListItem extends StatelessWidget {
           // Pricing & Status
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisSize: MainAxisSize.min,
             spacing: 8,
             children: <Widget>[
               Text(
@@ -95,6 +96,8 @@ class BookingListItem extends StatelessWidget {
                   textColor: AppColors.greenColor,
                   backgroundColor: AppColors.greenColor,
                 ),
+              // else
+              //   SecondaryButton(child: right(verifyString), onPressed: () {}),
             ],
           ),
         ],

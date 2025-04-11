@@ -620,3 +620,4 @@ const String productBookings = 'Product Bookings';
 const String searchBookingsHint = 'Search bookings...';
 
 const String verifiedString = 'Verified';
+const String verifyString = 'Verify';

@@ -333,4 +333,22 @@ final List<Booking> mockBookings = <Booking>[
     bookingType: 'VVIP',
     price: 5000,
   ),
+  Booking.initial().copyWith(
+    bookedOn: DateTime.now().toIso8601String(),
+    user: UserState(
+      firstName: 'Abiud',
+      lastName: 'Orina',
+    ),
+    bookingType: 'Regular',
+    price: 2000,
+  ),
+  Booking.initial().copyWith(
+    bookedOn: DateTime.now().toIso8601String(),
+    user: UserState(
+      firstName: 'Abiud',
+      lastName: 'Orina',
+    ),
+    bookingType: 'Regular',
+    price: 2000,
+  ),
 ];
