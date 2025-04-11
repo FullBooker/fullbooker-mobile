@@ -248,15 +248,22 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
             ),
             smallVerticalSizedBox,
             PrimaryButton(
-              onPressed: () {
-                showAlertDialog(
-                  context: context,
-                  assetPath: productSetupSuccessSVGPath,
-                  description: 'error',
-                  onConfirm: () {},
-                );
-                // context.router.push(ProductPricingRoute());
-              },
+              onPressed: () => showAlertDialog(
+                context: context,
+                assetPath: productSetupSuccessSVGPath,
+                title: productSubmit,
+                description: productSubmitCopy,
+                confirmText: backToProducts,
+                cancelText: viewProduct,
+                onConfirm: () {
+                  context.router.maybePop();
+                  // TODO(abiud): navigate to products page
+                },
+                onCancel: () {
+                  context.router.maybePop();
+                  // TODO(abiud): navigate to product detail page
+                },
+              ),
               child: d.right(submitString),
             ),
             SecondaryButton(

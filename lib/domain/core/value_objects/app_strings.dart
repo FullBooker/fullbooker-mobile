@@ -601,3 +601,6 @@ const String productInReviewCopy =
 const String productSubmit = 'You\'re All Set!';
 const String productSubmitCopy =
     'We’ve received your product. It’s now under review and will be live within 48 hours. For help, contact support on $kSupportLine';
+
+const String backToProducts = 'Back to Products';
+const String viewProduct = 'View Product';

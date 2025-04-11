@@ -56,13 +56,14 @@ void showAlertDialog({
   Function()? onConfirm,
   Function()? onCancel,
   String? confirmText,
+  String? cancelText,
 }) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
         content: Column(
-          spacing: 16,
+          spacing: 12,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             if (assetPath != null)
@@ -104,8 +105,8 @@ void showAlertDialog({
               width: double.infinity,
               height: 48,
               child: SecondaryButton(
-                child: right(confirmText ?? okThanksString),
-                onPressed: onConfirm ?? () => context.router.maybePop(),
+                child: right(cancelText ?? okThanksString),
+                onPressed: onCancel ?? () => context.router.maybePop(),
               ),
             ),
           ],
@@ -317,6 +318,8 @@ void navigateToNextProductStep({
 }) {
   if (product.completed ?? false) {
     context.router.push(const ProductDetailRoute());
+
+    return;
   }
 
   if ((product.name?.isEmpty ?? true) ||
@@ -325,7 +328,7 @@ void navigateToNextProductStep({
     return;
   }
 
-  if (product.locations == null || product.locations!.isEmpty) {
+  if (product.locations?.isEmpty ?? true) {
     context.router.push(const ProductLocationRoute());
     return;
   }
