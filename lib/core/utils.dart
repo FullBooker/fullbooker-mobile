@@ -13,6 +13,7 @@ import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/regexes.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
+import 'package:fullbooker/shared/widgets/secondary_button.dart';
 import 'package:intl/intl.dart';
 import 'package:map_location_picker/map_location_picker.dart';
 
@@ -53,6 +54,7 @@ void showAlertDialog({
   String? title,
   String? description,
   Function()? onConfirm,
+  Function()? onCancel,
   String? confirmText,
 }) {
   showDialog(
@@ -94,6 +96,14 @@ void showAlertDialog({
               width: double.infinity,
               height: 48,
               child: PrimaryButton(
+                child: right(confirmText ?? okThanksString),
+                onPressed: onConfirm ?? () => context.router.maybePop(),
+              ),
+            ),
+            SizedBox(
+              width: double.infinity,
+              height: 48,
+              child: SecondaryButton(
                 child: right(confirmText ?? okThanksString),
                 onPressed: onConfirm ?? () => context.router.maybePop(),
               ),

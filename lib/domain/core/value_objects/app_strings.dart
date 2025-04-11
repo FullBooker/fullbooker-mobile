@@ -1,5 +1,7 @@
 // Onboarding strings
 // TODO(abiud): improve this copy
+import 'package:fullbooker/core/common/constants.dart';
+
 const String overview1Title = 'Find your favorite events and activities';
 const String overview1Copy = 'Discover, book, and enjoy your favorite events';
 const String overview2Title = 'Find events and activities events nearby';
@@ -17,7 +19,7 @@ const String notFoundString =
 const String serverError = 'Server error';
 
 const String genericErrorString =
-    'Oops! Something went wrong on our end, please try again';
+    'Oops! Something went wrong on our end, please try again or contact us on $kSupportLine';
 
 // Shared
 const String okThanksString = 'Ok, Thanks';
@@ -595,3 +597,7 @@ const String iWantBuyersToPay = 'I want my buyers to pay the service fee';
 const String productInReview = 'Product in review';
 const String productInReviewCopy =
     'Your product is in review and will be live within 48 hours';
+
+const String productSubmit = 'You\'re All Set!';
+const String productSubmitCopy =
+    'We’ve received your product. It’s now under review and will be live within 48 hours. For help, contact support on $kSupportLine';

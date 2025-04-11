@@ -96,8 +96,8 @@ class AddProductPricingPage extends StatelessWidget {
                               Flexible(
                                 flex: 3,
                                 child: CustomDropdown(
-                                  options: allowedCurrencies,
-                                  value: allowedCurrencies.first,
+                                  options: kAllowedCurrencies,
+                                  value: kAllowedCurrencies.first,
                                   onChanged: (String? value) {},
                                 ),
                               ),
@@ -257,8 +257,8 @@ class AddProductPricingPage extends StatelessWidget {
                               Flexible(
                                 flex: 4,
                                 child: CustomDropdown(
-                                  options: allowedDiscountOptions,
-                                  value: allowedDiscountOptions.first,
+                                  options: kAllowedDiscountOptions,
+                                  value: kAllowedDiscountOptions.first,
                                   onChanged: (String? value) {},
                                 ),
                               ),

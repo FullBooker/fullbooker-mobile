@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
+import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/entities/product_category.dart';
 import 'package:fullbooker/domain/core/entities/product_location.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
@@ -248,7 +249,13 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
             smallVerticalSizedBox,
             PrimaryButton(
               onPressed: () {
-                context.router.push(ProductPricingRoute());
+                showAlertDialog(
+                  context: context,
+                  assetPath: productSetupSuccessSVGPath,
+                  description: 'error',
+                  onConfirm: () {},
+                );
+                // context.router.push(ProductPricingRoute());
               },
               child: d.right(submitString),
             ),
