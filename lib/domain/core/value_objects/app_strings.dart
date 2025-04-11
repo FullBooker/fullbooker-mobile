@@ -614,3 +614,9 @@ const String totalRevenue = 'Total Revenue';
 const String scanTickets = 'Scan Tickets';
 
 const String noGoBack = 'No, Go Back';
+
+const String productBookings = 'Product Bookings';
+
+const String searchBookingsHint = 'Search bookings...';
+
+const String verifiedString = 'Verified';

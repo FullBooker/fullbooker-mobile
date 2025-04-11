@@ -17,3 +17,7 @@
 ## Page changes (can be done later)
 
 - [ ] Remove reviews page
+
+## New changes
+
+- [ ] Handle currency formatting on the app
