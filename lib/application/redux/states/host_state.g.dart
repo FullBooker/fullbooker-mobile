@@ -24,6 +24,10 @@ _$HostStateImpl _$$HostStateImplFromJson(Map<String, dynamic> json) =>
               ?.map((e) => ProductCategory.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const <ProductCategory>[],
+      locationPerms: json['locationPerms'] == null
+          ? null
+          : LocationPermsResult.fromJson(
+              json['locationPerms'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$HostStateImplToJson(_$HostStateImpl instance) =>
@@ -33,4 +37,5 @@ Map<String, dynamic> _$$HostStateImplToJson(_$HostStateImpl instance) =>
       'selectedProduct': instance.selectedProduct?.toJson(),
       'productCategories':
           instance.productCategories?.map((e) => e.toJson()).toList(),
+      'locationPerms': instance.locationPerms?.toJson(),
     };
