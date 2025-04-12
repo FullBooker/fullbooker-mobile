@@ -44,6 +44,7 @@ class ProductLocationPage extends StatelessWidget {
             final bool isLocationAdded =
                 vm.currentProduct?.selectedLocation?.lat != null &&
                     vm.currentProduct?.selectedLocation?.lat != UNKNOWN;
+
             final bool locationDenied = vm.locationPerms?.denied ?? true;
             final bool locationDeniedPermanently =
                 vm.locationPerms?.deniedForever ?? true;

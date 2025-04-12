@@ -72,101 +72,105 @@ class HostingHomePage extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12),
-        child: Column(
-          spacing: 12,
-          children: <Widget>[
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                color: Theme.of(context).cardColor,
-                boxShadow: <BoxShadow>[
-                  BoxShadow(
-                    color: Theme.of(context).dividerColor.withValues(alpha: .5),
-                    offset: Offset(0, 8),
-                    blurRadius: 30,
-                  ),
-                ],
-              ),
-              child: Row(
-                children: <Widget>[
-                  ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(16),
-                      bottomLeft: Radius.circular(16),
+        child: SingleChildScrollView(
+          child: Column(
+            spacing: 12,
+            children: <Widget>[
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  color: Theme.of(context).cardColor,
+                  boxShadow: <BoxShadow>[
+                    BoxShadow(
+                      color:
+                          Theme.of(context).dividerColor.withValues(alpha: .5),
+                      offset: Offset(0, 8),
+                      blurRadius: 30,
                     ),
-                    child: Image.asset(
-                      homeNudgeImagePath,
-                      fit: BoxFit.cover,
-                      height: MediaQuery.of(context).size.height * .15,
-                      width: MediaQuery.of(context).size.height * .18,
-                    ),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 12, horizontal: 12),
-                      child: Column(
-                        spacing: 8,
-                        children: <Widget>[
-                          Text(
-                            homeNudgeCopy,
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
-                          PrimaryButton(
-                            onPressed: () =>
-                                context.router.push(SetupProductTypeRoute()),
-                            child: right(setupNow),
-                          ),
-                        ],
+                  ],
+                ),
+                child: Row(
+                  children: <Widget>[
+                    ClipRRect(
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(16),
+                        bottomLeft: Radius.circular(16),
+                      ),
+                      child: Image.asset(
+                        homeNudgeImagePath,
+                        fit: BoxFit.cover,
+                        height: MediaQuery.of(context).size.height * .15,
+                        width: MediaQuery.of(context).size.height * .18,
                       ),
                     ),
-                  ),
-                ],
+                    Expanded(
+                      child: Padding(
+                        padding:
+                            EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+                        child: Column(
+                          spacing: 8,
+                          children: <Widget>[
+                            Text(
+                              homeNudgeCopy,
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                            PrimaryButton(
+                              onPressed: () =>
+                                  context.router.push(SetupProductTypeRoute()),
+                              child: right(setupNow),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            StoreConnector<AppState, HostingHomeViewModel>(
-              converter: (Store<AppState> store) =>
-                  HostingHomeViewModel.fromState(store.state),
-              onInit: (Store<AppState> store) {
-                context.dispatch(
-                  FetchProductsAction(
-                    client: AppWrapperBase.of(context)!.customClient,
-                  ),
-                );
-              },
-              builder: (BuildContext context, HostingHomeViewModel vm) {
-                if (context.isWaiting(FetchProductsAction)) {
-                  return AppLoading();
-                }
-                final List<Product?>? products = vm.products;
-
-                if (products?.isEmpty ?? true) {
-                  return GenericZeroState(
-                    iconPath: productZeroStateSVGPath,
-                    title: noProducts,
-                    description: noProductsCopy,
-                    onCTATap: () {
-                      context.router.push(SetupProductTypeRoute());
-                    },
-                    ctaText: createProductString,
+              StoreConnector<AppState, HostingHomeViewModel>(
+                converter: (Store<AppState> store) =>
+                    HostingHomeViewModel.fromState(store.state),
+                onInit: (Store<AppState> store) {
+                  context.dispatch(
+                    FetchProductsAction(
+                      client: AppWrapperBase.of(context)!.customClient,
+                    ),
                   );
-                }
+                },
+                builder: (BuildContext context, HostingHomeViewModel vm) {
+                  if (context.isWaiting(FetchProductsAction)) {
+                    return AppLoading();
+                  }
+                  final List<Product?>? products = vm.products;
 
-                return ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: products?.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    final Product? product = products![index];
-
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                      child: ProductCard(product: product!),
+                  if (products?.isEmpty ?? true) {
+                    return GenericZeroState(
+                      iconPath: productZeroStateSVGPath,
+                      title: noProducts,
+                      description: noProductsCopy,
+                      onCTATap: () {
+                        context.router.push(SetupProductTypeRoute());
+                      },
+                      ctaText: createProductString,
                     );
-                  },
-                );
-              },
-            ),
-          ],
+                  }
+
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: products?.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      final Product? product = products![index];
+
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        child: ProductCard(product: product!),
+                      );
+                    },
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

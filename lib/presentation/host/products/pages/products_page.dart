@@ -43,54 +43,57 @@ class ProductsPage extends StatelessWidget {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12),
-        child: Column(
-          children: <Widget>[
-            StoreConnector<AppState, ProductsPageViewModel>(
-              converter: (Store<AppState> store) =>
-                  ProductsPageViewModel.fromState(store.state),
-              onInit: (Store<AppState> store) {
-                context.dispatch(
-                  FetchProductsAction(
-                    client: AppWrapperBase.of(context)!.customClient,
-                  ),
-                );
-              },
-              builder: (BuildContext context, ProductsPageViewModel vm) {
-                if (context.isWaiting(FetchProductsAction)) {
-                  return AppLoading();
-                }
-
-                final List<Product?>? products = vm.products;
-
-                if (products?.isEmpty ?? true) {
-                  return GenericZeroState(
-                    iconPath: productZeroStateSVGPath,
-                    title: noProducts,
-                    description: noProductsCopy,
-                    onCTATap: () {
-                      context.router.push(SetupProductTypeRoute());
-                    },
-                    ctaText: createProductString,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: Column(
+            children: <Widget>[
+              StoreConnector<AppState, ProductsPageViewModel>(
+                converter: (Store<AppState> store) =>
+                    ProductsPageViewModel.fromState(store.state),
+                onInit: (Store<AppState> store) {
+                  context.dispatch(
+                    FetchProductsAction(
+                      client: AppWrapperBase.of(context)!.customClient,
+                    ),
                   );
-                }
+                },
+                builder: (BuildContext context, ProductsPageViewModel vm) {
+                  if (context.isWaiting(FetchProductsAction)) {
+                    return AppLoading();
+                  }
 
-                return ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: products?.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    final Product? product = products![index];
+                  final List<Product?>? products = vm.products;
 
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                      child: ProductCard(product: product!),
+                  if (products?.isEmpty ?? true) {
+                    return GenericZeroState(
+                      iconPath: productZeroStateSVGPath,
+                      title: noProducts,
+                      description: noProductsCopy,
+                      onCTATap: () {
+                        context.router.push(SetupProductTypeRoute());
+                      },
+                      ctaText: createProductString,
                     );
-                  },
-                );
-              },
-            ),
-          ],
+                  }
+
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: products?.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      final Product? product = products![index];
+
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        child: ProductCard(product: product!),
+                      );
+                    },
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
