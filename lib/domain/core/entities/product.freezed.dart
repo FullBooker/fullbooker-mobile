@@ -32,14 +32,10 @@ mixin _$Product {
   String? get number => throw _privateConstructorUsedError;
   String? get category => throw _privateConstructorUsedError;
   String? get subcategory => throw _privateConstructorUsedError;
-  @JsonKey(name: 'availability')
   ProductAvailability? get availability => throw _privateConstructorUsedError;
-  @JsonKey(name: 'pricing')
   List<ProductPricing>? get pricing => throw _privateConstructorUsedError;
-  @JsonKey(name: 'image')
   ProductImage? get image => throw _privateConstructorUsedError;
   dynamic get video => throw _privateConstructorUsedError;
-  @JsonKey(name: 'locations')
   List<ProductLocation>? get locations => throw _privateConstructorUsedError;
   bool? get completed => throw _privateConstructorUsedError;
 
@@ -78,11 +74,11 @@ abstract class $ProductCopyWith<$Res> {
       String? number,
       String? category,
       String? subcategory,
-      @JsonKey(name: 'availability') ProductAvailability? availability,
-      @JsonKey(name: 'pricing') List<ProductPricing>? pricing,
-      @JsonKey(name: 'image') ProductImage? image,
+      ProductAvailability? availability,
+      List<ProductPricing>? pricing,
+      ProductImage? image,
       dynamic video,
-      @JsonKey(name: 'locations') List<ProductLocation>? locations,
+      List<ProductLocation>? locations,
       bool? completed,
       @JsonKey(includeFromJson: true, includeToJson: true)
       ProductCategory? selectedProductCategory,
@@ -319,11 +315,11 @@ abstract class _$$ProductImplCopyWith<$Res> implements $ProductCopyWith<$Res> {
       String? number,
       String? category,
       String? subcategory,
-      @JsonKey(name: 'availability') ProductAvailability? availability,
-      @JsonKey(name: 'pricing') List<ProductPricing>? pricing,
-      @JsonKey(name: 'image') ProductImage? image,
+      ProductAvailability? availability,
+      List<ProductPricing>? pricing,
+      ProductImage? image,
       dynamic video,
-      @JsonKey(name: 'locations') List<ProductLocation>? locations,
+      List<ProductLocation>? locations,
       bool? completed,
       @JsonKey(includeFromJson: true, includeToJson: true)
       ProductCategory? selectedProductCategory,
@@ -475,11 +471,11 @@ class _$ProductImpl implements _Product {
       this.number = UNKNOWN,
       this.category = UNKNOWN,
       this.subcategory = UNKNOWN,
-      @JsonKey(name: 'availability') this.availability,
-      @JsonKey(name: 'pricing') this.pricing = const <ProductPricing>[],
-      @JsonKey(name: 'image') this.image,
+      this.availability,
+      this.pricing = const <ProductPricing>[],
+      this.image,
       this.video,
-      @JsonKey(name: 'locations') this.locations = const <ProductLocation>[],
+      this.locations = const <ProductLocation>[],
       this.completed = false,
       @JsonKey(includeFromJson: true, includeToJson: true)
       this.selectedProductCategory,
@@ -521,18 +517,16 @@ class _$ProductImpl implements _Product {
   @JsonKey()
   final String? subcategory;
   @override
-  @JsonKey(name: 'availability')
   final ProductAvailability? availability;
   @override
-  @JsonKey(name: 'pricing')
+  @JsonKey()
   final List<ProductPricing>? pricing;
   @override
-  @JsonKey(name: 'image')
   final ProductImage? image;
   @override
   final dynamic video;
   @override
-  @JsonKey(name: 'locations')
+  @JsonKey()
   final List<ProductLocation>? locations;
   @override
   @JsonKey()
@@ -646,11 +640,11 @@ abstract class _Product implements Product {
       final String? number,
       final String? category,
       final String? subcategory,
-      @JsonKey(name: 'availability') final ProductAvailability? availability,
-      @JsonKey(name: 'pricing') final List<ProductPricing>? pricing,
-      @JsonKey(name: 'image') final ProductImage? image,
+      final ProductAvailability? availability,
+      final List<ProductPricing>? pricing,
+      final ProductImage? image,
       final dynamic video,
-      @JsonKey(name: 'locations') final List<ProductLocation>? locations,
+      final List<ProductLocation>? locations,
       final bool? completed,
       @JsonKey(includeFromJson: true, includeToJson: true)
       final ProductCategory? selectedProductCategory,
@@ -684,18 +678,14 @@ abstract class _Product implements Product {
   @override
   String? get subcategory;
   @override
-  @JsonKey(name: 'availability')
   ProductAvailability? get availability;
   @override
-  @JsonKey(name: 'pricing')
   List<ProductPricing>? get pricing;
   @override
-  @JsonKey(name: 'image')
   ProductImage? get image;
   @override
   dynamic get video;
   @override
-  @JsonKey(name: 'locations')
   List<ProductLocation>? get locations;
   @override
   bool? get completed;

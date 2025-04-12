@@ -325,8 +325,7 @@ void navigateToNextProductStep({
     return;
   }
 
-  if ((product.name?.isEmpty ?? true) ||
-      (product.description?.isEmpty ?? true)) {
+  if (product.name?.isEmpty ?? true) {
     context.router.push(const ProductBasicDetailsRoute());
     return;
   }
@@ -337,8 +336,10 @@ void navigateToNextProductStep({
   }
 
   final bool hasAvailability = product.availability != null &&
-      (product.availability?.start?.isNotEmpty ?? false) &&
-      (product.availability?.end?.isNotEmpty ?? false);
+      ((product.availability?.start?.isNotEmpty ?? false) &&
+          product.availability?.start != UNKNOWN) &&
+      ((product.availability?.end?.isNotEmpty ?? false) &&
+          product.availability?.end != UNKNOWN);
 
   if (!hasAvailability) {
     context.router.push(const ProductDateTimeRoute());

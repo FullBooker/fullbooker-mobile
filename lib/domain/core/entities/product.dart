@@ -24,15 +24,11 @@ class Product with _$Product {
     @Default(UNKNOWN) String? number,
     @Default(UNKNOWN) String? category,
     @Default(UNKNOWN) String? subcategory,
-    @JsonKey(name: 'availability') ProductAvailability? availability,
-    @Default(<ProductPricing>[])
-    @JsonKey(name: 'pricing')
-    List<ProductPricing>? pricing,
-    @JsonKey(name: 'image') ProductImage? image,
+    ProductAvailability? availability,
+    @Default(<ProductPricing>[]) List<ProductPricing>? pricing,
+    ProductImage? image,
     dynamic video,
-    @Default(<ProductLocation>[])
-    @JsonKey(name: 'locations')
-    List<ProductLocation>? locations,
+    @Default(<ProductLocation>[]) List<ProductLocation>? locations,
     @Default(false) bool? completed,
 
     /// Temp values used when creating a product
@@ -60,9 +56,12 @@ class Product with _$Product {
   factory Product.fromApiJson(Map<String, dynamic> json) {
     final Product product = _$ProductFromJson(json);
     return product.copyWith(
-      selectedProductCategory: ProductCategory.initial(),
-      selectedProductSubCategory: ProductCategory.initial(),
-      selectedLocation: ProductLocation.initial(),
+      availability: product.availability ?? ProductAvailability.initial(),
+      selectedProductCategory:
+          product.selectedProductCategory ?? ProductCategory.initial(),
+      selectedProductSubCategory:
+          product.selectedProductSubCategory ?? ProductCategory.initial(),
+      selectedLocation: product.selectedLocation ?? ProductLocation.initial(),
     );
   }
 }

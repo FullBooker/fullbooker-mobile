@@ -47,6 +47,8 @@ class ProductDetailPage extends StatelessWidget {
           ];
 
           final bool isComplete = product?.completed ?? false;
+          final bool isLocationAvailable =
+              product?.locations?.isNotEmpty ?? false;
 
           return Column(
             children: <Widget>[
@@ -89,22 +91,24 @@ class ProductDetailPage extends StatelessWidget {
                             spacing: 12,
                             children: <Widget>[
                               // Location
-                              Row(
-                                mainAxisSize: MainAxisSize.min,
-                                spacing: 4,
-                                children: <Widget>[
-                                  HeroIcon(
-                                    HeroIcons.mapPin,
-                                    color: AppColors.greyTextColor,
-                                    size: 20,
-                                  ),
-                                  Text(
-                                    product?.locations?.first.address ?? '',
-                                    style:
-                                        Theme.of(context).textTheme.bodyMedium,
-                                  ),
-                                ],
-                              ),
+                              if (isLocationAvailable)
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  spacing: 4,
+                                  children: <Widget>[
+                                    HeroIcon(
+                                      HeroIcons.mapPin,
+                                      color: AppColors.greyTextColor,
+                                      size: 20,
+                                    ),
+                                    Text(
+                                      product?.locations?.first.address ?? '',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium,
+                                    ),
+                                  ],
+                                ),
                               // Date
                               Row(
                                 mainAxisSize: MainAxisSize.min,

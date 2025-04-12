@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/infrastructure/location/location_handler.dart';
@@ -235,7 +234,7 @@ class _ChooseLocationPageState extends State<ChooseLocationPage> {
                         city: selectedCity,
                       ),
                     );
-                    context.router.push(ProductLocationRoute());
+                    context.router.maybePop();
                   },
                   child: d.right(continueString),
                 ),

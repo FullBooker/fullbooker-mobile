@@ -7,7 +7,9 @@ import 'package:fullbooker/application/redux/actions/update_current_product_acti
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/products_page_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
+import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
+import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:dartz/dartz.dart' as d;
 import 'package:fullbooker/shared/validators.dart';
@@ -116,6 +118,11 @@ class _ProductBasicDetailsPageState extends State<ProductBasicDetailsPage> {
                                         .customClient,
                                     onSuccess: () => context.router
                                         .push(ProductLocationRoute()),
+                                    onError: (String error) => showAlertDialog(
+                                      context: context,
+                                      assetPath: productZeroStateSVGPath,
+                                      description: error,
+                                    ),
                                   ),
                                 );
                               }
