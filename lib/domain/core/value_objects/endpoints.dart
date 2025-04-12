@@ -13,13 +13,13 @@ const String kDevProductsEndpoint = '$kDevAPIBaseURL/products/';
 const String kDevProfileEndpoint = '$kDevAPIBaseURL/accounts/profile';
 const String kDevProductCategoriesEndpoint = '$kDevAPIBaseURL/categories';
 const String kDevProductSubCategoriesEndpoint = '$kDevAPIBaseURL/subcategories';
+const String kDevLocationEndpoint = '$kDevAPIBaseURL/location/';
+const String kDevProductAvailabilityEndpoint = '$kDevAPIBaseURL/availability/';
 
 // ---- Implemented
 const String kDevHostsEndpoint = '$kDevAPIBaseURL/hosts/';
-const String kDevLocationEndpoint = '$kDevAPIBaseURL/location/';
 const String kDevMediaEndpoint = '$kDevAPIBaseURL/media/';
 const String kDevPricingEndpoint = '$kDevAPIBaseURL/pricing/';
-const String kDevAvailabilityEndpoint = '$kDevAPIBaseURL/availability/';
 
 /// ---- PROD ENDPOINTS
 const String kProdAPIBaseURL = 'https://api.fullbooker.com';
@@ -37,13 +37,13 @@ const String kProdProfileEndpoint = '$kProdAPIBaseURL/accounts/profile';
 const String kProdProductCategoriesEndpoint = '$kProdAPIBaseURL/categories';
 const String kProdProductSubCategoriesEndpoint =
     '$kProdAPIBaseURL/subcategories';
+const String kProdLocationEndpoint = '$kProdAPIBaseURL/location/';
+const String kProdProductAvailabilityEndpoint = '$kProdAPIBaseURL/availability/';
 
 // ---- Implemented
 const String kProdHostsEndpoint = '$kProdAPIBaseURL/hosts/';
-const String kProdLocationEndpoint = '$kProdAPIBaseURL/location/';
 const String kProdMediaEndpoint = '$kProdAPIBaseURL/media/';
 const String kProdPricingEndpoint = '$kProdAPIBaseURL/pricing/';
-const String kProdAvailabilityEndpoint = '$kProdAPIBaseURL/availability/';
 
 ///---- TEST ENDPOINTS
 const String kTestAPIBaseURL = 'https://api.dev.fullbooker.co.ke';
@@ -61,10 +61,10 @@ const String kTestProfileEndpoint = '$kTestAPIBaseURL/accounts/profile';
 const String kTestProductCategoriesEndpoint = '$kTestAPIBaseURL/categories';
 const String kTestProductSubCategoriesEndpoint =
     '$kTestAPIBaseURL/subcategories';
+const String kTestLocationEndpoint = '$kTestAPIBaseURL/location/';
+const String kTestProductAvailabilityEndpoint = '$kTestAPIBaseURL/availability/';
 
 // ---- Implemented
 const String kTestHostsEndpoint = '$kTestAPIBaseURL/hosts/';
-const String kTestLocationEndpoint = '$kTestAPIBaseURL/location/';
 const String kTestMediaEndpoint = '$kTestAPIBaseURL/media/';
 const String kTestPricingEndpoint = '$kTestAPIBaseURL/pricing/';
-const String kTestAvailabilityEndpoint = '$kTestAPIBaseURL/availability/';

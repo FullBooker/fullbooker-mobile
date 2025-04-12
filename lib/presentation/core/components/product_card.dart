@@ -189,7 +189,7 @@ class ProductCard extends StatelessWidget {
                         context.dispatch(
                           UpdateHostStateAction(currentProduct: product),
                         );
-                        context.router.push(const ProductLocationRoute());
+                        context.router.push(const ProductDateTimeRoute());
                         // navigateToNextProductStep(
                         //   context: context,
                         //   product: product,

@@ -6,15 +6,15 @@ import 'package:fullbooker/application/redux/actions/update_host_state_action.da
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/domain/core/entities/product.dart';
-import 'package:fullbooker/domain/core/entities/product_location.dart';
+import 'package:fullbooker/domain/core/entities/product_availability.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
 
-class SetProductLocationAction extends ReduxAction<AppState> {
-  SetProductLocationAction({
+class SetProductAvailabilityAction extends ReduxAction<AppState> {
+  SetProductAvailabilityAction({
     this.onSuccess,
     this.onError,
     required this.client,
@@ -27,26 +27,33 @@ class SetProductLocationAction extends ReduxAction<AppState> {
   @override
   Future<AppState?> reduce() async {
     final String productID = state.hostState?.currentProduct?.id ?? UNKNOWN;
-    final String lat =
-        state.hostState?.currentProduct?.selectedLocation?.lat ?? UNKNOWN;
-    final String long =
-        state.hostState?.currentProduct?.selectedLocation?.long ?? UNKNOWN;
-    final String address =
-        state.hostState?.currentProduct?.selectedLocation?.address ?? UNKNOWN;
+    final String start =
+        state.hostState?.currentProduct?.availability?.start ?? UNKNOWN;
+    final String startTime =
+        state.hostState?.currentProduct?.availability?.startTime ?? UNKNOWN;
+    final String end =
+        state.hostState?.currentProduct?.availability?.end ?? UNKNOWN;
+    final String endTime =
+        state.hostState?.currentProduct?.availability?.endTime ?? UNKNOWN;
 
-    if (productID == UNKNOWN || lat == UNKNOWN || long == UNKNOWN) {
-      return onError?.call(addLocationError);
+    if (productID == UNKNOWN ||
+        start == UNKNOWN ||
+        startTime == UNKNOWN ||
+        end == UNKNOWN ||
+        endTime == UNKNOWN) {
+      return onError?.call(addDateTimeError);
     }
 
     final Map<String, String> data = <String, String>{
       'product': productID,
-      'lat': lat,
-      'long': long,
-      'address': address,
+      'start': start,
+      'start_time': startTime,
+      'end': end,
+      'end_time': endTime,
     };
 
     final Response httpResponse = await client.callRESTAPI(
-      endpoint: GetIt.I.get<AppConfig>().productLocationEndpoint,
+      endpoint: GetIt.I.get<AppConfig>().productAvailabilityEndpoint,
       method: APIMethods.POST.name.toUpperCase(),
       variables: data,
     );
@@ -60,13 +67,11 @@ class SetProductLocationAction extends ReduxAction<AppState> {
       return onError?.call(error ?? defaultUserFriendlyMessage);
     }
 
-    final ProductLocation savedProductLocation = ProductLocation.fromJson(body);
+    final ProductAvailability savedAvailability =
+        ProductAvailability.fromJson(body);
 
     final Product? newCurrent = state.hostState?.currentProduct?.copyWith.call(
-      locations: <ProductLocation>[
-        ...?state.hostState?.currentProduct?.locations,
-        savedProductLocation,
-      ],
+      availability: savedAvailability,
     );
 
     dispatch(UpdateHostStateAction(currentProduct: newCurrent));

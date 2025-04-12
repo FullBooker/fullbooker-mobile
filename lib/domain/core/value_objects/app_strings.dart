@@ -586,6 +586,8 @@ const String createProductError =
 
 const String addLocationError =
     'Please provide a location for your event to continue';
+const String addDateTimeError =
+    'Please provide a date and time for your event to continue';
 
 const String selectCurrencyHint = 'Choose currency';
 

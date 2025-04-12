@@ -22,8 +22,6 @@ class ProductController extends BaseViewModel<OldProduct> {
   set repository(CRUDRepository<OldProduct> repository) =>
       _repository = repository;
 
-  
-
   Future<Map<String, Object?>?> createLocation(
     String product,
     double lat,
@@ -150,8 +148,10 @@ class ProductController extends BaseViewModel<OldProduct> {
       'closed_dates': closedDaysData,
     };
     try {
-      final dynamic response =
-          await repository.post(availabilityData, kDevAvailabilityEndpoint);
+      final dynamic response = await repository.post(
+        availabilityData,
+        kDevProductAvailabilityEndpoint,
+      );
       return response as Map<String, Object?>;
     } catch (exception) {
       return null;

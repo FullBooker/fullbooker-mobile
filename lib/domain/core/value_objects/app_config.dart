@@ -21,6 +21,7 @@ class AppConfig {
     required this.productCategoriesEndpoint,
     required this.productSubCategoriesEndpoint,
     required this.productLocationEndpoint,
+    required this.productAvailabilityEndpoint,
   });
 
   /// The context the app is running in
@@ -52,6 +53,7 @@ class AppConfig {
   final String productCategoriesEndpoint;
   final String productSubCategoriesEndpoint;
   final String productLocationEndpoint;
+  final String productAvailabilityEndpoint;
 
   /// Profile endpoints
   final String getProfileEndpoint;
@@ -75,6 +77,7 @@ final AppConfig devAppConfig = AppConfig(
   productCategoriesEndpoint: kDevProductCategoriesEndpoint,
   productSubCategoriesEndpoint: kDevProductSubCategoriesEndpoint,
   productLocationEndpoint: kDevLocationEndpoint,
+  productAvailabilityEndpoint: kDevProductAvailabilityEndpoint,
 );
 
 final AppConfig prodAppConfig = AppConfig(
@@ -95,6 +98,7 @@ final AppConfig prodAppConfig = AppConfig(
   productCategoriesEndpoint: kProdProductCategoriesEndpoint,
   productSubCategoriesEndpoint: kProdProductSubCategoriesEndpoint,
   productLocationEndpoint: kProdLocationEndpoint,
+  productAvailabilityEndpoint: kProdProductAvailabilityEndpoint,
 );
 
 final AppConfig testAppConfig = AppConfig(
@@ -115,4 +119,5 @@ final AppConfig testAppConfig = AppConfig(
   productCategoriesEndpoint: kTestProductCategoriesEndpoint,
   productSubCategoriesEndpoint: kTestProductSubCategoriesEndpoint,
   productLocationEndpoint: kTestLocationEndpoint,
+  productAvailabilityEndpoint: kTestProductAvailabilityEndpoint,
 );

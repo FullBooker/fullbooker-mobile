@@ -133,7 +133,7 @@ class ProductLocationPage extends StatelessWidget {
                               },
                               onError: (String error) => showAlertDialog(
                                 context: context,
-                                assetPath: loginCredentialsSVGPath,
+                                assetPath: productZeroStateSVGPath,
                                 description: error,
                               ),
                               client: AppWrapperBase.of(context)!.customClient,

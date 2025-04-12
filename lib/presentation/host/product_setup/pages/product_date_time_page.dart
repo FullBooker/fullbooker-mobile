@@ -1,6 +1,8 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
+import 'package:fullbooker/application/redux/actions/set_product_availability_action.dart';
 import 'package:fullbooker/application/redux/actions/update_current_product_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_setup_view_model.dart';
@@ -9,8 +11,11 @@ import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
+import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:dartz/dartz.dart' as d;
+import 'package:fullbooker/shared/entities/spaces.dart';
+import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
 import 'package:heroicons/heroicons.dart';
@@ -306,16 +311,41 @@ class ProductDateTimePage extends StatelessWidget {
                     ],
                   ),
                 ),
-                PrimaryButton(
-                  onPressed: () {
-                    context.router.push(ProductPhotosRoute());
+                StoreConnector<AppState, ProductSetupViewModel>(
+                  converter: (Store<AppState> store) =>
+                      ProductSetupViewModel.fromState(store.state),
+                  builder: (BuildContext context, ProductSetupViewModel vm) {
+                    if (context.isWaiting(SetProductAvailabilityAction)) {
+                      return AppLoading();
+                    }
+                    return Column(
+                      spacing: 12,
+                      children: <Widget>[
+                        PrimaryButton(
+                          onPressed: () => context.dispatch(
+                            SetProductAvailabilityAction(
+                              onSuccess: () {
+                                context.router.push(ProductPhotosRoute());
+                              },
+                              onError: (String error) => showAlertDialog(
+                                context: context,
+                                assetPath: productZeroStateSVGPath,
+                                description: error,
+                              ),
+                              client: AppWrapperBase.of(context)!.customClient,
+                            ),
+                          ),
+                          child: d.right(continueString),
+                        ),
+                        SecondaryButton(
+                          onPressed: () => context.router.maybePop(),
+                          child: d.right(previousString),
+                          fillColor: Colors.transparent,
+                        ),
+                        verySmallVerticalSizedBox,
+                      ],
+                    );
                   },
-                  child: d.right(continueString),
-                ),
-                SecondaryButton(
-                  onPressed: () => context.router.maybePop(),
-                  child: d.right(previousString),
-                  fillColor: Colors.transparent,
                 ),
               ],
             );
