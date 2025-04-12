@@ -22,27 +22,6 @@ class ProductController extends BaseViewModel<OldProduct> {
   set repository(CRUDRepository<OldProduct> repository) =>
       _repository = repository;
 
-  Future<Map<String, Object?>?> createLocation(
-    String product,
-    double lat,
-    double long,
-    String address,
-  ) async {
-    final Map<String, String> objData = <String, String>{
-      'product': product,
-      'lat': lat.toString(),
-      'long': long.toString(),
-      'address': address,
-    };
-    try {
-      final dynamic response =
-          await repository.post(objData, kDevLocationEndpoint);
-      return response as Map<String, Object?>;
-    } catch (exception) {
-      return null;
-    }
-  }
-
   String formatDate(DateTime date) {
     return '${date.year.toString()}-'
         "${date.month.toString().padLeft(2, '0')}"

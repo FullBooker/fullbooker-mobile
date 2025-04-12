@@ -32,7 +32,6 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: EventsSummaryRoute.page),
         AutoRoute(page: HostProductSummaryRoute.page),
         AutoRoute(page: ImageSelectionRoute.page),
-        AutoRoute(page: LocationSelectionRoute.page),
         AutoRoute(page: TicketsSummaryRoute.page),
         AutoRoute(page: VideoSelectionRoute.page),
         AutoRoute(page: GalleryRoute.page),
