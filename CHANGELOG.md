@@ -1,5 +1,146 @@
 # CHANGELOG
 
+- feat: add home nudge (#55)
+  - add home nudge image
+  - scaffold and link home nudge
+  - add validation to product basic details page
+  - fix navigation to bookings page in product details page
+
+## 0.0.240
+
+- feat: add home nudge
+  - add home nudge image
+  - scaffold and link home nudge
+  - add validation to product basic details page
+  - fix navigation to bookings page in product details page
+
+## 0.0.239
+
+- feat: continue Host Side scaffolding (#54)
+
+## 0.0.238
+
+- feat: finalize product bookings scaffolding
+
+## 0.0.237
+
+- feat: finalize product bookings scaffolding
+
+## 0.0.236
+
+- feat: add product bookings page
+  - scaffold product bookings page
+  - setup product bookings page in app router
+  - scaffold deactivate product page
+
+## 0.0.235
+
+- feat: add scan tickets button
+
+## 0.0.234
+
+- feat: finalize product details scaffolding
+
+## 0.0.233
+
+- feat: fix product details page
+  - add default fallback image in case product doesn't have images
+  - add in review status and update colors dynamically
+  - improve custom badge readability
+
+## 0.0.232
+
+- feat: add product submission dialog
+
+## 0.0.231
+
+- feat: scaffold product setup dialog
+
+## 0.0.230
+
+- feat:n add location scaffold in product preview page
+
+## 0.0.229
+
+- feat: rename all instances of publish to submit
+
+## 0.0.228
+
+- feat: finalize service fee breakdown
+
+## 0.0.227
+
+- feat: scaffold new pricing breakdown page
+
+## 0.0.226
+
+- feat: add currency dropdown
+
+## 0.0.225
+
+- feat: add correct ticket pricing icons
+
+## 0.0.224
+
+- feat: app enhancements
+  - enable modificatiion of state variables
+  - clear state before choosing a location
+
+## 0.0.223
+
+- chore: switch CI deployment from using Firebase Auth token to using a service account
+
+## 0.0.222
+
+- feat: save city, lat, long to state after selection
+
+## 0.0.221
+
+- feat: save current location in state after selection
+
+## 0.0.220
+
+- feat: create set location action
+  - create action to save event location
+  - extract API endpoints after regular action checks
+  - setup product location endpoint on AppConfig
+
+## 0.0.219
+
+- feat: link product location
+  - remove old product category code
+
+## 0.0.218
+
+- feat: link create product to API
+  - save the name and description of a product to the backend
+
+## 0.0.217
+
+- feat: dynamically navigate the user to the necessary product setup step
+
+## 0.0.216
+
+- feat: show default app image if no product images are available
+
+## 0.0.215
+
+- feat: show completion status of a newly created product
+
+## 0.0.214
+
+- feat: handle zero state for a newly created event without details
+
+## 0.0.213
+
+- feat: apply final review feedback
+
+## 0.0.212
+
+- chore(release): v1.0.99-dev
+
+## 0.0.211
+
 - feat: fix product category fetching from the API
   - fix product model serialization logic
   - add new zero state paths
