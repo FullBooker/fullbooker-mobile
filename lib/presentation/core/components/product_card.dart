@@ -189,11 +189,10 @@ class ProductCard extends StatelessWidget {
                         context.dispatch(
                           UpdateHostStateAction(currentProduct: product),
                         );
-                        context.router.push(const ProductDateTimeRoute());
-                        // navigateToNextProductStep(
-                        //   context: context,
-                        //   product: product,
-                        // );
+                        navigateToNextProductStep(
+                          context: context,
+                          product: product,
+                        );
                       },
                       child: d.right(completeSetup),
                     ),

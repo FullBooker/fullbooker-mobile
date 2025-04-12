@@ -5,7 +5,6 @@ import 'package:fullbooker/core/repository.dart';
 import 'package:fullbooker/core/view_model.dart';
 import 'package:fullbooker/domain/core/value_objects/endpoints.dart';
 import 'package:fullbooker/features/host/models/old_product.dart';
-import 'package:fullbooker/shared/entities/date_group.dart';
 import 'package:fullbooker/shared/entities/session_pricing.dart';
 
 class ProductController extends BaseViewModel<OldProduct> {
@@ -21,33 +20,6 @@ class ProductController extends BaseViewModel<OldProduct> {
   @override
   set repository(CRUDRepository<OldProduct> repository) =>
       _repository = repository;
-
-  String formatDate(DateTime date) {
-    return '${date.year.toString()}-'
-        "${date.month.toString().padLeft(2, '0')}"
-        "-${date.day.toString().padLeft(2, '0')}";
-  }
-
-  Future<Map<String, Object?>?> createAvailability(
-    DateGroup startDate,
-    DateGroup endDate,
-    String productId,
-  ) async {
-    final Map<String, String> availabilityData = <String, String>{
-      'product': productId,
-      'start': formatDate(startDate.date),
-      'end': formatDate(endDate.date),
-      'start_time': '${startDate.hours}:${startDate.minutes}:00',
-      'end_time': '${endDate.hours}:${endDate.minutes}:00',
-    };
-    try {
-      final dynamic response =
-          await repository.post(availabilityData, '/availability/');
-      return response as Map<String, Object?>;
-    } catch (exception) {
-      return null;
-    }
-  }
 
   Future<Map<String, Object?>?> createMedia(
     List<File> images,

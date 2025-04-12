@@ -27,7 +27,6 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: ActivityDayPassRoute.page),
         AutoRoute(page: ActivityPricingRoute.page),
         AutoRoute(page: ActivitySubscriptionRoute.page),
-        AutoRoute(page: DateSelectionRoute.page),
         AutoRoute(page: EventCategoryRoute.page),
         AutoRoute(page: EventsSummaryRoute.page),
         AutoRoute(page: HostProductSummaryRoute.page),
