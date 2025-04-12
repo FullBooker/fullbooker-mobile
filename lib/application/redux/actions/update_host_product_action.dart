@@ -5,7 +5,7 @@ import 'package:fullbooker/domain/core/entities/product.dart';
 class UpdateHostProductAction extends ReduxAction<AppState> {
   UpdateHostProductAction({this.products});
 
-  List<Product>? products;
+  List<Product?>? products;
 
   @override
   AppState? reduce() {

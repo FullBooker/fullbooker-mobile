@@ -43,12 +43,15 @@ mixin _$Product {
   List<ProductLocation>? get locations => throw _privateConstructorUsedError;
   bool? get completed => throw _privateConstructorUsedError;
 
-  /// Temp values used to create the product
+  /// Temp values used when creating a product
+  @JsonKey(includeFromJson: true, includeToJson: true)
   ProductCategory? get selectedProductCategory =>
       throw _privateConstructorUsedError;
+  @JsonKey(includeFromJson: true, includeToJson: true)
   ProductCategory? get selectedProductSubCategory =>
       throw _privateConstructorUsedError;
-  ProductLocation? get currentLocation => throw _privateConstructorUsedError;
+  @JsonKey(includeFromJson: true, includeToJson: true)
+  ProductLocation? get selectedLocation => throw _privateConstructorUsedError;
 
   /// Serializes this Product to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -81,16 +84,19 @@ abstract class $ProductCopyWith<$Res> {
       dynamic video,
       @JsonKey(name: 'locations') List<ProductLocation>? locations,
       bool? completed,
+      @JsonKey(includeFromJson: true, includeToJson: true)
       ProductCategory? selectedProductCategory,
+      @JsonKey(includeFromJson: true, includeToJson: true)
       ProductCategory? selectedProductSubCategory,
-      ProductLocation? currentLocation});
+      @JsonKey(includeFromJson: true, includeToJson: true)
+      ProductLocation? selectedLocation});
 
   $UserStateCopyWith<$Res>? get host;
   $ProductAvailabilityCopyWith<$Res>? get availability;
   $ProductImageCopyWith<$Res>? get image;
   $ProductCategoryCopyWith<$Res>? get selectedProductCategory;
   $ProductCategoryCopyWith<$Res>? get selectedProductSubCategory;
-  $ProductLocationCopyWith<$Res>? get currentLocation;
+  $ProductLocationCopyWith<$Res>? get selectedLocation;
 }
 
 /// @nodoc
@@ -126,7 +132,7 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
     Object? completed = freezed,
     Object? selectedProductCategory = freezed,
     Object? selectedProductSubCategory = freezed,
-    Object? currentLocation = freezed,
+    Object? selectedLocation = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -201,9 +207,9 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
           ? _value.selectedProductSubCategory
           : selectedProductSubCategory // ignore: cast_nullable_to_non_nullable
               as ProductCategory?,
-      currentLocation: freezed == currentLocation
-          ? _value.currentLocation
-          : currentLocation // ignore: cast_nullable_to_non_nullable
+      selectedLocation: freezed == selectedLocation
+          ? _value.selectedLocation
+          : selectedLocation // ignore: cast_nullable_to_non_nullable
               as ProductLocation?,
     ) as $Val);
   }
@@ -284,13 +290,13 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $ProductLocationCopyWith<$Res>? get currentLocation {
-    if (_value.currentLocation == null) {
+  $ProductLocationCopyWith<$Res>? get selectedLocation {
+    if (_value.selectedLocation == null) {
       return null;
     }
 
-    return $ProductLocationCopyWith<$Res>(_value.currentLocation!, (value) {
-      return _then(_value.copyWith(currentLocation: value) as $Val);
+    return $ProductLocationCopyWith<$Res>(_value.selectedLocation!, (value) {
+      return _then(_value.copyWith(selectedLocation: value) as $Val);
     });
   }
 }
@@ -319,9 +325,12 @@ abstract class _$$ProductImplCopyWith<$Res> implements $ProductCopyWith<$Res> {
       dynamic video,
       @JsonKey(name: 'locations') List<ProductLocation>? locations,
       bool? completed,
+      @JsonKey(includeFromJson: true, includeToJson: true)
       ProductCategory? selectedProductCategory,
+      @JsonKey(includeFromJson: true, includeToJson: true)
       ProductCategory? selectedProductSubCategory,
-      ProductLocation? currentLocation});
+      @JsonKey(includeFromJson: true, includeToJson: true)
+      ProductLocation? selectedLocation});
 
   @override
   $UserStateCopyWith<$Res>? get host;
@@ -334,7 +343,7 @@ abstract class _$$ProductImplCopyWith<$Res> implements $ProductCopyWith<$Res> {
   @override
   $ProductCategoryCopyWith<$Res>? get selectedProductSubCategory;
   @override
-  $ProductLocationCopyWith<$Res>? get currentLocation;
+  $ProductLocationCopyWith<$Res>? get selectedLocation;
 }
 
 /// @nodoc
@@ -368,7 +377,7 @@ class __$$ProductImplCopyWithImpl<$Res>
     Object? completed = freezed,
     Object? selectedProductCategory = freezed,
     Object? selectedProductSubCategory = freezed,
-    Object? currentLocation = freezed,
+    Object? selectedLocation = freezed,
   }) {
     return _then(_$ProductImpl(
       id: freezed == id
@@ -443,9 +452,9 @@ class __$$ProductImplCopyWithImpl<$Res>
           ? _value.selectedProductSubCategory
           : selectedProductSubCategory // ignore: cast_nullable_to_non_nullable
               as ProductCategory?,
-      currentLocation: freezed == currentLocation
-          ? _value.currentLocation
-          : currentLocation // ignore: cast_nullable_to_non_nullable
+      selectedLocation: freezed == selectedLocation
+          ? _value.selectedLocation
+          : selectedLocation // ignore: cast_nullable_to_non_nullable
               as ProductLocation?,
     ));
   }
@@ -472,9 +481,12 @@ class _$ProductImpl implements _Product {
       this.video,
       @JsonKey(name: 'locations') this.locations = const <ProductLocation>[],
       this.completed = false,
+      @JsonKey(includeFromJson: true, includeToJson: true)
       this.selectedProductCategory,
+      @JsonKey(includeFromJson: true, includeToJson: true)
       this.selectedProductSubCategory,
-      this.currentLocation});
+      @JsonKey(includeFromJson: true, includeToJson: true)
+      this.selectedLocation});
 
   factory _$ProductImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProductImplFromJson(json);
@@ -526,17 +538,20 @@ class _$ProductImpl implements _Product {
   @JsonKey()
   final bool? completed;
 
-  /// Temp values used to create the product
+  /// Temp values used when creating a product
   @override
+  @JsonKey(includeFromJson: true, includeToJson: true)
   final ProductCategory? selectedProductCategory;
   @override
+  @JsonKey(includeFromJson: true, includeToJson: true)
   final ProductCategory? selectedProductSubCategory;
   @override
-  final ProductLocation? currentLocation;
+  @JsonKey(includeFromJson: true, includeToJson: true)
+  final ProductLocation? selectedLocation;
 
   @override
   String toString() {
-    return 'Product(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, active: $active, host: $host, name: $name, description: $description, number: $number, category: $category, subcategory: $subcategory, availability: $availability, pricing: $pricing, image: $image, video: $video, locations: $locations, completed: $completed, selectedProductCategory: $selectedProductCategory, selectedProductSubCategory: $selectedProductSubCategory, currentLocation: $currentLocation)';
+    return 'Product(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, active: $active, host: $host, name: $name, description: $description, number: $number, category: $category, subcategory: $subcategory, availability: $availability, pricing: $pricing, image: $image, video: $video, locations: $locations, completed: $completed, selectedProductCategory: $selectedProductCategory, selectedProductSubCategory: $selectedProductSubCategory, selectedLocation: $selectedLocation)';
   }
 
   @override
@@ -574,8 +589,8 @@ class _$ProductImpl implements _Product {
                     selectedProductSubCategory) ||
                 other.selectedProductSubCategory ==
                     selectedProductSubCategory) &&
-            (identical(other.currentLocation, currentLocation) ||
-                other.currentLocation == currentLocation));
+            (identical(other.selectedLocation, selectedLocation) ||
+                other.selectedLocation == selectedLocation));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -600,7 +615,7 @@ class _$ProductImpl implements _Product {
         completed,
         selectedProductCategory,
         selectedProductSubCategory,
-        currentLocation
+        selectedLocation
       ]);
 
   /// Create a copy of Product
@@ -637,9 +652,12 @@ abstract class _Product implements Product {
       final dynamic video,
       @JsonKey(name: 'locations') final List<ProductLocation>? locations,
       final bool? completed,
+      @JsonKey(includeFromJson: true, includeToJson: true)
       final ProductCategory? selectedProductCategory,
+      @JsonKey(includeFromJson: true, includeToJson: true)
       final ProductCategory? selectedProductSubCategory,
-      final ProductLocation? currentLocation}) = _$ProductImpl;
+      @JsonKey(includeFromJson: true, includeToJson: true)
+      final ProductLocation? selectedLocation}) = _$ProductImpl;
 
   factory _Product.fromJson(Map<String, dynamic> json) = _$ProductImpl.fromJson;
 
@@ -682,13 +700,16 @@ abstract class _Product implements Product {
   @override
   bool? get completed;
 
-  /// Temp values used to create the product
+  /// Temp values used when creating a product
   @override
+  @JsonKey(includeFromJson: true, includeToJson: true)
   ProductCategory? get selectedProductCategory;
   @override
+  @JsonKey(includeFromJson: true, includeToJson: true)
   ProductCategory? get selectedProductSubCategory;
   @override
-  ProductLocation? get currentLocation;
+  @JsonKey(includeFromJson: true, includeToJson: true)
+  ProductLocation? get selectedLocation;
 
   /// Create a copy of Product
   /// with the given fields replaced by the non-null parameter values.

@@ -14,7 +14,7 @@ import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:fullbooker/presentation/core/components/generic_zero_state.dart';
-import 'package:fullbooker/presentation/core/components/new_product_card.dart';
+import 'package:fullbooker/presentation/core/components/product_card.dart';
 import 'package:fullbooker/presentation/core/components/profile_avatar.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
@@ -138,7 +138,7 @@ class HostingHomePage extends StatelessWidget {
                 if (context.isWaiting(FetchProductsAction)) {
                   return AppLoading();
                 }
-                final List<Product>? products = vm.products;
+                final List<Product?>? products = vm.products;
 
                 if (products?.isEmpty ?? true) {
                   return GenericZeroState(
@@ -156,11 +156,11 @@ class HostingHomePage extends StatelessWidget {
                   shrinkWrap: true,
                   itemCount: products?.length,
                   itemBuilder: (BuildContext context, int index) {
-                    final Product product = products![index];
+                    final Product? product = products![index];
 
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 12),
-                      child: NewProductCard(product: product),
+                      child: ProductCard(product: product!),
                     );
                   },
                 );

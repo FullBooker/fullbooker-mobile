@@ -35,10 +35,13 @@ class Product with _$Product {
     List<ProductLocation>? locations,
     @Default(false) bool? completed,
 
-    /// Temp values used to create the product
+    /// Temp values used when creating a product
+    @JsonKey(includeFromJson: true, includeToJson: true)
     ProductCategory? selectedProductCategory,
+    @JsonKey(includeFromJson: true, includeToJson: true)
     ProductCategory? selectedProductSubCategory,
-    ProductLocation? currentLocation,
+    @JsonKey(includeFromJson: true, includeToJson: true)
+    ProductLocation? selectedLocation,
   }) = _Product;
 
   factory Product.initial() => Product(
@@ -47,9 +50,19 @@ class Product with _$Product {
         image: ProductImage.initial(),
         selectedProductCategory: ProductCategory.initial(),
         selectedProductSubCategory: ProductCategory.initial(),
-        currentLocation: ProductLocation.initial(),
+        selectedLocation: ProductLocation.initial(),
       );
 
   factory Product.fromJson(Map<String, dynamic> json) =>
       _$ProductFromJson(json);
+
+  // Used for API responses to ignore locally used values
+  factory Product.fromApiJson(Map<String, dynamic> json) {
+    final Product product = _$ProductFromJson(json);
+    return product.copyWith(
+      selectedProductCategory: ProductCategory.initial(),
+      selectedProductSubCategory: ProductCategory.initial(),
+      selectedLocation: ProductLocation.initial(),
+    );
+  }
 }

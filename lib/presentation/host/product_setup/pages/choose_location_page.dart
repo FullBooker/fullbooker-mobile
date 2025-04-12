@@ -17,14 +17,14 @@ import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/redux/actions/update_current_product_action.dart';
 
 @RoutePage()
-class NewChooseLocationPage extends StatefulWidget {
-  const NewChooseLocationPage({super.key});
+class ChooseLocationPage extends StatefulWidget {
+  const ChooseLocationPage({super.key});
 
   @override
-  State<NewChooseLocationPage> createState() => _NewChooseLocationPageState();
+  State<ChooseLocationPage> createState() => _ChooseLocationPageState();
 }
 
-class _NewChooseLocationPageState extends State<NewChooseLocationPage> {
+class _ChooseLocationPageState extends State<ChooseLocationPage> {
   late String selectedAddress;
   late String selectedCity;
 

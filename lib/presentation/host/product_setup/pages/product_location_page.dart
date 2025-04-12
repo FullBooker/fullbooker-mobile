@@ -3,7 +3,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
 import 'package:fullbooker/application/redux/actions/set_product_location_action.dart';
-import 'package:fullbooker/application/redux/actions/update_current_product_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_setup_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
@@ -14,6 +13,7 @@ import 'package:fullbooker/infrastructure/location/location_handler.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:dartz/dartz.dart' as d;
 import 'package:fullbooker/presentation/core/components/generic_zero_state.dart';
+import 'package:fullbooker/presentation/host/product_setup/components/location_preview_widget.dart';
 import 'package:fullbooker/shared/entities/location_perms_result.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
@@ -63,21 +63,10 @@ class _ProductLocationPageState extends State<ProductLocationPage> {
         child: StoreConnector<AppState, ProductSetupViewModel>(
           converter: (Store<AppState> store) =>
               ProductSetupViewModel.fromState(store.state),
-          onInit: (Store<AppState> store) {
-            // Reset initial values. If the user was navigated here it means
-            // the product doesn't have a location set
-            context.dispatch(
-              UpdateCurrentProductAction(
-                lat: UNKNOWN,
-                long: UNKNOWN,
-                address: UNKNOWN,
-              ),
-            );
-          },
           builder: (BuildContext context, ProductSetupViewModel vm) {
             final bool isLocationAdded =
-                vm.currentProduct?.currentLocation?.lat != null &&
-                    vm.currentProduct?.currentLocation?.lat != UNKNOWN;
+                vm.currentProduct?.selectedLocation?.lat != null &&
+                    vm.currentProduct?.selectedLocation?.lat != UNKNOWN;
 
             return Column(
               spacing: 12,
@@ -129,7 +118,7 @@ class _ProductLocationPageState extends State<ProductLocationPage> {
                               title: setEventLocation,
                               description: locationZeroStateCopy,
                               onCTATap: () {
-                                context.router.push(NewChooseLocationRoute());
+                                context.router.push(ChooseLocationRoute());
                               },
                               ctaText: pickLocation,
                             ),
@@ -138,23 +127,18 @@ class _ProductLocationPageState extends State<ProductLocationPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               spacing: 8,
                               children: <Widget>[
-                                Container(
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Theme.of(context).dividerColor,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  height: 100,
+                                LocationPreviewWidget(
+                                  location: vm.currentProduct?.selectedLocation,
                                 ),
                                 Text(
-                                  vm.currentProduct?.currentLocation?.address ??
+                                  vm.currentProduct?.selectedLocation
+                                          ?.address ??
                                       '',
                                   style:
                                       Theme.of(context).textTheme.titleMedium,
                                 ),
                                 Text(
-                                  vm.currentProduct?.currentLocation?.city ??
+                                  vm.currentProduct?.selectedLocation?.city ??
                                       '',
                                   style: Theme.of(context).textTheme.bodySmall,
                                 ),

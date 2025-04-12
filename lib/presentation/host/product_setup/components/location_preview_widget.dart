@@ -6,13 +6,13 @@ import 'package:fullbooker/domain/core/entities/product_location.dart';
 class LocationPreviewWidget extends StatelessWidget {
   const LocationPreviewWidget({super.key, required this.location});
 
-  final ProductLocation location;
+  final ProductLocation? location;
 
   @override
   Widget build(BuildContext context) {
     final LatLng latLng = LatLng(
-      double.tryParse(location.lat ?? '0') ?? 0,
-      double.tryParse(location.long ?? '0') ?? 0,
+      double.tryParse(location?.lat ?? '0') ?? 0,
+      double.tryParse(location?.long ?? '0') ?? 0,
     );
 
     final CameraPosition cameraPosition = CameraPosition(
@@ -51,11 +51,11 @@ class LocationPreviewWidget extends StatelessWidget {
           spacing: 4,
           children: <Widget>[
             Text(
-              location.address ?? UNKNOWN,
+              location?.address ?? UNKNOWN,
               style: Theme.of(context).textTheme.titleMedium,
             ),
             Text(
-              location.city ?? UNKNOWN,
+              location?.city ?? UNKNOWN,
               style: Theme.of(context).textTheme.bodySmall,
             ),
           ],

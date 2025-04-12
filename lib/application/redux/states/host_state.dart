@@ -11,7 +11,7 @@ part 'host_state.g.dart';
 class HostState with _$HostState {
   @JsonSerializable(explicitToJson: true)
   factory HostState({
-    @Default(<Product>[]) List<Product>? products,
+    @Default(<Product>[]) List<Product?>? products,
     Product? currentProduct,
     Product? selectedProduct,
     @Default(<ProductCategory>[]) List<ProductCategory>? productCategories,

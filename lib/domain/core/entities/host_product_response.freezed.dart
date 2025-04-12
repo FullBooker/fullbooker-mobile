@@ -23,7 +23,8 @@ mixin _$HostProductResponse {
   int get count => throw _privateConstructorUsedError;
   String? get next => throw _privateConstructorUsedError;
   String? get previous => throw _privateConstructorUsedError;
-  List<Product>? get results => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: productsFromApiJson)
+  List<Product?>? get results => throw _privateConstructorUsedError;
 
   /// Serializes this HostProductResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -42,7 +43,10 @@ abstract class $HostProductResponseCopyWith<$Res> {
       _$HostProductResponseCopyWithImpl<$Res, HostProductResponse>;
   @useResult
   $Res call(
-      {int count, String? next, String? previous, List<Product>? results});
+      {int count,
+      String? next,
+      String? previous,
+      @JsonKey(fromJson: productsFromApiJson) List<Product?>? results});
 }
 
 /// @nodoc
@@ -81,7 +85,7 @@ class _$HostProductResponseCopyWithImpl<$Res, $Val extends HostProductResponse>
       results: freezed == results
           ? _value.results
           : results // ignore: cast_nullable_to_non_nullable
-              as List<Product>?,
+              as List<Product?>?,
     ) as $Val);
   }
 }
@@ -95,7 +99,10 @@ abstract class _$$HostProductResponseImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int count, String? next, String? previous, List<Product>? results});
+      {int count,
+      String? next,
+      String? previous,
+      @JsonKey(fromJson: productsFromApiJson) List<Product?>? results});
 }
 
 /// @nodoc
@@ -132,7 +139,7 @@ class __$$HostProductResponseImplCopyWithImpl<$Res>
       results: freezed == results
           ? _value.results
           : results // ignore: cast_nullable_to_non_nullable
-              as List<Product>?,
+              as List<Product?>?,
     ));
   }
 }
@@ -142,7 +149,10 @@ class __$$HostProductResponseImplCopyWithImpl<$Res>
 @JsonSerializable(explicitToJson: true)
 class _$HostProductResponseImpl implements _HostProductResponse {
   _$HostProductResponseImpl(
-      {this.count = 0, this.next, this.previous, this.results});
+      {this.count = 0,
+      this.next,
+      this.previous,
+      @JsonKey(fromJson: productsFromApiJson) this.results});
 
   factory _$HostProductResponseImpl.fromJson(Map<String, dynamic> json) =>
       _$$HostProductResponseImplFromJson(json);
@@ -155,7 +165,8 @@ class _$HostProductResponseImpl implements _HostProductResponse {
   @override
   final String? previous;
   @override
-  final List<Product>? results;
+  @JsonKey(fromJson: productsFromApiJson)
+  final List<Product?>? results;
 
   @override
   String toString() {
@@ -201,7 +212,8 @@ abstract class _HostProductResponse implements HostProductResponse {
       {final int count,
       final String? next,
       final String? previous,
-      final List<Product>? results}) = _$HostProductResponseImpl;
+      @JsonKey(fromJson: productsFromApiJson)
+      final List<Product?>? results}) = _$HostProductResponseImpl;
 
   factory _HostProductResponse.fromJson(Map<String, dynamic> json) =
       _$HostProductResponseImpl.fromJson;
@@ -213,7 +225,8 @@ abstract class _HostProductResponse implements HostProductResponse {
   @override
   String? get previous;
   @override
-  List<Product>? get results;
+  @JsonKey(fromJson: productsFromApiJson)
+  List<Product?>? get results;
 
   /// Create a copy of HostProductResponse
   /// with the given fields replaced by the non-null parameter values.

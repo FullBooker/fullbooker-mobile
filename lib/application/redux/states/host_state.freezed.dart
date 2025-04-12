@@ -20,7 +20,7 @@ HostState _$HostStateFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$HostState {
-  List<Product>? get products => throw _privateConstructorUsedError;
+  List<Product?>? get products => throw _privateConstructorUsedError;
   Product? get currentProduct => throw _privateConstructorUsedError;
   Product? get selectedProduct => throw _privateConstructorUsedError;
   List<ProductCategory>? get productCategories =>
@@ -42,7 +42,7 @@ abstract class $HostStateCopyWith<$Res> {
       _$HostStateCopyWithImpl<$Res, HostState>;
   @useResult
   $Res call(
-      {List<Product>? products,
+      {List<Product?>? products,
       Product? currentProduct,
       Product? selectedProduct,
       List<ProductCategory>? productCategories});
@@ -75,7 +75,7 @@ class _$HostStateCopyWithImpl<$Res, $Val extends HostState>
       products: freezed == products
           ? _value.products
           : products // ignore: cast_nullable_to_non_nullable
-              as List<Product>?,
+              as List<Product?>?,
       currentProduct: freezed == currentProduct
           ? _value.currentProduct
           : currentProduct // ignore: cast_nullable_to_non_nullable
@@ -129,7 +129,7 @@ abstract class _$$HostStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<Product>? products,
+      {List<Product?>? products,
       Product? currentProduct,
       Product? selectedProduct,
       List<ProductCategory>? productCategories});
@@ -162,7 +162,7 @@ class __$$HostStateImplCopyWithImpl<$Res>
       products: freezed == products
           ? _value.products
           : products // ignore: cast_nullable_to_non_nullable
-              as List<Product>?,
+              as List<Product?>?,
       currentProduct: freezed == currentProduct
           ? _value.currentProduct
           : currentProduct // ignore: cast_nullable_to_non_nullable
@@ -194,7 +194,7 @@ class _$HostStateImpl implements _HostState {
 
   @override
   @JsonKey()
-  final List<Product>? products;
+  final List<Product?>? products;
   @override
   final Product? currentProduct;
   @override
@@ -249,7 +249,7 @@ class _$HostStateImpl implements _HostState {
 
 abstract class _HostState implements HostState {
   factory _HostState(
-      {final List<Product>? products,
+      {final List<Product?>? products,
       final Product? currentProduct,
       final Product? selectedProduct,
       final List<ProductCategory>? productCategories}) = _$HostStateImpl;
@@ -258,7 +258,7 @@ abstract class _HostState implements HostState {
       _$HostStateImpl.fromJson;
 
   @override
-  List<Product>? get products;
+  List<Product?>? get products;
   @override
   Product? get currentProduct;
   @override

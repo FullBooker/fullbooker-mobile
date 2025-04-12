@@ -57,6 +57,7 @@ void showAlertDialog({
   Function()? onCancel,
   String? confirmText,
   String? cancelText,
+  bool showSecondary = true,
 }) {
   showDialog(
     context: context,
@@ -101,14 +102,15 @@ void showAlertDialog({
                 onPressed: onConfirm ?? () => context.router.maybePop(),
               ),
             ),
-            SizedBox(
-              width: double.infinity,
-              height: 48,
-              child: SecondaryButton(
-                child: right(cancelText ?? okThanksString),
-                onPressed: onCancel ?? () => context.router.maybePop(),
+            if (showSecondary)
+              SizedBox(
+                width: double.infinity,
+                height: 48,
+                child: SecondaryButton(
+                  child: right(cancelText ?? okThanksString),
+                  onPressed: onCancel ?? () => context.router.maybePop(),
+                ),
               ),
-            ),
           ],
         ),
       );

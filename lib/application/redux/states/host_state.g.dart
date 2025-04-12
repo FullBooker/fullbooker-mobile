@@ -9,7 +9,9 @@ part of 'host_state.dart';
 _$HostStateImpl _$$HostStateImplFromJson(Map<String, dynamic> json) =>
     _$HostStateImpl(
       products: (json['products'] as List<dynamic>?)
-              ?.map((e) => Product.fromJson(e as Map<String, dynamic>))
+              ?.map((e) => e == null
+                  ? null
+                  : Product.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const <Product>[],
       currentProduct: json['currentProduct'] == null
@@ -26,7 +28,7 @@ _$HostStateImpl _$$HostStateImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$HostStateImplToJson(_$HostStateImpl instance) =>
     <String, dynamic>{
-      'products': instance.products?.map((e) => e.toJson()).toList(),
+      'products': instance.products?.map((e) => e?.toJson()).toList(),
       'currentProduct': instance.currentProduct?.toJson(),
       'selectedProduct': instance.selectedProduct?.toJson(),
       'productCategories':

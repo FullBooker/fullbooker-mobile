@@ -6,7 +6,7 @@ class ProductsPageViewModel extends Vm {
   ProductsPageViewModel({required this.products, required this.selectedProduct})
       : super(equals: <Object?>[products]);
 
-  final List<Product>? products;
+  final List<Product?>? products;
   final Product? selectedProduct;
 
   static ProductsPageViewModel fromState(AppState state) {

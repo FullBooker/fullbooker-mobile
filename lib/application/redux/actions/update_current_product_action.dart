@@ -32,13 +32,13 @@ class UpdateCurrentProductAction extends ReduxAction<AppState> {
           state.hostState?.currentProduct?.selectedProductSubCategory,
       name: name ?? state.hostState?.currentProduct?.name,
       description: description ?? state.hostState?.currentProduct?.description,
-      currentLocation:
-          state.hostState?.currentProduct?.currentLocation?.copyWith.call(
-        lat: lat ?? state.hostState?.currentProduct?.currentLocation?.lat,
-        long: long ?? state.hostState?.currentProduct?.currentLocation?.long,
+      selectedLocation:
+          state.hostState?.currentProduct?.selectedLocation?.copyWith.call(
+        lat: lat ?? state.hostState?.currentProduct?.selectedLocation?.lat,
+        long: long ?? state.hostState?.currentProduct?.selectedLocation?.long,
         address: address ??
-            state.hostState?.currentProduct?.currentLocation?.address,
-        city: city ?? state.hostState?.currentProduct?.currentLocation?.city,
+            state.hostState?.currentProduct?.selectedLocation?.address,
+        city: city ?? state.hostState?.currentProduct?.selectedLocation?.city,
       ),
     );
 
