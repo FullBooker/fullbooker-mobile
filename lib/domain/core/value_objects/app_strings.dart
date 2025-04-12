@@ -625,4 +625,4 @@ const String verifiedString = 'Verified';
 const String verifyString = 'Verify';
 
 const String homeNudgeCopy = 'Ready to host your first experience?';
-const String setupNow = 'Set Up Now';
+const String startSetup = 'Start Setup';

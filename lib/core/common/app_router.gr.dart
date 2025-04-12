@@ -37,7 +37,7 @@ import 'package:fullbooker/features/host/pages/event_category_page.dart'
     as _i10;
 import 'package:fullbooker/features/host/pages/host_product_summary_page.dart'
     as _i14;
-import 'package:fullbooker/features/host/pages/hosting_home_page.dart' as _i15;
+import 'package:fullbooker/presentation/host/home/pages/hosting_home_page.dart' as _i15;
 import 'package:fullbooker/features/host/pages/image_selection_page.dart'
     as _i17;
 import 'package:fullbooker/features/host/pages/old_events_summary_page.dart'
