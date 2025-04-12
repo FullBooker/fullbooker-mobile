@@ -8,6 +8,7 @@ import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_setup_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/common/constants.dart';
+import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
@@ -110,31 +111,46 @@ class ProductLocationPage extends StatelessWidget {
                     ],
                   ),
                 ),
-                if (context.isWaiting(SetProductLocationAction))
-                  AppLoading()
-                else
-                  Column(
-                    spacing: 12,
-                    children: <Widget>[
-                      PrimaryButton(
-                        onPressed: () => context.dispatch(
-                          SetProductLocationAction(
-                            onSuccess: () {
-                              context.router.push(ProductDateTimeRoute());
-                            },
-                            client: AppWrapperBase.of(context)!.customClient,
-                          ),
-                        ),
-                        child: d.right(continueString),
-                      ),
-                      SecondaryButton(
-                        onPressed: () => context.router.maybePop(),
-                        child: d.right(cancelString),
-                        fillColor: Colors.transparent,
-                      ),
-                      verySmallVerticalSizedBox,
-                    ],
+                StoreConnector<AppState, ProductSetupViewModel>(
+                  converter: (Store<AppState> store) =>
+                      ProductSetupViewModel.fromState(store.state),
+                  onInit: (Store<AppState> store) => context.dispatch(
+                    CheckLocationPermissionAction(),
                   ),
+                  builder: (BuildContext context, ProductSetupViewModel vm) {
+                    if (context.isWaiting(SetProductLocationAction)) {
+                      return AppLoading();
+                    }
+
+                    return Column(
+                      spacing: 12,
+                      children: <Widget>[
+                        PrimaryButton(
+                          onPressed: () => context.dispatch(
+                            SetProductLocationAction(
+                              onSuccess: () {
+                                context.router.push(ProductDateTimeRoute());
+                              },
+                              onError: (String error) => showAlertDialog(
+                                context: context,
+                                assetPath: loginCredentialsSVGPath,
+                                description: error,
+                              ),
+                              client: AppWrapperBase.of(context)!.customClient,
+                            ),
+                          ),
+                          child: d.right(continueString),
+                        ),
+                        SecondaryButton(
+                          onPressed: () => context.router.maybePop(),
+                          child: d.right(cancelString),
+                          fillColor: Colors.transparent,
+                        ),
+                        verySmallVerticalSizedBox,
+                      ],
+                    );
+                  },
+                ),
               ],
             );
           },

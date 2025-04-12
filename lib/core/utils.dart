@@ -102,13 +102,13 @@ void showAlertDialog({
                 onPressed: onConfirm ?? () => context.router.maybePop(),
               ),
             ),
-            if (showSecondary)
+            if (onCancel != null)
               SizedBox(
                 width: double.infinity,
                 height: 48,
                 child: SecondaryButton(
                   child: right(cancelText ?? okThanksString),
-                  onPressed: onCancel ?? () => context.router.maybePop(),
+                  onPressed: onCancel,
                 ),
               ),
           ],

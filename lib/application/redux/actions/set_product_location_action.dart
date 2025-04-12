@@ -6,6 +6,7 @@ import 'package:fullbooker/application/redux/actions/update_host_state_action.da
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/domain/core/entities/product.dart';
+import 'package:fullbooker/domain/core/entities/product_location.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
@@ -27,11 +28,11 @@ class SetProductLocationAction extends ReduxAction<AppState> {
   Future<AppState?> reduce() async {
     final String productID = state.hostState?.currentProduct?.id ?? UNKNOWN;
     final String lat =
-        state.hostState?.currentProduct?.locations?.first.lat ?? UNKNOWN;
+        state.hostState?.currentProduct?.selectedLocation?.lat ?? UNKNOWN;
     final String long =
-        state.hostState?.currentProduct?.locations?.first.long ?? UNKNOWN;
+        state.hostState?.currentProduct?.selectedLocation?.long ?? UNKNOWN;
     final String address =
-        state.hostState?.currentProduct?.locations?.first.address ?? UNKNOWN;
+        state.hostState?.currentProduct?.selectedLocation?.address ?? UNKNOWN;
 
     if (productID == UNKNOWN ||
         lat == UNKNOWN ||
@@ -62,9 +63,16 @@ class SetProductLocationAction extends ReduxAction<AppState> {
       return onError?.call(error ?? defaultUserFriendlyMessage);
     }
 
-    final Product createdProduct = Product.fromJson(body);
+    final ProductLocation savedProductLocation = ProductLocation.fromJson(body);
 
-    dispatch(UpdateHostStateAction(currentProduct: createdProduct));
+    final Product? newCurrent = state.hostState?.currentProduct?.copyWith.call(
+      locations: <ProductLocation>[
+        ...?state.hostState?.currentProduct?.locations,
+        savedProductLocation,
+      ],
+    );
+
+    dispatch(UpdateHostStateAction(currentProduct: newCurrent));
 
     onSuccess?.call();
 
