@@ -166,7 +166,7 @@ class ProductCard extends StatelessWidget {
                                 size: 20,
                               ),
                               formatTime(
-                                rawTime: product.availability?.startTime,
+                                time: product.availability?.startTime,
                                 textStyle:
                                     Theme.of(context).textTheme.bodyMedium,
                               ),
@@ -175,7 +175,7 @@ class ProductCard extends StatelessWidget {
                                 style: Theme.of(context).textTheme.bodyMedium,
                               ),
                               formatTime(
-                                rawTime: product.availability?.endTime,
+                                time: product.availability?.endTime,
                                 textStyle:
                                     Theme.of(context).textTheme.bodyMedium,
                               ),

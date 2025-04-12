@@ -12,6 +12,10 @@ class UpdateCurrentProductAction extends ReduxAction<AppState> {
     this.long,
     this.address,
     this.city,
+    this.startDate,
+    this.endDate,
+    this.startTime,
+    this.endTime,
   });
 
   final String? address;
@@ -22,6 +26,10 @@ class UpdateCurrentProductAction extends ReduxAction<AppState> {
   final String? name;
   final ProductCategory? selectedCategory;
   final ProductCategory? selectedSubCategory;
+  final String? startDate;
+  final String? startTime;
+  final String? endDate;
+  final String? endTime;
 
   @override
   AppState? reduce() {
@@ -32,6 +40,16 @@ class UpdateCurrentProductAction extends ReduxAction<AppState> {
           state.hostState?.currentProduct?.selectedProductSubCategory,
       name: name ?? state.hostState?.currentProduct?.name,
       description: description ?? state.hostState?.currentProduct?.description,
+      availability:
+          state.hostState?.currentProduct?.availability?.copyWith.call(
+        start:
+            startDate ?? state.hostState?.currentProduct?.availability?.start,
+        startTime: startTime ??
+            state.hostState?.currentProduct?.availability?.startTime,
+        end: endDate ?? state.hostState?.currentProduct?.availability?.end,
+        endTime:
+            endTime ?? state.hostState?.currentProduct?.availability?.endTime,
+      ),
       selectedLocation:
           state.hostState?.currentProduct?.selectedLocation?.copyWith.call(
         lat: lat ?? state.hostState?.currentProduct?.selectedLocation?.lat,

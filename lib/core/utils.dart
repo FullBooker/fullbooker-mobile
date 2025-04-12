@@ -279,39 +279,40 @@ Widget humanizeDate({
   );
 }
 
+TimeOfDay stringToTimeOfDay(String timeString) {
+  final List<String> parts = timeString.split(':');
+  final int hour = int.parse(parts[0]);
+  final int minute = int.parse(parts[1]);
+  return TimeOfDay(hour: hour, minute: minute);
+}
+
 Widget formatTime({
-  String? rawTime,
-  TimeOfDay? timeOfDay,
+  String? time,
   TextStyle? textStyle,
 }) {
-  if ((rawTime == null || rawTime.isEmpty) && timeOfDay == null) {
+  if (time == null || time.isEmpty || time == UNKNOWN) {
     return const SizedBox();
   }
 
-  late DateTime parsedTime;
+  try {
+    final TimeOfDay timeOfDay = stringToTimeOfDay(time);
+    final DateTime dateTime =
+        DateTime(0, 1, 1, timeOfDay.hour, timeOfDay.minute);
+    final String formatted = DateFormat('h:mm a').format(dateTime);
 
-  if (timeOfDay != null) {
-    parsedTime = DateTime(0, 1, 1, timeOfDay.hour, timeOfDay.minute);
-  } else {
-    try {
-      parsedTime = DateFormat('HH:mm:ss').parse(rawTime!);
-    } catch (_) {
-      return const SizedBox();
-    }
+    return Text(
+      formatted,
+      style: textStyle ??
+          TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w200,
+            color: AppColors.bodyTextColor.withAlpha(90),
+            fontStyle: FontStyle.italic,
+          ),
+    );
+  } catch (_) {
+    return const SizedBox();
   }
-
-  final String formatted = DateFormat('h:mm a').format(parsedTime);
-
-  return Text(
-    formatted,
-    style: textStyle ??
-        TextStyle(
-          fontSize: 12,
-          fontWeight: FontWeight.w200,
-          color: AppColors.bodyTextColor.withValues(alpha: .35),
-          fontStyle: FontStyle.italic,
-        ),
-  );
 }
 
 void navigateToNextProductStep({
@@ -375,4 +376,28 @@ String formatCurrency(dynamic number) {
   );
 
   return currency.format(number);
+}
+
+Future<String?> pickDate({required BuildContext context}) async {
+  final DateTime now = DateTime.now();
+  final DateTime? picked = await showDatePicker(
+    context: context,
+    initialDate: now,
+    firstDate: now,
+    lastDate: DateTime(2100),
+  );
+
+  return picked != null ? DateFormat('yyyy-MM-dd').format(picked) : null;
+}
+
+Future<String?> pickTime({required BuildContext context}) async {
+  final TimeOfDay? picked = await showTimePicker(
+    context: context,
+    initialTime: TimeOfDay.now(),
+  );
+
+  if (picked == null) return null;
+
+  final DateTime dateTime = DateTime(0, 1, 1, picked.hour, picked.minute);
+  return DateFormat('HH:mm:ss').format(dateTime);
 }

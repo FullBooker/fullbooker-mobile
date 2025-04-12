@@ -1,6 +1,11 @@
+import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:fullbooker/application/redux/actions/update_current_product_action.dart';
+import 'package:fullbooker/application/redux/states/app_state.dart';
+import 'package:fullbooker/application/redux/view_models/product_setup_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
+import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
@@ -11,56 +16,8 @@ import 'package:fullbooker/shared/widgets/secondary_button.dart';
 import 'package:heroicons/heroicons.dart';
 
 @RoutePage()
-class ProductDateTimePage extends StatefulWidget {
+class ProductDateTimePage extends StatelessWidget {
   const ProductDateTimePage({super.key});
-
-  @override
-  State<ProductDateTimePage> createState() => _ProductDateTimePageState();
-}
-
-class _ProductDateTimePageState extends State<ProductDateTimePage> {
-  DateTime? _startDate;
-  TimeOfDay? _startTime;
-  DateTime? _endDate;
-  TimeOfDay? _endTime;
-
-  Future<void> _pickDate({required bool isStart}) async {
-    final DateTime initialDate =
-        isStart ? _startDate ?? DateTime.now() : _endDate ?? DateTime.now();
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: initialDate,
-      firstDate: DateTime.now(),
-      lastDate: DateTime(2100),
-    );
-
-    if (picked != null) {
-      setState(() {
-        if (isStart) {
-          _startDate = picked;
-        } else {
-          _endDate = picked;
-        }
-      });
-    }
-  }
-
-  Future<void> _pickTime({required bool isStart}) async {
-    final TimeOfDay? picked = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.now(),
-    );
-
-    if (picked != null) {
-      setState(() {
-        if (isStart) {
-          _startTime = picked;
-        } else {
-          _endTime = picked;
-        }
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,254 +28,298 @@ class _ProductDateTimePageState extends State<ProductDateTimePage> {
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          spacing: 12,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: 12,
-                children: <Widget>[
-                  Column(
+        child: StoreConnector<AppState, ProductSetupViewModel>(
+          converter: (Store<AppState> store) =>
+              ProductSetupViewModel.fromState(store.state),
+          builder: (BuildContext context, ProductSetupViewModel vm) {
+            return Column(
+              spacing: 12,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Expanded(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    spacing: 8,
-                    children: <Widget>[
-                      Text(
-                        dateAndTime,
-                        style: Theme.of(context).textTheme.headlineSmall,
-                      ),
-                      Text(
-                        dateAndTimeCopy,
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                    ],
-                  ),
-                  Row(
                     spacing: 12,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () => _pickDate(isStart: true),
-                          child: Column(
-                            spacing: 12,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                starting,
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Theme.of(context).dividerColor,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                padding: EdgeInsets.all(12),
-                                child: Row(
-                                  spacing: 12,
-                                  children: <Widget>[
-                                    HeroIcon(
-                                      HeroIcons.calendar,
-                                      size: 20,
-                                      color: AppColors.bodyTextColor,
-                                    ),
-                                    if (_startDate != null)
-                                      humanizeDate(
-                                        loadedDate: _startDate
-                                                ?.toIso8601String() ??
-                                            DateTime.now().toIso8601String(),
-                                        dateTextStyle: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium,
-                                      )
-                                    else
-                                      Text(
-                                        selectDateHint,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium,
-                                      ),
-                                  ],
-                                ),
-                              ),
-                            ],
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        spacing: 8,
+                        children: <Widget>[
+                          Text(
+                            dateAndTime,
+                            style: Theme.of(context).textTheme.headlineSmall,
                           ),
-                        ),
-                      ),
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () => _pickTime(isStart: true),
-                          child: Column(
-                            spacing: 12,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                atString,
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Theme.of(context).dividerColor,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                padding: EdgeInsets.all(12),
-                                child: Row(
-                                  spacing: 12,
-                                  children: <Widget>[
-                                    HeroIcon(
-                                      HeroIcons.clock,
-                                      size: 20,
-                                      color: AppColors.bodyTextColor,
-                                    ),
-                                    if (_startTime != null)
-                                      formatTime(
-                                        timeOfDay: _startTime,
-                                        textStyle: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium,
-                                      )
-                                    else
-                                      Text(
-                                        chooseTime,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium,
-                                      ),
-                                  ],
-                                ),
-                              ),
-                            ],
+                          Text(
+                            dateAndTimeCopy,
+                            style: Theme.of(context).textTheme.bodyMedium,
                           ),
-                        ),
+                        ],
                       ),
-                    ],
-                  ),
 
-                  // Ends on
-                  Row(
-                    spacing: 12,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () => _pickDate(isStart: false),
-                          child: Column(
-                            spacing: 12,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                ending,
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Theme.of(context).dividerColor,
+                      // Starts on
+                      Row(
+                        spacing: 12,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: () async {
+                                final String? date =
+                                    await pickDate(context: context);
+
+                                context.dispatch(
+                                  UpdateCurrentProductAction(
+                                    startDate: date,
                                   ),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                padding: EdgeInsets.all(12),
-                                child: Row(
-                                  spacing: 12,
-                                  children: <Widget>[
-                                    HeroIcon(
-                                      HeroIcons.calendar,
-                                      size: 20,
-                                      color: AppColors.bodyTextColor,
-                                    ),
-                                    if (_endDate != null)
-                                      humanizeDate(
-                                        loadedDate: _endDate
-                                                ?.toIso8601String() ??
-                                            DateTime.now().toIso8601String(),
-                                        dateTextStyle: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium,
-                                      )
-                                    else
-                                      Text(
-                                        selectDateHint,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium,
+                                );
+                              },
+                              child: Column(
+                                spacing: 12,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    starting,
+                                    style:
+                                        Theme.of(context).textTheme.titleMedium,
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: Theme.of(context).dividerColor,
                                       ),
-                                  ],
-                                ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    padding: EdgeInsets.all(12),
+                                    child: Row(
+                                      spacing: 12,
+                                      children: <Widget>[
+                                        HeroIcon(
+                                          HeroIcons.calendar,
+                                          size: 20,
+                                          color: AppColors.bodyTextColor,
+                                        ),
+                                        if (vm.startDate != UNKNOWN)
+                                          humanizeDate(
+                                            loadedDate: vm.startDate,
+                                            dateTextStyle: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium,
+                                          )
+                                        else
+                                          Text(
+                                            selectDateHint,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium,
+                                          ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
+                            ),
                           ),
-                        ),
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: () async {
+                                final String? time =
+                                    await pickTime(context: context);
+
+                                context.dispatch(
+                                  UpdateCurrentProductAction(
+                                    startTime: time,
+                                  ),
+                                );
+                              },
+                              child: Column(
+                                spacing: 12,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    atString,
+                                    style:
+                                        Theme.of(context).textTheme.titleMedium,
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: Theme.of(context).dividerColor,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    padding: EdgeInsets.all(12),
+                                    child: Row(
+                                      spacing: 12,
+                                      children: <Widget>[
+                                        HeroIcon(
+                                          HeroIcons.clock,
+                                          size: 20,
+                                          color: AppColors.bodyTextColor,
+                                        ),
+                                        if (vm.startTime != UNKNOWN)
+                                          formatTime(
+                                            time: vm.startTime,
+                                            textStyle: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium,
+                                          )
+                                        else
+                                          Text(
+                                            chooseTime,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium,
+                                          ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () => _pickTime(isStart: false),
-                          child: Column(
-                            spacing: 12,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                atString,
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Theme.of(context).dividerColor,
+
+                      // Ends on
+                      Row(
+                        spacing: 12,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: () async {
+                                final String? date =
+                                    await pickDate(context: context);
+
+                                context.dispatch(
+                                  UpdateCurrentProductAction(
+                                    endDate: date,
                                   ),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                padding: EdgeInsets.all(12),
-                                child: Row(
-                                  spacing: 12,
-                                  children: <Widget>[
-                                    HeroIcon(
-                                      HeroIcons.clock,
-                                      size: 20,
-                                      color: AppColors.bodyTextColor,
-                                    ),
-                                    if (_endTime != null)
-                                      formatTime(
-                                        timeOfDay: _endTime,
-                                        textStyle: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium,
-                                      )
-                                    else
-                                      Text(
-                                        chooseTime,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium,
+                                );
+                              },
+                              child: Column(
+                                spacing: 12,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    ending,
+                                    style:
+                                        Theme.of(context).textTheme.titleMedium,
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: Theme.of(context).dividerColor,
                                       ),
-                                  ],
-                                ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    padding: EdgeInsets.all(12),
+                                    child: Row(
+                                      spacing: 12,
+                                      children: <Widget>[
+                                        HeroIcon(
+                                          HeroIcons.calendar,
+                                          size: 20,
+                                          color: AppColors.bodyTextColor,
+                                        ),
+                                        if (vm.endDate != UNKNOWN)
+                                          humanizeDate(
+                                            loadedDate: vm.endDate,
+                                            dateTextStyle: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium,
+                                          )
+                                        else
+                                          Text(
+                                            selectDateHint,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium,
+                                          ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
+                            ),
                           ),
-                        ),
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: () async {
+                                final String? time =
+                                    await pickTime(context: context);
+
+                                context.dispatch(
+                                  UpdateCurrentProductAction(
+                                    endTime: time,
+                                  ),
+                                );
+                              },
+                              child: Column(
+                                spacing: 12,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    atString,
+                                    style:
+                                        Theme.of(context).textTheme.titleMedium,
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: Theme.of(context).dividerColor,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    padding: EdgeInsets.all(12),
+                                    child: Row(
+                                      spacing: 12,
+                                      children: <Widget>[
+                                        HeroIcon(
+                                          HeroIcons.clock,
+                                          size: 20,
+                                          color: AppColors.bodyTextColor,
+                                        ),
+                                        if (vm.endTime != UNKNOWN)
+                                          formatTime(
+                                            time: vm.endTime,
+                                            textStyle: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium,
+                                          )
+                                        else
+                                          Text(
+                                            chooseTime,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium,
+                                          ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                ],
-              ),
-            ),
-            PrimaryButton(
-              onPressed: () {
-                context.router.push(ProductPhotosRoute());
-              },
-              child: d.right(continueString),
-            ),
-            SecondaryButton(
-              onPressed: () => context.router.maybePop(),
-              child: d.right(previousString),
-              fillColor: Colors.transparent,
-            ),
-          ],
+                ),
+                PrimaryButton(
+                  onPressed: () {
+                    context.router.push(ProductPhotosRoute());
+                  },
+                  child: d.right(continueString),
+                ),
+                SecondaryButton(
+                  onPressed: () => context.router.maybePop(),
+                  child: d.right(previousString),
+                  fillColor: Colors.transparent,
+                ),
+              ],
+            );
+          },
         ),
       ),
     );

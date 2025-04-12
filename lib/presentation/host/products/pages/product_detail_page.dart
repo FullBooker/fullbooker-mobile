@@ -146,7 +146,7 @@ class ProductDetailPage extends StatelessWidget {
                                     size: 20,
                                   ),
                                   formatTime(
-                                    rawTime: product?.availability?.startTime,
+                                    time: product?.availability?.startTime,
                                     textStyle:
                                         Theme.of(context).textTheme.bodyMedium,
                                   ),
@@ -156,7 +156,7 @@ class ProductDetailPage extends StatelessWidget {
                                         Theme.of(context).textTheme.bodyMedium,
                                   ),
                                   formatTime(
-                                    rawTime: product?.availability?.endTime,
+                                    time: product?.availability?.endTime,
                                     textStyle:
                                         Theme.of(context).textTheme.bodyMedium,
                                   ),
