@@ -117,32 +117,13 @@ class _ProductLocationPageState extends State<ProductLocationPage> {
                               iconPath: locationSVGPath,
                               title: setEventLocation,
                               description: locationZeroStateCopy,
-                              onCTATap: () {
-                                context.router.push(ChooseLocationRoute());
-                              },
+                              onCTATap: () =>
+                                  context.router.push(ChooseLocationRoute()),
                               ctaText: pickLocation,
                             ),
                           if (isLocationAdded)
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              spacing: 8,
-                              children: <Widget>[
-                                LocationPreviewWidget(
-                                  location: vm.currentProduct?.selectedLocation,
-                                ),
-                                Text(
-                                  vm.currentProduct?.selectedLocation
-                                          ?.address ??
-                                      '',
-                                  style:
-                                      Theme.of(context).textTheme.titleMedium,
-                                ),
-                                Text(
-                                  vm.currentProduct?.selectedLocation?.city ??
-                                      '',
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                ),
-                              ],
+                            LocationPreviewWidget(
+                              location: vm.currentProduct?.selectedLocation,
                             ),
                         ],
                       ),

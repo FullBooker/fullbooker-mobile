@@ -1,12 +1,23 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
+import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/common/constants.dart';
+import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
+import 'package:fullbooker/shared/widgets/secondary_button.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:fullbooker/domain/core/entities/product_location.dart';
 
 class LocationPreviewWidget extends StatelessWidget {
-  const LocationPreviewWidget({super.key, required this.location});
+  const LocationPreviewWidget({
+    super.key,
+    required this.location,
+    this.readOnly = false,
+  });
 
   final ProductLocation? location;
+
+  final bool readOnly;
 
   @override
   Widget build(BuildContext context) {
@@ -46,17 +57,33 @@ class LocationPreviewWidget extends StatelessWidget {
             ),
           ),
         ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 4,
+        Row(
+          spacing: 12,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Text(
-              location?.address ?? UNKNOWN,
-              style: Theme.of(context).textTheme.titleMedium,
+            Expanded(
+              flex: 4,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: 4,
+                children: <Widget>[
+                  Text(
+                    location?.address ?? UNKNOWN,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  Text(
+                    location?.city ?? UNKNOWN,
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                ],
+              ),
             ),
-            Text(
-              location?.city ?? UNKNOWN,
-              style: Theme.of(context).textTheme.bodySmall,
+            Expanded(
+              flex: 2,
+              child: SecondaryButton(
+                child: right(changeString),
+                onPressed: () => context.router.push(ChooseLocationRoute()),
+              ),
             ),
           ],
         ),
