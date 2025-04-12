@@ -11,9 +11,19 @@ class HostProductResponse with _$HostProductResponse {
     @Default(0) int count,
     String? next,
     String? previous,
-    List<Product>? results,
+    @JsonKey(fromJson: productsFromApiJson) List<Product?>? results,
   }) = _HostProductResponse;
 
   factory HostProductResponse.fromJson(Map<String, dynamic> json) =>
       _$HostProductResponseFromJson(json);
+}
+
+List<Product?> productsFromApiJson(List<dynamic>? json) {
+  if (json == null) return <Product>[];
+  return json
+      .map(
+        (dynamic e) =>
+            e == null ? null : Product.fromApiJson(e as Map<String, dynamic>),
+      )
+      .toList();
 }

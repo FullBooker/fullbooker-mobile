@@ -1,17 +1,14 @@
-Welcome to FullBooker! We’re constantly improving the app to enhance your experience.
+Welcome to Fullbooker! We’re always improving to make your hosting experience even smoother.
 
-What's New:
+What’s New:
 
-1. Your sign in credentials can be auto-filled from your favorite password manager
-2. Your phone number is now recorded during account creation
-3. Improved button design for accessibility
-4. A custom appbar on the home page and across all pages
-5. You can now view your products as a host from the home page
-6. The product page now lists your products
-7. New product setup scaffolds have been added
-8. Other minor technical enhancements
-
-
-Spacing on the UI has been improved
+1. A new home nudge to help first-time hosts set up their first product quickly.
+2. View product bookings from product details page
+3. A scan tickets button has been added to usher in ticket scanning later
+4. Improved form validation and dynamically guide you through incomplete steps
+5. Location Enhancements – Your product’s location is now saved with city, latitude, and longitude.
+6. Simplified pricing breakdown and currency selection for your product tickets
+7. Smarter Image Handling – We show fallback images when product images are unavailable.
+8. Visual Improvements – Better status badges, consistent colors, and design tweaks across the app.
 
 Need help or have feedback? Contact us at +254717356476

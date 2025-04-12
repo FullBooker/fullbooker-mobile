@@ -24,21 +24,20 @@ class Product with _$Product {
     @Default(UNKNOWN) String? number,
     @Default(UNKNOWN) String? category,
     @Default(UNKNOWN) String? subcategory,
-    @JsonKey(name: 'availability') ProductAvailability? availability,
-    @Default(<ProductPricing>[])
-    @JsonKey(name: 'pricing')
-    List<ProductPricing>? pricing,
-    @JsonKey(name: 'image') ProductImage? image,
+    ProductAvailability? availability,
+    @Default(<ProductPricing>[]) List<ProductPricing>? pricing,
+    ProductImage? image,
     dynamic video,
-    @Default(<ProductLocation>[])
-    @JsonKey(name: 'locations')
-    List<ProductLocation>? locations,
+    @Default(<ProductLocation>[]) List<ProductLocation>? locations,
     @Default(false) bool? completed,
 
-    /// Temp values used to create the product
+    /// Temp values used when creating a product
+    @JsonKey(includeFromJson: true, includeToJson: true)
     ProductCategory? selectedProductCategory,
+    @JsonKey(includeFromJson: true, includeToJson: true)
     ProductCategory? selectedProductSubCategory,
-    ProductLocation? currentLocation,
+    @JsonKey(includeFromJson: true, includeToJson: true)
+    ProductLocation? selectedLocation,
   }) = _Product;
 
   factory Product.initial() => Product(
@@ -47,9 +46,22 @@ class Product with _$Product {
         image: ProductImage.initial(),
         selectedProductCategory: ProductCategory.initial(),
         selectedProductSubCategory: ProductCategory.initial(),
-        currentLocation: ProductLocation.initial(),
+        selectedLocation: ProductLocation.initial(),
       );
 
   factory Product.fromJson(Map<String, dynamic> json) =>
       _$ProductFromJson(json);
+
+  // Used for API responses to ignore locally used values
+  factory Product.fromApiJson(Map<String, dynamic> json) {
+    final Product product = _$ProductFromJson(json);
+    return product.copyWith(
+      availability: product.availability ?? ProductAvailability.initial(),
+      selectedProductCategory:
+          product.selectedProductCategory ?? ProductCategory.initial(),
+      selectedProductSubCategory:
+          product.selectedProductSubCategory ?? ProductCategory.initial(),
+      selectedLocation: product.selectedLocation ?? ProductLocation.initial(),
+    );
+  }
 }

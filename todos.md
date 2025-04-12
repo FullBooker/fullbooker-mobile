@@ -21,3 +21,4 @@
 ## New changes
 
 - [ ] Handle currency formatting on the app
+- [ ] Fix showAlertDialog across all pages

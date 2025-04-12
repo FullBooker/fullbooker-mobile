@@ -7,7 +7,7 @@ class HostingHomeViewModel extends Vm {
     required this.products,
   }) : super(equals: <Object?>[products]);
 
-  final List<Product>? products;
+  final List<Product?>? products;
 
   static HostingHomeViewModel fromState(AppState state) {
     return HostingHomeViewModel(

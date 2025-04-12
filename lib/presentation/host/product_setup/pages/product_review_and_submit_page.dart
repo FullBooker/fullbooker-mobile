@@ -113,6 +113,7 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                           address: 'KICC',
                           city: 'Nairobi',
                         ),
+                        readOnly: true,
                       ),
 
                       // Date and time

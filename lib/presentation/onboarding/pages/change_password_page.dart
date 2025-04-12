@@ -178,6 +178,7 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
                                     description: passwordUpdatedCopy,
                                     onConfirm: () =>
                                         context.router.push(LoginRoute()),
+                                    showSecondary: false,
                                   );
 
                                   await AnalyticsService().logEvent(

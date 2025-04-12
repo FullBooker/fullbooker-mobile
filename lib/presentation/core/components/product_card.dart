@@ -2,7 +2,7 @@ import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:fullbooker/application/redux/actions/select_product_action.dart';
+import 'package:fullbooker/application/redux/actions/update_host_state_action.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/core/utils.dart';
@@ -14,8 +14,8 @@ import 'package:dartz/dartz.dart' as d;
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
 import 'package:heroicons/heroicons.dart';
 
-class NewProductCard extends StatelessWidget {
-  const NewProductCard({super.key, required this.product});
+class ProductCard extends StatelessWidget {
+  const ProductCard({super.key, required this.product});
 
   final Product product;
 
@@ -25,7 +25,7 @@ class NewProductCard extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        context.dispatch(SelectProductAction(product: product));
+        context.dispatch(UpdateHostStateAction(selectedProduct: product));
         context.router.push(ProductDetailRoute());
       },
       child: Container(
@@ -166,7 +166,7 @@ class NewProductCard extends StatelessWidget {
                                 size: 20,
                               ),
                               formatTime(
-                                rawTime: product.availability?.startTime,
+                                time: product.availability?.startTime,
                                 textStyle:
                                     Theme.of(context).textTheme.bodyMedium,
                               ),
@@ -175,7 +175,7 @@ class NewProductCard extends StatelessWidget {
                                 style: Theme.of(context).textTheme.bodyMedium,
                               ),
                               formatTime(
-                                rawTime: product.availability?.endTime,
+                                time: product.availability?.endTime,
                                 textStyle:
                                     Theme.of(context).textTheme.bodyMedium,
                               ),
@@ -186,7 +186,9 @@ class NewProductCard extends StatelessWidget {
                   else
                     SecondaryButton(
                       onPressed: () {
-                        context.dispatch(SelectProductAction(product: product));
+                        context.dispatch(
+                          UpdateHostStateAction(currentProduct: product),
+                        );
                         navigateToNextProductStep(
                           context: context,
                           product: product,

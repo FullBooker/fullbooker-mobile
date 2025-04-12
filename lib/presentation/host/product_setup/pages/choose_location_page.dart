@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/infrastructure/location/location_handler.dart';
@@ -17,14 +16,14 @@ import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/redux/actions/update_current_product_action.dart';
 
 @RoutePage()
-class NewChooseLocationPage extends StatefulWidget {
-  const NewChooseLocationPage({super.key});
+class ChooseLocationPage extends StatefulWidget {
+  const ChooseLocationPage({super.key});
 
   @override
-  State<NewChooseLocationPage> createState() => _NewChooseLocationPageState();
+  State<ChooseLocationPage> createState() => _ChooseLocationPageState();
 }
 
-class _NewChooseLocationPageState extends State<NewChooseLocationPage> {
+class _ChooseLocationPageState extends State<ChooseLocationPage> {
   late String selectedAddress;
   late String selectedCity;
 
@@ -235,7 +234,7 @@ class _NewChooseLocationPageState extends State<NewChooseLocationPage> {
                         city: selectedCity,
                       ),
                     );
-                    context.router.push(ProductLocationRoute());
+                    context.router.maybePop();
                   },
                   child: d.right(continueString),
                 ),

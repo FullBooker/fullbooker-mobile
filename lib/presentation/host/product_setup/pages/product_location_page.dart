@@ -2,57 +2,31 @@ import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
+import 'package:fullbooker/application/redux/actions/check_location_permission_action.dart';
 import 'package:fullbooker/application/redux/actions/set_product_location_action.dart';
-import 'package:fullbooker/application/redux/actions/update_current_product_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_setup_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/common/constants.dart';
+import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
-import 'package:fullbooker/infrastructure/location/location_handler.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:dartz/dartz.dart' as d;
 import 'package:fullbooker/presentation/core/components/generic_zero_state.dart';
-import 'package:fullbooker/shared/entities/location_perms_result.dart';
+import 'package:fullbooker/presentation/host/product_setup/components/location_preview_widget.dart';
+import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 @RoutePage()
-class ProductLocationPage extends StatefulWidget {
+class ProductLocationPage extends StatelessWidget {
   const ProductLocationPage({super.key});
 
   @override
-  State<ProductLocationPage> createState() => _ProductLocationPageState();
-}
-
-class _ProductLocationPageState extends State<ProductLocationPage> {
-  late LocationPermsResult locationResult;
-  bool _isLoading = true;
-
-  @override
-  void initState() {
-    super.initState();
-    _handlePermission();
-  }
-
-  Future<void> _handlePermission() async {
-    final LocationPermsResult result =
-        await LocationHandler.checkLocationPermission();
-    if (mounted) {
-      setState(() {
-        locationResult = result;
-        _isLoading = false;
-      });
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
-    if (_isLoading) return AppLoading();
-
     return Scaffold(
       appBar: CustomAppBar(
         showBell: false,
@@ -63,21 +37,17 @@ class _ProductLocationPageState extends State<ProductLocationPage> {
         child: StoreConnector<AppState, ProductSetupViewModel>(
           converter: (Store<AppState> store) =>
               ProductSetupViewModel.fromState(store.state),
-          onInit: (Store<AppState> store) {
-            // Reset initial values. If the user was navigated here it means
-            // the product doesn't have a location set
-            context.dispatch(
-              UpdateCurrentProductAction(
-                lat: UNKNOWN,
-                long: UNKNOWN,
-                address: UNKNOWN,
-              ),
-            );
-          },
+          onInit: (Store<AppState> store) => context.dispatch(
+            CheckLocationPermissionAction(),
+          ),
           builder: (BuildContext context, ProductSetupViewModel vm) {
             final bool isLocationAdded =
-                vm.currentProduct?.currentLocation?.lat != null &&
-                    vm.currentProduct?.currentLocation?.lat != UNKNOWN;
+                vm.currentProduct?.selectedLocation?.lat != null &&
+                    vm.currentProduct?.selectedLocation?.lat != UNKNOWN;
+
+            final bool locationDenied = vm.locationPerms?.denied ?? true;
+            final bool locationDeniedPermanently =
+                vm.locationPerms?.deniedForever ?? true;
 
             return Column(
               spacing: 12,
@@ -106,20 +76,21 @@ class _ProductLocationPageState extends State<ProductLocationPage> {
                               ),
                             ],
                           ),
-                          if (locationResult.denied ||
-                              locationResult.deniedForever)
+                          if (locationDenied || locationDeniedPermanently)
                             GenericZeroState(
                               iconPath: locationSVGPath,
                               title: locationPermsTitle,
                               description: locationPermsCopy,
                               onCTATap: () {
-                                if (locationResult.deniedForever) {
+                                if (locationDeniedPermanently) {
                                   openAppSettings();
                                 } else {
-                                  _handlePermission();
+                                  context.dispatch(
+                                    CheckLocationPermissionAction(),
+                                  );
                                 }
                               },
-                              ctaText: locationResult.deniedForever
+                              ctaText: locationDeniedPermanently
                                   ? openSettings
                                   : enableLocation,
                             ),
@@ -128,60 +99,58 @@ class _ProductLocationPageState extends State<ProductLocationPage> {
                               iconPath: locationSVGPath,
                               title: setEventLocation,
                               description: locationZeroStateCopy,
-                              onCTATap: () {
-                                context.router.push(NewChooseLocationRoute());
-                              },
+                              onCTATap: () =>
+                                  context.router.push(ChooseLocationRoute()),
                               ctaText: pickLocation,
                             ),
                           if (isLocationAdded)
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              spacing: 8,
-                              children: <Widget>[
-                                Container(
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Theme.of(context).dividerColor,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  height: 100,
-                                ),
-                                Text(
-                                  vm.currentProduct?.currentLocation?.address ??
-                                      '',
-                                  style:
-                                      Theme.of(context).textTheme.titleMedium,
-                                ),
-                                Text(
-                                  vm.currentProduct?.currentLocation?.city ??
-                                      '',
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                ),
-                              ],
+                            LocationPreviewWidget(
+                              location: vm.currentProduct?.selectedLocation,
                             ),
                         ],
                       ),
                     ],
                   ),
                 ),
-                PrimaryButton(
-                  onPressed: () {
-                    context.dispatch(
-                      SetProductLocationAction(
-                        onSuccess: () {
-                          context.router.push(ProductDateTimeRoute());
-                        },
-                        client: AppWrapperBase.of(context)!.customClient,
-                      ),
+                StoreConnector<AppState, ProductSetupViewModel>(
+                  converter: (Store<AppState> store) =>
+                      ProductSetupViewModel.fromState(store.state),
+                  onInit: (Store<AppState> store) => context.dispatch(
+                    CheckLocationPermissionAction(),
+                  ),
+                  builder: (BuildContext context, ProductSetupViewModel vm) {
+                    if (context.isWaiting(SetProductLocationAction)) {
+                      return AppLoading();
+                    }
+
+                    return Column(
+                      spacing: 12,
+                      children: <Widget>[
+                        PrimaryButton(
+                          onPressed: () => context.dispatch(
+                            SetProductLocationAction(
+                              onSuccess: () {
+                                context.router.push(ProductDateTimeRoute());
+                              },
+                              onError: (String error) => showAlertDialog(
+                                context: context,
+                                assetPath: productZeroStateSVGPath,
+                                description: error,
+                              ),
+                              client: AppWrapperBase.of(context)!.customClient,
+                            ),
+                          ),
+                          child: d.right(continueString),
+                        ),
+                        SecondaryButton(
+                          onPressed: () => context.router.maybePop(),
+                          child: d.right(cancelString),
+                          fillColor: Colors.transparent,
+                        ),
+                        verySmallVerticalSizedBox,
+                      ],
                     );
                   },
-                  child: d.right(continueString),
-                ),
-                SecondaryButton(
-                  onPressed: () => context.router.maybePop(),
-                  child: d.right(cancelString),
-                  fillColor: Colors.transparent,
                 ),
               ],
             );
