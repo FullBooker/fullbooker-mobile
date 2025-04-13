@@ -4,9 +4,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 @RoutePage()
 class ImagePreviewPage extends StatelessWidget {
-  const ImagePreviewPage({super.key, required this.imageUrl});
+  const ImagePreviewPage({
+    super.key,
+    required this.imageUrl,
+    this.isOffline = false,
+  });
 
   final String imageUrl;
+  final bool isOffline;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +24,9 @@ class ImagePreviewPage extends StatelessWidget {
       body: Center(
         child: Hero(
           tag: imageUrl,
-          child: CachedNetworkImage(imageUrl: imageUrl, fit: BoxFit.contain),
+          child: isOffline
+              ? Image.asset(imageUrl, fit: BoxFit.cover)
+              : CachedNetworkImage(imageUrl: imageUrl, fit: BoxFit.cover),
         ),
       ),
     );

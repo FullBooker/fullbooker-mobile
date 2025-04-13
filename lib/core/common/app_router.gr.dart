@@ -37,7 +37,6 @@ import 'package:fullbooker/features/host/pages/event_category_page.dart'
     as _i10;
 import 'package:fullbooker/features/host/pages/host_product_summary_page.dart'
     as _i14;
-import 'package:fullbooker/presentation/host/home/pages/hosting_home_page.dart' as _i15;
 import 'package:fullbooker/features/host/pages/image_selection_page.dart'
     as _i17;
 import 'package:fullbooker/features/host/pages/old_events_summary_page.dart'
@@ -46,6 +45,8 @@ import 'package:fullbooker/features/host/pages/tickets_summary_page.dart'
     as _i37;
 import 'package:fullbooker/features/host/pages/video_selection_page.dart'
     as _i39;
+import 'package:fullbooker/presentation/host/home/pages/hosting_home_page.dart'
+    as _i15;
 import 'package:fullbooker/presentation/host/product_setup/pages/add_product_pricing_page.dart'
     as _i5;
 import 'package:fullbooker/presentation/host/product_setup/pages/choose_location_page.dart'
@@ -577,10 +578,15 @@ class ImagePreviewRoute extends _i40.PageRouteInfo<ImagePreviewRouteArgs> {
   ImagePreviewRoute({
     _i41.Key? key,
     required String imageUrl,
+    bool isOffline = false,
     List<_i40.PageRouteInfo>? children,
   }) : super(
          ImagePreviewRoute.name,
-         args: ImagePreviewRouteArgs(key: key, imageUrl: imageUrl),
+         args: ImagePreviewRouteArgs(
+           key: key,
+           imageUrl: imageUrl,
+           isOffline: isOffline,
+         ),
          initialChildren: children,
        );
 
@@ -590,21 +596,31 @@ class ImagePreviewRoute extends _i40.PageRouteInfo<ImagePreviewRouteArgs> {
     name,
     builder: (data) {
       final args = data.argsAs<ImagePreviewRouteArgs>();
-      return _i16.ImagePreviewPage(key: args.key, imageUrl: args.imageUrl);
+      return _i16.ImagePreviewPage(
+        key: args.key,
+        imageUrl: args.imageUrl,
+        isOffline: args.isOffline,
+      );
     },
   );
 }
 
 class ImagePreviewRouteArgs {
-  const ImagePreviewRouteArgs({this.key, required this.imageUrl});
+  const ImagePreviewRouteArgs({
+    this.key,
+    required this.imageUrl,
+    this.isOffline = false,
+  });
 
   final _i41.Key? key;
 
   final String imageUrl;
 
+  final bool isOffline;
+
   @override
   String toString() {
-    return 'ImagePreviewRouteArgs{key: $key, imageUrl: $imageUrl}';
+    return 'ImagePreviewRouteArgs{key: $key, imageUrl: $imageUrl, isOffline: $isOffline}';
   }
 }
 

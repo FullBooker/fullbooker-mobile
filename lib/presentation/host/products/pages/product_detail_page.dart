@@ -41,10 +41,7 @@ class ProductDetailPage extends StatelessWidget {
         builder: (BuildContext context, ProductsPageViewModel vm) {
           final Product? product = vm.selectedProduct;
 
-          final List<String?> imageURLs = <String?>[
-            product?.image?.file,
-            ...mockProductSetupImageURLs,
-          ];
+          final List<String?> imageURLs = mockProductSetupImageURLs;
 
           final bool isComplete = product?.completed ?? false;
           final bool isLocationAvailable =
