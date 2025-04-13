@@ -628,3 +628,7 @@ const String verifyString = 'Verify';
 
 const String homeNudgeCopy = 'Ready to host your first experience?';
 const String startSetup = 'Start Setup';
+
+const String scanAnother = 'Scan Another Ticket';
+const String validTicket = 'Valid Ticket';
+const String inValidTicket = 'Invalid Ticket';

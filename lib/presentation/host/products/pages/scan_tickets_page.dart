@@ -1,10 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
-import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:fullbooker/presentation/host/products/widgets/ticket_scan_bottom_sheet.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
 
 @RoutePage()
 class ScanTicketsPage extends StatefulWidget {
@@ -15,27 +14,8 @@ class ScanTicketsPage extends StatefulWidget {
 }
 
 class _ScanTicketsPageState extends State<ScanTicketsPage> {
-  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-  QRViewController? controller;
+  final GlobalKey qrKey = GlobalKey();
   bool hasScanned = false;
-
-  @override
-  void reassemble() {
-    super.reassemble();
-    controller?.pauseCamera();
-    controller?.resumeCamera();
-  }
-
-  void _onQRViewCreated(QRViewController qrController) {
-    controller = qrController;
-    qrController.scannedDataStream.listen((Barcode scanData) {
-      if (!hasScanned) {
-        setState(() => hasScanned = true);
-        controller?.pauseCamera();
-        _showValidationBottomSheet(scanData.code ?? '');
-      }
-    });
-  }
 
   void _showValidationBottomSheet(String code) {
     final bool isValid = code == 'VALID_TICKET_ID';
@@ -43,13 +23,14 @@ class _ScanTicketsPageState extends State<ScanTicketsPage> {
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.white,
+      isDismissible: false,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
       ),
       builder: (_) => TicketScanBottomSheet(
+        isValid: isValid,
         onDismiss: () {
           Navigator.pop(context);
-          controller?.resumeCamera();
           setState(() => hasScanned = false);
         },
       ),
@@ -57,26 +38,20 @@ class _ScanTicketsPageState extends State<ScanTicketsPage> {
   }
 
   @override
-  void dispose() {
-    controller?.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       body: Stack(
         children: <Widget>[
-          QRView(
-            key: qrKey,
-            onQRViewCreated: _onQRViewCreated,
-            overlay: QrScannerOverlayShape(
-              borderColor: Theme.of(context).primaryColor,
-              borderRadius: 8,
-              borderLength: 50,
-              borderWidth: 4,
-              cutOutSize: MediaQuery.of(context).size.width * 0.7,
-            ),
+          MobileScanner(
+            onDetect: (BarcodeCapture capture) {
+              if (hasScanned) return;
+              final String? code = capture.barcodes.first.rawValue;
+              if (code != null) {
+                setState(() => hasScanned = true);
+                _showValidationBottomSheet(code);
+              }
+            },
           ),
           SafeArea(
             child: Column(
