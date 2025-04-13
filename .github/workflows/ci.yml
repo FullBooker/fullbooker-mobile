@@ -5,7 +5,6 @@ on:
     branches:
       - main
       - prod
-      - setup-play-store-deploy
 
 jobs:
   deploy_to_app_tester:
@@ -60,7 +59,7 @@ jobs:
 
   deploy_to_play_store:
     name: Build AAB and Deploy to Google Play Store
-    if: github.ref == 'refs/heads/setup-play-store-deploy'
+    if: github.ref == 'refs/heads/prod'
     timeout-minutes: 20
     runs-on: ubuntu-latest
 
