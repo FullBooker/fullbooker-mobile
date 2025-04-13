@@ -73,7 +73,10 @@ class CustomTextInput extends StatelessWidget {
           autovalidateMode: autoValidate ?? false
               ? AutovalidateMode.always
               : AutovalidateMode.disabled,
-          style: Theme.of(context).textTheme.bodyLarge,
+          style: Theme.of(context)
+              .textTheme
+              .bodyLarge
+              ?.copyWith(color: AppColors.textBlackColor),
           decoration: InputDecoration(
             hintText: hintText ?? '',
             hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(

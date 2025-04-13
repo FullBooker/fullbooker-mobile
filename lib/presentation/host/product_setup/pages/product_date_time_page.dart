@@ -108,7 +108,11 @@ class ProductDateTimePage extends StatelessWidget {
                                             loadedDate: vm.startDate,
                                             dateTextStyle: Theme.of(context)
                                                 .textTheme
-                                                .bodyMedium,
+                                                .bodyMedium
+                                                ?.copyWith(
+                                                  color:
+                                                      AppColors.textBlackColor,
+                                                ),
                                           )
                                         else
                                           Text(
@@ -166,7 +170,11 @@ class ProductDateTimePage extends StatelessWidget {
                                             time: vm.startTime,
                                             textStyle: Theme.of(context)
                                                 .textTheme
-                                                .bodyMedium,
+                                                .bodyMedium
+                                                ?.copyWith(
+                                                  color:
+                                                      AppColors.textBlackColor,
+                                                ),
                                           )
                                         else
                                           Text(
@@ -232,7 +240,11 @@ class ProductDateTimePage extends StatelessWidget {
                                             loadedDate: vm.endDate,
                                             dateTextStyle: Theme.of(context)
                                                 .textTheme
-                                                .bodyMedium,
+                                                .bodyMedium
+                                                ?.copyWith(
+                                                  color:
+                                                      AppColors.textBlackColor,
+                                                ),
                                           )
                                         else
                                           Text(
@@ -290,7 +302,11 @@ class ProductDateTimePage extends StatelessWidget {
                                             time: vm.endTime,
                                             textStyle: Theme.of(context)
                                                 .textTheme
-                                                .bodyMedium,
+                                                .bodyMedium
+                                                ?.copyWith(
+                                                  color:
+                                                      AppColors.textBlackColor,
+                                                ),
                                           )
                                         else
                                           Text(

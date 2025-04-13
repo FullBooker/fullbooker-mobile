@@ -56,17 +56,18 @@ class ProductCard extends StatelessWidget {
                       width: double.infinity,
                       fit: BoxFit.cover,
                     ),
+                  )
+                else
+                  ClipRRect(
+                    borderRadius:
+                        const BorderRadius.vertical(top: Radius.circular(12)),
+                    child: Image.asset(
+                      productImageZeroState,
+                      height: MediaQuery.of(context).size.height * .2,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                ClipRRect(
-                  borderRadius:
-                      const BorderRadius.vertical(top: Radius.circular(12)),
-                  child: Image.asset(
-                    productImageZeroState,
-                    height: MediaQuery.of(context).size.height * .2,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                  ),
-                ),
                 Positioned(
                   top: 12,
                   left: 12,

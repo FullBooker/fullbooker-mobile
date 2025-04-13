@@ -1,6 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 
 class ImageCarouselWidget extends StatefulWidget {
@@ -33,19 +35,32 @@ class _ImageCarouselWidgetState extends State<ImageCarouselWidget> {
           ),
           items: widget.imageUrls?.map((String? imageUrl) {
             if (imageUrl != null) {
-              return CachedNetworkImage(
-                imageUrl: imageUrl,
-                fit: BoxFit.cover,
-                width: double.infinity,
-                placeholder: (BuildContext context, String url) =>
-                    const Center(child: CircularProgressIndicator()),
-                errorWidget: (BuildContext context, String url, Object error) =>
-                    const Icon(Icons.error),
+              return GestureDetector(
+                onTap: () =>
+                    context.router.push(ImagePreviewRoute(imageUrl: imageUrl)),
+                child: CachedNetworkImage(
+                  imageUrl: imageUrl,
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                  placeholder: (BuildContext context, String url) =>
+                      const Center(child: CircularProgressIndicator()),
+                  errorWidget:
+                      (BuildContext context, String url, Object error) =>
+                          const Icon(Icons.error),
+                ),
               );
             } else {
-              return Image.asset(
-                productImageZeroState,
-                fit: BoxFit.cover,
+              return GestureDetector(
+                onTap: () => context.router.push(
+                  ImagePreviewRoute(
+                    imageUrl: productImageZeroState,
+                    isOffline: true,
+                  ),
+                ),
+                child: Image.asset(
+                  productImageZeroState,
+                  fit: BoxFit.cover,
+                ),
               );
             }
           }).toList(),
