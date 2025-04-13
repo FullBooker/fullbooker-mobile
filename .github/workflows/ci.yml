@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - prod
+      - setup-play-store-deploy
 
 jobs:
   deploy_to_app_tester:
@@ -59,7 +60,7 @@ jobs:
 
   deploy_to_play_store:
     name: Build AAB and Deploy to Google Play Store
-    if: github.ref == 'refs/heads/prod'
+    if: github.ref == 'refs/heads/setup-play-store-deploy'
     timeout-minutes: 20
     runs-on: ubuntu-latest
 
@@ -104,7 +105,8 @@ jobs:
         uses: r0adkll/upload-google-play@v1
         with:
           serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
-          packageName: com.fullbooker.app
-          releaseFile: build/app/outputs/bundle/release/app-release.aab
-          track: internal
+          packageName: com.fullbooker.fullbooker
+          releaseFiles: build/app/outputs/bundle/release/app-release.aab
+          track: production
           status: completed
+          releaseName: 1.0.${{ github.run_number }}-prod
