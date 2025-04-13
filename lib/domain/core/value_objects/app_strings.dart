@@ -1,5 +1,3 @@
-// Onboarding strings
-// TODO(abiud): improve this copy
 import 'package:fullbooker/core/common/constants.dart';
 
 const String overview1Title = 'Find your favorite events and activities';
@@ -615,7 +613,8 @@ const String totalRevenue = 'Total Revenue';
 
 const String scanTickets = 'Scan Tickets';
 const String scanTicket = 'Scan Ticket';
-const String scanTicketCopy = 'Hold your camera steady over the QR code';
+const String scanTicketCopy =
+    'Point and hold your camera steady over the QR code';
 
 const String noGoBack = 'No, Go Back';
 
@@ -632,3 +631,5 @@ const String startSetup = 'Start Setup';
 const String scanAnother = 'Scan Another Ticket';
 const String validTicket = 'Valid Ticket';
 const String inValidTicket = 'Invalid Ticket';
+const String testTicketName = 'Abiud Orina';
+const String debugTicketQR = 'Debug QR Code: ';

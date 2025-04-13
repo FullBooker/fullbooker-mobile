@@ -14,10 +14,11 @@ class ScanTicketsPage extends StatefulWidget {
 }
 
 class _ScanTicketsPageState extends State<ScanTicketsPage> {
-  final GlobalKey qrKey = GlobalKey();
   bool hasScanned = false;
+  final GlobalKey qrKey = GlobalKey();
 
   void _showValidationBottomSheet(String code) {
+    // TODO(abiud): this will be replaced by an actual ticket REF ID
     final bool isValid = code == 'VALID_TICKET_ID';
 
     showModalBottomSheet(
@@ -29,7 +30,8 @@ class _ScanTicketsPageState extends State<ScanTicketsPage> {
       ),
       builder: (_) => TicketScanBottomSheet(
         isValid: isValid,
-        onDismiss: () {
+        code: code,
+        onConfirm: () {
           Navigator.pop(context);
           setState(() => hasScanned = false);
         },

@@ -2,21 +2,29 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/core/utils.dart';
+import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
+import 'package:get_it/get_it.dart';
 import 'package:heroicons/heroicons.dart';
 
 class TicketScanBottomSheet extends StatelessWidget {
   const TicketScanBottomSheet({
     super.key,
     this.isValid = false,
-    required this.onDismiss,
+    required this.onConfirm,
+    required this.code,
   });
+
   final bool isValid;
-  final Function() onDismiss;
+  final Function() onConfirm;
+  final String code;
 
   @override
   Widget build(BuildContext context) {
+    final bool showDebugTicket =
+        GetIt.I.get<AppConfig>().environment.toLowerCase() == 'dev';
+
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -37,18 +45,27 @@ class TicketScanBottomSheet extends StatelessWidget {
             ),
           ),
 
-          // Title
-          Text(
-            isValid ? validTicket : inValidTicket,
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: isValid
-                      ? Theme.of(context).primaryColor
-                      : AppColors.redColor,
+          Column(
+            spacing: 4,
+            children: <Widget>[
+              Text(
+                isValid ? validTicket : inValidTicket,
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: isValid
+                          ? Theme.of(context).primaryColor
+                          : AppColors.redColor,
+                    ),
+              ),
+              if (showDebugTicket)
+                Text(
+                  '$debugTicketQR $code',
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
+            ],
           ),
 
-          // Ticket info block
+          // Ticket info
           if (isValid)
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -61,8 +78,6 @@ class TicketScanBottomSheet extends StatelessWidget {
                 children: <Widget>[
                   // Avatar initials
                   Container(
-                    // width: 40,
-                    // height: 40,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
@@ -72,7 +87,7 @@ class TicketScanBottomSheet extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Text(
-                        getInitials('Abiud Orina'),
+                        getInitials(testTicketName),
                         style: Theme.of(context)
                             .textTheme
                             .titleMedium
@@ -86,7 +101,7 @@ class TicketScanBottomSheet extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        'Abiud Orina',
+                        testTicketName,
                         style: Theme.of(context)
                             .textTheme
                             .bodyLarge
@@ -105,9 +120,8 @@ class TicketScanBottomSheet extends StatelessWidget {
               ),
             ),
 
-          // CTA Button
           PrimaryButton(
-            onPressed: onDismiss,
+            onPressed: onConfirm,
             child: right(scanAnother),
           ),
         ],
