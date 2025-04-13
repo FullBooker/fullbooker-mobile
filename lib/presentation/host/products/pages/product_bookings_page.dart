@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/states/user_state.dart';
 import 'package:fullbooker/application/redux/view_models/products_page_view_model.dart';
+import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/domain/core/entities/booking.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
@@ -26,9 +27,7 @@ class ProductBookingsPage extends StatelessWidget {
         title: productBookings,
       ),
       floatingActionButton: GestureDetector(
-        onTap: () {
-          // TODO(abiud): scan tickets on this page
-        },
+        onTap: () => context.router.push(ScanTicketsRoute()),
         child: Container(
           decoration: BoxDecoration(
             color: Theme.of(context).primaryColor,

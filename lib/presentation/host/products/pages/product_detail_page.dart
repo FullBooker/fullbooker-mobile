@@ -252,15 +252,7 @@ class ProductDetailPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: PrimaryButton(
-                  onPressed: () {
-                    ScaffoldMessenger.of(context)
-                      ..hideCurrentSnackBar()
-                      ..showSnackBar(
-                        const SnackBar(
-                          content: Text(comingSoonTitle),
-                        ),
-                      );
-                  },
+                  onPressed: () => context.router.push(ScanTicketsRoute()),
                   customRadius: 100,
                   child: left(
                     Row(

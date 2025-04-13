@@ -51,5 +51,6 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: ChooseLocationRoute.page),
         AutoRoute(page: ProductDetailRoute.page),
         AutoRoute(page: ProductBookingsRoute.page),
+        AutoRoute(page: ScanTicketsRoute.page),
       ];
 }
