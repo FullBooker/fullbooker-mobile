@@ -1,1 +1,1 @@
-flutter build appbundle --build-number=106 --build-name=1.0.106-prod --obfuscate --split-debug-info=dump/ --release --dart-define=APPVERSION=1.0.106-prod --dart-define=ENV=PROD
+flutter build apk --build-number=111 --build-name=1.0.111-prod --obfuscate --split-debug-info=dump/ --release --dart-define=APPVERSION=1.0.111-prod --dart-define=ENV=PROD

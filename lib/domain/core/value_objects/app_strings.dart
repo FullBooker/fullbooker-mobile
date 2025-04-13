@@ -614,6 +614,8 @@ const String stats = 'Stats';
 const String totalRevenue = 'Total Revenue';
 
 const String scanTickets = 'Scan Tickets';
+const String scanTicket = 'Scan Ticket';
+const String scanTicketCopy = 'Hold your camera steady over the QR code';
 
 const String noGoBack = 'No, Go Back';
 
