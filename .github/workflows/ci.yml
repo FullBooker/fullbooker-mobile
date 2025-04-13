@@ -104,7 +104,8 @@ jobs:
         uses: r0adkll/upload-google-play@v1
         with:
           serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
-          packageName: com.fullbooker.app
-          releaseFile: build/app/outputs/bundle/release/app-release.aab
-          track: internal
+          packageName: com.fullbooker.fullbooker
+          releaseFiles: build/app/outputs/bundle/release/app-release.aab
+          track: production
           status: completed
+          releaseName: 1.0.${{ github.run_number }}-prod
