@@ -1,11 +1,10 @@
-// location_handler.dart
 import 'dart:convert';
 import 'package:fullbooker/shared/entities/location_perms_result.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:fullbooker/core/common/constants.dart';
+import 'package:maplibre_gl/maplibre_gl.dart';
 
 class LocationHandler {
   static Future<LatLng> getUserLocation({
@@ -27,28 +26,25 @@ class LocationHandler {
     }
   }
 
-// Returns results of places based on the search query
   static Future<List<Map<String, dynamic>>> searchLocation(String query) async {
     if (query.trim().isEmpty) return <Map<String, dynamic>>[];
 
     final Uri url = Uri.parse(
-      'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$query&components=country:ke&location=-1.286389,36.817223&radius=50000&strictbounds=true&key=$kMapsAPIKey',
+      'https://api.maptiler.com/geocoding/$query.json?key=$kMapTilerAPIKey&language=en&limit=5&country=ke',
     );
 
     try {
       final http.Response response = await http.get(url);
       if (response.statusCode == 200) {
-        final List<dynamic> predictions =
-            json.decode(response.body)['predictions'];
-        return predictions
-            .take(4)
-            .map(
-              (dynamic item) => <String, dynamic>{
-                'description': item['description'],
-                'place_id': item['place_id'],
-              },
-            )
-            .toList();
+        final dynamic data = json.decode(response.body);
+        final List<dynamic> features = data['features'];
+        return features.map((dynamic feature) {
+          return <String, dynamic>{
+            'description': feature['place_name'],
+            'center': feature['center'], // [lng, lat]
+            'id': feature['id'],
+          };
+        }).toList();
       }
     } catch (_) {
       return <Map<String, dynamic>>[];
@@ -56,38 +52,39 @@ class LocationHandler {
     return <Map<String, dynamic>>[];
   }
 
-  static Future<Map<String, dynamic>?> resolvePlace(String placeId) async {
-    final Uri detailsUrl = Uri.parse(
-      'https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&key=$kMapsAPIKey',
-    );
-
-    try {
-      final http.Response response = await http.get(detailsUrl);
-      if (response.statusCode == 200) {
-        return json.decode(response.body)['result'];
-      }
-    } catch (_) {
-      return null;
-    }
-    return null;
+  // 📍 Resolve place ID to coordinates — map back from search results
+  static Future<Map<String, dynamic>?> resolvePlace(String idOrName) async {
+    final List<Map<String, dynamic>> results = await searchLocation(idOrName);
+    return results.isNotEmpty
+        ? <String, dynamic>{
+            'name': results.first['description'],
+            'formatted_address': results.first['description'],
+            'geometry': <String, Map<String, dynamic>>{
+              'location': <String, dynamic>{
+                'lat': results.first['center'][1],
+                'lng': results.first['center'][0],
+              },
+            },
+          }
+        : null;
   }
 
-  // Returns a place name based on coordinates
   static Future<Map<String, dynamic>?> reverseGeocode(LatLng latLng) async {
-    final Uri reverseGeocodeUrl = Uri.parse(
-      'https://maps.googleapis.com/maps/api/geocode/json?latlng=${latLng.latitude},${latLng.longitude}&region=ke&key=$kMapsAPIKey',
+    final Uri url = Uri.parse(
+      'https://api.maptiler.com/geocoding/${latLng.longitude},${latLng.latitude}.json?key=$kMapTilerAPIKey&language=en',
     );
 
     try {
-      final http.Response response = await http.get(reverseGeocodeUrl);
+      final http.Response response = await http.get(url);
       if (response.statusCode == 200) {
-        final List<dynamic> results =
-            json.decode(response.body)['results'] as List<dynamic>;
-        return results.isNotEmpty ? results.first : null;
+        final dynamic data = json.decode(response.body);
+        final dynamic features = data['features'];
+        return features.isNotEmpty ? features.first : null;
       }
     } catch (_) {
       return null;
     }
+
     return null;
   }
 

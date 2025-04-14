@@ -1,4 +1,4 @@
-import 'package:map_location_picker/map_location_picker.dart';
+import 'package:maplibre_gl/maplibre_gl.dart';
 
 const String UNKNOWN = 'UNKNOWN';
 
@@ -20,6 +20,7 @@ const List<String> kAllowedImageExtensions = <String>['jpg', 'png'];
 const List<String> kAllowedVideoExtensions = <String>['mp4'];
 
 const String kMapsAPIKey = 'AIzaSyDen5uldAkBcBPog8ajqpThWXGsiXmYSyU';
+const String kMapTilerAPIKey = 'UwRsOLvqM5aXr5nWNHAw';
 
 const int kRequestTimeoutSeconds = 45;
 
