@@ -26,6 +26,8 @@ mixin _$HostState {
   List<ProductCategory>? get productCategories =>
       throw _privateConstructorUsedError;
   LocationPermsResult? get locationPerms => throw _privateConstructorUsedError;
+  ProductMediaState? get productMediaState =>
+      throw _privateConstructorUsedError;
 
   /// Serializes this HostState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -47,11 +49,13 @@ abstract class $HostStateCopyWith<$Res> {
       Product? currentProduct,
       Product? selectedProduct,
       List<ProductCategory>? productCategories,
-      LocationPermsResult? locationPerms});
+      LocationPermsResult? locationPerms,
+      ProductMediaState? productMediaState});
 
   $ProductCopyWith<$Res>? get currentProduct;
   $ProductCopyWith<$Res>? get selectedProduct;
   $LocationPermsResultCopyWith<$Res>? get locationPerms;
+  $ProductMediaStateCopyWith<$Res>? get productMediaState;
 }
 
 /// @nodoc
@@ -74,6 +78,7 @@ class _$HostStateCopyWithImpl<$Res, $Val extends HostState>
     Object? selectedProduct = freezed,
     Object? productCategories = freezed,
     Object? locationPerms = freezed,
+    Object? productMediaState = freezed,
   }) {
     return _then(_value.copyWith(
       products: freezed == products
@@ -96,6 +101,10 @@ class _$HostStateCopyWithImpl<$Res, $Val extends HostState>
           ? _value.locationPerms
           : locationPerms // ignore: cast_nullable_to_non_nullable
               as LocationPermsResult?,
+      productMediaState: freezed == productMediaState
+          ? _value.productMediaState
+          : productMediaState // ignore: cast_nullable_to_non_nullable
+              as ProductMediaState?,
     ) as $Val);
   }
 
@@ -140,6 +149,20 @@ class _$HostStateCopyWithImpl<$Res, $Val extends HostState>
       return _then(_value.copyWith(locationPerms: value) as $Val);
     });
   }
+
+  /// Create a copy of HostState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ProductMediaStateCopyWith<$Res>? get productMediaState {
+    if (_value.productMediaState == null) {
+      return null;
+    }
+
+    return $ProductMediaStateCopyWith<$Res>(_value.productMediaState!, (value) {
+      return _then(_value.copyWith(productMediaState: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -155,7 +178,8 @@ abstract class _$$HostStateImplCopyWith<$Res>
       Product? currentProduct,
       Product? selectedProduct,
       List<ProductCategory>? productCategories,
-      LocationPermsResult? locationPerms});
+      LocationPermsResult? locationPerms,
+      ProductMediaState? productMediaState});
 
   @override
   $ProductCopyWith<$Res>? get currentProduct;
@@ -163,6 +187,8 @@ abstract class _$$HostStateImplCopyWith<$Res>
   $ProductCopyWith<$Res>? get selectedProduct;
   @override
   $LocationPermsResultCopyWith<$Res>? get locationPerms;
+  @override
+  $ProductMediaStateCopyWith<$Res>? get productMediaState;
 }
 
 /// @nodoc
@@ -183,6 +209,7 @@ class __$$HostStateImplCopyWithImpl<$Res>
     Object? selectedProduct = freezed,
     Object? productCategories = freezed,
     Object? locationPerms = freezed,
+    Object? productMediaState = freezed,
   }) {
     return _then(_$HostStateImpl(
       products: freezed == products
@@ -205,6 +232,10 @@ class __$$HostStateImplCopyWithImpl<$Res>
           ? _value.locationPerms
           : locationPerms // ignore: cast_nullable_to_non_nullable
               as LocationPermsResult?,
+      productMediaState: freezed == productMediaState
+          ? _value.productMediaState
+          : productMediaState // ignore: cast_nullable_to_non_nullable
+              as ProductMediaState?,
     ));
   }
 }
@@ -218,7 +249,8 @@ class _$HostStateImpl implements _HostState {
       this.currentProduct,
       this.selectedProduct,
       this.productCategories = const <ProductCategory>[],
-      this.locationPerms});
+      this.locationPerms,
+      this.productMediaState});
 
   factory _$HostStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$HostStateImplFromJson(json);
@@ -235,10 +267,12 @@ class _$HostStateImpl implements _HostState {
   final List<ProductCategory>? productCategories;
   @override
   final LocationPermsResult? locationPerms;
+  @override
+  final ProductMediaState? productMediaState;
 
   @override
   String toString() {
-    return 'HostState(products: $products, currentProduct: $currentProduct, selectedProduct: $selectedProduct, productCategories: $productCategories, locationPerms: $locationPerms)';
+    return 'HostState(products: $products, currentProduct: $currentProduct, selectedProduct: $selectedProduct, productCategories: $productCategories, locationPerms: $locationPerms, productMediaState: $productMediaState)';
   }
 
   @override
@@ -254,7 +288,9 @@ class _$HostStateImpl implements _HostState {
             const DeepCollectionEquality()
                 .equals(other.productCategories, productCategories) &&
             (identical(other.locationPerms, locationPerms) ||
-                other.locationPerms == locationPerms));
+                other.locationPerms == locationPerms) &&
+            (identical(other.productMediaState, productMediaState) ||
+                other.productMediaState == productMediaState));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -265,7 +301,8 @@ class _$HostStateImpl implements _HostState {
       currentProduct,
       selectedProduct,
       const DeepCollectionEquality().hash(productCategories),
-      locationPerms);
+      locationPerms,
+      productMediaState);
 
   /// Create a copy of HostState
   /// with the given fields replaced by the non-null parameter values.
@@ -289,7 +326,8 @@ abstract class _HostState implements HostState {
       final Product? currentProduct,
       final Product? selectedProduct,
       final List<ProductCategory>? productCategories,
-      final LocationPermsResult? locationPerms}) = _$HostStateImpl;
+      final LocationPermsResult? locationPerms,
+      final ProductMediaState? productMediaState}) = _$HostStateImpl;
 
   factory _HostState.fromJson(Map<String, dynamic> json) =
       _$HostStateImpl.fromJson;
@@ -304,6 +342,8 @@ abstract class _HostState implements HostState {
   List<ProductCategory>? get productCategories;
   @override
   LocationPermsResult? get locationPerms;
+  @override
+  ProductMediaState? get productMediaState;
 
   /// Create a copy of HostState
   /// with the given fields replaced by the non-null parameter values.

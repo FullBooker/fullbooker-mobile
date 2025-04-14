@@ -46,3 +46,11 @@ const List<String> kAllowedCurrencies = <String>['KES', 'USD', 'AED'];
 const List<String> kAllowedDiscountOptions = <String>['Percentage', 'Amount'];
 
 const String kSupportLine = '0700 394 444';
+
+const List<String> kAllowedMediaExtensions = <String>[
+  'jpg',
+  'jpeg',
+  'png',
+  'mp4',
+  'mov',
+];
