@@ -84,6 +84,12 @@ class ProductPhotosPage extends StatelessWidget {
                           itemCount: media.length + 1,
                           itemBuilder: (BuildContext context, int index) {
                             if (index == media.length) {
+                              if (context.isWaiting(<Type>[
+                                UploadProductMediaAction,
+                                RemoveProductMediaAction,
+                              ])) {
+                                return AppLoading();
+                              }
                               return UploadPhotoZeroState(
                                 onTap: () async {
                                   final FilePickerResult? result =
@@ -134,7 +140,11 @@ class ProductPhotosPage extends StatelessWidget {
                                     onTap: () =>
                                         StoreProvider.dispatch<AppState>(
                                       context,
-                                      RemoveProductMediaAction(item!),
+                                      RemoveProductMediaAction(
+                                        media: item!,
+                                        client: AppWrapperBase.of(context)!
+                                            .customClient,
+                                      ),
                                     ),
                                     child: Container(
                                       decoration: BoxDecoration(

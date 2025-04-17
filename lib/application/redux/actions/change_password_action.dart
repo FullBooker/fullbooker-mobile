@@ -36,7 +36,9 @@ class ChangePasswordAction extends ReduxAction<AppState> {
     if (isPasswordEmpty ||
         isConformPasswordEmpty ||
         (password != confirmPassword)) {
-      return onError?.call(setPasswordPrompt);
+      onError?.call(setPasswordPrompt);
+
+      return null;
     }
 
     final Map<String, String> data = <String, String>{

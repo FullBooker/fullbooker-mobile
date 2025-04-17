@@ -60,10 +60,12 @@ class UploadProductMediaAction extends ReduxAction<AppState> {
       return onError?.call(error ?? defaultUserFriendlyMessage);
     }
 
-    final ProductMedia uploadImage = ProductMedia.fromJson(body);
+    final ProductMedia uploadedImage = ProductMedia.fromJson(body);
 
-    UpdateCurrentProductAction(
-      productMedia: <ProductMedia?>[...existingMedia, uploadImage],
+    dispatch(
+      UpdateCurrentProductAction(
+        productMedia: <ProductMedia?>[...existingMedia, uploadedImage],
+      ),
     );
 
     return state;
