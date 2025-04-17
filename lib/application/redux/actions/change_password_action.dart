@@ -59,13 +59,17 @@ class ChangePasswordAction extends ReduxAction<AppState> {
     if (httpResponse.statusCode >= 400) {
       final String? error = client.parseError(body);
 
-      return onError?.call(error ?? defaultUserFriendlyMessage);
+      onError?.call(error ?? defaultUserFriendlyMessage);
+
+      return null;
     }
 
     final bool isPasswordChanged = body.containsKey('detail');
 
     if (!isPasswordChanged) {
-      return onError?.call(errorVerifyingOTP);
+      onError?.call(errorVerifyingOTP);
+
+      return null;
     }
 
     onSuccess?.call();

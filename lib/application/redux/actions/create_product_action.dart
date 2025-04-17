@@ -33,7 +33,9 @@ class CreateProductAction extends ReduxAction<AppState> {
             UNKNOWN;
 
     if (name == UNKNOWN || description == UNKNOWN || subcategory == UNKNOWN) {
-      return onError?.call(createProductError);
+      onError?.call(createProductError);
+
+      return null;
     }
 
     final Map<String, String> data = <String, String>{
@@ -54,7 +56,9 @@ class CreateProductAction extends ReduxAction<AppState> {
     if (httpResponse.statusCode >= 400) {
       final String? error = client.parseError(body);
 
-      return onError?.call(error ?? defaultUserFriendlyMessage);
+      onError?.call(error ?? defaultUserFriendlyMessage);
+
+      return null;
     }
 
     final Product createdProduct = Product.fromJson(body);

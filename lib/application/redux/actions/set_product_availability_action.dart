@@ -41,7 +41,9 @@ class SetProductScheduleAction extends ReduxAction<AppState> {
         startTime == UNKNOWN ||
         end == UNKNOWN ||
         endTime == UNKNOWN) {
-      return onError?.call(addDateTimeError);
+      onError?.call(addDateTimeError);
+
+      return null;
     }
 
     final Map<String, String> data = <String, String>{
@@ -64,7 +66,9 @@ class SetProductScheduleAction extends ReduxAction<AppState> {
     if (httpResponse.statusCode >= 400) {
       final String? error = client.parseError(body);
 
-      return onError?.call(error ?? defaultUserFriendlyMessage);
+      onError?.call(error ?? defaultUserFriendlyMessage);
+
+      return null;
     }
 
     final ProductSchedule savedSchedule = ProductSchedule.fromJson(body);
