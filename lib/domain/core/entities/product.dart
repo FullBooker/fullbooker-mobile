@@ -38,8 +38,6 @@ class Product with _$Product {
     ProductCategory? selectedProductCategory,
     @JsonKey(includeFromJson: true, includeToJson: true)
     ProductCategory? selectedProductSubCategory,
-    @JsonKey(includeFromJson: true, includeToJson: true)
-    ProductLocation? selectedLocation,
   }) = _Product;
 
   factory Product.initial() => Product(
@@ -48,7 +46,6 @@ class Product with _$Product {
         image: ProductMedia.initial(),
         selectedProductCategory: ProductCategory.initial(),
         selectedProductSubCategory: ProductCategory.initial(),
-        selectedLocation: ProductLocation.initial(),
       );
 
   factory Product.fromJson(Map<String, dynamic> json) =>
@@ -63,7 +60,6 @@ class Product with _$Product {
           product.selectedProductCategory ?? ProductCategory.initial(),
       selectedProductSubCategory:
           product.selectedProductSubCategory ?? ProductCategory.initial(),
-      selectedLocation: product.selectedLocation ?? ProductLocation.initial(),
     );
   }
 }

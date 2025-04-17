@@ -7,7 +7,6 @@ import 'package:fullbooker/application/redux/actions/set_product_location_action
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_setup_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
-import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
@@ -41,9 +40,7 @@ class ProductLocationPage extends StatelessWidget {
             CheckLocationPermissionAction(),
           ),
           builder: (BuildContext context, ProductSetupViewModel vm) {
-            final bool isLocationAdded =
-                vm.currentProduct?.selectedLocation?.lat != null &&
-                    vm.currentProduct?.selectedLocation?.lat != UNKNOWN;
+            final bool isLocationAdded = hasValidLocation(vm.selectedLocation);
 
             final bool locationDenied = vm.locationPerms?.denied ?? true;
             final bool locationDeniedPermanently =
@@ -93,8 +90,12 @@ class ProductLocationPage extends StatelessWidget {
                               ctaText: locationDeniedPermanently
                                   ? openSettings
                                   : enableLocation,
-                            ),
-                          if (!isLocationAdded)
+                            )
+                          else if (isLocationAdded)
+                            LocationPreviewWidget(
+                              location: vm.selectedLocation,
+                            )
+                          else
                             GenericZeroState(
                               iconPath: locationSVGPath,
                               title: setEventLocation,
@@ -102,10 +103,6 @@ class ProductLocationPage extends StatelessWidget {
                               onCTATap: () =>
                                   context.router.push(ChooseLocationRoute()),
                               ctaText: pickLocation,
-                            ),
-                          if (isLocationAdded)
-                            LocationPreviewWidget(
-                              location: vm.currentProduct?.selectedLocation,
                             ),
                         ],
                       ),

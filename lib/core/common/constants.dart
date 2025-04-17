@@ -1,6 +1,7 @@
 import 'package:map_location_picker/map_location_picker.dart';
 
 const String UNKNOWN = 'UNKNOWN';
+const String kUnknownAddress = 'Unknown Address';
 
 // App names
 const String kAppName = 'Fullbooker';

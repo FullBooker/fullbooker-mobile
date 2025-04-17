@@ -3,7 +3,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/entities/product_category.dart';
-import 'package:fullbooker/domain/core/entities/product_media.dart';
+import 'package:fullbooker/domain/core/entities/product_location.dart';
 import 'package:fullbooker/shared/entities/location_perms_result.dart';
 
 part 'host_state.freezed.dart';
@@ -19,14 +19,15 @@ class HostState with _$HostState {
     @Default(<ProductCategory>[]) List<ProductCategory>? productCategories,
     LocationPermsResult? locationPerms,
 
-    // Used for the current draft product
-    @Default(<ProductMedia>[]) List<ProductMedia>? draftProductMedia,
+    // Used during product setup
+    ProductLocation? selectedLocation,
   }) = _HostState;
 
   factory HostState.initial() => HostState(
         currentProduct: Product.initial(),
         selectedProduct: Product.initial(),
         locationPerms: LocationPermsResult.initial(),
+        selectedLocation: ProductLocation.initial(),
       );
 
   factory HostState.fromJson(Map<String, dynamic> json) =>

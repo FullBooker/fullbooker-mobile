@@ -1,7 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:fullbooker/application/redux/actions/select_location_action.dart';
+import 'package:fullbooker/application/redux/actions/update_host_state_action.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
+import 'package:fullbooker/domain/core/entities/product_location.dart';
 import 'package:fullbooker/infrastructure/location/location_handler.dart';
 import 'package:fullbooker/shared/widgets/custom_text_input.dart';
 import 'package:heroicons/heroicons.dart';
@@ -13,7 +16,6 @@ import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:async_redux/async_redux.dart';
-import 'package:fullbooker/application/redux/actions/update_current_product_action.dart';
 
 @RoutePage()
 class ChooseLocationPage extends StatefulWidget {
@@ -79,10 +81,11 @@ class _ChooseLocationPageState extends State<ChooseLocationPage> {
       });
 
       context.dispatch(
-        UpdateCurrentProductAction(
+        SelectLocationAction(
           lat: latLng.latitude.toString(),
           long: latLng.longitude.toString(),
           address: selectedAddress,
+          city: selectedCity,
         ),
       );
 
@@ -164,7 +167,7 @@ class _ChooseLocationPageState extends State<ChooseLocationPage> {
                     await LocationHandler.reverseGeocode(latLng);
                 final String address =
                     result?['address_components']?.first['long_name'] ??
-                        UNKNOWN;
+                        kUnknownAddress;
                 final String city = result?['formatted_address'] ??
                     '${latLng.latitude.toStringAsFixed(5)}, ${latLng.longitude.toStringAsFixed(5)}';
 
@@ -176,10 +179,11 @@ class _ChooseLocationPageState extends State<ChooseLocationPage> {
                 });
 
                 context.dispatch(
-                  UpdateCurrentProductAction(
+                  SelectLocationAction(
                     lat: latLng.latitude.toString(),
                     long: latLng.longitude.toString(),
                     address: address,
+                    city: city,
                   ),
                 );
               },
@@ -227,11 +231,14 @@ class _ChooseLocationPageState extends State<ChooseLocationPage> {
                 PrimaryButton(
                   onPressed: () {
                     context.dispatch(
-                      UpdateCurrentProductAction(
-                        lat: selectedLatLng.latitude.toString(),
-                        long: selectedLatLng.longitude.toString(),
-                        address: selectedAddress,
-                        city: selectedCity,
+                      UpdateHostStateAction(
+                        selectedLocation:
+                            ProductLocation.initial().copyWith.call(
+                                  lat: selectedLatLng.latitude.toString(),
+                                  long: selectedLatLng.longitude.toString(),
+                                  address: selectedAddress,
+                                  city: selectedCity,
+                                ),
                       ),
                     );
                     context.router.maybePop();
