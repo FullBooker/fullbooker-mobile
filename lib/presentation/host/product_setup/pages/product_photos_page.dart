@@ -3,7 +3,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:fullbooker/application/redux/actions/add_media_action.dart';
+import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
+import 'package:fullbooker/application/redux/actions/upload_product_media_action.dart';
 import 'package:fullbooker/application/redux/actions/remove_product_media_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_setup_view_model.dart';
@@ -86,8 +87,13 @@ class ProductPhotosPage extends StatelessWidget {
                                       result.files.isNotEmpty) {
                                     final List<PlatformFile> files =
                                         result.files.toList();
-                                    context
-                                        .dispatch(AddProductMediaAction(files));
+                                    context.dispatch(
+                                      UploadProductMediaAction(
+                                        pickedFiles: files,
+                                        client: AppWrapperBase.of(context)!
+                                            .customClient,
+                                      ),
+                                    );
                                   }
                                 },
                               );
