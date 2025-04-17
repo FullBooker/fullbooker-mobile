@@ -36,7 +36,7 @@ class ProductSetupViewModel extends Vm {
   final String startTime;
   final String endDate;
   final String endTime;
-  final List<ProductMedia>? productMedia;
+  final List<ProductMedia?>? productMedia;
 
   static ProductSetupViewModel fromState(AppState state) {
     return ProductSetupViewModel(
@@ -48,7 +48,8 @@ class ProductSetupViewModel extends Vm {
           state.hostState?.currentProduct?.schedule?.startTime ?? UNKNOWN,
       endDate: state.hostState?.currentProduct?.schedule?.end ?? UNKNOWN,
       endTime: state.hostState?.currentProduct?.schedule?.endTime ?? UNKNOWN,
-      productMedia: state.hostState?.draftProductMedia ?? <ProductMedia>[],
+      productMedia:
+          state.hostState?.currentProduct?.productMedia ?? <ProductMedia?>[],
     );
   }
 }

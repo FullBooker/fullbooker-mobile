@@ -3,8 +3,8 @@ import 'dart:io';
 
 import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/core/services/i_custom_client.dart';
+import 'package:fullbooker/application/redux/actions/update_current_product_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
-import 'package:fullbooker/application/redux/states/host_state.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:fullbooker/domain/core/entities/product_media.dart';
@@ -28,8 +28,8 @@ class UploadProductMediaAction extends ReduxAction<AppState> {
 
   @override
   Future<AppState?> reduce() async {
-    final List<ProductMedia> existingMedia =
-        state.hostState?.draftProductMedia ?? <ProductMedia>[];
+    final List<ProductMedia?> existingMedia =
+        state.hostState?.currentProduct?.productMedia ?? <ProductMedia?>[];
 
     final String productID = state.hostState?.currentProduct?.id ?? UNKNOWN;
 
@@ -62,10 +62,10 @@ class UploadProductMediaAction extends ReduxAction<AppState> {
 
     final ProductMedia uploadImage = ProductMedia.fromJson(body);
 
-    final HostState? updatedHost = state.hostState?.copyWith(
-      draftProductMedia: <ProductMedia>[...existingMedia, uploadImage],
+    UpdateCurrentProductAction(
+      productMedia: <ProductMedia?>[...existingMedia, uploadImage],
     );
 
-    return state.copyWith(hostState: updatedHost);
+    return state;
   }
 }

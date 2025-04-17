@@ -352,7 +352,7 @@ void navigateToNextProductStep({
     return;
   }
 
-  if (product.completed != true) {
+  if (product.active ?? false) {
     context.router.push(const ProductReviewAndSubmitRoute());
     return;
   }

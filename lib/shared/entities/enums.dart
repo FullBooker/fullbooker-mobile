@@ -19,3 +19,5 @@ enum AnalyticsEventType {
 }
 
 enum SignInMethod { EMAIL, GOOGLE }
+
+enum WorkflowState { CREATE, VIEW }

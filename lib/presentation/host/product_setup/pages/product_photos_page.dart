@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
+import 'package:fullbooker/application/redux/actions/fetch_product_media_action.dart';
 import 'package:fullbooker/application/redux/actions/upload_product_media_action.dart';
 import 'package:fullbooker/application/redux/actions/remove_product_media_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
@@ -15,9 +16,11 @@ import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:dartz/dartz.dart' as d;
 import 'package:fullbooker/presentation/host/product_setup/components/upload_photo_zero_state.dart';
+import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
+import 'package:heroicons/heroicons.dart';
 
 @RoutePage()
 class ProductPhotosPage extends StatelessWidget {
@@ -40,8 +43,14 @@ class ProductPhotosPage extends StatelessWidget {
               child: StoreConnector<AppState, ProductSetupViewModel>(
                 converter: (Store<AppState> store) =>
                     ProductSetupViewModel.fromState(store.state),
+                onInit: (Store<AppState> store) => context.dispatch(
+                  FetchProductMediaAction(
+                    client: AppWrapperBase.of(context)!.customClient,
+                    workflowState: WorkflowState.CREATE,
+                  ),
+                ),
                 builder: (BuildContext context, ProductSetupViewModel vm) {
-                  final List<ProductMedia> media =
+                  final List<ProductMedia?> media =
                       vm.productMedia ?? <ProductMedia>[];
 
                   return SingleChildScrollView(
@@ -72,8 +81,7 @@ class ProductPhotosPage extends StatelessWidget {
                             crossAxisSpacing: 8,
                             mainAxisSpacing: 8,
                           ),
-                          itemCount: media.length +
-                              1, // Add 1 for UploadPhotoZeroState
+                          itemCount: media.length + 1,
                           itemBuilder: (BuildContext context, int index) {
                             if (index == media.length) {
                               return UploadPhotoZeroState(
@@ -99,8 +107,8 @@ class ProductPhotosPage extends StatelessWidget {
                               );
                             }
 
-                            final ProductMedia item = media[index];
-                            final bool isLoading = item.file == UNKNOWN;
+                            final ProductMedia? item = media[index];
+                            final bool isLoading = item?.file == UNKNOWN;
 
                             return Stack(
                               fit: StackFit.expand,
@@ -110,23 +118,36 @@ class ProductPhotosPage extends StatelessWidget {
                                     child: CircularProgressIndicator(),
                                   )
                                 else
-                                  CachedNetworkImage(
-                                    imageUrl: item.file ?? '',
-                                    fit: BoxFit.cover,
-                                    placeholder: (_, __) => const AppLoading(),
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(8),
+                                    child: CachedNetworkImage(
+                                      imageUrl: item?.file ?? '',
+                                      fit: BoxFit.cover,
+                                      placeholder: (_, __) =>
+                                          const AppLoading(),
+                                    ),
                                   ),
                                 Positioned(
-                                  top: 8,
-                                  right: 8,
+                                  top: 12,
+                                  right: 12,
                                   child: GestureDetector(
                                     onTap: () =>
                                         StoreProvider.dispatch<AppState>(
                                       context,
-                                      RemoveProductMediaAction(item),
+                                      RemoveProductMediaAction(item!),
                                     ),
-                                    child: const Icon(
-                                      Icons.close,
-                                      color: Colors.white,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color:
+                                            Colors.black.withValues(alpha: .6),
+                                        shape: BoxShape.circle,
+                                      ),
+                                      padding: EdgeInsets.all(8),
+                                      child: HeroIcon(
+                                        HeroIcons.xMark,
+                                        color: Colors.white,
+                                        size: 24,
+                                      ),
                                     ),
                                   ),
                                 ),
