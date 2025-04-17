@@ -41,7 +41,8 @@ class ProductPhotosPage extends StatelessWidget {
                 converter: (Store<AppState> store) =>
                     ProductSetupViewModel.fromState(store.state),
                 builder: (BuildContext context, ProductSetupViewModel vm) {
-                  final List<ProductImage>? media = vm.productMedia;
+                  final List<ProductImage> media =
+                      vm.productMedia ?? <ProductImage>[];
 
                   return SingleChildScrollView(
                     child: Column(
@@ -64,16 +65,17 @@ class ProductPhotosPage extends StatelessWidget {
                         ),
                         GridView.builder(
                           shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
+                          physics: const NeverScrollableScrollPhysics(),
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
                             crossAxisSpacing: 8,
                             mainAxisSpacing: 8,
                           ),
-                          itemCount: media?.length,
+                          itemCount: media.length +
+                              1, // Add 1 for UploadPhotoZeroState
                           itemBuilder: (BuildContext context, int index) {
-                            if (media == null || index == media.length) {
+                            if (index == media.length) {
                               return UploadPhotoZeroState(
                                 onTap: () async {
                                   final FilePickerResult? result =
@@ -85,11 +87,9 @@ class ProductPhotosPage extends StatelessWidget {
 
                                   if (result != null &&
                                       result.files.isNotEmpty) {
-                                    final List<PlatformFile> files =
-                                        result.files.toList();
                                     context.dispatch(
                                       UploadProductMediaAction(
-                                        pickedFiles: files,
+                                        pickedFiles: result.files,
                                         client: AppWrapperBase.of(context)!
                                             .customClient,
                                       ),
@@ -113,8 +113,7 @@ class ProductPhotosPage extends StatelessWidget {
                                   CachedNetworkImage(
                                     imageUrl: item.file ?? '',
                                     fit: BoxFit.cover,
-                                    placeholder: (_, __) =>
-                                        Center(child: AppLoading()),
+                                    placeholder: (_, __) => const AppLoading(),
                                   ),
                                 Positioned(
                                   top: 8,

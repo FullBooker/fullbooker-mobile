@@ -50,7 +50,8 @@ class ProductSetupViewModel extends Vm {
       endDate: state.hostState?.currentProduct?.availability?.end ?? UNKNOWN,
       endTime:
           state.hostState?.currentProduct?.availability?.endTime ?? UNKNOWN,
-      productMedia: state.hostState?.productMediaState?.media,
+      productMedia:
+          state.hostState?.productMediaState?.media ?? <ProductImage>[],
     );
   }
 }

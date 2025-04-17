@@ -352,3 +352,81 @@ final List<Booking> mockBookings = <Booking>[
     price: 2000,
   ),
 ];
+
+final Map<String, Object> data = <String, Object>{
+  'name': 'A trip to Disney land',
+  'description': '',
+  'number': 'ACTGUIC59514F0',
+  'category': '2265f35d-09d0-4737-8c50-ad1c673e1220',
+  'subcategory': '75fed4dc-0a51-4ecc-afa5-3357bc292ec2',
+  'pricing': <Map<String, Object?>>[
+    <String, Object?>{
+      'id': '5acb0d53-29f5-4b28-beb4-c5825e83b5ce',
+      'created_at': '2025-04-01T12:31:53.627828+03:00',
+      'updated_at': '2025-04-01T12:31:53.627844+03:00',
+      'active': true,
+      'host': '6780b32b-3cff-406f-9c10-ceede4c8ff1b',
+      'name': null,
+      'product': 'c59514f0-c99d-4c13-aeec-6ad759d768f4',
+      'currency': '5a9025cf-b4d9-4da6-84b2-d8f3e8bf8149',
+      'cost': '1000.00',
+      'type': 'session',
+      'ticket_tier': null,
+      'maximum_number_of_tickets': 200,
+      'remaining_tickets': 199,
+      'sold_tickets': 1,
+    },
+    <String, Object?>{
+      'id': '6c16d982-797b-44f8-aa94-c8c0dd6cbfa8',
+      'created_at': '2025-04-14T17:31:46.091301+03:00',
+      'updated_at': '2025-04-14T17:31:46.091403+03:00',
+      'active': true,
+      'host': '6780b32b-3cff-406f-9c10-ceede4c8ff1b',
+      'name': null,
+      'product': 'c59514f0-c99d-4c13-aeec-6ad759d768f4',
+      'currency': '5a9025cf-b4d9-4da6-84b2-d8f3e8bf8149',
+      'cost': '1.00',
+      'type': 'ticket',
+      'ticket_tier': 'vvip',
+      'maximum_number_of_tickets': 20,
+      'remaining_tickets': 11,
+      'sold_tickets': 9,
+    }
+  ],
+  'image': <String, Object>{
+    'id': '3f20d363-479e-4068-b5df-397abfc9e0e7',
+    'created_at': '2025-04-01T12:25:17.745075+03:00',
+    'updated_at': '2025-04-01T12:25:17.745090+03:00',
+    'active': true,
+    'host': '6780b32b-3cff-406f-9c10-ceede4c8ff1b',
+    'media_type': 'image',
+    'file':
+        'https://dev-fullbooker-static.s3.amazonaws.com/media/images/a-trip-to-disney-land/85e7f61cc88648338f37f1b32366d67b.png',
+    'uploaded_at': '2025-04-01T12:25:18.134854+03:00',
+  },
+  'video': <String, Object>{
+    'id': 'c1459170-c777-4e26-ab60-8b63a23e6ace',
+    'created_at': '2025-04-15T03:30:45.038668+03:00',
+    'updated_at': '2025-04-15T03:30:45.038736+03:00',
+    'active': true,
+    'host': '6780b32b-3cff-406f-9c10-ceede4c8ff1b',
+    'media_type': 'video',
+    'file':
+        'https://dev-fullbooker-static.s3.amazonaws.com/media/videos/a-trip-to-disney-land/ff9861ac8c494dda9f01d67cf4358e41.mp4',
+    'uploaded_at': '2025-04-15T03:31:37.472386+03:00',
+  },
+  'locations': <Map<String, Object>>[
+    <String, Object>{
+      'id': 'd8e91a73-b4f7-4309-8404-01ef36dabda4',
+      'created_at': '2025-03-31T21:06:11.695479+03:00',
+      'updated_at': '2025-04-01T12:23:48.339308+03:00',
+      'active': true,
+      'host': '6780b32b-3cff-406f-9c10-ceede4c8ff1b',
+      'product': 'c59514f0-c99d-4c13-aeec-6ad759d768f4',
+      'coordinates': 'SRID=4326;POINT (36.8145232 -1.2870297)',
+      'address': 'Thindigwa Highway Rd, Nairobi, Kenya',
+    }
+  ],
+  'complete': true,
+  'schedule': 'fe1c62ad-e1dc-40a0-934b-dce1e3b3f1a1',
+};
