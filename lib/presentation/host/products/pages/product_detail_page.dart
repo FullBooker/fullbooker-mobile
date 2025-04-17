@@ -16,7 +16,6 @@ import 'package:fullbooker/presentation/host/product_setup/components/pricing_ca
 import 'package:fullbooker/presentation/host/products/widgets/image_carousel_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_alert_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_detail_item_widget.dart';
-import 'package:fullbooker/shared/entities/data_mocks.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
@@ -41,15 +40,13 @@ class ProductDetailPage extends StatelessWidget {
         builder: (BuildContext context, ProductsPageViewModel vm) {
           final Product? product = vm.selectedProduct;
 
-          final List<String?> imageURLs = mockProductSetupImageURLs;
-
           final bool isComplete = product?.completed ?? false;
           final bool isLocationAvailable =
               product?.locations?.isNotEmpty ?? false;
 
           return Column(
             children: <Widget>[
-              ImageCarouselWidget(imageUrls: imageURLs),
+              ImageCarouselWidget(),
               Expanded(
                 child: ListView(
                   shrinkWrap: true,

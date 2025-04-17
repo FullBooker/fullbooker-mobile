@@ -40,6 +40,7 @@ mixin _$Product {
   ProductMedia? get image => throw _privateConstructorUsedError;
   dynamic get video => throw _privateConstructorUsedError;
   List<ProductLocation>? get locations => throw _privateConstructorUsedError;
+  List<ProductMedia?>? get productMedia => throw _privateConstructorUsedError;
   bool? get completed => throw _privateConstructorUsedError;
 
   /// Temp values used when creating a product
@@ -83,6 +84,7 @@ abstract class $ProductCopyWith<$Res> {
       ProductMedia? image,
       dynamic video,
       List<ProductLocation>? locations,
+      List<ProductMedia?>? productMedia,
       bool? completed,
       @JsonKey(includeFromJson: true, includeToJson: true)
       ProductCategory? selectedProductCategory,
@@ -130,6 +132,7 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
     Object? image = freezed,
     Object? video = freezed,
     Object? locations = freezed,
+    Object? productMedia = freezed,
     Object? completed = freezed,
     Object? selectedProductCategory = freezed,
     Object? selectedProductSubCategory = freezed,
@@ -200,6 +203,10 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
           ? _value.locations
           : locations // ignore: cast_nullable_to_non_nullable
               as List<ProductLocation>?,
+      productMedia: freezed == productMedia
+          ? _value.productMedia
+          : productMedia // ignore: cast_nullable_to_non_nullable
+              as List<ProductMedia?>?,
       completed: freezed == completed
           ? _value.completed
           : completed // ignore: cast_nullable_to_non_nullable
@@ -330,6 +337,7 @@ abstract class _$$ProductImplCopyWith<$Res> implements $ProductCopyWith<$Res> {
       ProductMedia? image,
       dynamic video,
       List<ProductLocation>? locations,
+      List<ProductMedia?>? productMedia,
       bool? completed,
       @JsonKey(includeFromJson: true, includeToJson: true)
       ProductCategory? selectedProductCategory,
@@ -381,6 +389,7 @@ class __$$ProductImplCopyWithImpl<$Res>
     Object? image = freezed,
     Object? video = freezed,
     Object? locations = freezed,
+    Object? productMedia = freezed,
     Object? completed = freezed,
     Object? selectedProductCategory = freezed,
     Object? selectedProductSubCategory = freezed,
@@ -451,6 +460,10 @@ class __$$ProductImplCopyWithImpl<$Res>
           ? _value.locations
           : locations // ignore: cast_nullable_to_non_nullable
               as List<ProductLocation>?,
+      productMedia: freezed == productMedia
+          ? _value.productMedia
+          : productMedia // ignore: cast_nullable_to_non_nullable
+              as List<ProductMedia?>?,
       completed: freezed == completed
           ? _value.completed
           : completed // ignore: cast_nullable_to_non_nullable
@@ -492,6 +505,7 @@ class _$ProductImpl implements _Product {
       this.image,
       this.video,
       this.locations = const <ProductLocation>[],
+      this.productMedia = const <ProductMedia>[],
       this.completed = false,
       @JsonKey(includeFromJson: true, includeToJson: true)
       this.selectedProductCategory,
@@ -550,6 +564,9 @@ class _$ProductImpl implements _Product {
   final List<ProductLocation>? locations;
   @override
   @JsonKey()
+  final List<ProductMedia?>? productMedia;
+  @override
+  @JsonKey()
   final bool? completed;
 
   /// Temp values used when creating a product
@@ -565,7 +582,7 @@ class _$ProductImpl implements _Product {
 
   @override
   String toString() {
-    return 'Product(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, active: $active, host: $host, name: $name, description: $description, number: $number, category: $category, subcategory: $subcategory, scheduleID: $scheduleID, schedule: $schedule, pricing: $pricing, image: $image, video: $video, locations: $locations, completed: $completed, selectedProductCategory: $selectedProductCategory, selectedProductSubCategory: $selectedProductSubCategory, selectedLocation: $selectedLocation)';
+    return 'Product(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, active: $active, host: $host, name: $name, description: $description, number: $number, category: $category, subcategory: $subcategory, scheduleID: $scheduleID, schedule: $schedule, pricing: $pricing, image: $image, video: $video, locations: $locations, productMedia: $productMedia, completed: $completed, selectedProductCategory: $selectedProductCategory, selectedProductSubCategory: $selectedProductSubCategory, selectedLocation: $selectedLocation)';
   }
 
   @override
@@ -596,6 +613,8 @@ class _$ProductImpl implements _Product {
             (identical(other.image, image) || other.image == image) &&
             const DeepCollectionEquality().equals(other.video, video) &&
             const DeepCollectionEquality().equals(other.locations, locations) &&
+            const DeepCollectionEquality()
+                .equals(other.productMedia, productMedia) &&
             (identical(other.completed, completed) ||
                 other.completed == completed) &&
             (identical(
@@ -629,6 +648,7 @@ class _$ProductImpl implements _Product {
         image,
         const DeepCollectionEquality().hash(video),
         const DeepCollectionEquality().hash(locations),
+        const DeepCollectionEquality().hash(productMedia),
         completed,
         selectedProductCategory,
         selectedProductSubCategory,
@@ -669,6 +689,7 @@ abstract class _Product implements Product {
       final ProductMedia? image,
       final dynamic video,
       final List<ProductLocation>? locations,
+      final List<ProductMedia?>? productMedia,
       final bool? completed,
       @JsonKey(includeFromJson: true, includeToJson: true)
       final ProductCategory? selectedProductCategory,
@@ -715,6 +736,8 @@ abstract class _Product implements Product {
   dynamic get video;
   @override
   List<ProductLocation>? get locations;
+  @override
+  List<ProductMedia?>? get productMedia;
   @override
   bool? get completed;
 

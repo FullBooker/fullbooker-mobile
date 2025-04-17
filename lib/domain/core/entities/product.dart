@@ -30,6 +30,7 @@ class Product with _$Product {
     ProductMedia? image,
     dynamic video,
     @Default(<ProductLocation>[]) List<ProductLocation>? locations,
+    @Default(<ProductMedia>[]) List<ProductMedia?>? productMedia,
     @Default(false) bool? completed,
 
     /// Temp values used when creating a product
