@@ -8,6 +8,7 @@ import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/domain/core/entities/product.dart';
+import 'package:fullbooker/domain/core/entities/product_location.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
@@ -335,13 +336,7 @@ void navigateToNextProductStep({
     return;
   }
 
-  final bool hasAvailability = product.availability != null &&
-      ((product.availability?.start?.isNotEmpty ?? false) &&
-          product.availability?.start != UNKNOWN) &&
-      ((product.availability?.end?.isNotEmpty ?? false) &&
-          product.availability?.end != UNKNOWN);
-
-  if (!hasAvailability) {
+  if (product.scheduleID == null) {
     context.router.push(const ProductDateTimeRoute());
     return;
   }
@@ -358,7 +353,7 @@ void navigateToNextProductStep({
     return;
   }
 
-  if (product.completed != true) {
+  if (product.active ?? false) {
     context.router.push(const ProductReviewAndSubmitRoute());
     return;
   }
@@ -401,4 +396,18 @@ Future<String?> pickTime({required BuildContext context}) async {
 
   final DateTime dateTime = DateTime(0, 1, 1, picked.hour, picked.minute);
   return DateFormat('HH:mm:ss').format(dateTime);
+}
+
+bool hasValidLocation(ProductLocation? location) {
+  if (location == null) return false;
+
+  final bool hasCoordinates = location.lat != UNKNOWN &&
+      location.long != UNKNOWN &&
+      location.lat != null &&
+      location.long != null;
+
+  final bool hasAddress =
+      location.address != null && location.address != UNKNOWN;
+
+  return hasCoordinates && hasAddress;
 }

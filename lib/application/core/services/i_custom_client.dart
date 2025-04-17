@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
 
 abstract class ICustomClient extends BaseClient {
   late String endpoint;
@@ -71,6 +73,48 @@ abstract class ICustomClient extends BaseClient {
               customHeaders: customHeaders,
               authenticated: authenticated,
             ),
+          );
+        },
+      ),
+    );
+  }
+
+  Future<Response> uploadMedia({
+    required String endpoint,
+    required Map<String, String> data,
+    required List<File> images,
+    Map<String, String>? customHeaders,
+    bool authenticated = true,
+  }) async {
+    final Uri uri = fromUriOrString(endpoint);
+
+    final MultipartRequest request = MultipartRequest('POST', uri)
+      ..headers.addAll(
+        buildHeaders(
+          customHeaders: customHeaders,
+          authenticated: authenticated,
+        )..remove('Content-Type'),
+      )
+      ..fields.addAll(data);
+
+    for (final File image in images) {
+      final http.MultipartFile multipartFile =
+          await http.MultipartFile.fromPath('file', image.path);
+      request.files.add(multipartFile);
+    }
+
+    return Response.fromStream(
+      await request.send().timeout(
+        const Duration(seconds: kRequestTimeoutSeconds),
+        onTimeout: () {
+          final String timeoutBody = json.encode(kTimeoutResponsePayload);
+          return http.StreamedResponse(
+            ByteStream.fromBytes(utf8.encode(timeoutBody)),
+            408,
+            headers: buildHeaders(
+              customHeaders: customHeaders,
+              authenticated: authenticated,
+            )..remove('Content-Type'),
           );
         },
       ),

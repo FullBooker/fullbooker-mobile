@@ -3,7 +3,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
-import 'package:fullbooker/application/redux/view_models/products_page_view_model.dart';
+import 'package:fullbooker/application/redux/view_models/product_detail_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/core/utils.dart';
@@ -16,7 +16,6 @@ import 'package:fullbooker/presentation/host/product_setup/components/pricing_ca
 import 'package:fullbooker/presentation/host/products/widgets/image_carousel_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_alert_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_detail_item_widget.dart';
-import 'package:fullbooker/shared/entities/data_mocks.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
@@ -35,13 +34,11 @@ class ProductDetailPage extends StatelessWidget {
         showBell: false,
         title: productsString,
       ),
-      body: StoreConnector<AppState, ProductsPageViewModel>(
+      body: StoreConnector<AppState, ProductDetailViewModel>(
         converter: (Store<AppState> store) =>
-            ProductsPageViewModel.fromState(store.state),
-        builder: (BuildContext context, ProductsPageViewModel vm) {
+            ProductDetailViewModel.fromState(store.state),
+        builder: (BuildContext context, ProductDetailViewModel vm) {
           final Product? product = vm.selectedProduct;
-
-          final List<String?> imageURLs = mockProductSetupImageURLs;
 
           final bool isComplete = product?.completed ?? false;
           final bool isLocationAvailable =
@@ -49,7 +46,7 @@ class ProductDetailPage extends StatelessWidget {
 
           return Column(
             children: <Widget>[
-              ImageCarouselWidget(imageUrls: imageURLs),
+              ImageCarouselWidget(),
               Expanded(
                 child: ListView(
                   shrinkWrap: true,
@@ -117,8 +114,7 @@ class ProductDetailPage extends StatelessWidget {
                                     size: 20,
                                   ),
                                   humanizeDate(
-                                    loadedDate:
-                                        product?.availability?.start ?? '',
+                                    loadedDate: product?.schedule?.start ?? '',
                                     dateTextStyle:
                                         Theme.of(context).textTheme.bodyMedium,
                                   ),
@@ -128,8 +124,7 @@ class ProductDetailPage extends StatelessWidget {
                                         Theme.of(context).textTheme.bodyMedium,
                                   ),
                                   humanizeDate(
-                                    loadedDate:
-                                        product?.availability?.end ?? '',
+                                    loadedDate: product?.schedule?.end ?? '',
                                     dateTextStyle:
                                         Theme.of(context).textTheme.bodyMedium,
                                   ),
@@ -147,7 +142,7 @@ class ProductDetailPage extends StatelessWidget {
                                     size: 20,
                                   ),
                                   formatTime(
-                                    time: product?.availability?.startTime,
+                                    time: product?.schedule?.startTime,
                                     textStyle:
                                         Theme.of(context).textTheme.bodyMedium,
                                   ),
@@ -157,7 +152,7 @@ class ProductDetailPage extends StatelessWidget {
                                         Theme.of(context).textTheme.bodyMedium,
                                   ),
                                   formatTime(
-                                    time: product?.availability?.endTime,
+                                    time: product?.schedule?.endTime,
                                     textStyle:
                                         Theme.of(context).textTheme.bodyMedium,
                                   ),

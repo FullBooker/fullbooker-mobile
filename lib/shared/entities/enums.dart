@@ -10,7 +10,7 @@ enum ProductSteps { Overview, Products, Sales, Expenses, Goals }
 
 enum AppContext { dev, prod, test }
 
-enum APIMethods { POST, GET, PUT, PATCH }
+enum APIMethods { POST, GET, PUT, PATCH, DELETE }
 
 enum AnalyticsEventType {
   NAVIGATION,
@@ -19,3 +19,5 @@ enum AnalyticsEventType {
 }
 
 enum SignInMethod { EMAIL, GOOGLE }
+
+enum WorkflowState { CREATE, VIEW }

@@ -20,22 +20,31 @@ _$ProductImpl _$$ProductImplFromJson(Map<String, dynamic> json) =>
       number: json['number'] as String? ?? UNKNOWN,
       category: json['category'] as String? ?? UNKNOWN,
       subcategory: json['subcategory'] as String? ?? UNKNOWN,
-      availability: json['availability'] == null
+      scheduleID: json['schedule'] as String? ?? UNKNOWN,
+      schedule: json['new_schedule'] == null
           ? null
-          : ProductAvailability.fromJson(
-              json['availability'] as Map<String, dynamic>),
+          : ProductSchedule.fromJson(
+              json['new_schedule'] as Map<String, dynamic>),
       pricing: (json['pricing'] as List<dynamic>?)
-              ?.map((e) => ProductPricing.fromJson(e as Map<String, dynamic>))
+              ?.map((e) => e == null
+                  ? null
+                  : ProductPricing.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const <ProductPricing>[],
       image: json['image'] == null
           ? null
-          : ProductImage.fromJson(json['image'] as Map<String, dynamic>),
+          : ProductMedia.fromJson(json['image'] as Map<String, dynamic>),
       video: json['video'],
       locations: (json['locations'] as List<dynamic>?)
               ?.map((e) => ProductLocation.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const <ProductLocation>[],
+      productMedia: (json['productMedia'] as List<dynamic>?)
+              ?.map((e) => e == null
+                  ? null
+                  : ProductMedia.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const <ProductMedia>[],
       completed: json['completed'] as bool? ?? false,
       selectedProductCategory: json['selectedProductCategory'] == null
           ? null
@@ -45,10 +54,6 @@ _$ProductImpl _$$ProductImplFromJson(Map<String, dynamic> json) =>
           ? null
           : ProductCategory.fromJson(
               json['selectedProductSubCategory'] as Map<String, dynamic>),
-      selectedLocation: json['selectedLocation'] == null
-          ? null
-          : ProductLocation.fromJson(
-              json['selectedLocation'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$ProductImplToJson(_$ProductImpl instance) =>
@@ -63,14 +68,15 @@ Map<String, dynamic> _$$ProductImplToJson(_$ProductImpl instance) =>
       'number': instance.number,
       'category': instance.category,
       'subcategory': instance.subcategory,
-      'availability': instance.availability?.toJson(),
-      'pricing': instance.pricing?.map((e) => e.toJson()).toList(),
+      'schedule': instance.scheduleID,
+      'new_schedule': instance.schedule?.toJson(),
+      'pricing': instance.pricing?.map((e) => e?.toJson()).toList(),
       'image': instance.image?.toJson(),
       'video': instance.video,
       'locations': instance.locations?.map((e) => e.toJson()).toList(),
+      'productMedia': instance.productMedia?.map((e) => e?.toJson()).toList(),
       'completed': instance.completed,
       'selectedProductCategory': instance.selectedProductCategory?.toJson(),
       'selectedProductSubCategory':
           instance.selectedProductSubCategory?.toJson(),
-      'selectedLocation': instance.selectedLocation?.toJson(),
     };

@@ -32,11 +32,15 @@ mixin _$Product {
   String? get number => throw _privateConstructorUsedError;
   String? get category => throw _privateConstructorUsedError;
   String? get subcategory => throw _privateConstructorUsedError;
-  ProductAvailability? get availability => throw _privateConstructorUsedError;
-  List<ProductPricing>? get pricing => throw _privateConstructorUsedError;
-  ProductImage? get image => throw _privateConstructorUsedError;
+  @JsonKey(name: 'schedule')
+  String? get scheduleID => throw _privateConstructorUsedError;
+  @JsonKey(name: 'new_schedule')
+  ProductSchedule? get schedule => throw _privateConstructorUsedError;
+  List<ProductPricing?>? get pricing => throw _privateConstructorUsedError;
+  ProductMedia? get image => throw _privateConstructorUsedError;
   dynamic get video => throw _privateConstructorUsedError;
   List<ProductLocation>? get locations => throw _privateConstructorUsedError;
+  List<ProductMedia?>? get productMedia => throw _privateConstructorUsedError;
   bool? get completed => throw _privateConstructorUsedError;
 
   /// Temp values used when creating a product
@@ -46,8 +50,6 @@ mixin _$Product {
   @JsonKey(includeFromJson: true, includeToJson: true)
   ProductCategory? get selectedProductSubCategory =>
       throw _privateConstructorUsedError;
-  @JsonKey(includeFromJson: true, includeToJson: true)
-  ProductLocation? get selectedLocation => throw _privateConstructorUsedError;
 
   /// Serializes this Product to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -74,25 +76,24 @@ abstract class $ProductCopyWith<$Res> {
       String? number,
       String? category,
       String? subcategory,
-      ProductAvailability? availability,
-      List<ProductPricing>? pricing,
-      ProductImage? image,
+      @JsonKey(name: 'schedule') String? scheduleID,
+      @JsonKey(name: 'new_schedule') ProductSchedule? schedule,
+      List<ProductPricing?>? pricing,
+      ProductMedia? image,
       dynamic video,
       List<ProductLocation>? locations,
+      List<ProductMedia?>? productMedia,
       bool? completed,
       @JsonKey(includeFromJson: true, includeToJson: true)
       ProductCategory? selectedProductCategory,
       @JsonKey(includeFromJson: true, includeToJson: true)
-      ProductCategory? selectedProductSubCategory,
-      @JsonKey(includeFromJson: true, includeToJson: true)
-      ProductLocation? selectedLocation});
+      ProductCategory? selectedProductSubCategory});
 
   $UserStateCopyWith<$Res>? get host;
-  $ProductAvailabilityCopyWith<$Res>? get availability;
-  $ProductImageCopyWith<$Res>? get image;
+  $ProductScheduleCopyWith<$Res>? get schedule;
+  $ProductMediaCopyWith<$Res>? get image;
   $ProductCategoryCopyWith<$Res>? get selectedProductCategory;
   $ProductCategoryCopyWith<$Res>? get selectedProductSubCategory;
-  $ProductLocationCopyWith<$Res>? get selectedLocation;
 }
 
 /// @nodoc
@@ -120,15 +121,16 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
     Object? number = freezed,
     Object? category = freezed,
     Object? subcategory = freezed,
-    Object? availability = freezed,
+    Object? scheduleID = freezed,
+    Object? schedule = freezed,
     Object? pricing = freezed,
     Object? image = freezed,
     Object? video = freezed,
     Object? locations = freezed,
+    Object? productMedia = freezed,
     Object? completed = freezed,
     Object? selectedProductCategory = freezed,
     Object? selectedProductSubCategory = freezed,
-    Object? selectedLocation = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -171,18 +173,22 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
           ? _value.subcategory
           : subcategory // ignore: cast_nullable_to_non_nullable
               as String?,
-      availability: freezed == availability
-          ? _value.availability
-          : availability // ignore: cast_nullable_to_non_nullable
-              as ProductAvailability?,
+      scheduleID: freezed == scheduleID
+          ? _value.scheduleID
+          : scheduleID // ignore: cast_nullable_to_non_nullable
+              as String?,
+      schedule: freezed == schedule
+          ? _value.schedule
+          : schedule // ignore: cast_nullable_to_non_nullable
+              as ProductSchedule?,
       pricing: freezed == pricing
           ? _value.pricing
           : pricing // ignore: cast_nullable_to_non_nullable
-              as List<ProductPricing>?,
+              as List<ProductPricing?>?,
       image: freezed == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
-              as ProductImage?,
+              as ProductMedia?,
       video: freezed == video
           ? _value.video
           : video // ignore: cast_nullable_to_non_nullable
@@ -191,6 +197,10 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
           ? _value.locations
           : locations // ignore: cast_nullable_to_non_nullable
               as List<ProductLocation>?,
+      productMedia: freezed == productMedia
+          ? _value.productMedia
+          : productMedia // ignore: cast_nullable_to_non_nullable
+              as List<ProductMedia?>?,
       completed: freezed == completed
           ? _value.completed
           : completed // ignore: cast_nullable_to_non_nullable
@@ -203,10 +213,6 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
           ? _value.selectedProductSubCategory
           : selectedProductSubCategory // ignore: cast_nullable_to_non_nullable
               as ProductCategory?,
-      selectedLocation: freezed == selectedLocation
-          ? _value.selectedLocation
-          : selectedLocation // ignore: cast_nullable_to_non_nullable
-              as ProductLocation?,
     ) as $Val);
   }
 
@@ -228,13 +234,13 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $ProductAvailabilityCopyWith<$Res>? get availability {
-    if (_value.availability == null) {
+  $ProductScheduleCopyWith<$Res>? get schedule {
+    if (_value.schedule == null) {
       return null;
     }
 
-    return $ProductAvailabilityCopyWith<$Res>(_value.availability!, (value) {
-      return _then(_value.copyWith(availability: value) as $Val);
+    return $ProductScheduleCopyWith<$Res>(_value.schedule!, (value) {
+      return _then(_value.copyWith(schedule: value) as $Val);
     });
   }
 
@@ -242,12 +248,12 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $ProductImageCopyWith<$Res>? get image {
+  $ProductMediaCopyWith<$Res>? get image {
     if (_value.image == null) {
       return null;
     }
 
-    return $ProductImageCopyWith<$Res>(_value.image!, (value) {
+    return $ProductMediaCopyWith<$Res>(_value.image!, (value) {
       return _then(_value.copyWith(image: value) as $Val);
     });
   }
@@ -281,20 +287,6 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
       return _then(_value.copyWith(selectedProductSubCategory: value) as $Val);
     });
   }
-
-  /// Create a copy of Product
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ProductLocationCopyWith<$Res>? get selectedLocation {
-    if (_value.selectedLocation == null) {
-      return null;
-    }
-
-    return $ProductLocationCopyWith<$Res>(_value.selectedLocation!, (value) {
-      return _then(_value.copyWith(selectedLocation: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -315,31 +307,29 @@ abstract class _$$ProductImplCopyWith<$Res> implements $ProductCopyWith<$Res> {
       String? number,
       String? category,
       String? subcategory,
-      ProductAvailability? availability,
-      List<ProductPricing>? pricing,
-      ProductImage? image,
+      @JsonKey(name: 'schedule') String? scheduleID,
+      @JsonKey(name: 'new_schedule') ProductSchedule? schedule,
+      List<ProductPricing?>? pricing,
+      ProductMedia? image,
       dynamic video,
       List<ProductLocation>? locations,
+      List<ProductMedia?>? productMedia,
       bool? completed,
       @JsonKey(includeFromJson: true, includeToJson: true)
       ProductCategory? selectedProductCategory,
       @JsonKey(includeFromJson: true, includeToJson: true)
-      ProductCategory? selectedProductSubCategory,
-      @JsonKey(includeFromJson: true, includeToJson: true)
-      ProductLocation? selectedLocation});
+      ProductCategory? selectedProductSubCategory});
 
   @override
   $UserStateCopyWith<$Res>? get host;
   @override
-  $ProductAvailabilityCopyWith<$Res>? get availability;
+  $ProductScheduleCopyWith<$Res>? get schedule;
   @override
-  $ProductImageCopyWith<$Res>? get image;
+  $ProductMediaCopyWith<$Res>? get image;
   @override
   $ProductCategoryCopyWith<$Res>? get selectedProductCategory;
   @override
   $ProductCategoryCopyWith<$Res>? get selectedProductSubCategory;
-  @override
-  $ProductLocationCopyWith<$Res>? get selectedLocation;
 }
 
 /// @nodoc
@@ -365,15 +355,16 @@ class __$$ProductImplCopyWithImpl<$Res>
     Object? number = freezed,
     Object? category = freezed,
     Object? subcategory = freezed,
-    Object? availability = freezed,
+    Object? scheduleID = freezed,
+    Object? schedule = freezed,
     Object? pricing = freezed,
     Object? image = freezed,
     Object? video = freezed,
     Object? locations = freezed,
+    Object? productMedia = freezed,
     Object? completed = freezed,
     Object? selectedProductCategory = freezed,
     Object? selectedProductSubCategory = freezed,
-    Object? selectedLocation = freezed,
   }) {
     return _then(_$ProductImpl(
       id: freezed == id
@@ -416,18 +407,22 @@ class __$$ProductImplCopyWithImpl<$Res>
           ? _value.subcategory
           : subcategory // ignore: cast_nullable_to_non_nullable
               as String?,
-      availability: freezed == availability
-          ? _value.availability
-          : availability // ignore: cast_nullable_to_non_nullable
-              as ProductAvailability?,
+      scheduleID: freezed == scheduleID
+          ? _value.scheduleID
+          : scheduleID // ignore: cast_nullable_to_non_nullable
+              as String?,
+      schedule: freezed == schedule
+          ? _value.schedule
+          : schedule // ignore: cast_nullable_to_non_nullable
+              as ProductSchedule?,
       pricing: freezed == pricing
           ? _value.pricing
           : pricing // ignore: cast_nullable_to_non_nullable
-              as List<ProductPricing>?,
+              as List<ProductPricing?>?,
       image: freezed == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
-              as ProductImage?,
+              as ProductMedia?,
       video: freezed == video
           ? _value.video
           : video // ignore: cast_nullable_to_non_nullable
@@ -436,6 +431,10 @@ class __$$ProductImplCopyWithImpl<$Res>
           ? _value.locations
           : locations // ignore: cast_nullable_to_non_nullable
               as List<ProductLocation>?,
+      productMedia: freezed == productMedia
+          ? _value.productMedia
+          : productMedia // ignore: cast_nullable_to_non_nullable
+              as List<ProductMedia?>?,
       completed: freezed == completed
           ? _value.completed
           : completed // ignore: cast_nullable_to_non_nullable
@@ -448,10 +447,6 @@ class __$$ProductImplCopyWithImpl<$Res>
           ? _value.selectedProductSubCategory
           : selectedProductSubCategory // ignore: cast_nullable_to_non_nullable
               as ProductCategory?,
-      selectedLocation: freezed == selectedLocation
-          ? _value.selectedLocation
-          : selectedLocation // ignore: cast_nullable_to_non_nullable
-              as ProductLocation?,
     ));
   }
 }
@@ -471,18 +466,18 @@ class _$ProductImpl implements _Product {
       this.number = UNKNOWN,
       this.category = UNKNOWN,
       this.subcategory = UNKNOWN,
-      this.availability,
+      @JsonKey(name: 'schedule') this.scheduleID = UNKNOWN,
+      @JsonKey(name: 'new_schedule') this.schedule,
       this.pricing = const <ProductPricing>[],
       this.image,
       this.video,
       this.locations = const <ProductLocation>[],
+      this.productMedia = const <ProductMedia>[],
       this.completed = false,
       @JsonKey(includeFromJson: true, includeToJson: true)
       this.selectedProductCategory,
       @JsonKey(includeFromJson: true, includeToJson: true)
-      this.selectedProductSubCategory,
-      @JsonKey(includeFromJson: true, includeToJson: true)
-      this.selectedLocation});
+      this.selectedProductSubCategory});
 
   factory _$ProductImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProductImplFromJson(json);
@@ -517,17 +512,24 @@ class _$ProductImpl implements _Product {
   @JsonKey()
   final String? subcategory;
   @override
-  final ProductAvailability? availability;
+  @JsonKey(name: 'schedule')
+  final String? scheduleID;
+  @override
+  @JsonKey(name: 'new_schedule')
+  final ProductSchedule? schedule;
   @override
   @JsonKey()
-  final List<ProductPricing>? pricing;
+  final List<ProductPricing?>? pricing;
   @override
-  final ProductImage? image;
+  final ProductMedia? image;
   @override
   final dynamic video;
   @override
   @JsonKey()
   final List<ProductLocation>? locations;
+  @override
+  @JsonKey()
+  final List<ProductMedia?>? productMedia;
   @override
   @JsonKey()
   final bool? completed;
@@ -539,13 +541,10 @@ class _$ProductImpl implements _Product {
   @override
   @JsonKey(includeFromJson: true, includeToJson: true)
   final ProductCategory? selectedProductSubCategory;
-  @override
-  @JsonKey(includeFromJson: true, includeToJson: true)
-  final ProductLocation? selectedLocation;
 
   @override
   String toString() {
-    return 'Product(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, active: $active, host: $host, name: $name, description: $description, number: $number, category: $category, subcategory: $subcategory, availability: $availability, pricing: $pricing, image: $image, video: $video, locations: $locations, completed: $completed, selectedProductCategory: $selectedProductCategory, selectedProductSubCategory: $selectedProductSubCategory, selectedLocation: $selectedLocation)';
+    return 'Product(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, active: $active, host: $host, name: $name, description: $description, number: $number, category: $category, subcategory: $subcategory, scheduleID: $scheduleID, schedule: $schedule, pricing: $pricing, image: $image, video: $video, locations: $locations, productMedia: $productMedia, completed: $completed, selectedProductCategory: $selectedProductCategory, selectedProductSubCategory: $selectedProductSubCategory)';
   }
 
   @override
@@ -568,12 +567,16 @@ class _$ProductImpl implements _Product {
                 other.category == category) &&
             (identical(other.subcategory, subcategory) ||
                 other.subcategory == subcategory) &&
-            (identical(other.availability, availability) ||
-                other.availability == availability) &&
+            (identical(other.scheduleID, scheduleID) ||
+                other.scheduleID == scheduleID) &&
+            (identical(other.schedule, schedule) ||
+                other.schedule == schedule) &&
             const DeepCollectionEquality().equals(other.pricing, pricing) &&
             (identical(other.image, image) || other.image == image) &&
             const DeepCollectionEquality().equals(other.video, video) &&
             const DeepCollectionEquality().equals(other.locations, locations) &&
+            const DeepCollectionEquality()
+                .equals(other.productMedia, productMedia) &&
             (identical(other.completed, completed) ||
                 other.completed == completed) &&
             (identical(
@@ -582,9 +585,7 @@ class _$ProductImpl implements _Product {
             (identical(other.selectedProductSubCategory,
                     selectedProductSubCategory) ||
                 other.selectedProductSubCategory ==
-                    selectedProductSubCategory) &&
-            (identical(other.selectedLocation, selectedLocation) ||
-                other.selectedLocation == selectedLocation));
+                    selectedProductSubCategory));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -601,15 +602,16 @@ class _$ProductImpl implements _Product {
         number,
         category,
         subcategory,
-        availability,
+        scheduleID,
+        schedule,
         const DeepCollectionEquality().hash(pricing),
         image,
         const DeepCollectionEquality().hash(video),
         const DeepCollectionEquality().hash(locations),
+        const DeepCollectionEquality().hash(productMedia),
         completed,
         selectedProductCategory,
-        selectedProductSubCategory,
-        selectedLocation
+        selectedProductSubCategory
       ]);
 
   /// Create a copy of Product
@@ -640,18 +642,18 @@ abstract class _Product implements Product {
       final String? number,
       final String? category,
       final String? subcategory,
-      final ProductAvailability? availability,
-      final List<ProductPricing>? pricing,
-      final ProductImage? image,
+      @JsonKey(name: 'schedule') final String? scheduleID,
+      @JsonKey(name: 'new_schedule') final ProductSchedule? schedule,
+      final List<ProductPricing?>? pricing,
+      final ProductMedia? image,
       final dynamic video,
       final List<ProductLocation>? locations,
+      final List<ProductMedia?>? productMedia,
       final bool? completed,
       @JsonKey(includeFromJson: true, includeToJson: true)
       final ProductCategory? selectedProductCategory,
       @JsonKey(includeFromJson: true, includeToJson: true)
-      final ProductCategory? selectedProductSubCategory,
-      @JsonKey(includeFromJson: true, includeToJson: true)
-      final ProductLocation? selectedLocation}) = _$ProductImpl;
+      final ProductCategory? selectedProductSubCategory}) = _$ProductImpl;
 
   factory _Product.fromJson(Map<String, dynamic> json) = _$ProductImpl.fromJson;
 
@@ -678,15 +680,21 @@ abstract class _Product implements Product {
   @override
   String? get subcategory;
   @override
-  ProductAvailability? get availability;
+  @JsonKey(name: 'schedule')
+  String? get scheduleID;
   @override
-  List<ProductPricing>? get pricing;
+  @JsonKey(name: 'new_schedule')
+  ProductSchedule? get schedule;
   @override
-  ProductImage? get image;
+  List<ProductPricing?>? get pricing;
+  @override
+  ProductMedia? get image;
   @override
   dynamic get video;
   @override
   List<ProductLocation>? get locations;
+  @override
+  List<ProductMedia?>? get productMedia;
   @override
   bool? get completed;
 
@@ -697,9 +705,6 @@ abstract class _Product implements Product {
   @override
   @JsonKey(includeFromJson: true, includeToJson: true)
   ProductCategory? get selectedProductSubCategory;
-  @override
-  @JsonKey(includeFromJson: true, includeToJson: true)
-  ProductLocation? get selectedLocation;
 
   /// Create a copy of Product
   /// with the given fields replaced by the non-null parameter values.

@@ -3,6 +3,8 @@ import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/entities/product_category.dart';
+import 'package:fullbooker/domain/core/entities/product_location.dart';
+import 'package:fullbooker/domain/core/entities/product_media.dart';
 import 'package:fullbooker/shared/entities/location_perms_result.dart';
 
 class ProductSetupViewModel extends Vm {
@@ -14,6 +16,8 @@ class ProductSetupViewModel extends Vm {
     required this.startTime,
     required this.endDate,
     required this.endTime,
+    required this.productMedia,
+    required this.selectedLocation,
   }) : super(
           equals: <Object?>[
             currentProduct,
@@ -23,6 +27,8 @@ class ProductSetupViewModel extends Vm {
             startTime,
             endDate,
             endTime,
+            productMedia,
+            selectedLocation,
           ],
         );
 
@@ -33,19 +39,22 @@ class ProductSetupViewModel extends Vm {
   final String startTime;
   final String endDate;
   final String endTime;
+  final List<ProductMedia?>? productMedia;
+  final ProductLocation? selectedLocation;
 
   static ProductSetupViewModel fromState(AppState state) {
     return ProductSetupViewModel(
       currentProduct: state.hostState?.currentProduct,
       productCategories: state.hostState?.productCategories,
       locationPerms: state.hostState?.locationPerms,
-      startDate:
-          state.hostState?.currentProduct?.availability?.start ?? UNKNOWN,
+      startDate: state.hostState?.currentProduct?.schedule?.start ?? UNKNOWN,
       startTime:
-          state.hostState?.currentProduct?.availability?.startTime ?? UNKNOWN,
-      endDate: state.hostState?.currentProduct?.availability?.end ?? UNKNOWN,
-      endTime:
-          state.hostState?.currentProduct?.availability?.endTime ?? UNKNOWN,
+          state.hostState?.currentProduct?.schedule?.startTime ?? UNKNOWN,
+      endDate: state.hostState?.currentProduct?.schedule?.end ?? UNKNOWN,
+      endTime: state.hostState?.currentProduct?.schedule?.endTime ?? UNKNOWN,
+      productMedia:
+          state.hostState?.currentProduct?.productMedia ?? <ProductMedia?>[],
+      selectedLocation: state.hostState?.selectedLocation,
     );
   }
 }

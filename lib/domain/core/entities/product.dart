@@ -1,9 +1,9 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:fullbooker/application/redux/states/user_state.dart';
 import 'package:fullbooker/core/common/constants.dart';
-import 'package:fullbooker/domain/core/entities/product_availability.dart';
+import 'package:fullbooker/domain/core/entities/product_schedule.dart';
 import 'package:fullbooker/domain/core/entities/product_category.dart';
-import 'package:fullbooker/domain/core/entities/product_image.dart';
+import 'package:fullbooker/domain/core/entities/product_media.dart';
 import 'package:fullbooker/domain/core/entities/product_location.dart';
 import 'package:fullbooker/domain/core/entities/product_pricing.dart';
 
@@ -24,11 +24,13 @@ class Product with _$Product {
     @Default(UNKNOWN) String? number,
     @Default(UNKNOWN) String? category,
     @Default(UNKNOWN) String? subcategory,
-    ProductAvailability? availability,
-    @Default(<ProductPricing>[]) List<ProductPricing>? pricing,
-    ProductImage? image,
+    @JsonKey(name: 'schedule') @Default(UNKNOWN) String? scheduleID,
+    @JsonKey(name: 'new_schedule') ProductSchedule? schedule,
+    @Default(<ProductPricing>[]) List<ProductPricing?>? pricing,
+    ProductMedia? image,
     dynamic video,
     @Default(<ProductLocation>[]) List<ProductLocation>? locations,
+    @Default(<ProductMedia>[]) List<ProductMedia?>? productMedia,
     @Default(false) bool? completed,
 
     /// Temp values used when creating a product
@@ -36,17 +38,14 @@ class Product with _$Product {
     ProductCategory? selectedProductCategory,
     @JsonKey(includeFromJson: true, includeToJson: true)
     ProductCategory? selectedProductSubCategory,
-    @JsonKey(includeFromJson: true, includeToJson: true)
-    ProductLocation? selectedLocation,
   }) = _Product;
 
   factory Product.initial() => Product(
         host: UserState.initial(),
-        availability: ProductAvailability.initial(),
-        image: ProductImage.initial(),
+        schedule: ProductSchedule.initial(),
+        image: ProductMedia.initial(),
         selectedProductCategory: ProductCategory.initial(),
         selectedProductSubCategory: ProductCategory.initial(),
-        selectedLocation: ProductLocation.initial(),
       );
 
   factory Product.fromJson(Map<String, dynamic> json) =>
@@ -56,12 +55,11 @@ class Product with _$Product {
   factory Product.fromApiJson(Map<String, dynamic> json) {
     final Product product = _$ProductFromJson(json);
     return product.copyWith(
-      availability: product.availability ?? ProductAvailability.initial(),
+      schedule: product.schedule ?? ProductSchedule.initial(),
       selectedProductCategory:
           product.selectedProductCategory ?? ProductCategory.initial(),
       selectedProductSubCategory:
           product.selectedProductSubCategory ?? ProductCategory.initial(),
-      selectedLocation: product.selectedLocation ?? ProductLocation.initial(),
     );
   }
 }

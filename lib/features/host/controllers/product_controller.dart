@@ -101,7 +101,7 @@ class ProductController extends BaseViewModel<OldProduct> {
     try {
       final dynamic response = await repository.post(
         availabilityData,
-        kDevProductAvailabilityEndpoint,
+        kDevProductScheduleEndpoint,
       );
       return response as Map<String, Object?>;
     } catch (exception) {

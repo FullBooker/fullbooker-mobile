@@ -39,7 +39,9 @@ class LoginAction extends ReduxAction<AppState> {
     final bool isPasswordEmpty = password.isEmpty || password == UNKNOWN;
 
     if (isEmailEmpty || isPasswordEmpty) {
-      return onError?.call(credentialsPrompt);
+      onError?.call(credentialsPrompt);
+
+      return null;
     }
 
     final Map<String, String> data = <String, String>{
@@ -62,7 +64,9 @@ class LoginAction extends ReduxAction<AppState> {
     if (httpResponse.statusCode >= 400) {
       final String? error = client.parseError(body);
 
-      return onError?.call(error ?? defaultUserFriendlyMessage);
+      onError?.call(error ?? defaultUserFriendlyMessage);
+
+      return null;
     }
 
     final LoginResponse loginResponse = LoginResponse.fromJson(body);

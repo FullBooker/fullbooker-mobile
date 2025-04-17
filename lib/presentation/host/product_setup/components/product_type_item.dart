@@ -25,6 +25,9 @@ class ProductTypeItem extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
+          color: isSelected
+              ? Theme.of(context).primaryColor.withValues(alpha: .05)
+              : null,
           border: Border.all(
             color: isSelected
                 ? Theme.of(context).primaryColor

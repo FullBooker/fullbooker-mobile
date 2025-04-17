@@ -28,6 +28,10 @@ _$HostStateImpl _$$HostStateImplFromJson(Map<String, dynamic> json) =>
           ? null
           : LocationPermsResult.fromJson(
               json['locationPerms'] as Map<String, dynamic>),
+      selectedLocation: json['selectedLocation'] == null
+          ? null
+          : ProductLocation.fromJson(
+              json['selectedLocation'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$HostStateImplToJson(_$HostStateImpl instance) =>
@@ -38,4 +42,5 @@ Map<String, dynamic> _$$HostStateImplToJson(_$HostStateImpl instance) =>
       'productCategories':
           instance.productCategories?.map((e) => e.toJson()).toList(),
       'locationPerms': instance.locationPerms?.toJson(),
+      'selectedLocation': instance.selectedLocation?.toJson(),
     };

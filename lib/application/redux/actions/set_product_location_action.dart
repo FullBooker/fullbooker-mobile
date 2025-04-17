@@ -27,15 +27,15 @@ class SetProductLocationAction extends ReduxAction<AppState> {
   @override
   Future<AppState?> reduce() async {
     final String productID = state.hostState?.currentProduct?.id ?? UNKNOWN;
-    final String lat =
-        state.hostState?.currentProduct?.selectedLocation?.lat ?? UNKNOWN;
-    final String long =
-        state.hostState?.currentProduct?.selectedLocation?.long ?? UNKNOWN;
+    final String lat = state.hostState?.selectedLocation?.lat ?? UNKNOWN;
+    final String long = state.hostState?.selectedLocation?.long ?? UNKNOWN;
     final String address =
-        state.hostState?.currentProduct?.selectedLocation?.address ?? UNKNOWN;
+        state.hostState?.selectedLocation?.address ?? UNKNOWN;
 
     if (productID == UNKNOWN || lat == UNKNOWN || long == UNKNOWN) {
-      return onError?.call(addLocationError);
+      onError?.call(addLocationError);
+
+      return null;
     }
 
     final Map<String, String> data = <String, String>{
@@ -57,7 +57,9 @@ class SetProductLocationAction extends ReduxAction<AppState> {
     if (httpResponse.statusCode >= 400) {
       final String? error = client.parseError(body);
 
-      return onError?.call(error ?? defaultUserFriendlyMessage);
+      onError?.call(error ?? defaultUserFriendlyMessage);
+
+      return null;
     }
 
     final ProductLocation savedProductLocation = ProductLocation.fromJson(body);

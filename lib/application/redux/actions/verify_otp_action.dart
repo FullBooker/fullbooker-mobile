@@ -30,7 +30,9 @@ class VerifyOTPAction extends ReduxAction<AppState> {
     final bool isOTPEmpty = otp.isEmpty || otp == UNKNOWN;
 
     if (isOTPEmpty) {
-      return onError?.call(otpEmptyPrompt);
+      onError?.call(otpEmptyPrompt);
+
+      return null;
     }
 
     final Map<String, String> data = <String, String>{
@@ -51,13 +53,17 @@ class VerifyOTPAction extends ReduxAction<AppState> {
     if (httpResponse.statusCode >= 400) {
       final String? error = client.parseError(body);
 
-      return onError?.call(error ?? defaultUserFriendlyMessage);
+      onError?.call(error ?? defaultUserFriendlyMessage);
+
+      return null;
     }
 
     final bool isOTPVerified = body.containsKey('detail');
 
     if (!isOTPVerified) {
-      return onError?.call(errorVerifyingOTP);
+      onError?.call(errorVerifyingOTP);
+
+      return null;
     }
 
     onSuccess?.call();

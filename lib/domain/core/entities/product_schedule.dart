@@ -1,13 +1,13 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:fullbooker/core/common/constants.dart';
 
-part 'product_availability.freezed.dart';
-part 'product_availability.g.dart';
+part 'product_schedule.freezed.dart';
+part 'product_schedule.g.dart';
 
 @Freezed(makeCollectionsUnmodifiable: false)
-class ProductAvailability with _$ProductAvailability {
+class ProductSchedule with _$ProductSchedule {
   @JsonSerializable(explicitToJson: true)
-  factory ProductAvailability({
+  factory ProductSchedule({
     @Default(UNKNOWN) String? id,
     @Default(UNKNOWN) String? product,
     @Default(UNKNOWN) @JsonKey(name: 'product_name') String? productName,
@@ -20,10 +20,10 @@ class ProductAvailability with _$ProductAvailability {
     @Default(<dynamic>[])
     @JsonKey(name: 'closed_dates')
     List<dynamic>? closedDates,
-  }) = _ProductAvailability;
+  }) = _ProductSchedule;
 
-  factory ProductAvailability.initial() => ProductAvailability();
+  factory ProductSchedule.initial() => ProductSchedule();
 
-  factory ProductAvailability.fromJson(Map<String, dynamic> json) =>
-      _$ProductAvailabilityFromJson(json);
+  factory ProductSchedule.fromJson(Map<String, dynamic> json) =>
+      _$ProductScheduleFromJson(json);
 }

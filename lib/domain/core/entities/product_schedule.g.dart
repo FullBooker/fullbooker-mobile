@@ -1,14 +1,14 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'product_availability.dart';
+part of 'product_schedule.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$ProductAvailabilityImpl _$$ProductAvailabilityImplFromJson(
+_$ProductScheduleImpl _$$ProductScheduleImplFromJson(
         Map<String, dynamic> json) =>
-    _$ProductAvailabilityImpl(
+    _$ProductScheduleImpl(
       id: json['id'] as String? ?? UNKNOWN,
       product: json['product'] as String? ?? UNKNOWN,
       productName: json['product_name'] as String? ?? UNKNOWN,
@@ -21,8 +21,8 @@ _$ProductAvailabilityImpl _$$ProductAvailabilityImplFromJson(
       closedDates: json['closed_dates'] as List<dynamic>? ?? const <dynamic>[],
     );
 
-Map<String, dynamic> _$$ProductAvailabilityImplToJson(
-        _$ProductAvailabilityImpl instance) =>
+Map<String, dynamic> _$$ProductScheduleImplToJson(
+        _$ProductScheduleImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'product': instance.product,

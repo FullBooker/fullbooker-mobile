@@ -331,7 +331,7 @@ class ProductDateTimePage extends StatelessWidget {
                   converter: (Store<AppState> store) =>
                       ProductSetupViewModel.fromState(store.state),
                   builder: (BuildContext context, ProductSetupViewModel vm) {
-                    if (context.isWaiting(SetProductAvailabilityAction)) {
+                    if (context.isWaiting(SetProductScheduleAction)) {
                       return AppLoading();
                     }
                     return Column(
@@ -339,7 +339,7 @@ class ProductDateTimePage extends StatelessWidget {
                       children: <Widget>[
                         PrimaryButton(
                           onPressed: () => context.dispatch(
-                            SetProductAvailabilityAction(
+                            SetProductScheduleAction(
                               onSuccess: () {
                                 context.router.push(ProductPhotosRoute());
                               },

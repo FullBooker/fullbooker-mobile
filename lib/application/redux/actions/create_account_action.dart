@@ -45,7 +45,9 @@ class CreateAccountAction extends ReduxAction<AppState> {
         isNewPasswordEmpty ||
         isNewEmailEmpty ||
         isPhoneEmpty) {
-      return onError?.call(fillInAllFields);
+      onError?.call(fillInAllFields);
+
+      return null;
     }
 
     final Map<String, String> data = <String, String>{
@@ -72,7 +74,9 @@ class CreateAccountAction extends ReduxAction<AppState> {
     if (httpResponse.statusCode >= 400) {
       final String? error = client.parseError(body);
 
-      return onError?.call(error ?? defaultUserFriendlyMessage);
+      onError?.call(error ?? defaultUserFriendlyMessage);
+
+      return null;
     }
 
     final LoginResponse loginResponse = LoginResponse.fromJson(body);

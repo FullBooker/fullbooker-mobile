@@ -32,7 +32,9 @@ class RequestOtpAction extends ReduxAction<AppState> {
         resetEmailAddress.isEmpty || resetEmailAddress == UNKNOWN;
 
     if (isEmailEmpty) {
-      return onError?.call(resetEmailPrompt);
+      onError?.call(resetEmailPrompt);
+
+      return null;
     }
 
     final Map<String, String> data = <String, String>{
@@ -52,13 +54,16 @@ class RequestOtpAction extends ReduxAction<AppState> {
     if (httpResponse.statusCode >= 400) {
       final String? error = client.parseError(body);
 
-      return onError?.call(error ?? defaultUserFriendlyMessage);
+      onError?.call(error ?? defaultUserFriendlyMessage);
+      return null;
     }
 
     final bool isOTPSent = body.containsKey('detail');
 
     if (!isOTPSent) {
-      return onError?.call(errorSendingOTP);
+      onError?.call(errorSendingOTP);
+
+      return null;
     }
 
     // This will run but only show in dev mode
