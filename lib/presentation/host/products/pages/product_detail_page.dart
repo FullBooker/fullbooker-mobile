@@ -117,8 +117,7 @@ class ProductDetailPage extends StatelessWidget {
                                     size: 20,
                                   ),
                                   humanizeDate(
-                                    loadedDate:
-                                        product?.availability?.start ?? '',
+                                    loadedDate: product?.schedule?.start ?? '',
                                     dateTextStyle:
                                         Theme.of(context).textTheme.bodyMedium,
                                   ),
@@ -128,8 +127,7 @@ class ProductDetailPage extends StatelessWidget {
                                         Theme.of(context).textTheme.bodyMedium,
                                   ),
                                   humanizeDate(
-                                    loadedDate:
-                                        product?.availability?.end ?? '',
+                                    loadedDate: product?.schedule?.end ?? '',
                                     dateTextStyle:
                                         Theme.of(context).textTheme.bodyMedium,
                                   ),
@@ -147,7 +145,7 @@ class ProductDetailPage extends StatelessWidget {
                                     size: 20,
                                   ),
                                   formatTime(
-                                    time: product?.availability?.startTime,
+                                    time: product?.schedule?.startTime,
                                     textStyle:
                                         Theme.of(context).textTheme.bodyMedium,
                                   ),
@@ -157,7 +155,7 @@ class ProductDetailPage extends StatelessWidget {
                                         Theme.of(context).textTheme.bodyMedium,
                                   ),
                                   formatTime(
-                                    time: product?.availability?.endTime,
+                                    time: product?.schedule?.endTime,
                                     textStyle:
                                         Theme.of(context).textTheme.bodyMedium,
                                   ),

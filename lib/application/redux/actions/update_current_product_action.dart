@@ -40,15 +40,12 @@ class UpdateCurrentProductAction extends ReduxAction<AppState> {
           state.hostState?.currentProduct?.selectedProductSubCategory,
       name: name ?? state.hostState?.currentProduct?.name,
       description: description ?? state.hostState?.currentProduct?.description,
-      availability:
-          state.hostState?.currentProduct?.availability?.copyWith.call(
-        start:
-            startDate ?? state.hostState?.currentProduct?.availability?.start,
-        startTime: startTime ??
-            state.hostState?.currentProduct?.availability?.startTime,
-        end: endDate ?? state.hostState?.currentProduct?.availability?.end,
-        endTime:
-            endTime ?? state.hostState?.currentProduct?.availability?.endTime,
+      schedule: state.hostState?.currentProduct?.schedule?.copyWith.call(
+        start: startDate ?? state.hostState?.currentProduct?.schedule?.start,
+        startTime:
+            startTime ?? state.hostState?.currentProduct?.schedule?.startTime,
+        end: endDate ?? state.hostState?.currentProduct?.schedule?.end,
+        endTime: endTime ?? state.hostState?.currentProduct?.schedule?.endTime,
       ),
       selectedLocation:
           state.hostState?.currentProduct?.selectedLocation?.copyWith.call(

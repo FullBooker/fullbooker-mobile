@@ -128,7 +128,7 @@ class ProductCard extends StatelessWidget {
                             ],
                           ),
                         // Date
-                        if (product.availability != null)
+                        if (product.schedule != null)
                           Row(
                             mainAxisSize: MainAxisSize.min,
                             spacing: 4,
@@ -139,7 +139,7 @@ class ProductCard extends StatelessWidget {
                                 size: 20,
                               ),
                               humanizeDate(
-                                loadedDate: product.availability?.start ?? '',
+                                loadedDate: product.schedule?.start ?? '',
                                 dateTextStyle:
                                     Theme.of(context).textTheme.bodyMedium,
                               ),
@@ -148,7 +148,7 @@ class ProductCard extends StatelessWidget {
                                 style: Theme.of(context).textTheme.bodyMedium,
                               ),
                               humanizeDate(
-                                loadedDate: product.availability?.end ?? '',
+                                loadedDate: product.schedule?.end ?? '',
                                 dateTextStyle:
                                     Theme.of(context).textTheme.bodyMedium,
                               ),
@@ -156,7 +156,7 @@ class ProductCard extends StatelessWidget {
                           ),
 
                         // Time
-                        if (product.availability != null)
+                        if (product.schedule != null)
                           Row(
                             mainAxisSize: MainAxisSize.min,
                             spacing: 4,
@@ -167,7 +167,7 @@ class ProductCard extends StatelessWidget {
                                 size: 20,
                               ),
                               formatTime(
-                                time: product.availability?.startTime,
+                                time: product.schedule?.startTime,
                                 textStyle:
                                     Theme.of(context).textTheme.bodyMedium,
                               ),
@@ -176,7 +176,7 @@ class ProductCard extends StatelessWidget {
                                 style: Theme.of(context).textTheme.bodyMedium,
                               ),
                               formatTime(
-                                time: product.availability?.endTime,
+                                time: product.schedule?.endTime,
                                 textStyle:
                                     Theme.of(context).textTheme.bodyMedium,
                               ),

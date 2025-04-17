@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'product_availability.dart';
+part of 'product_schedule.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,12 +14,12 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-ProductAvailability _$ProductAvailabilityFromJson(Map<String, dynamic> json) {
-  return _ProductAvailability.fromJson(json);
+ProductSchedule _$ProductScheduleFromJson(Map<String, dynamic> json) {
+  return _ProductSchedule.fromJson(json);
 }
 
 /// @nodoc
-mixin _$ProductAvailability {
+mixin _$ProductSchedule {
   String? get id => throw _privateConstructorUsedError;
   String? get product => throw _privateConstructorUsedError;
   @JsonKey(name: 'product_name')
@@ -36,21 +36,21 @@ mixin _$ProductAvailability {
   @JsonKey(name: 'closed_dates')
   List<dynamic>? get closedDates => throw _privateConstructorUsedError;
 
-  /// Serializes this ProductAvailability to a JSON map.
+  /// Serializes this ProductSchedule to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of ProductAvailability
+  /// Create a copy of ProductSchedule
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $ProductAvailabilityCopyWith<ProductAvailability> get copyWith =>
+  $ProductScheduleCopyWith<ProductSchedule> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ProductAvailabilityCopyWith<$Res> {
-  factory $ProductAvailabilityCopyWith(
-          ProductAvailability value, $Res Function(ProductAvailability) then) =
-      _$ProductAvailabilityCopyWithImpl<$Res, ProductAvailability>;
+abstract class $ProductScheduleCopyWith<$Res> {
+  factory $ProductScheduleCopyWith(
+          ProductSchedule value, $Res Function(ProductSchedule) then) =
+      _$ProductScheduleCopyWithImpl<$Res, ProductSchedule>;
   @useResult
   $Res call(
       {String? id,
@@ -66,16 +66,16 @@ abstract class $ProductAvailabilityCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ProductAvailabilityCopyWithImpl<$Res, $Val extends ProductAvailability>
-    implements $ProductAvailabilityCopyWith<$Res> {
-  _$ProductAvailabilityCopyWithImpl(this._value, this._then);
+class _$ProductScheduleCopyWithImpl<$Res, $Val extends ProductSchedule>
+    implements $ProductScheduleCopyWith<$Res> {
+  _$ProductScheduleCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of ProductAvailability
+  /// Create a copy of ProductSchedule
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -137,11 +137,11 @@ class _$ProductAvailabilityCopyWithImpl<$Res, $Val extends ProductAvailability>
 }
 
 /// @nodoc
-abstract class _$$ProductAvailabilityImplCopyWith<$Res>
-    implements $ProductAvailabilityCopyWith<$Res> {
-  factory _$$ProductAvailabilityImplCopyWith(_$ProductAvailabilityImpl value,
-          $Res Function(_$ProductAvailabilityImpl) then) =
-      __$$ProductAvailabilityImplCopyWithImpl<$Res>;
+abstract class _$$ProductScheduleImplCopyWith<$Res>
+    implements $ProductScheduleCopyWith<$Res> {
+  factory _$$ProductScheduleImplCopyWith(_$ProductScheduleImpl value,
+          $Res Function(_$ProductScheduleImpl) then) =
+      __$$ProductScheduleImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -158,14 +158,14 @@ abstract class _$$ProductAvailabilityImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$ProductAvailabilityImplCopyWithImpl<$Res>
-    extends _$ProductAvailabilityCopyWithImpl<$Res, _$ProductAvailabilityImpl>
-    implements _$$ProductAvailabilityImplCopyWith<$Res> {
-  __$$ProductAvailabilityImplCopyWithImpl(_$ProductAvailabilityImpl _value,
-      $Res Function(_$ProductAvailabilityImpl) _then)
+class __$$ProductScheduleImplCopyWithImpl<$Res>
+    extends _$ProductScheduleCopyWithImpl<$Res, _$ProductScheduleImpl>
+    implements _$$ProductScheduleImplCopyWith<$Res> {
+  __$$ProductScheduleImplCopyWithImpl(
+      _$ProductScheduleImpl _value, $Res Function(_$ProductScheduleImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ProductAvailability
+  /// Create a copy of ProductSchedule
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -181,7 +181,7 @@ class __$$ProductAvailabilityImplCopyWithImpl<$Res>
     Object? openDays = freezed,
     Object? closedDates = freezed,
   }) {
-    return _then(_$ProductAvailabilityImpl(
+    return _then(_$ProductScheduleImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -229,8 +229,8 @@ class __$$ProductAvailabilityImplCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(explicitToJson: true)
-class _$ProductAvailabilityImpl implements _ProductAvailability {
-  _$ProductAvailabilityImpl(
+class _$ProductScheduleImpl implements _ProductSchedule {
+  _$ProductScheduleImpl(
       {this.id = UNKNOWN,
       this.product = UNKNOWN,
       @JsonKey(name: 'product_name') this.productName = UNKNOWN,
@@ -242,8 +242,8 @@ class _$ProductAvailabilityImpl implements _ProductAvailability {
       @JsonKey(name: 'open_days') this.openDays = const <dynamic>[],
       @JsonKey(name: 'closed_dates') this.closedDates = const <dynamic>[]});
 
-  factory _$ProductAvailabilityImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ProductAvailabilityImplFromJson(json);
+  factory _$ProductScheduleImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ProductScheduleImplFromJson(json);
 
   @override
   @JsonKey()
@@ -278,14 +278,14 @@ class _$ProductAvailabilityImpl implements _ProductAvailability {
 
   @override
   String toString() {
-    return 'ProductAvailability(id: $id, product: $product, productName: $productName, start: $start, end: $end, startTime: $startTime, endTime: $endTime, duration: $duration, openDays: $openDays, closedDates: $closedDates)';
+    return 'ProductSchedule(id: $id, product: $product, productName: $productName, start: $start, end: $end, startTime: $startTime, endTime: $endTime, duration: $duration, openDays: $openDays, closedDates: $closedDates)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ProductAvailabilityImpl &&
+            other is _$ProductScheduleImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.product, product) || other.product == product) &&
             (identical(other.productName, productName) ||
@@ -317,25 +317,25 @@ class _$ProductAvailabilityImpl implements _ProductAvailability {
       const DeepCollectionEquality().hash(openDays),
       const DeepCollectionEquality().hash(closedDates));
 
-  /// Create a copy of ProductAvailability
+  /// Create a copy of ProductSchedule
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$ProductAvailabilityImplCopyWith<_$ProductAvailabilityImpl> get copyWith =>
-      __$$ProductAvailabilityImplCopyWithImpl<_$ProductAvailabilityImpl>(
+  _$$ProductScheduleImplCopyWith<_$ProductScheduleImpl> get copyWith =>
+      __$$ProductScheduleImplCopyWithImpl<_$ProductScheduleImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$ProductAvailabilityImplToJson(
+    return _$$ProductScheduleImplToJson(
       this,
     );
   }
 }
 
-abstract class _ProductAvailability implements ProductAvailability {
-  factory _ProductAvailability(
+abstract class _ProductSchedule implements ProductSchedule {
+  factory _ProductSchedule(
           {final String? id,
           final String? product,
           @JsonKey(name: 'product_name') final String? productName,
@@ -346,10 +346,10 @@ abstract class _ProductAvailability implements ProductAvailability {
           final int? duration,
           @JsonKey(name: 'open_days') final List<dynamic>? openDays,
           @JsonKey(name: 'closed_dates') final List<dynamic>? closedDates}) =
-      _$ProductAvailabilityImpl;
+      _$ProductScheduleImpl;
 
-  factory _ProductAvailability.fromJson(Map<String, dynamic> json) =
-      _$ProductAvailabilityImpl.fromJson;
+  factory _ProductSchedule.fromJson(Map<String, dynamic> json) =
+      _$ProductScheduleImpl.fromJson;
 
   @override
   String? get id;
@@ -377,10 +377,10 @@ abstract class _ProductAvailability implements ProductAvailability {
   @JsonKey(name: 'closed_dates')
   List<dynamic>? get closedDates;
 
-  /// Create a copy of ProductAvailability
+  /// Create a copy of ProductSchedule
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ProductAvailabilityImplCopyWith<_$ProductAvailabilityImpl> get copyWith =>
+  _$$ProductScheduleImplCopyWith<_$ProductScheduleImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

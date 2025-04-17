@@ -14,7 +14,7 @@ const String kDevProfileEndpoint = '$kDevAPIBaseURL/accounts/profile';
 const String kDevProductCategoriesEndpoint = '$kDevAPIBaseURL/categories';
 const String kDevProductSubCategoriesEndpoint = '$kDevAPIBaseURL/subcategories';
 const String kDevLocationEndpoint = '$kDevAPIBaseURL/location/';
-const String kDevProductAvailabilityEndpoint = '$kDevAPIBaseURL/availability/';
+const String kDevProductScheduleEndpoint = '$kDevAPIBaseURL/availability/';
 const String kDevMediaEndpoint = '$kDevAPIBaseURL/media/';
 
 // ---- Implemented
@@ -38,8 +38,7 @@ const String kProdProductCategoriesEndpoint = '$kProdAPIBaseURL/categories';
 const String kProdProductSubCategoriesEndpoint =
     '$kProdAPIBaseURL/subcategories';
 const String kProdLocationEndpoint = '$kProdAPIBaseURL/location/';
-const String kProdProductAvailabilityEndpoint =
-    '$kProdAPIBaseURL/availability/';
+const String kProdProductScheduleEndpoint = '$kProdAPIBaseURL/availability/';
 const String kProdMediaEndpoint = '$kProdAPIBaseURL/media/';
 
 // ---- Implemented
@@ -63,8 +62,7 @@ const String kTestProductCategoriesEndpoint = '$kTestAPIBaseURL/categories';
 const String kTestProductSubCategoriesEndpoint =
     '$kTestAPIBaseURL/subcategories';
 const String kTestLocationEndpoint = '$kTestAPIBaseURL/location/';
-const String kTestProductAvailabilityEndpoint =
-    '$kTestAPIBaseURL/availability/';
+const String kTestProductScheduleEndpoint = '$kTestAPIBaseURL/availability/';
 const String kTestMediaEndpoint = '$kTestAPIBaseURL/media/';
 
 // ---- Implemented

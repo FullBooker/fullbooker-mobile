@@ -32,7 +32,10 @@ mixin _$Product {
   String? get number => throw _privateConstructorUsedError;
   String? get category => throw _privateConstructorUsedError;
   String? get subcategory => throw _privateConstructorUsedError;
-  ProductAvailability? get availability => throw _privateConstructorUsedError;
+  @JsonKey(name: 'schedule')
+  String? get scheduleID => throw _privateConstructorUsedError;
+  @JsonKey(name: 'new_schedule')
+  ProductSchedule? get schedule => throw _privateConstructorUsedError;
   List<ProductPricing>? get pricing => throw _privateConstructorUsedError;
   ProductImage? get image => throw _privateConstructorUsedError;
   dynamic get video => throw _privateConstructorUsedError;
@@ -74,7 +77,8 @@ abstract class $ProductCopyWith<$Res> {
       String? number,
       String? category,
       String? subcategory,
-      ProductAvailability? availability,
+      @JsonKey(name: 'schedule') String? scheduleID,
+      @JsonKey(name: 'new_schedule') ProductSchedule? schedule,
       List<ProductPricing>? pricing,
       ProductImage? image,
       dynamic video,
@@ -88,7 +92,7 @@ abstract class $ProductCopyWith<$Res> {
       ProductLocation? selectedLocation});
 
   $UserStateCopyWith<$Res>? get host;
-  $ProductAvailabilityCopyWith<$Res>? get availability;
+  $ProductScheduleCopyWith<$Res>? get schedule;
   $ProductImageCopyWith<$Res>? get image;
   $ProductCategoryCopyWith<$Res>? get selectedProductCategory;
   $ProductCategoryCopyWith<$Res>? get selectedProductSubCategory;
@@ -120,7 +124,8 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
     Object? number = freezed,
     Object? category = freezed,
     Object? subcategory = freezed,
-    Object? availability = freezed,
+    Object? scheduleID = freezed,
+    Object? schedule = freezed,
     Object? pricing = freezed,
     Object? image = freezed,
     Object? video = freezed,
@@ -171,10 +176,14 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
           ? _value.subcategory
           : subcategory // ignore: cast_nullable_to_non_nullable
               as String?,
-      availability: freezed == availability
-          ? _value.availability
-          : availability // ignore: cast_nullable_to_non_nullable
-              as ProductAvailability?,
+      scheduleID: freezed == scheduleID
+          ? _value.scheduleID
+          : scheduleID // ignore: cast_nullable_to_non_nullable
+              as String?,
+      schedule: freezed == schedule
+          ? _value.schedule
+          : schedule // ignore: cast_nullable_to_non_nullable
+              as ProductSchedule?,
       pricing: freezed == pricing
           ? _value.pricing
           : pricing // ignore: cast_nullable_to_non_nullable
@@ -228,13 +237,13 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $ProductAvailabilityCopyWith<$Res>? get availability {
-    if (_value.availability == null) {
+  $ProductScheduleCopyWith<$Res>? get schedule {
+    if (_value.schedule == null) {
       return null;
     }
 
-    return $ProductAvailabilityCopyWith<$Res>(_value.availability!, (value) {
-      return _then(_value.copyWith(availability: value) as $Val);
+    return $ProductScheduleCopyWith<$Res>(_value.schedule!, (value) {
+      return _then(_value.copyWith(schedule: value) as $Val);
     });
   }
 
@@ -315,7 +324,8 @@ abstract class _$$ProductImplCopyWith<$Res> implements $ProductCopyWith<$Res> {
       String? number,
       String? category,
       String? subcategory,
-      ProductAvailability? availability,
+      @JsonKey(name: 'schedule') String? scheduleID,
+      @JsonKey(name: 'new_schedule') ProductSchedule? schedule,
       List<ProductPricing>? pricing,
       ProductImage? image,
       dynamic video,
@@ -331,7 +341,7 @@ abstract class _$$ProductImplCopyWith<$Res> implements $ProductCopyWith<$Res> {
   @override
   $UserStateCopyWith<$Res>? get host;
   @override
-  $ProductAvailabilityCopyWith<$Res>? get availability;
+  $ProductScheduleCopyWith<$Res>? get schedule;
   @override
   $ProductImageCopyWith<$Res>? get image;
   @override
@@ -365,7 +375,8 @@ class __$$ProductImplCopyWithImpl<$Res>
     Object? number = freezed,
     Object? category = freezed,
     Object? subcategory = freezed,
-    Object? availability = freezed,
+    Object? scheduleID = freezed,
+    Object? schedule = freezed,
     Object? pricing = freezed,
     Object? image = freezed,
     Object? video = freezed,
@@ -416,10 +427,14 @@ class __$$ProductImplCopyWithImpl<$Res>
           ? _value.subcategory
           : subcategory // ignore: cast_nullable_to_non_nullable
               as String?,
-      availability: freezed == availability
-          ? _value.availability
-          : availability // ignore: cast_nullable_to_non_nullable
-              as ProductAvailability?,
+      scheduleID: freezed == scheduleID
+          ? _value.scheduleID
+          : scheduleID // ignore: cast_nullable_to_non_nullable
+              as String?,
+      schedule: freezed == schedule
+          ? _value.schedule
+          : schedule // ignore: cast_nullable_to_non_nullable
+              as ProductSchedule?,
       pricing: freezed == pricing
           ? _value.pricing
           : pricing // ignore: cast_nullable_to_non_nullable
@@ -471,7 +486,8 @@ class _$ProductImpl implements _Product {
       this.number = UNKNOWN,
       this.category = UNKNOWN,
       this.subcategory = UNKNOWN,
-      this.availability,
+      @JsonKey(name: 'schedule') this.scheduleID = UNKNOWN,
+      @JsonKey(name: 'new_schedule') this.schedule,
       this.pricing = const <ProductPricing>[],
       this.image,
       this.video,
@@ -517,7 +533,11 @@ class _$ProductImpl implements _Product {
   @JsonKey()
   final String? subcategory;
   @override
-  final ProductAvailability? availability;
+  @JsonKey(name: 'schedule')
+  final String? scheduleID;
+  @override
+  @JsonKey(name: 'new_schedule')
+  final ProductSchedule? schedule;
   @override
   @JsonKey()
   final List<ProductPricing>? pricing;
@@ -545,7 +565,7 @@ class _$ProductImpl implements _Product {
 
   @override
   String toString() {
-    return 'Product(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, active: $active, host: $host, name: $name, description: $description, number: $number, category: $category, subcategory: $subcategory, availability: $availability, pricing: $pricing, image: $image, video: $video, locations: $locations, completed: $completed, selectedProductCategory: $selectedProductCategory, selectedProductSubCategory: $selectedProductSubCategory, selectedLocation: $selectedLocation)';
+    return 'Product(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, active: $active, host: $host, name: $name, description: $description, number: $number, category: $category, subcategory: $subcategory, scheduleID: $scheduleID, schedule: $schedule, pricing: $pricing, image: $image, video: $video, locations: $locations, completed: $completed, selectedProductCategory: $selectedProductCategory, selectedProductSubCategory: $selectedProductSubCategory, selectedLocation: $selectedLocation)';
   }
 
   @override
@@ -568,8 +588,10 @@ class _$ProductImpl implements _Product {
                 other.category == category) &&
             (identical(other.subcategory, subcategory) ||
                 other.subcategory == subcategory) &&
-            (identical(other.availability, availability) ||
-                other.availability == availability) &&
+            (identical(other.scheduleID, scheduleID) ||
+                other.scheduleID == scheduleID) &&
+            (identical(other.schedule, schedule) ||
+                other.schedule == schedule) &&
             const DeepCollectionEquality().equals(other.pricing, pricing) &&
             (identical(other.image, image) || other.image == image) &&
             const DeepCollectionEquality().equals(other.video, video) &&
@@ -601,7 +623,8 @@ class _$ProductImpl implements _Product {
         number,
         category,
         subcategory,
-        availability,
+        scheduleID,
+        schedule,
         const DeepCollectionEquality().hash(pricing),
         image,
         const DeepCollectionEquality().hash(video),
@@ -640,7 +663,8 @@ abstract class _Product implements Product {
       final String? number,
       final String? category,
       final String? subcategory,
-      final ProductAvailability? availability,
+      @JsonKey(name: 'schedule') final String? scheduleID,
+      @JsonKey(name: 'new_schedule') final ProductSchedule? schedule,
       final List<ProductPricing>? pricing,
       final ProductImage? image,
       final dynamic video,
@@ -678,7 +702,11 @@ abstract class _Product implements Product {
   @override
   String? get subcategory;
   @override
-  ProductAvailability? get availability;
+  @JsonKey(name: 'schedule')
+  String? get scheduleID;
+  @override
+  @JsonKey(name: 'new_schedule')
+  ProductSchedule? get schedule;
   @override
   List<ProductPricing>? get pricing;
   @override

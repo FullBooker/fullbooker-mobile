@@ -21,7 +21,7 @@ class AppConfig {
     required this.productCategoriesEndpoint,
     required this.productSubCategoriesEndpoint,
     required this.productLocationEndpoint,
-    required this.productAvailabilityEndpoint,
+    required this.ProductScheduleEndpoint,
     required this.productMediaEndpoint,
   });
 
@@ -54,7 +54,7 @@ class AppConfig {
   final String productCategoriesEndpoint;
   final String productSubCategoriesEndpoint;
   final String productLocationEndpoint;
-  final String productAvailabilityEndpoint;
+  final String ProductScheduleEndpoint;
   final String productMediaEndpoint;
 
   /// Profile endpoints
@@ -79,7 +79,7 @@ final AppConfig devAppConfig = AppConfig(
   productCategoriesEndpoint: kDevProductCategoriesEndpoint,
   productSubCategoriesEndpoint: kDevProductSubCategoriesEndpoint,
   productLocationEndpoint: kDevLocationEndpoint,
-  productAvailabilityEndpoint: kDevProductAvailabilityEndpoint,
+  ProductScheduleEndpoint: kDevProductScheduleEndpoint,
   productMediaEndpoint: kDevMediaEndpoint,
 );
 
@@ -101,7 +101,7 @@ final AppConfig prodAppConfig = AppConfig(
   productCategoriesEndpoint: kProdProductCategoriesEndpoint,
   productSubCategoriesEndpoint: kProdProductSubCategoriesEndpoint,
   productLocationEndpoint: kProdLocationEndpoint,
-  productAvailabilityEndpoint: kProdProductAvailabilityEndpoint,
+  ProductScheduleEndpoint: kProdProductScheduleEndpoint,
   productMediaEndpoint: kProdMediaEndpoint,
 );
 
@@ -123,6 +123,6 @@ final AppConfig testAppConfig = AppConfig(
   productCategoriesEndpoint: kTestProductCategoriesEndpoint,
   productSubCategoriesEndpoint: kTestProductSubCategoriesEndpoint,
   productLocationEndpoint: kTestLocationEndpoint,
-  productAvailabilityEndpoint: kTestProductAvailabilityEndpoint,
+  ProductScheduleEndpoint: kTestProductScheduleEndpoint,
   productMediaEndpoint: kTestMediaEndpoint,
 );

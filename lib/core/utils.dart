@@ -335,13 +335,7 @@ void navigateToNextProductStep({
     return;
   }
 
-  final bool hasAvailability = product.availability != null &&
-      ((product.availability?.start?.isNotEmpty ?? false) &&
-          product.availability?.start != UNKNOWN) &&
-      ((product.availability?.end?.isNotEmpty ?? false) &&
-          product.availability?.end != UNKNOWN);
-
-  if (!hasAvailability) {
+  if (product.scheduleID == null) {
     context.router.push(const ProductDateTimeRoute());
     return;
   }
