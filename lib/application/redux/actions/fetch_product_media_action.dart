@@ -34,7 +34,7 @@ class FetchProductMediaAction extends ReduxAction<AppState> {
     final Response httpResponse = await client.callRESTAPI(
       endpoint: GetIt.I.get<AppConfig>().productMediaEndpoint,
       method: APIMethods.GET.name.toUpperCase(),
-      variables: data,
+      queryParams: data,
     );
 
     final Map<String, dynamic> body =

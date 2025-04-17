@@ -6,7 +6,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
 import 'package:fullbooker/application/redux/actions/fetch_product_media_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
-import 'package:fullbooker/application/redux/view_models/products_page_view_model.dart';
+import 'package:fullbooker/application/redux/view_models/product_detail_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/domain/core/entities/product_media.dart';
@@ -25,15 +25,15 @@ class _ImageCarouselWidgetState extends State<ImageCarouselWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, ProductsPageViewModel>(
+    return StoreConnector<AppState, ProductDetailViewModel>(
       converter: (Store<AppState> store) =>
-          ProductsPageViewModel.fromState(store.state),
+          ProductDetailViewModel.fromState(store.state),
       onInit: (Store<AppState> store) => context.dispatch(
         FetchProductMediaAction(
           client: AppWrapperBase.of(context)!.customClient,
         ),
       ),
-      builder: (BuildContext context, ProductsPageViewModel vm) {
+      builder: (BuildContext context, ProductDetailViewModel vm) {
         if (context.isWaiting(FetchProductMediaAction)) {
           return SizedBox(
             height: MediaQuery.of(context).size.height * .25,

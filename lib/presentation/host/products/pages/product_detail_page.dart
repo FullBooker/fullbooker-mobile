@@ -3,7 +3,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
-import 'package:fullbooker/application/redux/view_models/products_page_view_model.dart';
+import 'package:fullbooker/application/redux/view_models/product_detail_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/core/utils.dart';
@@ -34,10 +34,10 @@ class ProductDetailPage extends StatelessWidget {
         showBell: false,
         title: productsString,
       ),
-      body: StoreConnector<AppState, ProductsPageViewModel>(
+      body: StoreConnector<AppState, ProductDetailViewModel>(
         converter: (Store<AppState> store) =>
-            ProductsPageViewModel.fromState(store.state),
-        builder: (BuildContext context, ProductsPageViewModel vm) {
+            ProductDetailViewModel.fromState(store.state),
+        builder: (BuildContext context, ProductDetailViewModel vm) {
           final Product? product = vm.selectedProduct;
 
           final bool isComplete = product?.completed ?? false;
