@@ -4,8 +4,10 @@ import 'dart:io';
 import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/core/services/i_custom_client.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
+import 'package:fullbooker/application/redux/states/host_state.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:fullbooker/domain/core/entities/product_image.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:get_it/get_it.dart';
@@ -26,13 +28,13 @@ class UploadProductMediaAction extends ReduxAction<AppState> {
 
   @override
   Future<AppState?> reduce() async {
-    // final List<ProductImage> existingMedia =
-    //     state.hostState?.productMediaState?.media ?? <ProductImage>[];
+    final List<ProductImage> existingMedia =
+        state.hostState?.productMediaState?.media ?? <ProductImage>[];
 
     final String productID = state.hostState?.currentProduct?.id ?? UNKNOWN;
 
     final Map<String, String> data = <String, String>{
-      'product': productID,
+      'product_id': productID,
       'media_type ': 'image',
     };
 
@@ -58,19 +60,14 @@ class UploadProductMediaAction extends ReduxAction<AppState> {
       return onError?.call(error ?? defaultUserFriendlyMessage);
     }
 
-    // final List<ProductImage> uploadedImages =
-    //     body.map((dynamic json) => ProductImage.fromJson(json)).toList();
+    final ProductImage uploadImage = ProductImage.fromJson(body);
 
-    // final HostState? updatedHost = state.hostState?.copyWith(
-    //   productMediaState: state.hostState?.productMediaState?.copyWith(
-    //     media: <ProductImage>[
-    //       ...existingMedia,
-    //       ...uploadedImages,
-    //     ],
-    //   ),
-    // );
+    final HostState? updatedHost = state.hostState?.copyWith(
+      productMediaState: state.hostState?.productMediaState?.copyWith(
+        media: <ProductImage>[...existingMedia, uploadImage],
+      ),
+    );
 
-    // return state.copyWith(hostState: updatedHost);
-    return state;
+    return state.copyWith(hostState: updatedHost);
   }
 }

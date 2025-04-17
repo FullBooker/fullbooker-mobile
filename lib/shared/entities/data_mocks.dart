@@ -430,3 +430,15 @@ final Map<String, Object> data = <String, Object>{
   'complete': true,
   'schedule': 'fe1c62ad-e1dc-40a0-934b-dce1e3b3f1a1',
 };
+
+final Map<String, Object> mockUploadData = <String, Object>{
+  'id': '189420ff-253c-48c2-9e50-0ae0d4f43c2b',
+  'created_at': '2025-04-17T13:38:04.884584+03:00',
+  'updated_at': '2025-04-17T13:38:04.884600+03:00',
+  'active': true,
+  'host': 'ea2f46db-0a79-4089-b932-cd4b862073b3',
+  'media_type': 'image',
+  'file':
+      'https://dev-fullbooker-static.s3.amazonaws.com/media/images/conquering-kilimanjaro/9d199946708541cab0f42bbe624fcee8.jpeg',
+  'uploaded_at': '2025-04-17T13:38:05.217554+03:00',
+};

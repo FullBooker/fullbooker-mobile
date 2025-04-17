@@ -83,17 +83,18 @@ abstract class ICustomClient extends BaseClient {
     required String endpoint,
     required Map<String, String> data,
     required List<File> images,
+    Map<String, String>? customHeaders,
+    bool authenticated = true,
   }) async {
     final Uri uri = fromUriOrString(endpoint);
 
-    final Map<String, String> headers = buildHeaders(
-      customHeaders: <String, String>{},
-    );
-
-    headers.remove('Content-Type');
-
     final MultipartRequest request = MultipartRequest('POST', uri)
-      ..headers.addAll(headers)
+      ..headers.addAll(
+        buildHeaders(
+          customHeaders: customHeaders,
+          authenticated: authenticated,
+        )..remove('Content-Type'),
+      )
       ..fields.addAll(data);
 
     for (final File image in images) {
@@ -102,22 +103,22 @@ abstract class ICustomClient extends BaseClient {
       request.files.add(multipartFile);
     }
 
-    final http.StreamedResponse streamedResponse = await request.send().timeout(
-      const Duration(seconds: kRequestTimeoutSeconds),
-      onTimeout: () {
-        final String timeoutBody = json.encode(kTimeoutResponsePayload);
-        return http.StreamedResponse(
-          ByteStream.fromBytes(utf8.encode(timeoutBody)),
-          408,
-          headers: headers,
-        );
-      },
+    return Response.fromStream(
+      await request.send().timeout(
+        const Duration(seconds: kRequestTimeoutSeconds),
+        onTimeout: () {
+          final String timeoutBody = json.encode(kTimeoutResponsePayload);
+          return http.StreamedResponse(
+            ByteStream.fromBytes(utf8.encode(timeoutBody)),
+            408,
+            headers: buildHeaders(
+              customHeaders: customHeaders,
+              authenticated: authenticated,
+            )..remove('Content-Type'),
+          );
+        },
+      ),
     );
-
-    final http.Response response =
-        await http.Response.fromStream(streamedResponse);
-
-    return response;
   }
 
   /// Extracts an error message from the response body
