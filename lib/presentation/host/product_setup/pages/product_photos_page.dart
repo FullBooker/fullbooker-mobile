@@ -10,7 +10,7 @@ import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_setup_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/common/constants.dart';
-import 'package:fullbooker/domain/core/entities/product_image.dart';
+import 'package:fullbooker/domain/core/entities/product_media.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:dartz/dartz.dart' as d;
@@ -41,8 +41,8 @@ class ProductPhotosPage extends StatelessWidget {
                 converter: (Store<AppState> store) =>
                     ProductSetupViewModel.fromState(store.state),
                 builder: (BuildContext context, ProductSetupViewModel vm) {
-                  final List<ProductImage> media =
-                      vm.productMedia ?? <ProductImage>[];
+                  final List<ProductMedia> media =
+                      vm.productMedia ?? <ProductMedia>[];
 
                   return SingleChildScrollView(
                     child: Column(
@@ -99,7 +99,7 @@ class ProductPhotosPage extends StatelessWidget {
                               );
                             }
 
-                            final ProductImage item = media[index];
+                            final ProductMedia item = media[index];
                             final bool isLoading = item.file == UNKNOWN;
 
                             return Stack(

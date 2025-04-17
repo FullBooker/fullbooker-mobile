@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'product_image.dart';
+part of 'product_media.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,12 +14,12 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-ProductImage _$ProductImageFromJson(Map<String, dynamic> json) {
-  return _ProductImage.fromJson(json);
+ProductMedia _$ProductMediaFromJson(Map<String, dynamic> json) {
+  return _ProductMedia.fromJson(json);
 }
 
 /// @nodoc
-mixin _$ProductImage {
+mixin _$ProductMedia {
   String? get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_at')
   String? get createdAt => throw _privateConstructorUsedError;
@@ -33,21 +33,21 @@ mixin _$ProductImage {
   @JsonKey(name: 'uploaded_at')
   String? get uploadedAt => throw _privateConstructorUsedError;
 
-  /// Serializes this ProductImage to a JSON map.
+  /// Serializes this ProductMedia to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of ProductImage
+  /// Create a copy of ProductMedia
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $ProductImageCopyWith<ProductImage> get copyWith =>
+  $ProductMediaCopyWith<ProductMedia> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ProductImageCopyWith<$Res> {
-  factory $ProductImageCopyWith(
-          ProductImage value, $Res Function(ProductImage) then) =
-      _$ProductImageCopyWithImpl<$Res, ProductImage>;
+abstract class $ProductMediaCopyWith<$Res> {
+  factory $ProductMediaCopyWith(
+          ProductMedia value, $Res Function(ProductMedia) then) =
+      _$ProductMediaCopyWithImpl<$Res, ProductMedia>;
   @useResult
   $Res call(
       {String? id,
@@ -61,16 +61,16 @@ abstract class $ProductImageCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ProductImageCopyWithImpl<$Res, $Val extends ProductImage>
-    implements $ProductImageCopyWith<$Res> {
-  _$ProductImageCopyWithImpl(this._value, this._then);
+class _$ProductMediaCopyWithImpl<$Res, $Val extends ProductMedia>
+    implements $ProductMediaCopyWith<$Res> {
+  _$ProductMediaCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of ProductImage
+  /// Create a copy of ProductMedia
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -122,11 +122,11 @@ class _$ProductImageCopyWithImpl<$Res, $Val extends ProductImage>
 }
 
 /// @nodoc
-abstract class _$$ProductImageImplCopyWith<$Res>
-    implements $ProductImageCopyWith<$Res> {
-  factory _$$ProductImageImplCopyWith(
-          _$ProductImageImpl value, $Res Function(_$ProductImageImpl) then) =
-      __$$ProductImageImplCopyWithImpl<$Res>;
+abstract class _$$ProductMediaImplCopyWith<$Res>
+    implements $ProductMediaCopyWith<$Res> {
+  factory _$$ProductMediaImplCopyWith(
+          _$ProductMediaImpl value, $Res Function(_$ProductMediaImpl) then) =
+      __$$ProductMediaImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -141,14 +141,14 @@ abstract class _$$ProductImageImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$ProductImageImplCopyWithImpl<$Res>
-    extends _$ProductImageCopyWithImpl<$Res, _$ProductImageImpl>
-    implements _$$ProductImageImplCopyWith<$Res> {
-  __$$ProductImageImplCopyWithImpl(
-      _$ProductImageImpl _value, $Res Function(_$ProductImageImpl) _then)
+class __$$ProductMediaImplCopyWithImpl<$Res>
+    extends _$ProductMediaCopyWithImpl<$Res, _$ProductMediaImpl>
+    implements _$$ProductMediaImplCopyWith<$Res> {
+  __$$ProductMediaImplCopyWithImpl(
+      _$ProductMediaImpl _value, $Res Function(_$ProductMediaImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ProductImage
+  /// Create a copy of ProductMedia
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -162,7 +162,7 @@ class __$$ProductImageImplCopyWithImpl<$Res>
     Object? file = freezed,
     Object? uploadedAt = freezed,
   }) {
-    return _then(_$ProductImageImpl(
+    return _then(_$ProductMediaImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -202,8 +202,8 @@ class __$$ProductImageImplCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(explicitToJson: true)
-class _$ProductImageImpl implements _ProductImage {
-  _$ProductImageImpl(
+class _$ProductMediaImpl implements _ProductMedia {
+  _$ProductMediaImpl(
       {this.id = UNKNOWN,
       @JsonKey(name: 'created_at') this.createdAt = UNKNOWN,
       @JsonKey(name: 'updated_at') this.updatedAt = UNKNOWN,
@@ -213,8 +213,8 @@ class _$ProductImageImpl implements _ProductImage {
       this.file = UNKNOWN,
       @JsonKey(name: 'uploaded_at') this.uploadedAt = UNKNOWN});
 
-  factory _$ProductImageImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ProductImageImplFromJson(json);
+  factory _$ProductMediaImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ProductMediaImplFromJson(json);
 
   @override
   @JsonKey()
@@ -243,14 +243,14 @@ class _$ProductImageImpl implements _ProductImage {
 
   @override
   String toString() {
-    return 'ProductImage(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, active: $active, host: $host, mediaType: $mediaType, file: $file, uploadedAt: $uploadedAt)';
+    return 'ProductMedia(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, active: $active, host: $host, mediaType: $mediaType, file: $file, uploadedAt: $uploadedAt)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ProductImageImpl &&
+            other is _$ProductMediaImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
@@ -270,24 +270,24 @@ class _$ProductImageImpl implements _ProductImage {
   int get hashCode => Object.hash(runtimeType, id, createdAt, updatedAt, active,
       host, mediaType, file, uploadedAt);
 
-  /// Create a copy of ProductImage
+  /// Create a copy of ProductMedia
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$ProductImageImplCopyWith<_$ProductImageImpl> get copyWith =>
-      __$$ProductImageImplCopyWithImpl<_$ProductImageImpl>(this, _$identity);
+  _$$ProductMediaImplCopyWith<_$ProductMediaImpl> get copyWith =>
+      __$$ProductMediaImplCopyWithImpl<_$ProductMediaImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$ProductImageImplToJson(
+    return _$$ProductMediaImplToJson(
       this,
     );
   }
 }
 
-abstract class _ProductImage implements ProductImage {
-  factory _ProductImage(
+abstract class _ProductMedia implements ProductMedia {
+  factory _ProductMedia(
           {final String? id,
           @JsonKey(name: 'created_at') final String? createdAt,
           @JsonKey(name: 'updated_at') final String? updatedAt,
@@ -296,10 +296,10 @@ abstract class _ProductImage implements ProductImage {
           @JsonKey(name: 'media_type') final String? mediaType,
           final String? file,
           @JsonKey(name: 'uploaded_at') final String? uploadedAt}) =
-      _$ProductImageImpl;
+      _$ProductMediaImpl;
 
-  factory _ProductImage.fromJson(Map<String, dynamic> json) =
-      _$ProductImageImpl.fromJson;
+  factory _ProductMedia.fromJson(Map<String, dynamic> json) =
+      _$ProductMediaImpl.fromJson;
 
   @override
   String? get id;
@@ -322,10 +322,10 @@ abstract class _ProductImage implements ProductImage {
   @JsonKey(name: 'uploaded_at')
   String? get uploadedAt;
 
-  /// Create a copy of ProductImage
+  /// Create a copy of ProductMedia
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ProductImageImplCopyWith<_$ProductImageImpl> get copyWith =>
+  _$$ProductMediaImplCopyWith<_$ProductMediaImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -3,7 +3,7 @@ import 'package:fullbooker/application/redux/states/user_state.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/domain/core/entities/product_schedule.dart';
 import 'package:fullbooker/domain/core/entities/product_category.dart';
-import 'package:fullbooker/domain/core/entities/product_image.dart';
+import 'package:fullbooker/domain/core/entities/product_media.dart';
 import 'package:fullbooker/domain/core/entities/product_location.dart';
 import 'package:fullbooker/domain/core/entities/product_pricing.dart';
 
@@ -27,7 +27,7 @@ class Product with _$Product {
     @JsonKey(name: 'schedule') @Default(UNKNOWN) String? scheduleID,
     @JsonKey(name: 'new_schedule') ProductSchedule? schedule,
     @Default(<ProductPricing>[]) List<ProductPricing>? pricing,
-    ProductImage? image,
+    ProductMedia? image,
     dynamic video,
     @Default(<ProductLocation>[]) List<ProductLocation>? locations,
     @Default(false) bool? completed,
@@ -44,7 +44,7 @@ class Product with _$Product {
   factory Product.initial() => Product(
         host: UserState.initial(),
         schedule: ProductSchedule.initial(),
-        image: ProductImage.initial(),
+        image: ProductMedia.initial(),
         selectedProductCategory: ProductCategory.initial(),
         selectedProductSubCategory: ProductCategory.initial(),
         selectedLocation: ProductLocation.initial(),

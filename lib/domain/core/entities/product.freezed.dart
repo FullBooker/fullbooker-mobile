@@ -37,7 +37,7 @@ mixin _$Product {
   @JsonKey(name: 'new_schedule')
   ProductSchedule? get schedule => throw _privateConstructorUsedError;
   List<ProductPricing>? get pricing => throw _privateConstructorUsedError;
-  ProductImage? get image => throw _privateConstructorUsedError;
+  ProductMedia? get image => throw _privateConstructorUsedError;
   dynamic get video => throw _privateConstructorUsedError;
   List<ProductLocation>? get locations => throw _privateConstructorUsedError;
   bool? get completed => throw _privateConstructorUsedError;
@@ -80,7 +80,7 @@ abstract class $ProductCopyWith<$Res> {
       @JsonKey(name: 'schedule') String? scheduleID,
       @JsonKey(name: 'new_schedule') ProductSchedule? schedule,
       List<ProductPricing>? pricing,
-      ProductImage? image,
+      ProductMedia? image,
       dynamic video,
       List<ProductLocation>? locations,
       bool? completed,
@@ -93,7 +93,7 @@ abstract class $ProductCopyWith<$Res> {
 
   $UserStateCopyWith<$Res>? get host;
   $ProductScheduleCopyWith<$Res>? get schedule;
-  $ProductImageCopyWith<$Res>? get image;
+  $ProductMediaCopyWith<$Res>? get image;
   $ProductCategoryCopyWith<$Res>? get selectedProductCategory;
   $ProductCategoryCopyWith<$Res>? get selectedProductSubCategory;
   $ProductLocationCopyWith<$Res>? get selectedLocation;
@@ -191,7 +191,7 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
       image: freezed == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
-              as ProductImage?,
+              as ProductMedia?,
       video: freezed == video
           ? _value.video
           : video // ignore: cast_nullable_to_non_nullable
@@ -251,12 +251,12 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $ProductImageCopyWith<$Res>? get image {
+  $ProductMediaCopyWith<$Res>? get image {
     if (_value.image == null) {
       return null;
     }
 
-    return $ProductImageCopyWith<$Res>(_value.image!, (value) {
+    return $ProductMediaCopyWith<$Res>(_value.image!, (value) {
       return _then(_value.copyWith(image: value) as $Val);
     });
   }
@@ -327,7 +327,7 @@ abstract class _$$ProductImplCopyWith<$Res> implements $ProductCopyWith<$Res> {
       @JsonKey(name: 'schedule') String? scheduleID,
       @JsonKey(name: 'new_schedule') ProductSchedule? schedule,
       List<ProductPricing>? pricing,
-      ProductImage? image,
+      ProductMedia? image,
       dynamic video,
       List<ProductLocation>? locations,
       bool? completed,
@@ -343,7 +343,7 @@ abstract class _$$ProductImplCopyWith<$Res> implements $ProductCopyWith<$Res> {
   @override
   $ProductScheduleCopyWith<$Res>? get schedule;
   @override
-  $ProductImageCopyWith<$Res>? get image;
+  $ProductMediaCopyWith<$Res>? get image;
   @override
   $ProductCategoryCopyWith<$Res>? get selectedProductCategory;
   @override
@@ -442,7 +442,7 @@ class __$$ProductImplCopyWithImpl<$Res>
       image: freezed == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
-              as ProductImage?,
+              as ProductMedia?,
       video: freezed == video
           ? _value.video
           : video // ignore: cast_nullable_to_non_nullable
@@ -542,7 +542,7 @@ class _$ProductImpl implements _Product {
   @JsonKey()
   final List<ProductPricing>? pricing;
   @override
-  final ProductImage? image;
+  final ProductMedia? image;
   @override
   final dynamic video;
   @override
@@ -666,7 +666,7 @@ abstract class _Product implements Product {
       @JsonKey(name: 'schedule') final String? scheduleID,
       @JsonKey(name: 'new_schedule') final ProductSchedule? schedule,
       final List<ProductPricing>? pricing,
-      final ProductImage? image,
+      final ProductMedia? image,
       final dynamic video,
       final List<ProductLocation>? locations,
       final bool? completed,
@@ -710,7 +710,7 @@ abstract class _Product implements Product {
   @override
   List<ProductPricing>? get pricing;
   @override
-  ProductImage? get image;
+  ProductMedia? get image;
   @override
   dynamic get video;
   @override

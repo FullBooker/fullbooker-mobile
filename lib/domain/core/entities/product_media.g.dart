@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'product_image.dart';
+part of 'product_media.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$ProductImageImpl _$$ProductImageImplFromJson(Map<String, dynamic> json) =>
-    _$ProductImageImpl(
+_$ProductMediaImpl _$$ProductMediaImplFromJson(Map<String, dynamic> json) =>
+    _$ProductMediaImpl(
       id: json['id'] as String? ?? UNKNOWN,
       createdAt: json['created_at'] as String? ?? UNKNOWN,
       updatedAt: json['updated_at'] as String? ?? UNKNOWN,
@@ -18,7 +18,7 @@ _$ProductImageImpl _$$ProductImageImplFromJson(Map<String, dynamic> json) =>
       uploadedAt: json['uploaded_at'] as String? ?? UNKNOWN,
     );
 
-Map<String, dynamic> _$$ProductImageImplToJson(_$ProductImageImpl instance) =>
+Map<String, dynamic> _$$ProductMediaImplToJson(_$ProductMediaImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'created_at': instance.createdAt,

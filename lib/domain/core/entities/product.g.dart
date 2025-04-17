@@ -31,7 +31,7 @@ _$ProductImpl _$$ProductImplFromJson(Map<String, dynamic> json) =>
           const <ProductPricing>[],
       image: json['image'] == null
           ? null
-          : ProductImage.fromJson(json['image'] as Map<String, dynamic>),
+          : ProductMedia.fromJson(json['image'] as Map<String, dynamic>),
       video: json['video'],
       locations: (json['locations'] as List<dynamic>?)
               ?.map((e) => ProductLocation.fromJson(e as Map<String, dynamic>))

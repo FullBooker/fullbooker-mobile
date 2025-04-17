@@ -3,7 +3,7 @@ import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/entities/product_category.dart';
-import 'package:fullbooker/domain/core/entities/product_image.dart';
+import 'package:fullbooker/domain/core/entities/product_media.dart';
 import 'package:fullbooker/shared/entities/location_perms_result.dart';
 
 class ProductSetupViewModel extends Vm {
@@ -36,7 +36,7 @@ class ProductSetupViewModel extends Vm {
   final String startTime;
   final String endDate;
   final String endTime;
-  final List<ProductImage>? productMedia;
+  final List<ProductMedia>? productMedia;
 
   static ProductSetupViewModel fromState(AppState state) {
     return ProductSetupViewModel(
@@ -48,8 +48,7 @@ class ProductSetupViewModel extends Vm {
           state.hostState?.currentProduct?.schedule?.startTime ?? UNKNOWN,
       endDate: state.hostState?.currentProduct?.schedule?.end ?? UNKNOWN,
       endTime: state.hostState?.currentProduct?.schedule?.endTime ?? UNKNOWN,
-      productMedia:
-          state.hostState?.productMediaState?.media ?? <ProductImage>[],
+      productMedia: state.hostState?.draftProductMedia ?? <ProductMedia>[],
     );
   }
 }
