@@ -26,7 +26,7 @@ class Product with _$Product {
     @Default(UNKNOWN) String? subcategory,
     @JsonKey(name: 'schedule') @Default(UNKNOWN) String? scheduleID,
     @JsonKey(name: 'new_schedule') ProductSchedule? schedule,
-    @Default(<ProductPricing>[]) List<ProductPricing>? pricing,
+    @Default(<ProductPricing>[]) List<ProductPricing?>? pricing,
     ProductMedia? image,
     dynamic video,
     @Default(<ProductLocation>[]) List<ProductLocation>? locations,

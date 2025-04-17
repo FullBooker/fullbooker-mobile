@@ -16,10 +16,8 @@ const String kDevProductSubCategoriesEndpoint = '$kDevAPIBaseURL/subcategories';
 const String kDevLocationEndpoint = '$kDevAPIBaseURL/location/';
 const String kDevProductScheduleEndpoint = '$kDevAPIBaseURL/availability/';
 const String kDevMediaEndpoint = '$kDevAPIBaseURL/media/';
-
-// ---- Implemented
-const String kDevHostsEndpoint = '$kDevAPIBaseURL/hosts/';
 const String kDevPricingEndpoint = '$kDevAPIBaseURL/pricing/';
+const String kDevHostsEndpoint = '$kDevAPIBaseURL/hosts/';
 
 /// ---- PROD ENDPOINTS
 const String kProdAPIBaseURL = 'https://api.fullbooker.com';
@@ -40,8 +38,6 @@ const String kProdProductSubCategoriesEndpoint =
 const String kProdLocationEndpoint = '$kProdAPIBaseURL/location/';
 const String kProdProductScheduleEndpoint = '$kProdAPIBaseURL/availability/';
 const String kProdMediaEndpoint = '$kProdAPIBaseURL/media/';
-
-// ---- Implemented
 const String kProdHostsEndpoint = '$kProdAPIBaseURL/hosts/';
 const String kProdPricingEndpoint = '$kProdAPIBaseURL/pricing/';
 
@@ -64,7 +60,5 @@ const String kTestProductSubCategoriesEndpoint =
 const String kTestLocationEndpoint = '$kTestAPIBaseURL/location/';
 const String kTestProductScheduleEndpoint = '$kTestAPIBaseURL/availability/';
 const String kTestMediaEndpoint = '$kTestAPIBaseURL/media/';
-
-// ---- Implemented
 const String kTestHostsEndpoint = '$kTestAPIBaseURL/hosts/';
 const String kTestPricingEndpoint = '$kTestAPIBaseURL/pricing/';

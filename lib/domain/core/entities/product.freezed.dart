@@ -36,7 +36,7 @@ mixin _$Product {
   String? get scheduleID => throw _privateConstructorUsedError;
   @JsonKey(name: 'new_schedule')
   ProductSchedule? get schedule => throw _privateConstructorUsedError;
-  List<ProductPricing>? get pricing => throw _privateConstructorUsedError;
+  List<ProductPricing?>? get pricing => throw _privateConstructorUsedError;
   ProductMedia? get image => throw _privateConstructorUsedError;
   dynamic get video => throw _privateConstructorUsedError;
   List<ProductLocation>? get locations => throw _privateConstructorUsedError;
@@ -80,7 +80,7 @@ abstract class $ProductCopyWith<$Res> {
       String? subcategory,
       @JsonKey(name: 'schedule') String? scheduleID,
       @JsonKey(name: 'new_schedule') ProductSchedule? schedule,
-      List<ProductPricing>? pricing,
+      List<ProductPricing?>? pricing,
       ProductMedia? image,
       dynamic video,
       List<ProductLocation>? locations,
@@ -190,7 +190,7 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
       pricing: freezed == pricing
           ? _value.pricing
           : pricing // ignore: cast_nullable_to_non_nullable
-              as List<ProductPricing>?,
+              as List<ProductPricing?>?,
       image: freezed == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
@@ -333,7 +333,7 @@ abstract class _$$ProductImplCopyWith<$Res> implements $ProductCopyWith<$Res> {
       String? subcategory,
       @JsonKey(name: 'schedule') String? scheduleID,
       @JsonKey(name: 'new_schedule') ProductSchedule? schedule,
-      List<ProductPricing>? pricing,
+      List<ProductPricing?>? pricing,
       ProductMedia? image,
       dynamic video,
       List<ProductLocation>? locations,
@@ -447,7 +447,7 @@ class __$$ProductImplCopyWithImpl<$Res>
       pricing: freezed == pricing
           ? _value.pricing
           : pricing // ignore: cast_nullable_to_non_nullable
-              as List<ProductPricing>?,
+              as List<ProductPricing?>?,
       image: freezed == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
@@ -554,7 +554,7 @@ class _$ProductImpl implements _Product {
   final ProductSchedule? schedule;
   @override
   @JsonKey()
-  final List<ProductPricing>? pricing;
+  final List<ProductPricing?>? pricing;
   @override
   final ProductMedia? image;
   @override
@@ -685,7 +685,7 @@ abstract class _Product implements Product {
       final String? subcategory,
       @JsonKey(name: 'schedule') final String? scheduleID,
       @JsonKey(name: 'new_schedule') final ProductSchedule? schedule,
-      final List<ProductPricing>? pricing,
+      final List<ProductPricing?>? pricing,
       final ProductMedia? image,
       final dynamic video,
       final List<ProductLocation>? locations,
@@ -729,7 +729,7 @@ abstract class _Product implements Product {
   @JsonKey(name: 'new_schedule')
   ProductSchedule? get schedule;
   @override
-  List<ProductPricing>? get pricing;
+  List<ProductPricing?>? get pricing;
   @override
   ProductMedia? get image;
   @override

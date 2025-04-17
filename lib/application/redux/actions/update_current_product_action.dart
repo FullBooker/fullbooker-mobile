@@ -2,6 +2,7 @@ import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/domain/core/entities/product_category.dart';
 import 'package:fullbooker/domain/core/entities/product_media.dart';
+import 'package:fullbooker/domain/core/entities/product_pricing.dart';
 
 class UpdateCurrentProductAction extends ReduxAction<AppState> {
   UpdateCurrentProductAction({
@@ -18,6 +19,7 @@ class UpdateCurrentProductAction extends ReduxAction<AppState> {
     this.startTime,
     this.endTime,
     this.productMedia,
+    this.pricing,
   });
 
   final String? address;
@@ -33,6 +35,7 @@ class UpdateCurrentProductAction extends ReduxAction<AppState> {
   final String? endDate;
   final String? endTime;
   final List<ProductMedia?>? productMedia;
+  final List<ProductPricing?>? pricing;
 
   @override
   AppState? reduce() {
@@ -60,6 +63,7 @@ class UpdateCurrentProductAction extends ReduxAction<AppState> {
       ),
       productMedia:
           productMedia ?? state.hostState?.currentProduct?.productMedia,
+      pricing: pricing ?? state.hostState?.currentProduct?.pricing,
     );
 
     return newState;

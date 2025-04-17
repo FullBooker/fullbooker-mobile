@@ -21,8 +21,9 @@ class AppConfig {
     required this.productCategoriesEndpoint,
     required this.productSubCategoriesEndpoint,
     required this.productLocationEndpoint,
-    required this.ProductScheduleEndpoint,
+    required this.productScheduleEndpoint,
     required this.productMediaEndpoint,
+    required this.productPricingEndpoint,
   });
 
   /// The context the app is running in
@@ -54,8 +55,9 @@ class AppConfig {
   final String productCategoriesEndpoint;
   final String productSubCategoriesEndpoint;
   final String productLocationEndpoint;
-  final String ProductScheduleEndpoint;
+  final String productScheduleEndpoint;
   final String productMediaEndpoint;
+  final String productPricingEndpoint;
 
   /// Profile endpoints
   final String getProfileEndpoint;
@@ -79,8 +81,9 @@ final AppConfig devAppConfig = AppConfig(
   productCategoriesEndpoint: kDevProductCategoriesEndpoint,
   productSubCategoriesEndpoint: kDevProductSubCategoriesEndpoint,
   productLocationEndpoint: kDevLocationEndpoint,
-  ProductScheduleEndpoint: kDevProductScheduleEndpoint,
+  productScheduleEndpoint: kDevProductScheduleEndpoint,
   productMediaEndpoint: kDevMediaEndpoint,
+  productPricingEndpoint: kDevPricingEndpoint,
 );
 
 final AppConfig prodAppConfig = AppConfig(
@@ -101,8 +104,9 @@ final AppConfig prodAppConfig = AppConfig(
   productCategoriesEndpoint: kProdProductCategoriesEndpoint,
   productSubCategoriesEndpoint: kProdProductSubCategoriesEndpoint,
   productLocationEndpoint: kProdLocationEndpoint,
-  ProductScheduleEndpoint: kProdProductScheduleEndpoint,
+  productScheduleEndpoint: kProdProductScheduleEndpoint,
   productMediaEndpoint: kProdMediaEndpoint,
+  productPricingEndpoint: kProdPricingEndpoint,
 );
 
 final AppConfig testAppConfig = AppConfig(
@@ -123,6 +127,7 @@ final AppConfig testAppConfig = AppConfig(
   productCategoriesEndpoint: kTestProductCategoriesEndpoint,
   productSubCategoriesEndpoint: kTestProductSubCategoriesEndpoint,
   productLocationEndpoint: kTestLocationEndpoint,
-  ProductScheduleEndpoint: kTestProductScheduleEndpoint,
+  productScheduleEndpoint: kTestProductScheduleEndpoint,
   productMediaEndpoint: kTestMediaEndpoint,
+  productPricingEndpoint: kTestPricingEndpoint,
 );
