@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
 import 'package:fullbooker/application/redux/actions/fetch_currencies_action.dart';
+import 'package:fullbooker/application/redux/actions/save_product_pricing_action.dart';
 import 'package:fullbooker/application/redux/actions/update_host_state_action.dart';
 import 'package:fullbooker/application/redux/actions/update_selected_pricing_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
@@ -230,6 +231,7 @@ class AddProductPricingPage extends StatelessWidget {
             ),
             PrimaryButton(
               onPressed: () {
+                context.dispatch(SaveProductPricingAction());
                 context.router.push(ProductPricingRoute());
               },
               child: d.right(saveString),
