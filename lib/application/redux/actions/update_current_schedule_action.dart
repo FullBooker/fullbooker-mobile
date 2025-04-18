@@ -1,7 +1,6 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/states/host_state.dart';
-import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/entities/product_schedule.dart';
 
 class UpdateCurrentScheduleAction extends ReduxAction<AppState> {

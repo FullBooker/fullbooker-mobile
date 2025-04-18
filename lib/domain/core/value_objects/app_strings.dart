@@ -642,3 +642,6 @@ const String validTicket = 'Valid Ticket';
 const String inValidTicket = 'Invalid Ticket';
 const String testTicketName = 'Abiud Orina';
 const String debugTicketQR = 'Debug QR Code: ';
+
+const String fromString = 'From';
+const String toString = 'To';

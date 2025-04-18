@@ -15,6 +15,10 @@ import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:dartz/dartz.dart' as d;
+import 'package:fullbooker/presentation/host/product_setup/components/repeats_daily_widget.dart';
+import 'package:fullbooker/presentation/host/product_setup/components/repeats_monthly_widget.dart';
+import 'package:fullbooker/presentation/host/product_setup/components/repeats_weekly_widget.dart';
+import 'package:fullbooker/presentation/host/product_setup/components/repeats_yearly_widget.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/custom_dropdown.dart';
@@ -368,6 +372,7 @@ class ProductDateTimePage extends StatelessWidget {
                                   context.dispatch(
                                     UpdateCurrentScheduleAction(
                                       repeats: value,
+                                      repeatType: dailyOption,
                                     ),
                                   );
                                 },
@@ -394,7 +399,7 @@ class ProductDateTimePage extends StatelessWidget {
                             spacing: 12,
                             children: <Widget>[
                               CustomDropdown(
-                                value: scheduleRepeatOptions.first,
+                                value: vm.repeatType,
                                 onChanged: (String? selected) {
                                   context.dispatch(
                                     UpdateCurrentScheduleAction(
@@ -407,119 +412,19 @@ class ProductDateTimePage extends StatelessWidget {
 
                               /// Repeats daily
                               if (vm.repeatType == dailyOption)
-                                Text(
-                                  dailyRepeatPrompt,
-                                  style: Theme.of(context).textTheme.bodyMedium,
-                                ),
+                                RepeatsDailyWidget(),
 
                               /// Repeats weekly
                               if (vm.repeatType == weeklyOption)
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                      weeklyRepeatPrompt,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleSmall,
-                                    ),
-                                    Wrap(
-                                      spacing: 8,
-                                      children: weekdays.map((String day) {
-                                        final bool isSelected =
-                                            vm.repeatWeekdays.contains(day);
-                                        return ChoiceChip(
-                                          label: Text(day),
-                                          selected: isSelected,
-                                          onSelected: (bool selected) {
-                                            final List<String> updatedDays =
-                                                <String>[...vm.repeatWeekdays];
-                                            selected
-                                                ? updatedDays.add(day)
-                                                : updatedDays.remove(day);
-                                            context.dispatch(
-                                              UpdateCurrentScheduleAction(
-                                                repeatWeekdays: updatedDays,
-                                              ),
-                                            );
-                                          },
-                                        );
-                                      }).toList(),
-                                    ),
-                                  ],
-                                ),
+                                RepeatsWeeklyWidget(),
 
                               /// Repeats monthly
                               if (vm.repeatType == monthlyOption)
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                      monthlyRepeatPrompt,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleSmall,
-                                    ),
-                                    CalendarDatePicker(
-                                      initialDate: DateTime.now(),
-                                      firstDate: DateTime.now()
-                                          .subtract(const Duration(days: 365)),
-                                      lastDate: DateTime.now()
-                                          .add(const Duration(days: 365)),
-                                      onDateChanged: (DateTime date) {
-                                        final List<int> updatedDates = <int>[
-                                          ...vm.repeatMonthDates,
-                                        ];
-                                        if (!updatedDates.contains(date.day)) {
-                                          updatedDates.add(date.day);
-                                        }
-                                        context.dispatch(
-                                          UpdateCurrentScheduleAction(
-                                            repeatMonthDates: updatedDates,
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ],
-                                ),
+                                RepeatsMonthlyWidget(),
 
                               /// Repeats yearly
                               if (vm.repeatType == yearlyOption)
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                      yearlyRepeatPrompt,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleSmall,
-                                    ),
-                                    CalendarDatePicker(
-                                      initialDate: DateTime.now(),
-                                      firstDate: DateTime.now()
-                                          .subtract(const Duration(days: 365)),
-                                      lastDate: DateTime.now()
-                                          .add(const Duration(days: 365 * 3)),
-                                      onDateChanged: (DateTime date) {
-                                        final String fullDate = date
-                                            .toIso8601String()
-                                            .substring(0, 10);
-                                        final List<String> updatedDates =
-                                            <String>[
-                                          ...vm.repeatYearDates,
-                                        ];
-                                        if (!updatedDates.contains(fullDate)) {
-                                          updatedDates.add(fullDate);
-                                        }
-                                        context.dispatch(
-                                          UpdateCurrentScheduleAction(
-                                            repeatYearDates: updatedDates,
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ],
-                                ),
+                                RepeatsYearlyWidget(),
                             ],
                           ),
                         ],
