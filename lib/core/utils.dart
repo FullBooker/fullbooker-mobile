@@ -11,6 +11,7 @@ import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/entities/product_location.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
+import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/regexes.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
@@ -412,4 +413,34 @@ bool hasValidLocation(ProductLocation? location) {
       location.address != null && location.address != UNKNOWN;
 
   return hasCoordinates && hasAddress;
+}
+
+String getTicketIconPath(String tier) {
+  switch (tier.toLowerCase()) {
+    case earlyBirdTier:
+      return earlyBirdTicketIconSVGPath;
+    case standardTier:
+      return standardTicketIconSVGPath;
+    case vipTier:
+      return vipTicketIconSVGPath;
+    case vvipTier:
+      return vvipTicketIconSVGPath;
+    default:
+      return standardTicketIconSVGPath;
+  }
+}
+
+String getTicketDisplayName(String tier) {
+  switch (tier.toLowerCase()) {
+    case earlyBirdTier:
+      return 'Early Bird';
+    case standardTier:
+      return 'Standard';
+    case vipTier:
+      return 'VIP';
+    case vvipTier:
+      return 'VVIP';
+    default:
+      return 'Standard';
+  }
 }

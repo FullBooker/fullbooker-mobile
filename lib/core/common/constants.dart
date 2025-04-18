@@ -79,3 +79,15 @@ const List<String> scheduleRepeatOptions = <String>[
 ];
 
 const String noRepeatSchedule = 'none';
+
+const String earlyBirdTier = 'early_bird';
+const String standardTier = 'standard';
+const String vipTier = 'vip';
+const String vvipTier = 'vvip';
+
+final List<String> allTicketTiers = <String>[
+  earlyBirdTier,
+  standardTier,
+  vipTier,
+  vvipTier,
+];

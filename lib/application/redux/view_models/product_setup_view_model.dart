@@ -5,6 +5,7 @@ import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/entities/product_category.dart';
 import 'package:fullbooker/domain/core/entities/product_location.dart';
 import 'package:fullbooker/domain/core/entities/product_media.dart';
+import 'package:fullbooker/domain/core/entities/product_pricing.dart';
 import 'package:fullbooker/shared/entities/location_perms_result.dart';
 
 class ProductSetupViewModel extends Vm {
@@ -24,6 +25,7 @@ class ProductSetupViewModel extends Vm {
     required this.repeatMonthDates,
     required this.repeatYearDates,
     required this.repeatOnDaysOfWeek,
+    required this.pricing,
   }) : super(
           equals: <Object?>[
             currentProduct,
@@ -41,6 +43,7 @@ class ProductSetupViewModel extends Vm {
             repeatMonthDates,
             repeatYearDates,
             repeatOnDaysOfWeek,
+            pricing,
           ],
         );
 
@@ -58,6 +61,7 @@ class ProductSetupViewModel extends Vm {
   final String repeatType;
   final List<int> repeatMonthDates;
   final List<String> repeatYearDates;
+  final List<ProductPricing?>? pricing;
 
   final Map<String, Map<String, String>> repeatOnDaysOfWeek;
 
@@ -85,6 +89,7 @@ class ProductSetupViewModel extends Vm {
       repeatOnDaysOfWeek:
           state.hostState?.selectedSchedule?.repeatOnDaysOfWeek ??
               <String, Map<String, String>>{},
+      pricing: state.hostState?.currentProduct?.pricing ?? <ProductPricing>[],
     );
   }
 }

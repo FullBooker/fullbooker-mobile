@@ -16,13 +16,11 @@ class FetchCurrenciesAction extends ReduxAction<AppState> {
     this.onSuccess,
     this.onError,
     required this.client,
-    required this.workflowState,
   });
 
   final Function(String error)? onError;
   final Function()? onSuccess;
   final ICustomClient client;
-  final WorkflowState workflowState;
 
   @override
   Future<AppState?> reduce() async {
