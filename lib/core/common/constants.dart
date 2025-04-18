@@ -16,6 +16,7 @@ const String kDevDatabaseName = 'fullbooker.dev.store.db';
 const String kProdDatabaseName = 'fullbooker.store.db';
 
 const double kPlatformServiceFee = 7;
+const double kBasePlatformFee = 150;
 
 const List<String> kAllowedImageExtensions = <String>['jpg', 'png'];
 const List<String> kAllowedVideoExtensions = <String>['mp4'];

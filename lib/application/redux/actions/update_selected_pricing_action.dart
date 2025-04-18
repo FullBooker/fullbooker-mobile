@@ -6,11 +6,13 @@ class UpdateSelectedPricingAction extends ReduxAction<AppState> {
   final String? cost;
   final int? maxTickets;
   final String? currency;
+  final bool? buyerPaysFee;
 
   UpdateSelectedPricingAction({
     this.cost,
     this.maxTickets,
     this.currency,
+    this.buyerPaysFee,
   });
 
   @override
@@ -23,6 +25,8 @@ class UpdateSelectedPricingAction extends ReduxAction<AppState> {
       maxTickets: maxTickets ?? existing.maxTickets,
       currency: currency ?? existing.currency,
       ticketTier: state.hostState?.selectedPricingTier,
+      buyerPaysFee:
+          buyerPaysFee ?? state.hostState?.selectedProductPricing?.buyerPaysFee,
     );
 
     return state.copyWith.hostState?.call(selectedProductPricing: updated);

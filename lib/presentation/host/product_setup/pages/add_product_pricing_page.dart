@@ -17,6 +17,7 @@ import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:dartz/dartz.dart' as d;
 import 'package:fullbooker/presentation/host/product_setup/widgets/pricing_breakdown_widget.dart';
+import 'package:fullbooker/shared/validators.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/custom_dropdown.dart';
 import 'package:fullbooker/shared/widgets/custom_text_input.dart';
@@ -29,6 +30,8 @@ class AddProductPricingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
     return Scaffold(
       appBar: CustomAppBar(
         showBell: false,
@@ -50,189 +53,229 @@ class AddProductPricingPage extends StatelessWidget {
                   ),
                 ),
                 builder: (BuildContext context, ProductSetupViewModel vm) {
-                  return ListView(
-                    children: <Widget>[
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        spacing: 16,
-                        children: <Widget>[
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            spacing: 8,
-                            children: <Widget>[
-                              Text(
-                                setupTickerPrice,
-                                style:
-                                    Theme.of(context).textTheme.headlineSmall,
-                              ),
-                              Text(
-                                setupTickerPriceCopy,
-                                style: Theme.of(context).textTheme.bodyMedium,
-                              ),
-                            ],
-                          ),
-                          Container(
-                            padding: EdgeInsets.all(12),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                            child: Row(
-                              spacing: 12,
+                  return Form(
+                    key: _formKey,
+                    child: ListView(
+                      children: <Widget>[
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          spacing: 16,
+                          children: <Widget>[
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              spacing: 8,
                               children: <Widget>[
-                                SvgPicture.asset(
-                                  getTicketIconPath(vm.selectedPricingTier),
+                                Text(
+                                  setupTickerPrice,
+                                  style:
+                                      Theme.of(context).textTheme.headlineSmall,
                                 ),
                                 Text(
-                                  getTicketDisplayName(vm.selectedPricingTier),
-                                  style: Theme.of(context).textTheme.bodyLarge,
+                                  setupTickerPriceCopy,
+                                  style: Theme.of(context).textTheme.bodyMedium,
                                 ),
                               ],
                             ),
-                          ),
-
-                          // Currency dropdown
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            spacing: 12,
-                            children: <Widget>[
-                              Text(
-                                priceString,
-                                style: Theme.of(context).textTheme.titleMedium,
+                            Container(
+                              padding: EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                  color: Theme.of(context).primaryColor,
+                                ),
                               ),
-                              Row(
+                              child: Row(
                                 spacing: 12,
                                 children: <Widget>[
-                                  Flexible(
-                                    flex: 3,
-                                    child: context
-                                            .isWaiting(FetchCurrenciesAction)
-                                        ? const AppLoading()
-                                        : CustomDropdown(
-                                            options: vm.currencies
-                                                    ?.map(
-                                                      (Currency? c) =>
-                                                          c?.code ?? UNKNOWN,
-                                                    )
-                                                    .where(
-                                                      (String code) =>
-                                                          code.isNotEmpty,
-                                                    )
-                                                    .toList() ??
-                                                <String>[],
-                                            value: (vm.selectedCurrencyCode
-                                                            .isNotEmpty ==
-                                                        true &&
-                                                    vm.selectedCurrencyCode !=
-                                                        UNKNOWN)
-                                                ? vm.selectedCurrencyCode
-                                                : (vm.currencies?.first?.code ??
-                                                    UNKNOWN),
-                                            onChanged: (String? value) {
-                                              if (value != null &&
-                                                  value.isNotEmpty) {
-                                                context
-                                                    .dispatchAll(<ReduxAction<
-                                                        AppState>>[
-                                                  UpdateHostStateAction(
-                                                    selectedCurrencyCode: value,
-                                                  ),
-                                                  UpdateSelectedPricingAction(
-                                                    currency: value,
-                                                  ),
-                                                ]);
-                                              }
-                                            },
-                                          ),
+                                  SvgPicture.asset(
+                                    getTicketIconPath(vm.selectedPricingTier),
                                   ),
-                                  Flexible(
-                                    flex: 9,
-                                    child: CustomTextInput(
-                                      hintText: priceHint,
-                                      autovalidateMode:
-                                          AutovalidateMode.onUserInteraction,
-                                      onChanged: (String value) {
-                                        context.dispatch(
-                                          UpdateSelectedPricingAction(
-                                            cost: value,
-                                          ),
-                                        );
-                                      },
-                                      keyboardType: TextInputType.number,
+                                  Text(
+                                    getTicketDisplayName(
+                                      vm.selectedPricingTier,
                                     ),
+                                    style:
+                                        Theme.of(context).textTheme.bodyLarge,
                                   ),
                                 ],
                               ),
-                            ],
-                          ),
-
-                          PricingBreakDownWidget(price: 3000),
-
-                          CustomTextInput(
-                            hintText: maxTicketsHint,
-                            labelText: maximumTickets(
-                              getTicketDisplayName(vm.selectedPricingTier),
                             ),
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            onChanged: (String value) {
-                              final int? parsed = int.tryParse(value);
-                              if (parsed != null) {
-                                context.dispatch(
-                                  UpdateSelectedPricingAction(
-                                    maxTickets: parsed,
-                                  ),
-                                );
-                              }
-                            },
-                            keyboardType: TextInputType.number,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            spacing: 12,
-                            children: <Widget>[
-                              Text(
-                                discountLabel,
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                              Row(
-                                spacing: 12,
-                                children: <Widget>[
-                                  Flexible(
-                                    flex: 4,
-                                    child: CustomDropdown(
-                                      options: kAllowedDiscountOptions,
-                                      value: kAllowedDiscountOptions.first,
-                                      onChanged: (String? value) {},
+
+                            // Currency dropdown
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              spacing: 12,
+                              children: <Widget>[
+                                Text(
+                                  priceString,
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
+                                ),
+                                Row(
+                                  spacing: 12,
+                                  children: <Widget>[
+                                    Flexible(
+                                      flex: 3,
+                                      child: context
+                                              .isWaiting(FetchCurrenciesAction)
+                                          ? const AppLoading()
+                                          : CustomDropdown(
+                                              options: vm.currencies
+                                                      ?.map(
+                                                        (Currency? c) =>
+                                                            c?.code ?? UNKNOWN,
+                                                      )
+                                                      .where(
+                                                        (String code) =>
+                                                            code.isNotEmpty,
+                                                      )
+                                                      .toList() ??
+                                                  <String>[],
+                                              value: (vm.selectedCurrencyCode
+                                                              .isNotEmpty ==
+                                                          true &&
+                                                      vm.selectedCurrencyCode !=
+                                                          UNKNOWN)
+                                                  ? vm.selectedCurrencyCode
+                                                  : (vm.currencies?.first
+                                                          ?.code ??
+                                                      UNKNOWN),
+                                              onChanged: (String? value) {
+                                                if (value != null &&
+                                                    value.isNotEmpty) {
+                                                  context
+                                                      .dispatchAll(<ReduxAction<
+                                                          AppState>>[
+                                                    UpdateHostStateAction(
+                                                      selectedCurrencyCode:
+                                                          value,
+                                                    ),
+                                                    UpdateSelectedPricingAction(
+                                                      currency: value,
+                                                    ),
+                                                  ]);
+                                                }
+                                              },
+                                            ),
                                     ),
-                                  ),
-                                  Flexible(
-                                    flex: 8,
-                                    child: CustomTextInput(
-                                      hintText: priceHint,
-                                      autovalidateMode:
-                                          AutovalidateMode.onUserInteraction,
-                                      onChanged: (String value) {},
-                                      keyboardType: TextInputType.number,
+                                    Flexible(
+                                      flex: 9,
+                                      child: CustomTextInput(
+                                        hintText: priceHint,
+                                        autovalidateMode:
+                                            AutovalidateMode.onUserInteraction,
+                                        validator: (String? email) =>
+                                            validateAmount(email),
+                                        onChanged: (String value) {
+                                          context.dispatch(
+                                            UpdateSelectedPricingAction(
+                                              cost: value,
+                                            ),
+                                          );
+                                        },
+                                        keyboardType: TextInputType.number,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
+                              ],
+                            ),
+
+                            if (double.tryParse(
+                                  vm.selectedPricing?.cost?.toString() ?? '',
+                                ) !=
+                                null)
+                              PricingBreakDownWidget(
+                                ticketPrice: double.tryParse(
+                                      vm.selectedPricing?.cost ?? '0',
+                                    ) ??
+                                    0,
+                                buyerPaysFee:
+                                    vm.selectedPricing?.buyerPaysFee ?? false,
+                                onToggleFeeResponsibility: () {
+                                  context.dispatch(
+                                    UpdateSelectedPricingAction(
+                                      buyerPaysFee: !vm.buyerPaysFee,
+                                    ),
+                                  );
+                                },
+                                selectedCurrency: (vm.selectedCurrencyCode
+                                                .isNotEmpty ==
+                                            true &&
+                                        vm.selectedCurrencyCode != UNKNOWN)
+                                    ? vm.selectedCurrencyCode
+                                    : (vm.currencies?.first?.code ?? UNKNOWN),
                               ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],
+
+                            CustomTextInput(
+                              hintText: maxTicketsHint,
+                              labelText: maximumTickets(
+                                getTicketDisplayName(vm.selectedPricingTier),
+                              ),
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              validator: (String? email) =>
+                                  validateMaxTickets(email),
+                              onChanged: (String value) {
+                                final int? parsed = int.tryParse(value);
+                                if (parsed != null) {
+                                  context.dispatch(
+                                    UpdateSelectedPricingAction(
+                                      maxTickets: parsed,
+                                    ),
+                                  );
+                                }
+                              },
+                              keyboardType: TextInputType.number,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              spacing: 12,
+                              children: <Widget>[
+                                Text(
+                                  discountLabel,
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
+                                ),
+                                Row(
+                                  spacing: 12,
+                                  children: <Widget>[
+                                    Flexible(
+                                      flex: 4,
+                                      child: CustomDropdown(
+                                        options: kAllowedDiscountOptions,
+                                        value: kAllowedDiscountOptions.first,
+                                        onChanged: (String? value) {},
+                                      ),
+                                    ),
+                                    Flexible(
+                                      flex: 8,
+                                      child: CustomTextInput(
+                                        hintText: priceHint,
+                                        autovalidateMode:
+                                            AutovalidateMode.onUserInteraction,
+                                        onChanged: (String value) {},
+                                        keyboardType: TextInputType.number,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   );
                 },
               ),
             ),
             PrimaryButton(
               onPressed: () {
-                context.dispatch(SaveProductPricingAction());
-                context.router.push(ProductPricingRoute());
+                if (_formKey.currentState?.validate() ?? false) {
+                  context.dispatch(SaveProductPricingAction());
+                  context.router.push(ProductPricingRoute());
+                }
               },
               child: d.right(saveString),
             ),

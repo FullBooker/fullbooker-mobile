@@ -30,6 +30,8 @@ class ProductSetupViewModel extends Vm {
     required this.currencies,
     required this.selectedCurrencyCode,
     required this.selectedPricingTier,
+    required this.selectedPricing,
+    required this.buyerPaysFee,
   }) : super(
           equals: <Object?>[
             currentProduct,
@@ -51,6 +53,8 @@ class ProductSetupViewModel extends Vm {
             currencies,
             selectedCurrencyCode,
             selectedPricingTier,
+            selectedPricing,
+            buyerPaysFee,
           ],
         );
 
@@ -75,6 +79,8 @@ class ProductSetupViewModel extends Vm {
 
   final String selectedCurrencyCode;
   final String selectedPricingTier;
+  final ProductPricing? selectedPricing;
+  final bool buyerPaysFee;
 
   static ProductSetupViewModel fromState(AppState state) {
     return ProductSetupViewModel(
@@ -105,6 +111,10 @@ class ProductSetupViewModel extends Vm {
       selectedCurrencyCode:
           state.hostState?.selectedCurrencyCode ?? kAllowedCurrencyCodes.first,
       selectedPricingTier: state.hostState?.selectedPricingTier ?? UNKNOWN,
+      selectedPricing:
+          state.hostState?.selectedProductPricing ?? ProductPricing(),
+      buyerPaysFee:
+          state.hostState?.selectedProductPricing?.buyerPaysFee ?? true,
     );
   }
 }

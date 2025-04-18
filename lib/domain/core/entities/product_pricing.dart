@@ -22,6 +22,7 @@ class ProductPricing with _$ProductPricing {
     @Default(0) @JsonKey(name: 'maximum_number_of_tickets') int? maxTickets,
     @Default(0) @JsonKey(name: 'remaining_tickets') int? remainingTickets,
     @Default(0) @JsonKey(name: 'sold_tickets') int? soldTickets,
+    @Default(true) bool? buyerPaysFee,
   }) = _ProductPricing;
 
   factory ProductPricing.initial() => ProductPricing();
