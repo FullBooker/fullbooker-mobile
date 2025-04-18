@@ -18,6 +18,7 @@ const String kDevProductScheduleEndpoint = '$kDevAPIBaseURL/schedules/';
 const String kDevMediaEndpoint = '$kDevAPIBaseURL/media/';
 const String kDevPricingEndpoint = '$kDevAPIBaseURL/pricing/';
 const String kDevHostsEndpoint = '$kDevAPIBaseURL/hosts/';
+const String kDevCurrenciesEndpoint = '$kDevAPIBaseURL/currencies/';
 
 /// ---- PROD ENDPOINTS
 const String kProdAPIBaseURL = 'https://api.fullbooker.com';
@@ -40,6 +41,7 @@ const String kProdProductScheduleEndpoint = '$kProdAPIBaseURL/schedules/';
 const String kProdMediaEndpoint = '$kProdAPIBaseURL/media/';
 const String kProdHostsEndpoint = '$kProdAPIBaseURL/hosts/';
 const String kProdPricingEndpoint = '$kProdAPIBaseURL/pricing/';
+const String kProdCurrenciesEndpoint = '$kProdAPIBaseURL/currencies/';
 
 ///---- TEST ENDPOINTS
 const String kTestAPIBaseURL = 'https://api.dev.fullbooker.co.ke';
@@ -62,3 +64,4 @@ const String kTestProductScheduleEndpoint = '$kTestAPIBaseURL/schedules/';
 const String kTestMediaEndpoint = '$kTestAPIBaseURL/media/';
 const String kTestHostsEndpoint = '$kTestAPIBaseURL/hosts/';
 const String kTestPricingEndpoint = '$kTestAPIBaseURL/pricing/';
+const String kTestCurrenciesEndpoint = '$kTestAPIBaseURL/currencies/';

@@ -1,5 +1,6 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
+import 'package:fullbooker/domain/core/entities/currency.dart';
 import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/entities/product_location.dart';
 
@@ -8,11 +9,13 @@ class UpdateHostStateAction extends ReduxAction<AppState> {
     this.selectedProduct,
     this.currentProduct,
     this.selectedLocation,
+    this.currencies,
   });
 
   Product? selectedProduct;
   Product? currentProduct;
   ProductLocation? selectedLocation;
+  List<Currency?>? currencies;
 
   @override
   AppState? reduce() {
@@ -20,6 +23,7 @@ class UpdateHostStateAction extends ReduxAction<AppState> {
       selectedProduct: selectedProduct ?? state.hostState?.selectedProduct,
       currentProduct: currentProduct ?? state.hostState?.currentProduct,
       selectedLocation: selectedLocation ?? state.hostState?.selectedLocation,
+      currencies: currencies ?? state.hostState?.currencies,
     );
 
     return newState;

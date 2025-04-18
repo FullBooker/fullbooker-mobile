@@ -268,6 +268,7 @@ class LoginPageState extends State<LoginPage> {
                                                   ?.copyWith(
                                                     color: Theme.of(context)
                                                         .primaryColor,
+                                                    fontWeight: FontWeight.bold,
                                                   ),
                                             ),
                                           ],

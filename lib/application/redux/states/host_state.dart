@@ -1,6 +1,7 @@
 // Package imports:
 
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:fullbooker/domain/core/entities/currency.dart';
 import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/entities/product_category.dart';
 import 'package:fullbooker/domain/core/entities/product_location.dart';
@@ -23,6 +24,7 @@ class HostState with _$HostState {
     // Used during product setup
     ProductLocation? selectedLocation,
     ProductSchedule? selectedSchedule,
+    @Default(<Currency>[]) List<Currency?>? currencies,
   }) = _HostState;
 
   factory HostState.initial() => HostState(
