@@ -142,6 +142,7 @@ const String ticketPriceString = 'Ticket Price';
 const String totalString = 'Total';
 const String proceedToCheckoutString = 'Proceed to checkout';
 const String selectDateString = 'Select Date';
+const String addDateString = 'Add Date';
 const String buyTicketString = 'Buy Ticket';
 
 const String seeAllString = 'See All';

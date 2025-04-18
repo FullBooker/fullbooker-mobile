@@ -77,3 +77,5 @@ const List<String> scheduleRepeatOptions = <String>[
   monthlyOption,
   yearlyOption,
 ];
+
+const String noRepeatSchedule = 'none';
