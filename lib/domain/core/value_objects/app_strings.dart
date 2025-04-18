@@ -488,6 +488,15 @@ const String starting = 'Starting';
 const String ending = 'Ends on';
 const String atString = 'at';
 const String chooseTime = 'Choose time';
+const String repeatsLabel = 'Repeats';
+const String dailyRepeatPrompt =
+    'Choose a day of the week when your event repeats';
+const String weeklyRepeatPrompt =
+    'Choose a day of the week when your event repeats';
+const String monthlyRepeatPrompt =
+    'Select the days of the month when your event will be repeating';
+const String yearlyRepeatPrompt =
+    'Select the days of the year when your event will be repeating';
 
 // Photos page
 const String photos = 'Photos';

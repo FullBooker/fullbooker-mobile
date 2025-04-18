@@ -19,6 +19,21 @@ _$ProductScheduleImpl _$$ProductScheduleImplFromJson(
       duration: (json['duration'] as num?)?.toInt() ?? 0,
       openDays: json['open_days'] as List<dynamic>? ?? const <dynamic>[],
       closedDates: json['closed_dates'] as List<dynamic>? ?? const <dynamic>[],
+      isAllDay: json['all_day'] as bool? ?? false,
+      repeats: json['repeats'] as bool? ?? false,
+      repeatType: json['repeat_type'] as String? ?? 'Daily',
+      repeatWeekdays: (json['repeatWeekdays'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const <String>[],
+      repeatMonthDates: (json['repeatMonthDates'] as List<dynamic>?)
+              ?.map((e) => (e as num).toInt())
+              .toList() ??
+          const <int>[],
+      repeatYearDates: (json['repeatYearDates'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const <String>[],
     );
 
 Map<String, dynamic> _$$ProductScheduleImplToJson(
@@ -34,4 +49,10 @@ Map<String, dynamic> _$$ProductScheduleImplToJson(
       'duration': instance.duration,
       'open_days': instance.openDays,
       'closed_dates': instance.closedDates,
+      'all_day': instance.isAllDay,
+      'repeats': instance.repeats,
+      'repeat_type': instance.repeatType,
+      'repeatWeekdays': instance.repeatWeekdays,
+      'repeatMonthDates': instance.repeatMonthDates,
+      'repeatYearDates': instance.repeatYearDates,
     };

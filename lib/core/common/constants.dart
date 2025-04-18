@@ -55,3 +55,25 @@ const List<String> kAllowedMediaExtensions = <String>[
   'mp4',
   'mov',
 ];
+
+const List<String> weekdays = <String>[
+  'monday',
+  'tuesday',
+  'wednesday',
+  'thursday',
+  'friday',
+  'saturday',
+  'sunday',
+];
+
+const String dailyOption = 'Daily';
+const String weeklyOption = 'Weekly';
+const String monthlyOption = 'Monthly';
+const String yearlyOption = 'Yearly';
+
+const List<String> scheduleRepeatOptions = <String>[
+  dailyOption,
+  weeklyOption,
+  monthlyOption,
+  yearlyOption,
+];

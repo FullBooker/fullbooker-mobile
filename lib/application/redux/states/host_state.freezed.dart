@@ -28,6 +28,7 @@ mixin _$HostState {
   LocationPermsResult? get locationPerms =>
       throw _privateConstructorUsedError; // Used during product setup
   ProductLocation? get selectedLocation => throw _privateConstructorUsedError;
+  ProductSchedule? get selectedSchedule => throw _privateConstructorUsedError;
 
   /// Serializes this HostState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -50,12 +51,14 @@ abstract class $HostStateCopyWith<$Res> {
       Product? selectedProduct,
       List<ProductCategory>? productCategories,
       LocationPermsResult? locationPerms,
-      ProductLocation? selectedLocation});
+      ProductLocation? selectedLocation,
+      ProductSchedule? selectedSchedule});
 
   $ProductCopyWith<$Res>? get currentProduct;
   $ProductCopyWith<$Res>? get selectedProduct;
   $LocationPermsResultCopyWith<$Res>? get locationPerms;
   $ProductLocationCopyWith<$Res>? get selectedLocation;
+  $ProductScheduleCopyWith<$Res>? get selectedSchedule;
 }
 
 /// @nodoc
@@ -79,6 +82,7 @@ class _$HostStateCopyWithImpl<$Res, $Val extends HostState>
     Object? productCategories = freezed,
     Object? locationPerms = freezed,
     Object? selectedLocation = freezed,
+    Object? selectedSchedule = freezed,
   }) {
     return _then(_value.copyWith(
       products: freezed == products
@@ -105,6 +109,10 @@ class _$HostStateCopyWithImpl<$Res, $Val extends HostState>
           ? _value.selectedLocation
           : selectedLocation // ignore: cast_nullable_to_non_nullable
               as ProductLocation?,
+      selectedSchedule: freezed == selectedSchedule
+          ? _value.selectedSchedule
+          : selectedSchedule // ignore: cast_nullable_to_non_nullable
+              as ProductSchedule?,
     ) as $Val);
   }
 
@@ -163,6 +171,20 @@ class _$HostStateCopyWithImpl<$Res, $Val extends HostState>
       return _then(_value.copyWith(selectedLocation: value) as $Val);
     });
   }
+
+  /// Create a copy of HostState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ProductScheduleCopyWith<$Res>? get selectedSchedule {
+    if (_value.selectedSchedule == null) {
+      return null;
+    }
+
+    return $ProductScheduleCopyWith<$Res>(_value.selectedSchedule!, (value) {
+      return _then(_value.copyWith(selectedSchedule: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -179,7 +201,8 @@ abstract class _$$HostStateImplCopyWith<$Res>
       Product? selectedProduct,
       List<ProductCategory>? productCategories,
       LocationPermsResult? locationPerms,
-      ProductLocation? selectedLocation});
+      ProductLocation? selectedLocation,
+      ProductSchedule? selectedSchedule});
 
   @override
   $ProductCopyWith<$Res>? get currentProduct;
@@ -189,6 +212,8 @@ abstract class _$$HostStateImplCopyWith<$Res>
   $LocationPermsResultCopyWith<$Res>? get locationPerms;
   @override
   $ProductLocationCopyWith<$Res>? get selectedLocation;
+  @override
+  $ProductScheduleCopyWith<$Res>? get selectedSchedule;
 }
 
 /// @nodoc
@@ -210,6 +235,7 @@ class __$$HostStateImplCopyWithImpl<$Res>
     Object? productCategories = freezed,
     Object? locationPerms = freezed,
     Object? selectedLocation = freezed,
+    Object? selectedSchedule = freezed,
   }) {
     return _then(_$HostStateImpl(
       products: freezed == products
@@ -236,6 +262,10 @@ class __$$HostStateImplCopyWithImpl<$Res>
           ? _value.selectedLocation
           : selectedLocation // ignore: cast_nullable_to_non_nullable
               as ProductLocation?,
+      selectedSchedule: freezed == selectedSchedule
+          ? _value.selectedSchedule
+          : selectedSchedule // ignore: cast_nullable_to_non_nullable
+              as ProductSchedule?,
     ));
   }
 }
@@ -250,7 +280,8 @@ class _$HostStateImpl implements _HostState {
       this.selectedProduct,
       this.productCategories = const <ProductCategory>[],
       this.locationPerms,
-      this.selectedLocation});
+      this.selectedLocation,
+      this.selectedSchedule});
 
   factory _$HostStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$HostStateImplFromJson(json);
@@ -270,10 +301,12 @@ class _$HostStateImpl implements _HostState {
 // Used during product setup
   @override
   final ProductLocation? selectedLocation;
+  @override
+  final ProductSchedule? selectedSchedule;
 
   @override
   String toString() {
-    return 'HostState(products: $products, currentProduct: $currentProduct, selectedProduct: $selectedProduct, productCategories: $productCategories, locationPerms: $locationPerms, selectedLocation: $selectedLocation)';
+    return 'HostState(products: $products, currentProduct: $currentProduct, selectedProduct: $selectedProduct, productCategories: $productCategories, locationPerms: $locationPerms, selectedLocation: $selectedLocation, selectedSchedule: $selectedSchedule)';
   }
 
   @override
@@ -291,7 +324,9 @@ class _$HostStateImpl implements _HostState {
             (identical(other.locationPerms, locationPerms) ||
                 other.locationPerms == locationPerms) &&
             (identical(other.selectedLocation, selectedLocation) ||
-                other.selectedLocation == selectedLocation));
+                other.selectedLocation == selectedLocation) &&
+            (identical(other.selectedSchedule, selectedSchedule) ||
+                other.selectedSchedule == selectedSchedule));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -303,7 +338,8 @@ class _$HostStateImpl implements _HostState {
       selectedProduct,
       const DeepCollectionEquality().hash(productCategories),
       locationPerms,
-      selectedLocation);
+      selectedLocation,
+      selectedSchedule);
 
   /// Create a copy of HostState
   /// with the given fields replaced by the non-null parameter values.
@@ -328,7 +364,8 @@ abstract class _HostState implements HostState {
       final Product? selectedProduct,
       final List<ProductCategory>? productCategories,
       final LocationPermsResult? locationPerms,
-      final ProductLocation? selectedLocation}) = _$HostStateImpl;
+      final ProductLocation? selectedLocation,
+      final ProductSchedule? selectedSchedule}) = _$HostStateImpl;
 
   factory _HostState.fromJson(Map<String, dynamic> json) =
       _$HostStateImpl.fromJson;
@@ -345,6 +382,8 @@ abstract class _HostState implements HostState {
   LocationPermsResult? get locationPerms; // Used during product setup
   @override
   ProductLocation? get selectedLocation;
+  @override
+  ProductSchedule? get selectedSchedule;
 
   /// Create a copy of HostState
   /// with the given fields replaced by the non-null parameter values.

@@ -4,6 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/entities/product_category.dart';
 import 'package:fullbooker/domain/core/entities/product_location.dart';
+import 'package:fullbooker/domain/core/entities/product_schedule.dart';
 import 'package:fullbooker/shared/entities/location_perms_result.dart';
 
 part 'host_state.freezed.dart';
@@ -21,6 +22,7 @@ class HostState with _$HostState {
 
     // Used during product setup
     ProductLocation? selectedLocation,
+    ProductSchedule? selectedSchedule,
   }) = _HostState;
 
   factory HostState.initial() => HostState(
@@ -28,6 +30,7 @@ class HostState with _$HostState {
         selectedProduct: Product.initial(),
         locationPerms: LocationPermsResult.initial(),
         selectedLocation: ProductLocation.initial(),
+        selectedSchedule: ProductSchedule.initial(),
       );
 
   factory HostState.fromJson(Map<String, dynamic> json) =>

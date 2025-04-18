@@ -18,6 +18,12 @@ class ProductSetupViewModel extends Vm {
     required this.endTime,
     required this.productMedia,
     required this.selectedLocation,
+    required this.isAllDay,
+    required this.repeats,
+    required this.repeatType,
+    required this.repeatWeekdays,
+    required this.repeatMonthDates,
+    required this.repeatYearDates,
   }) : super(
           equals: <Object?>[
             currentProduct,
@@ -29,6 +35,13 @@ class ProductSetupViewModel extends Vm {
             endTime,
             productMedia,
             selectedLocation,
+            isAllDay,
+            repeats,
+            repeatType,
+            repeatWeekdays,
+            repeatWeekdays,
+            repeatMonthDates,
+            repeatYearDates,
           ],
         );
 
@@ -41,6 +54,17 @@ class ProductSetupViewModel extends Vm {
   final String endTime;
   final List<ProductMedia?>? productMedia;
   final ProductLocation? selectedLocation;
+  final bool isAllDay;
+  final bool repeats;
+  // 'Daily', 'Weekly', 'Monthly', 'Yearly'
+  final String repeatType;
+
+  // ['Mon', 'Tue'] etc
+  final List<String> repeatWeekdays;
+
+  final List<int> repeatMonthDates;
+
+  final List<String> repeatYearDates;
 
   static ProductSetupViewModel fromState(AppState state) {
     return ProductSetupViewModel(
@@ -55,6 +79,15 @@ class ProductSetupViewModel extends Vm {
       productMedia:
           state.hostState?.currentProduct?.productMedia ?? <ProductMedia?>[],
       selectedLocation: state.hostState?.selectedLocation,
+      isAllDay: state.hostState?.selectedSchedule?.isAllDay ?? false,
+      repeats: state.hostState?.selectedSchedule?.repeats ?? false,
+      repeatType: state.hostState?.selectedSchedule?.repeatType ?? UNKNOWN,
+      repeatWeekdays:
+          state.hostState?.selectedSchedule?.repeatWeekdays ?? <String>[],
+      repeatMonthDates:
+          state.hostState?.selectedSchedule?.repeatMonthDates ?? <int>[],
+      repeatYearDates:
+          state.hostState?.selectedSchedule?.repeatYearDates ?? <String>[],
     );
   }
 }
