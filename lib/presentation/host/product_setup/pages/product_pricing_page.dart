@@ -116,7 +116,11 @@ class ProductPricingPage extends StatelessWidget {
                                       0,
                               svgIconPath: getTicketIconPath(tier),
                               onAddOrEdit: () {
-                                context.dispatch(UpdateHostStateAction());
+                                context.dispatch(
+                                  UpdateHostStateAction(
+                                    selectedPricingTier: tier,
+                                  ),
+                                );
                                 context.router.push(AddProductPricingRoute());
                               },
                             ),

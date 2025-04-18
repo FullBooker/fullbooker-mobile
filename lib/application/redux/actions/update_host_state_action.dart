@@ -11,6 +11,7 @@ class UpdateHostStateAction extends ReduxAction<AppState> {
     this.selectedLocation,
     this.currencies,
     this.selectedCurrencyCode,
+    this.selectedPricingTier,
   });
 
   final Product? selectedProduct;
@@ -18,6 +19,7 @@ class UpdateHostStateAction extends ReduxAction<AppState> {
   final ProductLocation? selectedLocation;
   final List<Currency?>? currencies;
   final String? selectedCurrencyCode;
+  final String? selectedPricingTier;
 
   @override
   AppState? reduce() {
@@ -28,6 +30,8 @@ class UpdateHostStateAction extends ReduxAction<AppState> {
       currencies: currencies ?? state.hostState?.currencies,
       selectedCurrencyCode:
           selectedCurrencyCode ?? state.hostState?.selectedCurrencyCode,
+      selectedPricingTier:
+          selectedPricingTier ?? state.hostState?.selectedPricingTier,
     );
 
     return newState;

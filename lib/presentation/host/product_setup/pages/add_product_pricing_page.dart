@@ -5,16 +5,17 @@ import 'package:flutter_svg/svg.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
 import 'package:fullbooker/application/redux/actions/fetch_currencies_action.dart';
 import 'package:fullbooker/application/redux/actions/update_host_state_action.dart';
+import 'package:fullbooker/application/redux/actions/update_selected_pricing_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_setup_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/common/constants.dart';
-import 'package:fullbooker/core/theme/app_colors.dart';
+import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/entities/currency.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
-import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:dartz/dartz.dart' as d;
+import 'package:fullbooker/presentation/host/product_setup/widgets/pricing_breakdown_widget.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/custom_dropdown.dart';
 import 'package:fullbooker/shared/widgets/custom_text_input.dart';
@@ -27,11 +28,6 @@ class AddProductPricingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double buyerPay = 2825;
-    const double revenue = 2500;
-    const double serviceFee = 2500;
-    const double totalPrice = 2825;
-
     return Scaffold(
       appBar: CustomAppBar(
         showBell: false,
@@ -57,7 +53,7 @@ class AddProductPricingPage extends StatelessWidget {
                     children: <Widget>[
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        spacing: 12,
+                        spacing: 16,
                         children: <Widget>[
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -85,15 +81,12 @@ class AddProductPricingPage extends StatelessWidget {
                             child: Row(
                               spacing: 12,
                               children: <Widget>[
-                                SvgPicture.asset(standardTicketIconSVGPath),
+                                SvgPicture.asset(
+                                  getTicketIconPath(vm.selectedPricingTier),
+                                ),
                                 Text(
-                                  vip,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleMedium
-                                      ?.copyWith(
-                                        color: Theme.of(context).primaryColor,
-                                      ),
+                                  getTicketDisplayName(vm.selectedPricingTier),
+                                  style: Theme.of(context).textTheme.bodyLarge,
                                 ),
                               ],
                             ),
@@ -128,20 +121,27 @@ class AddProductPricingPage extends StatelessWidget {
                                                     )
                                                     .toList() ??
                                                 <String>[],
-                                            value: vm.selectedCurrencyCode
-                                                        .isNotEmpty ==
-                                                    true
+                                            value: (vm.selectedCurrencyCode
+                                                            .isNotEmpty ==
+                                                        true &&
+                                                    vm.selectedCurrencyCode !=
+                                                        UNKNOWN)
                                                 ? vm.selectedCurrencyCode
                                                 : (vm.currencies?.first?.code ??
                                                     UNKNOWN),
                                             onChanged: (String? value) {
                                               if (value != null &&
                                                   value.isNotEmpty) {
-                                                context.dispatch(
+                                                context
+                                                    .dispatchAll(<ReduxAction<
+                                                        AppState>>[
                                                   UpdateHostStateAction(
                                                     selectedCurrencyCode: value,
                                                   ),
-                                                );
+                                                  UpdateSelectedPricingAction(
+                                                    currency: value,
+                                                  ),
+                                                ]);
                                               }
                                             },
                                           ),
@@ -152,7 +152,13 @@ class AddProductPricingPage extends StatelessWidget {
                                       hintText: priceHint,
                                       autovalidateMode:
                                           AutovalidateMode.onUserInteraction,
-                                      onChanged: (String value) {},
+                                      onChanged: (String value) {
+                                        context.dispatch(
+                                          UpdateSelectedPricingAction(
+                                            cost: value,
+                                          ),
+                                        );
+                                      },
                                       keyboardType: TextInputType.number,
                                     ),
                                   ),
@@ -161,145 +167,25 @@ class AddProductPricingPage extends StatelessWidget {
                             ],
                           ),
 
-                          Container(
-                            padding: const EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Theme.of(context).primaryColor,
-                              ), // Orange border
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              spacing: 16,
-                              children: <Widget>[
-                                Text(
-                                  pricingBreakdown,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleMedium
-                                      ?.copyWith(
-                                        color: Theme.of(context).primaryColor,
-                                      ),
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Text(
-                                      serviceFeeLabel,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium,
-                                    ),
-                                    Text(
-                                      serviceFee.toStringAsFixed(0),
-                                      style: TextStyle(color: Colors.grey),
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Text(
-                                      yourBuyers,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium,
-                                    ),
-                                    Text(
-                                      buyerPay.toStringAsFixed(0),
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Text(
-                                      yourRevenue,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium,
-                                    ),
-                                    Text(
-                                      revenue.toStringAsFixed(0),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleSmall
-                                          ?.copyWith(
-                                            color: AppColors.greenColor,
-                                          ),
-                                    ),
-                                  ],
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    // TODO(abiud): save this value to state for the current product
-                                  },
-                                  highlightColor: Theme.of(context)
-                                      .primaryColor
-                                      .withValues(alpha: 0.1),
-                                  splashColor: Theme.of(context)
-                                      .primaryColor
-                                      .withValues(alpha: 0.1),
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 4),
-                                    child: Row(
-                                      spacing: 12,
-                                      children: <Widget>[
-                                        Icon(
-                                          Icons.check_box,
-                                          color: Theme.of(context).primaryColor,
-                                        ),
-                                        Text(
-                                          iWantBuyersToPay,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Text(
-                                      totalString,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Theme.of(context).primaryColor,
-                                      ),
-                                    ),
-                                    Text(
-                                      totalPrice.toStringAsFixed(0),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleSmall
-                                          ?.copyWith(
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                          ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
+                          PricingBreakDownWidget(price: 3000),
 
                           CustomTextInput(
                             hintText: maxTicketsHint,
-                            labelText: maximumTickets(vip),
+                            labelText: maximumTickets(
+                              getTicketDisplayName(vm.selectedPricingTier),
+                            ),
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
-                            onChanged: (String value) {},
+                            onChanged: (String value) {
+                              final int? parsed = int.tryParse(value);
+                              if (parsed != null) {
+                                context.dispatch(
+                                  UpdateSelectedPricingAction(
+                                    maxTickets: parsed,
+                                  ),
+                                );
+                              }
+                            },
                             keyboardType: TextInputType.number,
                           ),
                           Column(

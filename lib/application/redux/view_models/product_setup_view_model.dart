@@ -29,6 +29,7 @@ class ProductSetupViewModel extends Vm {
     required this.pricing,
     required this.currencies,
     required this.selectedCurrencyCode,
+    required this.selectedPricingTier,
   }) : super(
           equals: <Object?>[
             currentProduct,
@@ -49,6 +50,7 @@ class ProductSetupViewModel extends Vm {
             pricing,
             currencies,
             selectedCurrencyCode,
+            selectedPricingTier,
           ],
         );
 
@@ -72,6 +74,7 @@ class ProductSetupViewModel extends Vm {
   final Map<String, Map<String, String>> repeatOnDaysOfWeek;
 
   final String selectedCurrencyCode;
+  final String selectedPricingTier;
 
   static ProductSetupViewModel fromState(AppState state) {
     return ProductSetupViewModel(
@@ -101,6 +104,7 @@ class ProductSetupViewModel extends Vm {
       currencies: state.hostState?.currencies ?? <Currency?>[],
       selectedCurrencyCode:
           state.hostState?.selectedCurrencyCode ?? kAllowedCurrencyCodes.first,
+      selectedPricingTier: state.hostState?.selectedPricingTier ?? UNKNOWN,
     );
   }
 }
