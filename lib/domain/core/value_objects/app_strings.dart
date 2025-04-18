@@ -142,6 +142,7 @@ const String ticketPriceString = 'Ticket Price';
 const String totalString = 'Total';
 const String proceedToCheckoutString = 'Proceed to checkout';
 const String selectDateString = 'Select Date';
+const String addDateString = 'Add Date';
 const String buyTicketString = 'Buy Ticket';
 
 const String seeAllString = 'See All';
@@ -488,6 +489,15 @@ const String starting = 'Starting';
 const String ending = 'Ends on';
 const String atString = 'at';
 const String chooseTime = 'Choose time';
+const String repeatsLabel = 'Repeats';
+const String dailyRepeatPrompt =
+    'Choose a day of the week when your event repeats';
+const String weeklyRepeatPrompt =
+    'Choose a day of the week when your event repeats';
+const String monthlyRepeatPrompt =
+    'Select the days of the month when your event will be repeating';
+const String yearlyRepeatPrompt =
+    'Select the days of the year when your event will be repeating';
 
 // Photos page
 const String photos = 'Photos';
@@ -633,3 +643,10 @@ const String validTicket = 'Valid Ticket';
 const String inValidTicket = 'Invalid Ticket';
 const String testTicketName = 'Abiud Orina';
 const String debugTicketQR = 'Debug QR Code: ';
+
+const String fromString = 'From';
+const String toString = 'To';
+
+const String dailyPrompt = 'Your event will repeat daily from 9 AM to 10 PM';
+
+const String closedString = 'Closed';

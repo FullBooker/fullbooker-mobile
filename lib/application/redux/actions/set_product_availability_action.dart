@@ -26,33 +26,86 @@ class SetProductScheduleAction extends ReduxAction<AppState> {
 
   @override
   Future<AppState?> reduce() async {
-    final String productID = state.hostState?.currentProduct?.id ?? UNKNOWN;
-    final String start =
-        state.hostState?.currentProduct?.schedule?.start ?? UNKNOWN;
-    final String startTime =
-        state.hostState?.currentProduct?.schedule?.startTime ?? UNKNOWN;
-    final String end =
-        state.hostState?.currentProduct?.schedule?.end ?? UNKNOWN;
-    final String endTime =
-        state.hostState?.currentProduct?.schedule?.endTime ?? UNKNOWN;
+    final Product? product = state.hostState?.currentProduct;
+    final ProductSchedule? schedule = product?.schedule;
+    final ProductSchedule? selectedSchedule = state.hostState?.selectedSchedule;
 
-    if (productID == UNKNOWN ||
-        start == UNKNOWN ||
-        startTime == UNKNOWN ||
-        end == UNKNOWN ||
-        endTime == UNKNOWN) {
+    final String productID = product?.id ?? UNKNOWN;
+    final String start = schedule?.start ?? UNKNOWN;
+    final String startTime = schedule?.startTime ?? UNKNOWN;
+    final String end = schedule?.end ?? UNKNOWN;
+    final String endTime = schedule?.endTime ?? UNKNOWN;
+
+    if (productID == UNKNOWN || startTime == UNKNOWN || endTime == UNKNOWN) {
       onError?.call(addDateTimeError);
-
       return null;
     }
 
-    final Map<String, String> data = <String, String>{
+    final bool repeats = selectedSchedule?.repeats ?? false;
+    final String repeatOption =
+        selectedSchedule?.repeatType?.toLowerCase() ?? noRepeatSchedule;
+
+    final Map<String, dynamic> data = <String, dynamic>{
       'product': productID,
-      'start': start,
       'start_time': startTime,
-      'end': end,
       'end_time': endTime,
+      'repeat': repeats ? repeatOption : noRepeatSchedule,
     };
+
+    if (repeatOption == noRepeatSchedule || repeatOption == dailyOption) {
+      data['start_date'] = start;
+      data['end_date'] = end;
+    }
+
+    if (repeats) {
+      if (repeatOption == weeklyOption.toLowerCase()) {
+        final Map<String, Map<String, String>> weekly =
+            selectedSchedule?.repeatOnDaysOfWeek ??
+                <String, Map<String, String>>{};
+        data['repeat_on_days_of_week'] =
+            weekly.entries.map((MapEntry<String, Map<String, String>> entry) {
+          return <String, String?>{
+            'day': entry.key.toLowerCase(),
+            'start_time': entry.value['start_time'],
+            'end_time': entry.value['end_time'],
+          };
+        }).toList();
+      }
+
+      if (repeatOption == monthlyOption.toLowerCase()) {
+        final List<int> dates = selectedSchedule?.repeatMonthDates ?? <int>[];
+        data['repeat_on_date_of_month'] = dates;
+      }
+
+      if (repeatOption == yearlyOption.toLowerCase()) {
+        final List<String> yearDates =
+            selectedSchedule?.repeatYearDates ?? <String>[];
+
+        final Set<int> uniqueDays = <int>{};
+        final Set<int> uniqueMonths = <int>{};
+
+        for (final String entry in yearDates) {
+          final List<String> parts = entry.split('-');
+          if (parts.length == 2) {
+            final int? month = int.tryParse(parts[0]);
+            final int? day = int.tryParse(parts[1]);
+
+            if (month != null &&
+                day != null &&
+                month >= 1 &&
+                month <= 12 &&
+                day >= 1 &&
+                day <= 31) {
+              uniqueDays.add(day);
+              uniqueMonths.add(month);
+            }
+          }
+        }
+
+        data['repeat_on_date_of_month'] = uniqueDays.toList()..sort();
+        data['repeat_on_month_of_year'] = uniqueMonths.toList()..sort();
+      }
+    }
 
     final Response httpResponse = await client.callRESTAPI(
       endpoint: GetIt.I.get<AppConfig>().productScheduleEndpoint,
@@ -60,27 +113,23 @@ class SetProductScheduleAction extends ReduxAction<AppState> {
       variables: data,
     );
 
-    final Map<String, dynamic> body =
-        json.decode(httpResponse.body) as Map<String, dynamic>;
-
     if (httpResponse.statusCode >= 400) {
+      final Map<String, dynamic>? body =
+          json.decode(httpResponse.body) as Map<String, dynamic>?;
       final String? error = client.parseError(body);
-
       onError?.call(error ?? defaultUserFriendlyMessage);
-
       return null;
     }
 
-    final ProductSchedule savedSchedule = ProductSchedule.fromJson(body);
+    final Map<String, dynamic> responseBody =
+        json.decode(httpResponse.body) as Map<String, dynamic>;
+    final ProductSchedule savedSchedule =
+        ProductSchedule.fromJson(responseBody);
 
-    final Product? newCurrent = state.hostState?.currentProduct?.copyWith.call(
-      schedule: savedSchedule,
-    );
-
+    final Product? newCurrent = product?.copyWith(schedule: savedSchedule);
     dispatch(UpdateHostStateAction(currentProduct: newCurrent));
 
     onSuccess?.call();
-
     return state;
   }
 }

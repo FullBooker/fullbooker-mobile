@@ -15,7 +15,7 @@ import 'package:fullbooker/domain/core/entities/product_media.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:dartz/dartz.dart' as d;
-import 'package:fullbooker/presentation/host/product_setup/components/upload_photo_zero_state.dart';
+import 'package:fullbooker/presentation/host/product_setup/widgets/upload_photo_zero_state.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';

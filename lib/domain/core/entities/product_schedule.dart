@@ -20,6 +20,16 @@ class ProductSchedule with _$ProductSchedule {
     @Default(<dynamic>[])
     @JsonKey(name: 'closed_dates')
     List<dynamic>? closedDates,
+
+    // Other fields used for setup
+    @Default(false) @JsonKey(name: 'all_day') bool? isAllDay,
+    @Default(false) bool? repeats,
+    @Default('Daily')
+    @JsonKey(name: 'repeat_type')
+    String? repeatType, // Daily, Weekly, Monthly, Yearly
+    final Map<String, Map<String, String>>? repeatOnDaysOfWeek,
+    @Default(<int>[]) List<int>? repeatMonthDates, // [5, 8, 21]
+    @Default(<String>[]) List<String>? repeatYearDates, // ['2025-03-08']
   }) = _ProductSchedule;
 
   factory ProductSchedule.initial() => ProductSchedule();
