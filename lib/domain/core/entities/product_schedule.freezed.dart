@@ -42,8 +42,8 @@ mixin _$ProductSchedule {
   @JsonKey(name: 'repeat_type')
   String? get repeatType =>
       throw _privateConstructorUsedError; // Daily, Weekly, Monthly, Yearly
-  List<String>? get repeatWeekdays =>
-      throw _privateConstructorUsedError; // ['Mon', 'Wed']
+  Map<String, Map<String, String>>? get repeatOnDaysOfWeek =>
+      throw _privateConstructorUsedError;
   List<int>? get repeatMonthDates =>
       throw _privateConstructorUsedError; // [5, 8, 21]
   List<String>? get repeatYearDates => throw _privateConstructorUsedError;
@@ -78,7 +78,7 @@ abstract class $ProductScheduleCopyWith<$Res> {
       @JsonKey(name: 'all_day') bool? isAllDay,
       bool? repeats,
       @JsonKey(name: 'repeat_type') String? repeatType,
-      List<String>? repeatWeekdays,
+      Map<String, Map<String, String>>? repeatOnDaysOfWeek,
       List<int>? repeatMonthDates,
       List<String>? repeatYearDates});
 }
@@ -111,7 +111,7 @@ class _$ProductScheduleCopyWithImpl<$Res, $Val extends ProductSchedule>
     Object? isAllDay = freezed,
     Object? repeats = freezed,
     Object? repeatType = freezed,
-    Object? repeatWeekdays = freezed,
+    Object? repeatOnDaysOfWeek = freezed,
     Object? repeatMonthDates = freezed,
     Object? repeatYearDates = freezed,
   }) {
@@ -168,10 +168,10 @@ class _$ProductScheduleCopyWithImpl<$Res, $Val extends ProductSchedule>
           ? _value.repeatType
           : repeatType // ignore: cast_nullable_to_non_nullable
               as String?,
-      repeatWeekdays: freezed == repeatWeekdays
-          ? _value.repeatWeekdays
-          : repeatWeekdays // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+      repeatOnDaysOfWeek: freezed == repeatOnDaysOfWeek
+          ? _value.repeatOnDaysOfWeek
+          : repeatOnDaysOfWeek // ignore: cast_nullable_to_non_nullable
+              as Map<String, Map<String, String>>?,
       repeatMonthDates: freezed == repeatMonthDates
           ? _value.repeatMonthDates
           : repeatMonthDates // ignore: cast_nullable_to_non_nullable
@@ -206,7 +206,7 @@ abstract class _$$ProductScheduleImplCopyWith<$Res>
       @JsonKey(name: 'all_day') bool? isAllDay,
       bool? repeats,
       @JsonKey(name: 'repeat_type') String? repeatType,
-      List<String>? repeatWeekdays,
+      Map<String, Map<String, String>>? repeatOnDaysOfWeek,
       List<int>? repeatMonthDates,
       List<String>? repeatYearDates});
 }
@@ -237,7 +237,7 @@ class __$$ProductScheduleImplCopyWithImpl<$Res>
     Object? isAllDay = freezed,
     Object? repeats = freezed,
     Object? repeatType = freezed,
-    Object? repeatWeekdays = freezed,
+    Object? repeatOnDaysOfWeek = freezed,
     Object? repeatMonthDates = freezed,
     Object? repeatYearDates = freezed,
   }) {
@@ -294,10 +294,10 @@ class __$$ProductScheduleImplCopyWithImpl<$Res>
           ? _value.repeatType
           : repeatType // ignore: cast_nullable_to_non_nullable
               as String?,
-      repeatWeekdays: freezed == repeatWeekdays
-          ? _value.repeatWeekdays
-          : repeatWeekdays // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+      repeatOnDaysOfWeek: freezed == repeatOnDaysOfWeek
+          ? _value.repeatOnDaysOfWeek
+          : repeatOnDaysOfWeek // ignore: cast_nullable_to_non_nullable
+              as Map<String, Map<String, String>>?,
       repeatMonthDates: freezed == repeatMonthDates
           ? _value.repeatMonthDates
           : repeatMonthDates // ignore: cast_nullable_to_non_nullable
@@ -328,7 +328,7 @@ class _$ProductScheduleImpl implements _ProductSchedule {
       @JsonKey(name: 'all_day') this.isAllDay = false,
       this.repeats = false,
       @JsonKey(name: 'repeat_type') this.repeatType = 'Daily',
-      this.repeatWeekdays = const <String>[],
+      this.repeatOnDaysOfWeek,
       this.repeatMonthDates = const <int>[],
       this.repeatYearDates = const <String>[]});
 
@@ -377,9 +377,7 @@ class _$ProductScheduleImpl implements _ProductSchedule {
   final String? repeatType;
 // Daily, Weekly, Monthly, Yearly
   @override
-  @JsonKey()
-  final List<String>? repeatWeekdays;
-// ['Mon', 'Wed']
+  final Map<String, Map<String, String>>? repeatOnDaysOfWeek;
   @override
   @JsonKey()
   final List<int>? repeatMonthDates;
@@ -390,7 +388,7 @@ class _$ProductScheduleImpl implements _ProductSchedule {
 
   @override
   String toString() {
-    return 'ProductSchedule(id: $id, product: $product, productName: $productName, start: $start, end: $end, startTime: $startTime, endTime: $endTime, duration: $duration, openDays: $openDays, closedDates: $closedDates, isAllDay: $isAllDay, repeats: $repeats, repeatType: $repeatType, repeatWeekdays: $repeatWeekdays, repeatMonthDates: $repeatMonthDates, repeatYearDates: $repeatYearDates)';
+    return 'ProductSchedule(id: $id, product: $product, productName: $productName, start: $start, end: $end, startTime: $startTime, endTime: $endTime, duration: $duration, openDays: $openDays, closedDates: $closedDates, isAllDay: $isAllDay, repeats: $repeats, repeatType: $repeatType, repeatOnDaysOfWeek: $repeatOnDaysOfWeek, repeatMonthDates: $repeatMonthDates, repeatYearDates: $repeatYearDates)';
   }
 
   @override
@@ -418,7 +416,7 @@ class _$ProductScheduleImpl implements _ProductSchedule {
             (identical(other.repeatType, repeatType) ||
                 other.repeatType == repeatType) &&
             const DeepCollectionEquality()
-                .equals(other.repeatWeekdays, repeatWeekdays) &&
+                .equals(other.repeatOnDaysOfWeek, repeatOnDaysOfWeek) &&
             const DeepCollectionEquality()
                 .equals(other.repeatMonthDates, repeatMonthDates) &&
             const DeepCollectionEquality()
@@ -442,7 +440,7 @@ class _$ProductScheduleImpl implements _ProductSchedule {
       isAllDay,
       repeats,
       repeatType,
-      const DeepCollectionEquality().hash(repeatWeekdays),
+      const DeepCollectionEquality().hash(repeatOnDaysOfWeek),
       const DeepCollectionEquality().hash(repeatMonthDates),
       const DeepCollectionEquality().hash(repeatYearDates));
 
@@ -478,7 +476,7 @@ abstract class _ProductSchedule implements ProductSchedule {
       @JsonKey(name: 'all_day') final bool? isAllDay,
       final bool? repeats,
       @JsonKey(name: 'repeat_type') final String? repeatType,
-      final List<String>? repeatWeekdays,
+      final Map<String, Map<String, String>>? repeatOnDaysOfWeek,
       final List<int>? repeatMonthDates,
       final List<String>? repeatYearDates}) = _$ProductScheduleImpl;
 
@@ -519,7 +517,7 @@ abstract class _ProductSchedule implements ProductSchedule {
   @JsonKey(name: 'repeat_type')
   String? get repeatType; // Daily, Weekly, Monthly, Yearly
   @override
-  List<String>? get repeatWeekdays; // ['Mon', 'Wed']
+  Map<String, Map<String, String>>? get repeatOnDaysOfWeek;
   @override
   List<int>? get repeatMonthDates; // [5, 8, 21]
   @override

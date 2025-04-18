@@ -22,10 +22,10 @@ _$ProductScheduleImpl _$$ProductScheduleImplFromJson(
       isAllDay: json['all_day'] as bool? ?? false,
       repeats: json['repeats'] as bool? ?? false,
       repeatType: json['repeat_type'] as String? ?? 'Daily',
-      repeatWeekdays: (json['repeatWeekdays'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList() ??
-          const <String>[],
+      repeatOnDaysOfWeek:
+          (json['repeatOnDaysOfWeek'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, Map<String, String>.from(e as Map)),
+      ),
       repeatMonthDates: (json['repeatMonthDates'] as List<dynamic>?)
               ?.map((e) => (e as num).toInt())
               .toList() ??
@@ -52,7 +52,7 @@ Map<String, dynamic> _$$ProductScheduleImplToJson(
       'all_day': instance.isAllDay,
       'repeats': instance.repeats,
       'repeat_type': instance.repeatType,
-      'repeatWeekdays': instance.repeatWeekdays,
+      'repeatOnDaysOfWeek': instance.repeatOnDaysOfWeek,
       'repeatMonthDates': instance.repeatMonthDates,
       'repeatYearDates': instance.repeatYearDates,
     };

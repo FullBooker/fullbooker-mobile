@@ -12,7 +12,7 @@ class UpdateCurrentScheduleAction extends ReduxAction<AppState> {
     this.isAllDay,
     this.repeats,
     this.repeatType,
-    this.repeatWeekdays,
+    this.repeatOnDaysOfWeek,
     this.repeatMonthDates,
     this.repeatYearDates,
   });
@@ -24,9 +24,9 @@ class UpdateCurrentScheduleAction extends ReduxAction<AppState> {
   final bool? isAllDay;
   final bool? repeats;
   final String? repeatType;
-  final List<String>? repeatWeekdays;
   final List<int>? repeatMonthDates;
   final List<String>? repeatYearDates;
+  Map<String, Map<String, String>>? repeatOnDaysOfWeek;
 
   @override
   AppState? reduce() {
@@ -40,7 +40,8 @@ class UpdateCurrentScheduleAction extends ReduxAction<AppState> {
       isAllDay: isAllDay ?? currentSchedule.isAllDay,
       repeats: repeats ?? currentSchedule.repeats,
       repeatType: repeatType ?? currentSchedule.repeatType,
-      repeatWeekdays: repeatWeekdays ?? currentSchedule.repeatWeekdays,
+      repeatOnDaysOfWeek:
+          repeatOnDaysOfWeek ?? currentSchedule.repeatOnDaysOfWeek,
       repeatMonthDates: repeatMonthDates ?? currentSchedule.repeatMonthDates,
       repeatYearDates: repeatYearDates ?? currentSchedule.repeatYearDates,
     );

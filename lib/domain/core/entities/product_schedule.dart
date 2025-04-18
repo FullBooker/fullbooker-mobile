@@ -27,7 +27,7 @@ class ProductSchedule with _$ProductSchedule {
     @Default('Daily')
     @JsonKey(name: 'repeat_type')
     String? repeatType, // Daily, Weekly, Monthly, Yearly
-    @Default(<String>[]) List<String>? repeatWeekdays, // ['Mon', 'Wed']
+    final Map<String, Map<String, String>>? repeatOnDaysOfWeek,
     @Default(<int>[]) List<int>? repeatMonthDates, // [5, 8, 21]
     @Default(<String>[]) List<String>? repeatYearDates, // ['2025-03-08']
   }) = _ProductSchedule;

@@ -21,9 +21,9 @@ class ProductSetupViewModel extends Vm {
     required this.isAllDay,
     required this.repeats,
     required this.repeatType,
-    required this.repeatWeekdays,
     required this.repeatMonthDates,
     required this.repeatYearDates,
+    required this.repeatOnDaysOfWeek,
   }) : super(
           equals: <Object?>[
             currentProduct,
@@ -38,10 +38,9 @@ class ProductSetupViewModel extends Vm {
             isAllDay,
             repeats,
             repeatType,
-            repeatWeekdays,
-            repeatWeekdays,
             repeatMonthDates,
             repeatYearDates,
+            repeatOnDaysOfWeek,
           ],
         );
 
@@ -56,15 +55,11 @@ class ProductSetupViewModel extends Vm {
   final ProductLocation? selectedLocation;
   final bool isAllDay;
   final bool repeats;
-  // 'Daily', 'Weekly', 'Monthly', 'Yearly'
   final String repeatType;
-
-  // ['Mon', 'Tue'] etc
-  final List<String> repeatWeekdays;
-
   final List<int> repeatMonthDates;
-
   final List<String> repeatYearDates;
+
+  final Map<String, Map<String, String>> repeatOnDaysOfWeek;
 
   static ProductSetupViewModel fromState(AppState state) {
     return ProductSetupViewModel(
@@ -82,12 +77,13 @@ class ProductSetupViewModel extends Vm {
       isAllDay: state.hostState?.selectedSchedule?.isAllDay ?? false,
       repeats: state.hostState?.selectedSchedule?.repeats ?? false,
       repeatType: state.hostState?.selectedSchedule?.repeatType ?? UNKNOWN,
-      repeatWeekdays:
-          state.hostState?.selectedSchedule?.repeatWeekdays ?? <String>[],
       repeatMonthDates:
           state.hostState?.selectedSchedule?.repeatMonthDates ?? <int>[],
       repeatYearDates:
           state.hostState?.selectedSchedule?.repeatYearDates ?? <String>[],
+      repeatOnDaysOfWeek:
+          state.hostState?.selectedSchedule?.repeatOnDaysOfWeek ??
+              <String, Map<String, String>>{},
     );
   }
 }
