@@ -354,7 +354,9 @@ void navigateToNextProductStep({
   }
 
   if (product.active ?? false) {
-    context.router.push(const ProductReviewAndSubmitRoute());
+    context.router.push(
+      ProductReviewAndSubmitRoute(workflowState: WorkflowState.VIEW),
+    );
     return;
   }
 }

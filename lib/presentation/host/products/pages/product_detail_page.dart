@@ -8,6 +8,7 @@ import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/entities/product.dart';
+import 'package:fullbooker/domain/core/value_objects/app_bar_action.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
@@ -17,6 +18,7 @@ import 'package:fullbooker/presentation/host/products/widgets/image_carousel_wid
 import 'package:fullbooker/presentation/host/products/widgets/product_alert_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_detail_item_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_schedule_widget.dart';
+import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
@@ -34,6 +36,18 @@ class ProductDetailPage extends StatelessWidget {
       appBar: CustomAppBar(
         showBell: false,
         title: productsString,
+        actions: <AppBarAction>[
+          AppBarAction(
+            iconUrl: HeroIcons.pencil,
+            onTap: () {
+              context.router.push(
+                ProductReviewAndSubmitRoute(
+                  workflowState: WorkflowState.VIEW,
+                ),
+              );
+            },
+          ),
+        ],
       ),
       body: StoreConnector<AppState, ProductDetailViewModel>(
         converter: (Store<AppState> store) =>

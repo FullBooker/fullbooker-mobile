@@ -14,6 +14,7 @@ import 'package:fullbooker/presentation/host/product_setup/widgets/preview_heade
 import 'package:fullbooker/presentation/host/product_setup/widgets/pricing_card_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/product_type_item.dart';
 import 'package:fullbooker/shared/entities/data_mocks.dart';
+import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
@@ -22,7 +23,9 @@ import 'package:heroicons/heroicons.dart';
 
 @RoutePage()
 class ProductReviewAndSubmitPage extends StatelessWidget {
-  const ProductReviewAndSubmitPage({super.key});
+  const ProductReviewAndSubmitPage({super.key, required this.workflowState});
+
+  final WorkflowState workflowState;
 
   @override
   Widget build(BuildContext context) {

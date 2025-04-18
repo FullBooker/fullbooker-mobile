@@ -943,18 +943,49 @@ class ProductPricingRoute extends _i41.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i29.ProductReviewAndSubmitPage]
-class ProductReviewAndSubmitRoute extends _i41.PageRouteInfo<void> {
-  const ProductReviewAndSubmitRoute({List<_i41.PageRouteInfo>? children})
-    : super(ProductReviewAndSubmitRoute.name, initialChildren: children);
+class ProductReviewAndSubmitRoute
+    extends _i41.PageRouteInfo<ProductReviewAndSubmitRouteArgs> {
+  ProductReviewAndSubmitRoute({
+    _i42.Key? key,
+    required _i46.WorkflowState workflowState,
+    List<_i41.PageRouteInfo>? children,
+  }) : super(
+         ProductReviewAndSubmitRoute.name,
+         args: ProductReviewAndSubmitRouteArgs(
+           key: key,
+           workflowState: workflowState,
+         ),
+         initialChildren: children,
+       );
 
   static const String name = 'ProductReviewAndSubmitRoute';
 
   static _i41.PageInfo page = _i41.PageInfo(
     name,
     builder: (data) {
-      return const _i29.ProductReviewAndSubmitPage();
+      final args = data.argsAs<ProductReviewAndSubmitRouteArgs>();
+      return _i29.ProductReviewAndSubmitPage(
+        key: args.key,
+        workflowState: args.workflowState,
+      );
     },
   );
+}
+
+class ProductReviewAndSubmitRouteArgs {
+  const ProductReviewAndSubmitRouteArgs({
+    this.key,
+    required this.workflowState,
+  });
+
+  final _i42.Key? key;
+
+  final _i46.WorkflowState workflowState;
+
+  @override
+  String toString() {
+    return 'ProductReviewAndSubmitRouteArgs{key: $key, workflowState: $workflowState}';
+  }
 }
 
 /// generated route for
