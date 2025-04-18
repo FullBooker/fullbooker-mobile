@@ -12,7 +12,7 @@ import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:fullbooker/presentation/core/components/custom_badge_widget.dart';
-import 'package:fullbooker/presentation/host/product_setup/components/pricing_card_widget.dart';
+import 'package:fullbooker/presentation/host/product_setup/widgets/pricing_card_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/image_carousel_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_alert_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_detail_item_widget.dart';

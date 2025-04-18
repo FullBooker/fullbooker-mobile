@@ -6,7 +6,7 @@ import 'package:fullbooker/application/redux/view_models/product_setup_view_mode
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
-import 'package:fullbooker/presentation/host/product_setup/components/time_slot_widget.dart';
+import 'package:fullbooker/presentation/host/product_setup/widgets/time_slot_widget.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:intl/intl.dart';
 
