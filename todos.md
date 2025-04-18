@@ -22,3 +22,4 @@
 
 - [ ] Handle currency formatting on the app
 - [ ] Fix showAlertDialog across all pages
+- [ ] Fetch the most recent version of the product on each step of the setup process

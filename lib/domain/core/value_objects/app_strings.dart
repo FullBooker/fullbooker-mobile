@@ -601,9 +601,16 @@ const String selectCurrencyHint = 'Choose currency';
 
 const String pricingBreakdown = 'Pricing breakdown';
 
-const String serviceFeeLabel = 'Service fee (KES 150 + 7%)';
+String serviceFeeLabel({
+  required String currency,
+  required String baseFee,
+  required String serviceFeePercentage,
+}) {
+  return 'Service fee ($currency $baseFee + $serviceFeePercentage%)';
+}
+
 const String yourBuyers = 'Your Buyers Pay';
-const String yourRevenue = 'Your Revenue';
+const String yourRevenueString = 'Your Revenue';
 
 const String iWantBuyersToPay = 'I want my buyers to pay the service fee';
 

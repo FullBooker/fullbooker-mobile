@@ -85,6 +85,48 @@ String? validateProductName(
   return null;
 }
 
+String? validateAmount(String? value) {
+  if (value == null || value.trim().isEmpty) {
+    return 'Amount is required';
+  }
+
+  final double? parsed = double.tryParse(value);
+  if (parsed == null) {
+    return 'Please enter a valid amount';
+  }
+
+  if (parsed < 150) {
+    return 'Amount must be at least 150';
+  }
+
+  if (parsed > 1000000) {
+    return 'Amount must not exceed 1,000,000';
+  }
+
+  return null;
+}
+
+String? validateMaxTickets(String? value) {
+  if (value == null || value.trim().isEmpty) {
+    return 'Please enter max tickets';
+  }
+
+  final int? parsed = int.tryParse(value);
+  if (parsed == null) {
+    return 'Enter a valid number';
+  }
+
+  if (parsed < 1) {
+    return 'At least one ticket is required';
+  }
+
+  if (parsed > 10000) {
+    return 'Tickets must not exceed 10,000';
+  }
+
+  return null;
+}
+
 ///------ OTHERS ------ REMOVE once done
 
 String? validateNotEmpty(String? val, {bool isOptional = false}) {

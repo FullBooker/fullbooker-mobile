@@ -17,11 +17,12 @@ _$ProductPricingImpl _$$ProductPricingImplFromJson(Map<String, dynamic> json) =>
       product: json['product'] as String? ?? UNKNOWN,
       currency: json['currency'] as String? ?? UNKNOWN,
       cost: json['cost'] as String? ?? UNKNOWN,
-      type: json['type'] as String? ?? UNKNOWN,
-      ticketTier: json['ticket_tier'] as String? ?? UNKNOWN,
+      type: json['type'] as String? ?? 'ticket',
+      ticketTier: json['ticket_tier'] as String? ?? standardTier,
       maxTickets: (json['maximum_number_of_tickets'] as num?)?.toInt() ?? 0,
       remainingTickets: (json['remaining_tickets'] as num?)?.toInt() ?? 0,
       soldTickets: (json['sold_tickets'] as num?)?.toInt() ?? 0,
+      buyerPaysFee: json['buyerPaysFee'] as bool? ?? true,
     );
 
 Map<String, dynamic> _$$ProductPricingImplToJson(
@@ -41,4 +42,5 @@ Map<String, dynamic> _$$ProductPricingImplToJson(
       'maximum_number_of_tickets': instance.maxTickets,
       'remaining_tickets': instance.remainingTickets,
       'sold_tickets': instance.soldTickets,
+      'buyerPaysFee': instance.buyerPaysFee,
     };

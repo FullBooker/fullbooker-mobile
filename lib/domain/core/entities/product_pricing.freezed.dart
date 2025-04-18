@@ -40,6 +40,7 @@ mixin _$ProductPricing {
   int? get remainingTickets => throw _privateConstructorUsedError;
   @JsonKey(name: 'sold_tickets')
   int? get soldTickets => throw _privateConstructorUsedError;
+  bool? get buyerPaysFee => throw _privateConstructorUsedError;
 
   /// Serializes this ProductPricing to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -71,7 +72,8 @@ abstract class $ProductPricingCopyWith<$Res> {
       @JsonKey(name: 'ticket_tier') String? ticketTier,
       @JsonKey(name: 'maximum_number_of_tickets') int? maxTickets,
       @JsonKey(name: 'remaining_tickets') int? remainingTickets,
-      @JsonKey(name: 'sold_tickets') int? soldTickets});
+      @JsonKey(name: 'sold_tickets') int? soldTickets,
+      bool? buyerPaysFee});
 }
 
 /// @nodoc
@@ -103,6 +105,7 @@ class _$ProductPricingCopyWithImpl<$Res, $Val extends ProductPricing>
     Object? maxTickets = freezed,
     Object? remainingTickets = freezed,
     Object? soldTickets = freezed,
+    Object? buyerPaysFee = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -161,6 +164,10 @@ class _$ProductPricingCopyWithImpl<$Res, $Val extends ProductPricing>
           ? _value.soldTickets
           : soldTickets // ignore: cast_nullable_to_non_nullable
               as int?,
+      buyerPaysFee: freezed == buyerPaysFee
+          ? _value.buyerPaysFee
+          : buyerPaysFee // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ) as $Val);
   }
 }
@@ -187,7 +194,8 @@ abstract class _$$ProductPricingImplCopyWith<$Res>
       @JsonKey(name: 'ticket_tier') String? ticketTier,
       @JsonKey(name: 'maximum_number_of_tickets') int? maxTickets,
       @JsonKey(name: 'remaining_tickets') int? remainingTickets,
-      @JsonKey(name: 'sold_tickets') int? soldTickets});
+      @JsonKey(name: 'sold_tickets') int? soldTickets,
+      bool? buyerPaysFee});
 }
 
 /// @nodoc
@@ -217,6 +225,7 @@ class __$$ProductPricingImplCopyWithImpl<$Res>
     Object? maxTickets = freezed,
     Object? remainingTickets = freezed,
     Object? soldTickets = freezed,
+    Object? buyerPaysFee = freezed,
   }) {
     return _then(_$ProductPricingImpl(
       id: freezed == id
@@ -275,6 +284,10 @@ class __$$ProductPricingImplCopyWithImpl<$Res>
           ? _value.soldTickets
           : soldTickets // ignore: cast_nullable_to_non_nullable
               as int?,
+      buyerPaysFee: freezed == buyerPaysFee
+          ? _value.buyerPaysFee
+          : buyerPaysFee // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -293,11 +306,12 @@ class _$ProductPricingImpl implements _ProductPricing {
       this.product = UNKNOWN,
       this.currency = UNKNOWN,
       this.cost = UNKNOWN,
-      this.type = UNKNOWN,
-      @JsonKey(name: 'ticket_tier') this.ticketTier = UNKNOWN,
+      this.type = 'ticket',
+      @JsonKey(name: 'ticket_tier') this.ticketTier = standardTier,
       @JsonKey(name: 'maximum_number_of_tickets') this.maxTickets = 0,
       @JsonKey(name: 'remaining_tickets') this.remainingTickets = 0,
-      @JsonKey(name: 'sold_tickets') this.soldTickets = 0});
+      @JsonKey(name: 'sold_tickets') this.soldTickets = 0,
+      this.buyerPaysFee = true});
 
   factory _$ProductPricingImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProductPricingImplFromJson(json);
@@ -344,10 +358,13 @@ class _$ProductPricingImpl implements _ProductPricing {
   @override
   @JsonKey(name: 'sold_tickets')
   final int? soldTickets;
+  @override
+  @JsonKey()
+  final bool? buyerPaysFee;
 
   @override
   String toString() {
-    return 'ProductPricing(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, active: $active, host: $host, name: $name, product: $product, currency: $currency, cost: $cost, type: $type, ticketTier: $ticketTier, maxTickets: $maxTickets, remainingTickets: $remainingTickets, soldTickets: $soldTickets)';
+    return 'ProductPricing(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, active: $active, host: $host, name: $name, product: $product, currency: $currency, cost: $cost, type: $type, ticketTier: $ticketTier, maxTickets: $maxTickets, remainingTickets: $remainingTickets, soldTickets: $soldTickets, buyerPaysFee: $buyerPaysFee)';
   }
 
   @override
@@ -375,7 +392,9 @@ class _$ProductPricingImpl implements _ProductPricing {
             (identical(other.remainingTickets, remainingTickets) ||
                 other.remainingTickets == remainingTickets) &&
             (identical(other.soldTickets, soldTickets) ||
-                other.soldTickets == soldTickets));
+                other.soldTickets == soldTickets) &&
+            (identical(other.buyerPaysFee, buyerPaysFee) ||
+                other.buyerPaysFee == buyerPaysFee));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -395,7 +414,8 @@ class _$ProductPricingImpl implements _ProductPricing {
       ticketTier,
       maxTickets,
       remainingTickets,
-      soldTickets);
+      soldTickets,
+      buyerPaysFee);
 
   /// Create a copy of ProductPricing
   /// with the given fields replaced by the non-null parameter values.
@@ -416,21 +436,21 @@ class _$ProductPricingImpl implements _ProductPricing {
 
 abstract class _ProductPricing implements ProductPricing {
   factory _ProductPricing(
-          {final String? id,
-          @JsonKey(name: 'created_at') final String? createdAt,
-          @JsonKey(name: 'updated_at') final String? updatedAt,
-          final bool? active,
-          final String? host,
-          final String? name,
-          final String? product,
-          final String? currency,
-          final String? cost,
-          final String? type,
-          @JsonKey(name: 'ticket_tier') final String? ticketTier,
-          @JsonKey(name: 'maximum_number_of_tickets') final int? maxTickets,
-          @JsonKey(name: 'remaining_tickets') final int? remainingTickets,
-          @JsonKey(name: 'sold_tickets') final int? soldTickets}) =
-      _$ProductPricingImpl;
+      {final String? id,
+      @JsonKey(name: 'created_at') final String? createdAt,
+      @JsonKey(name: 'updated_at') final String? updatedAt,
+      final bool? active,
+      final String? host,
+      final String? name,
+      final String? product,
+      final String? currency,
+      final String? cost,
+      final String? type,
+      @JsonKey(name: 'ticket_tier') final String? ticketTier,
+      @JsonKey(name: 'maximum_number_of_tickets') final int? maxTickets,
+      @JsonKey(name: 'remaining_tickets') final int? remainingTickets,
+      @JsonKey(name: 'sold_tickets') final int? soldTickets,
+      final bool? buyerPaysFee}) = _$ProductPricingImpl;
 
   factory _ProductPricing.fromJson(Map<String, dynamic> json) =
       _$ProductPricingImpl.fromJson;
@@ -469,6 +489,8 @@ abstract class _ProductPricing implements ProductPricing {
   @override
   @JsonKey(name: 'sold_tickets')
   int? get soldTickets;
+  @override
+  bool? get buyerPaysFee;
 
   /// Create a copy of ProductPricing
   /// with the given fields replaced by the non-null parameter values.

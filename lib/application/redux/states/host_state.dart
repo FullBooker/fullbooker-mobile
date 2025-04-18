@@ -1,9 +1,12 @@
 // Package imports:
 
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:fullbooker/core/common/constants.dart';
+import 'package:fullbooker/domain/core/entities/currency.dart';
 import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/entities/product_category.dart';
 import 'package:fullbooker/domain/core/entities/product_location.dart';
+import 'package:fullbooker/domain/core/entities/product_pricing.dart';
 import 'package:fullbooker/domain/core/entities/product_schedule.dart';
 import 'package:fullbooker/shared/entities/location_perms_result.dart';
 
@@ -23,6 +26,10 @@ class HostState with _$HostState {
     // Used during product setup
     ProductLocation? selectedLocation,
     ProductSchedule? selectedSchedule,
+    @Default(<Currency>[]) List<Currency?>? currencies,
+    @Default(UNKNOWN) String? selectedCurrencyCode,
+    @Default(UNKNOWN) String? selectedPricingTier,
+    ProductPricing? selectedProductPricing,
   }) = _HostState;
 
   factory HostState.initial() => HostState(
@@ -31,6 +38,7 @@ class HostState with _$HostState {
         locationPerms: LocationPermsResult.initial(),
         selectedLocation: ProductLocation.initial(),
         selectedSchedule: ProductSchedule.initial(),
+        selectedProductPricing: ProductPricing.initial(),
       );
 
   factory HostState.fromJson(Map<String, dynamic> json) =>

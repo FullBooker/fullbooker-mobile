@@ -1,7 +1,6 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:fullbooker/core/common/app_router.gr.dart';
+import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
 import 'package:dartz/dartz.dart' as d;
@@ -47,7 +46,7 @@ class PricingCardWidget extends StatelessWidget {
               spacing: 4,
               children: <Widget>[
                 Text(
-                  ticketType,
+                  getTicketDisplayName(ticketType),
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 if (discount != null && discount! > 0)
@@ -58,12 +57,13 @@ class PricingCardWidget extends StatelessWidget {
                         .bodySmall
                         ?.copyWith(color: Theme.of(context).primaryColor),
                   ),
-                Text(
-                  maxAllowedTickets(maxTickets),
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        fontStyle: FontStyle.italic,
-                      ),
-                ),
+                if (maxTickets > 0)
+                  Text(
+                    maxAllowedTickets(maxTickets),
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          fontStyle: FontStyle.italic,
+                        ),
+                  ),
               ],
             ),
           ),
@@ -80,9 +80,7 @@ class PricingCardWidget extends StatelessWidget {
                 if (onAddOrEdit != null)
                   SecondaryButton(
                     customHeight: 36,
-                    onPressed: () {
-                      context.router.push(AddProductPricingRoute());
-                    },
+                    onPressed: onAddOrEdit,
                     child: d.right(hasPrice ? changeString : addPrice),
                   ),
               ],
