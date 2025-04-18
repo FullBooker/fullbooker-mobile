@@ -30,6 +30,8 @@ mixin _$HostState {
   ProductLocation? get selectedLocation => throw _privateConstructorUsedError;
   ProductSchedule? get selectedSchedule => throw _privateConstructorUsedError;
   List<Currency?>? get currencies => throw _privateConstructorUsedError;
+  String? get selectedCurrencyCode => throw _privateConstructorUsedError;
+  String? get selectedPricingTier => throw _privateConstructorUsedError;
 
   /// Serializes this HostState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -54,7 +56,9 @@ abstract class $HostStateCopyWith<$Res> {
       LocationPermsResult? locationPerms,
       ProductLocation? selectedLocation,
       ProductSchedule? selectedSchedule,
-      List<Currency?>? currencies});
+      List<Currency?>? currencies,
+      String? selectedCurrencyCode,
+      String? selectedPricingTier});
 
   $ProductCopyWith<$Res>? get currentProduct;
   $ProductCopyWith<$Res>? get selectedProduct;
@@ -86,6 +90,8 @@ class _$HostStateCopyWithImpl<$Res, $Val extends HostState>
     Object? selectedLocation = freezed,
     Object? selectedSchedule = freezed,
     Object? currencies = freezed,
+    Object? selectedCurrencyCode = freezed,
+    Object? selectedPricingTier = freezed,
   }) {
     return _then(_value.copyWith(
       products: freezed == products
@@ -120,6 +126,14 @@ class _$HostStateCopyWithImpl<$Res, $Val extends HostState>
           ? _value.currencies
           : currencies // ignore: cast_nullable_to_non_nullable
               as List<Currency?>?,
+      selectedCurrencyCode: freezed == selectedCurrencyCode
+          ? _value.selectedCurrencyCode
+          : selectedCurrencyCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      selectedPricingTier: freezed == selectedPricingTier
+          ? _value.selectedPricingTier
+          : selectedPricingTier // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 
@@ -210,7 +224,9 @@ abstract class _$$HostStateImplCopyWith<$Res>
       LocationPermsResult? locationPerms,
       ProductLocation? selectedLocation,
       ProductSchedule? selectedSchedule,
-      List<Currency?>? currencies});
+      List<Currency?>? currencies,
+      String? selectedCurrencyCode,
+      String? selectedPricingTier});
 
   @override
   $ProductCopyWith<$Res>? get currentProduct;
@@ -245,6 +261,8 @@ class __$$HostStateImplCopyWithImpl<$Res>
     Object? selectedLocation = freezed,
     Object? selectedSchedule = freezed,
     Object? currencies = freezed,
+    Object? selectedCurrencyCode = freezed,
+    Object? selectedPricingTier = freezed,
   }) {
     return _then(_$HostStateImpl(
       products: freezed == products
@@ -279,6 +297,14 @@ class __$$HostStateImplCopyWithImpl<$Res>
           ? _value.currencies
           : currencies // ignore: cast_nullable_to_non_nullable
               as List<Currency?>?,
+      selectedCurrencyCode: freezed == selectedCurrencyCode
+          ? _value.selectedCurrencyCode
+          : selectedCurrencyCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      selectedPricingTier: freezed == selectedPricingTier
+          ? _value.selectedPricingTier
+          : selectedPricingTier // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -295,7 +321,9 @@ class _$HostStateImpl implements _HostState {
       this.locationPerms,
       this.selectedLocation,
       this.selectedSchedule,
-      this.currencies = const <Currency>[]});
+      this.currencies = const <Currency>[],
+      this.selectedCurrencyCode = UNKNOWN,
+      this.selectedPricingTier = UNKNOWN});
 
   factory _$HostStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$HostStateImplFromJson(json);
@@ -320,10 +348,16 @@ class _$HostStateImpl implements _HostState {
   @override
   @JsonKey()
   final List<Currency?>? currencies;
+  @override
+  @JsonKey()
+  final String? selectedCurrencyCode;
+  @override
+  @JsonKey()
+  final String? selectedPricingTier;
 
   @override
   String toString() {
-    return 'HostState(products: $products, currentProduct: $currentProduct, selectedProduct: $selectedProduct, productCategories: $productCategories, locationPerms: $locationPerms, selectedLocation: $selectedLocation, selectedSchedule: $selectedSchedule, currencies: $currencies)';
+    return 'HostState(products: $products, currentProduct: $currentProduct, selectedProduct: $selectedProduct, productCategories: $productCategories, locationPerms: $locationPerms, selectedLocation: $selectedLocation, selectedSchedule: $selectedSchedule, currencies: $currencies, selectedCurrencyCode: $selectedCurrencyCode, selectedPricingTier: $selectedPricingTier)';
   }
 
   @override
@@ -345,7 +379,11 @@ class _$HostStateImpl implements _HostState {
             (identical(other.selectedSchedule, selectedSchedule) ||
                 other.selectedSchedule == selectedSchedule) &&
             const DeepCollectionEquality()
-                .equals(other.currencies, currencies));
+                .equals(other.currencies, currencies) &&
+            (identical(other.selectedCurrencyCode, selectedCurrencyCode) ||
+                other.selectedCurrencyCode == selectedCurrencyCode) &&
+            (identical(other.selectedPricingTier, selectedPricingTier) ||
+                other.selectedPricingTier == selectedPricingTier));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -359,7 +397,9 @@ class _$HostStateImpl implements _HostState {
       locationPerms,
       selectedLocation,
       selectedSchedule,
-      const DeepCollectionEquality().hash(currencies));
+      const DeepCollectionEquality().hash(currencies),
+      selectedCurrencyCode,
+      selectedPricingTier);
 
   /// Create a copy of HostState
   /// with the given fields replaced by the non-null parameter values.
@@ -386,7 +426,9 @@ abstract class _HostState implements HostState {
       final LocationPermsResult? locationPerms,
       final ProductLocation? selectedLocation,
       final ProductSchedule? selectedSchedule,
-      final List<Currency?>? currencies}) = _$HostStateImpl;
+      final List<Currency?>? currencies,
+      final String? selectedCurrencyCode,
+      final String? selectedPricingTier}) = _$HostStateImpl;
 
   factory _HostState.fromJson(Map<String, dynamic> json) =
       _$HostStateImpl.fromJson;
@@ -407,6 +449,10 @@ abstract class _HostState implements HostState {
   ProductSchedule? get selectedSchedule;
   @override
   List<Currency?>? get currencies;
+  @override
+  String? get selectedCurrencyCode;
+  @override
+  String? get selectedPricingTier;
 
   /// Create a copy of HostState
   /// with the given fields replaced by the non-null parameter values.

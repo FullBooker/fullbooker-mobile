@@ -1,6 +1,7 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:fullbooker/application/redux/actions/update_host_state_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_setup_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
@@ -37,11 +38,6 @@ class ProductPricingPage extends StatelessWidget {
               child: StoreConnector<AppState, ProductSetupViewModel>(
                 converter: (Store<AppState> store) =>
                     ProductSetupViewModel.fromState(store.state),
-                // onInit: (Store<AppState> store) => context.dispatch(
-                //   FetchCurrenciesAction(
-                //     client: AppWrapperBase.of(context)!.customClient,
-                //   ),
-                // ),
                 builder: (BuildContext context, ProductSetupViewModel vm) {
                   final Map<String, ProductPricing> pricingMap =
                       <String, ProductPricing>{};
@@ -120,6 +116,7 @@ class ProductPricingPage extends StatelessWidget {
                                       0,
                               svgIconPath: getTicketIconPath(tier),
                               onAddOrEdit: () {
+                                context.dispatch(UpdateHostStateAction());
                                 context.router.push(AddProductPricingRoute());
                               },
                             ),

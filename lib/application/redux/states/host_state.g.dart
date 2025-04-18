@@ -42,6 +42,8 @@ _$HostStateImpl _$$HostStateImplFromJson(Map<String, dynamic> json) =>
                   : Currency.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const <Currency>[],
+      selectedCurrencyCode: json['selectedCurrencyCode'] as String? ?? UNKNOWN,
+      selectedPricingTier: json['selectedPricingTier'] as String? ?? UNKNOWN,
     );
 
 Map<String, dynamic> _$$HostStateImplToJson(_$HostStateImpl instance) =>
@@ -55,4 +57,6 @@ Map<String, dynamic> _$$HostStateImplToJson(_$HostStateImpl instance) =>
       'selectedLocation': instance.selectedLocation?.toJson(),
       'selectedSchedule': instance.selectedSchedule?.toJson(),
       'currencies': instance.currencies?.map((e) => e?.toJson()).toList(),
+      'selectedCurrencyCode': instance.selectedCurrencyCode,
+      'selectedPricingTier': instance.selectedPricingTier,
     };

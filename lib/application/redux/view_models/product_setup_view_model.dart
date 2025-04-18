@@ -1,6 +1,7 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/core/common/constants.dart';
+import 'package:fullbooker/domain/core/entities/currency.dart';
 import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/entities/product_category.dart';
 import 'package:fullbooker/domain/core/entities/product_location.dart';
@@ -26,6 +27,8 @@ class ProductSetupViewModel extends Vm {
     required this.repeatYearDates,
     required this.repeatOnDaysOfWeek,
     required this.pricing,
+    required this.currencies,
+    required this.selectedCurrencyCode,
   }) : super(
           equals: <Object?>[
             currentProduct,
@@ -44,6 +47,8 @@ class ProductSetupViewModel extends Vm {
             repeatYearDates,
             repeatOnDaysOfWeek,
             pricing,
+            currencies,
+            selectedCurrencyCode,
           ],
         );
 
@@ -62,8 +67,11 @@ class ProductSetupViewModel extends Vm {
   final List<int> repeatMonthDates;
   final List<String> repeatYearDates;
   final List<ProductPricing?>? pricing;
+  final List<Currency?>? currencies;
 
   final Map<String, Map<String, String>> repeatOnDaysOfWeek;
+
+  final String selectedCurrencyCode;
 
   static ProductSetupViewModel fromState(AppState state) {
     return ProductSetupViewModel(
@@ -90,6 +98,9 @@ class ProductSetupViewModel extends Vm {
           state.hostState?.selectedSchedule?.repeatOnDaysOfWeek ??
               <String, Map<String, String>>{},
       pricing: state.hostState?.currentProduct?.pricing ?? <ProductPricing>[],
+      currencies: state.hostState?.currencies ?? <Currency?>[],
+      selectedCurrencyCode:
+          state.hostState?.selectedCurrencyCode ?? kAllowedCurrencyCodes.first,
     );
   }
 }

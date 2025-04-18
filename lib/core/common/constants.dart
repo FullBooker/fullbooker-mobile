@@ -43,7 +43,8 @@ const List<String> allowedPhoneNumberCountries = <String>['KE', 'UG', 'TZ'];
 
 const LatLng kDefaultLocation = LatLng(-1.228003, 36.900032);
 
-const List<String> kAllowedCurrencies = <String>['KES', 'USD', 'AED'];
+const List<String> kAllowedCurrencyCodes = <String>['KES', 'USD', 'AED'];
+
 const List<String> kAllowedDiscountOptions = <String>['Percentage', 'Amount'];
 
 const String kSupportLine = '0700 394 444';
