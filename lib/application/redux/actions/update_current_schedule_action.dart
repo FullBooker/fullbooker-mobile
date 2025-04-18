@@ -33,8 +33,8 @@ class UpdateCurrentScheduleAction extends ReduxAction<AppState> {
     final ProductSchedule? currentSchedule = state.hostState?.selectedSchedule;
 
     final ProductSchedule? updatedSchedule = currentSchedule?.copyWith(
-      start: startDate ?? currentSchedule.start,
-      end: endDate ?? currentSchedule.end,
+      startDate: startDate ?? currentSchedule.startDate,
+      endDate: endDate ?? currentSchedule.endDate,
       startTime: startTime ?? currentSchedule.startTime,
       endTime: endTime ?? currentSchedule.endTime,
       isAllDay: isAllDay ?? currentSchedule.isAllDay,

@@ -31,9 +31,9 @@ class SetProductScheduleAction extends ReduxAction<AppState> {
     final ProductSchedule? selectedSchedule = state.hostState?.selectedSchedule;
 
     final String productID = product?.id ?? UNKNOWN;
-    final String start = schedule?.start ?? UNKNOWN;
+    final String startDate = schedule?.startDate ?? UNKNOWN;
     final String startTime = schedule?.startTime ?? UNKNOWN;
-    final String end = schedule?.end ?? UNKNOWN;
+    final String end = schedule?.endDate ?? UNKNOWN;
     final String endTime = schedule?.endTime ?? UNKNOWN;
 
     if (productID == UNKNOWN || startTime == UNKNOWN || endTime == UNKNOWN) {
@@ -47,13 +47,15 @@ class SetProductScheduleAction extends ReduxAction<AppState> {
 
     final Map<String, dynamic> data = <String, dynamic>{
       'product': productID,
+      'start_date': startDate,
       'start_time': startTime,
+      'end_date': end,
       'end_time': endTime,
       'repeat': repeats ? repeatOption : noRepeatSchedule,
     };
 
     if (repeatOption == noRepeatSchedule || repeatOption == dailyOption) {
-      data['start_date'] = start;
+      data['start_date'] = startDate;
       data['end_date'] = end;
     }
 
@@ -107,8 +109,10 @@ class SetProductScheduleAction extends ReduxAction<AppState> {
       }
     }
 
+    final String endpoint = GetIt.I.get<AppConfig>().productScheduleEndpoint;
+
     final Response httpResponse = await client.callRESTAPI(
-      endpoint: GetIt.I.get<AppConfig>().productScheduleEndpoint,
+      endpoint: endpoint,
       method: APIMethods.POST.name.toUpperCase(),
       variables: data,
     );

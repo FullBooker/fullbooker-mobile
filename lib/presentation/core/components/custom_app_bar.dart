@@ -73,26 +73,23 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               ...actions!.map(
                 (AppBarAction action) => Padding(
                   padding: const EdgeInsets.all(2.0),
-                  child: ClipRRect(
+                  child: InkWell(
                     borderRadius: BorderRadius.circular(8),
-                    child: InkWell(
-                      key: action.actionKey,
-                      borderRadius: BorderRadius.circular(8),
-                      splashColor: Theme.of(context)
-                          .colorScheme
-                          .primary
-                          .withValues(alpha: .2),
-                      onTap: action.onTap,
-                      child: Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).cardColor,
-                        ),
-                        child: HeroIcon(
-                          action.iconUrl,
-                          color: Theme.of(context).primaryColor,
-                          size: action.iconSize ?? 24,
-                        ),
+                    key: action.actionKey,
+                    splashColor: Theme.of(context)
+                        .colorScheme
+                        .primary
+                        .withValues(alpha: .2),
+                    onTap: action.onTap,
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).cardColor,
+                      ),
+                      child: HeroIcon(
+                        action.iconUrl,
+                        color: Theme.of(context).primaryColor,
+                        size: action.iconSize ?? 24,
                       ),
                     ),
                   ),

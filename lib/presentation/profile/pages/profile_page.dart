@@ -34,147 +34,118 @@ class ProfilePage extends StatelessWidget {
     return Scaffold(
       bottomNavigationBar: const BottomNavBar(),
       appBar: CustomAppBar(title: profileString),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12),
-        child: StoreConnector<AppState, ProfileViewModel>(
-          converter: (Store<AppState> store) =>
-              ProfileViewModel.fromStore(store),
-          onInit: (Store<AppState> store) {
-            context.dispatch(
-              FetchProfileAction(
-                client: AppWrapperBase.of(context)!.customClient,
-              ),
-            );
-          },
-          builder: (BuildContext context, ProfileViewModel vm) {
-            final String name = vm.fullName;
-            final String email = vm.user?.emailAddress ?? '';
-            final String profileURL = vm.user?.profileURL ?? UNKNOWN;
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: Column(
+            children: <Widget>[
+              Column(
+                spacing: 12,
+                children: <Widget>[
+                  StoreConnector<AppState, ProfileViewModel>(
+                    converter: (Store<AppState> store) =>
+                        ProfileViewModel.fromStore(store),
+                    onInit: (Store<AppState> store) {
+                      context.dispatch(
+                        FetchProfileAction(
+                          client: AppWrapperBase.of(context)!.customClient,
+                        ),
+                      );
+                    },
+                    builder: (BuildContext context, ProfileViewModel vm) {
+                      if (context.isWaiting(FetchProfileAction)) {
+                        return SizedBox(height: 200, child: AppLoading());
+                      }
 
-            if (context.isWaiting(FetchProfileAction)) {
-              return AppLoading();
-            }
+                      final String name = vm.fullName;
+                      final String email = vm.user?.emailAddress ?? '';
+                      final String profileURL = vm.user?.profileURL ?? UNKNOWN;
 
-            return ListView(
-              shrinkWrap: true,
-              children: <Widget>[
-                Column(
-                  spacing: 12,
-                  children: <Widget>[
-                    Center(
-                      child: ProfileAvatar(
-                        displayName: name,
-                        aviSize: 100,
-                        avatarURI: profileURL,
-                      ),
-                    ),
-                    Center(
-                      child: Text(
-                        name,
-                        style:
-                            Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                      ),
-                    ),
-                    Center(
-                      child: Text(
-                        email,
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                    ),
-                    verySmallVerticalSizedBox,
-
-                    // Switch to hosting banner
-                    Container(
-                      width: double.infinity,
-                      padding: EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context)
-                            .primaryColor
-                            .withValues(alpha: .1),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        spacing: 4,
+                      return Column(
+                        spacing: 12,
                         children: <Widget>[
-                          Text(
-                            switchToHosting,
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium!
-                                .copyWith(
-                                  color: Theme.of(context).primaryColor,
-                                ),
+                          Center(
+                            child: ProfileAvatar(
+                              displayName: name,
+                              aviSize: 100,
+                              avatarURI: profileURL,
+                            ),
                           ),
-                          Text(
-                            switchToHostingCopy,
-                            style: Theme.of(context).textTheme.bodyMedium,
+                          Center(
+                            child: Text(
+                              name,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall!
+                                  .copyWith(
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                            ),
+                          ),
+                          Center(
+                            child: Text(
+                              email,
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
                           ),
                           verySmallVerticalSizedBox,
-                          PrimaryButton(
-                            customHeight: 56,
-                            customRadius: 100,
-                            child: d.left(
-                              Row(
-                                spacing: 8,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  HeroIcon(
-                                    HeroIcons.arrowsUpDown,
-                                    color: Colors.white,
-                                    size: 24,
-                                  ),
-                                  Text(
-                                    switchToHosting,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            onPressed: () {
-                              ScaffoldMessenger.of(context)
-                                ..hideCurrentSnackBar()
-                                ..showSnackBar(
-                                  const SnackBar(
-                                    content: Text(comingSoonTitle),
-                                  ),
-                                );
-                            },
-                          ),
                         ],
-                      ),
-                    ),
+                      );
+                    },
+                  ),
 
-                    // Settings items
-                    Column(
+                  // Switch to hosting banner
+                  Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color:
+                          Theme.of(context).primaryColor.withValues(alpha: .1),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      spacing: 4,
                       children: <Widget>[
-                        ProfileListItem(
-                          iconData: HeroIcons.clipboardDocumentList,
-                          title: legal,
-                          body: legalCopy,
-                          onTap: () {
-                            ScaffoldMessenger.of(context)
-                              ..hideCurrentSnackBar()
-                              ..showSnackBar(
-                                const SnackBar(
-                                  content: Text(comingSoonTitle),
-                                ),
-                              );
-                          },
+                        Text(
+                          switchToHosting,
+                          style:
+                              Theme.of(context).textTheme.titleMedium!.copyWith(
+                                    color: Theme.of(context).primaryColor,
+                                  ),
                         ),
-                        ProfileListItem(
-                          iconData: HeroIcons.key,
-                          title: changePassword,
-                          body: changePasswordCopy,
-                          onTap: () {
+                        Text(
+                          switchToHostingCopy,
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                        verySmallVerticalSizedBox,
+                        PrimaryButton(
+                          customHeight: 56,
+                          customRadius: 100,
+                          child: d.left(
+                            Row(
+                              spacing: 8,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                HeroIcon(
+                                  HeroIcons.arrowsUpDown,
+                                  color: Colors.white,
+                                  size: 24,
+                                ),
+                                Text(
+                                  switchToHosting,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          onPressed: () {
                             ScaffoldMessenger.of(context)
                               ..hideCurrentSnackBar()
                               ..showSnackBar(
@@ -186,13 +157,53 @@ class ProfilePage extends StatelessWidget {
                         ),
                       ],
                     ),
-                  ],
-                ),
-                largeVerticalSizedBox,
-                if (context.isWaiting(LogoutAction()))
-                  const AppLoading()
-                else
-                  SecondaryButton(
+                  ),
+
+                  // Settings items
+                  Column(
+                    children: <Widget>[
+                      ProfileListItem(
+                        iconData: HeroIcons.clipboardDocumentList,
+                        title: legal,
+                        body: legalCopy,
+                        onTap: () {
+                          ScaffoldMessenger.of(context)
+                            ..hideCurrentSnackBar()
+                            ..showSnackBar(
+                              const SnackBar(
+                                content: Text(comingSoonTitle),
+                              ),
+                            );
+                        },
+                      ),
+                      ProfileListItem(
+                        iconData: HeroIcons.key,
+                        title: changePassword,
+                        body: changePasswordCopy,
+                        onTap: () {
+                          ScaffoldMessenger.of(context)
+                            ..hideCurrentSnackBar()
+                            ..showSnackBar(
+                              const SnackBar(
+                                content: Text(comingSoonTitle),
+                              ),
+                            );
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              smallVerticalSizedBox,
+              StoreConnector<AppState, ProfileViewModel>(
+                converter: (Store<AppState> store) =>
+                    ProfileViewModel.fromStore(store),
+                builder: (BuildContext context, ProfileViewModel vm) {
+                  if (context.isWaiting(LogoutAction())) {
+                    return const AppLoading();
+                  }
+
+                  return SecondaryButton(
                     onPressed: () async {
                       await context.dispatch(
                         LogoutAction(
@@ -204,24 +215,25 @@ class ProfilePage extends StatelessWidget {
                       );
                     },
                     child: d.right(logoutString),
+                  );
+                },
+              ),
+              veryLargeVerticalSizedBox,
+              Column(
+                spacing: 8,
+                children: <Widget>[
+                  Text(
+                    copyright(),
+                    style: Theme.of(context).textTheme.labelMedium,
                   ),
-                smallVerticalSizedBox,
-                Column(
-                  spacing: 8,
-                  children: <Widget>[
-                    Text(
-                      copyright(),
-                      style: Theme.of(context).textTheme.labelMedium,
-                    ),
-                    Text(
-                      appVersionFormat(appVersion),
-                      style: Theme.of(context).textTheme.labelMedium,
-                    ),
-                  ],
-                ),
-              ],
-            );
-          },
+                  Text(
+                    appVersionFormat(appVersion),
+                    style: Theme.of(context).textTheme.labelMedium,
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

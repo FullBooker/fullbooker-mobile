@@ -16,13 +16,19 @@ class LogoutAction extends ReduxAction<AppState> {
 
   @override
   Future<AppState?> reduce() async {
-    final SignInMethod? signInMethod = state.onboardingState?.signInMethod;
+    try {
+      final SignInMethod? signInMethod = state.onboardingState?.signInMethod;
 
-    if (signInMethod == SignInMethod.GOOGLE) {
-      await GetIt.I.get<GoogleSignIn>().signOut();
+      if (signInMethod == SignInMethod.GOOGLE) {
+        final GoogleSignIn googleSignIn = GetIt.I.get<GoogleSignIn>();
+        if (await googleSignIn.isSignedIn()) {
+          await googleSignIn.signOut();
+        }
+      }
+    } finally {
+      onDone?.call();
     }
 
-    onDone?.call();
     return AppState.initial();
   }
 }

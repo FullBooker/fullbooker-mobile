@@ -650,3 +650,4 @@ const String toString = 'To';
 const String dailyPrompt = 'Your event will repeat daily from 9 AM to 10 PM';
 
 const String closedString = 'Closed';
+const String notProvided = 'Not Provided';

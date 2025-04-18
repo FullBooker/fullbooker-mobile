@@ -262,7 +262,7 @@ Widget humanizeDate({
 
   final List<String> formatStrings = <String>[];
   if (showMonthDate) formatStrings.add('d MMM');
-  if (showYear) formatStrings.add('y');
+  if (showYear) formatStrings.add('yy');
   if (showTime) formatStrings.add('h:mm a');
 
   final DateFormat dateFormat = DateFormat(formatStrings.join(' '));
@@ -354,7 +354,9 @@ void navigateToNextProductStep({
   }
 
   if (product.active ?? false) {
-    context.router.push(const ProductReviewAndSubmitRoute());
+    context.router.push(
+      ProductReviewAndSubmitRoute(workflowState: WorkflowState.VIEW),
+    );
     return;
   }
 }
