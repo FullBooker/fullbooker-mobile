@@ -16,6 +16,7 @@ import 'package:fullbooker/presentation/host/product_setup/widgets/pricing_card_
 import 'package:fullbooker/presentation/host/products/widgets/image_carousel_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_alert_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_detail_item_widget.dart';
+import 'package:fullbooker/presentation/host/products/widgets/product_schedule_widget.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
@@ -103,63 +104,9 @@ class ProductDetailPage extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                              // Date
-                              Row(
-                                mainAxisSize: MainAxisSize.min,
-                                spacing: 4,
-                                children: <Widget>[
-                                  HeroIcon(
-                                    HeroIcons.calendar,
-                                    color: AppColors.greyTextColor,
-                                    size: 20,
-                                  ),
-                                  humanizeDate(
-                                    loadedDate: product?.schedule?.start ?? '',
-                                    dateTextStyle:
-                                        Theme.of(context).textTheme.bodyMedium,
-                                  ),
-                                  Text(
-                                    to,
-                                    style:
-                                        Theme.of(context).textTheme.bodyMedium,
-                                  ),
-                                  humanizeDate(
-                                    loadedDate: product?.schedule?.end ?? '',
-                                    dateTextStyle:
-                                        Theme.of(context).textTheme.bodyMedium,
-                                  ),
-                                ],
-                              ),
-
-                              // Time
-                              Row(
-                                mainAxisSize: MainAxisSize.min,
-                                spacing: 4,
-                                children: <Widget>[
-                                  HeroIcon(
-                                    HeroIcons.clock,
-                                    color: AppColors.greyTextColor,
-                                    size: 20,
-                                  ),
-                                  formatTime(
-                                    time: product?.schedule?.startTime,
-                                    textStyle:
-                                        Theme.of(context).textTheme.bodyMedium,
-                                  ),
-                                  Text(
-                                    to,
-                                    style:
-                                        Theme.of(context).textTheme.bodyMedium,
-                                  ),
-                                  formatTime(
-                                    time: product?.schedule?.endTime,
-                                    textStyle:
-                                        Theme.of(context).textTheme.bodyMedium,
-                                  ),
-                                ],
-                              ),
                             ],
                           ),
+                          ProductScheduleWidget(),
                           ProductAlertWidget(
                             title: productInReview,
                             description: productInReviewCopy,

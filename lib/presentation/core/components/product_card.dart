@@ -139,7 +139,7 @@ class ProductCard extends StatelessWidget {
                                 size: 20,
                               ),
                               humanizeDate(
-                                loadedDate: product.schedule?.start ?? '',
+                                loadedDate: product.schedule?.startDate ?? '',
                                 dateTextStyle:
                                     Theme.of(context).textTheme.bodyMedium,
                               ),
@@ -148,7 +148,7 @@ class ProductCard extends StatelessWidget {
                                 style: Theme.of(context).textTheme.bodyMedium,
                               ),
                               humanizeDate(
-                                loadedDate: product.schedule?.end ?? '',
+                                loadedDate: product.schedule?.endDate ?? '',
                                 dateTextStyle:
                                     Theme.of(context).textTheme.bodyMedium,
                               ),

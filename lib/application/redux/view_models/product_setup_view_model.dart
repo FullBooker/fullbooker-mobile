@@ -66,10 +66,11 @@ class ProductSetupViewModel extends Vm {
       currentProduct: state.hostState?.currentProduct,
       productCategories: state.hostState?.productCategories,
       locationPerms: state.hostState?.locationPerms,
-      startDate: state.hostState?.currentProduct?.schedule?.start ?? UNKNOWN,
+      startDate:
+          state.hostState?.currentProduct?.schedule?.startDate ?? UNKNOWN,
       startTime:
           state.hostState?.currentProduct?.schedule?.startTime ?? UNKNOWN,
-      endDate: state.hostState?.currentProduct?.schedule?.end ?? UNKNOWN,
+      endDate: state.hostState?.currentProduct?.schedule?.endDate ?? UNKNOWN,
       endTime: state.hostState?.currentProduct?.schedule?.endTime ?? UNKNOWN,
       productMedia:
           state.hostState?.currentProduct?.productMedia ?? <ProductMedia?>[],

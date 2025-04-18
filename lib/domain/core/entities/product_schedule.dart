@@ -11,10 +11,14 @@ class ProductSchedule with _$ProductSchedule {
     @Default(UNKNOWN) String? id,
     @Default(UNKNOWN) String? product,
     @Default(UNKNOWN) @JsonKey(name: 'product_name') String? productName,
-    @Default(UNKNOWN) String? start,
-    @Default(UNKNOWN) String? end,
+    @Default(UNKNOWN) @JsonKey(name: 'start_date') String? startDate,
     @Default(UNKNOWN) @JsonKey(name: 'start_time') String? startTime,
+    @Default(UNKNOWN) @JsonKey(name: 'end_date') String? endDate,
     @Default(UNKNOWN) @JsonKey(name: 'end_time') String? endTime,
+    @Default(false) @JsonKey(name: 'is_all_day') bool? isAllDay,
+    @Default(false) bool? repeats,
+    @Default('daily') @JsonKey(name: 'repeat') String? repeatType,
+    @Default('sunday') @JsonKey(name: 'week_starts_on') String? weekStartsOn,
     @Default(0) int? duration,
     @Default(<dynamic>[]) @JsonKey(name: 'open_days') List<dynamic>? openDays,
     @Default(<dynamic>[])
@@ -22,14 +26,9 @@ class ProductSchedule with _$ProductSchedule {
     List<dynamic>? closedDates,
 
     // Other fields used for setup
-    @Default(false) @JsonKey(name: 'all_day') bool? isAllDay,
-    @Default(false) bool? repeats,
-    @Default('Daily')
-    @JsonKey(name: 'repeat_type')
-    String? repeatType, // Daily, Weekly, Monthly, Yearly
     final Map<String, Map<String, String>>? repeatOnDaysOfWeek,
-    @Default(<int>[]) List<int>? repeatMonthDates, // [5, 8, 21]
-    @Default(<String>[]) List<String>? repeatYearDates, // ['2025-03-08']
+    @Default(<int>[]) List<int>? repeatMonthDates,
+    @Default(<String>[]) List<String>? repeatYearDates,
   }) = _ProductSchedule;
 
   factory ProductSchedule.initial() => ProductSchedule();
