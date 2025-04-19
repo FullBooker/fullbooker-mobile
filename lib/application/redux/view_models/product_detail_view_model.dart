@@ -1,16 +1,21 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
+import 'package:fullbooker/domain/core/entities/currency.dart';
 import 'package:fullbooker/domain/core/entities/product.dart';
 
 class ProductDetailViewModel extends Vm {
-  ProductDetailViewModel({required this.selectedProduct})
-      : super(equals: <Object?>[selectedProduct]);
+  ProductDetailViewModel({
+    required this.selectedProduct,
+    required this.currencies,
+  }) : super(equals: <Object?>[selectedProduct, currencies]);
 
   final Product? selectedProduct;
+  final List<Currency?>? currencies;
 
   static ProductDetailViewModel fromState(AppState state) {
     return ProductDetailViewModel(
       selectedProduct: state.hostState?.selectedProduct,
+      currencies: state.hostState?.currencies,
     );
   }
 }

@@ -26,6 +26,8 @@ class _ImageCarouselWidgetState extends State<ImageCarouselWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final double customHeight = MediaQuery.of(context).size.height * .25;
+
     return StoreConnector<AppState, ProductDetailViewModel>(
       converter: (Store<AppState> store) =>
           ProductDetailViewModel.fromState(store.state),
@@ -38,7 +40,7 @@ class _ImageCarouselWidgetState extends State<ImageCarouselWidget> {
       builder: (BuildContext context, ProductDetailViewModel vm) {
         if (context.isWaiting(FetchProductMediaAction)) {
           return SizedBox(
-            height: MediaQuery.of(context).size.height * .25,
+            height: customHeight,
             child: Center(
               child: AppLoading(),
             ),
@@ -71,7 +73,7 @@ class _ImageCarouselWidgetState extends State<ImageCarouselWidget> {
           children: <Widget>[
             CarouselSlider(
               options: CarouselOptions(
-                height: MediaQuery.of(context).size.height * .25,
+                height: customHeight,
                 autoPlay: true,
                 autoPlayInterval: Duration(seconds: 5),
                 autoPlayCurve: Curves.easeInOut,

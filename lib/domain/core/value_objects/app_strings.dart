@@ -316,6 +316,7 @@ const String searchString = 'Search';
 const String profileString = 'Profile';
 const String homeString = 'Home';
 const String productsString = 'Products';
+const String productDetailsString = 'Product Details';
 
 const String yesString = 'Yes';
 const String noString = 'No';
@@ -661,3 +662,6 @@ const String notProvided = 'Not Provided';
 
 const String noPricingOptionsString = 'No pricing options provided';
 const String noImagesString = 'No photos added';
+const String learnMore = 'Learn More';
+
+String aboutString(String name) => 'About $name';

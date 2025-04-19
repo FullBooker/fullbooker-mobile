@@ -17,6 +17,7 @@ import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:fullbooker/presentation/core/components/custom_badge_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/pricing_card_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/image_carousel_widget.dart';
+import 'package:fullbooker/presentation/host/products/widgets/limited_description_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/min_zero_state.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_alert_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_detail_item_widget.dart';
@@ -38,7 +39,7 @@ class ProductDetailPage extends StatelessWidget {
       bottomNavigationBar: const BottomNavBar(),
       appBar: CustomAppBar(
         showBell: false,
-        title: productsString,
+        title: productDetailsString,
         actions: <AppBarAction>[
           AppBarAction(
             iconUrl: HeroIcons.pencil,
@@ -68,6 +69,7 @@ class ProductDetailPage extends StatelessWidget {
               Expanded(
                 child: ListView(
                   shrinkWrap: true,
+                  physics: AlwaysScrollableScrollPhysics(),
                   children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.all(16),
@@ -129,6 +131,10 @@ class ProductDetailPage extends StatelessWidget {
                             description: productInReviewCopy,
                             iconData: HeroIcons.clipboardDocumentList,
                           ),
+                          LimitedDescriptionWidget(
+                            name: product?.name ?? UNKNOWN,
+                            description: product?.description ?? UNKNOWN,
+                          ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             spacing: 12,
@@ -175,6 +181,7 @@ class ProductDetailPage extends StatelessWidget {
                                 MinZeroState(copy: noPricingOptionsString)
                               else
                                 ListView.builder(
+                                  physics: NeverScrollableScrollPhysics(),
                                   shrinkWrap: true,
                                   itemCount: product?.pricing?.length,
                                   itemBuilder:
@@ -184,17 +191,8 @@ class ProductDetailPage extends StatelessWidget {
 
                                     return Container(
                                       margin: EdgeInsets.only(bottom: 12),
-                                      child: PricingCardWidget(
-                                        ticketTier:
-                                            current?.ticketTier ?? standardTier,
-                                        maxTickets: current?.maxTickets ?? 0,
-                                        price: double.tryParse(
-                                          current?.cost?.toString() ?? '0',
-                                        ),
-                                        svgIconPath: getTicketIconPath(
-                                          current?.ticketTier ?? standardTier,
-                                        ),
-                                      ),
+                                      child:
+                                          PricingCardWidget(pricing: current),
                                     );
                                   },
                                 ),

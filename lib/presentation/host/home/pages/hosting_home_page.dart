@@ -2,6 +2,7 @@ import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
+import 'package:fullbooker/application/redux/actions/fetch_currencies_action.dart';
 import 'package:fullbooker/application/redux/actions/fetch_products_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/hosting_home_view_model.dart';
@@ -80,11 +81,14 @@ class HostingHomePage extends StatelessWidget {
                 converter: (Store<AppState> store) =>
                     HostingHomeViewModel.fromState(store.state),
                 onInit: (Store<AppState> store) {
-                  context.dispatch(
+                  context.dispatchAll(<ReduxAction<AppState>>[
                     FetchProductsAction(
                       client: AppWrapperBase.of(context)!.customClient,
                     ),
-                  );
+                    FetchCurrenciesAction(
+                      client: AppWrapperBase.of(context)!.customClient,
+                    ),
+                  ]);
                 },
                 builder: (BuildContext context, HostingHomeViewModel vm) {
                   if (context.isWaiting(FetchProductsAction)) {

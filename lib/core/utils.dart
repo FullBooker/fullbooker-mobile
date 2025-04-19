@@ -365,16 +365,6 @@ Color getProductColor({bool complete = false}) {
   return AppColors.amberColor;
 }
 
-String formatCurrency(dynamic number) {
-  final NumberFormat currency = NumberFormat.currency(
-    decimalDigits: 0,
-    symbol: 'Ksh. ',
-    locale: 'en-US',
-  );
-
-  return currency.format(number);
-}
-
 Future<String?> pickDate({required BuildContext context}) async {
   final DateTime now = DateTime.now();
   final DateTime? picked = await showDatePicker(
@@ -458,4 +448,60 @@ LatLng parseCoordinates(String? raw) {
     return const LatLng(0, 0);
   }
   return const LatLng(0, 0);
+}
+
+Future<void> showFullDescriptionDialog({
+  required BuildContext context,
+  required String title,
+  required String description,
+}) {
+  return showDialog(
+    context: context,
+    builder: (_) => Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 16,
+          children: <Widget>[
+            Text(
+              aboutString(title),
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            Text(
+              description,
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+            PrimaryButton(
+              onPressed: () => context.router.maybePop(),
+              child: right(okThanksString),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+/// Formats currency string with comma separators & currency code.
+///
+/// Example:
+/// ```dart
+/// formatCurrency(2500); // KES 2,500
+/// formatCurrency(12500.75, currencyCode: 'USD'); // USD 12,500.75
+/// ```
+String formatCurrency(
+  num amount, {
+  String currencyCode = 'KES',
+  int decimalDigits = 0,
+}) {
+  final NumberFormat formatter = NumberFormat.currency(
+    symbol: '$currencyCode ',
+    decimalDigits: decimalDigits,
+    customPattern:
+        '¤#,##0${decimalDigits > 0 ? '.${'0' * decimalDigits}' : ''}',
+  );
+  return formatter.format(amount);
 }
