@@ -661,6 +661,6 @@ const String notProvided = 'Not Provided';
 
 const String noPricingOptionsString = 'No pricing options provided';
 const String noImagesString = 'No photos added';
-const String viewMoreString = 'View More';
+const String learnMore = 'Learn More';
 
 String aboutString(String name) => 'About $name';

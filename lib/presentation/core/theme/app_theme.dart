@@ -11,13 +11,18 @@ class AppTheme {
       cardColor: Colors.white,
       dividerColor: AppColors.borderColor,
       snackBarTheme: SnackBarThemeData(
-        backgroundColor: AppColors.pageBgColor,
-        contentTextStyle: TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w500,
-          height: 1.5,
-          color: AppColors.primaryColor,
+        backgroundColor: Colors.black87,
+        behavior: SnackBarBehavior.floating,
+        elevation: 4,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
         ),
+        contentTextStyle: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.w500,
+          color: Colors.white,
+        ),
+        actionTextColor: AppColors.primaryColor,
       ),
       chipTheme: ChipThemeData(
         side: BorderSide.none,

@@ -20,16 +20,16 @@ class LimitedDescriptionWidget extends StatelessWidget {
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      spacing: 8,
       children: <Widget>[
         Text(
           description,
-          maxLines: 2,
+          maxLines: 3,
           overflow: TextOverflow.ellipsis,
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: Theme.of(context).textTheme.bodyMedium?.color,
               ),
         ),
-        const SizedBox(height: 4),
         GestureDetector(
           onTap: () {
             showFullDescriptionDialog(
@@ -39,7 +39,7 @@ class LimitedDescriptionWidget extends StatelessWidget {
             );
           },
           child: Text(
-            viewMoreString,
+            learnMore,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: Theme.of(context).colorScheme.primary,
                   fontWeight: FontWeight.w600,
