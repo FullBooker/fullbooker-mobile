@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_review_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
+import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/entities/product_category.dart';
@@ -16,6 +17,7 @@ import 'package:fullbooker/presentation/host/product_setup/widgets/location_prev
 import 'package:fullbooker/presentation/host/product_setup/widgets/preview_header_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/pricing_card_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/product_type_item.dart';
+import 'package:fullbooker/presentation/host/products/widgets/product_schedule_widget.dart';
 import 'package:fullbooker/shared/entities/data_mocks.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
@@ -49,7 +51,9 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                 converter: (Store<AppState> store) =>
                     ProductReviewViewModel.fromState(store.state),
                 builder: (BuildContext context, ProductReviewViewModel vm) {
-                  final Product? product = vm.selectedProduct;
+                  final Product? product = workflowState == WorkflowState.CREATE
+                      ? vm.currentProduct
+                      : vm.selectedProduct;
 
                   final String? name = product?.name;
                   final String? description = product?.description;
@@ -125,55 +129,28 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                           // Divider(),
 
                           // Location
-                          PreviewHeaderWidget(
-                            title: location,
-                            onEdit: () {},
-                          ),
+                          // PreviewHeaderWidget(
+                          //   title: location,
+                          //   onEdit: () {},
+                          // ),
 
-                          if (isLocationAvailable)
-                            LocationPreviewWidget(
-                              location: product?.locations?.first,
-                              readOnly: true,
-                            ),
+                          // if (isLocationAvailable)
+                          //   LocationPreviewWidget(
+                          //     location: product?.locations?.first,
+                          //     readOnly: true,
+                          //   ),
 
-                          // Date and time
-                          Divider(),
-                          PreviewHeaderWidget(
-                            title: dateAndTime,
-                            onEdit: () {},
-                          ),
-                          Wrap(
-                            runSpacing: 12,
-                            spacing: 12,
-                            crossAxisAlignment: WrapCrossAlignment.center,
-                            children: <Widget>[
-                              Row(
-                                mainAxisSize: MainAxisSize.min,
-                                spacing: 8,
-                                children: <Widget>[
-                                  HeroIcon(HeroIcons.calendar, size: 20),
-                                  Text(
-                                    testDate,
-                                    style:
-                                        Theme.of(context).textTheme.bodyMedium,
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisSize: MainAxisSize.min,
-                                spacing: 8,
-                                children: <Widget>[
-                                  HeroIcon(HeroIcons.clock, size: 20),
-                                  Text(
-                                    testTime,
-                                    style:
-                                        Theme.of(context).textTheme.bodyMedium,
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          Divider(),
+                          // // Date and time
+                          // Divider(),
+                          // PreviewHeaderWidget(
+                          //   title: dateAndTime,
+                          //   onEdit: () {},
+                          // ),
+
+                          // if ((product?.scheduleID ?? UNKNOWN) != UNKNOWN)
+                          //   ProductScheduleWidget(),
+
+                          // Divider(),
 
                           // Photos
                           PreviewHeaderWidget(
