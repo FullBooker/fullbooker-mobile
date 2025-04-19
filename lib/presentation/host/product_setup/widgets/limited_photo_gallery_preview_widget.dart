@@ -9,7 +9,8 @@ import 'package:fullbooker/application/redux/view_models/product_review_view_mod
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/domain/core/entities/product_media.dart';
-import 'package:fullbooker/presentation/host/products/widgets/no_images_zero_state.dart';
+import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
+import 'package:fullbooker/presentation/host/products/widgets/min_zero_state.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 
@@ -42,7 +43,7 @@ class LimitedPhotoGalleryPreviewWidget extends StatelessWidget {
                 .toList() ??
             <ProductMedia?>[];
 
-        if (media.isEmpty) return const NoImagesZeroState();
+        if (media.isEmpty) return const MinZeroState(copy: noImagesString);
 
         final int extraCount = media.length > 4 ? media.length - 3 : 0;
 

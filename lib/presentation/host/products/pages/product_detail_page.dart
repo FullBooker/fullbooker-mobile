@@ -16,7 +16,7 @@ import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:fullbooker/presentation/core/components/custom_badge_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/pricing_card_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/image_carousel_widget.dart';
-import 'package:fullbooker/presentation/host/products/widgets/no_pricing_zero_state.dart';
+import 'package:fullbooker/presentation/host/products/widgets/min_zero_state.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_alert_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_schedule_widget.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
@@ -161,8 +161,8 @@ class ProductDetailPage extends StatelessWidget {
                             style: Theme.of(context).textTheme.titleMedium,
                           ),
 
-                          if (product?.pricing?.isNotEmpty ?? false)
-                            NoPricingZeroState()
+                          if (product?.pricing?.isEmpty ?? true)
+                            MinZeroState(copy: noPricingOptionsString)
                           else
                             ListView.builder(
                               shrinkWrap: true,

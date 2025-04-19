@@ -1,6 +1,5 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_review_view_model.dart';
@@ -9,6 +8,7 @@ import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/entities/product_category.dart';
+import 'package:fullbooker/domain/core/entities/product_pricing.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
@@ -18,14 +18,12 @@ import 'package:fullbooker/presentation/host/product_setup/widgets/location_prev
 import 'package:fullbooker/presentation/host/product_setup/widgets/preview_header_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/pricing_card_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/product_type_item.dart';
+import 'package:fullbooker/presentation/host/products/widgets/min_zero_state.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_schedule_widget.dart';
-import 'package:fullbooker/shared/entities/data_mocks.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
-import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
-import 'package:heroicons/heroicons.dart';
 
 @RoutePage()
 class ProductReviewAndSubmitPage extends StatelessWidget {
@@ -100,57 +98,57 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
 
                           Divider(),
 
-                          // // Basic details
-                          // PreviewHeaderWidget(
-                          //   title: basicDetails,
-                          //   onEdit: () {},
-                          // ),
-                          // Column(
-                          //   spacing: 4,
-                          //   crossAxisAlignment: CrossAxisAlignment.start,
-                          //   children: <Widget>[
-                          //     if (name != null &&
-                          //         name.isNotEmpty &&
-                          //         name != UNKNOWN)
-                          //       Text(
-                          //         product?.name ?? UNKNOWN,
-                          //         style: Theme.of(context).textTheme.titleSmall,
-                          //       ),
-                          //     if (description != null &&
-                          //         description.isNotEmpty &&
-                          //         description != UNKNOWN)
-                          //       Text(
-                          //         description,
-                          //         style: Theme.of(context).textTheme.bodyMedium,
-                          //       ),
-                          //   ],
-                          // ),
+                          // Basic details
+                          PreviewHeaderWidget(
+                            title: basicDetails,
+                            onEdit: () {},
+                          ),
+                          Column(
+                            spacing: 4,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              if (name != null &&
+                                  name.isNotEmpty &&
+                                  name != UNKNOWN)
+                                Text(
+                                  product?.name ?? UNKNOWN,
+                                  style: Theme.of(context).textTheme.titleSmall,
+                                ),
+                              if (description != null &&
+                                  description.isNotEmpty &&
+                                  description != UNKNOWN)
+                                Text(
+                                  description,
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                ),
+                            ],
+                          ),
 
-                          // Divider(),
+                          Divider(),
 
                           // Location
-                          // PreviewHeaderWidget(
-                          //   title: location,
-                          //   onEdit: () {},
-                          // ),
+                          PreviewHeaderWidget(
+                            title: location,
+                            onEdit: () {},
+                          ),
 
-                          // if (isLocationAvailable)
-                          //   LocationPreviewWidget(
-                          //     location: product?.locations?.first,
-                          //     readOnly: true,
-                          //   ),
+                          if (isLocationAvailable)
+                            LocationPreviewWidget(
+                              location: product?.locations?.first,
+                              readOnly: true,
+                            ),
 
-                          // // Date and time
-                          // Divider(),
-                          // PreviewHeaderWidget(
-                          //   title: dateAndTime,
-                          //   onEdit: () {},
-                          // ),
+                          // Date and time
+                          Divider(),
+                          PreviewHeaderWidget(
+                            title: dateAndTime,
+                            onEdit: () {},
+                          ),
 
-                          // if ((product?.scheduleID ?? UNKNOWN) != UNKNOWN)
-                          //   ProductScheduleWidget(),
+                          if ((product?.scheduleID ?? UNKNOWN) != UNKNOWN)
+                            ProductScheduleWidget(),
 
-                          // Divider(),
+                          Divider(),
 
                           // Photos
                           PreviewHeaderWidget(
@@ -167,18 +165,32 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                             title: pricing,
                             onEdit: () {},
                           ),
-                          PricingCardWidget(
-                            ticketTier: vip,
-                            price: 2000,
-                            maxTickets: 300,
-                            svgIconPath: standardTicketIconSVGPath,
-                          ),
-                          PricingCardWidget(
-                            ticketTier: standard,
-                            price: 2000,
-                            maxTickets: 300,
-                            svgIconPath: standardTicketIconSVGPath,
-                          ),
+                          if (product?.pricing?.isEmpty ?? true)
+                            MinZeroState(copy: noPricingOptionsString)
+                          else
+                            ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: product?.pricing?.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                final ProductPricing? current =
+                                    product?.pricing![index];
+
+                                return Container(
+                                  margin: EdgeInsets.only(bottom: 12),
+                                  child: PricingCardWidget(
+                                    ticketTier:
+                                        current?.ticketTier ?? standardTier,
+                                    maxTickets: current?.maxTickets ?? 0,
+                                    price: double.tryParse(
+                                      current?.cost?.toString() ?? '0',
+                                    ),
+                                    svgIconPath: getTicketIconPath(
+                                      current?.ticketTier ?? standardTier,
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
                         ],
                       ),
                     ],

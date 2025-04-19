@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 
-class NoPricingZeroState extends StatelessWidget {
-  const NoPricingZeroState({super.key});
+class MinZeroState extends StatelessWidget {
+  const MinZeroState({super.key, required this.copy});
+
+  final String copy;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class NoPricingZeroState extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
       ),
       child: Text(
-        noPricingOptionsString,
+        copy,
         style: Theme.of(context).textTheme.bodyMedium,
       ),
     );
