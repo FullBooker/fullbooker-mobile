@@ -444,3 +444,20 @@ String getTicketDisplayName(String tier) {
       return 'Standard';
   }
 }
+
+LatLng parseCoordinates(String? raw) {
+  if (raw == null || raw.isEmpty) return const LatLng(0, 0);
+
+  try {
+    final String cleaned = raw.split('POINT (').last.split(')').first;
+    final List<String> parts = cleaned.trim().split(' ');
+    if (parts.length == 2) {
+      final double lng = double.tryParse(parts[0]) ?? 0;
+      final double lat = double.tryParse(parts[1]) ?? 0;
+      return LatLng(lat, lng);
+    }
+  } catch (_) {
+    return const LatLng(0, 0);
+  }
+  return const LatLng(0, 0);
+}
