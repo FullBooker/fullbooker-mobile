@@ -459,3 +459,38 @@ LatLng parseCoordinates(String? raw) {
   }
   return const LatLng(0, 0);
 }
+
+Future<void> showFullDescriptionDialog({
+  required BuildContext context,
+  required String title,
+  required String description,
+}) {
+  return showDialog(
+    context: context,
+    builder: (_) => Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 16,
+          children: <Widget>[
+            Text(
+              aboutString(title),
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            Text(
+              description,
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+            PrimaryButton(
+              onPressed: () => context.router.maybePop(),
+              child: right(okThanksString),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}

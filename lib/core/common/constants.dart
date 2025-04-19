@@ -53,6 +53,7 @@ const String kSupportLine = '0700 394 444';
 const List<String> kAllowedMediaExtensions = <String>[
   'jpg',
   'jpeg',
+  'webp',
   'png',
   'mp4',
   'mov',

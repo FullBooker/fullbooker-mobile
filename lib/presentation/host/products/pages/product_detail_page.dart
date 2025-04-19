@@ -17,6 +17,7 @@ import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:fullbooker/presentation/core/components/custom_badge_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/pricing_card_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/image_carousel_widget.dart';
+import 'package:fullbooker/presentation/host/products/widgets/limited_description_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/min_zero_state.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_alert_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_detail_item_widget.dart';
@@ -128,6 +129,10 @@ class ProductDetailPage extends StatelessWidget {
                             title: productInReview,
                             description: productInReviewCopy,
                             iconData: HeroIcons.clipboardDocumentList,
+                          ),
+                          LimitedDescriptionWidget(
+                            name: product?.name ?? UNKNOWN,
+                            description: product?.description ?? UNKNOWN,
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
