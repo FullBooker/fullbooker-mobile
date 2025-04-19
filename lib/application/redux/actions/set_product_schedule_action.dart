@@ -53,24 +53,20 @@ class SetProductScheduleAction extends ReduxAction<AppState> {
       'repeat': repeats ? repeatOption : noRepeatSchedule,
     };
 
-    if (repeatOption == noRepeatSchedule || repeatOption == dailyOption) {
-      data['start_date'] = startDate;
-      data['end_date'] = endDate;
-    }
-
     if (repeats) {
       if (repeatOption == weeklyOption.toLowerCase()) {
         final Map<String, Map<String, String>> weekly =
             selectedSchedule?.repeatOnDaysOfWeek ??
                 <String, Map<String, String>>{};
-        data['repeat_on_days_of_week'] =
-            weekly.entries.map((MapEntry<String, Map<String, String>> entry) {
-          return <String, String?>{
-            'day': entry.key.toLowerCase(),
-            'start_time': entry.value['start_time'],
-            'end_time': entry.value['end_time'],
-          };
-        }).toList();
+        data['repeat_on_days_of_week'] = weekly.entries.map(
+          (MapEntry<String, Map<String, String>> entry) {
+            return <String, String?>{
+              'day': entry.key.toLowerCase(),
+              'start_time': entry.value['start_time'],
+              'end_time': entry.value['end_time'],
+            };
+          },
+        ).toList();
       }
 
       if (repeatOption == monthlyOption.toLowerCase()) {
@@ -82,8 +78,7 @@ class SetProductScheduleAction extends ReduxAction<AppState> {
         final List<String> yearDates =
             selectedSchedule?.repeatYearDates ?? <String>[];
 
-        final Set<int> uniqueDays = <int>{};
-        final Set<int> uniqueMonths = <int>{};
+        final Map<String, Set<int>> grouped = <String, Set<int>>{};
 
         for (final String entry in yearDates) {
           final List<String> parts = entry.split('-');
@@ -97,18 +92,29 @@ class SetProductScheduleAction extends ReduxAction<AppState> {
                 month <= 12 &&
                 day >= 1 &&
                 day <= 31) {
-              uniqueDays.add(day);
-              uniqueMonths.add(month);
+              final String monthName = _monthName(month);
+              grouped.putIfAbsent(monthName, () => <int>{});
+              grouped[monthName]!.add(day);
             }
           }
         }
 
-        data['repeat_on_date_of_month'] = uniqueDays.toList()..sort();
-        data['repeat_on_month_of_year'] = uniqueMonths.toList()..sort();
+        final List<Map<String, dynamic>> repeatOnMonthOfYear = grouped.entries
+            .map(
+              (MapEntry<String, Set<int>> e) => <String, dynamic>{
+                'month': e.key,
+                'repeat_on_date_of_month': e.value.toList()..sort(),
+              },
+            )
+            .toList();
+
+        data['repeat_on_month_of_year'] = repeatOnMonthOfYear;
       }
     }
 
     final String endpoint = GetIt.I.get<AppConfig>().productScheduleEndpoint;
+
+    print(data);
 
     final Response httpResponse = await client.callRESTAPI(
       endpoint: endpoint,
@@ -134,5 +140,23 @@ class SetProductScheduleAction extends ReduxAction<AppState> {
 
     onSuccess?.call();
     return state;
+  }
+
+  String _monthName(int month) {
+    const List<String> monthNames = <String>[
+      'january',
+      'february',
+      'march',
+      'april',
+      'may',
+      'june',
+      'july',
+      'august',
+      'september',
+      'october',
+      'november',
+      'december',
+    ];
+    return monthNames[month - 1];
   }
 }

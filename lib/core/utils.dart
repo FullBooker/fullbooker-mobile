@@ -485,7 +485,7 @@ Future<void> showFullDescriptionDialog({
   );
 }
 
-/// Formats a number into a currency string with comma separators and optional currency code.
+/// Formats currency string with comma separators & currency code.
 ///
 /// Example:
 /// ```dart
