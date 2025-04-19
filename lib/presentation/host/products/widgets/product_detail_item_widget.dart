@@ -7,13 +7,13 @@ class ProductDetailItemWidget extends StatelessWidget {
   const ProductDetailItemWidget({
     super.key,
     required this.text,
-    required this.value,
+    this.value,
     required this.onTap,
   });
 
-  final String text;
-  final String value;
   final Function() onTap;
+  final String text;
+  final String? value;
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +37,13 @@ class ProductDetailItemWidget extends StatelessWidget {
               children: <Widget>[
                 Text(
                   text,
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-                Text(
-                  value,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
+                if (value != null)
+                  Text(
+                    value!,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
               ],
             ),
           ),
