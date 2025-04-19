@@ -39,7 +39,7 @@ class ProductDetailPage extends StatelessWidget {
       bottomNavigationBar: const BottomNavBar(),
       appBar: CustomAppBar(
         showBell: false,
-        title: productsString,
+        title: productDetailsString,
         actions: <AppBarAction>[
           AppBarAction(
             iconUrl: HeroIcons.pencil,

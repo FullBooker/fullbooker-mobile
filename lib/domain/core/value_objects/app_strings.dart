@@ -316,6 +316,7 @@ const String searchString = 'Search';
 const String profileString = 'Profile';
 const String homeString = 'Home';
 const String productsString = 'Products';
+const String productDetailsString = 'Product Details';
 
 const String yesString = 'Yes';
 const String noString = 'No';
