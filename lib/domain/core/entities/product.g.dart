@@ -34,18 +34,26 @@ _$ProductImpl _$$ProductImplFromJson(Map<String, dynamic> json) =>
       image: json['image'] == null
           ? null
           : ProductMedia.fromJson(json['image'] as Map<String, dynamic>),
-      video: json['video'],
+      video: json['video'] == null
+          ? null
+          : ProductMedia.fromJson(json['video'] as Map<String, dynamic>),
       locations: (json['locations'] as List<dynamic>?)
               ?.map((e) => ProductLocation.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const <ProductLocation>[],
+      completed: json['completed'] as bool? ?? false,
       productMedia: (json['productMedia'] as List<dynamic>?)
               ?.map((e) => e == null
                   ? null
                   : ProductMedia.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const <ProductMedia>[],
-      completed: json['completed'] as bool? ?? false,
+      bookings: (json['bookings'] as List<dynamic>?)
+              ?.map((e) => e == null
+                  ? null
+                  : Booking.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const <Booking>[],
       selectedProductCategory: json['selectedProductCategory'] == null
           ? null
           : ProductCategory.fromJson(
@@ -75,10 +83,11 @@ Map<String, dynamic> _$$ProductImplToJson(_$ProductImpl instance) =>
       'new_schedule': instance.schedule?.toJson(),
       'pricing': instance.pricing?.map((e) => e?.toJson()).toList(),
       'image': instance.image?.toJson(),
-      'video': instance.video,
+      'video': instance.video?.toJson(),
       'locations': instance.locations?.map((e) => e.toJson()).toList(),
-      'productMedia': instance.productMedia?.map((e) => e?.toJson()).toList(),
       'completed': instance.completed,
+      'productMedia': instance.productMedia?.map((e) => e?.toJson()).toList(),
+      'bookings': instance.bookings?.map((e) => e?.toJson()).toList(),
       'selectedProductCategory': instance.selectedProductCategory?.toJson(),
       'selectedProductSubCategory':
           instance.selectedProductSubCategory?.toJson(),

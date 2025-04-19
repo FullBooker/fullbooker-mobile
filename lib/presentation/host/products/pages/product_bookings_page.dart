@@ -1,15 +1,15 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
+import 'package:fullbooker/application/redux/actions/fetch_product_bookings_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
-import 'package:fullbooker/application/redux/states/user_state.dart';
-import 'package:fullbooker/application/redux/view_models/products_page_view_model.dart';
+import 'package:fullbooker/application/redux/view_models/products_bookings_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
-import 'package:fullbooker/domain/core/entities/booking.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
-import 'package:fullbooker/presentation/host/products/widgets/booking_list_item_widget.dart';
 import 'package:fullbooker/shared/entities/data_mocks.dart';
+import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/custom_text_input.dart';
 import 'package:heroicons/heroicons.dart';
@@ -47,23 +47,20 @@ class ProductBookingsPage extends StatelessWidget {
           physics: NeverScrollableScrollPhysics(),
           child: Column(
             children: <Widget>[
-              StoreConnector<AppState, ProductsPageViewModel>(
+              StoreConnector<AppState, ProductsBookingsViewModel>(
                 converter: (Store<AppState> store) =>
-                    ProductsPageViewModel.fromState(store.state),
+                    ProductsBookingsViewModel.fromState(store.state),
                 onInit: (Store<AppState> store) {
-                  // TODO(abiud): dispatch get product bookings action
-                  // context.dispatch(
-                  //   FetchProductsAction(
-                  //     client: AppWrapperBase.of(context)!.customClient,
-                  //   ),
-                  // );
+                  context.dispatch(
+                    FetchProductBookingsAction(
+                      client: AppWrapperBase.of(context)!.customClient,
+                    ),
+                  );
                 },
-                builder: (BuildContext context, ProductsPageViewModel vm) {
-                  // TODO(abiud): restore this code when linking to the API
-
-                  // if (context.isWaiting(FetchProductsAction)) {
-                  //   return AppLoading();
-                  // }
+                builder: (BuildContext context, ProductsBookingsViewModel vm) {
+                  if (context.isWaiting(FetchProductBookingsAction)) {
+                    return AppLoading();
+                  }
 
                   // final List<Product>? products = vm.products;
 
@@ -135,22 +132,24 @@ class ProductBookingsPage extends StatelessWidget {
                             physics: AlwaysScrollableScrollPhysics(),
                             shrinkWrap: true,
                             itemBuilder: (BuildContext context, int index) {
-                              final Booking current = mockBookings[index];
+                              // final Booking current = mockBookings[index];
 
                               return Padding(
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 4),
-                                child: BookingListItem(
-                                  booking: Booking.initial().copyWith(
-                                    bookedOn: DateTime.now().toIso8601String(),
-                                    user: UserState(
-                                      firstName: current.user?.firstName,
-                                      lastName: current.user?.lastName,
-                                    ),
-                                    bookingType: current.bookingType,
-                                    price: current.price,
-                                  ),
-                                ),
+                                child: Container(),
+
+                                //  BookingListItem(
+                                //   booking: Booking.initial().copyWith(
+                                //     bookedOn: DateTime.now().toIso8601String(),
+                                //     user: UserState(
+                                //       firstName: current.user?.firstName,
+                                //       lastName: current.user?.lastName,
+                                //     ),
+                                //     bookingType: current.bookingType,
+                                //     price: current.price,
+                                //   ),
+                                // ),
                               );
                             },
                           ),

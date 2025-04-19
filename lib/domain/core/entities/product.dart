@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:fullbooker/application/redux/states/user_state.dart';
 import 'package:fullbooker/core/common/constants.dart';
+import 'package:fullbooker/domain/core/entities/booking.dart';
 import 'package:fullbooker/domain/core/entities/product_schedule.dart';
 import 'package:fullbooker/domain/core/entities/product_category.dart';
 import 'package:fullbooker/domain/core/entities/product_media.dart';
@@ -29,12 +30,13 @@ class Product with _$Product {
     @JsonKey(name: 'new_schedule') ProductSchedule? schedule,
     @Default(<ProductPricing>[]) List<ProductPricing?>? pricing,
     ProductMedia? image,
-    dynamic video,
+    ProductMedia? video,
     @Default(<ProductLocation>[]) List<ProductLocation>? locations,
-    @Default(<ProductMedia>[]) List<ProductMedia?>? productMedia,
     @Default(false) bool? completed,
 
     /// Temp values used when creating a product
+    @Default(<ProductMedia>[]) List<ProductMedia?>? productMedia,
+    @Default(<Booking>[]) List<Booking?>? bookings,
     @JsonKey(includeFromJson: true, includeToJson: true)
     ProductCategory? selectedProductCategory,
     @JsonKey(includeFromJson: true, includeToJson: true)
@@ -46,6 +48,7 @@ class Product with _$Product {
         host: UserState.initial(),
         schedule: ProductSchedule.initial(),
         image: ProductMedia.initial(),
+        video: ProductMedia.initial(),
         selectedProductCategory: ProductCategory.initial(),
         selectedProductSubCategory: ProductCategory.initial(),
         stats: ProductStats(),
