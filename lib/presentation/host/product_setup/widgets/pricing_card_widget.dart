@@ -80,9 +80,7 @@ class PricingCardWidget extends StatelessWidget {
                     if (maxTickets > 0)
                       Text(
                         maxAllowedTickets(maxTickets),
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              fontStyle: FontStyle.italic,
-                            ),
+                        style: Theme.of(context).textTheme.bodySmall,
                       ),
                   ],
                 ),

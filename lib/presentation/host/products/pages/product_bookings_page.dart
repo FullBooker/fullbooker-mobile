@@ -7,6 +7,7 @@ import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/products_bookings_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/domain/core/entities/booking.dart';
+import 'package:fullbooker/domain/core/entities/product_stats.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
@@ -50,31 +51,6 @@ class ProductBookingsPage extends StatelessWidget {
           physics: NeverScrollableScrollPhysics(),
           child: Column(
             children: <Widget>[
-              // if (products?.isEmpty ?? true) {
-              //   return GenericZeroState(
-              //     iconPath: productZeroStateSVGPath,
-              //     title: noProducts,
-              //     description: noProductsCopy,
-              //     onCTATap: () {
-              //       context.router.push(SetupProductTypeRoute());
-              //     },
-              //     ctaText: createProductString,
-              //   );
-              // }
-
-              // return ListView.builder(
-              //   shrinkWrap: true,
-              //   itemCount: products?.length,
-              //   itemBuilder: (BuildContext context, int index) {
-              //     final Product product = products![index];
-
-              //     return Padding(
-              //       padding: const EdgeInsets.symmetric(vertical: 12),
-              //       child: NewProductCard(product: product),
-              //     );
-              //   },
-              // );
-
               Column(
                 spacing: 24,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -90,6 +66,10 @@ class ProductBookingsPage extends StatelessWidget {
                           BuildContext context,
                           ProductsBookingsViewModel vm,
                         ) {
+                          final ProductStats? stats = vm.stats;
+                          final int count = stats?.bookings ?? 0;
+                          final bool hasBookings = count > 0;
+
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             spacing: 12,
@@ -99,11 +79,13 @@ class ProductBookingsPage extends StatelessWidget {
                                 style: Theme.of(context).textTheme.titleMedium,
                               ),
                               Text(
-                                '400 $bookings',
+                                hasBookings
+                                    ? bookingsValue(count)
+                                    : noBookingsYet,
                                 style: Theme.of(context).textTheme.bodySmall,
                               ),
                               Text(
-                                'KES 300, 000',
+                                'KES ${stats?.revenue}',
                                 style: Theme.of(context)
                                     .textTheme
                                     .titleMedium
@@ -165,8 +147,6 @@ class ProductBookingsPage extends StatelessWidget {
                                 keyboardType: TextInputType.name,
                                 prefixIconData: HeroIcons.magnifyingGlass,
                               ),
-
-                              // Bookings
                               ListView.builder(
                                 itemCount: vm.bookings?.length,
                                 physics: AlwaysScrollableScrollPhysics(),

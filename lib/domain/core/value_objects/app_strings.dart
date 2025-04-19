@@ -564,7 +564,6 @@ const String locationPermsCopy =
 const String viewString = 'View';
 
 const String bookings = 'Bookings';
-const String noBookingsYet = 'No bookings yet';
 String bookingsValue(int value) => '$value bookings';
 const String payments = 'Payments';
 
