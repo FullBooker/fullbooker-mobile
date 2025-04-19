@@ -13,12 +13,15 @@ class ProductDetailItemWidget extends StatelessWidget {
 
   final Function() onTap;
   final String text;
-  final String? value;
+  final int? value;
 
   @override
   Widget build(BuildContext context) {
+    final int count = value ?? 0;
+    final bool hasBookings = count > 0;
+
     return Container(
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
@@ -27,30 +30,32 @@ class ProductDetailItemWidget extends StatelessWidget {
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        spacing: 12,
         children: <Widget>[
           Flexible(
             flex: 5,
             child: Column(
-              spacing: 4,
               crossAxisAlignment: CrossAxisAlignment.start,
+              spacing: 4,
               children: <Widget>[
                 Text(
                   text,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
-                if (value != null)
-                  Text(
-                    value!,
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
+                Text(
+                  hasBookings ? bookingsValue(count) : noBookingsYet,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
               ],
             ),
           ),
-          Flexible(
-            flex: 2,
-            child: SecondaryButton(onPressed: onTap, child: right(viewString)),
-          ),
+          if (hasBookings)
+            Flexible(
+              flex: 2,
+              child: SecondaryButton(
+                onPressed: onTap,
+                child: right(viewString),
+              ),
+            ),
         ],
       ),
     );

@@ -54,6 +54,9 @@ _$ProductImpl _$$ProductImplFromJson(Map<String, dynamic> json) =>
           ? null
           : ProductCategory.fromJson(
               json['selectedProductSubCategory'] as Map<String, dynamic>),
+      stats: json['stats'] == null
+          ? null
+          : ProductStats.fromJson(json['stats'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$ProductImplToJson(_$ProductImpl instance) =>
@@ -79,4 +82,5 @@ Map<String, dynamic> _$$ProductImplToJson(_$ProductImpl instance) =>
       'selectedProductCategory': instance.selectedProductCategory?.toJson(),
       'selectedProductSubCategory':
           instance.selectedProductSubCategory?.toJson(),
+      'stats': instance.stats?.toJson(),
     };

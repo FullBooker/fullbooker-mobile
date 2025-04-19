@@ -20,8 +20,8 @@ import 'package:fullbooker/presentation/host/products/widgets/image_carousel_wid
 import 'package:fullbooker/presentation/host/products/widgets/limited_description_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/min_zero_state.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_alert_widget.dart';
-import 'package:fullbooker/presentation/host/products/widgets/product_detail_item_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_schedule_widget.dart';
+import 'package:fullbooker/presentation/host/products/widgets/product_stats_widget.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
@@ -135,40 +135,7 @@ class ProductDetailPage extends StatelessWidget {
                             name: product?.name ?? UNKNOWN,
                             description: product?.description ?? UNKNOWN,
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            spacing: 12,
-                            children: <Widget>[
-                              Text(
-                                stats,
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                              // Column(
-                              //   crossAxisAlignment: CrossAxisAlignment.start,
-                              //   spacing: 8,
-                              //   children: <Widget>[
-                              //     Text(
-                              //       totalRevenue,
-                              //       style: Theme.of(context).textTheme.bodySmall,
-                              //     ),
-                              //     Text(
-                              //       'KES 300, 000',
-                              //       style: Theme.of(context)
-                              //           .textTheme
-                              //           .titleLarge
-                              //           ?.copyWith(
-                              //             color: Theme.of(context).primaryColor,
-                              //           ),
-                              //     ),
-                              //   ],
-                              // ),
-                              ProductDetailItemWidget(
-                                text: bookings,
-                                onTap: () =>
-                                    context.router.push(ProductBookingsRoute()),
-                              ),
-                            ],
-                          ),
+                          ProductStatsWidget(),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             spacing: 12,
