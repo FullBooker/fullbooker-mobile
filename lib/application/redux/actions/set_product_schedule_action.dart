@@ -114,8 +114,6 @@ class SetProductScheduleAction extends ReduxAction<AppState> {
 
     final String endpoint = GetIt.I.get<AppConfig>().productScheduleEndpoint;
 
-    print(data);
-
     final Response httpResponse = await client.callRESTAPI(
       endpoint: endpoint,
       method: APIMethods.POST.name.toUpperCase(),

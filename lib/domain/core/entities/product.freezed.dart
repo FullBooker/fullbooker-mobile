@@ -50,6 +50,7 @@ mixin _$Product {
   @JsonKey(includeFromJson: true, includeToJson: true)
   ProductCategory? get selectedProductSubCategory =>
       throw _privateConstructorUsedError;
+  ProductStats? get stats => throw _privateConstructorUsedError;
 
   /// Serializes this Product to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -87,13 +88,15 @@ abstract class $ProductCopyWith<$Res> {
       @JsonKey(includeFromJson: true, includeToJson: true)
       ProductCategory? selectedProductCategory,
       @JsonKey(includeFromJson: true, includeToJson: true)
-      ProductCategory? selectedProductSubCategory});
+      ProductCategory? selectedProductSubCategory,
+      ProductStats? stats});
 
   $UserStateCopyWith<$Res>? get host;
   $ProductScheduleCopyWith<$Res>? get schedule;
   $ProductMediaCopyWith<$Res>? get image;
   $ProductCategoryCopyWith<$Res>? get selectedProductCategory;
   $ProductCategoryCopyWith<$Res>? get selectedProductSubCategory;
+  $ProductStatsCopyWith<$Res>? get stats;
 }
 
 /// @nodoc
@@ -131,6 +134,7 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
     Object? completed = freezed,
     Object? selectedProductCategory = freezed,
     Object? selectedProductSubCategory = freezed,
+    Object? stats = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -213,6 +217,10 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
           ? _value.selectedProductSubCategory
           : selectedProductSubCategory // ignore: cast_nullable_to_non_nullable
               as ProductCategory?,
+      stats: freezed == stats
+          ? _value.stats
+          : stats // ignore: cast_nullable_to_non_nullable
+              as ProductStats?,
     ) as $Val);
   }
 
@@ -287,6 +295,20 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
       return _then(_value.copyWith(selectedProductSubCategory: value) as $Val);
     });
   }
+
+  /// Create a copy of Product
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ProductStatsCopyWith<$Res>? get stats {
+    if (_value.stats == null) {
+      return null;
+    }
+
+    return $ProductStatsCopyWith<$Res>(_value.stats!, (value) {
+      return _then(_value.copyWith(stats: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -318,7 +340,8 @@ abstract class _$$ProductImplCopyWith<$Res> implements $ProductCopyWith<$Res> {
       @JsonKey(includeFromJson: true, includeToJson: true)
       ProductCategory? selectedProductCategory,
       @JsonKey(includeFromJson: true, includeToJson: true)
-      ProductCategory? selectedProductSubCategory});
+      ProductCategory? selectedProductSubCategory,
+      ProductStats? stats});
 
   @override
   $UserStateCopyWith<$Res>? get host;
@@ -330,6 +353,8 @@ abstract class _$$ProductImplCopyWith<$Res> implements $ProductCopyWith<$Res> {
   $ProductCategoryCopyWith<$Res>? get selectedProductCategory;
   @override
   $ProductCategoryCopyWith<$Res>? get selectedProductSubCategory;
+  @override
+  $ProductStatsCopyWith<$Res>? get stats;
 }
 
 /// @nodoc
@@ -365,6 +390,7 @@ class __$$ProductImplCopyWithImpl<$Res>
     Object? completed = freezed,
     Object? selectedProductCategory = freezed,
     Object? selectedProductSubCategory = freezed,
+    Object? stats = freezed,
   }) {
     return _then(_$ProductImpl(
       id: freezed == id
@@ -447,6 +473,10 @@ class __$$ProductImplCopyWithImpl<$Res>
           ? _value.selectedProductSubCategory
           : selectedProductSubCategory // ignore: cast_nullable_to_non_nullable
               as ProductCategory?,
+      stats: freezed == stats
+          ? _value.stats
+          : stats // ignore: cast_nullable_to_non_nullable
+              as ProductStats?,
     ));
   }
 }
@@ -477,7 +507,8 @@ class _$ProductImpl implements _Product {
       @JsonKey(includeFromJson: true, includeToJson: true)
       this.selectedProductCategory,
       @JsonKey(includeFromJson: true, includeToJson: true)
-      this.selectedProductSubCategory});
+      this.selectedProductSubCategory,
+      this.stats});
 
   factory _$ProductImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProductImplFromJson(json);
@@ -541,10 +572,12 @@ class _$ProductImpl implements _Product {
   @override
   @JsonKey(includeFromJson: true, includeToJson: true)
   final ProductCategory? selectedProductSubCategory;
+  @override
+  final ProductStats? stats;
 
   @override
   String toString() {
-    return 'Product(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, active: $active, host: $host, name: $name, description: $description, number: $number, category: $category, subcategory: $subcategory, scheduleID: $scheduleID, schedule: $schedule, pricing: $pricing, image: $image, video: $video, locations: $locations, productMedia: $productMedia, completed: $completed, selectedProductCategory: $selectedProductCategory, selectedProductSubCategory: $selectedProductSubCategory)';
+    return 'Product(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, active: $active, host: $host, name: $name, description: $description, number: $number, category: $category, subcategory: $subcategory, scheduleID: $scheduleID, schedule: $schedule, pricing: $pricing, image: $image, video: $video, locations: $locations, productMedia: $productMedia, completed: $completed, selectedProductCategory: $selectedProductCategory, selectedProductSubCategory: $selectedProductSubCategory, stats: $stats)';
   }
 
   @override
@@ -585,7 +618,8 @@ class _$ProductImpl implements _Product {
             (identical(other.selectedProductSubCategory,
                     selectedProductSubCategory) ||
                 other.selectedProductSubCategory ==
-                    selectedProductSubCategory));
+                    selectedProductSubCategory) &&
+            (identical(other.stats, stats) || other.stats == stats));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -611,7 +645,8 @@ class _$ProductImpl implements _Product {
         const DeepCollectionEquality().hash(productMedia),
         completed,
         selectedProductCategory,
-        selectedProductSubCategory
+        selectedProductSubCategory,
+        stats
       ]);
 
   /// Create a copy of Product
@@ -653,7 +688,8 @@ abstract class _Product implements Product {
       @JsonKey(includeFromJson: true, includeToJson: true)
       final ProductCategory? selectedProductCategory,
       @JsonKey(includeFromJson: true, includeToJson: true)
-      final ProductCategory? selectedProductSubCategory}) = _$ProductImpl;
+      final ProductCategory? selectedProductSubCategory,
+      final ProductStats? stats}) = _$ProductImpl;
 
   factory _Product.fromJson(Map<String, dynamic> json) = _$ProductImpl.fromJson;
 
@@ -705,6 +741,8 @@ abstract class _Product implements Product {
   @override
   @JsonKey(includeFromJson: true, includeToJson: true)
   ProductCategory? get selectedProductSubCategory;
+  @override
+  ProductStats? get stats;
 
   /// Create a copy of Product
   /// with the given fields replaced by the non-null parameter values.

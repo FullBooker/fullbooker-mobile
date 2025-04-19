@@ -6,6 +6,7 @@ import 'package:fullbooker/domain/core/entities/product_category.dart';
 import 'package:fullbooker/domain/core/entities/product_media.dart';
 import 'package:fullbooker/domain/core/entities/product_location.dart';
 import 'package:fullbooker/domain/core/entities/product_pricing.dart';
+import 'package:fullbooker/domain/core/entities/product_stats.dart';
 
 part 'product.freezed.dart';
 part 'product.g.dart';
@@ -38,6 +39,7 @@ class Product with _$Product {
     ProductCategory? selectedProductCategory,
     @JsonKey(includeFromJson: true, includeToJson: true)
     ProductCategory? selectedProductSubCategory,
+    ProductStats? stats,
   }) = _Product;
 
   factory Product.initial() => Product(
@@ -46,6 +48,7 @@ class Product with _$Product {
         image: ProductMedia.initial(),
         selectedProductCategory: ProductCategory.initial(),
         selectedProductSubCategory: ProductCategory.initial(),
+        stats: ProductStats(),
       );
 
   factory Product.fromJson(Map<String, dynamic> json) =>
@@ -60,6 +63,7 @@ class Product with _$Product {
           product.selectedProductCategory ?? ProductCategory.initial(),
       selectedProductSubCategory:
           product.selectedProductSubCategory ?? ProductCategory.initial(),
+      stats: product.stats ?? ProductStats(),
     );
   }
 }

@@ -564,6 +564,8 @@ const String locationPermsCopy =
 const String viewString = 'View';
 
 const String bookings = 'Bookings';
+const String noBookingsYet = 'No bookings yet';
+String bookingsValue(int value) => '$value bookings';
 const String payments = 'Payments';
 
 const String deactivateProduct = 'Deactivate Product';
@@ -626,7 +628,7 @@ const String productSubmitCopy =
 const String backToProducts = 'Back to Products';
 const String viewProduct = 'View Product';
 
-const String stats = 'Stats';
+const String statsString = 'Stats';
 const String totalRevenue = 'Total Revenue';
 
 const String scanTickets = 'Scan Tickets';
