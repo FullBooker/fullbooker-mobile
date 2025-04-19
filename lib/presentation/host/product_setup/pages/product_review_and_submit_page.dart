@@ -13,6 +13,7 @@ import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:dartz/dartz.dart' as d;
+import 'package:fullbooker/presentation/host/product_setup/widgets/limited_photo_gallery_preview_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/location_preview_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/preview_header_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/pricing_card_widget.dart';
@@ -34,7 +35,6 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double photoSize = (MediaQuery.of(context).size.width - 32) / 4.5;
     return Scaffold(
       appBar: CustomAppBar(
         showBell: false,
@@ -157,74 +157,9 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                             title: photos,
                             onEdit: () {},
                           ),
-                          Row(
-                            children: <Widget>[
-                              ...mockProductSetupImageURLs.take(3).map(
-                                (String url) {
-                                  return Padding(
-                                    padding: const EdgeInsets.only(right: 8.0),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(8),
-                                      child: CachedNetworkImage(
-                                        imageUrl: url,
-                                        width: photoSize,
-                                        height: photoSize,
-                                        fit: BoxFit.cover,
-                                        progressIndicatorBuilder: (
-                                          BuildContext context,
-                                          String url,
-                                          DownloadProgress progress,
-                                        ) =>
-                                            Center(child: AppLoading()),
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(8),
-                                child: Stack(
-                                  alignment: Alignment.center,
-                                  children: <Widget>[
-                                    CachedNetworkImage(
-                                      imageUrl: mockProductSetupImageURLs.last,
-                                      width: photoSize,
-                                      height: photoSize,
-                                      fit: BoxFit.cover,
-                                      placeholder: (
-                                        BuildContext context,
-                                        String url,
-                                      ) =>
-                                          Container(
-                                        color: Colors.grey.shade300,
-                                      ),
-                                      errorWidget: (
-                                        BuildContext context,
-                                        String url,
-                                        Object error,
-                                      ) =>
-                                          const Icon(Icons.error),
-                                    ),
-                                    Container(
-                                      width: photoSize,
-                                      height: photoSize,
-                                      color:
-                                          Colors.black.withValues(alpha: 0.5),
-                                      child: const Center(
-                                        child: Text(
-                                          '+ 12',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
+
+                          LimitedPhotoGalleryPreviewWidget(),
+
                           Divider(),
 
                           // Pricing
