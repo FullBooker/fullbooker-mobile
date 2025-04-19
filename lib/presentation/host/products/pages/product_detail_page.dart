@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_detail_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
+import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/entities/product.dart';
+import 'package:fullbooker/domain/core/entities/product_pricing.dart';
 import 'package:fullbooker/domain/core/value_objects/app_bar_action.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
@@ -15,6 +17,7 @@ import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:fullbooker/presentation/core/components/custom_badge_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/pricing_card_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/image_carousel_widget.dart';
+import 'package:fullbooker/presentation/host/products/widgets/min_zero_state.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_alert_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_detail_item_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_schedule_widget.dart';
@@ -69,7 +72,7 @@ class ProductDetailPage extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(16),
                       child: Column(
-                        spacing: 12,
+                        spacing: 16,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Row(
@@ -126,56 +129,81 @@ class ProductDetailPage extends StatelessWidget {
                             description: productInReviewCopy,
                             iconData: HeroIcons.clipboardDocumentList,
                           ),
-                          verySmallVerticalSizedBox,
-                          Text(
-                            stats,
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            spacing: 8,
+                            spacing: 12,
                             children: <Widget>[
                               Text(
-                                totalRevenue,
-                                style: Theme.of(context).textTheme.bodySmall,
+                                stats,
+                                style: Theme.of(context).textTheme.titleMedium,
                               ),
-                              Text(
-                                'KES 300, 000',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleLarge
-                                    ?.copyWith(
-                                      color: Theme.of(context).primaryColor,
-                                    ),
+                              // Column(
+                              //   crossAxisAlignment: CrossAxisAlignment.start,
+                              //   spacing: 8,
+                              //   children: <Widget>[
+                              //     Text(
+                              //       totalRevenue,
+                              //       style: Theme.of(context).textTheme.bodySmall,
+                              //     ),
+                              //     Text(
+                              //       'KES 300, 000',
+                              //       style: Theme.of(context)
+                              //           .textTheme
+                              //           .titleLarge
+                              //           ?.copyWith(
+                              //             color: Theme.of(context).primaryColor,
+                              //           ),
+                              //     ),
+                              //   ],
+                              // ),
+                              ProductDetailItemWidget(
+                                text: bookings,
+                                onTap: () =>
+                                    context.router.push(ProductBookingsRoute()),
                               ),
                             ],
                           ),
-                          ProductDetailItemWidget(
-                            text: bookings,
-                            value: '300',
-                            onTap: () =>
-                                context.router.push(ProductBookingsRoute()),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            spacing: 12,
+                            children: <Widget>[
+                              Text(
+                                pricing,
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                              if (product?.pricing?.isEmpty ?? true)
+                                MinZeroState(copy: noPricingOptionsString)
+                              else
+                                ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: product?.pricing?.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    final ProductPricing? current =
+                                        product?.pricing![index];
+
+                                    return Container(
+                                      margin: EdgeInsets.only(bottom: 12),
+                                      child: PricingCardWidget(
+                                        ticketTier:
+                                            current?.ticketTier ?? standardTier,
+                                        maxTickets: current?.maxTickets ?? 0,
+                                        price: double.tryParse(
+                                          current?.cost?.toString() ?? '0',
+                                        ),
+                                        svgIconPath: getTicketIconPath(
+                                          current?.ticketTier ?? standardTier,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                            ],
                           ),
-                          Text(
-                            pricing,
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
-                          PricingCardWidget(
-                            ticketType: vip,
-                            maxTickets: 300,
-                            price: 3000,
-                            svgIconPath: vvipTicketIconSVGPath,
-                            // onAddOrEdit: () {},
-                          ),
-                          PricingCardWidget(
-                            ticketType: vvip,
-                            maxTickets: 20,
-                            price: 5000,
-                            svgIconPath: vvipTicketIconSVGPath,
-                            // onAddOrEdit: () {},
-                          ),
+                          verySmallVerticalSizedBox,
                           SecondaryButton(
-                            fillColor: AppColors.redColor.withValues(alpha: .1),
+                            fillColor:
+                                AppColors.redColor.withValues(alpha: .05),
                             textColor: AppColors.redColor,
                             onPressed: () => showAlertDialog(
                               context: context,

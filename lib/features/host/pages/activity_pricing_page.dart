@@ -5,7 +5,7 @@ import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/features/host/controllers/currency_controller.dart';
-import 'package:fullbooker/features/host/models/currency.dart';
+import 'package:fullbooker/features/host/models/old_currency.dart';
 import 'package:fullbooker/features/host/models/old_product.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/session_pricing.dart';
@@ -31,9 +31,9 @@ class ActivityPricingPage extends StatefulWidget {
 
 class _ActivityPricingPageState extends State<ActivityPricingPage> {
   bool isLoading = false;
-  List<Currency> currencies = <Currency>[];
+  List<OldCurrency> currencies = <OldCurrency>[];
   CurrencyViewModel currencyViewModel = CurrencyViewModel();
-  Currency? selectedCurrency;
+  OldCurrency? selectedCurrency;
   TextEditingController priceController = TextEditingController();
   TextEditingController amountController = TextEditingController();
 
@@ -62,7 +62,7 @@ class _ActivityPricingPageState extends State<ActivityPricingPage> {
     super.initState();
     currencyViewModel.repository
         .pullMultiple(1, 100)
-        .then((List<Currency> currencies_) {
+        .then((List<OldCurrency> currencies_) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         setState(() => currencies = currencies_);
       });
@@ -109,7 +109,7 @@ class _ActivityPricingPageState extends State<ActivityPricingPage> {
                             child: OldCustomDropdown(
                               options: currencies
                                   .map(
-                                    (Currency currency) => OldDropDownOption(
+                                    (OldCurrency currency) => OldDropDownOption(
                                       currency.code,
                                       currency.id,
                                       () {},
@@ -123,7 +123,7 @@ class _ActivityPricingPageState extends State<ActivityPricingPage> {
                                     setState(
                                       () => selectedCurrency =
                                           currencies.firstWhere(
-                                        (Currency currency) =>
+                                        (OldCurrency currency) =>
                                             currency.id == option.id,
                                       ),
                                     );

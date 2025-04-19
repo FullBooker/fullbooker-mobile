@@ -5,7 +5,7 @@ import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/features/host/controllers/currency_controller.dart';
-import 'package:fullbooker/features/host/models/currency.dart';
+import 'package:fullbooker/features/host/models/old_currency.dart';
 import 'package:fullbooker/features/host/models/old_product.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/session_pricing.dart';
@@ -37,9 +37,9 @@ class ActivityDayPassPage extends StatefulWidget {
 
 class _ActivityDayPass extends State<ActivityDayPassPage> {
   bool isLoading = false;
-  List<Currency> currencies = <Currency>[];
+  List<OldCurrency> currencies = <OldCurrency>[];
   CurrencyViewModel currencyViewModel = CurrencyViewModel();
-  Currency? selectedCurrency;
+  OldCurrency? selectedCurrency;
   TextEditingController priceController = TextEditingController();
   TextEditingController amountController = TextEditingController();
   bool setDayPass = false;
@@ -87,7 +87,7 @@ class _ActivityDayPass extends State<ActivityDayPassPage> {
     super.initState();
     currencyViewModel.repository
         .pullMultiple(1, 100)
-        .then((List<Currency> currencies_) {
+        .then((List<OldCurrency> currencies_) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         setState(() => currencies = currencies_);
       });
@@ -155,7 +155,7 @@ class _ActivityDayPass extends State<ActivityDayPassPage> {
                             child: OldCustomDropdown(
                               options: currencies
                                   .map(
-                                    (Currency currency) => OldDropDownOption(
+                                    (OldCurrency currency) => OldDropDownOption(
                                       currency.code,
                                       currency.id,
                                       () {},
@@ -169,7 +169,7 @@ class _ActivityDayPass extends State<ActivityDayPassPage> {
                                     setState(
                                       () => selectedCurrency =
                                           currencies.firstWhere(
-                                        (Currency currency) =>
+                                        (OldCurrency currency) =>
                                             currency.id == option.id,
                                       ),
                                     );

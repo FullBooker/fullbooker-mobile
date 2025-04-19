@@ -5,7 +5,7 @@ import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/features/host/controllers/product_controller.dart';
-import 'package:fullbooker/features/host/models/currency.dart';
+import 'package:fullbooker/features/host/models/old_currency.dart';
 import 'package:fullbooker/features/host/models/old_product.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
@@ -26,7 +26,7 @@ class TicketsSummaryPage extends StatefulWidget {
   });
 
   final Map<String, int> amounts;
-  final Currency currency;
+  final OldCurrency currency;
   final Map<String, double> prices;
   final OldProduct product;
   final List<String> selectedCategories;

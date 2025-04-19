@@ -45,7 +45,11 @@ class _ImageCarouselWidgetState extends State<ImageCarouselWidget> {
           );
         }
 
-        final List<ProductMedia?>? images = vm.selectedProduct?.productMedia;
+        final List<ProductMedia?>? images = vm.selectedProduct?.productMedia
+            ?.where(
+              (ProductMedia? element) => element?.mediaType == kImageMediaType,
+            )
+            .toList();
 
         if (images?.isEmpty ?? true) {
           return GestureDetector(

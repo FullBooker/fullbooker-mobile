@@ -29,7 +29,7 @@ mixin _$Currency {
   String? get name => throw _privateConstructorUsedError;
   String? get code => throw _privateConstructorUsedError;
   @JsonKey(name: 'conversion_rate')
-  String get conversionRate => throw _privateConstructorUsedError;
+  String? get conversionRate => throw _privateConstructorUsedError;
 
   /// Serializes this Currency to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -53,7 +53,7 @@ abstract class $CurrencyCopyWith<$Res> {
       bool? active,
       String? name,
       String? code,
-      @JsonKey(name: 'conversion_rate') String conversionRate});
+      @JsonKey(name: 'conversion_rate') String? conversionRate});
 }
 
 /// @nodoc
@@ -77,7 +77,7 @@ class _$CurrencyCopyWithImpl<$Res, $Val extends Currency>
     Object? active = freezed,
     Object? name = freezed,
     Object? code = freezed,
-    Object? conversionRate = null,
+    Object? conversionRate = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -104,10 +104,10 @@ class _$CurrencyCopyWithImpl<$Res, $Val extends Currency>
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
               as String?,
-      conversionRate: null == conversionRate
+      conversionRate: freezed == conversionRate
           ? _value.conversionRate
           : conversionRate // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -127,7 +127,7 @@ abstract class _$$CurrencyImplCopyWith<$Res>
       bool? active,
       String? name,
       String? code,
-      @JsonKey(name: 'conversion_rate') String conversionRate});
+      @JsonKey(name: 'conversion_rate') String? conversionRate});
 }
 
 /// @nodoc
@@ -149,7 +149,7 @@ class __$$CurrencyImplCopyWithImpl<$Res>
     Object? active = freezed,
     Object? name = freezed,
     Object? code = freezed,
-    Object? conversionRate = null,
+    Object? conversionRate = freezed,
   }) {
     return _then(_$CurrencyImpl(
       id: freezed == id
@@ -176,10 +176,10 @@ class __$$CurrencyImplCopyWithImpl<$Res>
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
               as String?,
-      conversionRate: null == conversionRate
+      conversionRate: freezed == conversionRate
           ? _value.conversionRate
           : conversionRate // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -192,10 +192,10 @@ class _$CurrencyImpl implements _Currency {
       {this.id = UNKNOWN,
       @JsonKey(name: 'created_at') this.createdAt = UNKNOWN,
       @JsonKey(name: 'updated_at') this.updatedAt = UNKNOWN,
-      this.active = false,
+      this.active = true,
       this.name = UNKNOWN,
       this.code = UNKNOWN,
-      @JsonKey(name: 'conversion_rate') required this.conversionRate});
+      @JsonKey(name: 'conversion_rate') this.conversionRate});
 
   factory _$CurrencyImpl.fromJson(Map<String, dynamic> json) =>
       _$$CurrencyImplFromJson(json);
@@ -220,7 +220,7 @@ class _$CurrencyImpl implements _Currency {
   final String? code;
   @override
   @JsonKey(name: 'conversion_rate')
-  final String conversionRate;
+  final String? conversionRate;
 
   @override
   String toString() {
@@ -267,14 +267,14 @@ class _$CurrencyImpl implements _Currency {
 
 abstract class _Currency implements Currency {
   const factory _Currency(
-      {final String? id,
-      @JsonKey(name: 'created_at') final String? createdAt,
-      @JsonKey(name: 'updated_at') final String? updatedAt,
-      final bool? active,
-      final String? name,
-      final String? code,
-      @JsonKey(name: 'conversion_rate')
-      required final String conversionRate}) = _$CurrencyImpl;
+          {final String? id,
+          @JsonKey(name: 'created_at') final String? createdAt,
+          @JsonKey(name: 'updated_at') final String? updatedAt,
+          final bool? active,
+          final String? name,
+          final String? code,
+          @JsonKey(name: 'conversion_rate') final String? conversionRate}) =
+      _$CurrencyImpl;
 
   factory _Currency.fromJson(Map<String, dynamic> json) =
       _$CurrencyImpl.fromJson;
@@ -295,7 +295,7 @@ abstract class _Currency implements Currency {
   String? get code;
   @override
   @JsonKey(name: 'conversion_rate')
-  String get conversionRate;
+  String? get conversionRate;
 
   /// Create a copy of Currency
   /// with the given fields replaced by the non-null parameter values.

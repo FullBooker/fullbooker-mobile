@@ -337,19 +337,17 @@ void navigateToNextProductStep({
     return;
   }
 
-  if (product.scheduleID == null) {
+  if ((product.scheduleID ?? UNKNOWN) == UNKNOWN) {
     context.router.push(const ProductDateTimeRoute());
     return;
   }
 
-  if (product.image == null ||
-      product.image?.file == null ||
-      product.image?.file == UNKNOWN) {
+  if ((product.image?.file ?? UNKNOWN) == UNKNOWN) {
     context.router.push(const ProductPhotosRoute());
     return;
   }
 
-  if (product.pricing == null || product.pricing!.isEmpty) {
+  if (product.pricing?.isEmpty ?? true) {
     context.router.push(const ProductPricingRoute());
     return;
   }
@@ -443,4 +441,21 @@ String getTicketDisplayName(String tier) {
     default:
       return 'Standard';
   }
+}
+
+LatLng parseCoordinates(String? raw) {
+  if (raw == null || raw.isEmpty) return const LatLng(0, 0);
+
+  try {
+    final String cleaned = raw.split('POINT (').last.split(')').first;
+    final List<String> parts = cleaned.trim().split(' ');
+    if (parts.length == 2) {
+      final double lng = double.tryParse(parts[0]) ?? 0;
+      final double lat = double.tryParse(parts[1]) ?? 0;
+      return LatLng(lat, lng);
+    }
+  } catch (_) {
+    return const LatLng(0, 0);
+  }
+  return const LatLng(0, 0);
 }

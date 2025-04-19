@@ -11,10 +11,10 @@ _$CurrencyImpl _$$CurrencyImplFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String? ?? UNKNOWN,
       createdAt: json['created_at'] as String? ?? UNKNOWN,
       updatedAt: json['updated_at'] as String? ?? UNKNOWN,
-      active: json['active'] as bool? ?? false,
+      active: json['active'] as bool? ?? true,
       name: json['name'] as String? ?? UNKNOWN,
       code: json['code'] as String? ?? UNKNOWN,
-      conversionRate: json['conversion_rate'] as String,
+      conversionRate: json['conversion_rate'] as String?,
     );
 
 Map<String, dynamic> _$$CurrencyImplToJson(_$CurrencyImpl instance) =>

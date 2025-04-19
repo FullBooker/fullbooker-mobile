@@ -30,7 +30,7 @@ mixin _$HostState {
   ProductLocation? get selectedLocation => throw _privateConstructorUsedError;
   ProductSchedule? get selectedSchedule => throw _privateConstructorUsedError;
   List<Currency?>? get currencies => throw _privateConstructorUsedError;
-  String? get selectedCurrencyCode => throw _privateConstructorUsedError;
+  Currency? get selectedCurrency => throw _privateConstructorUsedError;
   String? get selectedPricingTier => throw _privateConstructorUsedError;
   ProductPricing? get selectedProductPricing =>
       throw _privateConstructorUsedError;
@@ -59,7 +59,7 @@ abstract class $HostStateCopyWith<$Res> {
       ProductLocation? selectedLocation,
       ProductSchedule? selectedSchedule,
       List<Currency?>? currencies,
-      String? selectedCurrencyCode,
+      Currency? selectedCurrency,
       String? selectedPricingTier,
       ProductPricing? selectedProductPricing});
 
@@ -68,6 +68,7 @@ abstract class $HostStateCopyWith<$Res> {
   $LocationPermsResultCopyWith<$Res>? get locationPerms;
   $ProductLocationCopyWith<$Res>? get selectedLocation;
   $ProductScheduleCopyWith<$Res>? get selectedSchedule;
+  $CurrencyCopyWith<$Res>? get selectedCurrency;
   $ProductPricingCopyWith<$Res>? get selectedProductPricing;
 }
 
@@ -94,7 +95,7 @@ class _$HostStateCopyWithImpl<$Res, $Val extends HostState>
     Object? selectedLocation = freezed,
     Object? selectedSchedule = freezed,
     Object? currencies = freezed,
-    Object? selectedCurrencyCode = freezed,
+    Object? selectedCurrency = freezed,
     Object? selectedPricingTier = freezed,
     Object? selectedProductPricing = freezed,
   }) {
@@ -131,10 +132,10 @@ class _$HostStateCopyWithImpl<$Res, $Val extends HostState>
           ? _value.currencies
           : currencies // ignore: cast_nullable_to_non_nullable
               as List<Currency?>?,
-      selectedCurrencyCode: freezed == selectedCurrencyCode
-          ? _value.selectedCurrencyCode
-          : selectedCurrencyCode // ignore: cast_nullable_to_non_nullable
-              as String?,
+      selectedCurrency: freezed == selectedCurrency
+          ? _value.selectedCurrency
+          : selectedCurrency // ignore: cast_nullable_to_non_nullable
+              as Currency?,
       selectedPricingTier: freezed == selectedPricingTier
           ? _value.selectedPricingTier
           : selectedPricingTier // ignore: cast_nullable_to_non_nullable
@@ -220,6 +221,20 @@ class _$HostStateCopyWithImpl<$Res, $Val extends HostState>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
+  $CurrencyCopyWith<$Res>? get selectedCurrency {
+    if (_value.selectedCurrency == null) {
+      return null;
+    }
+
+    return $CurrencyCopyWith<$Res>(_value.selectedCurrency!, (value) {
+      return _then(_value.copyWith(selectedCurrency: value) as $Val);
+    });
+  }
+
+  /// Create a copy of HostState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
   $ProductPricingCopyWith<$Res>? get selectedProductPricing {
     if (_value.selectedProductPricing == null) {
       return null;
@@ -249,7 +264,7 @@ abstract class _$$HostStateImplCopyWith<$Res>
       ProductLocation? selectedLocation,
       ProductSchedule? selectedSchedule,
       List<Currency?>? currencies,
-      String? selectedCurrencyCode,
+      Currency? selectedCurrency,
       String? selectedPricingTier,
       ProductPricing? selectedProductPricing});
 
@@ -263,6 +278,8 @@ abstract class _$$HostStateImplCopyWith<$Res>
   $ProductLocationCopyWith<$Res>? get selectedLocation;
   @override
   $ProductScheduleCopyWith<$Res>? get selectedSchedule;
+  @override
+  $CurrencyCopyWith<$Res>? get selectedCurrency;
   @override
   $ProductPricingCopyWith<$Res>? get selectedProductPricing;
 }
@@ -288,7 +305,7 @@ class __$$HostStateImplCopyWithImpl<$Res>
     Object? selectedLocation = freezed,
     Object? selectedSchedule = freezed,
     Object? currencies = freezed,
-    Object? selectedCurrencyCode = freezed,
+    Object? selectedCurrency = freezed,
     Object? selectedPricingTier = freezed,
     Object? selectedProductPricing = freezed,
   }) {
@@ -325,10 +342,10 @@ class __$$HostStateImplCopyWithImpl<$Res>
           ? _value.currencies
           : currencies // ignore: cast_nullable_to_non_nullable
               as List<Currency?>?,
-      selectedCurrencyCode: freezed == selectedCurrencyCode
-          ? _value.selectedCurrencyCode
-          : selectedCurrencyCode // ignore: cast_nullable_to_non_nullable
-              as String?,
+      selectedCurrency: freezed == selectedCurrency
+          ? _value.selectedCurrency
+          : selectedCurrency // ignore: cast_nullable_to_non_nullable
+              as Currency?,
       selectedPricingTier: freezed == selectedPricingTier
           ? _value.selectedPricingTier
           : selectedPricingTier // ignore: cast_nullable_to_non_nullable
@@ -354,7 +371,7 @@ class _$HostStateImpl implements _HostState {
       this.selectedLocation,
       this.selectedSchedule,
       this.currencies = const <Currency>[],
-      this.selectedCurrencyCode = UNKNOWN,
+      this.selectedCurrency,
       this.selectedPricingTier = UNKNOWN,
       this.selectedProductPricing});
 
@@ -382,8 +399,7 @@ class _$HostStateImpl implements _HostState {
   @JsonKey()
   final List<Currency?>? currencies;
   @override
-  @JsonKey()
-  final String? selectedCurrencyCode;
+  final Currency? selectedCurrency;
   @override
   @JsonKey()
   final String? selectedPricingTier;
@@ -392,7 +408,7 @@ class _$HostStateImpl implements _HostState {
 
   @override
   String toString() {
-    return 'HostState(products: $products, currentProduct: $currentProduct, selectedProduct: $selectedProduct, productCategories: $productCategories, locationPerms: $locationPerms, selectedLocation: $selectedLocation, selectedSchedule: $selectedSchedule, currencies: $currencies, selectedCurrencyCode: $selectedCurrencyCode, selectedPricingTier: $selectedPricingTier, selectedProductPricing: $selectedProductPricing)';
+    return 'HostState(products: $products, currentProduct: $currentProduct, selectedProduct: $selectedProduct, productCategories: $productCategories, locationPerms: $locationPerms, selectedLocation: $selectedLocation, selectedSchedule: $selectedSchedule, currencies: $currencies, selectedCurrency: $selectedCurrency, selectedPricingTier: $selectedPricingTier, selectedProductPricing: $selectedProductPricing)';
   }
 
   @override
@@ -415,8 +431,8 @@ class _$HostStateImpl implements _HostState {
                 other.selectedSchedule == selectedSchedule) &&
             const DeepCollectionEquality()
                 .equals(other.currencies, currencies) &&
-            (identical(other.selectedCurrencyCode, selectedCurrencyCode) ||
-                other.selectedCurrencyCode == selectedCurrencyCode) &&
+            (identical(other.selectedCurrency, selectedCurrency) ||
+                other.selectedCurrency == selectedCurrency) &&
             (identical(other.selectedPricingTier, selectedPricingTier) ||
                 other.selectedPricingTier == selectedPricingTier) &&
             (identical(other.selectedProductPricing, selectedProductPricing) ||
@@ -435,7 +451,7 @@ class _$HostStateImpl implements _HostState {
       selectedLocation,
       selectedSchedule,
       const DeepCollectionEquality().hash(currencies),
-      selectedCurrencyCode,
+      selectedCurrency,
       selectedPricingTier,
       selectedProductPricing);
 
@@ -465,7 +481,7 @@ abstract class _HostState implements HostState {
       final ProductLocation? selectedLocation,
       final ProductSchedule? selectedSchedule,
       final List<Currency?>? currencies,
-      final String? selectedCurrencyCode,
+      final Currency? selectedCurrency,
       final String? selectedPricingTier,
       final ProductPricing? selectedProductPricing}) = _$HostStateImpl;
 
@@ -489,7 +505,7 @@ abstract class _HostState implements HostState {
   @override
   List<Currency?>? get currencies;
   @override
-  String? get selectedCurrencyCode;
+  Currency? get selectedCurrency;
   @override
   String? get selectedPricingTier;
   @override

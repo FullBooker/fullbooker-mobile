@@ -27,14 +27,13 @@ class SetProductScheduleAction extends ReduxAction<AppState> {
   @override
   Future<AppState?> reduce() async {
     final Product? product = state.hostState?.currentProduct;
-    final ProductSchedule? schedule = product?.schedule;
     final ProductSchedule? selectedSchedule = state.hostState?.selectedSchedule;
 
     final String productID = product?.id ?? UNKNOWN;
-    final String startDate = schedule?.startDate ?? UNKNOWN;
-    final String startTime = schedule?.startTime ?? UNKNOWN;
-    final String end = schedule?.endDate ?? UNKNOWN;
-    final String endTime = schedule?.endTime ?? UNKNOWN;
+    final String startDate = selectedSchedule?.startDate ?? UNKNOWN;
+    final String startTime = selectedSchedule?.startTime ?? UNKNOWN;
+    final String endDate = selectedSchedule?.endDate ?? UNKNOWN;
+    final String endTime = selectedSchedule?.endTime ?? UNKNOWN;
 
     if (productID == UNKNOWN || startTime == UNKNOWN || endTime == UNKNOWN) {
       onError?.call(addDateTimeError);
@@ -49,14 +48,14 @@ class SetProductScheduleAction extends ReduxAction<AppState> {
       'product': productID,
       'start_date': startDate,
       'start_time': startTime,
-      'end_date': end,
+      'end_date': endDate,
       'end_time': endTime,
       'repeat': repeats ? repeatOption : noRepeatSchedule,
     };
 
     if (repeatOption == noRepeatSchedule || repeatOption == dailyOption) {
       data['start_date'] = startDate;
-      data['end_date'] = end;
+      data['end_date'] = endDate;
     }
 
     if (repeats) {

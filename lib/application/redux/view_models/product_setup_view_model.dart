@@ -28,7 +28,7 @@ class ProductSetupViewModel extends Vm {
     required this.repeatOnDaysOfWeek,
     required this.pricing,
     required this.currencies,
-    required this.selectedCurrencyCode,
+    required this.selectedCurrency,
     required this.selectedPricingTier,
     required this.selectedPricing,
     required this.buyerPaysFee,
@@ -51,7 +51,7 @@ class ProductSetupViewModel extends Vm {
             repeatOnDaysOfWeek,
             pricing,
             currencies,
-            selectedCurrencyCode,
+            selectedCurrency,
             selectedPricingTier,
             selectedPricing,
             buyerPaysFee,
@@ -77,7 +77,7 @@ class ProductSetupViewModel extends Vm {
 
   final Map<String, Map<String, String>> repeatOnDaysOfWeek;
 
-  final String selectedCurrencyCode;
+  final Currency? selectedCurrency;
   final String selectedPricingTier;
   final ProductPricing? selectedPricing;
   final bool buyerPaysFee;
@@ -87,12 +87,10 @@ class ProductSetupViewModel extends Vm {
       currentProduct: state.hostState?.currentProduct,
       productCategories: state.hostState?.productCategories,
       locationPerms: state.hostState?.locationPerms,
-      startDate:
-          state.hostState?.currentProduct?.schedule?.startDate ?? UNKNOWN,
-      startTime:
-          state.hostState?.currentProduct?.schedule?.startTime ?? UNKNOWN,
-      endDate: state.hostState?.currentProduct?.schedule?.endDate ?? UNKNOWN,
-      endTime: state.hostState?.currentProduct?.schedule?.endTime ?? UNKNOWN,
+      startDate: state.hostState?.selectedSchedule?.startDate ?? UNKNOWN,
+      startTime: state.hostState?.selectedSchedule?.startTime ?? UNKNOWN,
+      endDate: state.hostState?.selectedSchedule?.endDate ?? UNKNOWN,
+      endTime: state.hostState?.selectedSchedule?.endTime ?? UNKNOWN,
       productMedia:
           state.hostState?.currentProduct?.productMedia ?? <ProductMedia?>[],
       selectedLocation: state.hostState?.selectedLocation,
@@ -108,8 +106,7 @@ class ProductSetupViewModel extends Vm {
               <String, Map<String, String>>{},
       pricing: state.hostState?.currentProduct?.pricing ?? <ProductPricing>[],
       currencies: state.hostState?.currencies ?? <Currency?>[],
-      selectedCurrencyCode:
-          state.hostState?.selectedCurrencyCode ?? kAllowedCurrencyCodes.first,
+      selectedCurrency: state.hostState?.selectedCurrency,
       selectedPricingTier: state.hostState?.selectedPricingTier ?? UNKNOWN,
       selectedPricing:
           state.hostState?.selectedProductPricing ?? ProductPricing(),

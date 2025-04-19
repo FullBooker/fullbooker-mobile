@@ -25,6 +25,7 @@ class AppConfig {
     required this.productMediaEndpoint,
     required this.productPricingEndpoint,
     required this.currenciesEndpoint,
+    required this.bookingsEndpoint,
   });
 
   /// The context the app is running in
@@ -60,6 +61,7 @@ class AppConfig {
   final String productMediaEndpoint;
   final String productPricingEndpoint;
   final String currenciesEndpoint;
+  final String bookingsEndpoint;
 
   /// Profile endpoints
   final String getProfileEndpoint;
@@ -87,6 +89,7 @@ final AppConfig devAppConfig = AppConfig(
   productMediaEndpoint: kDevMediaEndpoint,
   productPricingEndpoint: kDevPricingEndpoint,
   currenciesEndpoint: kDevCurrenciesEndpoint,
+  bookingsEndpoint: kDevBookingsEndpoint,
 );
 
 final AppConfig prodAppConfig = AppConfig(
@@ -111,6 +114,7 @@ final AppConfig prodAppConfig = AppConfig(
   productMediaEndpoint: kProdMediaEndpoint,
   productPricingEndpoint: kProdPricingEndpoint,
   currenciesEndpoint: kProdCurrenciesEndpoint,
+  bookingsEndpoint: kProdBookingsEndpoint,
 );
 
 final AppConfig testAppConfig = AppConfig(
@@ -135,4 +139,5 @@ final AppConfig testAppConfig = AppConfig(
   productMediaEndpoint: kTestMediaEndpoint,
   productPricingEndpoint: kTestPricingEndpoint,
   currenciesEndpoint: kTestCurrenciesEndpoint,
+  bookingsEndpoint: kTestBookingsEndpoint,
 );

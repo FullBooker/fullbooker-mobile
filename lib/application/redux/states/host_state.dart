@@ -27,7 +27,7 @@ class HostState with _$HostState {
     ProductLocation? selectedLocation,
     ProductSchedule? selectedSchedule,
     @Default(<Currency>[]) List<Currency?>? currencies,
-    @Default(UNKNOWN) String? selectedCurrencyCode,
+    Currency? selectedCurrency,
     @Default(UNKNOWN) String? selectedPricingTier,
     ProductPricing? selectedProductPricing,
   }) = _HostState;
@@ -39,6 +39,7 @@ class HostState with _$HostState {
         selectedLocation: ProductLocation.initial(),
         selectedSchedule: ProductSchedule.initial(),
         selectedProductPricing: ProductPricing.initial(),
+        selectedCurrency: Currency(),
       );
 
   factory HostState.fromJson(Map<String, dynamic> json) =>
