@@ -1,10 +1,12 @@
 import 'package:async_redux/async_redux.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
 import 'package:fullbooker/application/redux/actions/fetch_product_media_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_review_view_model.dart';
+import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/domain/core/entities/product_media.dart';
 import 'package:fullbooker/presentation/host/products/widgets/no_images_zero_state.dart';
@@ -50,19 +52,24 @@ class LimitedPhotoGalleryPreviewWidget extends StatelessWidget {
               (ProductMedia? m) {
                 return Padding(
                   padding: const EdgeInsets.only(right: 8.0),
-                  child: ClipRRect(
+                  child: InkWell(
                     borderRadius: BorderRadius.circular(8),
-                    child: CachedNetworkImage(
-                      imageUrl: m?.file ?? UNKNOWN,
-                      width: photoSize,
-                      height: photoSize,
-                      fit: BoxFit.cover,
-                      progressIndicatorBuilder: (
-                        BuildContext context,
-                        String url,
-                        DownloadProgress progress,
-                      ) =>
-                          const Center(child: AppLoading()),
+                    onTap: () => context.router
+                        .push(ImagePreviewRoute(imageUrl: m?.file ?? UNKNOWN)),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: CachedNetworkImage(
+                        imageUrl: m?.file ?? UNKNOWN,
+                        width: photoSize,
+                        height: photoSize,
+                        fit: BoxFit.cover,
+                        progressIndicatorBuilder: (
+                          BuildContext context,
+                          String url,
+                          DownloadProgress progress,
+                        ) =>
+                            const Center(child: AppLoading()),
+                      ),
                     ),
                   ),
                 );
