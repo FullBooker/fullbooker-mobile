@@ -38,7 +38,7 @@ class FetchSingleProductAction extends ReduxAction<AppState> {
 
     final String baseEndpoint = GetIt.I.get<AppConfig>().getProductsEndpoint;
 
-    final String fullEndpoint = '$baseEndpoint/$ctxProductId';
+    final String fullEndpoint = '$baseEndpoint$ctxProductId';
 
     final Response httpResponse = await client.callRESTAPI(
       endpoint: fullEndpoint,
