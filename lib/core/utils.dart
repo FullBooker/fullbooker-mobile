@@ -365,16 +365,6 @@ Color getProductColor({bool complete = false}) {
   return AppColors.amberColor;
 }
 
-String formatCurrency(dynamic number) {
-  final NumberFormat currency = NumberFormat.currency(
-    decimalDigits: 0,
-    symbol: 'Ksh. ',
-    locale: 'en-US',
-  );
-
-  return currency.format(number);
-}
-
 Future<String?> pickDate({required BuildContext context}) async {
   final DateTime now = DateTime.now();
   final DateTime? picked = await showDatePicker(
@@ -493,4 +483,25 @@ Future<void> showFullDescriptionDialog({
       ),
     ),
   );
+}
+
+/// Formats a number into a currency string with comma separators and optional currency code.
+///
+/// Example:
+/// ```dart
+/// formatCurrency(2500); // KES 2,500
+/// formatCurrency(12500.75, currencyCode: 'USD'); // USD 12,500.75
+/// ```
+String formatCurrency(
+  num amount, {
+  String currencyCode = 'KES',
+  int decimalDigits = 0,
+}) {
+  final NumberFormat formatter = NumberFormat.currency(
+    symbol: '$currencyCode ',
+    decimalDigits: decimalDigits,
+    customPattern:
+        '¤#,##0${decimalDigits > 0 ? '.${'0' * decimalDigits}' : ''}',
+  );
+  return formatter.format(amount);
 }

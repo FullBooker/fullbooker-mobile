@@ -125,17 +125,6 @@ class ProductPricingPage extends StatelessWidget {
                                 ),
                               for (final String tier in allTicketTiers)
                                 PricingCardWidget(
-                                  ticketTier: tier,
-                                  price: double.tryParse(
-                                        pricingMap[tier.toLowerCase()]?.cost ??
-                                            '',
-                                      ) ??
-                                      0,
-                                  discount: null,
-                                  maxTickets: pricingMap[tier.toLowerCase()]
-                                          ?.maxTickets ??
-                                      0,
-                                  svgIconPath: getTicketIconPath(tier),
                                   onAddOrEdit: () {
                                     context.dispatch(
                                       UpdateHostStateAction(
@@ -145,6 +134,7 @@ class ProductPricingPage extends StatelessWidget {
                                     context.router
                                         .push(AddProductPricingRoute());
                                   },
+                                  pricing: pricingMap[tier.toLowerCase()],
                                 ),
                             ],
                           );

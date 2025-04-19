@@ -69,6 +69,7 @@ class ProductDetailPage extends StatelessWidget {
               Expanded(
                 child: ListView(
                   shrinkWrap: true,
+                  physics: AlwaysScrollableScrollPhysics(),
                   children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.all(16),
@@ -189,17 +190,8 @@ class ProductDetailPage extends StatelessWidget {
 
                                     return Container(
                                       margin: EdgeInsets.only(bottom: 12),
-                                      child: PricingCardWidget(
-                                        ticketTier:
-                                            current?.ticketTier ?? standardTier,
-                                        maxTickets: current?.maxTickets ?? 0,
-                                        price: double.tryParse(
-                                          current?.cost?.toString() ?? '0',
-                                        ),
-                                        svgIconPath: getTicketIconPath(
-                                          current?.ticketTier ?? standardTier,
-                                        ),
-                                      ),
+                                      child:
+                                          PricingCardWidget(pricing: current),
                                     );
                                   },
                                 ),
