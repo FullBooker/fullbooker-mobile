@@ -181,6 +181,7 @@ class ProductDetailPage extends StatelessWidget {
                                 MinZeroState(copy: noPricingOptionsString)
                               else
                                 ListView.builder(
+                                  physics: NeverScrollableScrollPhysics(),
                                   shrinkWrap: true,
                                   itemCount: product?.pricing?.length,
                                   itemBuilder:
