@@ -10,10 +10,6 @@ class UpdateCurrentProductAction extends ReduxAction<AppState> {
     this.selectedSubCategory,
     this.name,
     this.description,
-    this.startDate,
-    this.endDate,
-    this.startTime,
-    this.endTime,
     this.productMedia,
     this.pricing,
   });
@@ -22,10 +18,7 @@ class UpdateCurrentProductAction extends ReduxAction<AppState> {
   final String? name;
   final ProductCategory? selectedCategory;
   final ProductCategory? selectedSubCategory;
-  final String? startDate;
-  final String? startTime;
-  final String? endDate;
-  final String? endTime;
+
   final List<ProductMedia?>? productMedia;
   final List<ProductPricing?>? pricing;
 
@@ -38,14 +31,6 @@ class UpdateCurrentProductAction extends ReduxAction<AppState> {
           state.hostState?.currentProduct?.selectedProductSubCategory,
       name: name ?? state.hostState?.currentProduct?.name,
       description: description ?? state.hostState?.currentProduct?.description,
-      schedule: state.hostState?.currentProduct?.schedule?.copyWith.call(
-        startDate:
-            startDate ?? state.hostState?.currentProduct?.schedule?.startDate,
-        startTime:
-            startTime ?? state.hostState?.currentProduct?.schedule?.startTime,
-        endDate: endDate ?? state.hostState?.currentProduct?.schedule?.endDate,
-        endTime: endTime ?? state.hostState?.currentProduct?.schedule?.endTime,
-      ),
       productMedia:
           productMedia ?? state.hostState?.currentProduct?.productMedia,
       pricing: pricing ?? state.hostState?.currentProduct?.pricing,

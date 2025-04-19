@@ -28,8 +28,7 @@ class UpdateHostStateAction extends ReduxAction<AppState> {
       currentProduct: currentProduct ?? state.hostState?.currentProduct,
       selectedLocation: selectedLocation ?? state.hostState?.selectedLocation,
       currencies: currencies ?? state.hostState?.currencies,
-      selectedCurrency:
-          selectedCurrency ?? state.hostState?.selectedCurrency,
+      selectedCurrency: selectedCurrency ?? state.hostState?.selectedCurrency,
       selectedPricingTier:
           selectedPricingTier ?? state.hostState?.selectedPricingTier,
     );

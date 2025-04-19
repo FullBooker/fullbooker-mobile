@@ -337,19 +337,17 @@ void navigateToNextProductStep({
     return;
   }
 
-  if (product.scheduleID == null) {
+  if ((product.scheduleID ?? UNKNOWN) == UNKNOWN) {
     context.router.push(const ProductDateTimeRoute());
     return;
   }
 
-  if (product.image == null ||
-      product.image?.file == null ||
-      product.image?.file == UNKNOWN) {
+  if ((product.image?.file ?? UNKNOWN) == UNKNOWN) {
     context.router.push(const ProductPhotosRoute());
     return;
   }
 
-  if (product.pricing == null || product.pricing!.isEmpty) {
+  if (product.pricing?.isEmpty ?? true) {
     context.router.push(const ProductPricingRoute());
     return;
   }

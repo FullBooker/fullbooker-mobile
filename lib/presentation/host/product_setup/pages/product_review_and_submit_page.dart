@@ -1,6 +1,7 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:fullbooker/application/redux/actions/update_host_state_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_review_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
@@ -199,30 +200,48 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
               ),
             ),
             smallVerticalSizedBox,
-            PrimaryButton(
-              onPressed: () => showAlertDialog(
-                context: context,
-                assetPath: productSetupSuccessSVGPath,
-                title: productSubmit,
-                description: productSubmitCopy,
-                confirmText: backToProducts,
-                cancelText: viewProduct,
-                onConfirm: () {
-                  context.router.popAndPush(ProductsRoute());
-                },
-                onCancel: () {
-                  context.router.maybePop();
-                  // TODO(abiud): navigate to product detail page
-                },
-              ),
-              child: d.right(submitString),
+            StoreConnector<AppState, ProductReviewViewModel>(
+              converter: (Store<AppState> store) =>
+                  ProductReviewViewModel.fromState(store.state),
+              builder: (BuildContext context, ProductReviewViewModel vm) {
+                final Product? product = workflowState == WorkflowState.CREATE
+                    ? vm.currentProduct
+                    : vm.selectedProduct;
+
+                return Column(
+                  spacing: 12,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    PrimaryButton(
+                      onPressed: () => showAlertDialog(
+                        context: context,
+                        assetPath: productSetupSuccessSVGPath,
+                        title: productSubmit,
+                        description: productSubmitCopy,
+                        confirmText: backToProducts,
+                        cancelText: viewProduct,
+                        onConfirm: () {
+                          context.router.popAndPush(ProductsRoute());
+                        },
+                        onCancel: () {
+                          context.dispatch(
+                            UpdateHostStateAction(selectedProduct: product),
+                          );
+                          context.router.push(ProductDetailRoute());
+                        },
+                      ),
+                      child: d.right(submitString),
+                    ),
+                    SecondaryButton(
+                      onPressed: () => context.router.maybePop(),
+                      child: d.right(previousString),
+                      fillColor: Colors.transparent,
+                    ),
+                    verySmallVerticalSizedBox,
+                  ],
+                );
+              },
             ),
-            SecondaryButton(
-              onPressed: () => context.router.maybePop(),
-              child: d.right(previousString),
-              fillColor: Colors.transparent,
-            ),
-            verySmallVerticalSizedBox,
           ],
         ),
       ),

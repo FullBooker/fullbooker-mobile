@@ -3,7 +3,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
 import 'package:fullbooker/application/redux/actions/set_product_availability_action.dart';
-import 'package:fullbooker/application/redux/actions/update_current_product_action.dart';
 import 'package:fullbooker/application/redux/actions/update_current_schedule_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_setup_view_model.dart';
@@ -92,7 +91,7 @@ class ProductDateTimePage extends StatelessWidget {
                                           await pickDate(context: context);
 
                                       context.dispatch(
-                                        UpdateCurrentProductAction(
+                                        UpdateCurrentScheduleAction(
                                           startDate: date,
                                         ),
                                       );
@@ -158,7 +157,7 @@ class ProductDateTimePage extends StatelessWidget {
                                           await pickTime(context: context);
 
                                       context.dispatch(
-                                        UpdateCurrentProductAction(
+                                        UpdateCurrentScheduleAction(
                                           startTime: time,
                                         ),
                                       );
@@ -228,7 +227,7 @@ class ProductDateTimePage extends StatelessWidget {
                                           await pickDate(context: context);
 
                                       context.dispatch(
-                                        UpdateCurrentProductAction(
+                                        UpdateCurrentScheduleAction(
                                           endDate: date,
                                         ),
                                       );
@@ -294,7 +293,7 @@ class ProductDateTimePage extends StatelessWidget {
                                           await pickTime(context: context);
 
                                       context.dispatch(
-                                        UpdateCurrentProductAction(
+                                        UpdateCurrentScheduleAction(
                                           endTime: time,
                                         ),
                                       );
