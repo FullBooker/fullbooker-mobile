@@ -105,7 +105,7 @@ class ProductPricingPage extends StatelessWidget {
                           ],
                           for (final String tier in allTicketTiers)
                             PricingCardWidget(
-                              ticketType: tier,
+                              ticketTier: tier,
                               price: double.tryParse(
                                     pricingMap[tier.toLowerCase()]?.cost ?? '',
                                   ) ??

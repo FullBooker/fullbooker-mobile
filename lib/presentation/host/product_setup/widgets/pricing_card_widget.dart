@@ -8,7 +8,7 @@ import 'package:dartz/dartz.dart' as d;
 class PricingCardWidget extends StatelessWidget {
   const PricingCardWidget({
     super.key,
-    required this.ticketType,
+    required this.ticketTier,
     this.price = 0,
     this.discount = 0,
     required this.maxTickets,
@@ -16,7 +16,7 @@ class PricingCardWidget extends StatelessWidget {
     this.onAddOrEdit,
   });
 
-  final String ticketType;
+  final String ticketTier;
   final double? price;
   final double? discount;
   final int maxTickets;
@@ -46,7 +46,7 @@ class PricingCardWidget extends StatelessWidget {
               spacing: 4,
               children: <Widget>[
                 Text(
-                  getTicketDisplayName(ticketType),
+                  getTicketDisplayName(ticketTier),
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 if (discount != null && discount! > 0)

@@ -5,16 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_detail_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
+import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/entities/product.dart';
+import 'package:fullbooker/domain/core/entities/product_pricing.dart';
 import 'package:fullbooker/domain/core/value_objects/app_bar_action.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
-import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:fullbooker/presentation/core/components/custom_badge_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/pricing_card_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/image_carousel_widget.dart';
+import 'package:fullbooker/presentation/host/products/widgets/no_pricing_zero_state.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_alert_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_detail_item_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_schedule_widget.dart';
@@ -22,7 +24,6 @@ import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
-import 'package:fullbooker/shared/widgets/secondary_button.dart';
 import 'package:heroicons/heroicons.dart';
 
 @RoutePage()
@@ -127,78 +128,92 @@ class ProductDetailPage extends StatelessWidget {
                             iconData: HeroIcons.clipboardDocumentList,
                           ),
                           verySmallVerticalSizedBox,
-                          Text(
-                            stats,
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            spacing: 8,
-                            children: <Widget>[
-                              Text(
-                                totalRevenue,
-                                style: Theme.of(context).textTheme.bodySmall,
-                              ),
-                              Text(
-                                'KES 300, 000',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleLarge
-                                    ?.copyWith(
-                                      color: Theme.of(context).primaryColor,
-                                    ),
-                              ),
-                            ],
-                          ),
-                          ProductDetailItemWidget(
-                            text: bookings,
-                            value: '300',
-                            onTap: () =>
-                                context.router.push(ProductBookingsRoute()),
-                          ),
+                          // Text(
+                          //   stats,
+                          //   style: Theme.of(context).textTheme.titleMedium,
+                          // ),
+                          // Column(
+                          //   crossAxisAlignment: CrossAxisAlignment.start,
+                          //   spacing: 8,
+                          //   children: <Widget>[
+                          //     Text(
+                          //       totalRevenue,
+                          //       style: Theme.of(context).textTheme.bodySmall,
+                          //     ),
+                          //     Text(
+                          //       'KES 300, 000',
+                          //       style: Theme.of(context)
+                          //           .textTheme
+                          //           .titleLarge
+                          //           ?.copyWith(
+                          //             color: Theme.of(context).primaryColor,
+                          //           ),
+                          //     ),
+                          //   ],
+                          // ),
+                          // ProductDetailItemWidget(
+                          //   text: bookings,
+                          //   value: '300',
+                          //   onTap: () =>
+                          //       context.router.push(ProductBookingsRoute()),
+                          // ),
                           Text(
                             pricing,
                             style: Theme.of(context).textTheme.titleMedium,
                           ),
-                          PricingCardWidget(
-                            ticketType: vip,
-                            maxTickets: 300,
-                            price: 3000,
-                            svgIconPath: vvipTicketIconSVGPath,
-                            // onAddOrEdit: () {},
-                          ),
-                          PricingCardWidget(
-                            ticketType: vvip,
-                            maxTickets: 20,
-                            price: 5000,
-                            svgIconPath: vvipTicketIconSVGPath,
-                            // onAddOrEdit: () {},
-                          ),
-                          SecondaryButton(
-                            fillColor: AppColors.redColor.withValues(alpha: .1),
-                            textColor: AppColors.redColor,
-                            onPressed: () => showAlertDialog(
-                              context: context,
-                              assetPath: deleteProductSVGPath,
-                              title: '$deactivateProduct?',
-                              description: deactivateProductCopy,
-                              confirmText: deactivateProduct,
-                              cancelText: noGoBack,
-                              onConfirm: () {
-                                // TODO(abiud): deactivate a product
-                                context.router.maybePop();
-                                ScaffoldMessenger.of(context)
-                                  ..hideCurrentSnackBar()
-                                  ..showSnackBar(
-                                    const SnackBar(
-                                      content: Text(comingSoonTitle),
+
+                          if (product?.pricing?.isNotEmpty ?? false)
+                            NoPricingZeroState()
+                          else
+                            ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: product?.pricing?.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                final ProductPricing? current =
+                                    product?.pricing![index];
+
+                                return Container(
+                                  margin: EdgeInsets.only(bottom: 12),
+                                  child: PricingCardWidget(
+                                    ticketTier:
+                                        current?.ticketTier ?? standardTier,
+                                    maxTickets: current?.maxTickets ?? 0,
+                                    price: double.tryParse(
+                                      current?.cost?.toString() ?? '0',
                                     ),
-                                  );
+                                    svgIconPath: getTicketIconPath(
+                                      current?.ticketTier ?? standardTier,
+                                    ),
+                                  ),
+                                );
                               },
-                              onCancel: () => context.router.maybePop(),
                             ),
-                            child: right(deactivateProduct),
-                          ),
+
+                          // SecondaryButton(
+                          //   fillColor: AppColors.redColor.withValues(alpha: .1),
+                          //   textColor: AppColors.redColor,
+                          //   onPressed: () => showAlertDialog(
+                          //     context: context,
+                          //     assetPath: deleteProductSVGPath,
+                          //     title: '$deactivateProduct?',
+                          //     description: deactivateProductCopy,
+                          //     confirmText: deactivateProduct,
+                          //     cancelText: noGoBack,
+                          //     onConfirm: () {
+                          //       // TODO(abiud): deactivate a product
+                          //       context.router.maybePop();
+                          //       ScaffoldMessenger.of(context)
+                          //         ..hideCurrentSnackBar()
+                          //         ..showSnackBar(
+                          //           const SnackBar(
+                          //             content: Text(comingSoonTitle),
+                          //           ),
+                          //         );
+                          //     },
+                          //     onCancel: () => context.router.maybePop(),
+                          //   ),
+                          //   child: right(deactivateProduct),
+                          // ),
                         ],
                       ),
                     ),

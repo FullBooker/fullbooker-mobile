@@ -234,13 +234,13 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                         onEdit: () {},
                       ),
                       PricingCardWidget(
-                        ticketType: vip,
+                        ticketTier: vip,
                         price: 2000,
                         maxTickets: 300,
                         svgIconPath: standardTicketIconSVGPath,
                       ),
                       PricingCardWidget(
-                        ticketType: standard,
+                        ticketTier: standard,
                         price: 2000,
                         maxTickets: 300,
                         svgIconPath: standardTicketIconSVGPath,
