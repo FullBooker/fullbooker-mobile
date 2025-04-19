@@ -660,4 +660,4 @@ const String closedString = 'Closed';
 const String notProvided = 'Not Provided';
 
 const String noPricingOptionsString = 'No pricing options provided';
-const String noImagesString = 'No images added';
+const String noImagesString = 'No photos added';
