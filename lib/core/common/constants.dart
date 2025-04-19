@@ -93,3 +93,5 @@ final List<String> allTicketTiers = <String>[
   vipTier,
   vvipTier,
 ];
+
+const String kImageMediaType = 'image';

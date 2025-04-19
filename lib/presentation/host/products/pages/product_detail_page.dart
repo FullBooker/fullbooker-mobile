@@ -18,7 +18,6 @@ import 'package:fullbooker/presentation/host/product_setup/widgets/pricing_card_
 import 'package:fullbooker/presentation/host/products/widgets/image_carousel_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/no_pricing_zero_state.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_alert_widget.dart';
-import 'package:fullbooker/presentation/host/products/widgets/product_detail_item_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_schedule_widget.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
