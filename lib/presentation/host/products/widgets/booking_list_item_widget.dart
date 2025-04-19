@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/entities/booking.dart';
@@ -56,22 +57,10 @@ class BookingListItem extends StatelessWidget {
                   overflow: TextOverflow.visible,
                   softWrap: true,
                 ),
-                Row(
-                  spacing: 4,
-                  children: <Widget>[
-                    Text(
-                      booking.bookingType ?? '',
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: AppColors.primaryColor,
-                            fontWeight: FontWeight.bold,
-                          ),
-                    ),
-                    humanizeDate(
-                      loadedDate:
-                          booking.bookedOn ?? DateTime.now().toIso8601String(),
-                      dateTextStyle: Theme.of(context).textTheme.bodySmall,
-                    ),
-                  ],
+                humanizeDate(
+                  loadedDate:
+                      booking.confirmedOn ?? DateTime.now().toIso8601String(),
+                  dateTextStyle: Theme.of(context).textTheme.bodySmall,
                 ),
               ],
             ),
@@ -84,20 +73,18 @@ class BookingListItem extends StatelessWidget {
             spacing: 8,
             children: <Widget>[
               Text(
-                'KES ${booking.price?.toStringAsFixed(0) ?? ''}',
+                'KES ${booking.totalCost?.toString() ?? ''}',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: AppColors.primaryColor,
                       fontWeight: FontWeight.bold,
                     ),
               ),
-              if (booking.verified ?? false)
+              if (booking.status != UNKNOWN)
                 CustomBadgeWidget(
                   text: verifiedString,
                   textColor: AppColors.greenColor,
                   backgroundColor: AppColors.greenColor,
                 ),
-              // else
-              //   SecondaryButton(child: right(verifyString), onPressed: () {}),
             ],
           ),
         ],

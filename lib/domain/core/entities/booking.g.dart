@@ -14,10 +14,13 @@ _$BookingImpl _$$BookingImplFromJson(Map<String, dynamic> json) =>
       active: json['active'] as bool? ?? false,
       host: json['host'] as String? ?? UNKNOWN,
       product: json['product'] as String? ?? UNKNOWN,
-      user: json['user'] as String? ?? UNKNOWN,
       status: json['status'] as String? ?? UNKNOWN,
       totalCost: json['total_cost'] as String? ?? UNKNOWN,
       totalTicketsCount: (json['total_tickets_count'] as num?)?.toInt() ?? 0,
+      user: json['user_details'] == null
+          ? null
+          : UserState.fromJson(json['user_details'] as Map<String, dynamic>),
+      confirmedOn: json['confirmed_on'] as String?,
     );
 
 Map<String, dynamic> _$$BookingImplToJson(_$BookingImpl instance) =>
@@ -28,8 +31,9 @@ Map<String, dynamic> _$$BookingImplToJson(_$BookingImpl instance) =>
       'active': instance.active,
       'host': instance.host,
       'product': instance.product,
-      'user': instance.user,
       'status': instance.status,
       'total_cost': instance.totalCost,
       'total_tickets_count': instance.totalTicketsCount,
+      'user_details': instance.user?.toJson(),
+      'confirmed_on': instance.confirmedOn,
     };

@@ -667,3 +667,7 @@ const String noImagesString = 'No photos added';
 const String learnMore = 'Learn More';
 
 String aboutString(String name) => 'About $name';
+
+const String noBookingsYet = 'No Bookings Yet';
+const String noBookingsYetCopy =
+    'You haven’t received any bookings for this product yet';
