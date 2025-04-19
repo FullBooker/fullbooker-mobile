@@ -121,39 +121,60 @@ class AddProductPricingPage extends StatelessWidget {
                                           ? const AppLoading()
                                           : CustomDropdown(
                                               options: vm.currencies
-                                                      ?.map(
-                                                        (Currency? c) =>
-                                                            c?.code ?? UNKNOWN,
+                                                      ?.whereType<Currency>()
+                                                      .map(
+                                                        (Currency c) =>
+                                                            c.code ?? UNKNOWN,
                                                       )
                                                       .where(
                                                         (String code) =>
-                                                            code.isNotEmpty,
+                                                            code.isNotEmpty &&
+                                                            code != UNKNOWN,
                                                       )
                                                       .toList() ??
                                                   <String>[],
-                                              value: (vm.selectedCurrencyCode
-                                                              .isNotEmpty ==
-                                                          true &&
-                                                      vm.selectedCurrencyCode !=
-                                                          UNKNOWN)
-                                                  ? vm.selectedCurrencyCode
-                                                  : (vm.currencies?.first
+                                              value: (vm.selectedCurrency?.code
+                                                              ?.isNotEmpty ??
+                                                          false) &&
+                                                      vm.selectedCurrency
+                                                              ?.code !=
+                                                          UNKNOWN
+                                                  ? vm.selectedCurrency!.code!
+                                                  : (vm.currencies
+                                                          ?.firstWhere(
+                                                            (Currency? c) =>
+                                                                (c?.code?.isNotEmpty ??
+                                                                    false) &&
+                                                                c?.code !=
+                                                                    UNKNOWN,
+                                                            orElse: () => null,
+                                                          )
                                                           ?.code ??
                                                       UNKNOWN),
                                               onChanged: (String? value) {
                                                 if (value != null &&
                                                     value.isNotEmpty) {
-                                                  context
-                                                      .dispatchAll(<ReduxAction<
-                                                          AppState>>[
-                                                    UpdateHostStateAction(
-                                                      selectedCurrencyCode:
-                                                          value,
-                                                    ),
-                                                    UpdateSelectedPricingAction(
-                                                      currency: value,
-                                                    ),
-                                                  ]);
+                                                  final Currency? selected =
+                                                      vm.currencies?.firstWhere(
+                                                    (Currency? c) =>
+                                                        c?.code == value,
+                                                    orElse: () => null,
+                                                  );
+                                                  if (selected != null) {
+                                                    context
+                                                        .dispatchAll(<ReduxAction<
+                                                            AppState>>[
+                                                      UpdateHostStateAction(
+                                                        selectedCurrency:
+                                                            selected,
+                                                      ),
+                                                      UpdateSelectedPricingAction(
+                                                        currency:
+                                                            selected.code ??
+                                                                UNKNOWN,
+                                                      ),
+                                                    ]);
+                                                  }
                                                 }
                                               },
                                             ),
@@ -182,7 +203,7 @@ class AddProductPricingPage extends StatelessWidget {
                             ),
 
                             if (double.tryParse(
-                                  vm.selectedPricing?.cost?.toString() ?? '',
+                                  vm.selectedPricing?.cost ?? '',
                                 ) !=
                                 null)
                               PricingBreakDownWidget(
@@ -199,12 +220,21 @@ class AddProductPricingPage extends StatelessWidget {
                                     ),
                                   );
                                 },
-                                selectedCurrency: (vm.selectedCurrencyCode
-                                                .isNotEmpty ==
-                                            true &&
-                                        vm.selectedCurrencyCode != UNKNOWN)
-                                    ? vm.selectedCurrencyCode
-                                    : (vm.currencies?.first?.code ?? UNKNOWN),
+                                selectedCurrency:
+                                    (vm.selectedCurrency?.code?.isNotEmpty ??
+                                                false) &&
+                                            vm.selectedCurrency?.code != UNKNOWN
+                                        ? vm.selectedCurrency!.code!
+                                        : (vm.currencies
+                                                ?.firstWhere(
+                                                  (Currency? c) =>
+                                                      (c?.code?.isNotEmpty ??
+                                                          false) &&
+                                                      c?.code != UNKNOWN,
+                                                  orElse: () => null,
+                                                )
+                                                ?.code ??
+                                            UNKNOWN),
                               ),
 
                             CustomTextInput(
@@ -270,21 +300,44 @@ class AddProductPricingPage extends StatelessWidget {
                 },
               ),
             ),
-            PrimaryButton(
-              onPressed: () {
-                if (_formKey.currentState?.validate() ?? false) {
-                  context.dispatch(SaveProductPricingAction());
-                  context.router.push(ProductPricingRoute());
+            StoreConnector<AppState, ProductSetupViewModel>(
+              converter: (Store<AppState> store) =>
+                  ProductSetupViewModel.fromState(store.state),
+              onInit: (Store<AppState> store) => context.dispatch(
+                FetchCurrenciesAction(
+                  client: AppWrapperBase.of(context)!.customClient,
+                ),
+              ),
+              builder: (BuildContext context, ProductSetupViewModel vm) {
+                if (context.isWaiting(SaveProductPricingAction)) {
+                  return AppLoading();
                 }
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  spacing: 12,
+                  children: <Widget>[
+                    PrimaryButton(
+                      onPressed: () {
+                        if (_formKey.currentState?.validate() ?? false) {
+                          context.dispatch(
+                            SaveProductPricingAction(
+                              client: AppWrapperBase.of(context)!.customClient,
+                              onSuccess: () =>
+                                  context.router.push(ProductPricingRoute()),
+                            ),
+                          );
+                        }
+                      },
+                      child: d.right(saveString),
+                    ),
+                    SecondaryButton(
+                      onPressed: () => context.router.maybePop(),
+                      child: d.right(cancelString),
+                      fillColor: Colors.transparent,
+                    ),
+                  ],
+                );
               },
-              child: d.right(saveString),
-            ),
-            SecondaryButton(
-              onPressed: () {
-                context.router.maybePop();
-              },
-              child: d.right(cancelString),
-              fillColor: Colors.transparent,
             ),
           ],
         ),

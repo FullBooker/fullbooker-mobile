@@ -28,7 +28,7 @@ class ProductSetupViewModel extends Vm {
     required this.repeatOnDaysOfWeek,
     required this.pricing,
     required this.currencies,
-    required this.selectedCurrencyCode,
+    required this.selectedCurrency,
     required this.selectedPricingTier,
     required this.selectedPricing,
     required this.buyerPaysFee,
@@ -51,7 +51,7 @@ class ProductSetupViewModel extends Vm {
             repeatOnDaysOfWeek,
             pricing,
             currencies,
-            selectedCurrencyCode,
+            selectedCurrency,
             selectedPricingTier,
             selectedPricing,
             buyerPaysFee,
@@ -77,7 +77,7 @@ class ProductSetupViewModel extends Vm {
 
   final Map<String, Map<String, String>> repeatOnDaysOfWeek;
 
-  final String selectedCurrencyCode;
+  final Currency? selectedCurrency;
   final String selectedPricingTier;
   final ProductPricing? selectedPricing;
   final bool buyerPaysFee;
@@ -108,8 +108,7 @@ class ProductSetupViewModel extends Vm {
               <String, Map<String, String>>{},
       pricing: state.hostState?.currentProduct?.pricing ?? <ProductPricing>[],
       currencies: state.hostState?.currencies ?? <Currency?>[],
-      selectedCurrencyCode:
-          state.hostState?.selectedCurrencyCode ?? kAllowedCurrencyCodes.first,
+      selectedCurrency: state.hostState?.selectedCurrency,
       selectedPricingTier: state.hostState?.selectedPricingTier ?? UNKNOWN,
       selectedPricing:
           state.hostState?.selectedProductPricing ?? ProductPricing(),

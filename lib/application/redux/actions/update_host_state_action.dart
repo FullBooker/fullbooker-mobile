@@ -10,7 +10,7 @@ class UpdateHostStateAction extends ReduxAction<AppState> {
     this.currentProduct,
     this.selectedLocation,
     this.currencies,
-    this.selectedCurrencyCode,
+    this.selectedCurrency,
     this.selectedPricingTier,
   });
 
@@ -18,7 +18,7 @@ class UpdateHostStateAction extends ReduxAction<AppState> {
   final Product? currentProduct;
   final ProductLocation? selectedLocation;
   final List<Currency?>? currencies;
-  final String? selectedCurrencyCode;
+  final Currency? selectedCurrency;
   final String? selectedPricingTier;
 
   @override
@@ -28,8 +28,8 @@ class UpdateHostStateAction extends ReduxAction<AppState> {
       currentProduct: currentProduct ?? state.hostState?.currentProduct,
       selectedLocation: selectedLocation ?? state.hostState?.selectedLocation,
       currencies: currencies ?? state.hostState?.currencies,
-      selectedCurrencyCode:
-          selectedCurrencyCode ?? state.hostState?.selectedCurrencyCode,
+      selectedCurrency:
+          selectedCurrency ?? state.hostState?.selectedCurrency,
       selectedPricingTier:
           selectedPricingTier ?? state.hostState?.selectedPricingTier,
     );

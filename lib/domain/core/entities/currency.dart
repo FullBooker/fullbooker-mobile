@@ -11,10 +11,10 @@ class Currency with _$Currency {
     @Default(UNKNOWN) String? id,
     @Default(UNKNOWN) @JsonKey(name: 'created_at') String? createdAt,
     @Default(UNKNOWN) @JsonKey(name: 'updated_at') String? updatedAt,
-    @Default(false) bool? active,
+    @Default(true) bool? active,
     @Default(UNKNOWN) String? name,
     @Default(UNKNOWN) String? code,
-    @JsonKey(name: 'conversion_rate') required String conversionRate,
+    @JsonKey(name: 'conversion_rate') String? conversionRate,
   }) = _Currency;
 
   factory Currency.fromJson(Map<String, dynamic> json) =>

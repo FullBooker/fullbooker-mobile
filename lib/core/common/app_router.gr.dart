@@ -23,7 +23,7 @@ import 'package:fullbooker/features/consumer/pages/payment_confirmation_page.dar
     as _i20;
 import 'package:fullbooker/features/consumer/pages/payment_summary_page.dart'
     as _i21;
-import 'package:fullbooker/features/host/models/currency.dart' as _i48;
+import 'package:fullbooker/features/host/models/old_currency.dart' as _i48;
 import 'package:fullbooker/features/host/models/old_product.dart' as _i43;
 import 'package:fullbooker/features/host/pages/activity_date_selection_page.dart'
     as _i1;
@@ -1124,7 +1124,7 @@ class TicketsSummaryRoute extends _i41.PageRouteInfo<TicketsSummaryRouteArgs> {
     required _i43.OldProduct product,
     required Map<String, double> prices,
     required Map<String, int> amounts,
-    required _i48.Currency currency,
+    required _i48.OldCurrency currency,
     required List<String> selectedCategories,
     List<_i41.PageRouteInfo>? children,
   }) : super(
@@ -1176,7 +1176,7 @@ class TicketsSummaryRouteArgs {
 
   final Map<String, int> amounts;
 
-  final _i48.Currency currency;
+  final _i48.OldCurrency currency;
 
   final List<String> selectedCategories;
 

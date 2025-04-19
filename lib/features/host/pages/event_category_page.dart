@@ -4,7 +4,7 @@ import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/features/host/controllers/currency_controller.dart';
-import 'package:fullbooker/features/host/models/currency.dart';
+import 'package:fullbooker/features/host/models/old_currency.dart';
 import 'package:fullbooker/features/host/models/old_product.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
@@ -44,9 +44,9 @@ class _EventCategoryPageState extends State<EventCategoryPage> {
       <String, TextEditingController>{};
   Map<String, TextEditingController> amountControllers =
       <String, TextEditingController>{};
-  List<Currency> currencies = <Currency>[];
+  List<OldCurrency> currencies = <OldCurrency>[];
   CurrencyViewModel currencyViewModel = CurrencyViewModel();
-  Currency? selectedCurrency;
+  OldCurrency? selectedCurrency;
   List<String> selectedCategories = <String>[];
   Map<String, double> prices = <String, double>{};
   Map<String, int> amounts = <String, int>{};
@@ -96,7 +96,7 @@ class _EventCategoryPageState extends State<EventCategoryPage> {
     super.initState();
     currencyViewModel.repository
         .pullMultiple(1, 100)
-        .then((List<Currency> currencies_) {
+        .then((List<OldCurrency> currencies_) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         setState(() {
           currencies = currencies_;
@@ -153,7 +153,7 @@ class _EventCategoryPageState extends State<EventCategoryPage> {
                             child: OldCustomDropdown(
                               options: currencies
                                   .map(
-                                    (Currency currency) => OldDropDownOption(
+                                    (OldCurrency currency) => OldDropDownOption(
                                       currency.code,
                                       currency.id,
                                       () {},
@@ -167,7 +167,7 @@ class _EventCategoryPageState extends State<EventCategoryPage> {
                                     setState(
                                       () => selectedCurrency =
                                           currencies.firstWhere(
-                                        (Currency currency) =>
+                                        (OldCurrency currency) =>
                                             currency.id == option.id,
                                       ),
                                     );
