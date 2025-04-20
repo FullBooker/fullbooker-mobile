@@ -10,6 +10,7 @@ import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/entities/product_location.dart';
+import 'package:fullbooker/domain/core/entities/product_schedule.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
@@ -366,6 +367,27 @@ void navigateToNextProductStep({
   }
 }
 
+bool isProductComplete({required Product product}) {
+  // Explicit true overrides all checks
+  if ((product.completed ?? false) || (product.active ?? false)) {
+    return true;
+  }
+
+  final bool hasName = product.name?.trim().isNotEmpty ?? false;
+  final bool hasLocation = product.locations?.isNotEmpty ?? false;
+  final bool hasSchedule = (product.scheduleID ?? UNKNOWN) != UNKNOWN;
+  final bool hasImage = (product.image?.file ?? UNKNOWN) != UNKNOWN;
+  final bool hasVideo = (product.video?.file ?? UNKNOWN) != UNKNOWN;
+  final bool hasPricing = product.pricing?.isNotEmpty ?? false;
+
+  return hasName &&
+      hasLocation &&
+      hasSchedule &&
+      hasImage &&
+      hasVideo &&
+      hasPricing;
+}
+
 Color getProductColor({bool complete = false}) {
   if (complete) return AppColors.greenColor;
   return AppColors.amberColor;
@@ -523,4 +545,23 @@ Future<FilePickerResult?> pickMediaFiles({required UploadMediaType type}) {
     type: FileType.custom,
     allowedExtensions: extensions,
   );
+}
+
+
+bool isScheduleValid(ProductSchedule? schedule) {
+  final bool isDateValid = schedule?.startDate != null &&
+      schedule!.startDate!.isNotEmpty &&
+      schedule.startDate != UNKNOWN &&
+      schedule.endDate != null &&
+      schedule.endDate!.isNotEmpty &&
+      schedule.endDate != UNKNOWN;
+
+  final bool isTimeValid = schedule?.startTime != null &&
+      schedule!.startTime!.isNotEmpty &&
+      schedule.startTime != UNKNOWN &&
+      schedule.endTime != null &&
+      schedule.endTime!.isNotEmpty &&
+      schedule.endTime != UNKNOWN;
+
+  return isDateValid && isTimeValid;
 }

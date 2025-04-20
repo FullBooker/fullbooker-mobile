@@ -21,7 +21,7 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool complete = product.completed ?? false;
+    final bool complete = isProductComplete(product: product);
 
     return GestureDetector(
       onTap: () {
@@ -135,61 +135,6 @@ class ProductCard extends StatelessWidget {
                               Text(
                                 product.locations?.first.address ?? '',
                                 style: Theme.of(context).textTheme.bodyMedium,
-                              ),
-                            ],
-                          ),
-                        // Date
-                        if (product.schedule != null)
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            spacing: 4,
-                            children: <Widget>[
-                              HeroIcon(
-                                HeroIcons.calendar,
-                                color: Colors.grey,
-                                size: 20,
-                              ),
-                              humanizeDate(
-                                loadedDate: product.schedule?.startDate ?? '',
-                                dateTextStyle:
-                                    Theme.of(context).textTheme.bodyMedium,
-                              ),
-                              Text(
-                                to,
-                                style: Theme.of(context).textTheme.bodyMedium,
-                              ),
-                              humanizeDate(
-                                loadedDate: product.schedule?.endDate ?? '',
-                                dateTextStyle:
-                                    Theme.of(context).textTheme.bodyMedium,
-                              ),
-                            ],
-                          ),
-
-                        // Time
-                        if (product.schedule != null)
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            spacing: 4,
-                            children: <Widget>[
-                              HeroIcon(
-                                HeroIcons.clock,
-                                color: Colors.grey,
-                                size: 20,
-                              ),
-                              formatTime(
-                                time: product.schedule?.startTime,
-                                textStyle:
-                                    Theme.of(context).textTheme.bodyMedium,
-                              ),
-                              Text(
-                                to,
-                                style: Theme.of(context).textTheme.bodyMedium,
-                              ),
-                              formatTime(
-                                time: product.schedule?.endTime,
-                                textStyle:
-                                    Theme.of(context).textTheme.bodyMedium,
                               ),
                             ],
                           ),
