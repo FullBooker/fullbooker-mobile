@@ -60,7 +60,7 @@ class _ImageSelectionPageState extends State<ImageSelectionPage> {
 
   Future<void> selectImage() async {
     final FilePickerResult? result =
-        await pickMediaFiles(type: MediaType.PHOTO);
+        await pickMediaFiles(type: UploadMediaType.PHOTO);
     if (result != null) {
       setState(() {
         images = result.paths.map((String? path) => File(path!)).toList();
@@ -70,7 +70,7 @@ class _ImageSelectionPageState extends State<ImageSelectionPage> {
 
   Future<void> selectSingleImage() async {
     final FilePickerResult? result =
-        await pickMediaFiles(type: MediaType.PHOTO);
+        await pickMediaFiles(type: UploadMediaType.PHOTO);
 
     if (result != null) {
       setState(() {
@@ -82,7 +82,7 @@ class _ImageSelectionPageState extends State<ImageSelectionPage> {
 
   Future<void> replaceImage(int currentImageIndex) async {
     final FilePickerResult? result =
-        await pickMediaFiles(type: MediaType.PHOTO);
+        await pickMediaFiles(type: UploadMediaType.PHOTO);
     if (result != null) {
       images[currentImageIndex] = File(result.paths[0]!);
       setState(() => images = images);

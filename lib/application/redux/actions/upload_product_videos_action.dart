@@ -13,9 +13,9 @@ import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
 
-class UploadProductPhotosAction extends ReduxAction<AppState> {
-  UploadProductPhotosAction({
-    required this.pickedPhotoFiles,
+class UploadProductVideosAction extends ReduxAction<AppState> {
+  UploadProductVideosAction({
+    required this.pickedVideoFiles,
     required this.client,
     this.onSuccess,
     this.onError,
@@ -24,23 +24,23 @@ class UploadProductPhotosAction extends ReduxAction<AppState> {
   final Function(String error)? onError;
   final Function()? onSuccess;
   final ICustomClient client;
-  final List<PlatformFile> pickedPhotoFiles;
+  final List<PlatformFile> pickedVideoFiles;
 
   @override
   Future<AppState?> reduce() async {
-    final List<ProductMedia?> existingPhotos =
-        state.hostState?.currentProduct?.photos ?? <ProductMedia?>[];
+    final List<ProductMedia?> existingVideos =
+        state.hostState?.currentProduct?.videos ?? <ProductMedia?>[];
 
     final String productID = state.hostState?.currentProduct?.id ?? UNKNOWN;
 
     final Map<String, String> data = <String, String>{
       'product_id': productID,
-      'media_type': kImageMediaType,
+      'media_type': kVideoMediaType,
     };
 
     final String endpoint = GetIt.I.get<AppConfig>().productMediaEndpoint;
 
-    final List<File> imageFiles = pickedPhotoFiles
+    final List<File> imageFiles = pickedVideoFiles
         .where((PlatformFile p) => p.path != null)
         .map((PlatformFile p) => File(p.path!))
         .toList();
@@ -67,11 +67,11 @@ class UploadProductPhotosAction extends ReduxAction<AppState> {
       return null;
     }
 
-    final ProductMedia uploadedPhoto = ProductMedia.fromJson(body);
+    final ProductMedia uploadedVideo = ProductMedia.fromJson(body);
 
     dispatch(
       UpdateCurrentProductAction(
-        photos: <ProductMedia?>[...existingPhotos, uploadedPhoto],
+        videos: <ProductMedia?>[...existingVideos, uploadedVideo],
       ),
     );
 

@@ -41,7 +41,7 @@ class _VideoSelectionPageState extends State<VideoSelectionPage> {
 
   Future<void> selectVideo() async {
     final FilePickerResult? result =
-        await pickMediaFiles(type: MediaType.VIDEO);
+        await pickMediaFiles(type: UploadMediaType.VIDEO);
 
     if (result != null) {
       setState(() {
@@ -53,7 +53,7 @@ class _VideoSelectionPageState extends State<VideoSelectionPage> {
 
   Future<void> replaceVideo(int currentVideoIndex) async {
     final FilePickerResult? result =
-        await pickMediaFiles(type: MediaType.VIDEO);
+        await pickMediaFiles(type: UploadMediaType.VIDEO);
 
     if (result != null) {
       videos[currentVideoIndex] = File(result.paths[0]!);
@@ -63,7 +63,7 @@ class _VideoSelectionPageState extends State<VideoSelectionPage> {
 
   Future<void> selectSingleVideo() async {
     final FilePickerResult? result =
-        await pickMediaFiles(type: MediaType.VIDEO);
+        await pickMediaFiles(type: UploadMediaType.VIDEO);
 
     if (result != null) {
       videos.add(File(result.paths[0]!));

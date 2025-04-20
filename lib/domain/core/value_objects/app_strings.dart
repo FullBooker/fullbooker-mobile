@@ -502,8 +502,11 @@ const String yearlyRepeatPrompt =
 
 // Photos page
 const String photos = 'Photos';
+const String videosString = 'Videos';
 const String photosCopy = 'Add at least 6 high quality photos of your event';
+const String videosCopy = 'Add at least 2 high quality videos of your event';
 const String addPhoto = 'Add Photo';
+const String addVideo = 'Add Video';
 
 // Pricing page
 const String addPricingErrorMsg = 'Add at least one pricing option to continue';

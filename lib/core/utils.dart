@@ -507,10 +507,10 @@ String formatCurrency(
   return formatter.format(amount);
 }
 
-Future<FilePickerResult?> pickMediaFiles({required MediaType type}) {
+Future<FilePickerResult?> pickMediaFiles({required UploadMediaType type}) {
   final List<String> extensions = switch (type) {
-    MediaType.PHOTO => kAllowedPhotoExtensions,
-    MediaType.VIDEO => kAllowedVideoExtensions,
+    UploadMediaType.PHOTO => kAllowedPhotoExtensions,
+    UploadMediaType.VIDEO => kAllowedVideoExtensions,
   };
 
   return FilePicker.platform.pickFiles(

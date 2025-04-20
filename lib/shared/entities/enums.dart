@@ -22,4 +22,4 @@ enum SignInMethod { EMAIL, GOOGLE }
 
 enum WorkflowState { CREATE, VIEW }
 
-enum MediaType { PHOTO, VIDEO }
+enum UploadMediaType { PHOTO, VIDEO }

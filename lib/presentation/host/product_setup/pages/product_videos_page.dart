@@ -5,8 +5,8 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
 import 'package:fullbooker/application/redux/actions/fetch_product_media_action.dart';
-import 'package:fullbooker/application/redux/actions/upload_product_photos_action.dart';
-import 'package:fullbooker/application/redux/actions/remove_product_photo_action.dart';
+import 'package:fullbooker/application/redux/actions/remove_product_video_action.dart';
+import 'package:fullbooker/application/redux/actions/upload_product_videos_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_setup_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
@@ -16,7 +16,7 @@ import 'package:fullbooker/domain/core/entities/product_media.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:dartz/dartz.dart' as d;
-import 'package:fullbooker/presentation/host/product_setup/widgets/upload_photo_zero_state.dart';
+import 'package:fullbooker/presentation/host/product_setup/widgets/upload_media_zero_state.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
@@ -64,11 +64,11 @@ class ProductVideosPage extends StatelessWidget {
                           spacing: 8,
                           children: <Widget>[
                             Text(
-                              photos,
+                              videosString,
                               style: Theme.of(context).textTheme.headlineSmall,
                             ),
                             Text(
-                              photosCopy,
+                              videosCopy,
                               style: Theme.of(context).textTheme.bodyMedium,
                             ),
                           ],
@@ -86,23 +86,24 @@ class ProductVideosPage extends StatelessWidget {
                           itemBuilder: (BuildContext context, int index) {
                             if (index == videos.length) {
                               if (context.isWaiting(<Type>[
-                                UploadProductPhotosAction,
-                                RemoveProductPhotoAction,
+                                UploadProductVideosAction,
+                                RemoveProductVideoAction,
                               ])) {
                                 return AppLoading();
                               }
-                              return UploadPhotoZeroState(
+                              return UploadMediaZeroState(
+                                mediaType: UploadMediaType.VIDEO,
                                 onTap: () async {
                                   final FilePickerResult? result =
                                       await pickMediaFiles(
-                                    type: MediaType.VIDEO,
+                                    type: UploadMediaType.VIDEO,
                                   );
 
                                   if (result != null &&
                                       result.files.isNotEmpty) {
                                     context.dispatch(
-                                      UploadProductPhotosAction(
-                                        pickedPhotoFiles: result.files,
+                                      UploadProductVideosAction(
+                                        pickedVideoFiles: result.files,
                                         client: AppWrapperBase.of(context)!
                                             .customClient,
                                       ),
@@ -139,8 +140,8 @@ class ProductVideosPage extends StatelessWidget {
                                     onTap: () =>
                                         StoreProvider.dispatch<AppState>(
                                       context,
-                                      RemoveProductPhotoAction(
-                                        photo: item!,
+                                      RemoveProductVideoAction(
+                                        video: item!,
                                         client: AppWrapperBase.of(context)!
                                             .customClient,
                                       ),
