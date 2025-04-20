@@ -550,7 +550,9 @@ const String testEventName = 'Music Concert, Eras tour Taylor swift ';
 const String testLocation = 'George Padmore Road';
 const String testDate = '22 Feb 2025';
 const String testTime = '2 - 5 PM';
-String photosAdded(int number) => '$number photos added';
+
+String photosAdded(int number) =>
+    '$number photo${number == 1 ? '' : 's'} added';
 
 const String enterPhone = 'Enter phone number';
 
@@ -568,7 +570,9 @@ const String locationPermsCopy =
 const String viewString = 'View';
 
 const String bookings = 'Bookings';
-String bookingsValue(int value) => '$value bookings';
+String bookingsValue(int value) => '$value booking${value == 1 ? '' : 's'}';
+String ticketsValue(int value) => '$value ticket${value == 1 ? '' : 's'}';
+
 const String payments = 'Payments';
 
 const String deactivateProduct = 'Deactivate Product';

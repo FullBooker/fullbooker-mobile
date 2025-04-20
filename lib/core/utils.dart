@@ -522,7 +522,7 @@ Future<void> showFullDescriptionDialog({
 /// ```
 String formatCurrency(
   num amount, {
-  String currencyCode = 'KES',
+  String currencyCode = kDefaultCurrencyCode,
   int decimalDigits = 0,
 }) {
   final NumberFormat formatter = NumberFormat.currency(
@@ -546,7 +546,6 @@ Future<FilePickerResult?> pickMediaFiles({required UploadMediaType type}) {
     allowedExtensions: extensions,
   );
 }
-
 
 bool isScheduleValid(ProductSchedule? schedule) {
   final bool isDateValid = schedule?.startDate != null &&

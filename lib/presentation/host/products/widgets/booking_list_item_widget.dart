@@ -15,6 +15,7 @@ class BookingListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final String fullName =
         getFullName(booking.user?.firstName, booking.user?.lastName);
+    final int tickets = booking.totalTicketsCount ?? 0;
 
     return Container(
       padding: const EdgeInsets.all(12),
@@ -57,10 +58,23 @@ class BookingListItem extends StatelessWidget {
                   overflow: TextOverflow.visible,
                   softWrap: true,
                 ),
-                humanizeDate(
-                  loadedDate:
-                      booking.confirmedOn ?? DateTime.now().toIso8601String(),
-                  dateTextStyle: Theme.of(context).textTheme.bodySmall,
+                Row(
+                  spacing: 8,
+                  children: <Widget>[
+                    if (tickets > 0)
+                      Text(
+                        ticketsValue(tickets),
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleSmall
+                            ?.copyWith(color: Theme.of(context).primaryColor),
+                      ),
+                    humanizeDate(
+                      loadedDate: booking.confirmedOn ??
+                          DateTime.now().toIso8601String(),
+                      dateTextStyle: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  ],
                 ),
               ],
             ),

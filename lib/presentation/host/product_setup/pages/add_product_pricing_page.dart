@@ -259,40 +259,42 @@ class AddProductPricingPage extends StatelessWidget {
                               },
                               keyboardType: TextInputType.number,
                             ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              spacing: 12,
-                              children: <Widget>[
-                                Text(
-                                  discountLabel,
-                                  style:
-                                      Theme.of(context).textTheme.titleMedium,
-                                ),
-                                Row(
-                                  spacing: 12,
-                                  children: <Widget>[
-                                    Flexible(
-                                      flex: 4,
-                                      child: CustomDropdown(
-                                        options: kAllowedDiscountOptions,
-                                        value: kAllowedDiscountOptions.first,
-                                        onChanged: (String? value) {},
-                                      ),
-                                    ),
-                                    Flexible(
-                                      flex: 8,
-                                      child: CustomTextInput(
-                                        hintText: priceHint,
-                                        autovalidateMode:
-                                            AutovalidateMode.onUserInteraction,
-                                        onChanged: (String value) {},
-                                        keyboardType: TextInputType.number,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
+
+                            // TODO(abiud): return this when the discount option is available
+                            // Column(
+                            //   crossAxisAlignment: CrossAxisAlignment.start,
+                            //   spacing: 12,
+                            //   children: <Widget>[
+                            //     Text(
+                            //       discountLabel,
+                            //       style:
+                            //           Theme.of(context).textTheme.titleMedium,
+                            //     ),
+                            //     Row(
+                            //       spacing: 12,
+                            //       children: <Widget>[
+                            //         Flexible(
+                            //           flex: 4,
+                            //           child: CustomDropdown(
+                            //             options: kAllowedDiscountOptions,
+                            //             value: kAllowedDiscountOptions.first,
+                            //             onChanged: (String? value) {},
+                            //           ),
+                            //         ),
+                            //         Flexible(
+                            //           flex: 8,
+                            //           child: CustomTextInput(
+                            //             hintText: priceHint,
+                            //             autovalidateMode:
+                            //                 AutovalidateMode.onUserInteraction,
+                            //             onChanged: (String value) {},
+                            //             keyboardType: TextInputType.number,
+                            //           ),
+                            //         ),
+                            //       ],
+                            //     ),
+                            //   ],
+                            // ),
                           ],
                         ),
                       ],
