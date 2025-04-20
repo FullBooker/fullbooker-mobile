@@ -37,15 +37,7 @@ class PricingCardWidget extends StatelessWidget {
         final String tier = pricing?.ticketTier ?? '';
         final String iconPath = getTicketIconPath(tier);
 
-        final String currencyGuid = pricing?.currency ?? '';
-        final String resolvedCurrencyCode = vm.currencies
-                ?.whereType<Currency>()
-                .firstWhere(
-                  (Currency c) => c.id == currencyGuid,
-                  orElse: () => const Currency(code: 'KES'),
-                )
-                .code ??
-            'KES';
+        final String currencyCode = pricing?.currencyCode ?? 'KES';
 
         return Container(
           padding: EdgeInsets.all(16),
@@ -92,10 +84,7 @@ class PricingCardWidget extends StatelessWidget {
                   children: <Widget>[
                     if (hasPrice)
                       Text(
-                        formatCurrency(
-                          parsedPrice,
-                          currencyCode: resolvedCurrencyCode,
-                        ),
+                        formatCurrency(parsedPrice, currencyCode: currencyCode),
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                     if (onAddOrEdit != null)

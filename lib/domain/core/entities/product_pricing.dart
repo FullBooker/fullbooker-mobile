@@ -16,6 +16,7 @@ class ProductPricing with _$ProductPricing {
     @Default(UNKNOWN) String? name,
     @Default(UNKNOWN) String? product,
     @Default(UNKNOWN) String? currency,
+    @JsonKey(name: 'currency_code') @Default(UNKNOWN) String? currencyCode,
     @Default(UNKNOWN) String? cost,
     @Default('ticket') String? type,
     @Default(standardTier) @JsonKey(name: 'ticket_tier') String? ticketTier,

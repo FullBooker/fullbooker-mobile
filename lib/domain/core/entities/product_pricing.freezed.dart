@@ -30,6 +30,8 @@ mixin _$ProductPricing {
   String? get name => throw _privateConstructorUsedError;
   String? get product => throw _privateConstructorUsedError;
   String? get currency => throw _privateConstructorUsedError;
+  @JsonKey(name: 'currency_code')
+  String? get currencyCode => throw _privateConstructorUsedError;
   String? get cost => throw _privateConstructorUsedError;
   String? get type => throw _privateConstructorUsedError;
   @JsonKey(name: 'ticket_tier')
@@ -67,6 +69,7 @@ abstract class $ProductPricingCopyWith<$Res> {
       String? name,
       String? product,
       String? currency,
+      @JsonKey(name: 'currency_code') String? currencyCode,
       String? cost,
       String? type,
       @JsonKey(name: 'ticket_tier') String? ticketTier,
@@ -99,6 +102,7 @@ class _$ProductPricingCopyWithImpl<$Res, $Val extends ProductPricing>
     Object? name = freezed,
     Object? product = freezed,
     Object? currency = freezed,
+    Object? currencyCode = freezed,
     Object? cost = freezed,
     Object? type = freezed,
     Object? ticketTier = freezed,
@@ -139,6 +143,10 @@ class _$ProductPricingCopyWithImpl<$Res, $Val extends ProductPricing>
       currency: freezed == currency
           ? _value.currency
           : currency // ignore: cast_nullable_to_non_nullable
+              as String?,
+      currencyCode: freezed == currencyCode
+          ? _value.currencyCode
+          : currencyCode // ignore: cast_nullable_to_non_nullable
               as String?,
       cost: freezed == cost
           ? _value.cost
@@ -189,6 +197,7 @@ abstract class _$$ProductPricingImplCopyWith<$Res>
       String? name,
       String? product,
       String? currency,
+      @JsonKey(name: 'currency_code') String? currencyCode,
       String? cost,
       String? type,
       @JsonKey(name: 'ticket_tier') String? ticketTier,
@@ -219,6 +228,7 @@ class __$$ProductPricingImplCopyWithImpl<$Res>
     Object? name = freezed,
     Object? product = freezed,
     Object? currency = freezed,
+    Object? currencyCode = freezed,
     Object? cost = freezed,
     Object? type = freezed,
     Object? ticketTier = freezed,
@@ -259,6 +269,10 @@ class __$$ProductPricingImplCopyWithImpl<$Res>
       currency: freezed == currency
           ? _value.currency
           : currency // ignore: cast_nullable_to_non_nullable
+              as String?,
+      currencyCode: freezed == currencyCode
+          ? _value.currencyCode
+          : currencyCode // ignore: cast_nullable_to_non_nullable
               as String?,
       cost: freezed == cost
           ? _value.cost
@@ -305,6 +319,7 @@ class _$ProductPricingImpl implements _ProductPricing {
       this.name = UNKNOWN,
       this.product = UNKNOWN,
       this.currency = UNKNOWN,
+      @JsonKey(name: 'currency_code') this.currencyCode = UNKNOWN,
       this.cost = UNKNOWN,
       this.type = 'ticket',
       @JsonKey(name: 'ticket_tier') this.ticketTier = standardTier,
@@ -341,6 +356,9 @@ class _$ProductPricingImpl implements _ProductPricing {
   @JsonKey()
   final String? currency;
   @override
+  @JsonKey(name: 'currency_code')
+  final String? currencyCode;
+  @override
   @JsonKey()
   final String? cost;
   @override
@@ -364,7 +382,7 @@ class _$ProductPricingImpl implements _ProductPricing {
 
   @override
   String toString() {
-    return 'ProductPricing(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, active: $active, host: $host, name: $name, product: $product, currency: $currency, cost: $cost, type: $type, ticketTier: $ticketTier, maxTickets: $maxTickets, remainingTickets: $remainingTickets, soldTickets: $soldTickets, buyerPaysFee: $buyerPaysFee)';
+    return 'ProductPricing(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, active: $active, host: $host, name: $name, product: $product, currency: $currency, currencyCode: $currencyCode, cost: $cost, type: $type, ticketTier: $ticketTier, maxTickets: $maxTickets, remainingTickets: $remainingTickets, soldTickets: $soldTickets, buyerPaysFee: $buyerPaysFee)';
   }
 
   @override
@@ -383,6 +401,8 @@ class _$ProductPricingImpl implements _ProductPricing {
             (identical(other.product, product) || other.product == product) &&
             (identical(other.currency, currency) ||
                 other.currency == currency) &&
+            (identical(other.currencyCode, currencyCode) ||
+                other.currencyCode == currencyCode) &&
             (identical(other.cost, cost) || other.cost == cost) &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.ticketTier, ticketTier) ||
@@ -409,6 +429,7 @@ class _$ProductPricingImpl implements _ProductPricing {
       name,
       product,
       currency,
+      currencyCode,
       cost,
       type,
       ticketTier,
@@ -444,6 +465,7 @@ abstract class _ProductPricing implements ProductPricing {
       final String? name,
       final String? product,
       final String? currency,
+      @JsonKey(name: 'currency_code') final String? currencyCode,
       final String? cost,
       final String? type,
       @JsonKey(name: 'ticket_tier') final String? ticketTier,
@@ -473,6 +495,9 @@ abstract class _ProductPricing implements ProductPricing {
   String? get product;
   @override
   String? get currency;
+  @override
+  @JsonKey(name: 'currency_code')
+  String? get currencyCode;
   @override
   String? get cost;
   @override
