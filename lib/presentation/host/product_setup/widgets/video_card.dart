@@ -39,6 +39,12 @@ class VideoCardState extends State<VideoCard> {
     super.dispose();
   }
 
+  String formatDuration(Duration duration) {
+    final int minutes = duration.inMinutes;
+    final int seconds = duration.inSeconds.remainder(60);
+    return '$minutes:${seconds.toString().padLeft(2, '0')}';
+  }
+
   @override
   Widget build(BuildContext context) {
     const double radius = 8;
@@ -51,56 +57,83 @@ class VideoCardState extends State<VideoCard> {
         child: Stack(
           fit: StackFit.expand,
           children: <Widget>[
-            // Thumbnail or fallback
+            // Video thumbnail
             if (_initialized)
-              AspectRatio(
-                aspectRatio: _controller.value.aspectRatio,
-                child: VideoPlayer(_controller),
+              FittedBox(
+                fit: BoxFit.cover,
+                clipBehavior: Clip.hardEdge,
+                child: SizedBox(
+                  width: _controller.value.size.width,
+                  height: _controller.value.size.height,
+                  child: VideoPlayer(_controller),
+                ),
               )
             else
               CachedNetworkImage(
                 imageUrl: widget.videoUrl,
                 fit: BoxFit.cover,
-                placeholder: (_, __) => AppLoading(),
-                errorWidget: (_, __, ___) => AppLoading(),
+                placeholder: (_, __) => const AppLoading(),
+                errorWidget: (_, __, ___) => const AppLoading(),
               ),
 
-            // Play icon overlay
-            Center(
-              child: Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.black.withValues(alpha: 0.6),
-                ),
-                padding: EdgeInsets.all(12),
-                child: HeroIcon(
-                  HeroIcons.play,
-                  size: 40,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-
-            // Remove button
+            // Remove icon
             Positioned(
-              top: 8,
-              right: 8,
+              top: 12,
+              right: 12,
               child: GestureDetector(
                 onTap: widget.onRemove,
                 child: Container(
-                  padding: const EdgeInsets.all(6),
                   decoration: BoxDecoration(
-                    color: Colors.black.withValues(alpha: 0.6),
+                    color: Colors.black.withValues(alpha: .6),
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(
-                    Icons.close,
+                  padding: EdgeInsets.all(8),
+                  child: HeroIcon(
+                    HeroIcons.xMark,
                     color: Colors.white,
-                    size: 18,
+                    size: 24,
                   ),
                 ),
               ),
             ),
+
+            // Duration
+            if (_initialized)
+              Positioned(
+                bottom: 8,
+                left: 0,
+                right: 0,
+                child: Center(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.black.withValues(alpha: 0.6),
+                      borderRadius: BorderRadius.circular(100),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 8,
+                      horizontal: 12,
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      spacing: 4,
+                      children: <Widget>[
+                        const HeroIcon(
+                          HeroIcons.play,
+                          size: 24,
+                          color: Colors.white,
+                        ),
+                        Text(
+                          formatDuration(_controller.value.duration),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall
+                              ?.copyWith(color: Colors.white),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
           ],
         ),
       ),

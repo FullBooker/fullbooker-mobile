@@ -103,17 +103,22 @@ class FullscreenVideoPlayerPageState extends State<FullscreenVideoPlayerPage> {
                                       formatDuration(
                                         controller.value.position,
                                       ),
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 12,
-                                      ),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall
+                                          ?.copyWith(
+                                            color: Colors.white,
+                                          ),
                                     ),
                                     Text(
                                       ' / ${formatDuration(controller.value.duration)}',
-                                      style: const TextStyle(
-                                        color: Colors.white70,
-                                        fontSize: 12,
-                                      ),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall
+                                          ?.copyWith(
+                                            color: Colors.white
+                                                .withValues(alpha: .6),
+                                          ),
                                     ),
                                   ],
                                 ),
