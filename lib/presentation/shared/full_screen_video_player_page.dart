@@ -8,10 +8,7 @@ import 'package:video_player/video_player.dart';
 
 @RoutePage()
 class FullscreenVideoPlayerPage extends StatefulWidget {
-  const FullscreenVideoPlayerPage({
-    super.key,
-    required this.videoUrl,
-  });
+  const FullscreenVideoPlayerPage({super.key, required this.videoUrl});
 
   final String videoUrl;
 
@@ -22,17 +19,24 @@ class FullscreenVideoPlayerPage extends StatefulWidget {
 
 class FullscreenVideoPlayerPageState extends State<FullscreenVideoPlayerPage> {
   late final VideoPlayerController controller;
+
   bool initialized = false;
   bool showControls = true;
+  bool isMuted = false;
 
   @override
   void initState() {
     super.initState();
+
     controller = VideoPlayerController.networkUrl(Uri.parse(widget.videoUrl))
       ..initialize().then((_) {
         setState(() => initialized = true);
         controller.play();
       });
+
+    controller.addListener(() {
+      if (mounted) setState(() {});
+    });
   }
 
   @override
@@ -42,7 +46,7 @@ class FullscreenVideoPlayerPageState extends State<FullscreenVideoPlayerPage> {
     super.dispose();
   }
 
-  void toggleControls() {
+  void _toggleControls() {
     setState(() => showControls = !showControls);
   }
 
@@ -58,10 +62,10 @@ class FullscreenVideoPlayerPageState extends State<FullscreenVideoPlayerPage> {
 
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: CustomAppBar(title: playVideo, showBell: false),
+      appBar: CustomAppBar(title: playVideo),
       body: initialized
           ? GestureDetector(
-              onTap: toggleControls,
+              onTap: _toggleControls,
               child: Stack(
                 alignment: Alignment.center,
                 children: <Widget>[
@@ -73,76 +77,126 @@ class FullscreenVideoPlayerPageState extends State<FullscreenVideoPlayerPage> {
                   ),
                   if (showControls)
                     Positioned(
-                      bottom: 0,
-                      left: 0,
-                      right: 0,
+                      bottom: 32,
+                      left: 16,
+                      right: 16,
                       child: Container(
-                        color: Colors.black.withValues(alpha: 0.3),
                         padding: const EdgeInsets.symmetric(
+                          vertical: 12,
                           horizontal: 16,
-                          vertical: 8,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.black.withValues(alpha: 0.4),
+                          borderRadius: BorderRadius.circular(12),
                         ),
                         child: Column(
                           spacing: 8,
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: <Widget>[
                             Row(
                               spacing: 8,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
-                                Text(
-                                  formatDuration(
-                                    controller.value.position,
-                                  ),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodySmall
-                                      ?.copyWith(color: Colors.white),
-                                ),
-                                Expanded(
-                                  child: VideoProgressIndicator(
-                                    controller,
-                                    allowScrubbing: true,
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 8,
+                                Row(
+                                  spacing: 8,
+                                  children: <Widget>[
+                                    Text(
+                                      formatDuration(
+                                        controller.value.position,
+                                      ),
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 12,
+                                      ),
                                     ),
-                                    colors: VideoProgressColors(
-                                      playedColor: theme.primaryColor,
-                                      bufferedColor: theme.primaryColor
-                                          .withValues(alpha: 0.3),
-                                      backgroundColor:
-                                          Colors.black.withValues(alpha: .6),
+                                    Text(
+                                      ' / ${formatDuration(controller.value.duration)}',
+                                      style: const TextStyle(
+                                        color: Colors.white70,
+                                        fontSize: 12,
+                                      ),
                                     ),
-                                  ),
+                                  ],
                                 ),
-                                Text(
-                                  formatDuration(controller.value.duration),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodySmall
-                                      ?.copyWith(color: Colors.white),
+                                Row(
+                                  spacing: 8,
+                                  children: <Widget>[
+                                    IconButton(
+                                      icon: const HeroIcon(
+                                        HeroIcons.backward,
+                                        size: 24,
+                                        color: Colors.white,
+                                      ),
+                                      onPressed: () {
+                                        final Duration newPosition =
+                                            controller.value.position -
+                                                const Duration(seconds: 10);
+                                        controller.seekTo(
+                                          newPosition >= Duration.zero
+                                              ? newPosition
+                                              : Duration.zero,
+                                        );
+                                      },
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          controller.value.isPlaying
+                                              ? controller.pause()
+                                              : controller.play();
+                                        });
+                                      },
+                                      icon: HeroIcon(
+                                        controller.value.isPlaying
+                                            ? HeroIcons.pause
+                                            : HeroIcons.play,
+                                        color: Colors.white,
+                                        size: 32,
+                                      ),
+                                    ),
+                                    IconButton(
+                                      icon: const HeroIcon(
+                                        HeroIcons.forward,
+                                        size: 24,
+                                        color: Colors.white,
+                                      ),
+                                      onPressed: () {
+                                        final Duration newPosition =
+                                            controller.value.position +
+                                                const Duration(seconds: 10);
+                                        controller.seekTo(newPosition);
+                                      },
+                                    ),
+                                    IconButton(
+                                      icon: HeroIcon(
+                                        isMuted
+                                            ? HeroIcons.speakerXMark
+                                            : HeroIcons.speakerWave,
+                                        color: Colors.white,
+                                        size: 24,
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          isMuted = !isMuted;
+                                          controller.setVolume(
+                                            isMuted ? 0.0 : 1.0,
+                                          );
+                                        });
+                                      },
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                IconButton(
-                                  icon: HeroIcon(
-                                    controller.value.isPlaying
-                                        ? HeroIcons.stop
-                                        : HeroIcons.play,
-                                    color: Colors.white,
-                                    size: 32,
-                                  ),
-                                  onPressed: () {
-                                    setState(() {
-                                      controller.value.isPlaying
-                                          ? controller.pause()
-                                          : controller.play();
-                                    });
-                                  },
-                                ),
-                              ],
+                            VideoProgressIndicator(
+                              controller,
+                              allowScrubbing: true,
+                              padding: EdgeInsets.zero,
+                              colors: VideoProgressColors(
+                                playedColor: theme.primaryColor,
+                                bufferedColor:
+                                    theme.primaryColor.withValues(alpha: 0.3),
+                                backgroundColor: Colors.grey.shade700,
+                              ),
                             ),
                           ],
                         ),
