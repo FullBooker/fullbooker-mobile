@@ -1,7 +1,12 @@
+import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
+import 'package:fullbooker/application/redux/actions/update_host_state_action.dart';
+import 'package:fullbooker/application/redux/actions/validate_ticket_action.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/presentation/host/products/widgets/ticket_scan_bottom_sheet.dart';
+import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
@@ -15,12 +20,13 @@ class ScanTicketsPage extends StatefulWidget {
 
 class _ScanTicketsPageState extends State<ScanTicketsPage> {
   bool hasScanned = false;
+  bool isValidating = false;
   final GlobalKey qrKey = GlobalKey();
 
-  void _showValidationBottomSheet(String code) {
-    // TODO(abiud): this will be replaced by an actual ticket REF ID
-    final bool isValid = code == 'VALID_TICKET_ID';
-
+  void showValidationBottomSheet({
+    required String code,
+    required bool isValid,
+  }) {
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.white,
@@ -33,7 +39,10 @@ class _ScanTicketsPageState extends State<ScanTicketsPage> {
         code: code,
         onConfirm: () {
           Navigator.pop(context);
-          setState(() => hasScanned = false);
+          setState(() {
+            hasScanned = false;
+            isValidating = false;
+          });
         },
       ),
     );
@@ -47,11 +56,28 @@ class _ScanTicketsPageState extends State<ScanTicketsPage> {
         children: <Widget>[
           MobileScanner(
             onDetect: (BarcodeCapture capture) {
-              if (hasScanned) return;
+              if (hasScanned || isValidating) return;
               final String? code = capture.barcodes.first.rawValue;
               if (code != null) {
-                setState(() => hasScanned = true);
-                _showValidationBottomSheet(code);
+                setState(() {
+                  hasScanned = true;
+                  isValidating = true;
+                });
+
+                context.dispatch(
+                  UpdateHostStateAction(currentScannedTicketID: code),
+                );
+
+                context.dispatch(
+                  ValidateTicketAction(
+                    client: AppWrapperBase.of(context)!.customClient,
+                    onResult: (bool isValid) {
+                      if (mounted) {
+                        showValidationBottomSheet(code: code, isValid: isValid);
+                      }
+                    },
+                  ),
+                );
               }
             },
           ),
@@ -101,6 +127,11 @@ class _ScanTicketsPageState extends State<ScanTicketsPage> {
               ],
             ),
           ),
+          if (isValidating)
+            Container(
+              color: Colors.black.withValues(alpha: 0.4),
+              child: AppLoading(),
+            ),
         ],
       ),
     );

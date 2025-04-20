@@ -5,6 +5,7 @@ import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/entities/booking.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/presentation/core/components/custom_badge_widget.dart';
+import 'package:intl/intl.dart';
 
 class BookingListItem extends StatelessWidget {
   const BookingListItem({super.key, required this.booking});
@@ -95,9 +96,8 @@ class BookingListItem extends StatelessWidget {
               ),
               if (booking.status != UNKNOWN)
                 CustomBadgeWidget(
-                  text: verifiedString,
-                  textColor: AppColors.greenColor,
-                  backgroundColor: AppColors.greenColor,
+                  text: toBeginningOfSentenceCase(booking.status ?? UNKNOWN),
+                  textColor: AppColors.amberColor,
                 ),
             ],
           ),

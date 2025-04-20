@@ -33,7 +33,9 @@ mixin _$HostState {
   Currency? get selectedCurrency => throw _privateConstructorUsedError;
   String? get selectedPricingTier => throw _privateConstructorUsedError;
   ProductPricing? get selectedProductPricing =>
-      throw _privateConstructorUsedError;
+      throw _privateConstructorUsedError; // Ticket scanning
+  String? get currentScannedTicketID => throw _privateConstructorUsedError;
+  bool? get isValidTicket => throw _privateConstructorUsedError;
 
   /// Serializes this HostState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -61,7 +63,9 @@ abstract class $HostStateCopyWith<$Res> {
       List<Currency?>? currencies,
       Currency? selectedCurrency,
       String? selectedPricingTier,
-      ProductPricing? selectedProductPricing});
+      ProductPricing? selectedProductPricing,
+      String? currentScannedTicketID,
+      bool? isValidTicket});
 
   $ProductCopyWith<$Res>? get currentProduct;
   $ProductCopyWith<$Res>? get selectedProduct;
@@ -98,6 +102,8 @@ class _$HostStateCopyWithImpl<$Res, $Val extends HostState>
     Object? selectedCurrency = freezed,
     Object? selectedPricingTier = freezed,
     Object? selectedProductPricing = freezed,
+    Object? currentScannedTicketID = freezed,
+    Object? isValidTicket = freezed,
   }) {
     return _then(_value.copyWith(
       products: freezed == products
@@ -144,6 +150,14 @@ class _$HostStateCopyWithImpl<$Res, $Val extends HostState>
           ? _value.selectedProductPricing
           : selectedProductPricing // ignore: cast_nullable_to_non_nullable
               as ProductPricing?,
+      currentScannedTicketID: freezed == currentScannedTicketID
+          ? _value.currentScannedTicketID
+          : currentScannedTicketID // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isValidTicket: freezed == isValidTicket
+          ? _value.isValidTicket
+          : isValidTicket // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ) as $Val);
   }
 
@@ -266,7 +280,9 @@ abstract class _$$HostStateImplCopyWith<$Res>
       List<Currency?>? currencies,
       Currency? selectedCurrency,
       String? selectedPricingTier,
-      ProductPricing? selectedProductPricing});
+      ProductPricing? selectedProductPricing,
+      String? currentScannedTicketID,
+      bool? isValidTicket});
 
   @override
   $ProductCopyWith<$Res>? get currentProduct;
@@ -308,6 +324,8 @@ class __$$HostStateImplCopyWithImpl<$Res>
     Object? selectedCurrency = freezed,
     Object? selectedPricingTier = freezed,
     Object? selectedProductPricing = freezed,
+    Object? currentScannedTicketID = freezed,
+    Object? isValidTicket = freezed,
   }) {
     return _then(_$HostStateImpl(
       products: freezed == products
@@ -354,6 +372,14 @@ class __$$HostStateImplCopyWithImpl<$Res>
           ? _value.selectedProductPricing
           : selectedProductPricing // ignore: cast_nullable_to_non_nullable
               as ProductPricing?,
+      currentScannedTicketID: freezed == currentScannedTicketID
+          ? _value.currentScannedTicketID
+          : currentScannedTicketID // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isValidTicket: freezed == isValidTicket
+          ? _value.isValidTicket
+          : isValidTicket // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -373,7 +399,9 @@ class _$HostStateImpl implements _HostState {
       this.currencies = const <Currency>[],
       this.selectedCurrency,
       this.selectedPricingTier = UNKNOWN,
-      this.selectedProductPricing});
+      this.selectedProductPricing,
+      this.currentScannedTicketID = UNKNOWN,
+      this.isValidTicket = false});
 
   factory _$HostStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$HostStateImplFromJson(json);
@@ -405,10 +433,17 @@ class _$HostStateImpl implements _HostState {
   final String? selectedPricingTier;
   @override
   final ProductPricing? selectedProductPricing;
+// Ticket scanning
+  @override
+  @JsonKey()
+  final String? currentScannedTicketID;
+  @override
+  @JsonKey()
+  final bool? isValidTicket;
 
   @override
   String toString() {
-    return 'HostState(products: $products, currentProduct: $currentProduct, selectedProduct: $selectedProduct, productCategories: $productCategories, locationPerms: $locationPerms, selectedLocation: $selectedLocation, selectedSchedule: $selectedSchedule, currencies: $currencies, selectedCurrency: $selectedCurrency, selectedPricingTier: $selectedPricingTier, selectedProductPricing: $selectedProductPricing)';
+    return 'HostState(products: $products, currentProduct: $currentProduct, selectedProduct: $selectedProduct, productCategories: $productCategories, locationPerms: $locationPerms, selectedLocation: $selectedLocation, selectedSchedule: $selectedSchedule, currencies: $currencies, selectedCurrency: $selectedCurrency, selectedPricingTier: $selectedPricingTier, selectedProductPricing: $selectedProductPricing, currentScannedTicketID: $currentScannedTicketID, isValidTicket: $isValidTicket)';
   }
 
   @override
@@ -436,7 +471,11 @@ class _$HostStateImpl implements _HostState {
             (identical(other.selectedPricingTier, selectedPricingTier) ||
                 other.selectedPricingTier == selectedPricingTier) &&
             (identical(other.selectedProductPricing, selectedProductPricing) ||
-                other.selectedProductPricing == selectedProductPricing));
+                other.selectedProductPricing == selectedProductPricing) &&
+            (identical(other.currentScannedTicketID, currentScannedTicketID) ||
+                other.currentScannedTicketID == currentScannedTicketID) &&
+            (identical(other.isValidTicket, isValidTicket) ||
+                other.isValidTicket == isValidTicket));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -453,7 +492,9 @@ class _$HostStateImpl implements _HostState {
       const DeepCollectionEquality().hash(currencies),
       selectedCurrency,
       selectedPricingTier,
-      selectedProductPricing);
+      selectedProductPricing,
+      currentScannedTicketID,
+      isValidTicket);
 
   /// Create a copy of HostState
   /// with the given fields replaced by the non-null parameter values.
@@ -483,7 +524,9 @@ abstract class _HostState implements HostState {
       final List<Currency?>? currencies,
       final Currency? selectedCurrency,
       final String? selectedPricingTier,
-      final ProductPricing? selectedProductPricing}) = _$HostStateImpl;
+      final ProductPricing? selectedProductPricing,
+      final String? currentScannedTicketID,
+      final bool? isValidTicket}) = _$HostStateImpl;
 
   factory _HostState.fromJson(Map<String, dynamic> json) =
       _$HostStateImpl.fromJson;
@@ -509,7 +552,11 @@ abstract class _HostState implements HostState {
   @override
   String? get selectedPricingTier;
   @override
-  ProductPricing? get selectedProductPricing;
+  ProductPricing? get selectedProductPricing; // Ticket scanning
+  @override
+  String? get currentScannedTicketID;
+  @override
+  bool? get isValidTicket;
 
   /// Create a copy of HostState
   /// with the given fields replaced by the non-null parameter values.

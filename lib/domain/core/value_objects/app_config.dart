@@ -26,6 +26,8 @@ class AppConfig {
     required this.productPricingEndpoint,
     required this.currenciesEndpoint,
     required this.bookingsEndpoint,
+    required this.ticketsEndpoint,
+    required this.validateTicketsEndpoint,
   });
 
   /// The context the app is running in
@@ -62,6 +64,8 @@ class AppConfig {
   final String productPricingEndpoint;
   final String currenciesEndpoint;
   final String bookingsEndpoint;
+  final String ticketsEndpoint;
+  final String validateTicketsEndpoint;
 
   /// Profile endpoints
   final String getProfileEndpoint;
@@ -90,6 +94,8 @@ final AppConfig devAppConfig = AppConfig(
   productPricingEndpoint: kDevPricingEndpoint,
   currenciesEndpoint: kDevCurrenciesEndpoint,
   bookingsEndpoint: kDevBookingsEndpoint,
+  ticketsEndpoint: kDevTicketsEndpoint,
+  validateTicketsEndpoint: kDevValidateTicketEndpoint,
 );
 
 final AppConfig prodAppConfig = AppConfig(
@@ -115,6 +121,8 @@ final AppConfig prodAppConfig = AppConfig(
   productPricingEndpoint: kProdPricingEndpoint,
   currenciesEndpoint: kProdCurrenciesEndpoint,
   bookingsEndpoint: kProdBookingsEndpoint,
+  ticketsEndpoint: kProdTicketsEndpoint,
+  validateTicketsEndpoint: kProdValidateTicketEndpoint,
 );
 
 final AppConfig testAppConfig = AppConfig(
@@ -140,4 +148,6 @@ final AppConfig testAppConfig = AppConfig(
   productPricingEndpoint: kTestPricingEndpoint,
   currenciesEndpoint: kTestCurrenciesEndpoint,
   bookingsEndpoint: kTestBookingsEndpoint,
+  ticketsEndpoint: kTestTicketsEndpoint,
+  validateTicketsEndpoint: kTestValidateTicketEndpoint,
 );
