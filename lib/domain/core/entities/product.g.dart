@@ -42,7 +42,13 @@ _$ProductImpl _$$ProductImplFromJson(Map<String, dynamic> json) =>
               .toList() ??
           const <ProductLocation>[],
       completed: json['completed'] as bool? ?? false,
-      productMedia: (json['productMedia'] as List<dynamic>?)
+      photos: (json['photos'] as List<dynamic>?)
+              ?.map((e) => e == null
+                  ? null
+                  : ProductMedia.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const <ProductMedia>[],
+      videos: (json['videos'] as List<dynamic>?)
               ?.map((e) => e == null
                   ? null
                   : ProductMedia.fromJson(e as Map<String, dynamic>))
@@ -86,7 +92,8 @@ Map<String, dynamic> _$$ProductImplToJson(_$ProductImpl instance) =>
       'video': instance.video?.toJson(),
       'locations': instance.locations?.map((e) => e.toJson()).toList(),
       'completed': instance.completed,
-      'productMedia': instance.productMedia?.map((e) => e?.toJson()).toList(),
+      'photos': instance.photos?.map((e) => e?.toJson()).toList(),
+      'videos': instance.videos?.map((e) => e?.toJson()).toList(),
       'bookings': instance.bookings?.map((e) => e?.toJson()).toList(),
       'selectedProductCategory': instance.selectedProductCategory?.toJson(),
       'selectedProductSubCategory':

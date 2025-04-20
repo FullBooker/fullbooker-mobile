@@ -670,3 +670,6 @@ String aboutString(String name) => 'About $name';
 const String noBookingsYet = 'No Bookings Yet';
 const String noBookingsYetCopy =
     'You haven’t received any bookings for this product yet';
+
+const String invalidMediaFilesError =
+    'Some files aren’t supported. Please upload valid images or videos';

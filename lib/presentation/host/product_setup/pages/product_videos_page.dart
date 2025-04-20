@@ -23,8 +23,8 @@ import 'package:fullbooker/shared/widgets/secondary_button.dart';
 import 'package:heroicons/heroicons.dart';
 
 @RoutePage()
-class ProductPhotosPage extends StatelessWidget {
-  const ProductPhotosPage({super.key});
+class ProductVideosPage extends StatelessWidget {
+  const ProductVideosPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -50,8 +50,8 @@ class ProductPhotosPage extends StatelessWidget {
                   ),
                 ),
                 builder: (BuildContext context, ProductSetupViewModel vm) {
-                  final List<ProductMedia?> productPhotos =
-                      vm.photos ?? <ProductMedia>[];
+                  final List<ProductMedia?> videos =
+                      vm.videos ?? <ProductMedia>[];
 
                   return SingleChildScrollView(
                     child: Column(
@@ -81,9 +81,9 @@ class ProductPhotosPage extends StatelessWidget {
                             crossAxisSpacing: 8,
                             mainAxisSpacing: 8,
                           ),
-                          itemCount: productPhotos.length + 1,
+                          itemCount: videos.length + 1,
                           itemBuilder: (BuildContext context, int index) {
-                            if (index == productPhotos.length) {
+                            if (index == videos.length) {
                               if (context.isWaiting(<Type>[
                                 UploadProductPhotosAction,
                                 RemoveProductPhotoAction,
@@ -113,7 +113,7 @@ class ProductPhotosPage extends StatelessWidget {
                               );
                             }
 
-                            final ProductMedia? item = productPhotos[index];
+                            final ProductMedia? item = videos[index];
                             final bool isLoading = item?.file == UNKNOWN;
 
                             return Stack(

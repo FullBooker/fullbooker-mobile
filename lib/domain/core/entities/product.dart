@@ -35,7 +35,8 @@ class Product with _$Product {
     @Default(false) bool? completed,
 
     /// Temp values used when creating a product
-    @Default(<ProductMedia>[]) List<ProductMedia?>? productMedia,
+    @Default(<ProductMedia>[]) List<ProductMedia?>? photos,
+    @Default(<ProductMedia>[]) List<ProductMedia?>? videos,
     @Default(<Booking>[]) List<Booking?>? bookings,
     @JsonKey(includeFromJson: true, includeToJson: true)
     ProductCategory? selectedProductCategory,

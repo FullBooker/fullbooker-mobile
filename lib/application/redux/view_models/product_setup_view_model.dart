@@ -18,7 +18,8 @@ class ProductSetupViewModel extends Vm {
     required this.startTime,
     required this.endDate,
     required this.endTime,
-    required this.productMedia,
+    required this.photos,
+    required this.videos,
     required this.selectedLocation,
     required this.isAllDay,
     required this.repeats,
@@ -41,7 +42,8 @@ class ProductSetupViewModel extends Vm {
             startTime,
             endDate,
             endTime,
-            productMedia,
+            photos,
+            videos,
             selectedLocation,
             isAllDay,
             repeats,
@@ -65,7 +67,8 @@ class ProductSetupViewModel extends Vm {
   final String startTime;
   final String endDate;
   final String endTime;
-  final List<ProductMedia?>? productMedia;
+  final List<ProductMedia?>? photos;
+  final List<ProductMedia?>? videos;
   final ProductLocation? selectedLocation;
   final bool isAllDay;
   final bool repeats;
@@ -91,8 +94,8 @@ class ProductSetupViewModel extends Vm {
       startTime: state.hostState?.selectedSchedule?.startTime ?? UNKNOWN,
       endDate: state.hostState?.selectedSchedule?.endDate ?? UNKNOWN,
       endTime: state.hostState?.selectedSchedule?.endTime ?? UNKNOWN,
-      productMedia:
-          state.hostState?.currentProduct?.productMedia ?? <ProductMedia?>[],
+      photos: state.hostState?.currentProduct?.photos ?? <ProductMedia?>[],
+      videos: state.hostState?.currentProduct?.videos ?? <ProductMedia?>[],
       selectedLocation: state.hostState?.selectedLocation,
       isAllDay: state.hostState?.selectedSchedule?.isAllDay ?? false,
       repeats: state.hostState?.selectedSchedule?.repeats ?? false,

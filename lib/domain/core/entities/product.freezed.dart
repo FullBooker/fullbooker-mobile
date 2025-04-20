@@ -43,7 +43,8 @@ mixin _$Product {
   bool? get completed => throw _privateConstructorUsedError;
 
   /// Temp values used when creating a product
-  List<ProductMedia?>? get productMedia => throw _privateConstructorUsedError;
+  List<ProductMedia?>? get photos => throw _privateConstructorUsedError;
+  List<ProductMedia?>? get videos => throw _privateConstructorUsedError;
   List<Booking?>? get bookings => throw _privateConstructorUsedError;
   @JsonKey(includeFromJson: true, includeToJson: true)
   ProductCategory? get selectedProductCategory =>
@@ -85,7 +86,8 @@ abstract class $ProductCopyWith<$Res> {
       ProductMedia? video,
       List<ProductLocation>? locations,
       bool? completed,
-      List<ProductMedia?>? productMedia,
+      List<ProductMedia?>? photos,
+      List<ProductMedia?>? videos,
       List<Booking?>? bookings,
       @JsonKey(includeFromJson: true, includeToJson: true)
       ProductCategory? selectedProductCategory,
@@ -134,7 +136,8 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
     Object? video = freezed,
     Object? locations = freezed,
     Object? completed = freezed,
-    Object? productMedia = freezed,
+    Object? photos = freezed,
+    Object? videos = freezed,
     Object? bookings = freezed,
     Object? selectedProductCategory = freezed,
     Object? selectedProductSubCategory = freezed,
@@ -209,9 +212,13 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
           ? _value.completed
           : completed // ignore: cast_nullable_to_non_nullable
               as bool?,
-      productMedia: freezed == productMedia
-          ? _value.productMedia
-          : productMedia // ignore: cast_nullable_to_non_nullable
+      photos: freezed == photos
+          ? _value.photos
+          : photos // ignore: cast_nullable_to_non_nullable
+              as List<ProductMedia?>?,
+      videos: freezed == videos
+          ? _value.videos
+          : videos // ignore: cast_nullable_to_non_nullable
               as List<ProductMedia?>?,
       bookings: freezed == bookings
           ? _value.bookings
@@ -358,7 +365,8 @@ abstract class _$$ProductImplCopyWith<$Res> implements $ProductCopyWith<$Res> {
       ProductMedia? video,
       List<ProductLocation>? locations,
       bool? completed,
-      List<ProductMedia?>? productMedia,
+      List<ProductMedia?>? photos,
+      List<ProductMedia?>? videos,
       List<Booking?>? bookings,
       @JsonKey(includeFromJson: true, includeToJson: true)
       ProductCategory? selectedProductCategory,
@@ -412,7 +420,8 @@ class __$$ProductImplCopyWithImpl<$Res>
     Object? video = freezed,
     Object? locations = freezed,
     Object? completed = freezed,
-    Object? productMedia = freezed,
+    Object? photos = freezed,
+    Object? videos = freezed,
     Object? bookings = freezed,
     Object? selectedProductCategory = freezed,
     Object? selectedProductSubCategory = freezed,
@@ -487,9 +496,13 @@ class __$$ProductImplCopyWithImpl<$Res>
           ? _value.completed
           : completed // ignore: cast_nullable_to_non_nullable
               as bool?,
-      productMedia: freezed == productMedia
-          ? _value.productMedia
-          : productMedia // ignore: cast_nullable_to_non_nullable
+      photos: freezed == photos
+          ? _value.photos
+          : photos // ignore: cast_nullable_to_non_nullable
+              as List<ProductMedia?>?,
+      videos: freezed == videos
+          ? _value.videos
+          : videos // ignore: cast_nullable_to_non_nullable
               as List<ProductMedia?>?,
       bookings: freezed == bookings
           ? _value.bookings
@@ -533,7 +546,8 @@ class _$ProductImpl implements _Product {
       this.video,
       this.locations = const <ProductLocation>[],
       this.completed = false,
-      this.productMedia = const <ProductMedia>[],
+      this.photos = const <ProductMedia>[],
+      this.videos = const <ProductMedia>[],
       this.bookings = const <Booking>[],
       @JsonKey(includeFromJson: true, includeToJson: true)
       this.selectedProductCategory,
@@ -596,7 +610,10 @@ class _$ProductImpl implements _Product {
   /// Temp values used when creating a product
   @override
   @JsonKey()
-  final List<ProductMedia?>? productMedia;
+  final List<ProductMedia?>? photos;
+  @override
+  @JsonKey()
+  final List<ProductMedia?>? videos;
   @override
   @JsonKey()
   final List<Booking?>? bookings;
@@ -611,7 +628,7 @@ class _$ProductImpl implements _Product {
 
   @override
   String toString() {
-    return 'Product(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, active: $active, host: $host, name: $name, description: $description, number: $number, category: $category, subcategory: $subcategory, scheduleID: $scheduleID, schedule: $schedule, pricing: $pricing, image: $image, video: $video, locations: $locations, completed: $completed, productMedia: $productMedia, bookings: $bookings, selectedProductCategory: $selectedProductCategory, selectedProductSubCategory: $selectedProductSubCategory, stats: $stats)';
+    return 'Product(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, active: $active, host: $host, name: $name, description: $description, number: $number, category: $category, subcategory: $subcategory, scheduleID: $scheduleID, schedule: $schedule, pricing: $pricing, image: $image, video: $video, locations: $locations, completed: $completed, photos: $photos, videos: $videos, bookings: $bookings, selectedProductCategory: $selectedProductCategory, selectedProductSubCategory: $selectedProductSubCategory, stats: $stats)';
   }
 
   @override
@@ -644,8 +661,8 @@ class _$ProductImpl implements _Product {
             const DeepCollectionEquality().equals(other.locations, locations) &&
             (identical(other.completed, completed) ||
                 other.completed == completed) &&
-            const DeepCollectionEquality()
-                .equals(other.productMedia, productMedia) &&
+            const DeepCollectionEquality().equals(other.photos, photos) &&
+            const DeepCollectionEquality().equals(other.videos, videos) &&
             const DeepCollectionEquality().equals(other.bookings, bookings) &&
             (identical(
                     other.selectedProductCategory, selectedProductCategory) ||
@@ -678,7 +695,8 @@ class _$ProductImpl implements _Product {
         video,
         const DeepCollectionEquality().hash(locations),
         completed,
-        const DeepCollectionEquality().hash(productMedia),
+        const DeepCollectionEquality().hash(photos),
+        const DeepCollectionEquality().hash(videos),
         const DeepCollectionEquality().hash(bookings),
         selectedProductCategory,
         selectedProductSubCategory,
@@ -720,7 +738,8 @@ abstract class _Product implements Product {
       final ProductMedia? video,
       final List<ProductLocation>? locations,
       final bool? completed,
-      final List<ProductMedia?>? productMedia,
+      final List<ProductMedia?>? photos,
+      final List<ProductMedia?>? videos,
       final List<Booking?>? bookings,
       @JsonKey(includeFromJson: true, includeToJson: true)
       final ProductCategory? selectedProductCategory,
@@ -771,7 +790,9 @@ abstract class _Product implements Product {
 
   /// Temp values used when creating a product
   @override
-  List<ProductMedia?>? get productMedia;
+  List<ProductMedia?>? get photos;
+  @override
+  List<ProductMedia?>? get videos;
   @override
   List<Booking?>? get bookings;
   @override

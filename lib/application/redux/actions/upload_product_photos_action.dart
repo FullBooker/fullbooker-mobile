@@ -13,37 +13,42 @@ import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
 
-class UploadProductMediaAction extends ReduxAction<AppState> {
-  final List<PlatformFile> pickedFiles;
-  final ICustomClient client;
-  final Function(String error)? onError;
-  final Function()? onSuccess;
-
-  UploadProductMediaAction({
-    required this.pickedFiles,
+class UploadProductPhotosAction extends ReduxAction<AppState> {
+  UploadProductPhotosAction({
+    required this.pickedPhotoFiles,
     required this.client,
     this.onSuccess,
     this.onError,
   });
 
+  final Function(String error)? onError;
+  final Function()? onSuccess;
+  final ICustomClient client;
+  final List<PlatformFile> pickedPhotoFiles;
+
   @override
   Future<AppState?> reduce() async {
-    final List<ProductMedia?> existingMedia =
-        state.hostState?.currentProduct?.productMedia ?? <ProductMedia?>[];
+    final List<ProductMedia?> existingPhotos =
+        state.hostState?.currentProduct?.photos ?? <ProductMedia?>[];
 
     final String productID = state.hostState?.currentProduct?.id ?? UNKNOWN;
 
     final Map<String, String> data = <String, String>{
       'product_id': productID,
-      'media_type ': 'image',
+      'media_type': kImageMediaType,
     };
 
     final String endpoint = GetIt.I.get<AppConfig>().productMediaEndpoint;
 
-    final List<File> imageFiles = pickedFiles
+    final List<File> imageFiles = pickedPhotoFiles
         .where((PlatformFile p) => p.path != null)
         .map((PlatformFile p) => File(p.path!))
         .toList();
+
+    if (imageFiles.isEmpty) {
+      onError?.call(invalidMediaFilesError);
+      return null;
+    }
 
     final Response httpResponse = await client.uploadMedia(
       endpoint: endpoint,
@@ -62,14 +67,14 @@ class UploadProductMediaAction extends ReduxAction<AppState> {
       return null;
     }
 
-    final ProductMedia uploadedImage = ProductMedia.fromJson(body);
+    final ProductMedia uploadedPhoto = ProductMedia.fromJson(body);
 
     dispatch(
       UpdateCurrentProductAction(
-        productMedia: <ProductMedia?>[...existingMedia, uploadedImage],
+        photos: <ProductMedia?>[...existingPhotos, uploadedPhoto],
       ),
     );
 
-    return state;
+    return null;
   }
 }

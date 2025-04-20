@@ -96,3 +96,4 @@ final List<String> allTicketTiers = <String>[
 ];
 
 const String kImageMediaType = 'image';
+const String kVideoMediaType = 'video';

@@ -47,7 +47,7 @@ class _ImageCarouselWidgetState extends State<ImageCarouselWidget> {
           );
         }
 
-        final List<ProductMedia?>? images = vm.selectedProduct?.productMedia
+        final List<ProductMedia?>? images = vm.selectedProduct?.photos
             ?.where(
               (ProductMedia? element) => element?.mediaType == kImageMediaType,
             )

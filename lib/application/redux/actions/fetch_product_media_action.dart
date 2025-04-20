@@ -6,6 +6,7 @@ import 'package:fullbooker/application/redux/actions/update_current_product_acti
 import 'package:fullbooker/application/redux/actions/update_selected_product_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/core/common/constants.dart';
+import 'package:fullbooker/domain/core/entities/product_media.dart';
 import 'package:fullbooker/domain/core/entities/product_media_response.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
@@ -28,27 +29,21 @@ class FetchProductMediaAction extends ReduxAction<AppState> {
 
   @override
   Future<AppState?> reduce() async {
-    final String selectProductID =
-        state.hostState?.selectedProduct?.id ?? UNKNOWN;
-    final String currentProductID =
-        state.hostState?.currentProduct?.id ?? UNKNOWN;
+    final String? productId = workflowState == WorkflowState.CREATE
+        ? state.hostState?.currentProduct?.id
+        : state.hostState?.selectedProduct?.id;
 
-    final bool isEdit = workflowState == WorkflowState.CREATE;
-
-    final Map<String, dynamic> data = <String, dynamic>{
-      'product_id': isEdit ? currentProductID : selectProductID,
-    };
-
+    final Uri uri = Uri.parse(GetIt.I.get<AppConfig>().productMediaEndpoint);
     final Response httpResponse = await client.callRESTAPI(
-      endpoint: GetIt.I.get<AppConfig>().productMediaEndpoint,
-      method: APIMethods.GET.name.toUpperCase(),
-      queryParams: data,
+      endpoint: uri.toString(),
+      method: APIMethods.GET.name,
+      queryParams: <String, dynamic>{'product_id': productId},
     );
 
-    final Map<String, dynamic> body =
-        json.decode(httpResponse.body) as Map<String, dynamic>;
-
     if (httpResponse.statusCode >= 400) {
+      final Map<String, dynamic>? body =
+          json.decode(httpResponse.body) as Map<String, dynamic>?;
+
       final String? error = client.parseError(body);
 
       onError?.call(error ?? defaultUserFriendlyMessage);
@@ -56,25 +51,29 @@ class FetchProductMediaAction extends ReduxAction<AppState> {
       return null;
     }
 
-    final ProductMediaResponse productMediaResponse =
-        ProductMediaResponse.fromJson(body);
+    final Map<String, dynamic> jsonBody =
+        json.decode(httpResponse.body) as Map<String, dynamic>;
 
-    if (isEdit) {
-      dispatch(
-        UpdateCurrentProductAction(
-          productMedia: productMediaResponse.results,
-        ),
-      );
+    final ProductMediaResponse mediaResponse =
+        ProductMediaResponse.fromJson(jsonBody);
 
-      return state;
+    final List<ProductMedia?> mediaList =
+        mediaResponse.results ?? <ProductMedia?>[];
+
+    final List<ProductMedia?> photos = mediaList
+        .where((ProductMedia? m) => m?.mediaType == kImageMediaType)
+        .toList();
+    final List<ProductMedia?> videos = mediaList
+        .where((ProductMedia? m) => m?.mediaType == kVideoMediaType)
+        .toList();
+
+    if (workflowState == WorkflowState.CREATE) {
+      dispatch(UpdateCurrentProductAction(photos: photos, videos: videos));
     } else {
-      dispatch(
-        UpdateSelectedProductAction(
-          productMedia: productMediaResponse.results,
-        ),
-      );
-
-      return state;
+      dispatch(UpdateSelectedProductAction(photos: photos, videos: videos));
     }
+
+    onSuccess?.call();
+    return null;
   }
 }
