@@ -173,7 +173,7 @@ class ProductPhotosPage extends StatelessWidget {
             ),
             PrimaryButton(
               onPressed: () {
-                context.router.push(ProductPricingRoute());
+                context.router.push(ProductVideosRoute());
               },
               child: d.right(continueString),
             ),

@@ -348,6 +348,11 @@ void navigateToNextProductStep({
     return;
   }
 
+  if ((product.video?.file ?? UNKNOWN) == UNKNOWN) {
+    context.router.push(const ProductVideosRoute());
+    return;
+  }
+
   if (product.pricing?.isEmpty ?? true) {
     context.router.push(const ProductPricingRoute());
     return;
