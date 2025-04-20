@@ -9,11 +9,11 @@ class PreviewHeaderWidget extends StatelessWidget {
   const PreviewHeaderWidget({
     super.key,
     required this.title,
-    required this.onEdit,
+    this.onEdit,
   });
 
   final String title;
-  final Function() onEdit;
+  final Function()? onEdit;
 
   @override
   Widget build(BuildContext context) {
@@ -30,34 +30,35 @@ class PreviewHeaderWidget extends StatelessWidget {
                 ),
           ),
         ),
-        Expanded(
-          child: SecondaryButton(
-            customHeight: 32,
-            onPressed: () {
-              context.router.maybePop();
-            },
-            child: d.left(
-              Row(
-                spacing: 8,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  HeroIcon(
-                    HeroIcons.pencil,
-                    size: 16,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  Text(
-                    editString,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Theme.of(context).primaryColor,
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                ],
+        if (onEdit != null)
+          Expanded(
+            child: SecondaryButton(
+              customHeight: 32,
+              onPressed: () {
+                context.router.maybePop();
+              },
+              child: d.left(
+                Row(
+                  spacing: 8,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    HeroIcon(
+                      HeroIcons.pencil,
+                      size: 16,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                    Text(
+                      editString,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: Theme.of(context).primaryColor,
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
       ],
     );
   }

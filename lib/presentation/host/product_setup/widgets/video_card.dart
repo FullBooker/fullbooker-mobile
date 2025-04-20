@@ -11,10 +11,12 @@ class VideoCard extends StatefulWidget {
     super.key,
     required this.videoUrl,
     required this.onRemove,
+    this.readOnly = false,
   });
 
   final String videoUrl;
   final VoidCallback onRemove;
+  final bool readOnly;
 
   @override
   State<VideoCard> createState() => VideoCardState();
@@ -47,6 +49,8 @@ class VideoCardState extends State<VideoCard> {
 
   @override
   Widget build(BuildContext context) {
+    final bool isReadOnly = widget.readOnly;
+
     const double radius = 8;
     return GestureDetector(
       onTap: () => context.router.push(
@@ -77,40 +81,42 @@ class VideoCardState extends State<VideoCard> {
               ),
 
             // Remove icon
-            Positioned(
-              top: 12,
-              right: 12,
-              child: GestureDetector(
-                onTap: widget.onRemove,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.black.withValues(alpha: .6),
-                    shape: BoxShape.circle,
-                  ),
-                  padding: EdgeInsets.all(8),
-                  child: HeroIcon(
-                    HeroIcons.xMark,
-                    color: Colors.white,
-                    size: 24,
+            if (!isReadOnly)
+              Positioned(
+                top: 12,
+                right: 12,
+                child: GestureDetector(
+                  onTap: widget.onRemove,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.black.withValues(alpha: .6),
+                      shape: BoxShape.circle,
+                    ),
+                    padding: EdgeInsets.all(8),
+                    child: HeroIcon(
+                      HeroIcons.xMark,
+                      color: Colors.white,
+                      size: 24,
+                    ),
                   ),
                 ),
               ),
-            ),
 
             // Duration
             if (_initialized)
               Positioned(
-                bottom: 8,
+                bottom: isReadOnly ? 0 : 8,
                 left: 0,
                 right: 0,
+                top: isReadOnly ? 0 : null,
                 child: Center(
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.black.withValues(alpha: 0.6),
                       borderRadius: BorderRadius.circular(100),
                     ),
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 8,
+                    padding: EdgeInsets.symmetric(
+                      vertical: isReadOnly ? 12 : 8,
                       horizontal: 12,
                     ),
                     child: Row(
@@ -122,13 +128,14 @@ class VideoCardState extends State<VideoCard> {
                           size: 24,
                           color: Colors.white,
                         ),
-                        Text(
-                          formatDuration(_controller.value.duration),
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall
-                              ?.copyWith(color: Colors.white),
-                        ),
+                        if (!isReadOnly)
+                          Text(
+                            formatDuration(_controller.value.duration),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall
+                                ?.copyWith(color: Colors.white),
+                          ),
                       ],
                     ),
                   ),

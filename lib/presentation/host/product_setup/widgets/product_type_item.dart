@@ -8,7 +8,7 @@ class ProductTypeItem extends StatelessWidget {
     super.key,
     required this.category,
     this.isSelected = false,
-    required this.onTap,
+      this.onTap,
   });
 
   final Function()? onTap;
