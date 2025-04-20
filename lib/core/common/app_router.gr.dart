@@ -16,9 +16,10 @@ import 'package:fullbooker/features/consumer/pages/consumer_home_page.dart'
     as _i8;
 import 'package:fullbooker/features/consumer/pages/event_details_page.dart'
     as _i11;
-import 'package:fullbooker/features/consumer/pages/gallery_page.dart' as _i13;
 import 'package:fullbooker/features/consumer/pages/image_preview_page.dart'
-    as _i16;
+    as _i15;
+import 'package:fullbooker/features/consumer/pages/old_gallery_page.dart'
+    as _i18;
 import 'package:fullbooker/features/consumer/pages/payment_confirmation_page.dart'
     as _i20;
 import 'package:fullbooker/features/consumer/pages/payment_summary_page.dart'
@@ -36,9 +37,9 @@ import 'package:fullbooker/features/host/pages/activity_subscription_page.dart'
 import 'package:fullbooker/features/host/pages/event_category_page.dart'
     as _i10;
 import 'package:fullbooker/features/host/pages/host_product_summary_page.dart'
-    as _i14;
+    as _i13;
 import 'package:fullbooker/features/host/pages/image_selection_page.dart'
-    as _i17;
+    as _i16;
 import 'package:fullbooker/features/host/pages/old_events_summary_page.dart'
     as _i12;
 import 'package:fullbooker/features/host/pages/tickets_summary_page.dart'
@@ -46,7 +47,7 @@ import 'package:fullbooker/features/host/pages/tickets_summary_page.dart'
 import 'package:fullbooker/features/host/pages/video_selection_page.dart'
     as _i41;
 import 'package:fullbooker/presentation/host/home/pages/hosting_home_page.dart'
-    as _i15;
+    as _i14;
 import 'package:fullbooker/presentation/host/product_setup/pages/add_product_pricing_page.dart'
     as _i5;
 import 'package:fullbooker/presentation/host/product_setup/pages/choose_location_page.dart'
@@ -84,7 +85,7 @@ import 'package:fullbooker/presentation/onboarding/pages/change_password_page.da
 import 'package:fullbooker/presentation/onboarding/pages/create_account_page.dart'
     as _i9;
 import 'package:fullbooker/presentation/onboarding/pages/login_page.dart'
-    as _i18;
+    as _i17;
 import 'package:fullbooker/presentation/onboarding/pages/request_otp_page.dart'
     as _i34;
 import 'package:fullbooker/presentation/onboarding/pages/verify_otp_page.dart'
@@ -486,44 +487,7 @@ class EventsSummaryRoute extends _i42.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i13.GalleryPage]
-class GalleryRoute extends _i42.PageRouteInfo<GalleryRouteArgs> {
-  GalleryRoute({
-    _i43.Key? key,
-    required List<String> images,
-    List<_i42.PageRouteInfo>? children,
-  }) : super(
-         GalleryRoute.name,
-         args: GalleryRouteArgs(key: key, images: images),
-         initialChildren: children,
-       );
-
-  static const String name = 'GalleryRoute';
-
-  static _i42.PageInfo page = _i42.PageInfo(
-    name,
-    builder: (data) {
-      final args = data.argsAs<GalleryRouteArgs>();
-      return _i13.GalleryPage(key: args.key, images: args.images);
-    },
-  );
-}
-
-class GalleryRouteArgs {
-  const GalleryRouteArgs({this.key, required this.images});
-
-  final _i43.Key? key;
-
-  final List<String> images;
-
-  @override
-  String toString() {
-    return 'GalleryRouteArgs{key: $key, images: $images}';
-  }
-}
-
-/// generated route for
-/// [_i14.HostProductSummaryPage]
+/// [_i13.HostProductSummaryPage]
 class HostProductSummaryRoute
     extends _i42.PageRouteInfo<HostProductSummaryRouteArgs> {
   HostProductSummaryRoute({
@@ -542,7 +506,7 @@ class HostProductSummaryRoute
     name,
     builder: (data) {
       final args = data.argsAs<HostProductSummaryRouteArgs>();
-      return _i14.HostProductSummaryPage(key: args.key, host: args.host);
+      return _i13.HostProductSummaryPage(key: args.key, host: args.host);
     },
   );
 }
@@ -561,7 +525,7 @@ class HostProductSummaryRouteArgs {
 }
 
 /// generated route for
-/// [_i15.HostingHomePage]
+/// [_i14.HostingHomePage]
 class HostingHomeRoute extends _i42.PageRouteInfo<void> {
   const HostingHomeRoute({List<_i42.PageRouteInfo>? children})
     : super(HostingHomeRoute.name, initialChildren: children);
@@ -571,13 +535,13 @@ class HostingHomeRoute extends _i42.PageRouteInfo<void> {
   static _i42.PageInfo page = _i42.PageInfo(
     name,
     builder: (data) {
-      return const _i15.HostingHomePage();
+      return const _i14.HostingHomePage();
     },
   );
 }
 
 /// generated route for
-/// [_i16.ImagePreviewPage]
+/// [_i15.ImagePreviewPage]
 class ImagePreviewRoute extends _i42.PageRouteInfo<ImagePreviewRouteArgs> {
   ImagePreviewRoute({
     _i43.Key? key,
@@ -600,7 +564,7 @@ class ImagePreviewRoute extends _i42.PageRouteInfo<ImagePreviewRouteArgs> {
     name,
     builder: (data) {
       final args = data.argsAs<ImagePreviewRouteArgs>();
-      return _i16.ImagePreviewPage(
+      return _i15.ImagePreviewPage(
         key: args.key,
         imageUrl: args.imageUrl,
         isOffline: args.isOffline,
@@ -629,7 +593,7 @@ class ImagePreviewRouteArgs {
 }
 
 /// generated route for
-/// [_i17.ImageSelectionPage]
+/// [_i16.ImageSelectionPage]
 class ImageSelectionRoute extends _i42.PageRouteInfo<ImageSelectionRouteArgs> {
   ImageSelectionRoute({
     _i43.Key? key,
@@ -648,7 +612,7 @@ class ImageSelectionRoute extends _i42.PageRouteInfo<ImageSelectionRouteArgs> {
     name,
     builder: (data) {
       final args = data.argsAs<ImageSelectionRouteArgs>();
-      return _i17.ImageSelectionPage(
+      return _i16.ImageSelectionPage(
         key: args.key,
         product: args.product,
         type: args.type,
@@ -677,7 +641,7 @@ class ImageSelectionRouteArgs {
 }
 
 /// generated route for
-/// [_i18.LoginPage]
+/// [_i17.LoginPage]
 class LoginRoute extends _i42.PageRouteInfo<void> {
   const LoginRoute({List<_i42.PageRouteInfo>? children})
     : super(LoginRoute.name, initialChildren: children);
@@ -687,9 +651,46 @@ class LoginRoute extends _i42.PageRouteInfo<void> {
   static _i42.PageInfo page = _i42.PageInfo(
     name,
     builder: (data) {
-      return const _i18.LoginPage();
+      return const _i17.LoginPage();
     },
   );
+}
+
+/// generated route for
+/// [_i18.OldGalleryPage]
+class OldGalleryRoute extends _i42.PageRouteInfo<OldGalleryRouteArgs> {
+  OldGalleryRoute({
+    _i43.Key? key,
+    required List<String> images,
+    List<_i42.PageRouteInfo>? children,
+  }) : super(
+         OldGalleryRoute.name,
+         args: OldGalleryRouteArgs(key: key, images: images),
+         initialChildren: children,
+       );
+
+  static const String name = 'OldGalleryRoute';
+
+  static _i42.PageInfo page = _i42.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<OldGalleryRouteArgs>();
+      return _i18.OldGalleryPage(key: args.key, images: args.images);
+    },
+  );
+}
+
+class OldGalleryRouteArgs {
+  const OldGalleryRouteArgs({this.key, required this.images});
+
+  final _i43.Key? key;
+
+  final List<String> images;
+
+  @override
+  String toString() {
+    return 'OldGalleryRouteArgs{key: $key, images: $images}';
+  }
 }
 
 /// generated route for

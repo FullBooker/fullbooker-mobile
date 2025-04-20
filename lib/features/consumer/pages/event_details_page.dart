@@ -145,7 +145,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                       children: <Widget>[
                         GestureDetector(
                           onTap: () => context.router
-                              .push(GalleryRoute(images: const <String>[])),
+                              .push(OldGalleryRoute(images: const <String>[])),
                           child: EventCarouselWidget(
                             product: widget.event,
                             actionLabel: viewMapString,
