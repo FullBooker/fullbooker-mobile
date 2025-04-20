@@ -32,9 +32,9 @@ mixin _$Product {
   String? get number => throw _privateConstructorUsedError;
   String? get category => throw _privateConstructorUsedError;
   String? get subcategory => throw _privateConstructorUsedError;
-  @JsonKey(name: 'schedule')
+  @JsonKey(name: 'schedule_id')
   String? get scheduleID => throw _privateConstructorUsedError;
-  @JsonKey(name: 'new_schedule')
+  @JsonKey(name: 'schedule')
   ProductSchedule? get schedule => throw _privateConstructorUsedError;
   List<ProductPricing?>? get pricing => throw _privateConstructorUsedError;
   ProductMedia? get image => throw _privateConstructorUsedError;
@@ -79,8 +79,8 @@ abstract class $ProductCopyWith<$Res> {
       String? number,
       String? category,
       String? subcategory,
-      @JsonKey(name: 'schedule') String? scheduleID,
-      @JsonKey(name: 'new_schedule') ProductSchedule? schedule,
+      @JsonKey(name: 'schedule_id') String? scheduleID,
+      @JsonKey(name: 'schedule') ProductSchedule? schedule,
       List<ProductPricing?>? pricing,
       ProductMedia? image,
       ProductMedia? video,
@@ -358,8 +358,8 @@ abstract class _$$ProductImplCopyWith<$Res> implements $ProductCopyWith<$Res> {
       String? number,
       String? category,
       String? subcategory,
-      @JsonKey(name: 'schedule') String? scheduleID,
-      @JsonKey(name: 'new_schedule') ProductSchedule? schedule,
+      @JsonKey(name: 'schedule_id') String? scheduleID,
+      @JsonKey(name: 'schedule') ProductSchedule? schedule,
       List<ProductPricing?>? pricing,
       ProductMedia? image,
       ProductMedia? video,
@@ -539,8 +539,8 @@ class _$ProductImpl implements _Product {
       this.number = UNKNOWN,
       this.category = UNKNOWN,
       this.subcategory = UNKNOWN,
-      @JsonKey(name: 'schedule') this.scheduleID = UNKNOWN,
-      @JsonKey(name: 'new_schedule') this.schedule,
+      @JsonKey(name: 'schedule_id') this.scheduleID = UNKNOWN,
+      @JsonKey(name: 'schedule') this.schedule,
       this.pricing = const <ProductPricing>[],
       this.image,
       this.video,
@@ -588,10 +588,10 @@ class _$ProductImpl implements _Product {
   @JsonKey()
   final String? subcategory;
   @override
-  @JsonKey(name: 'schedule')
+  @JsonKey(name: 'schedule_id')
   final String? scheduleID;
   @override
-  @JsonKey(name: 'new_schedule')
+  @JsonKey(name: 'schedule')
   final ProductSchedule? schedule;
   @override
   @JsonKey()
@@ -731,8 +731,8 @@ abstract class _Product implements Product {
       final String? number,
       final String? category,
       final String? subcategory,
-      @JsonKey(name: 'schedule') final String? scheduleID,
-      @JsonKey(name: 'new_schedule') final ProductSchedule? schedule,
+      @JsonKey(name: 'schedule_id') final String? scheduleID,
+      @JsonKey(name: 'schedule') final ProductSchedule? schedule,
       final List<ProductPricing?>? pricing,
       final ProductMedia? image,
       final ProductMedia? video,
@@ -772,10 +772,10 @@ abstract class _Product implements Product {
   @override
   String? get subcategory;
   @override
-  @JsonKey(name: 'schedule')
+  @JsonKey(name: 'schedule_id')
   String? get scheduleID;
   @override
-  @JsonKey(name: 'new_schedule')
+  @JsonKey(name: 'schedule')
   ProductSchedule? get schedule;
   @override
   List<ProductPricing?>? get pricing;

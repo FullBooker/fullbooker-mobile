@@ -20,11 +20,10 @@ _$ProductImpl _$$ProductImplFromJson(Map<String, dynamic> json) =>
       number: json['number'] as String? ?? UNKNOWN,
       category: json['category'] as String? ?? UNKNOWN,
       subcategory: json['subcategory'] as String? ?? UNKNOWN,
-      scheduleID: json['schedule'] as String? ?? UNKNOWN,
-      schedule: json['new_schedule'] == null
+      scheduleID: json['schedule_id'] as String? ?? UNKNOWN,
+      schedule: json['schedule'] == null
           ? null
-          : ProductSchedule.fromJson(
-              json['new_schedule'] as Map<String, dynamic>),
+          : ProductSchedule.fromJson(json['schedule'] as Map<String, dynamic>),
       pricing: (json['pricing'] as List<dynamic>?)
               ?.map((e) => e == null
                   ? null
@@ -85,8 +84,8 @@ Map<String, dynamic> _$$ProductImplToJson(_$ProductImpl instance) =>
       'number': instance.number,
       'category': instance.category,
       'subcategory': instance.subcategory,
-      'schedule': instance.scheduleID,
-      'new_schedule': instance.schedule?.toJson(),
+      'schedule_id': instance.scheduleID,
+      'schedule': instance.schedule?.toJson(),
       'pricing': instance.pricing?.map((e) => e?.toJson()).toList(),
       'image': instance.image?.toJson(),
       'video': instance.video?.toJson(),
