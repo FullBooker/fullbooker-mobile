@@ -8,14 +8,16 @@ import 'package:fullbooker/domain/core/entities/product_stats.dart';
 
 class UpdateSelectedProductAction extends ReduxAction<AppState> {
   UpdateSelectedProductAction({
-    this.productMedia,
+    this.photos,
+    this.videos,
     this.productPricing,
     this.schedule,
     this.stats,
     this.bookings,
   });
 
-  final List<ProductMedia?>? productMedia;
+  final List<ProductMedia?>? photos;
+  final List<ProductMedia?>? videos;
   final List<ProductPricing?>? productPricing;
   final List<Booking?>? bookings;
   final ProductSchedule? schedule;
@@ -24,8 +26,8 @@ class UpdateSelectedProductAction extends ReduxAction<AppState> {
   @override
   AppState? reduce() {
     final AppState? newState = state.copyWith.hostState?.selectedProduct?.call(
-      productMedia:
-          productMedia ?? state.hostState?.selectedProduct?.productMedia,
+      photos: photos ?? state.hostState?.selectedProduct?.photos,
+      videos: videos ?? state.hostState?.selectedProduct?.videos,
       schedule: schedule ?? state.hostState?.selectedProduct?.schedule,
       stats: stats ?? state.hostState?.selectedProduct?.stats,
       bookings: bookings ?? state.hostState?.selectedProduct?.bookings,

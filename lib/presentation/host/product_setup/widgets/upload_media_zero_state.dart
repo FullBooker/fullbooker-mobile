@@ -2,15 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
+import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:heroicons/heroicons.dart';
 
-class UploadPhotoZeroState extends StatelessWidget {
-  const UploadPhotoZeroState({super.key, required this.onTap});
+class UploadMediaZeroState extends StatelessWidget {
+  const UploadMediaZeroState({
+    super.key,
+    required this.onTap,
+    required this.mediaType,
+  });
 
   final Function()? onTap;
+  final UploadMediaType mediaType;
 
   @override
   Widget build(BuildContext context) {
+    final bool isPhoto = mediaType == UploadMediaType.PHOTO;
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -24,7 +31,7 @@ class UploadPhotoZeroState extends StatelessWidget {
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          spacing: 8,
+          spacing: 12,
           children: <Widget>[
             SvgPicture.asset(addPhotosIconSVGPath),
             Row(
@@ -36,7 +43,7 @@ class UploadPhotoZeroState extends StatelessWidget {
                   size: 16,
                 ),
                 Text(
-                  addPhoto,
+                  isPhoto ? addPhoto : addVideo,
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               ],

@@ -19,12 +19,13 @@ _$ProductImpl _$$ProductImplFromJson(Map<String, dynamic> json) =>
       description: json['description'] as String? ?? UNKNOWN,
       number: json['number'] as String? ?? UNKNOWN,
       category: json['category'] as String? ?? UNKNOWN,
+      categoryName: json['category_name'] as String? ?? UNKNOWN,
       subcategory: json['subcategory'] as String? ?? UNKNOWN,
-      scheduleID: json['schedule'] as String? ?? UNKNOWN,
-      schedule: json['new_schedule'] == null
+      subcategoryName: json['subcategory_name'] as String? ?? UNKNOWN,
+      scheduleID: json['schedule_id'] as String? ?? UNKNOWN,
+      schedule: json['schedule'] == null
           ? null
-          : ProductSchedule.fromJson(
-              json['new_schedule'] as Map<String, dynamic>),
+          : ProductSchedule.fromJson(json['schedule'] as Map<String, dynamic>),
       pricing: (json['pricing'] as List<dynamic>?)
               ?.map((e) => e == null
                   ? null
@@ -42,7 +43,13 @@ _$ProductImpl _$$ProductImplFromJson(Map<String, dynamic> json) =>
               .toList() ??
           const <ProductLocation>[],
       completed: json['completed'] as bool? ?? false,
-      productMedia: (json['productMedia'] as List<dynamic>?)
+      photos: (json['photos'] as List<dynamic>?)
+              ?.map((e) => e == null
+                  ? null
+                  : ProductMedia.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const <ProductMedia>[],
+      videos: (json['videos'] as List<dynamic>?)
               ?.map((e) => e == null
                   ? null
                   : ProductMedia.fromJson(e as Map<String, dynamic>))
@@ -78,15 +85,18 @@ Map<String, dynamic> _$$ProductImplToJson(_$ProductImpl instance) =>
       'description': instance.description,
       'number': instance.number,
       'category': instance.category,
+      'category_name': instance.categoryName,
       'subcategory': instance.subcategory,
-      'schedule': instance.scheduleID,
-      'new_schedule': instance.schedule?.toJson(),
+      'subcategory_name': instance.subcategoryName,
+      'schedule_id': instance.scheduleID,
+      'schedule': instance.schedule?.toJson(),
       'pricing': instance.pricing?.map((e) => e?.toJson()).toList(),
       'image': instance.image?.toJson(),
       'video': instance.video?.toJson(),
       'locations': instance.locations?.map((e) => e.toJson()).toList(),
       'completed': instance.completed,
-      'productMedia': instance.productMedia?.map((e) => e?.toJson()).toList(),
+      'photos': instance.photos?.map((e) => e?.toJson()).toList(),
+      'videos': instance.videos?.map((e) => e?.toJson()).toList(),
       'bookings': instance.bookings?.map((e) => e?.toJson()).toList(),
       'selectedProductCategory': instance.selectedProductCategory?.toJson(),
       'selectedProductSubCategory':

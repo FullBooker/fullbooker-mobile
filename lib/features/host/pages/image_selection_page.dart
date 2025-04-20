@@ -4,7 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
-import 'package:fullbooker/core/common/constants.dart';
+import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/features/host/controllers/product_controller.dart';
@@ -59,11 +59,8 @@ class _ImageSelectionPageState extends State<ImageSelectionPage> {
   }
 
   Future<void> selectImage() async {
-    final FilePickerResult? result = await FilePicker.platform.pickFiles(
-      allowMultiple: true,
-      type: FileType.custom,
-      allowedExtensions: kAllowedImageExtensions,
-    );
+    final FilePickerResult? result =
+        await pickMediaFiles(type: UploadMediaType.PHOTO);
     if (result != null) {
       setState(() {
         images = result.paths.map((String? path) => File(path!)).toList();
@@ -72,10 +69,9 @@ class _ImageSelectionPageState extends State<ImageSelectionPage> {
   }
 
   Future<void> selectSingleImage() async {
-    final FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: kAllowedImageExtensions,
-    );
+    final FilePickerResult? result =
+        await pickMediaFiles(type: UploadMediaType.PHOTO);
+
     if (result != null) {
       setState(() {
         images.add(File(result.paths[0]!));
@@ -85,10 +81,8 @@ class _ImageSelectionPageState extends State<ImageSelectionPage> {
   }
 
   Future<void> replaceImage(int currentImageIndex) async {
-    final FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: kAllowedImageExtensions,
-    );
+    final FilePickerResult? result =
+        await pickMediaFiles(type: UploadMediaType.PHOTO);
     if (result != null) {
       images[currentImageIndex] = File(result.paths[0]!);
       setState(() => images = images);

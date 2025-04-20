@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:auto_route/auto_route.dart';
 import 'package:dartz/dartz.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fullbooker/config/environments.dart';
@@ -9,6 +10,7 @@ import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/entities/product_location.dart';
+import 'package:fullbooker/domain/core/entities/product_schedule.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
@@ -347,6 +349,11 @@ void navigateToNextProductStep({
     return;
   }
 
+  if ((product.video?.file ?? UNKNOWN) == UNKNOWN) {
+    context.router.push(const ProductVideosRoute());
+    return;
+  }
+
   if (product.pricing?.isEmpty ?? true) {
     context.router.push(const ProductPricingRoute());
     return;
@@ -358,6 +365,27 @@ void navigateToNextProductStep({
     );
     return;
   }
+}
+
+bool isProductComplete({required Product product}) {
+  // Explicit true overrides all checks
+  if ((product.completed ?? false) || (product.active ?? false)) {
+    return true;
+  }
+
+  final bool hasName = product.name?.trim().isNotEmpty ?? false;
+  final bool hasLocation = product.locations?.isNotEmpty ?? false;
+  final bool hasSchedule = (product.scheduleID ?? UNKNOWN) != UNKNOWN;
+  final bool hasImage = (product.image?.file ?? UNKNOWN) != UNKNOWN;
+  final bool hasVideo = (product.video?.file ?? UNKNOWN) != UNKNOWN;
+  final bool hasPricing = product.pricing?.isNotEmpty ?? false;
+
+  return hasName &&
+      hasLocation &&
+      hasSchedule &&
+      hasImage &&
+      hasVideo &&
+      hasPricing;
 }
 
 Color getProductColor({bool complete = false}) {
@@ -504,4 +532,36 @@ String formatCurrency(
         '¤#,##0${decimalDigits > 0 ? '.${'0' * decimalDigits}' : ''}',
   );
   return formatter.format(amount);
+}
+
+Future<FilePickerResult?> pickMediaFiles({required UploadMediaType type}) {
+  final List<String> extensions = switch (type) {
+    UploadMediaType.PHOTO => kAllowedPhotoExtensions,
+    UploadMediaType.VIDEO => kAllowedVideoExtensions,
+  };
+
+  return FilePicker.platform.pickFiles(
+    allowMultiple: true,
+    type: FileType.custom,
+    allowedExtensions: extensions,
+  );
+}
+
+
+bool isScheduleValid(ProductSchedule? schedule) {
+  final bool isDateValid = schedule?.startDate != null &&
+      schedule!.startDate!.isNotEmpty &&
+      schedule.startDate != UNKNOWN &&
+      schedule.endDate != null &&
+      schedule.endDate!.isNotEmpty &&
+      schedule.endDate != UNKNOWN;
+
+  final bool isTimeValid = schedule?.startTime != null &&
+      schedule!.startTime!.isNotEmpty &&
+      schedule.startTime != UNKNOWN &&
+      schedule.endTime != null &&
+      schedule.endTime!.isNotEmpty &&
+      schedule.endTime != UNKNOWN;
+
+  return isDateValid && isTimeValid;
 }

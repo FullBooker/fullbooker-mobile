@@ -38,18 +38,16 @@ class LimitedPhotoGalleryPreviewWidget extends StatelessWidget {
           );
         }
 
-        final List<ProductMedia?> media = vm.selectedProduct?.productMedia
-                ?.where((ProductMedia? m) => m?.mediaType == kImageMediaType)
-                .toList() ??
-            <ProductMedia?>[];
+        final List<ProductMedia?> photos =
+            vm.selectedProduct?.photos ?? <ProductMedia?>[];
 
-        if (media.isEmpty) return const MinZeroState(copy: noImagesString);
+        if (photos.isEmpty) return const MinZeroState(copy: noImagesString);
 
-        final int extraCount = media.length > 4 ? media.length - 3 : 0;
+        final int extraCount = photos.length > 4 ? photos.length - 3 : 0;
 
         return Row(
           children: <Widget>[
-            ...media.take(3).map(
+            ...photos.take(3).map(
               (ProductMedia? m) {
                 return Padding(
                   padding: const EdgeInsets.only(right: 8.0),
@@ -83,7 +81,7 @@ class LimitedPhotoGalleryPreviewWidget extends StatelessWidget {
                   alignment: Alignment.center,
                   children: <Widget>[
                     CachedNetworkImage(
-                      imageUrl: media[3]?.file ?? UNKNOWN,
+                      imageUrl: photos[3]?.file ?? UNKNOWN,
                       width: photoSize,
                       height: photoSize,
                       fit: BoxFit.cover,

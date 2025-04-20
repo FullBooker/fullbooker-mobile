@@ -15,6 +15,7 @@ import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:dartz/dartz.dart' as d;
 import 'package:fullbooker/presentation/host/product_setup/widgets/limited_photo_gallery_preview_widget.dart';
+import 'package:fullbooker/presentation/host/product_setup/widgets/limited_video_gallery_preview_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/location_preview_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/preview_header_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/pricing_card_widget.dart';
@@ -85,16 +86,15 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                           // Category and type
                           PreviewHeaderWidget(
                             title: categoryAndType,
-                            onEdit: () {},
+                            // onEdit: () {},
                           ),
 
                           ProductTypeItem(
                             category: ProductCategory.initial().copyWith(
-                              name: activities,
-                              description: activitiesString,
+                              name: product?.categoryName,
+                              description: product?.subcategoryName,
                             ),
                             isSelected: true,
-                            onTap: () {},
                           ),
 
                           Divider(),
@@ -102,7 +102,7 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                           // Basic details
                           PreviewHeaderWidget(
                             title: basicDetails,
-                            onEdit: () {},
+                            // onEdit: () {},
                           ),
                           Column(
                             spacing: 4,
@@ -130,7 +130,7 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                           // Location
                           PreviewHeaderWidget(
                             title: location,
-                            onEdit: () {},
+                            // onEdit: () {},
                           ),
 
                           if (isLocationAvailable)
@@ -143,28 +143,47 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                           Divider(),
                           PreviewHeaderWidget(
                             title: dateAndTime,
-                            onEdit: () {},
+                            // onEdit: () {},
                           ),
-
                           if ((product?.scheduleID ?? UNKNOWN) != UNKNOWN)
                             ProductScheduleWidget(),
-
                           Divider(),
 
                           // Photos
                           PreviewHeaderWidget(
                             title: photos,
-                            onEdit: () {},
+                            onEdit: () {
+                              context.dispatch(
+                                UpdateHostStateAction(currentProduct: product),
+                              );
+                              context.router.push(const ProductPhotosRoute());
+                            },
                           ),
-
                           LimitedPhotoGalleryPreviewWidget(),
+                          Divider(),
 
+                          // Videos
+                          PreviewHeaderWidget(
+                            title: videosString,
+                            onEdit: () {
+                              context.dispatch(
+                                UpdateHostStateAction(currentProduct: product),
+                              );
+                              context.router.push(const ProductVideosRoute());
+                            },
+                          ),
+                          LimitedVideoGalleryPreviewWidget(),
                           Divider(),
 
                           // Pricing
                           PreviewHeaderWidget(
                             title: pricing,
-                            onEdit: () {},
+                            onEdit: () {
+                              context.dispatch(
+                                UpdateHostStateAction(currentProduct: product),
+                              );
+                              context.router.push(const ProductPricingRoute());
+                            },
                           ),
                           if (product?.pricing?.isEmpty ?? true)
                             MinZeroState(copy: noPricingOptionsString)

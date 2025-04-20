@@ -33,7 +33,8 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: ImageSelectionRoute.page),
         AutoRoute(page: TicketsSummaryRoute.page),
         AutoRoute(page: VideoSelectionRoute.page),
-        AutoRoute(page: GalleryRoute.page),
+        AutoRoute(page: ImageGalleryRoute.page),
+        AutoRoute(page: OldGalleryRoute.page),
         AutoRoute(page: ProductsRoute.page),
         AutoRoute(page: ProfileRoute.page),
 
@@ -45,6 +46,7 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: ProductLocationRoute.page),
         AutoRoute(page: ProductDateTimeRoute.page),
         AutoRoute(page: ProductPhotosRoute.page),
+        AutoRoute(page: ProductVideosRoute.page),
         AutoRoute(page: ProductPricingRoute.page),
         AutoRoute(page: AddProductPricingRoute.page),
         AutoRoute(page: ProductReviewAndSubmitRoute.page),
@@ -52,5 +54,6 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: ProductDetailRoute.page),
         AutoRoute(page: ProductBookingsRoute.page),
         AutoRoute(page: ScanTicketsRoute.page),
+        AutoRoute(page: FullscreenVideoPlayerRoute.page),
       ];
 }

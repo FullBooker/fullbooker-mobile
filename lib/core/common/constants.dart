@@ -19,7 +19,6 @@ const double kPlatformServiceFee = 7;
 const double kBasePlatformFee = 150;
 
 const List<String> kAllowedImageExtensions = <String>['jpg', 'png'];
-const List<String> kAllowedVideoExtensions = <String>['mp4'];
 
 const String kMapsAPIKey = 'AIzaSyDen5uldAkBcBPog8ajqpThWXGsiXmYSyU';
 
@@ -50,11 +49,14 @@ const List<String> kAllowedDiscountOptions = <String>['Percentage', 'Amount'];
 
 const String kSupportLine = '0700 394 444';
 
-const List<String> kAllowedMediaExtensions = <String>[
+const List<String> kAllowedPhotoExtensions = <String>[
   'jpg',
   'jpeg',
   'webp',
   'png',
+];
+
+const List<String> kAllowedVideoExtensions = <String>[
   'mp4',
   'mov',
 ];
@@ -96,3 +98,4 @@ final List<String> allTicketTiers = <String>[
 ];
 
 const String kImageMediaType = 'image';
+const String kVideoMediaType = 'video';

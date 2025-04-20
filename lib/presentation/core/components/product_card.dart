@@ -21,7 +21,7 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool complete = product.completed ?? false;
+    final bool complete = isProductComplete(product: product);
 
     return GestureDetector(
       onTap: () {
@@ -71,10 +71,21 @@ class ProductCard extends StatelessWidget {
                 Positioned(
                   top: 12,
                   left: 12,
-                  child: CustomBadgeWidget(
-                    text: product.name?.split(' ').last ?? '',
-                    textColor: Colors.white,
-                    backgroundColor: Colors.black,
+                  child: Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    margin: const EdgeInsets.symmetric(horizontal: 5),
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.all(Radius.circular(50)),
+                      color: AppColors.productBadgeBackgroundColor,
+                    ),
+                    child: Text(
+                      product.categoryName ?? '',
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
                   ),
                 ),
               ],
@@ -124,61 +135,6 @@ class ProductCard extends StatelessWidget {
                               Text(
                                 product.locations?.first.address ?? '',
                                 style: Theme.of(context).textTheme.bodyMedium,
-                              ),
-                            ],
-                          ),
-                        // Date
-                        if (product.schedule != null)
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            spacing: 4,
-                            children: <Widget>[
-                              HeroIcon(
-                                HeroIcons.calendar,
-                                color: Colors.grey,
-                                size: 20,
-                              ),
-                              humanizeDate(
-                                loadedDate: product.schedule?.startDate ?? '',
-                                dateTextStyle:
-                                    Theme.of(context).textTheme.bodyMedium,
-                              ),
-                              Text(
-                                to,
-                                style: Theme.of(context).textTheme.bodyMedium,
-                              ),
-                              humanizeDate(
-                                loadedDate: product.schedule?.endDate ?? '',
-                                dateTextStyle:
-                                    Theme.of(context).textTheme.bodyMedium,
-                              ),
-                            ],
-                          ),
-
-                        // Time
-                        if (product.schedule != null)
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            spacing: 4,
-                            children: <Widget>[
-                              HeroIcon(
-                                HeroIcons.clock,
-                                color: Colors.grey,
-                                size: 20,
-                              ),
-                              formatTime(
-                                time: product.schedule?.startTime,
-                                textStyle:
-                                    Theme.of(context).textTheme.bodyMedium,
-                              ),
-                              Text(
-                                to,
-                                style: Theme.of(context).textTheme.bodyMedium,
-                              ),
-                              formatTime(
-                                time: product.schedule?.endTime,
-                                textStyle:
-                                    Theme.of(context).textTheme.bodyMedium,
                               ),
                             ],
                           ),

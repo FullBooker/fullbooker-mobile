@@ -10,7 +10,8 @@ class UpdateCurrentProductAction extends ReduxAction<AppState> {
     this.selectedSubCategory,
     this.name,
     this.description,
-    this.productMedia,
+    this.photos,
+    this.videos,
     this.pricing,
   });
 
@@ -19,7 +20,8 @@ class UpdateCurrentProductAction extends ReduxAction<AppState> {
   final ProductCategory? selectedCategory;
   final ProductCategory? selectedSubCategory;
 
-  final List<ProductMedia?>? productMedia;
+  final List<ProductMedia?>? photos;
+  final List<ProductMedia?>? videos;
   final List<ProductPricing?>? pricing;
 
   @override
@@ -31,8 +33,8 @@ class UpdateCurrentProductAction extends ReduxAction<AppState> {
           state.hostState?.currentProduct?.selectedProductSubCategory,
       name: name ?? state.hostState?.currentProduct?.name,
       description: description ?? state.hostState?.currentProduct?.description,
-      productMedia:
-          productMedia ?? state.hostState?.currentProduct?.productMedia,
+      photos: photos ?? state.hostState?.currentProduct?.photos,
+      videos: videos ?? state.hostState?.currentProduct?.videos,
       pricing: pricing ?? state.hostState?.currentProduct?.pricing,
     );
 

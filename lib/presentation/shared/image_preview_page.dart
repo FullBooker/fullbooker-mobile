@@ -24,9 +24,13 @@ class ImagePreviewPage extends StatelessWidget {
       body: Center(
         child: Hero(
           tag: imageUrl,
-          child: isOffline
-              ? Image.asset(imageUrl, fit: BoxFit.cover)
-              : CachedNetworkImage(imageUrl: imageUrl, fit: BoxFit.cover),
+          child: InteractiveViewer(
+            minScale: 1.0,
+            maxScale: 5.0,
+            child: isOffline
+                ? Image.asset(imageUrl, fit: BoxFit.contain)
+                : CachedNetworkImage(imageUrl: imageUrl, fit: BoxFit.contain),
+          ),
         ),
       ),
     );

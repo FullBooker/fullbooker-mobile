@@ -502,8 +502,12 @@ const String yearlyRepeatPrompt =
 
 // Photos page
 const String photos = 'Photos';
+const String videosString = 'Videos';
 const String photosCopy = 'Add at least 6 high quality photos of your event';
+const String videosCopy = 'Add at least 2 high quality videos of your event';
 const String addPhoto = 'Add Photo';
+const String addVideo = 'Add Video';
+const String playVideo = 'Play Video';
 
 // Pricing page
 const String addPricingErrorMsg = 'Add at least one pricing option to continue';
@@ -663,6 +667,7 @@ const String notProvided = 'Not Provided';
 
 const String noPricingOptionsString = 'No pricing options provided';
 const String noImagesString = 'No photos added';
+const String noVideosString = 'No videos added';
 const String learnMore = 'Learn More';
 
 String aboutString(String name) => 'About $name';
@@ -670,3 +675,6 @@ String aboutString(String name) => 'About $name';
 const String noBookingsYet = 'No Bookings Yet';
 const String noBookingsYetCopy =
     'You haven’t received any bookings for this product yet';
+
+const String invalidMediaFilesError =
+    'Some files aren’t supported. Please upload valid images or videos';

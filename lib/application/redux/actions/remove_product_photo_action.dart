@@ -11,21 +11,21 @@ import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
 
-class RemoveProductMediaAction extends ReduxAction<AppState> {
-  final ProductMedia media;
-  final ICustomClient client;
-  final Function(String error)? onError;
-
-  RemoveProductMediaAction({
-    required this.media,
+class RemoveProductPhotoAction extends ReduxAction<AppState> {
+  RemoveProductPhotoAction({
+    required this.photo,
     required this.client,
     this.onError,
   });
 
+  final Function(String error)? onError;
+  final ICustomClient client;
+  final ProductMedia photo;
+
   @override
   Future<AppState?> reduce() async {
     final String endpoint =
-        '${GetIt.I.get<AppConfig>().productMediaEndpoint}${media.id}/';
+        '${GetIt.I.get<AppConfig>().productMediaEndpoint}${photo.id}/';
 
     final Response httpResponse = await client.callRESTAPI(
       endpoint: endpoint,
@@ -42,16 +42,16 @@ class RemoveProductMediaAction extends ReduxAction<AppState> {
       return null;
     }
 
-    final List<ProductMedia> currentMedia = state
-            .hostState?.currentProduct?.productMedia
+    final List<ProductMedia> currentPhotos = state
+            .hostState?.currentProduct?.photos
             ?.whereType<ProductMedia>()
             .toList() ??
         <ProductMedia>[];
 
-    final List<ProductMedia> updatedMedia = currentMedia
-      ..removeWhere((ProductMedia item) => item.id == media.id);
+    final List<ProductMedia> updatedPhotos = currentPhotos
+      ..removeWhere((ProductMedia item) => item.id == photo.id);
 
-    dispatch(UpdateCurrentProductAction(productMedia: updatedMedia));
+    dispatch(UpdateCurrentProductAction(photos: updatedPhotos));
 
     return state;
   }
