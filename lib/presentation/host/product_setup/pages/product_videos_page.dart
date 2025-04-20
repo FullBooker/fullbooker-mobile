@@ -1,6 +1,5 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
@@ -10,18 +9,17 @@ import 'package:fullbooker/application/redux/actions/upload_product_videos_actio
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_setup_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
-import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/entities/product_media.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:dartz/dartz.dart' as d;
 import 'package:fullbooker/presentation/host/product_setup/widgets/upload_media_zero_state.dart';
+import 'package:fullbooker/presentation/host/product_setup/widgets/video_card.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
-import 'package:heroicons/heroicons.dart';
 
 @RoutePage()
 class ProductVideosPage extends StatelessWidget {
@@ -91,6 +89,7 @@ class ProductVideosPage extends StatelessWidget {
                               ])) {
                                 return AppLoading();
                               }
+
                               return UploadMediaZeroState(
                                 mediaType: UploadMediaType.VIDEO,
                                 onTap: () async {
@@ -114,54 +113,18 @@ class ProductVideosPage extends StatelessWidget {
                             }
 
                             final ProductMedia? item = videos[index];
-                            final bool isLoading = item?.file == UNKNOWN;
 
-                            return Stack(
-                              fit: StackFit.expand,
-                              children: <Widget>[
-                                if (isLoading)
-                                  const Center(
-                                    child: CircularProgressIndicator(),
-                                  )
-                                else
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(8),
-                                    child: CachedNetworkImage(
-                                      imageUrl: item?.file ?? '',
-                                      fit: BoxFit.cover,
-                                      placeholder: (_, __) =>
-                                          const AppLoading(),
-                                    ),
+                            return VideoCard(
+                              videoUrl: item?.file ?? '',
+                              onRemove: () {
+                                context.dispatch(
+                                  RemoveProductVideoAction(
+                                    video: item!,
+                                    client: AppWrapperBase.of(context)!
+                                        .customClient,
                                   ),
-                                Positioned(
-                                  top: 12,
-                                  right: 12,
-                                  child: GestureDetector(
-                                    onTap: () =>
-                                        StoreProvider.dispatch<AppState>(
-                                      context,
-                                      RemoveProductVideoAction(
-                                        video: item!,
-                                        client: AppWrapperBase.of(context)!
-                                            .customClient,
-                                      ),
-                                    ),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color:
-                                            Colors.black.withValues(alpha: .6),
-                                        shape: BoxShape.circle,
-                                      ),
-                                      padding: EdgeInsets.all(8),
-                                      child: HeroIcon(
-                                        HeroIcons.xMark,
-                                        color: Colors.white,
-                                        size: 24,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
+                                );
+                              },
                             );
                           },
                         ),
