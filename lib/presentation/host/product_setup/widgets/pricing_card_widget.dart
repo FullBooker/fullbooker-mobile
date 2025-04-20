@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_detail_view_model.dart';
+import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/entities/product_pricing.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
-import 'package:fullbooker/domain/core/entities/currency.dart';
 import 'package:dartz/dartz.dart' as d;
 
 class PricingCardWidget extends StatelessWidget {
@@ -37,15 +37,7 @@ class PricingCardWidget extends StatelessWidget {
         final String tier = pricing?.ticketTier ?? '';
         final String iconPath = getTicketIconPath(tier);
 
-        final String currencyGuid = pricing?.currency ?? '';
-        final String resolvedCurrencyCode = vm.currencies
-                ?.whereType<Currency>()
-                .firstWhere(
-                  (Currency c) => c.id == currencyGuid,
-                  orElse: () => const Currency(code: 'KES'),
-                )
-                .code ??
-            'KES';
+        final String currencyCode = pricing?.currencyCode ?? kDefaultCurrencyCode;
 
         return Container(
           padding: EdgeInsets.all(16),
@@ -92,10 +84,7 @@ class PricingCardWidget extends StatelessWidget {
                   children: <Widget>[
                     if (hasPrice)
                       Text(
-                        formatCurrency(
-                          parsedPrice,
-                          currencyCode: resolvedCurrencyCode,
-                        ),
+                        formatCurrency(parsedPrice, currencyCode: currencyCode),
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                     if (onAddOrEdit != null)

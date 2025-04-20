@@ -50,6 +50,9 @@ _$HostStateImpl _$$HostStateImplFromJson(Map<String, dynamic> json) =>
           ? null
           : ProductPricing.fromJson(
               json['selectedProductPricing'] as Map<String, dynamic>),
+      currentScannedTicketID:
+          json['currentScannedTicketID'] as String? ?? UNKNOWN,
+      isValidTicket: json['isValidTicket'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$HostStateImplToJson(_$HostStateImpl instance) =>
@@ -66,4 +69,6 @@ Map<String, dynamic> _$$HostStateImplToJson(_$HostStateImpl instance) =>
       'selectedCurrency': instance.selectedCurrency?.toJson(),
       'selectedPricingTier': instance.selectedPricingTier,
       'selectedProductPricing': instance.selectedProductPricing?.toJson(),
+      'currentScannedTicketID': instance.currentScannedTicketID,
+      'isValidTicket': instance.isValidTicket,
     };

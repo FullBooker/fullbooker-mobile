@@ -5,6 +5,7 @@ import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/entities/booking.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/presentation/core/components/custom_badge_widget.dart';
+import 'package:intl/intl.dart';
 
 class BookingListItem extends StatelessWidget {
   const BookingListItem({super.key, required this.booking});
@@ -15,6 +16,7 @@ class BookingListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final String fullName =
         getFullName(booking.user?.firstName, booking.user?.lastName);
+    final int tickets = booking.totalTicketsCount ?? 0;
 
     return Container(
       padding: const EdgeInsets.all(12),
@@ -57,10 +59,23 @@ class BookingListItem extends StatelessWidget {
                   overflow: TextOverflow.visible,
                   softWrap: true,
                 ),
-                humanizeDate(
-                  loadedDate:
-                      booking.confirmedOn ?? DateTime.now().toIso8601String(),
-                  dateTextStyle: Theme.of(context).textTheme.bodySmall,
+                Row(
+                  spacing: 8,
+                  children: <Widget>[
+                    if (tickets > 0)
+                      Text(
+                        ticketsValue(tickets),
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleSmall
+                            ?.copyWith(color: Theme.of(context).primaryColor),
+                      ),
+                    humanizeDate(
+                      loadedDate: booking.confirmedOn ??
+                          DateTime.now().toIso8601String(),
+                      dateTextStyle: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -81,9 +96,8 @@ class BookingListItem extends StatelessWidget {
               ),
               if (booking.status != UNKNOWN)
                 CustomBadgeWidget(
-                  text: verifiedString,
-                  textColor: AppColors.greenColor,
-                  backgroundColor: AppColors.greenColor,
+                  text: toBeginningOfSentenceCase(booking.status ?? UNKNOWN),
+                  textColor: AppColors.amberColor,
                 ),
             ],
           ),

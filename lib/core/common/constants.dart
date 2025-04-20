@@ -39,11 +39,22 @@ const String kDevBuild = 'dev-build';
 
 const int kOTPRetryTimeout = 120;
 
-const List<String> allowedPhoneNumberCountries = <String>['KE', 'UG', 'TZ'];
+const List<String> allowedPhoneNumberCountries = <String>[
+  'KE',
+  'US',
+  'SA',
+];
 
 const LatLng kDefaultLocation = LatLng(-1.228003, 36.900032);
 
-const List<String> kAllowedCurrencyCodes = <String>['KES', 'USD', 'AED'];
+const String kDefaultCurrencyCode = 'KES';
+
+const List<String> kAllowedCurrencyCodes = <String>[
+  kDefaultCurrencyCode,
+  'USD',
+  'AED',
+];
+
 
 const List<String> kAllowedDiscountOptions = <String>['Percentage', 'Amount'];
 

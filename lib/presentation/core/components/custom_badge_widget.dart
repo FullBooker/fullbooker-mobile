@@ -4,12 +4,12 @@ class CustomBadgeWidget extends StatelessWidget {
   const CustomBadgeWidget({
     super.key,
     required this.text,
-    this.textColor,
+    required this.textColor,
     this.backgroundColor,
   });
 
   final Color? backgroundColor;
-  final Color? textColor;
+  final Color textColor;
   final String text;
 
   @override
@@ -20,12 +20,12 @@ class CustomBadgeWidget extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(50)),
         color: backgroundColor?.withValues(alpha: .1) ??
-            Theme.of(context).primaryColor.withValues(alpha: .1),
+            textColor.withValues(alpha: .1),
       ),
       child: Text(
         text,
         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: textColor ?? Theme.of(context).primaryColor,
+              color: textColor,
               fontWeight: FontWeight.bold,
             ),
       ),

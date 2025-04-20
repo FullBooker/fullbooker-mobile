@@ -1121,18 +1121,36 @@ class ProductsRoute extends _i44.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i35.ProfilePage]
-class ProfileRoute extends _i44.PageRouteInfo<void> {
-  const ProfileRoute({List<_i44.PageRouteInfo>? children})
-    : super(ProfileRoute.name, initialChildren: children);
+class ProfileRoute extends _i44.PageRouteInfo<ProfileRouteArgs> {
+  ProfileRoute({_i45.Key? key, List<_i44.PageRouteInfo>? children})
+    : super(
+        ProfileRoute.name,
+        args: ProfileRouteArgs(key: key),
+        initialChildren: children,
+      );
 
   static const String name = 'ProfileRoute';
 
   static _i44.PageInfo page = _i44.PageInfo(
     name,
     builder: (data) {
-      return const _i35.ProfilePage();
+      final args = data.argsAs<ProfileRouteArgs>(
+        orElse: () => const ProfileRouteArgs(),
+      );
+      return _i35.ProfilePage(key: args.key);
     },
   );
+}
+
+class ProfileRouteArgs {
+  const ProfileRouteArgs({this.key});
+
+  final _i45.Key? key;
+
+  @override
+  String toString() {
+    return 'ProfileRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for

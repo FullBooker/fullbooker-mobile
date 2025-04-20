@@ -30,6 +30,10 @@ class HostState with _$HostState {
     Currency? selectedCurrency,
     @Default(UNKNOWN) String? selectedPricingTier,
     ProductPricing? selectedProductPricing,
+
+    // Ticket scanning
+    @Default(UNKNOWN) String? currentScannedTicketID,
+    @Default(false) bool? isValidTicket,
   }) = _HostState;
 
   factory HostState.initial() => HostState(
