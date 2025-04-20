@@ -31,7 +31,11 @@ mixin _$Product {
   String? get description => throw _privateConstructorUsedError;
   String? get number => throw _privateConstructorUsedError;
   String? get category => throw _privateConstructorUsedError;
+  @JsonKey(name: 'category_name')
+  String? get categoryName => throw _privateConstructorUsedError;
   String? get subcategory => throw _privateConstructorUsedError;
+  @JsonKey(name: 'subcategory_name')
+  String? get subcategoryName => throw _privateConstructorUsedError;
   @JsonKey(name: 'schedule_id')
   String? get scheduleID => throw _privateConstructorUsedError;
   @JsonKey(name: 'schedule')
@@ -78,7 +82,9 @@ abstract class $ProductCopyWith<$Res> {
       String? description,
       String? number,
       String? category,
+      @JsonKey(name: 'category_name') String? categoryName,
       String? subcategory,
+      @JsonKey(name: 'subcategory_name') String? subcategoryName,
       @JsonKey(name: 'schedule_id') String? scheduleID,
       @JsonKey(name: 'schedule') ProductSchedule? schedule,
       List<ProductPricing?>? pricing,
@@ -128,7 +134,9 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
     Object? description = freezed,
     Object? number = freezed,
     Object? category = freezed,
+    Object? categoryName = freezed,
     Object? subcategory = freezed,
+    Object? subcategoryName = freezed,
     Object? scheduleID = freezed,
     Object? schedule = freezed,
     Object? pricing = freezed,
@@ -180,9 +188,17 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
               as String?,
+      categoryName: freezed == categoryName
+          ? _value.categoryName
+          : categoryName // ignore: cast_nullable_to_non_nullable
+              as String?,
       subcategory: freezed == subcategory
           ? _value.subcategory
           : subcategory // ignore: cast_nullable_to_non_nullable
+              as String?,
+      subcategoryName: freezed == subcategoryName
+          ? _value.subcategoryName
+          : subcategoryName // ignore: cast_nullable_to_non_nullable
               as String?,
       scheduleID: freezed == scheduleID
           ? _value.scheduleID
@@ -357,7 +373,9 @@ abstract class _$$ProductImplCopyWith<$Res> implements $ProductCopyWith<$Res> {
       String? description,
       String? number,
       String? category,
+      @JsonKey(name: 'category_name') String? categoryName,
       String? subcategory,
+      @JsonKey(name: 'subcategory_name') String? subcategoryName,
       @JsonKey(name: 'schedule_id') String? scheduleID,
       @JsonKey(name: 'schedule') ProductSchedule? schedule,
       List<ProductPricing?>? pricing,
@@ -412,7 +430,9 @@ class __$$ProductImplCopyWithImpl<$Res>
     Object? description = freezed,
     Object? number = freezed,
     Object? category = freezed,
+    Object? categoryName = freezed,
     Object? subcategory = freezed,
+    Object? subcategoryName = freezed,
     Object? scheduleID = freezed,
     Object? schedule = freezed,
     Object? pricing = freezed,
@@ -464,9 +484,17 @@ class __$$ProductImplCopyWithImpl<$Res>
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
               as String?,
+      categoryName: freezed == categoryName
+          ? _value.categoryName
+          : categoryName // ignore: cast_nullable_to_non_nullable
+              as String?,
       subcategory: freezed == subcategory
           ? _value.subcategory
           : subcategory // ignore: cast_nullable_to_non_nullable
+              as String?,
+      subcategoryName: freezed == subcategoryName
+          ? _value.subcategoryName
+          : subcategoryName // ignore: cast_nullable_to_non_nullable
               as String?,
       scheduleID: freezed == scheduleID
           ? _value.scheduleID
@@ -538,7 +566,9 @@ class _$ProductImpl implements _Product {
       this.description = UNKNOWN,
       this.number = UNKNOWN,
       this.category = UNKNOWN,
+      @JsonKey(name: 'category_name') this.categoryName = UNKNOWN,
       this.subcategory = UNKNOWN,
+      @JsonKey(name: 'subcategory_name') this.subcategoryName = UNKNOWN,
       @JsonKey(name: 'schedule_id') this.scheduleID = UNKNOWN,
       @JsonKey(name: 'schedule') this.schedule,
       this.pricing = const <ProductPricing>[],
@@ -585,8 +615,14 @@ class _$ProductImpl implements _Product {
   @JsonKey()
   final String? category;
   @override
+  @JsonKey(name: 'category_name')
+  final String? categoryName;
+  @override
   @JsonKey()
   final String? subcategory;
+  @override
+  @JsonKey(name: 'subcategory_name')
+  final String? subcategoryName;
   @override
   @JsonKey(name: 'schedule_id')
   final String? scheduleID;
@@ -628,7 +664,7 @@ class _$ProductImpl implements _Product {
 
   @override
   String toString() {
-    return 'Product(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, active: $active, host: $host, name: $name, description: $description, number: $number, category: $category, subcategory: $subcategory, scheduleID: $scheduleID, schedule: $schedule, pricing: $pricing, image: $image, video: $video, locations: $locations, completed: $completed, photos: $photos, videos: $videos, bookings: $bookings, selectedProductCategory: $selectedProductCategory, selectedProductSubCategory: $selectedProductSubCategory, stats: $stats)';
+    return 'Product(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, active: $active, host: $host, name: $name, description: $description, number: $number, category: $category, categoryName: $categoryName, subcategory: $subcategory, subcategoryName: $subcategoryName, scheduleID: $scheduleID, schedule: $schedule, pricing: $pricing, image: $image, video: $video, locations: $locations, completed: $completed, photos: $photos, videos: $videos, bookings: $bookings, selectedProductCategory: $selectedProductCategory, selectedProductSubCategory: $selectedProductSubCategory, stats: $stats)';
   }
 
   @override
@@ -649,8 +685,12 @@ class _$ProductImpl implements _Product {
             (identical(other.number, number) || other.number == number) &&
             (identical(other.category, category) ||
                 other.category == category) &&
+            (identical(other.categoryName, categoryName) ||
+                other.categoryName == categoryName) &&
             (identical(other.subcategory, subcategory) ||
                 other.subcategory == subcategory) &&
+            (identical(other.subcategoryName, subcategoryName) ||
+                other.subcategoryName == subcategoryName) &&
             (identical(other.scheduleID, scheduleID) ||
                 other.scheduleID == scheduleID) &&
             (identical(other.schedule, schedule) ||
@@ -687,7 +727,9 @@ class _$ProductImpl implements _Product {
         description,
         number,
         category,
+        categoryName,
         subcategory,
+        subcategoryName,
         scheduleID,
         schedule,
         const DeepCollectionEquality().hash(pricing),
@@ -730,7 +772,9 @@ abstract class _Product implements Product {
       final String? description,
       final String? number,
       final String? category,
+      @JsonKey(name: 'category_name') final String? categoryName,
       final String? subcategory,
+      @JsonKey(name: 'subcategory_name') final String? subcategoryName,
       @JsonKey(name: 'schedule_id') final String? scheduleID,
       @JsonKey(name: 'schedule') final ProductSchedule? schedule,
       final List<ProductPricing?>? pricing,
@@ -770,7 +814,13 @@ abstract class _Product implements Product {
   @override
   String? get category;
   @override
+  @JsonKey(name: 'category_name')
+  String? get categoryName;
+  @override
   String? get subcategory;
+  @override
+  @JsonKey(name: 'subcategory_name')
+  String? get subcategoryName;
   @override
   @JsonKey(name: 'schedule_id')
   String? get scheduleID;

@@ -71,10 +71,21 @@ class ProductCard extends StatelessWidget {
                 Positioned(
                   top: 12,
                   left: 12,
-                  child: CustomBadgeWidget(
-                    text: product.name?.split(' ').last ?? '',
-                    textColor: Colors.white,
-                    backgroundColor: Colors.black,
+                  child: Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    margin: const EdgeInsets.symmetric(horizontal: 5),
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.all(Radius.circular(50)),
+                      color: AppColors.productBadgeBackgroundColor,
+                    ),
+                    child: Text(
+                      product.categoryName ?? '',
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
                   ),
                 ),
               ],

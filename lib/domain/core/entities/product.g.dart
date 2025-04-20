@@ -19,7 +19,9 @@ _$ProductImpl _$$ProductImplFromJson(Map<String, dynamic> json) =>
       description: json['description'] as String? ?? UNKNOWN,
       number: json['number'] as String? ?? UNKNOWN,
       category: json['category'] as String? ?? UNKNOWN,
+      categoryName: json['category_name'] as String? ?? UNKNOWN,
       subcategory: json['subcategory'] as String? ?? UNKNOWN,
+      subcategoryName: json['subcategory_name'] as String? ?? UNKNOWN,
       scheduleID: json['schedule_id'] as String? ?? UNKNOWN,
       schedule: json['schedule'] == null
           ? null
@@ -83,7 +85,9 @@ Map<String, dynamic> _$$ProductImplToJson(_$ProductImpl instance) =>
       'description': instance.description,
       'number': instance.number,
       'category': instance.category,
+      'category_name': instance.categoryName,
       'subcategory': instance.subcategory,
+      'subcategory_name': instance.subcategoryName,
       'schedule_id': instance.scheduleID,
       'schedule': instance.schedule?.toJson(),
       'pricing': instance.pricing?.map((e) => e?.toJson()).toList(),

@@ -25,7 +25,11 @@ class Product with _$Product {
     @Default(UNKNOWN) String? description,
     @Default(UNKNOWN) String? number,
     @Default(UNKNOWN) String? category,
+    @JsonKey(name: 'category_name') @Default(UNKNOWN) String? categoryName,
     @Default(UNKNOWN) String? subcategory,
+    @JsonKey(name: 'subcategory_name')
+    @Default(UNKNOWN)
+    String? subcategoryName,
     @JsonKey(name: 'schedule_id') @Default(UNKNOWN) String? scheduleID,
     @JsonKey(name: 'schedule') ProductSchedule? schedule,
     @Default(<ProductPricing>[]) List<ProductPricing?>? pricing,
