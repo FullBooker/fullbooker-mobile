@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
@@ -34,9 +33,7 @@ class PreviewHeaderWidget extends StatelessWidget {
           Expanded(
             child: SecondaryButton(
               customHeight: 32,
-              onPressed: () {
-                context.router.maybePop();
-              },
+              onPressed: onEdit,
               child: d.left(
                 Row(
                   spacing: 8,

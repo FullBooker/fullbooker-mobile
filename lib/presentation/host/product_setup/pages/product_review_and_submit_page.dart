@@ -152,7 +152,12 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                           // Photos
                           PreviewHeaderWidget(
                             title: photos,
-                            // onEdit: () {},
+                            onEdit: () {
+                              context.dispatch(
+                                UpdateHostStateAction(currentProduct: product),
+                              );
+                              context.router.push(const ProductPhotosRoute());
+                            },
                           ),
                           LimitedPhotoGalleryPreviewWidget(),
                           Divider(),
@@ -160,7 +165,12 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                           // Videos
                           PreviewHeaderWidget(
                             title: videosString,
-                            // onEdit: () {},
+                            onEdit: () {
+                              context.dispatch(
+                                UpdateHostStateAction(currentProduct: product),
+                              );
+                              context.router.push(const ProductVideosRoute());
+                            },
                           ),
                           LimitedVideoGalleryPreviewWidget(),
                           Divider(),
@@ -168,7 +178,12 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                           // Pricing
                           PreviewHeaderWidget(
                             title: pricing,
-                            // onEdit: () {},
+                            onEdit: () {
+                              context.dispatch(
+                                UpdateHostStateAction(currentProduct: product),
+                              );
+                              context.router.push(const ProductPricingRoute());
+                            },
                           ),
                           if (product?.pricing?.isEmpty ?? true)
                             MinZeroState(copy: noPricingOptionsString)
