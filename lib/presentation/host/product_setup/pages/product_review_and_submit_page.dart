@@ -171,6 +171,7 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                           else
                             ListView.builder(
                               shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
                               itemCount: product?.pricing?.length,
                               itemBuilder: (BuildContext context, int index) {
                                 final ProductPricing? current =

@@ -12,14 +12,15 @@ _$BookingImpl _$$BookingImplFromJson(Map<String, dynamic> json) =>
       createdAt: json['created_at'] as String? ?? UNKNOWN,
       updatedAt: json['updated_at'] as String? ?? UNKNOWN,
       active: json['active'] as bool? ?? false,
-      user: json['user'] == null
-          ? null
-          : UserState.fromJson(json['user'] as Map<String, dynamic>),
-      bookingType: json['bookingType'] as String? ?? UNKNOWN,
-      verified: json['verified'] as bool? ?? false,
-      bookedOn: json['bookedOn'] as String? ?? UNKNOWN,
-      price: (json['price'] as num?)?.toDouble() ?? 0,
+      host: json['host'] as String? ?? UNKNOWN,
+      product: json['product'] as String? ?? UNKNOWN,
       status: json['status'] as String? ?? UNKNOWN,
+      totalCost: json['total_cost'] as String? ?? UNKNOWN,
+      totalTicketsCount: (json['total_tickets_count'] as num?)?.toInt() ?? 0,
+      user: json['user_details'] == null
+          ? null
+          : UserState.fromJson(json['user_details'] as Map<String, dynamic>),
+      confirmedOn: json['confirmed_on'] as String?,
     );
 
 Map<String, dynamic> _$$BookingImplToJson(_$BookingImpl instance) =>
@@ -28,10 +29,11 @@ Map<String, dynamic> _$$BookingImplToJson(_$BookingImpl instance) =>
       'created_at': instance.createdAt,
       'updated_at': instance.updatedAt,
       'active': instance.active,
-      'user': instance.user?.toJson(),
-      'bookingType': instance.bookingType,
-      'verified': instance.verified,
-      'bookedOn': instance.bookedOn,
-      'price': instance.price,
+      'host': instance.host,
+      'product': instance.product,
       'status': instance.status,
+      'total_cost': instance.totalCost,
+      'total_tickets_count': instance.totalTicketsCount,
+      'user_details': instance.user?.toJson(),
+      'confirmed_on': instance.confirmedOn,
     };

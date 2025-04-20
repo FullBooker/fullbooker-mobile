@@ -38,6 +38,7 @@ const String addPhotosIconSVGPath = 'assets/vectors/add_photos_icon.svg';
 const String productSetupSuccessSVGPath =
     'assets/vectors/product_setup_complete_svg.svg';
 const String deleteProductSVGPath = 'assets/vectors/delete_product.svg';
+const String bookingZeroStateSVGPath = 'assets/vectors/booking_zero_state.svg';
 
 // Ticket icons
 const String earlyBirdTicketIconSVGPath =

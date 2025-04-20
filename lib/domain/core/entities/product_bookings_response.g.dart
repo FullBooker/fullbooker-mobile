@@ -13,9 +13,8 @@ _$ProductBookingsResponseImpl _$$ProductBookingsResponseImplFromJson(
       next: json['next'] as String?,
       previous: json['previous'] as String?,
       results: (json['results'] as List<dynamic>?)
-          ?.map((e) => e == null
-              ? null
-              : ProductPricing.fromJson(e as Map<String, dynamic>))
+          ?.map((e) =>
+              e == null ? null : Booking.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 

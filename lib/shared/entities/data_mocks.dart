@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fullbooker/application/redux/states/user_state.dart';
-import 'package:fullbooker/domain/core/entities/booking.dart';
 import 'package:fullbooker/domain/core/entities/host_product_response.dart';
 import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/shared/entities/event_creation_model.dart';
@@ -313,45 +311,6 @@ final Map<String, dynamic> productMockResponse = <String, dynamic>{
 
 final Product? mockProduct =
     HostProductResponse.fromJson(productMockResponse).results?.first;
-
-final List<Booking> mockBookings = <Booking>[
-  Booking.initial().copyWith(
-    bookedOn: DateTime.now().toIso8601String(),
-    user: UserState(
-      firstName: 'Abiud',
-      lastName: 'Orina',
-    ),
-    bookingType: 'VIP',
-    price: 3000,
-  ),
-  Booking.initial().copyWith(
-    bookedOn: DateTime.now().toIso8601String(),
-    user: UserState(
-      firstName: 'Ken',
-      lastName: 'Mathenge',
-    ),
-    bookingType: 'VVIP',
-    price: 5000,
-  ),
-  Booking.initial().copyWith(
-    bookedOn: DateTime.now().toIso8601String(),
-    user: UserState(
-      firstName: 'Abiud',
-      lastName: 'Orina',
-    ),
-    bookingType: 'Regular',
-    price: 2000,
-  ),
-  Booking.initial().copyWith(
-    bookedOn: DateTime.now().toIso8601String(),
-    user: UserState(
-      firstName: 'Abiud',
-      lastName: 'Orina',
-    ),
-    bookingType: 'Regular',
-    price: 2000,
-  ),
-];
 
 final Map<String, Object> data = <String, Object>{
   'name': 'A trip to Disney land',

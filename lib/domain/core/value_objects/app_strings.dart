@@ -564,7 +564,6 @@ const String locationPermsCopy =
 const String viewString = 'View';
 
 const String bookings = 'Bookings';
-const String noBookingsYet = 'No bookings yet';
 String bookingsValue(int value) => '$value bookings';
 const String payments = 'Payments';
 
@@ -667,3 +666,7 @@ const String noImagesString = 'No photos added';
 const String learnMore = 'Learn More';
 
 String aboutString(String name) => 'About $name';
+
+const String noBookingsYet = 'No Bookings Yet';
+const String noBookingsYetCopy =
+    'You haven’t received any bookings for this product yet';

@@ -25,11 +25,10 @@ class FetchProductBookingsAction extends ReduxAction<AppState> {
 
   @override
   Future<AppState?> reduce() async {
-    final String selectProductID =
-        state.hostState?.selectedProduct?.id ?? UNKNOWN;
+    final String productID = state.hostState?.selectedProduct?.id ?? UNKNOWN;
 
     final Map<String, dynamic> data = <String, dynamic>{
-      'product': selectProductID,
+      'product_id': productID,
     };
 
     final Response httpResponse = await client.callRESTAPI(
@@ -49,13 +48,11 @@ class FetchProductBookingsAction extends ReduxAction<AppState> {
       return null;
     }
 
-    final ProductBookingsResponse productPricingResponse =
+    final ProductBookingsResponse bookingsResponse =
         ProductBookingsResponse.fromJson(body);
 
     dispatch(
-      UpdateSelectedProductAction(
-        productPricing: productPricingResponse.results,
-      ),
+      UpdateSelectedProductAction(bookings: bookingsResponse.results),
     );
 
     return state;

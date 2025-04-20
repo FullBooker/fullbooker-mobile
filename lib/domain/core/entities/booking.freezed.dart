@@ -26,12 +26,17 @@ mixin _$Booking {
   @JsonKey(name: 'updated_at')
   String? get updatedAt => throw _privateConstructorUsedError;
   bool? get active => throw _privateConstructorUsedError;
-  UserState? get user => throw _privateConstructorUsedError;
-  String? get bookingType => throw _privateConstructorUsedError;
-  bool? get verified => throw _privateConstructorUsedError;
-  String? get bookedOn => throw _privateConstructorUsedError;
-  double? get price => throw _privateConstructorUsedError;
+  String? get host => throw _privateConstructorUsedError;
+  String? get product => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
+  @JsonKey(name: 'total_cost')
+  String? get totalCost => throw _privateConstructorUsedError;
+  @JsonKey(name: 'total_tickets_count')
+  int? get totalTicketsCount => throw _privateConstructorUsedError;
+  @JsonKey(name: 'user_details')
+  UserState? get user => throw _privateConstructorUsedError;
+  @JsonKey(name: 'confirmed_on')
+  String? get confirmedOn => throw _privateConstructorUsedError;
 
   /// Serializes this Booking to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -52,12 +57,13 @@ abstract class $BookingCopyWith<$Res> {
       @JsonKey(name: 'created_at') String? createdAt,
       @JsonKey(name: 'updated_at') String? updatedAt,
       bool? active,
-      UserState? user,
-      String? bookingType,
-      bool? verified,
-      String? bookedOn,
-      double? price,
-      String? status});
+      String? host,
+      String? product,
+      String? status,
+      @JsonKey(name: 'total_cost') String? totalCost,
+      @JsonKey(name: 'total_tickets_count') int? totalTicketsCount,
+      @JsonKey(name: 'user_details') UserState? user,
+      @JsonKey(name: 'confirmed_on') String? confirmedOn});
 
   $UserStateCopyWith<$Res>? get user;
 }
@@ -81,12 +87,13 @@ class _$BookingCopyWithImpl<$Res, $Val extends Booking>
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
     Object? active = freezed,
-    Object? user = freezed,
-    Object? bookingType = freezed,
-    Object? verified = freezed,
-    Object? bookedOn = freezed,
-    Object? price = freezed,
+    Object? host = freezed,
+    Object? product = freezed,
     Object? status = freezed,
+    Object? totalCost = freezed,
+    Object? totalTicketsCount = freezed,
+    Object? user = freezed,
+    Object? confirmedOn = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -105,29 +112,33 @@ class _$BookingCopyWithImpl<$Res, $Val extends Booking>
           ? _value.active
           : active // ignore: cast_nullable_to_non_nullable
               as bool?,
+      host: freezed == host
+          ? _value.host
+          : host // ignore: cast_nullable_to_non_nullable
+              as String?,
+      product: freezed == product
+          ? _value.product
+          : product // ignore: cast_nullable_to_non_nullable
+              as String?,
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String?,
+      totalCost: freezed == totalCost
+          ? _value.totalCost
+          : totalCost // ignore: cast_nullable_to_non_nullable
+              as String?,
+      totalTicketsCount: freezed == totalTicketsCount
+          ? _value.totalTicketsCount
+          : totalTicketsCount // ignore: cast_nullable_to_non_nullable
+              as int?,
       user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as UserState?,
-      bookingType: freezed == bookingType
-          ? _value.bookingType
-          : bookingType // ignore: cast_nullable_to_non_nullable
-              as String?,
-      verified: freezed == verified
-          ? _value.verified
-          : verified // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      bookedOn: freezed == bookedOn
-          ? _value.bookedOn
-          : bookedOn // ignore: cast_nullable_to_non_nullable
-              as String?,
-      price: freezed == price
-          ? _value.price
-          : price // ignore: cast_nullable_to_non_nullable
-              as double?,
-      status: freezed == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
+      confirmedOn: freezed == confirmedOn
+          ? _value.confirmedOn
+          : confirmedOn // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -159,12 +170,13 @@ abstract class _$$BookingImplCopyWith<$Res> implements $BookingCopyWith<$Res> {
       @JsonKey(name: 'created_at') String? createdAt,
       @JsonKey(name: 'updated_at') String? updatedAt,
       bool? active,
-      UserState? user,
-      String? bookingType,
-      bool? verified,
-      String? bookedOn,
-      double? price,
-      String? status});
+      String? host,
+      String? product,
+      String? status,
+      @JsonKey(name: 'total_cost') String? totalCost,
+      @JsonKey(name: 'total_tickets_count') int? totalTicketsCount,
+      @JsonKey(name: 'user_details') UserState? user,
+      @JsonKey(name: 'confirmed_on') String? confirmedOn});
 
   @override
   $UserStateCopyWith<$Res>? get user;
@@ -187,12 +199,13 @@ class __$$BookingImplCopyWithImpl<$Res>
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
     Object? active = freezed,
-    Object? user = freezed,
-    Object? bookingType = freezed,
-    Object? verified = freezed,
-    Object? bookedOn = freezed,
-    Object? price = freezed,
+    Object? host = freezed,
+    Object? product = freezed,
     Object? status = freezed,
+    Object? totalCost = freezed,
+    Object? totalTicketsCount = freezed,
+    Object? user = freezed,
+    Object? confirmedOn = freezed,
   }) {
     return _then(_$BookingImpl(
       id: freezed == id
@@ -211,29 +224,33 @@ class __$$BookingImplCopyWithImpl<$Res>
           ? _value.active
           : active // ignore: cast_nullable_to_non_nullable
               as bool?,
+      host: freezed == host
+          ? _value.host
+          : host // ignore: cast_nullable_to_non_nullable
+              as String?,
+      product: freezed == product
+          ? _value.product
+          : product // ignore: cast_nullable_to_non_nullable
+              as String?,
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String?,
+      totalCost: freezed == totalCost
+          ? _value.totalCost
+          : totalCost // ignore: cast_nullable_to_non_nullable
+              as String?,
+      totalTicketsCount: freezed == totalTicketsCount
+          ? _value.totalTicketsCount
+          : totalTicketsCount // ignore: cast_nullable_to_non_nullable
+              as int?,
       user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as UserState?,
-      bookingType: freezed == bookingType
-          ? _value.bookingType
-          : bookingType // ignore: cast_nullable_to_non_nullable
-              as String?,
-      verified: freezed == verified
-          ? _value.verified
-          : verified // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      bookedOn: freezed == bookedOn
-          ? _value.bookedOn
-          : bookedOn // ignore: cast_nullable_to_non_nullable
-              as String?,
-      price: freezed == price
-          ? _value.price
-          : price // ignore: cast_nullable_to_non_nullable
-              as double?,
-      status: freezed == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
+      confirmedOn: freezed == confirmedOn
+          ? _value.confirmedOn
+          : confirmedOn // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -248,12 +265,13 @@ class _$BookingImpl implements _Booking {
       @JsonKey(name: 'created_at') this.createdAt = UNKNOWN,
       @JsonKey(name: 'updated_at') this.updatedAt = UNKNOWN,
       this.active = false,
-      this.user,
-      this.bookingType = UNKNOWN,
-      this.verified = false,
-      this.bookedOn = UNKNOWN,
-      this.price = 0,
-      this.status = UNKNOWN});
+      this.host = UNKNOWN,
+      this.product = UNKNOWN,
+      this.status = UNKNOWN,
+      @JsonKey(name: 'total_cost') this.totalCost = UNKNOWN,
+      @JsonKey(name: 'total_tickets_count') this.totalTicketsCount = 0,
+      @JsonKey(name: 'user_details') this.user,
+      @JsonKey(name: 'confirmed_on') this.confirmedOn});
 
   factory _$BookingImpl.fromJson(Map<String, dynamic> json) =>
       _$$BookingImplFromJson(json);
@@ -271,26 +289,30 @@ class _$BookingImpl implements _Booking {
   @JsonKey()
   final bool? active;
   @override
-  final UserState? user;
+  @JsonKey()
+  final String? host;
   @override
   @JsonKey()
-  final String? bookingType;
-  @override
-  @JsonKey()
-  final bool? verified;
-  @override
-  @JsonKey()
-  final String? bookedOn;
-  @override
-  @JsonKey()
-  final double? price;
+  final String? product;
   @override
   @JsonKey()
   final String? status;
+  @override
+  @JsonKey(name: 'total_cost')
+  final String? totalCost;
+  @override
+  @JsonKey(name: 'total_tickets_count')
+  final int? totalTicketsCount;
+  @override
+  @JsonKey(name: 'user_details')
+  final UserState? user;
+  @override
+  @JsonKey(name: 'confirmed_on')
+  final String? confirmedOn;
 
   @override
   String toString() {
-    return 'Booking(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, active: $active, user: $user, bookingType: $bookingType, verified: $verified, bookedOn: $bookedOn, price: $price, status: $status)';
+    return 'Booking(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, active: $active, host: $host, product: $product, status: $status, totalCost: $totalCost, totalTicketsCount: $totalTicketsCount, user: $user, confirmedOn: $confirmedOn)';
   }
 
   @override
@@ -304,21 +326,22 @@ class _$BookingImpl implements _Booking {
             (identical(other.updatedAt, updatedAt) ||
                 other.updatedAt == updatedAt) &&
             (identical(other.active, active) || other.active == active) &&
+            (identical(other.host, host) || other.host == host) &&
+            (identical(other.product, product) || other.product == product) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.totalCost, totalCost) ||
+                other.totalCost == totalCost) &&
+            (identical(other.totalTicketsCount, totalTicketsCount) ||
+                other.totalTicketsCount == totalTicketsCount) &&
             (identical(other.user, user) || other.user == user) &&
-            (identical(other.bookingType, bookingType) ||
-                other.bookingType == bookingType) &&
-            (identical(other.verified, verified) ||
-                other.verified == verified) &&
-            (identical(other.bookedOn, bookedOn) ||
-                other.bookedOn == bookedOn) &&
-            (identical(other.price, price) || other.price == price) &&
-            (identical(other.status, status) || other.status == status));
+            (identical(other.confirmedOn, confirmedOn) ||
+                other.confirmedOn == confirmedOn));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, createdAt, updatedAt, active,
-      user, bookingType, verified, bookedOn, price, status);
+      host, product, status, totalCost, totalTicketsCount, user, confirmedOn);
 
   /// Create a copy of Booking
   /// with the given fields replaced by the non-null parameter values.
@@ -338,16 +361,18 @@ class _$BookingImpl implements _Booking {
 
 abstract class _Booking implements Booking {
   factory _Booking(
-      {final String? id,
-      @JsonKey(name: 'created_at') final String? createdAt,
-      @JsonKey(name: 'updated_at') final String? updatedAt,
-      final bool? active,
-      final UserState? user,
-      final String? bookingType,
-      final bool? verified,
-      final String? bookedOn,
-      final double? price,
-      final String? status}) = _$BookingImpl;
+          {final String? id,
+          @JsonKey(name: 'created_at') final String? createdAt,
+          @JsonKey(name: 'updated_at') final String? updatedAt,
+          final bool? active,
+          final String? host,
+          final String? product,
+          final String? status,
+          @JsonKey(name: 'total_cost') final String? totalCost,
+          @JsonKey(name: 'total_tickets_count') final int? totalTicketsCount,
+          @JsonKey(name: 'user_details') final UserState? user,
+          @JsonKey(name: 'confirmed_on') final String? confirmedOn}) =
+      _$BookingImpl;
 
   factory _Booking.fromJson(Map<String, dynamic> json) = _$BookingImpl.fromJson;
 
@@ -362,17 +387,23 @@ abstract class _Booking implements Booking {
   @override
   bool? get active;
   @override
-  UserState? get user;
+  String? get host;
   @override
-  String? get bookingType;
-  @override
-  bool? get verified;
-  @override
-  String? get bookedOn;
-  @override
-  double? get price;
+  String? get product;
   @override
   String? get status;
+  @override
+  @JsonKey(name: 'total_cost')
+  String? get totalCost;
+  @override
+  @JsonKey(name: 'total_tickets_count')
+  int? get totalTicketsCount;
+  @override
+  @JsonKey(name: 'user_details')
+  UserState? get user;
+  @override
+  @JsonKey(name: 'confirmed_on')
+  String? get confirmedOn;
 
   /// Create a copy of Booking
   /// with the given fields replaced by the non-null parameter values.

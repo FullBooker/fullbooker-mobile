@@ -24,7 +24,7 @@ mixin _$ProductBookingsResponse {
   int get count => throw _privateConstructorUsedError;
   String? get next => throw _privateConstructorUsedError;
   String? get previous => throw _privateConstructorUsedError;
-  List<ProductPricing?>? get results => throw _privateConstructorUsedError;
+  List<Booking?>? get results => throw _privateConstructorUsedError;
 
   /// Serializes this ProductBookingsResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -43,10 +43,7 @@ abstract class $ProductBookingsResponseCopyWith<$Res> {
       _$ProductBookingsResponseCopyWithImpl<$Res, ProductBookingsResponse>;
   @useResult
   $Res call(
-      {int count,
-      String? next,
-      String? previous,
-      List<ProductPricing?>? results});
+      {int count, String? next, String? previous, List<Booking?>? results});
 }
 
 /// @nodoc
@@ -86,7 +83,7 @@ class _$ProductBookingsResponseCopyWithImpl<$Res,
       results: freezed == results
           ? _value.results
           : results // ignore: cast_nullable_to_non_nullable
-              as List<ProductPricing?>?,
+              as List<Booking?>?,
     ) as $Val);
   }
 }
@@ -101,10 +98,7 @@ abstract class _$$ProductBookingsResponseImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int count,
-      String? next,
-      String? previous,
-      List<ProductPricing?>? results});
+      {int count, String? next, String? previous, List<Booking?>? results});
 }
 
 /// @nodoc
@@ -143,7 +137,7 @@ class __$$ProductBookingsResponseImplCopyWithImpl<$Res>
       results: freezed == results
           ? _value.results
           : results // ignore: cast_nullable_to_non_nullable
-              as List<ProductPricing?>?,
+              as List<Booking?>?,
     ));
   }
 }
@@ -166,7 +160,7 @@ class _$ProductBookingsResponseImpl implements _ProductBookingsResponse {
   @override
   final String? previous;
   @override
-  final List<ProductPricing?>? results;
+  final List<Booking?>? results;
 
   @override
   String toString() {
@@ -212,7 +206,7 @@ abstract class _ProductBookingsResponse implements ProductBookingsResponse {
       {final int count,
       final String? next,
       final String? previous,
-      final List<ProductPricing?>? results}) = _$ProductBookingsResponseImpl;
+      final List<Booking?>? results}) = _$ProductBookingsResponseImpl;
 
   factory _ProductBookingsResponse.fromJson(Map<String, dynamic> json) =
       _$ProductBookingsResponseImpl.fromJson;
@@ -224,7 +218,7 @@ abstract class _ProductBookingsResponse implements ProductBookingsResponse {
   @override
   String? get previous;
   @override
-  List<ProductPricing?>? get results;
+  List<Booking?>? get results;
 
   /// Create a copy of ProductBookingsResponse
   /// with the given fields replaced by the non-null parameter values.

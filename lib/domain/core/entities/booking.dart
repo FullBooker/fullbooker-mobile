@@ -13,17 +13,16 @@ class Booking with _$Booking {
     @JsonKey(name: 'created_at') @Default(UNKNOWN) String? createdAt,
     @JsonKey(name: 'updated_at') @Default(UNKNOWN) String? updatedAt,
     @Default(false) bool? active,
-    UserState? user,
-    @Default(UNKNOWN) String? bookingType,
-    @Default(false) bool? verified,
-    @Default(UNKNOWN) String? bookedOn,
-    @Default(0) double? price,
+    @Default(UNKNOWN) String? host,
+    @Default(UNKNOWN) String? product,
     @Default(UNKNOWN) String? status,
+    @JsonKey(name: 'total_cost') @Default(UNKNOWN) String? totalCost,
+    @JsonKey(name: 'total_tickets_count') @Default(0) int? totalTicketsCount,
+    @JsonKey(name: 'user_details') UserState? user,
+    @JsonKey(name: 'confirmed_on') String? confirmedOn,
   }) = _Booking;
 
-  factory Booking.initial() => Booking(
-        user: UserState.initial(),
-      );
+  factory Booking.initial() => Booking(user: UserState.initial());
 
   factory Booking.fromJson(Map<String, dynamic> json) =>
       _$BookingFromJson(json);
