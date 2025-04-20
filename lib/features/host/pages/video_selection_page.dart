@@ -4,7 +4,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
-import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
@@ -41,11 +40,9 @@ class _VideoSelectionPageState extends State<VideoSelectionPage> {
   ProductController productViewModel = ProductController();
 
   Future<void> selectVideo() async {
-    final FilePickerResult? result = await FilePicker.platform.pickFiles(
-      allowMultiple: true,
-      type: FileType.custom,
-      allowedExtensions: kAllowedVideoExtensions,
-    );
+    final FilePickerResult? result =
+        await pickMediaFiles(type: MediaType.VIDEO);
+
     if (result != null) {
       setState(() {
         filesLoaded = 0;
@@ -55,10 +52,9 @@ class _VideoSelectionPageState extends State<VideoSelectionPage> {
   }
 
   Future<void> replaceVideo(int currentVideoIndex) async {
-    final FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: kAllowedVideoExtensions,
-    );
+    final FilePickerResult? result =
+        await pickMediaFiles(type: MediaType.VIDEO);
+
     if (result != null) {
       videos[currentVideoIndex] = File(result.paths[0]!);
       setState(() => videos = videos);
@@ -66,10 +62,9 @@ class _VideoSelectionPageState extends State<VideoSelectionPage> {
   }
 
   Future<void> selectSingleVideo() async {
-    final FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: kAllowedVideoExtensions,
-    );
+    final FilePickerResult? result =
+        await pickMediaFiles(type: MediaType.VIDEO);
+
     if (result != null) {
       videos.add(File(result.paths[0]!));
       setState(() => videos = videos);

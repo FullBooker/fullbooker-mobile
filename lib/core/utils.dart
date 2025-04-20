@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:auto_route/auto_route.dart';
 import 'package:dartz/dartz.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fullbooker/config/environments.dart';
@@ -504,4 +505,17 @@ String formatCurrency(
         '¤#,##0${decimalDigits > 0 ? '.${'0' * decimalDigits}' : ''}',
   );
   return formatter.format(amount);
+}
+
+Future<FilePickerResult?> pickMediaFiles({required MediaType type}) {
+  final List<String> extensions = switch (type) {
+    MediaType.PHOTO => kAllowedPhotoExtensions,
+    MediaType.VIDEO => kAllowedVideoExtensions,
+  };
+
+  return FilePicker.platform.pickFiles(
+    allowMultiple: true,
+    type: FileType.custom,
+    allowedExtensions: extensions,
+  );
 }
