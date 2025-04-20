@@ -586,6 +586,10 @@ const String inReviewString = 'In Review';
 const String switchToHosting = 'Switch To Hosting';
 const String switchToHostingCopy =
     'Switch to hosting to setup your products, view your earnings, and more';
+const String switchToUserCopy =
+    'View and purchase your favorite products, and more';
+
+String switchToUser(String appName) => 'Switch To $appName';
 
 const String legal = 'Legal';
 const String legalCopy = 'Terms and conditions, opt-out';

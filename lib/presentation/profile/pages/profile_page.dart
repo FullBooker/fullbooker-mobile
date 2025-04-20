@@ -8,6 +8,7 @@ import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/profile_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/common/constants.dart';
+import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:fullbooker/presentation/core/components/profile_avatar.dart';
@@ -18,16 +19,20 @@ import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
 import 'package:dartz/dartz.dart' as d;
+import 'package:get_it/get_it.dart';
 import 'package:heroicons/heroicons.dart';
 
 @RoutePage()
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
+  ProfilePage({super.key});
 
   final String appVersion = const String.fromEnvironment(
     APPVERSION,
     defaultValue: kDevBuild,
   );
+
+  final String appName =
+      GetIt.I.get<AppConfig>().applicationName.split(' ').first;
 
   @override
   Widget build(BuildContext context) {
@@ -108,14 +113,14 @@ class ProfilePage extends StatelessWidget {
                       spacing: 4,
                       children: <Widget>[
                         Text(
-                          switchToHosting,
+                          switchToUser(appName),
                           style:
                               Theme.of(context).textTheme.titleMedium!.copyWith(
                                     color: Theme.of(context).primaryColor,
                                   ),
                         ),
                         Text(
-                          switchToHostingCopy,
+                          switchToUserCopy,
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                         verySmallVerticalSizedBox,
@@ -133,7 +138,7 @@ class ProfilePage extends StatelessWidget {
                                   size: 24,
                                 ),
                                 Text(
-                                  switchToHosting,
+                                  switchToUser(appName),
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyLarge

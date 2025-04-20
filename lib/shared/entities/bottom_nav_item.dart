@@ -34,6 +34,6 @@ final List<BottomNavItem> bottomNavItems = <BottomNavItem>[
     itemKey: 'bottom-nav-3',
     title: profileString,
     iconUrl: HeroIcons.user,
-    route: const ProfileRoute(),
+    route: ProfileRoute(),
   ),
 ];

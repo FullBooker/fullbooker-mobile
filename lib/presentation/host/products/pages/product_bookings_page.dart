@@ -15,7 +15,6 @@ import 'package:fullbooker/presentation/core/components/generic_zero_state.dart'
 import 'package:fullbooker/presentation/host/products/widgets/booking_list_item_widget.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
-import 'package:fullbooker/shared/widgets/custom_text_input.dart';
 import 'package:heroicons/heroicons.dart';
 
 @RoutePage()

@@ -33,7 +33,7 @@ class HostingHomePage extends StatelessWidget {
         leading: Padding(
           padding: const EdgeInsets.all(8),
           child: GestureDetector(
-            onTap: () => context.router.push(const ProfileRoute()),
+            onTap: () => context.router.push(ProfileRoute()),
             child: StoreConnector<AppState, ProfileViewModel>(
               converter: (Store<AppState> store) =>
                   ProfileViewModel.fromStore(store),
