@@ -12,7 +12,6 @@ import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/entities/product_pricing.dart';
 import 'package:fullbooker/domain/core/value_objects/app_bar_action.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
-import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:fullbooker/presentation/core/components/custom_badge_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/pricing_card_widget.dart';
@@ -26,7 +25,6 @@ import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
-import 'package:fullbooker/shared/widgets/secondary_button.dart';
 import 'package:heroicons/heroicons.dart';
 
 @RoutePage()
@@ -166,32 +164,33 @@ class ProductDetailPage extends StatelessWidget {
                             ],
                           ),
                           verySmallVerticalSizedBox,
-                          SecondaryButton(
-                            fillColor:
-                                AppColors.redColor.withValues(alpha: .05),
-                            textColor: AppColors.redColor,
-                            onPressed: () => showAlertDialog(
-                              context: context,
-                              assetPath: deleteProductSVGPath,
-                              title: '$deactivateProduct?',
-                              description: deactivateProductCopy,
-                              confirmText: deactivateProduct,
-                              cancelText: noGoBack,
-                              onConfirm: () {
-                                // TODO(abiud): deactivate a product
-                                context.router.maybePop();
-                                ScaffoldMessenger.of(context)
-                                  ..hideCurrentSnackBar()
-                                  ..showSnackBar(
-                                    const SnackBar(
-                                      content: Text(comingSoonTitle),
-                                    ),
-                                  );
-                              },
-                              onCancel: () => context.router.maybePop(),
-                            ),
-                            child: right(deactivateProduct),
-                          ),
+                          // TODO(abiud): return this when the delete API for a product has proper workflow
+                          // SecondaryButton(
+                          //   fillColor:
+                          //       AppColors.redColor.withValues(alpha: .05),
+                          //   textColor: AppColors.redColor,
+                          //   onPressed: () => showAlertDialog(
+                          //     context: context,
+                          //     assetPath: deleteProductSVGPath,
+                          //     title: '$deactivateProduct?',
+                          //     description: deactivateProductCopy,
+                          //     confirmText: deactivateProduct,
+                          //     cancelText: noGoBack,
+                          //     onConfirm: () {
+                          //       // TODO(abiud): deactivate a product
+                          //       context.router.maybePop();
+                          //       ScaffoldMessenger.of(context)
+                          //         ..hideCurrentSnackBar()
+                          //         ..showSnackBar(
+                          //           const SnackBar(
+                          //             content: Text(comingSoonTitle),
+                          //           ),
+                          //         );
+                          //     },
+                          //     onCancel: () => context.router.maybePop(),
+                          //   ),
+                          //   child: right(deactivateProduct),
+                          // ),
                         ],
                       ),
                     ),
