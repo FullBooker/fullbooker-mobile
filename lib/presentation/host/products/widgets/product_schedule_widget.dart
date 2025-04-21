@@ -10,11 +10,14 @@ import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/entities/product_schedule.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
+import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:heroicons/heroicons.dart';
 
 class ProductScheduleWidget extends StatelessWidget {
-  const ProductScheduleWidget({super.key});
+  const ProductScheduleWidget({super.key, required this.workflowState});
+
+  final WorkflowState workflowState;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +28,7 @@ class ProductScheduleWidget extends StatelessWidget {
         context.dispatch(
           FetchProductSchedulesAction(
             client: AppWrapperBase.of(context)!.customClient,
+            workflowState: workflowState,
           ),
         );
       },

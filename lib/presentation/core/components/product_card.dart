@@ -22,6 +22,8 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool complete = isProductComplete(product: product);
+    final String statusDisplay = getStatusDisplay(product: product);
+    final Color statusColor = getProductStatusColor(product: product);
 
     return GestureDetector(
       onTap: () {
@@ -106,13 +108,9 @@ class ProductCard extends StatelessWidget {
                         ),
                       ),
                       CustomBadgeWidget(
-                        text: complete ? publishedString : draftString,
-                        backgroundColor: complete
-                            ? AppColors.greenColor
-                            : AppColors.greyTextColor,
-                        textColor: complete
-                            ? AppColors.greenColor
-                            : AppColors.greyTextColor,
+                        text: statusDisplay,
+                        backgroundColor: statusColor,
+                        textColor: statusColor,
                       ),
                     ],
                   ),

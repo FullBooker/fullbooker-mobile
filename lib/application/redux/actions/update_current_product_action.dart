@@ -3,6 +3,7 @@ import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/domain/core/entities/product_category.dart';
 import 'package:fullbooker/domain/core/entities/product_media.dart';
 import 'package:fullbooker/domain/core/entities/product_pricing.dart';
+import 'package:fullbooker/domain/core/entities/product_schedule.dart';
 
 class UpdateCurrentProductAction extends ReduxAction<AppState> {
   UpdateCurrentProductAction({
@@ -13,6 +14,7 @@ class UpdateCurrentProductAction extends ReduxAction<AppState> {
     this.photos,
     this.videos,
     this.pricing,
+    this.schedule,
   });
 
   final String? description;
@@ -23,6 +25,7 @@ class UpdateCurrentProductAction extends ReduxAction<AppState> {
   final List<ProductMedia?>? photos;
   final List<ProductMedia?>? videos;
   final List<ProductPricing?>? pricing;
+  final ProductSchedule? schedule;
 
   @override
   AppState? reduce() {
@@ -36,6 +39,7 @@ class UpdateCurrentProductAction extends ReduxAction<AppState> {
       photos: photos ?? state.hostState?.currentProduct?.photos,
       videos: videos ?? state.hostState?.currentProduct?.videos,
       pricing: pricing ?? state.hostState?.currentProduct?.pricing,
+      schedule: schedule ?? state.hostState?.currentProduct?.schedule,
     );
 
     return newState;

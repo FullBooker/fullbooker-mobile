@@ -1,6 +1,10 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
+import 'package:fullbooker/application/redux/actions/fetch_product_media_action.dart';
+import 'package:fullbooker/application/redux/actions/fetch_product_schedules_action.dart';
+import 'package:fullbooker/application/redux/actions/fetch_single_product_action.dart';
 import 'package:fullbooker/application/redux/actions/update_host_state_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_review_view_model.dart';
@@ -50,6 +54,22 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
               child: StoreConnector<AppState, ProductReviewViewModel>(
                 converter: (Store<AppState> store) =>
                     ProductReviewViewModel.fromState(store.state),
+                onInit: (Store<AppState> store) {
+                  context.dispatchAll(<ReduxAction<AppState>>[
+                    FetchSingleProductAction(
+                      client: AppWrapperBase.of(context)!.customClient,
+                      workflowState: workflowState,
+                    ),
+                    FetchProductMediaAction(
+                      client: AppWrapperBase.of(context)!.customClient,
+                      workflowState: workflowState,
+                    ),
+                    FetchProductSchedulesAction(
+                      client: AppWrapperBase.of(context)!.customClient,
+                      workflowState: workflowState,
+                    ),
+                  ]);
+                },
                 builder: (BuildContext context, ProductReviewViewModel vm) {
                   final Product? product = workflowState == WorkflowState.CREATE
                       ? vm.currentProduct
@@ -146,7 +166,7 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                             // onEdit: () {},
                           ),
                           if ((product?.scheduleID ?? UNKNOWN) != UNKNOWN)
-                            ProductScheduleWidget(),
+                            ProductScheduleWidget(workflowState: workflowState),
                           Divider(),
 
                           // Photos
