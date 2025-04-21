@@ -13,7 +13,12 @@ import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 
 class LimitedVideoGalleryPreviewWidget extends StatelessWidget {
-  const LimitedVideoGalleryPreviewWidget({super.key});
+  const LimitedVideoGalleryPreviewWidget({
+    super.key,
+    required this.workflowState,
+  });
+
+  final WorkflowState workflowState;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +30,7 @@ class LimitedVideoGalleryPreviewWidget extends StatelessWidget {
       onInit: (Store<AppState> store) => context.dispatch(
         FetchProductMediaAction(
           client: AppWrapperBase.of(context)!.customClient,
-          workflowState: WorkflowState.VIEW,
+          workflowState: workflowState,
         ),
       ),
       builder: (BuildContext context, ProductReviewViewModel vm) {
