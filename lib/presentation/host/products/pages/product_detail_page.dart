@@ -12,7 +12,6 @@ import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/entities/product_pricing.dart';
 import 'package:fullbooker/domain/core/value_objects/app_bar_action.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
-import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:fullbooker/presentation/core/components/custom_badge_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/pricing_card_widget.dart';
@@ -26,7 +25,6 @@ import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
-import 'package:fullbooker/shared/widgets/secondary_button.dart';
 import 'package:heroicons/heroicons.dart';
 
 @RoutePage()
@@ -59,9 +57,12 @@ class ProductDetailPage extends StatelessWidget {
         builder: (BuildContext context, ProductDetailViewModel vm) {
           final Product? product = vm.selectedProduct;
 
-          final bool isComplete = product?.completed ?? false;
           final bool isLocationAvailable =
               product?.locations?.isNotEmpty ?? false;
+
+          final String statusDisplay = getStatusDisplay(product: product!);
+          final Color statusColor = getProductStatusColor(product: product);
+          final ProductStatus productStatus = getProductStatus(product);
 
           return Column(
             children: <Widget>[
@@ -82,21 +83,15 @@ class ProductDetailPage extends StatelessWidget {
                             children: <Widget>[
                               Expanded(
                                 child: Text(
-                                  product?.name ?? '',
+                                  product.name ?? '',
                                   style:
                                       Theme.of(context).textTheme.titleMedium,
                                 ),
                               ),
                               CustomBadgeWidget(
-                                text: isComplete
-                                    ? publishedString
-                                    : inReviewString,
-                                backgroundColor: getProductColor(
-                                  complete: isComplete,
-                                ),
-                                textColor: getProductColor(
-                                  complete: isComplete,
-                                ),
+                                text: statusDisplay,
+                                backgroundColor: statusColor,
+                                textColor: statusColor,
                               ),
                             ],
                           ),
@@ -116,7 +111,7 @@ class ProductDetailPage extends StatelessWidget {
                                       size: 20,
                                     ),
                                     Text(
-                                      product?.locations?.first.address ?? '',
+                                      product.locations?.first.address ?? '',
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyMedium,
@@ -125,15 +120,18 @@ class ProductDetailPage extends StatelessWidget {
                                 ),
                             ],
                           ),
-                          ProductScheduleWidget(),
-                          ProductAlertWidget(
-                            title: productInReview,
-                            description: productInReviewCopy,
-                            iconData: HeroIcons.clipboardDocumentList,
+                          ProductScheduleWidget(
+                            workflowState: WorkflowState.VIEW,
                           ),
+                          if (productStatus == ProductStatus.inReview)
+                            ProductAlertWidget(
+                              title: productInReview,
+                              description: productInReviewCopy,
+                              iconData: HeroIcons.clipboardDocumentList,
+                            ),
                           LimitedDescriptionWidget(
-                            name: product?.name ?? UNKNOWN,
-                            description: product?.description ?? UNKNOWN,
+                            name: product.name ?? UNKNOWN,
+                            description: product.description ?? UNKNOWN,
                           ),
                           ProductStatsWidget(),
                           Column(
@@ -144,17 +142,17 @@ class ProductDetailPage extends StatelessWidget {
                                 pricing,
                                 style: Theme.of(context).textTheme.titleMedium,
                               ),
-                              if (product?.pricing?.isEmpty ?? true)
+                              if (product.pricing?.isEmpty ?? true)
                                 MinZeroState(copy: noPricingOptionsString)
                               else
                                 ListView.builder(
                                   physics: NeverScrollableScrollPhysics(),
                                   shrinkWrap: true,
-                                  itemCount: product?.pricing?.length,
+                                  itemCount: product.pricing?.length,
                                   itemBuilder:
                                       (BuildContext context, int index) {
                                     final ProductPricing? current =
-                                        product?.pricing![index];
+                                        product.pricing![index];
 
                                     return Container(
                                       margin: EdgeInsets.only(bottom: 12),
@@ -166,32 +164,33 @@ class ProductDetailPage extends StatelessWidget {
                             ],
                           ),
                           verySmallVerticalSizedBox,
-                          SecondaryButton(
-                            fillColor:
-                                AppColors.redColor.withValues(alpha: .05),
-                            textColor: AppColors.redColor,
-                            onPressed: () => showAlertDialog(
-                              context: context,
-                              assetPath: deleteProductSVGPath,
-                              title: '$deactivateProduct?',
-                              description: deactivateProductCopy,
-                              confirmText: deactivateProduct,
-                              cancelText: noGoBack,
-                              onConfirm: () {
-                                // TODO(abiud): deactivate a product
-                                context.router.maybePop();
-                                ScaffoldMessenger.of(context)
-                                  ..hideCurrentSnackBar()
-                                  ..showSnackBar(
-                                    const SnackBar(
-                                      content: Text(comingSoonTitle),
-                                    ),
-                                  );
-                              },
-                              onCancel: () => context.router.maybePop(),
-                            ),
-                            child: right(deactivateProduct),
-                          ),
+                          // TODO(abiud): return this when the delete API for a product has proper workflow
+                          // SecondaryButton(
+                          //   fillColor:
+                          //       AppColors.redColor.withValues(alpha: .05),
+                          //   textColor: AppColors.redColor,
+                          //   onPressed: () => showAlertDialog(
+                          //     context: context,
+                          //     assetPath: deleteProductSVGPath,
+                          //     title: '$deactivateProduct?',
+                          //     description: deactivateProductCopy,
+                          //     confirmText: deactivateProduct,
+                          //     cancelText: noGoBack,
+                          //     onConfirm: () {
+                          //       // TODO(abiud): deactivate a product
+                          //       context.router.maybePop();
+                          //       ScaffoldMessenger.of(context)
+                          //         ..hideCurrentSnackBar()
+                          //         ..showSnackBar(
+                          //           const SnackBar(
+                          //             content: Text(comingSoonTitle),
+                          //           ),
+                          //         );
+                          //     },
+                          //     onCancel: () => context.router.maybePop(),
+                          //   ),
+                          //   child: right(deactivateProduct),
+                          // ),
                         ],
                       ),
                     ),

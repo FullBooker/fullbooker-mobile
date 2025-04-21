@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/core/services/i_custom_client.dart';
+import 'package:fullbooker/application/redux/actions/update_current_product_action.dart';
 import 'package:fullbooker/application/redux/actions/update_selected_product_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/core/common/constants.dart';
@@ -17,11 +18,13 @@ class FetchProductSchedulesAction extends ReduxAction<AppState> {
     this.onSuccess,
     this.onError,
     required this.client,
+    required this.workflowState,
   });
 
   final Function(String error)? onError;
   final Function()? onSuccess;
   final ICustomClient client;
+  final WorkflowState workflowState;
 
   @override
   Future<AppState?> reduce() async {
@@ -50,8 +53,12 @@ class FetchProductSchedulesAction extends ReduxAction<AppState> {
 
     final ProductSchedule scheduleResponse = ProductSchedule.fromJson(body);
 
-    dispatch(UpdateSelectedProductAction(schedule: scheduleResponse));
+    if (workflowState == WorkflowState.CREATE) {
+      dispatch(UpdateCurrentProductAction(schedule: scheduleResponse));
+    } else {
+      dispatch(UpdateSelectedProductAction(schedule: scheduleResponse));
+    }
 
-    return state;
+    return null;
   }
 }

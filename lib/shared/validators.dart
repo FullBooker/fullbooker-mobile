@@ -120,7 +120,7 @@ String? validateMaxTickets(String? value) {
     return 'At least one ticket is required';
   }
 
-  if (parsed > 10000) {
+  if (parsed > 100000) {
     return 'Tickets must not exceed 10,000';
   }
 

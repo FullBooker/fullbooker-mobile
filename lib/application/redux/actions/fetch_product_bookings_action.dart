@@ -28,11 +28,11 @@ class FetchProductBookingsAction extends ReduxAction<AppState> {
     final String productID = state.hostState?.selectedProduct?.id ?? UNKNOWN;
 
     final Map<String, dynamic> data = <String, dynamic>{
-      'product_id': productID,
+      'product': productID,
     };
 
     final Response httpResponse = await client.callRESTAPI(
-      endpoint: GetIt.I.get<AppConfig>().bookingsEndpoint,
+      endpoint: '${GetIt.I.get<AppConfig>().bookingsEndpoint}/',
       method: APIMethods.GET.name.toUpperCase(),
       queryParams: data,
     );

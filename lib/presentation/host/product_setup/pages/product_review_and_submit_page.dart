@@ -146,7 +146,7 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                             // onEdit: () {},
                           ),
                           if ((product?.scheduleID ?? UNKNOWN) != UNKNOWN)
-                            ProductScheduleWidget(),
+                            ProductScheduleWidget(workflowState: workflowState),
                           Divider(),
 
                           // Photos
@@ -159,7 +159,9 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                               context.router.push(const ProductPhotosRoute());
                             },
                           ),
-                          LimitedPhotoGalleryPreviewWidget(),
+                          LimitedPhotoGalleryPreviewWidget(
+                            workflowState: workflowState,
+                          ),
                           Divider(),
 
                           // Videos
@@ -172,7 +174,9 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                               context.router.push(const ProductVideosRoute());
                             },
                           ),
-                          LimitedVideoGalleryPreviewWidget(),
+                          LimitedVideoGalleryPreviewWidget(
+                            workflowState: workflowState,
+                          ),
                           Divider(),
 
                           // Pricing

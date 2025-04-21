@@ -23,3 +23,5 @@ enum SignInMethod { EMAIL, GOOGLE }
 enum WorkflowState { CREATE, VIEW }
 
 enum UploadMediaType { PHOTO, VIDEO }
+
+enum ProductStatus { published, draft, inReview }

@@ -15,7 +15,12 @@ import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 
 class LimitedPhotoGalleryPreviewWidget extends StatelessWidget {
-  const LimitedPhotoGalleryPreviewWidget({super.key});
+  const LimitedPhotoGalleryPreviewWidget({
+    super.key,
+    required this.workflowState,
+  });
+
+  final WorkflowState workflowState;
 
   @override
   Widget build(BuildContext context) {

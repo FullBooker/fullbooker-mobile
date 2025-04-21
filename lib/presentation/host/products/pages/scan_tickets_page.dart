@@ -25,6 +25,7 @@ class _ScanTicketsPageState extends State<ScanTicketsPage> {
 
   void showValidationBottomSheet({
     required String code,
+    required String msg,
     required bool isValid,
   }) {
     showModalBottomSheet(
@@ -71,10 +72,24 @@ class _ScanTicketsPageState extends State<ScanTicketsPage> {
                 context.dispatch(
                   ValidateTicketAction(
                     client: AppWrapperBase.of(context)!.customClient,
-                    onResult: (bool isValid) {
-                      if (mounted) {
-                        showValidationBottomSheet(code: code, isValid: isValid);
-                      }
+                    onResult: (bool isValid, String msg) {
+                      showValidationBottomSheet(
+                        code: code,
+                        isValid: isValid,
+                        msg: msg,
+                      );
+                    },
+                    onError: (String error) {
+                      setState(() {
+                        hasScanned = false;
+                        isValidating = false;
+                      });
+
+                      showValidationBottomSheet(
+                        code: code,
+                        isValid: false,
+                        msg: error,
+                      );
                     },
                   ),
                 );

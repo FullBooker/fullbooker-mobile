@@ -388,9 +388,32 @@ bool isProductComplete({required Product product}) {
       hasPricing;
 }
 
-Color getProductColor({bool complete = false}) {
-  if (complete) return AppColors.greenColor;
-  return AppColors.amberColor;
+ProductStatus getProductStatus(Product product) {
+  if (product.active ?? false) return ProductStatus.published;
+  if (isProductComplete(product: product)) return ProductStatus.inReview;
+  return ProductStatus.draft;
+}
+
+String getStatusDisplay({required Product product}) {
+  switch (getProductStatus(product)) {
+    case ProductStatus.published:
+      return 'Published';
+    case ProductStatus.draft:
+      return 'Draft';
+    case ProductStatus.inReview:
+      return 'In Review';
+  }
+}
+
+Color getProductStatusColor({required Product product}) {
+  switch (getProductStatus(product)) {
+    case ProductStatus.published:
+      return AppColors.greenColor;
+    case ProductStatus.draft:
+      return AppColors.greyTextColor;
+    case ProductStatus.inReview:
+      return AppColors.amberColor;
+  }
 }
 
 Future<String?> pickDate({required BuildContext context}) async {
