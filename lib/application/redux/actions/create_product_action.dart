@@ -27,12 +27,12 @@ class CreateProductAction extends ReduxAction<AppState> {
   Future<AppState?> reduce() async {
     final String name = state.hostState?.currentProduct?.name ?? UNKNOWN;
     final String description =
-        state.hostState?.currentProduct?.description ?? UNKNOWN;
+        state.hostState?.currentProduct?.description ?? '';
     final String subcategory =
         state.hostState?.currentProduct?.selectedProductSubCategory?.id ??
             UNKNOWN;
 
-    if (name == UNKNOWN || description == UNKNOWN || subcategory == UNKNOWN) {
+    if (name == UNKNOWN || subcategory == UNKNOWN) {
       onError?.call(createProductError);
 
       return null;
