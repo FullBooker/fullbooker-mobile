@@ -389,12 +389,9 @@ bool isProductComplete({required Product product}) {
 }
 
 ProductStatus getProductStatus(Product product) {
-  final bool isActive = product.active ?? false;
-  final bool isComplete = isProductComplete(product: product);
-
-  if (isComplete) return ProductStatus.draft;
-  if (isActive) return ProductStatus.published;
-  return ProductStatus.inReview;
+  if (product.active ?? false) return ProductStatus.published;
+  if (isProductComplete(product: product)) return ProductStatus.inReview;
+  return ProductStatus.draft;
 }
 
 String getStatusDisplay({required Product product}) {
@@ -418,8 +415,6 @@ Color getProductStatusColor({required Product product}) {
       return AppColors.amberColor;
   }
 }
-
-
 
 Future<String?> pickDate({required BuildContext context}) async {
   final DateTime now = DateTime.now();

@@ -59,12 +59,12 @@ class ProductDetailPage extends StatelessWidget {
         builder: (BuildContext context, ProductDetailViewModel vm) {
           final Product? product = vm.selectedProduct;
 
-          // final bool isComplete = product?.completed ?? false;
           final bool isLocationAvailable =
               product?.locations?.isNotEmpty ?? false;
 
           final String statusDisplay = getStatusDisplay(product: product!);
           final Color statusColor = getProductStatusColor(product: product);
+          final ProductStatus productStatus = getProductStatus(product);
 
           return Column(
             children: <Widget>[
@@ -125,11 +125,12 @@ class ProductDetailPage extends StatelessWidget {
                           ProductScheduleWidget(
                             workflowState: WorkflowState.VIEW,
                           ),
-                          ProductAlertWidget(
-                            title: productInReview,
-                            description: productInReviewCopy,
-                            iconData: HeroIcons.clipboardDocumentList,
-                          ),
+                          if (productStatus == ProductStatus.inReview)
+                            ProductAlertWidget(
+                              title: productInReview,
+                              description: productInReviewCopy,
+                              iconData: HeroIcons.clipboardDocumentList,
+                            ),
                           LimitedDescriptionWidget(
                             name: product.name ?? UNKNOWN,
                             description: product.description ?? UNKNOWN,
