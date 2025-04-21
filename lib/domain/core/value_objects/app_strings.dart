@@ -686,3 +686,6 @@ const String noBookingsYetCopy =
 
 const String invalidMediaFilesError =
     'Some files aren’t supported. Please upload valid images or videos';
+
+const String couldNotScanTickerError =
+    'We couldn’t verify the ticket. Please try again or scan a different one';
