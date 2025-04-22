@@ -206,9 +206,8 @@ String getFullName(String? firstName, String? lastName) {
 /// Checks if token has expired based on expiry date
 /// returns true if token expires in 10 minutes or less
 /// otherwise returns false
-bool hasTokenExpired(DateTime expiresAt, DateTime now) {
-  return expiresAt.difference(now).inMinutes < 5;
-}
+bool hasTokenExpired(DateTime expiresAt, DateTime now) =>
+    expiresAt.difference(now).inMinutes < 5;
 
 /// Generates a personalized greeting based on the current time and the provided [name].
 String greetings(String name, {DateTime? currentTime}) {
