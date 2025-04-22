@@ -49,18 +49,12 @@ class ImageGalleryPageState extends State<ImageGalleryPage> {
                         child: CachedNetworkImage(
                           imageUrl: url,
                           fit: BoxFit.cover,
-                          placeholder: (BuildContext context, String url) =>
-                              Container(
-                            height: 150,
-                            color: Colors.grey[300],
-                            child: const Center(child: AppLoading()),
-                          ),
-                          errorWidget: (
+                          progressIndicatorBuilder: (
                             BuildContext context,
                             String url,
-                            Object error,
+                            DownloadProgress progress,
                           ) =>
-                              const Icon(Icons.broken_image, size: 50),
+                              Center(child: AppLoading()),
                         ),
                       ),
                     ),

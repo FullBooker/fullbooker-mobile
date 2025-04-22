@@ -35,7 +35,12 @@ class ImagePreviewPage extends StatelessWidget {
                   : CachedNetworkImage(
                       imageUrl: imageUrl,
                       fit: BoxFit.contain,
-                      placeholder: (_, __) => AppLoading(),
+                      progressIndicatorBuilder: (
+                        BuildContext context,
+                        String url,
+                        DownloadProgress progress,
+                      ) =>
+                          Center(child: AppLoading()),
                     ),
             ),
           ),

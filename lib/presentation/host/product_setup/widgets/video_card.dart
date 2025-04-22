@@ -76,8 +76,12 @@ class VideoCardState extends State<VideoCard> {
               CachedNetworkImage(
                 imageUrl: widget.videoUrl,
                 fit: BoxFit.cover,
-                placeholder: (_, __) => const AppLoading(),
-                errorWidget: (_, __, ___) => const AppLoading(),
+                progressIndicatorBuilder: (
+                  BuildContext context,
+                  String url,
+                  DownloadProgress progress,
+                ) =>
+                    Center(child: AppLoading()),
               ),
 
             // Remove icon

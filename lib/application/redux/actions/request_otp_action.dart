@@ -67,11 +67,16 @@ class RequestOtpAction extends ReduxAction<AppState> {
     }
 
     // This will run but only show in dev mode
-    final String otp = body['otp'];
-    dispatch(UpdateOnboardingStateAction(resetPasswordDebugOTP: otp));
+    final bool isDev =
+        GetIt.I.get<AppConfig>().environment.toLowerCase() == 'dev';
 
-    if (kDebugMode) {
-      debugPrint(otp);
+    if (isDev) {
+      final String otp = body['otp'];
+      dispatch(UpdateOnboardingStateAction(resetPasswordDebugOTP: otp));
+
+      if (kDebugMode) {
+        debugPrint(otp);
+      }
     }
 
     onSuccess?.call();

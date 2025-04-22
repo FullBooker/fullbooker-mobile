@@ -11,6 +11,7 @@ import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_badge_widget.dart';
 import 'package:dartz/dartz.dart' as d;
+import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
 import 'package:heroicons/heroicons.dart';
 
@@ -57,6 +58,12 @@ class ProductCard extends StatelessWidget {
                       height: MediaQuery.of(context).size.height * .2,
                       width: double.infinity,
                       fit: BoxFit.cover,
+                      progressIndicatorBuilder: (
+                        BuildContext context,
+                        String url,
+                        DownloadProgress progress,
+                      ) =>
+                          Center(child: AppLoading()),
                     ),
                   )
                 else

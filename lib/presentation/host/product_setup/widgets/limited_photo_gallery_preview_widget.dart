@@ -90,9 +90,12 @@ class LimitedPhotoGalleryPreviewWidget extends StatelessWidget {
                       width: photoSize,
                       height: photoSize,
                       fit: BoxFit.cover,
-                      placeholder: (_, __) =>
-                          Container(color: Colors.grey.shade300),
-                      errorWidget: (_, __, ___) => const Icon(Icons.error),
+                      progressIndicatorBuilder: (
+                        BuildContext context,
+                        String url,
+                        DownloadProgress progress,
+                      ) =>
+                          Center(child: AppLoading()),
                     ),
                     Container(
                       width: photoSize,

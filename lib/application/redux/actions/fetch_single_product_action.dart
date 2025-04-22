@@ -56,13 +56,13 @@ class FetchSingleProductAction extends ReduxAction<AppState> {
       return null;
     }
 
-    final Product productResponse = Product.fromJson(body);
+    final Product product = Product.fromJson(body);
 
     if (isEdit) {
-      dispatch(UpdateHostStateAction(currentProduct: productResponse));
+      dispatch(UpdateHostStateAction(currentProduct: product));
       return state;
     } else {
-      dispatch(UpdateHostStateAction(selectedProduct: productResponse));
+      dispatch(UpdateHostStateAction(selectedProduct: product));
       return state;
     }
   }

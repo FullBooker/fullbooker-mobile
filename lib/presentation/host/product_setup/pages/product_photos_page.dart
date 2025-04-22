@@ -129,8 +129,12 @@ class ProductPhotosPage extends StatelessWidget {
                                     child: CachedNetworkImage(
                                       imageUrl: item?.file ?? '',
                                       fit: BoxFit.cover,
-                                      placeholder: (_, __) =>
-                                          const AppLoading(),
+                                      progressIndicatorBuilder: (
+                                        BuildContext context,
+                                        String url,
+                                        DownloadProgress progress,
+                                      ) =>
+                                          Center(child: AppLoading()),
                                     ),
                                   ),
                                 Positioned(

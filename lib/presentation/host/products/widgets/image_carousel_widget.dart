@@ -93,11 +93,12 @@ class _ImageCarouselWidgetState extends State<ImageCarouselWidget> {
                       imageUrl: imageUrl,
                       fit: BoxFit.cover,
                       width: double.infinity,
-                      placeholder: (BuildContext context, String url) =>
-                          const Center(child: CircularProgressIndicator()),
-                      errorWidget:
-                          (BuildContext context, String url, Object error) =>
-                              const Icon(Icons.error),
+                      progressIndicatorBuilder: (
+                        BuildContext context,
+                        String url,
+                        DownloadProgress progress,
+                      ) =>
+                          Center(child: AppLoading()),
                     ),
                   );
                 } else {
