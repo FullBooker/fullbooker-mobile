@@ -689,3 +689,4 @@ const String invalidMediaFilesError =
 
 const String couldNotScanTickerError =
     'We couldn’t verify the ticket. Please try again or scan a different one';
+const String locationUnavailable = 'Location unavailable';

@@ -2,6 +2,7 @@ import 'package:map_location_picker/map_location_picker.dart';
 
 const String UNKNOWN = 'UNKNOWN';
 const String kUnknownAddress = 'Unknown Address';
+const String kUnknownCity = 'Unknown City';
 
 // App names
 const String kAppName = 'Fullbooker';
@@ -20,7 +21,7 @@ const double kBasePlatformFee = 150;
 
 const List<String> kAllowedImageExtensions = <String>['jpg', 'png'];
 
-const String kMapsAPIKey = 'AIzaSyDen5uldAkBcBPog8ajqpThWXGsiXmYSyU';
+const String kMapsAPIKey = 'AIzaSyCDJOyqgUJdZD_pFXe4wlK1yX9-9qVky_w';
 
 const int kRequestTimeoutSeconds = 45;
 
@@ -54,7 +55,6 @@ const List<String> kAllowedCurrencyCodes = <String>[
   'USD',
   'AED',
 ];
-
 
 const List<String> kAllowedDiscountOptions = <String>['Percentage', 'Amount'];
 
