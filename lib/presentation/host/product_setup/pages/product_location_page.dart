@@ -5,6 +5,7 @@ import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
 import 'package:fullbooker/application/redux/actions/check_location_permission_action.dart';
 import 'package:fullbooker/application/redux/actions/fetch_single_product_action.dart';
 import 'package:fullbooker/application/redux/actions/set_product_location_action.dart';
+import 'package:fullbooker/application/redux/actions/update_host_state_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_setup_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
@@ -50,6 +51,10 @@ class ProductLocationPage extends StatelessWidget {
             ],
           ),
           builder: (BuildContext context, ProductSetupViewModel vm) {
+            if (context.isWaiting(FetchSingleProductAction)) {
+              return AppLoading();
+            }
+
             final bool isLocationAdded = hasValidLocation(vm.selectedLocation);
 
             final bool locationDenied = vm.locationPerms?.denied ?? true;

@@ -137,11 +137,7 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                                   UpdateHostStateAction(
                                     currentProduct: product,
                                   ),
-                                  UpdateHostStateAction(
-                                    selectedLocation:
-                                        product?.locations?.first ??
-                                            ProductLocation.initial(),
-                                  ),
+                                  
                                 ],
                               );
                               context.router.push(

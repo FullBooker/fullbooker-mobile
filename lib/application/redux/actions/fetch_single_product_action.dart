@@ -6,6 +6,7 @@ import 'package:fullbooker/application/redux/actions/update_host_state_action.da
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/domain/core/entities/product.dart';
+import 'package:fullbooker/domain/core/entities/product_location.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
@@ -62,7 +63,14 @@ class FetchSingleProductAction extends ReduxAction<AppState> {
       dispatch(UpdateHostStateAction(currentProduct: product));
       return state;
     } else {
-      dispatch(UpdateHostStateAction(selectedProduct: product));
+      dispatchAll(<ReduxAction<AppState>>[
+        UpdateHostStateAction(selectedProduct: product),
+        UpdateHostStateAction(
+          selectedLocation:
+              product.locations?.first ?? ProductLocation.initial(),
+        ),
+      ]);
+
       return state;
     }
   }
