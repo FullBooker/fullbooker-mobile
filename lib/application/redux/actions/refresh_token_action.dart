@@ -2,22 +2,19 @@ import 'dart:convert';
 
 import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/core/services/i_custom_client.dart';
-import 'package:fullbooker/application/redux/actions/logout_action.dart';
 import 'package:fullbooker/application/redux/actions/set_sign_in_method_action.dart';
 import 'package:fullbooker/application/redux/actions/update_auth_state_action.dart';
-import 'package:fullbooker/application/redux/actions/update_user_state_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/states/auth_credentials.dart';
 import 'package:fullbooker/core/common/constants.dart';
-import 'package:fullbooker/domain/core/entities/login_response.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
 
-class LoginAction extends ReduxAction<AppState> {
-  LoginAction({
+class RefreshTokenAction extends ReduxAction<AppState> {
+  RefreshTokenAction({
     this.onSuccess,
     this.onError,
     required this.client,
@@ -60,10 +57,7 @@ class LoginAction extends ReduxAction<AppState> {
 
       onError?.call(error ?? defaultUserFriendlyMessage);
 
-      // Extreme case. Logout the user
-      dispatch(LogoutAction());
-
-      return state;
+      return null;
     }
 
     final AuthCredentials newCredentials = AuthCredentials.fromJson(body);

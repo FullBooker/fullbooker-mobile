@@ -71,13 +71,12 @@ class LoginAction extends ReduxAction<AppState> {
 
     final LoginResponse loginResponse = LoginResponse.fromJson(body);
 
-    // Update the auth state
     dispatch(
       UpdateAuthStateAction(
         isSignedIn: true,
         accessToken: loginResponse.accessToken,
         refreshToken: loginResponse.refreshToken,
-        expiresAt: loginResponse.accessToken,
+        expiresAt: loginResponse.expiresAt,
       ),
     );
 
