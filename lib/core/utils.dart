@@ -335,7 +335,8 @@ void navigateToNextProductStep({
   }
 
   if (product.locations?.isEmpty ?? true) {
-    context.router.push(const ProductLocationRoute());
+    context.router
+        .push(ProductLocationRoute(workflowState: WorkflowState.CREATE));
     return;
   }
 

@@ -6,6 +6,7 @@ import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/core/common/app_router.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/presentation/core/theme/app_theme.dart';
+import 'package:fullbooker/shared/entities/enums.dart';
 
 class FullbookerAppWidget extends StatelessWidget {
   const FullbookerAppWidget({super.key, required this.appStore});
@@ -26,7 +27,11 @@ class FullbookerAppWidget extends StatelessWidget {
             deepLinkBuilder: (PlatformDeepLink deepLink) {
               if (isSignedIn) {
                 return DeepLink(
-                  <PageRouteInfo<dynamic>>[HostingHomeRoute()],
+                  <PageRouteInfo<dynamic>>[
+                    ProductReviewAndSubmitRoute(
+                      workflowState: WorkflowState.VIEW,
+                    ),
+                  ],
                 );
               }
               return const DeepLink(

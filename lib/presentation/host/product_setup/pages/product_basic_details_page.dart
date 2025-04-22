@@ -12,6 +12,7 @@ import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:dartz/dartz.dart' as d;
+import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/validators.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/custom_text_input.dart';
@@ -116,8 +117,11 @@ class _ProductBasicDetailsPageState extends State<ProductBasicDetailsPage> {
                                   CreateProductAction(
                                     client: AppWrapperBase.of(context)!
                                         .customClient,
-                                    onSuccess: () => context.router
-                                        .push(ProductLocationRoute()),
+                                    onSuccess: () => context.router.push(
+                                      ProductLocationRoute(
+                                        workflowState: WorkflowState.CREATE,
+                                      ),
+                                    ),
                                     onError: (String error) => showAlertDialog(
                                       context: context,
                                       assetPath: productZeroStateSVGPath,

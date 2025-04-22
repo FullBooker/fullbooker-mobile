@@ -9,6 +9,7 @@ import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/entities/product_category.dart';
+import 'package:fullbooker/domain/core/entities/product_location.dart';
 import 'package:fullbooker/domain/core/entities/product_pricing.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
@@ -130,7 +131,25 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                           // Location
                           PreviewHeaderWidget(
                             title: location,
-                            // onEdit: () {},
+                            onEdit: () {
+                              context.dispatchAll(
+                                <ReduxAction<AppState>>[
+                                  UpdateHostStateAction(
+                                    currentProduct: product,
+                                  ),
+                                  UpdateHostStateAction(
+                                    selectedLocation:
+                                        product?.locations?.first ??
+                                            ProductLocation.initial(),
+                                  ),
+                                ],
+                              );
+                              context.router.push(
+                                ProductLocationRoute(
+                                  workflowState: workflowState,
+                                ),
+                              );
+                            },
                           ),
 
                           if (isLocationAvailable)

@@ -978,18 +978,43 @@ class ProductDetailRoute extends _i44.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i28.ProductLocationPage]
-class ProductLocationRoute extends _i44.PageRouteInfo<void> {
-  const ProductLocationRoute({List<_i44.PageRouteInfo>? children})
-    : super(ProductLocationRoute.name, initialChildren: children);
+class ProductLocationRoute
+    extends _i44.PageRouteInfo<ProductLocationRouteArgs> {
+  ProductLocationRoute({
+    _i45.Key? key,
+    required _i49.WorkflowState workflowState,
+    List<_i44.PageRouteInfo>? children,
+  }) : super(
+         ProductLocationRoute.name,
+         args: ProductLocationRouteArgs(key: key, workflowState: workflowState),
+         initialChildren: children,
+       );
 
   static const String name = 'ProductLocationRoute';
 
   static _i44.PageInfo page = _i44.PageInfo(
     name,
     builder: (data) {
-      return const _i28.ProductLocationPage();
+      final args = data.argsAs<ProductLocationRouteArgs>();
+      return _i28.ProductLocationPage(
+        key: args.key,
+        workflowState: args.workflowState,
+      );
     },
   );
+}
+
+class ProductLocationRouteArgs {
+  const ProductLocationRouteArgs({this.key, required this.workflowState});
+
+  final _i45.Key? key;
+
+  final _i49.WorkflowState workflowState;
+
+  @override
+  String toString() {
+    return 'ProductLocationRouteArgs{key: $key, workflowState: $workflowState}';
+  }
 }
 
 /// generated route for

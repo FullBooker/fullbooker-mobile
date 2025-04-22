@@ -3,6 +3,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
 import 'package:fullbooker/application/redux/actions/check_location_permission_action.dart';
+import 'package:fullbooker/application/redux/actions/fetch_single_product_action.dart';
 import 'package:fullbooker/application/redux/actions/set_product_location_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_setup_view_model.dart';
@@ -14,6 +15,7 @@ import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:dartz/dartz.dart' as d;
 import 'package:fullbooker/presentation/core/components/generic_zero_state.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/location_preview_widget.dart';
+import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
@@ -22,7 +24,9 @@ import 'package:permission_handler/permission_handler.dart';
 
 @RoutePage()
 class ProductLocationPage extends StatelessWidget {
-  const ProductLocationPage({super.key});
+  const ProductLocationPage({super.key, required this.workflowState});
+
+  final WorkflowState workflowState;
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +40,14 @@ class ProductLocationPage extends StatelessWidget {
         child: StoreConnector<AppState, ProductSetupViewModel>(
           converter: (Store<AppState> store) =>
               ProductSetupViewModel.fromState(store.state),
-          onInit: (Store<AppState> store) => context.dispatch(
-            CheckLocationPermissionAction(),
+          onInit: (Store<AppState> store) => context.dispatchAll(
+            <ReduxAction<AppState>>[
+              CheckLocationPermissionAction(),
+              FetchSingleProductAction(
+                client: AppWrapperBase.of(context)!.customClient,
+                workflowState: workflowState,
+              ),
+            ],
           ),
           builder: (BuildContext context, ProductSetupViewModel vm) {
             final bool isLocationAdded = hasValidLocation(vm.selectedLocation);
@@ -135,6 +145,7 @@ class ProductLocationPage extends StatelessWidget {
                                 description: error,
                               ),
                               client: AppWrapperBase.of(context)!.customClient,
+                              workflowState: workflowState,
                             ),
                           ),
                           child: d.right(continueString),
