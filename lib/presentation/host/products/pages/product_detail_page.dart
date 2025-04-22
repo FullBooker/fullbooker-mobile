@@ -25,6 +25,7 @@ import 'package:fullbooker/presentation/host/products/widgets/product_schedule_w
 import 'package:fullbooker/presentation/host/products/widgets/product_stats_widget.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
+import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:heroicons/heroicons.dart';
@@ -74,6 +75,10 @@ class ProductDetailPage extends StatelessWidget {
           final String statusDisplay = getStatusDisplay(product: product!);
           final Color statusColor = getProductStatusColor(product: product);
           final ProductStatus productStatus = getProductStatus(product);
+
+          if (context.isWaiting(FetchSingleProductAction)) {
+            return AppLoading();
+          }
 
           return RefreshIndicator(
             onRefresh: () => onRefresh(context),
