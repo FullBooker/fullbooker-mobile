@@ -41,6 +41,8 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
 
   @override
   Widget build(BuildContext context) {
+    final int total = widget.imageUrls?.length ?? 0;
+
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -48,37 +50,72 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
         iconTheme: const IconThemeData(color: Colors.white),
         elevation: 0,
       ),
-      body: PageView.builder(
-        controller: _pageController,
-        itemCount: widget.imageUrls?.length ?? 0,
-        onPageChanged: (int index) {
-          setState(() => currentIndex = index);
-        },
-        itemBuilder: (BuildContext context, int index) {
-          final String image = widget.imageUrls![index] ?? UNKNOWN;
+      body: Stack(
+        alignment: Alignment.bottomCenter,
+        children: <Widget>[
+          PageView.builder(
+            controller: _pageController,
+            itemCount: total,
+            onPageChanged: (int index) {
+              setState(() => currentIndex = index);
+            },
+            itemBuilder: (BuildContext context, int index) {
+              final String image = widget.imageUrls![index] ?? UNKNOWN;
 
-          return Hero(
-            tag: image,
-            child: InteractiveViewer(
-              minScale: 1.0,
-              maxScale: 4.0,
-              child: Center(
-                child: widget.isOffline
-                    ? Image.asset(image, fit: BoxFit.contain)
-                    : CachedNetworkImage(
-                        imageUrl: image,
-                        fit: BoxFit.contain,
-                        progressIndicatorBuilder: (
-                          BuildContext context,
-                          String url,
-                          DownloadProgress progress,
-                        ) =>
-                            const Center(child: AppLoading()),
-                      ),
+              return Hero(
+                tag: image,
+                child: InteractiveViewer(
+                  minScale: 1.0,
+                  maxScale: 4.0,
+                  child: Center(
+                    child: widget.isOffline
+                        ? Image.asset(image, fit: BoxFit.contain)
+                        : CachedNetworkImage(
+                            imageUrl: image,
+                            fit: BoxFit.contain,
+                            progressIndicatorBuilder: (
+                              BuildContext context,
+                              String url,
+                              DownloadProgress progress,
+                            ) =>
+                                const Center(child: AppLoading()),
+                          ),
+                  ),
+                ),
+              );
+            },
+          ),
+          if (total > 1)
+            Positioned(
+              bottom: 32,
+              child: Column(
+                children: <Widget>[
+                  Text(
+                    'Photo ${currentIndex + 1} of $total',
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                  const SizedBox(height: 12),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children:
+                        List<AnimatedContainer>.generate(total, (int index) {
+                      final bool isActive = index == currentIndex;
+                      return AnimatedContainer(
+                        duration: const Duration(milliseconds: 300),
+                        margin: const EdgeInsets.symmetric(horizontal: 4),
+                        width: isActive ? 12 : 8,
+                        height: 8,
+                        decoration: BoxDecoration(
+                          color: isActive ? Colors.white : Colors.white24,
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                      );
+                    }),
+                  ),
+                ],
               ),
             ),
-          );
-        },
+        ],
       ),
     );
   }

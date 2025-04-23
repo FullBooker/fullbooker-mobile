@@ -86,38 +86,46 @@ class LimitedPhotoGalleryPreviewWidget extends StatelessWidget {
               },
             ),
             if (extraCount > 0)
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: <Widget>[
-                    CachedNetworkImage(
-                      imageUrl: photos[3]?.file ?? UNKNOWN,
-                      width: photoSize,
-                      height: photoSize,
-                      fit: BoxFit.cover,
-                      progressIndicatorBuilder: (
-                        BuildContext context,
-                        String url,
-                        DownloadProgress progress,
-                      ) =>
-                          Center(child: AppLoading()),
-                    ),
-                    Container(
-                      width: photoSize,
-                      height: photoSize,
-                      color: Colors.black.withValues(alpha: .5),
-                      child: Center(
-                        child: Text(
-                          '+ $extraCount',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
+              InkWell(
+                onTap: () => context.router.push(
+                  ImagePreviewRoute(
+                    imageUrl: photoUrls[extraCount - 1] ?? UNKNOWN,
+                    imageUrls: photoUrls,
+                  ),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: <Widget>[
+                      CachedNetworkImage(
+                        imageUrl: photos[extraCount]?.file ?? UNKNOWN,
+                        width: photoSize,
+                        height: photoSize,
+                        fit: BoxFit.cover,
+                        progressIndicatorBuilder: (
+                          BuildContext context,
+                          String url,
+                          DownloadProgress progress,
+                        ) =>
+                            Center(child: AppLoading()),
+                      ),
+                      Container(
+                        width: photoSize,
+                        height: photoSize,
+                        color: Colors.black.withValues(alpha: .5),
+                        child: Center(
+                          child: Text(
+                            '+ $extraCount',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge
+                                ?.copyWith(color: Colors.white),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
           ],
