@@ -627,6 +627,7 @@ class ImageGalleryRouteArgs {
 class ImagePreviewRoute extends _i45.PageRouteInfo<ImagePreviewRouteArgs> {
   ImagePreviewRoute({
     _i46.Key? key,
+    required List<String?>? imageUrls,
     required String imageUrl,
     bool isOffline = false,
     List<_i45.PageRouteInfo>? children,
@@ -634,6 +635,7 @@ class ImagePreviewRoute extends _i45.PageRouteInfo<ImagePreviewRouteArgs> {
          ImagePreviewRoute.name,
          args: ImagePreviewRouteArgs(
            key: key,
+           imageUrls: imageUrls,
            imageUrl: imageUrl,
            isOffline: isOffline,
          ),
@@ -648,6 +650,7 @@ class ImagePreviewRoute extends _i45.PageRouteInfo<ImagePreviewRouteArgs> {
       final args = data.argsAs<ImagePreviewRouteArgs>();
       return _i17.ImagePreviewPage(
         key: args.key,
+        imageUrls: args.imageUrls,
         imageUrl: args.imageUrl,
         isOffline: args.isOffline,
       );
@@ -658,11 +661,14 @@ class ImagePreviewRoute extends _i45.PageRouteInfo<ImagePreviewRouteArgs> {
 class ImagePreviewRouteArgs {
   const ImagePreviewRouteArgs({
     this.key,
+    required this.imageUrls,
     required this.imageUrl,
     this.isOffline = false,
   });
 
   final _i46.Key? key;
+
+  final List<String?>? imageUrls;
 
   final String imageUrl;
 
@@ -670,7 +676,7 @@ class ImagePreviewRouteArgs {
 
   @override
   String toString() {
-    return 'ImagePreviewRouteArgs{key: $key, imageUrl: $imageUrl, isOffline: $isOffline}';
+    return 'ImagePreviewRouteArgs{key: $key, imageUrls: $imageUrls, imageUrl: $imageUrl, isOffline: $isOffline}';
   }
 }
 

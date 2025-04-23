@@ -45,6 +45,8 @@ class LimitedPhotoGalleryPreviewWidget extends StatelessWidget {
 
         final List<ProductMedia?> photos =
             vm.selectedProduct?.photos ?? <ProductMedia?>[];
+        final List<String?> photoUrls =
+            photos.map((ProductMedia? e) => e?.file).toList();
 
         if (photos.isEmpty) return const MinZeroState(copy: noImagesString);
 
@@ -52,18 +54,22 @@ class LimitedPhotoGalleryPreviewWidget extends StatelessWidget {
 
         return Row(
           children: <Widget>[
-            ...photos.take(3).map(
-              (ProductMedia? m) {
+            ...photoUrls.take(3).map(
+              (String? url) {
                 return Padding(
                   padding: const EdgeInsets.only(right: 8.0),
                   child: InkWell(
                     borderRadius: BorderRadius.circular(8),
-                    onTap: () => context.router
-                        .push(ImagePreviewRoute(imageUrl: m?.file ?? UNKNOWN)),
+                    onTap: () => context.router.push(
+                      ImagePreviewRoute(
+                        imageUrl: url ?? UNKNOWN,
+                        imageUrls: photoUrls,
+                      ),
+                    ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
                       child: CachedNetworkImage(
-                        imageUrl: m?.file ?? UNKNOWN,
+                        imageUrl: url ?? UNKNOWN,
                         width: photoSize,
                         height: photoSize,
                         fit: BoxFit.cover,

@@ -40,8 +40,12 @@ class ImageGalleryPageState extends State<ImageGalleryPage> {
               children: <Widget>[
                 for (String url in mockImageUrls)
                   GestureDetector(
-                    onTap: () =>
-                        context.router.push(ImagePreviewRoute(imageUrl: url)),
+                    onTap: () => context.router.push(
+                      ImagePreviewRoute(
+                        imageUrl: url,
+                        imageUrls: mockImageUrls,
+                      ),
+                    ),
                     child: Hero(
                       tag: url,
                       child: ClipRRect(
