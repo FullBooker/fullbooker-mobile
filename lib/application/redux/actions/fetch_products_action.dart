@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/core/services/i_custom_client.dart';
+import 'package:fullbooker/application/redux/actions/check_and_refresh_token_action.dart';
 import 'package:fullbooker/application/redux/actions/update_host_product_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/domain/core/entities/host_product_response.dart';
@@ -38,7 +39,13 @@ class FetchProductsAction extends ReduxAction<AppState> {
     final Map<String, dynamic> body =
         json.decode(httpResponse.body) as Map<String, dynamic>;
 
-    if (httpResponse.statusCode >= 400) {
+    final int code = httpResponse.statusCode;
+
+    if (code >= 400) {
+      if (code == 401) {
+        dispatch(CheckAndRefreshTokenAction(client: client));
+      }
+
       final String? error = client.parseError(body);
 
       onError?.call(error ?? defaultUserFriendlyMessage);
