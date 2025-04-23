@@ -19,6 +19,7 @@ import 'package:fullbooker/presentation/core/components/profile_avatar.dart';
 import 'package:fullbooker/presentation/host/home/widgets/home_nudge_widget.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
+import 'package:heroicons/heroicons.dart';
 
 @RoutePage()
 class HostingHomePage extends StatelessWidget {
@@ -28,6 +29,21 @@ class HostingHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: const BottomNavBar(),
+      floatingActionButton: GestureDetector(
+        onTap: () => context.router.push(SetupProductTypeRoute()),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).primaryColor,
+            shape: BoxShape.circle,
+          ),
+          padding: const EdgeInsets.all(16),
+          child: HeroIcon(
+            HeroIcons.plus,
+            color: Colors.white,
+            size: 32,
+          ),
+        ),
+      ),
       appBar: CustomAppBar(
         preferredSize: const Size(double.infinity, 80),
         leading: Padding(
@@ -108,18 +124,30 @@ class HostingHomePage extends StatelessWidget {
                     );
                   }
 
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: products?.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      final Product? product = products![index];
+                  return Container(
+                    margin: EdgeInsets.only(top: 12),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          myProducts,
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: products?.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            final Product? product = products![index];
 
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        child: ProductCard(product: product!),
-                      );
-                    },
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                              child: ProductCard(product: product!),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   );
                 },
               ),
