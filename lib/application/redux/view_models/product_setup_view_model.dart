@@ -114,7 +114,7 @@ class ProductSetupViewModel extends Vm {
       selectedPricing:
           state.hostState?.selectedProductPricing ?? ProductPricing(),
       buyerPaysFee:
-          state.hostState?.selectedProductPricing?.buyerPaysFee ?? true,
+          state.hostState?.selectedProductPricing?.buyerPaysFee ?? false,
     );
   }
 }

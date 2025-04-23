@@ -326,7 +326,7 @@ class _$ProductPricingImpl implements _ProductPricing {
       @JsonKey(name: 'maximum_number_of_tickets') this.maxTickets = 0,
       @JsonKey(name: 'remaining_tickets') this.remainingTickets = 0,
       @JsonKey(name: 'sold_tickets') this.soldTickets = 0,
-      this.buyerPaysFee = true});
+      this.buyerPaysFee = false});
 
   factory _$ProductPricingImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProductPricingImplFromJson(json);

@@ -32,6 +32,7 @@ class _FullBookerAppWidgetState extends State<FullBookerAppWidget>
     });
   }
 
+  // TODO(abiud): restore this when the server returns local time
   // @override
   // void didChangeDependencies() {
   //   super.didChangeDependencies();
