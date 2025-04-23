@@ -45,6 +45,8 @@ class LimitedPhotoGalleryPreviewWidget extends StatelessWidget {
 
         final List<ProductMedia?> photos =
             vm.selectedProduct?.photos ?? <ProductMedia?>[];
+        final List<String?> photoUrls =
+            photos.map((ProductMedia? e) => e?.file).toList();
 
         if (photos.isEmpty) return const MinZeroState(copy: noImagesString);
 
@@ -52,18 +54,22 @@ class LimitedPhotoGalleryPreviewWidget extends StatelessWidget {
 
         return Row(
           children: <Widget>[
-            ...photos.take(3).map(
-              (ProductMedia? m) {
+            ...photoUrls.take(3).map(
+              (String? url) {
                 return Padding(
                   padding: const EdgeInsets.only(right: 8.0),
                   child: InkWell(
                     borderRadius: BorderRadius.circular(8),
-                    onTap: () => context.router
-                        .push(ImagePreviewRoute(imageUrl: m?.file ?? UNKNOWN)),
+                    onTap: () => context.router.push(
+                      ImagePreviewRoute(
+                        imageUrl: url ?? UNKNOWN,
+                        imageUrls: photoUrls,
+                      ),
+                    ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
                       child: CachedNetworkImage(
-                        imageUrl: m?.file ?? UNKNOWN,
+                        imageUrl: url ?? UNKNOWN,
                         width: photoSize,
                         height: photoSize,
                         fit: BoxFit.cover,
@@ -80,35 +86,46 @@ class LimitedPhotoGalleryPreviewWidget extends StatelessWidget {
               },
             ),
             if (extraCount > 0)
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: <Widget>[
-                    CachedNetworkImage(
-                      imageUrl: photos[3]?.file ?? UNKNOWN,
-                      width: photoSize,
-                      height: photoSize,
-                      fit: BoxFit.cover,
-                      placeholder: (_, __) =>
-                          Container(color: Colors.grey.shade300),
-                      errorWidget: (_, __, ___) => const Icon(Icons.error),
-                    ),
-                    Container(
-                      width: photoSize,
-                      height: photoSize,
-                      color: Colors.black.withValues(alpha: .5),
-                      child: Center(
-                        child: Text(
-                          '+ $extraCount',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
+              InkWell(
+                onTap: () => context.router.push(
+                  ImagePreviewRoute(
+                    imageUrl: photoUrls[extraCount - 1] ?? UNKNOWN,
+                    imageUrls: photoUrls,
+                  ),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: <Widget>[
+                      CachedNetworkImage(
+                        imageUrl: photos[extraCount]?.file ?? UNKNOWN,
+                        width: photoSize,
+                        height: photoSize,
+                        fit: BoxFit.cover,
+                        progressIndicatorBuilder: (
+                          BuildContext context,
+                          String url,
+                          DownloadProgress progress,
+                        ) =>
+                            Center(child: AppLoading()),
+                      ),
+                      Container(
+                        width: photoSize,
+                        height: photoSize,
+                        color: Colors.black.withValues(alpha: .5),
+                        child: Center(
+                          child: Text(
+                            '+ $extraCount',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge
+                                ?.copyWith(color: Colors.white),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
           ],

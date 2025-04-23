@@ -130,7 +130,20 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                           // Location
                           PreviewHeaderWidget(
                             title: location,
-                            // onEdit: () {},
+                            onEdit: () {
+                              context.dispatchAll(
+                                <ReduxAction<AppState>>[
+                                  UpdateHostStateAction(
+                                    currentProduct: product,
+                                  ),
+                                ],
+                              );
+                              context.router.push(
+                                ProductLocationRoute(
+                                  workflowState: workflowState,
+                                ),
+                              );
+                            },
                           ),
 
                           if (isLocationAvailable)

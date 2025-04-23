@@ -591,9 +591,6 @@ const String switchToUserCopy =
 
 String switchToUser(String appName) => 'Switch To $appName';
 
-const String legal = 'Legal';
-const String legalCopy = 'Terms and conditions, opt-out';
-
 const String changePassword = 'Change Password';
 const String changePasswordCopy = 'Update your password';
 
@@ -689,3 +686,7 @@ const String invalidMediaFilesError =
 
 const String couldNotScanTickerError =
     'We couldn’t verify the ticket. Please try again or scan a different one';
+const String locationUnavailable = 'Location unavailable';
+
+const String termsOfService = 'Terms of Service';
+const String termsOfServiceCopy = 'Tap to read our terms of service';

@@ -4,18 +4,18 @@ import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/core/services/i_custom_client.dart';
 import 'package:fullbooker/application/redux/actions/set_sign_in_method_action.dart';
 import 'package:fullbooker/application/redux/actions/update_auth_state_action.dart';
-import 'package:fullbooker/application/redux/actions/update_user_state_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
+import 'package:fullbooker/application/redux/states/auth_credentials.dart';
 import 'package:fullbooker/core/common/constants.dart';
-import 'package:fullbooker/domain/core/entities/login_response.dart';
+import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
 
-class LoginAction extends ReduxAction<AppState> {
-  LoginAction({
+class CheckAndRefreshTokenAction extends ReduxAction<AppState> {
+  CheckAndRefreshTokenAction({
     this.onSuccess,
     this.onError,
     required this.client,
@@ -32,28 +32,35 @@ class LoginAction extends ReduxAction<AppState> {
 
   @override
   Future<AppState?> reduce() async {
-    final String emailAddress = state.onboardingState?.emailAddress ?? '';
-    final String password = state.onboardingState?.password ?? '';
+    final bool isSignedIn = state.authState?.isSignedIn ?? false;
 
-    final bool isEmailEmpty = emailAddress.isEmpty || emailAddress == UNKNOWN;
-    final bool isPasswordEmpty = password.isEmpty || password == UNKNOWN;
+    if (!isSignedIn) return null;
 
-    if (isEmailEmpty || isPasswordEmpty) {
-      onError?.call(credentialsPrompt);
+    final DateTime now = DateTime.now();
 
-      return null;
-    }
+    final DateTime expiresAt = DateTime.tryParse(
+          state.authState?.authCredentials?.expiresAt ?? '',
+        ) ??
+        now;
+
+    final bool hasExpired = hasTokenExpired(expiresAt, now);
+
+    if (!hasExpired) return null;
+
+    final AuthCredentials? authCredentials = state.authState?.authCredentials;
+
+    final String refreshToken = authCredentials?.refreshToken ?? UNKNOWN;
 
     final Map<String, String> data = <String, String>{
-      'email': emailAddress,
-      'password': password,
+      'refresh': refreshToken,
     };
 
-    final String loginEndpoint = GetIt.I.get<AppConfig>().loginEndpoint;
+    final String refreshEndpoint =
+        GetIt.I.get<AppConfig>().refreshTokenEndpoint;
 
     final Response httpResponse = await client.callRESTAPI(
       authenticated: false,
-      endpoint: loginEndpoint,
+      endpoint: refreshEndpoint,
       method: APIMethods.POST.name.toUpperCase(),
       variables: data,
     );
@@ -69,18 +76,17 @@ class LoginAction extends ReduxAction<AppState> {
       return null;
     }
 
-    final LoginResponse loginResponse = LoginResponse.fromJson(body);
+    final AuthCredentials newCredentials = AuthCredentials.fromJson(body);
 
+    // Update the auth state
     dispatch(
       UpdateAuthStateAction(
         isSignedIn: true,
-        accessToken: loginResponse.accessToken,
-        refreshToken: loginResponse.refreshToken,
-        expiresAt: loginResponse.expiresAt,
+        accessToken: newCredentials.accessToken,
+        refreshToken: newCredentials.refreshToken,
+        expiresAt: newCredentials.expiresAt,
       ),
     );
-
-    dispatch(UpdateUserStateAction(user: loginResponse.user));
 
     onSuccess?.call();
 

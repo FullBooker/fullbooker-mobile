@@ -1,5 +1,6 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
+import 'package:fullbooker/core/utils.dart';
 
 class UpdateAuthStateAction extends ReduxAction<AppState> {
   UpdateAuthStateAction({
@@ -23,7 +24,8 @@ class UpdateAuthStateAction extends ReduxAction<AppState> {
             accessToken ?? state.authState!.authCredentials!.accessToken,
         refreshToken:
             refreshToken ?? state.authState!.authCredentials!.refreshToken,
-        expiresAt: expiresAt ?? state.authState!.authCredentials!.expiresAt,
+        expiresAt: convertToLocalTimestamp(expiresAt) ??
+            state.authState!.authCredentials!.expiresAt,
       ),
     );
 

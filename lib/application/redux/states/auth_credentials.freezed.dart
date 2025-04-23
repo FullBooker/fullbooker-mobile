@@ -21,11 +21,11 @@ AuthCredentials _$AuthCredentialsFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$AuthCredentials {
   @JsonKey(name: 'access')
-  String get accessToken => throw _privateConstructorUsedError;
+  String? get accessToken => throw _privateConstructorUsedError;
   @JsonKey(name: 'refresh')
-  String get refreshToken => throw _privateConstructorUsedError;
+  String? get refreshToken => throw _privateConstructorUsedError;
   @JsonKey(name: 'expires_at')
-  String get expiresAt => throw _privateConstructorUsedError;
+  String? get expiresAt => throw _privateConstructorUsedError;
 
   /// Serializes this AuthCredentials to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -44,9 +44,9 @@ abstract class $AuthCredentialsCopyWith<$Res> {
       _$AuthCredentialsCopyWithImpl<$Res, AuthCredentials>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'access') String accessToken,
-      @JsonKey(name: 'refresh') String refreshToken,
-      @JsonKey(name: 'expires_at') String expiresAt});
+      {@JsonKey(name: 'access') String? accessToken,
+      @JsonKey(name: 'refresh') String? refreshToken,
+      @JsonKey(name: 'expires_at') String? expiresAt});
 }
 
 /// @nodoc
@@ -64,23 +64,23 @@ class _$AuthCredentialsCopyWithImpl<$Res, $Val extends AuthCredentials>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? accessToken = null,
-    Object? refreshToken = null,
-    Object? expiresAt = null,
+    Object? accessToken = freezed,
+    Object? refreshToken = freezed,
+    Object? expiresAt = freezed,
   }) {
     return _then(_value.copyWith(
-      accessToken: null == accessToken
+      accessToken: freezed == accessToken
           ? _value.accessToken
           : accessToken // ignore: cast_nullable_to_non_nullable
-              as String,
-      refreshToken: null == refreshToken
+              as String?,
+      refreshToken: freezed == refreshToken
           ? _value.refreshToken
           : refreshToken // ignore: cast_nullable_to_non_nullable
-              as String,
-      expiresAt: null == expiresAt
+              as String?,
+      expiresAt: freezed == expiresAt
           ? _value.expiresAt
           : expiresAt // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -94,9 +94,9 @@ abstract class _$$AuthCredentialsImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'access') String accessToken,
-      @JsonKey(name: 'refresh') String refreshToken,
-      @JsonKey(name: 'expires_at') String expiresAt});
+      {@JsonKey(name: 'access') String? accessToken,
+      @JsonKey(name: 'refresh') String? refreshToken,
+      @JsonKey(name: 'expires_at') String? expiresAt});
 }
 
 /// @nodoc
@@ -112,23 +112,23 @@ class __$$AuthCredentialsImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? accessToken = null,
-    Object? refreshToken = null,
-    Object? expiresAt = null,
+    Object? accessToken = freezed,
+    Object? refreshToken = freezed,
+    Object? expiresAt = freezed,
   }) {
     return _then(_$AuthCredentialsImpl(
-      accessToken: null == accessToken
+      accessToken: freezed == accessToken
           ? _value.accessToken
           : accessToken // ignore: cast_nullable_to_non_nullable
-              as String,
-      refreshToken: null == refreshToken
+              as String?,
+      refreshToken: freezed == refreshToken
           ? _value.refreshToken
           : refreshToken // ignore: cast_nullable_to_non_nullable
-              as String,
-      expiresAt: null == expiresAt
+              as String?,
+      expiresAt: freezed == expiresAt
           ? _value.expiresAt
           : expiresAt // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -147,13 +147,13 @@ class _$AuthCredentialsImpl implements _AuthCredentials {
 
   @override
   @JsonKey(name: 'access')
-  final String accessToken;
+  final String? accessToken;
   @override
   @JsonKey(name: 'refresh')
-  final String refreshToken;
+  final String? refreshToken;
   @override
   @JsonKey(name: 'expires_at')
-  final String expiresAt;
+  final String? expiresAt;
 
   @override
   String toString() {
@@ -197,9 +197,9 @@ class _$AuthCredentialsImpl implements _AuthCredentials {
 
 abstract class _AuthCredentials implements AuthCredentials {
   factory _AuthCredentials(
-          {@JsonKey(name: 'access') final String accessToken,
-          @JsonKey(name: 'refresh') final String refreshToken,
-          @JsonKey(name: 'expires_at') final String expiresAt}) =
+          {@JsonKey(name: 'access') final String? accessToken,
+          @JsonKey(name: 'refresh') final String? refreshToken,
+          @JsonKey(name: 'expires_at') final String? expiresAt}) =
       _$AuthCredentialsImpl;
 
   factory _AuthCredentials.fromJson(Map<String, dynamic> json) =
@@ -207,13 +207,13 @@ abstract class _AuthCredentials implements AuthCredentials {
 
   @override
   @JsonKey(name: 'access')
-  String get accessToken;
+  String? get accessToken;
   @override
   @JsonKey(name: 'refresh')
-  String get refreshToken;
+  String? get refreshToken;
   @override
   @JsonKey(name: 'expires_at')
-  String get expiresAt;
+  String? get expiresAt;
 
   /// Create a copy of AuthCredentials
   /// with the given fields replaced by the non-null parameter values.

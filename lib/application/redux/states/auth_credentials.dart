@@ -8,9 +8,9 @@ part 'auth_credentials.g.dart';
 class AuthCredentials with _$AuthCredentials {
   @JsonSerializable(explicitToJson: true)
   factory AuthCredentials({
-    @Default(UNKNOWN) @JsonKey(name: 'access') String accessToken,
-    @Default(UNKNOWN) @JsonKey(name: 'refresh') String refreshToken,
-    @Default(UNKNOWN) @JsonKey(name: 'expires_at') String expiresAt,
+    @Default(UNKNOWN) @JsonKey(name: 'access') String? accessToken,
+    @Default(UNKNOWN) @JsonKey(name: 'refresh') String? refreshToken,
+    @Default(UNKNOWN) @JsonKey(name: 'expires_at') String? expiresAt,
   }) = _AuthCredentials;
 
   factory AuthCredentials.initial() => AuthCredentials();

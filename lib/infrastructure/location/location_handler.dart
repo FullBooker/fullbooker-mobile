@@ -1,10 +1,8 @@
-// location_handler.dart
 import 'dart:convert';
 import 'package:fullbooker/shared/entities/location_perms_result.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
-
 import 'package:fullbooker/core/common/constants.dart';
 
 class LocationHandler {
@@ -19,6 +17,7 @@ class LocationHandler {
         permission == LocationPermission.deniedForever) {
       return fallback;
     }
+
     try {
       final Position location = await Geolocator.getCurrentPosition();
       return LatLng(location.latitude, location.longitude);
@@ -27,12 +26,17 @@ class LocationHandler {
     }
   }
 
-// Returns results of places based on the search query
   static Future<List<Map<String, dynamic>>> searchLocation(String query) async {
     if (query.trim().isEmpty) return <Map<String, dynamic>>[];
 
     final Uri url = Uri.parse(
-      'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$query&components=country:ke&location=-1.286389,36.817223&radius=50000&strictbounds=true&key=$kMapsAPIKey',
+      'https://maps.googleapis.com/maps/api/place/autocomplete/json'
+      '?input=$query'
+      '&components=country:ke'
+      '&location=-1.286389,36.817223'
+      '&radius=50000'
+      '&strictbounds=true'
+      '&key=$kMapsAPIKey',
     );
 
     try {
@@ -40,25 +44,30 @@ class LocationHandler {
       if (response.statusCode == 200) {
         final List<dynamic> predictions =
             json.decode(response.body)['predictions'];
-        return predictions
-            .take(4)
-            .map(
-              (dynamic item) => <String, dynamic>{
-                'description': item['description'],
-                'place_id': item['place_id'],
-              },
-            )
-            .toList();
+
+        return predictions.take(4).map((dynamic item) {
+          final Map<String, dynamic>? formatting =
+              item['structured_formatting'] as Map<String, dynamic>?;
+
+          return <String, dynamic>{
+            'place_id': item['place_id'],
+            'title': formatting?['main_text'] ?? item['description'] ?? '',
+            'description': formatting?['secondary_text'] ?? '',
+          };
+        }).toList();
       }
     } catch (_) {
       return <Map<String, dynamic>>[];
     }
+
     return <Map<String, dynamic>>[];
   }
 
   static Future<Map<String, dynamic>?> resolvePlace(String placeId) async {
     final Uri detailsUrl = Uri.parse(
-      'https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&key=$kMapsAPIKey',
+      'https://maps.googleapis.com/maps/api/place/details/json'
+      '?place_id=$placeId'
+      '&key=$kMapsAPIKey',
     );
 
     try {
@@ -69,25 +78,30 @@ class LocationHandler {
     } catch (_) {
       return null;
     }
+
     return null;
   }
 
-  // Returns a place name based on coordinates
   static Future<Map<String, dynamic>?> reverseGeocode(LatLng latLng) async {
-    final Uri reverseGeocodeUrl = Uri.parse(
-      'https://maps.googleapis.com/maps/api/geocode/json?latlng=${latLng.latitude},${latLng.longitude}&region=ke&key=$kMapsAPIKey',
+    final Uri url = Uri.parse(
+      'https://maps.googleapis.com/maps/api/geocode/json'
+      '?latlng=${latLng.latitude},${latLng.longitude}'
+      '&result_type=establishment|street_address|premise|point_of_interest'
+      '&key=$kMapsAPIKey',
     );
 
     try {
-      final http.Response response = await http.get(reverseGeocodeUrl);
+      final http.Response response = await http.get(url);
       if (response.statusCode == 200) {
-        final List<dynamic> results =
-            json.decode(response.body)['results'] as List<dynamic>;
-        return results.isNotEmpty ? results.first : null;
+        final List<dynamic> results = json.decode(response.body)['results'];
+        return results.isNotEmpty
+            ? results.first as Map<String, dynamic>
+            : null;
       }
     } catch (_) {
       return null;
     }
+
     return null;
   }
 

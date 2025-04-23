@@ -53,12 +53,16 @@ class _ImageCarouselWidgetState extends State<ImageCarouselWidget> {
             )
             .toList();
 
-        if (images?.isEmpty ?? true) {
+        final List<String?> photoUrls =
+            images?.map((ProductMedia? e) => e?.file).toList() ?? <String?>[];
+
+        if (photoUrls.isEmpty) {
           return GestureDetector(
             onTap: () => context.router.push(
               ImagePreviewRoute(
                 imageUrl: productImageZeroState,
                 isOffline: true,
+                imageUrls: photoUrls,
               ),
             ),
             child: Image.asset(
@@ -87,17 +91,22 @@ class _ImageCarouselWidgetState extends State<ImageCarouselWidget> {
                   final String imageUrl = image?.file ?? UNKNOWN;
 
                   return GestureDetector(
-                    onTap: () => context.router
-                        .push(ImagePreviewRoute(imageUrl: imageUrl)),
+                    onTap: () => context.router.push(
+                      ImagePreviewRoute(
+                        imageUrl: imageUrl,
+                        imageUrls: photoUrls,
+                      ),
+                    ),
                     child: CachedNetworkImage(
                       imageUrl: imageUrl,
                       fit: BoxFit.cover,
                       width: double.infinity,
-                      placeholder: (BuildContext context, String url) =>
-                          const Center(child: CircularProgressIndicator()),
-                      errorWidget:
-                          (BuildContext context, String url, Object error) =>
-                              const Icon(Icons.error),
+                      progressIndicatorBuilder: (
+                        BuildContext context,
+                        String url,
+                        DownloadProgress progress,
+                      ) =>
+                          Center(child: AppLoading()),
                     ),
                   );
                 } else {
@@ -106,6 +115,7 @@ class _ImageCarouselWidgetState extends State<ImageCarouselWidget> {
                       ImagePreviewRoute(
                         imageUrl: productImageZeroState,
                         isOffline: true,
+                        imageUrls: const <String>[productImageZeroState],
                       ),
                     ),
                     child: Image.asset(

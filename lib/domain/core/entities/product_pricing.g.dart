@@ -23,7 +23,7 @@ _$ProductPricingImpl _$$ProductPricingImplFromJson(Map<String, dynamic> json) =>
       maxTickets: (json['maximum_number_of_tickets'] as num?)?.toInt() ?? 0,
       remainingTickets: (json['remaining_tickets'] as num?)?.toInt() ?? 0,
       soldTickets: (json['sold_tickets'] as num?)?.toInt() ?? 0,
-      buyerPaysFee: json['buyerPaysFee'] as bool? ?? true,
+      buyerPaysFee: json['buyerPaysFee'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$ProductPricingImplToJson(

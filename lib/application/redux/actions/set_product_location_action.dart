@@ -18,28 +18,38 @@ class SetProductLocationAction extends ReduxAction<AppState> {
     this.onSuccess,
     this.onError,
     required this.client,
+    required this.workflowState,
   });
 
   final Function(String error)? onError;
   final Function()? onSuccess;
   final ICustomClient client;
+  final WorkflowState workflowState;
 
   @override
   Future<AppState?> reduce() async {
-    final String productID = state.hostState?.currentProduct?.id ?? UNKNOWN;
+    final String currentProductID =
+        state.hostState?.currentProduct?.id ?? UNKNOWN;
+    final String selectedProductID =
+        state.hostState?.selectedProduct?.id ?? UNKNOWN;
+
+    final bool isEdit = workflowState == WorkflowState.VIEW;
+
+    final String ctxProductID = isEdit ? selectedProductID : currentProductID;
+
     final String lat = state.hostState?.selectedLocation?.lat ?? UNKNOWN;
     final String long = state.hostState?.selectedLocation?.long ?? UNKNOWN;
     final String address =
         state.hostState?.selectedLocation?.address ?? UNKNOWN;
 
-    if (productID == UNKNOWN || lat == UNKNOWN || long == UNKNOWN) {
+    if (ctxProductID == UNKNOWN || lat == UNKNOWN || long == UNKNOWN) {
       onError?.call(addLocationError);
 
       return null;
     }
 
     final Map<String, String> data = <String, String>{
-      'product': productID,
+      'product': ctxProductID,
       'lat': lat,
       'long': long,
       'address': address,
@@ -64,14 +74,19 @@ class SetProductLocationAction extends ReduxAction<AppState> {
 
     final ProductLocation savedProductLocation = ProductLocation.fromJson(body);
 
-    final Product? newCurrent = state.hostState?.currentProduct?.copyWith.call(
+    final Product? updatedProduct =
+        state.hostState?.currentProduct?.copyWith.call(
       locations: <ProductLocation>[
         ...?state.hostState?.currentProduct?.locations,
         savedProductLocation,
       ],
     );
 
-    dispatch(UpdateHostStateAction(currentProduct: newCurrent));
+    if (isEdit) {
+      dispatch(UpdateHostStateAction(selectedProduct: updatedProduct));
+    } else {
+      dispatch(UpdateHostStateAction(currentProduct: updatedProduct));
+    }
 
     onSuccess?.call();
 

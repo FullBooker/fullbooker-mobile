@@ -206,9 +206,8 @@ String getFullName(String? firstName, String? lastName) {
 /// Checks if token has expired based on expiry date
 /// returns true if token expires in 10 minutes or less
 /// otherwise returns false
-bool hasTokenExpired(DateTime expiresAt, DateTime now) {
-  return expiresAt.difference(now).inMinutes < 10;
-}
+bool hasTokenExpired(DateTime expiresAt, DateTime now) =>
+    expiresAt.difference(now).inMinutes < 5;
 
 /// Generates a personalized greeting based on the current time and the provided [name].
 String greetings(String name, {DateTime? currentTime}) {
@@ -335,7 +334,8 @@ void navigateToNextProductStep({
   }
 
   if (product.locations?.isEmpty ?? true) {
-    context.router.push(const ProductLocationRoute());
+    context.router
+        .push(ProductLocationRoute(workflowState: WorkflowState.CREATE));
     return;
   }
 
@@ -586,4 +586,15 @@ bool isScheduleValid(ProductSchedule? schedule) {
       schedule.endTime != UNKNOWN;
 
   return isDateValid && isTimeValid;
+}
+
+String? convertToLocalTimestamp(String? utcTimestamp) {
+  if (utcTimestamp == null || utcTimestamp.isEmpty) return null;
+
+  try {
+    final DateTime localTime = DateTime.parse(utcTimestamp).toLocal();
+    return localTime.toIso8601String();
+  } catch (_) {
+    return null;
+  }
 }

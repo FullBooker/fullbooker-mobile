@@ -18,7 +18,6 @@ class AppEntryPoint extends StatelessWidget {
   });
 
   final String appName;
-
   final Store<AppState> appStore;
   final String? fcmToken;
 
@@ -42,7 +41,7 @@ class AppEntryPoint extends StatelessWidget {
               refreshToken: refreshToken,
               refreshTokenEndpoint: refreshTokenEndpoint,
             ),
-            child: FullbookerAppWidget(appStore: appStore),
+            child: FullBookerAppWidget(),
           );
         },
       ),
