@@ -47,16 +47,18 @@ class _ImageCarouselWidgetState extends State<ImageCarouselWidget> {
           );
         }
 
-        final List<ProductMedia?>? images = vm.selectedProduct?.photos
-            ?.where(
-              (ProductMedia? element) => element?.mediaType == kImageMediaType,
-            )
-            .toList();
+        final List<ProductMedia?> images = vm.selectedProduct?.photos
+                ?.where(
+                  (ProductMedia? element) =>
+                      element?.mediaType == kImageMediaType,
+                )
+                .toList() ??
+            <ProductMedia?>[];
 
         final List<String?> photoUrls =
-            images?.map((ProductMedia? e) => e?.file).toList() ?? <String?>[];
+            images.map((ProductMedia? e) => e?.file).toList();
 
-        if (photoUrls.isEmpty) {
+        if (images.isEmpty) {
           return GestureDetector(
             onTap: () => context.router.push(
               ImagePreviewRoute(
@@ -86,7 +88,7 @@ class _ImageCarouselWidgetState extends State<ImageCarouselWidget> {
                   setState(() => _currentIndex = index);
                 },
               ),
-              items: images?.map((ProductMedia? image) {
+              items: images.map((ProductMedia? image) {
                 if (image?.file != null) {
                   final String imageUrl = image?.file ?? UNKNOWN;
 
@@ -128,7 +130,7 @@ class _ImageCarouselWidgetState extends State<ImageCarouselWidget> {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: List<Widget>.generate(images?.length ?? 0, (int index) {
+              children: List<Widget>.generate(images.length, (int index) {
                 final bool isActive = index == _currentIndex;
                 return AnimatedContainer(
                   duration: const Duration(milliseconds: 300),

@@ -91,8 +91,11 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
               child: Column(
                 children: <Widget>[
                   Text(
-                    'Photo ${currentIndex + 1} of $total',
-                    style: const TextStyle(color: Colors.white),
+                    '${currentIndex + 1}/$total',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(color: Colors.white),
                   ),
                   const SizedBox(height: 12),
                   Row(
