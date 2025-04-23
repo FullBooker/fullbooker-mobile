@@ -110,3 +110,5 @@ final List<String> allTicketTiers = <String>[
 
 const String kImageMediaType = 'image';
 const String kVideoMediaType = 'video';
+
+const String kPlatformTermsURL = 'https://fullbooker.com/terms-of-service';

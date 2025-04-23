@@ -64,7 +64,7 @@ class _FullBookerAppWidgetState extends State<FullBookerAppWidget>
             deepLinkBuilder: (PlatformDeepLink deepLink) {
               if (isSignedIn) {
                 return DeepLink(<PageRouteInfo<dynamic>>[
-                  HostingHomeRoute(),
+                  ProfileRoute(),
                 ]);
               }
               return const DeepLink(<PageRouteInfo<dynamic>>[LoginRoute()]);
