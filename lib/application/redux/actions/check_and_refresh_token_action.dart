@@ -7,14 +7,15 @@ import 'package:fullbooker/application/redux/actions/update_auth_state_action.da
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/states/auth_credentials.dart';
 import 'package:fullbooker/core/common/constants.dart';
+import 'package:fullbooker/core/utils.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
 
-class RefreshTokenAction extends ReduxAction<AppState> {
-  RefreshTokenAction({
+class CheckAndRefreshTokenAction extends ReduxAction<AppState> {
+  CheckAndRefreshTokenAction({
     this.onSuccess,
     this.onError,
     required this.client,
@@ -31,6 +32,21 @@ class RefreshTokenAction extends ReduxAction<AppState> {
 
   @override
   Future<AppState?> reduce() async {
+    final bool isSignedIn = state.authState?.isSignedIn ?? false;
+
+    if (!isSignedIn) return null;
+
+    final DateTime now = DateTime.now();
+
+    final DateTime expiresAt = DateTime.tryParse(
+          state.authState?.authCredentials?.expiresAt ?? '',
+        ) ??
+        now;
+
+    final bool hasExpired = hasTokenExpired(expiresAt, now);
+
+    if (!hasExpired) return null;
+
     final AuthCredentials? authCredentials = state.authState?.authCredentials;
 
     final String refreshToken = authCredentials?.refreshToken ?? UNKNOWN;
@@ -68,7 +84,7 @@ class RefreshTokenAction extends ReduxAction<AppState> {
         isSignedIn: true,
         accessToken: newCredentials.accessToken,
         refreshToken: newCredentials.refreshToken,
-        expiresAt: newCredentials.accessToken,
+        expiresAt: newCredentials.expiresAt,
       ),
     );
 

@@ -4,7 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fullbooker/fullbooker_app_widget.dart';
+import 'package:fullbooker/app_entry_point.dart';
 import 'package:fullbooker/application/core/services/analytics_service.dart';
 import 'package:fullbooker/application/redux/observers/custom_observer.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
@@ -62,7 +62,7 @@ Future<void> appBootStrap() async {
     NavigateAction.setNavigatorKey(appGlobalNavigatorKey);
 
     runApp(
-      FullBookerAppWidget(
+      AppEntryPoint(
         appStore: store,
         appName: appConfig.applicationName,
       ),
