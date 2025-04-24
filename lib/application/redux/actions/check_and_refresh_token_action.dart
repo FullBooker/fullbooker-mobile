@@ -38,10 +38,10 @@ class CheckAndRefreshTokenAction extends ReduxAction<AppState> {
 
     final DateTime now = DateTime.now();
 
-    final DateTime expiresAt = DateTime.tryParse(
-          state.authState?.authCredentials?.expiresAt ?? '',
-        ) ??
-        now;
+    final DateTime expiresAt =
+        DateTime.tryParse(state.authState?.authCredentials?.expiresAt ?? '')
+                ?.toLocal() ??
+            now;
 
     final bool hasExpired = hasTokenExpired(expiresAt, now);
 
