@@ -55,7 +55,7 @@ class PricingBreakDownWidget extends StatelessWidget {
               ),
               Text(
                 '$selectedCurrency ${serviceFee.toStringAsFixed(0)}',
-                style: const TextStyle(color: Colors.grey),
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
             ],
           ),
@@ -68,7 +68,7 @@ class PricingBreakDownWidget extends StatelessWidget {
               ),
               Text(
                 '$selectedCurrency ${yourBuyersPay.toStringAsFixed(0)}',
-                style: const TextStyle(fontWeight: FontWeight.bold),
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
             ],
           ),
@@ -116,10 +116,9 @@ class PricingBreakDownWidget extends StatelessWidget {
             children: <Widget>[
               Text(
                 totalString,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).primaryColor,
-                ),
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      color: Theme.of(context).primaryColor,
+                    ),
               ),
               Text(
                 '$selectedCurrency ${total.toStringAsFixed(0)}',

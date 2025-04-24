@@ -19,15 +19,42 @@ import 'package:fullbooker/presentation/core/components/profile_avatar.dart';
 import 'package:fullbooker/presentation/host/home/widgets/home_nudge_widget.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
+import 'package:heroicons/heroicons.dart';
 
 @RoutePage()
 class HostingHomePage extends StatelessWidget {
   const HostingHomePage({super.key});
 
+  Future<void> onRefresh(BuildContext context) async {
+    context.dispatchAll(<ReduxAction<AppState>>[
+      FetchProductsAction(
+        client: AppWrapperBase.of(context)!.customClient,
+      ),
+      FetchCurrenciesAction(
+        client: AppWrapperBase.of(context)!.customClient,
+      ),
+    ]);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: const BottomNavBar(),
+      floatingActionButton: GestureDetector(
+        onTap: () => context.router.push(SetupProductTypeRoute()),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).primaryColor,
+            shape: BoxShape.circle,
+          ),
+          padding: const EdgeInsets.all(16),
+          child: HeroIcon(
+            HeroIcons.plus,
+            color: Colors.white,
+            size: 32,
+          ),
+        ),
+      ),
       appBar: CustomAppBar(
         preferredSize: const Size(double.infinity, 80),
         leading: Padding(
@@ -70,60 +97,76 @@ class HostingHomePage extends StatelessWidget {
           ],
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12),
-        child: SingleChildScrollView(
-          child: Column(
-            spacing: 12,
-            children: <Widget>[
-              HomeNudgeWidget(),
-              StoreConnector<AppState, HostingHomeViewModel>(
-                converter: (Store<AppState> store) =>
-                    HostingHomeViewModel.fromState(store.state),
-                onInit: (Store<AppState> store) {
-                  context.dispatchAll(<ReduxAction<AppState>>[
-                    FetchProductsAction(
-                      client: AppWrapperBase.of(context)!.customClient,
-                    ),
-                    FetchCurrenciesAction(
-                      client: AppWrapperBase.of(context)!.customClient,
-                    ),
-                  ]);
-                },
-                builder: (BuildContext context, HostingHomeViewModel vm) {
-                  if (context.isWaiting(FetchProductsAction)) {
-                    return AppLoading();
-                  }
-                  final List<Product?>? products = vm.products;
+      body: RefreshIndicator(
+        onRefresh: () => onRefresh(context),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: SingleChildScrollView(
+            child: Column(
+              spacing: 12,
+              children: <Widget>[
+                HomeNudgeWidget(),
+                StoreConnector<AppState, HostingHomeViewModel>(
+                  converter: (Store<AppState> store) =>
+                      HostingHomeViewModel.fromState(store.state),
+                  onInit: (Store<AppState> store) {
+                    context.dispatchAll(<ReduxAction<AppState>>[
+                      FetchProductsAction(
+                        client: AppWrapperBase.of(context)!.customClient,
+                      ),
+                      FetchCurrenciesAction(
+                        client: AppWrapperBase.of(context)!.customClient,
+                      ),
+                    ]);
+                  },
+                  builder: (BuildContext context, HostingHomeViewModel vm) {
+                    if (context.isWaiting(FetchProductsAction)) {
+                      return AppLoading();
+                    }
+                    final List<Product?>? products = vm.products;
 
-                  if (products?.isEmpty ?? true) {
-                    return GenericZeroState(
-                      iconPath: productZeroStateSVGPath,
-                      title: noProducts,
-                      description: noProductsCopy,
-                      onCTATap: () {
-                        context.router.push(SetupProductTypeRoute());
-                      },
-                      ctaText: createProductString,
-                    );
-                  }
-
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: products?.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      final Product? product = products![index];
-
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        child: ProductCard(product: product!),
+                    if (products?.isEmpty ?? true) {
+                      return GenericZeroState(
+                        iconPath: productZeroStateSVGPath,
+                        title: noProducts,
+                        description: noProductsCopy,
+                        onCTATap: () {
+                          context.router.push(SetupProductTypeRoute());
+                        },
+                        ctaText: createProductString,
                       );
-                    },
-                  );
-                },
-              ),
-            ],
+                    }
+
+                    return Container(
+                      margin: EdgeInsets.only(top: 12),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            myProducts,
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                          ListView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: products?.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              final Product? product = products![index];
+
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 12),
+                                child: ProductCard(product: product!),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),

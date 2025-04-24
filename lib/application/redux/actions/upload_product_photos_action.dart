@@ -25,7 +25,6 @@ class UploadProductPhotosAction extends ReduxAction<AppState> {
   final Function()? onSuccess;
   final ICustomClient client;
   final List<PlatformFile> pickedPhotoFiles;
-
   @override
   Future<AppState?> reduce() async {
     final List<ProductMedia?> existingPhotos =
@@ -50,31 +49,34 @@ class UploadProductPhotosAction extends ReduxAction<AppState> {
       return null;
     }
 
-    final Response httpResponse = await client.uploadMedia(
+    final List<Response> responses = await client.uploadMedia(
       endpoint: endpoint,
       data: data,
       files: imageFiles,
     );
 
-    final Map<String, dynamic> body =
-        json.decode(httpResponse.body) as Map<String, dynamic>;
+    final List<ProductMedia> uploadedPhotos = <ProductMedia>[];
 
-    if (httpResponse.statusCode >= 400) {
-      final String? error = client.parseError(body);
+    for (final Response httpResponse in responses) {
+      final Map<String, dynamic> body =
+          json.decode(httpResponse.body) as Map<String, dynamic>;
 
-      onError?.call(error ?? defaultUserFriendlyMessage);
+      if (httpResponse.statusCode >= 400) {
+        final String? error = client.parseError(body);
+        onError?.call(error ?? defaultUserFriendlyMessage);
+        return null;
+      }
 
-      return null;
+      uploadedPhotos.add(ProductMedia.fromJson(body));
     }
-
-    final ProductMedia uploadedPhoto = ProductMedia.fromJson(body);
 
     dispatch(
       UpdateCurrentProductAction(
-        photos: <ProductMedia?>[...existingPhotos, uploadedPhoto],
+        photos: <ProductMedia?>[...existingPhotos, ...uploadedPhotos],
       ),
     );
 
+    onSuccess?.call();
     return null;
   }
 }

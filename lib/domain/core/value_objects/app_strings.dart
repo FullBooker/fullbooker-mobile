@@ -690,3 +690,5 @@ const String locationUnavailable = 'Location unavailable';
 
 const String termsOfService = 'Terms of Service';
 const String termsOfServiceCopy = 'Tap to read our terms of service';
+
+const String myProducts = 'My Products';

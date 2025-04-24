@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:http/http.dart';
-import 'package:http/http.dart' as http;
 
 abstract class ICustomClient extends BaseClient {
   late String endpoint;
@@ -79,7 +78,7 @@ abstract class ICustomClient extends BaseClient {
     );
   }
 
-  Future<Response> uploadMedia({
+  Future<List<Response>> uploadMedia({
     required String endpoint,
     required Map<String, String> data,
     required List<File> files,
@@ -88,27 +87,27 @@ abstract class ICustomClient extends BaseClient {
   }) async {
     final Uri uri = fromUriOrString(endpoint);
 
-    final MultipartRequest request = MultipartRequest('POST', uri)
-      ..headers.addAll(
-        buildHeaders(
-          customHeaders: customHeaders,
-          authenticated: authenticated,
-        )..remove('Content-Type'),
-      )
-      ..fields.addAll(data);
+    final List<Response> responses = <Response>[];
 
     for (final File file in files) {
-      final http.MultipartFile multipartFile =
-          await http.MultipartFile.fromPath('file', file.path);
-      request.files.add(multipartFile);
-    }
+      final MultipartRequest request = MultipartRequest('POST', uri)
+        ..headers.addAll(
+          buildHeaders(
+            customHeaders: customHeaders,
+            authenticated: authenticated,
+          )..remove('Content-Type'),
+        )
+        ..fields.addAll(data);
 
-    return Response.fromStream(
-      await request.send().timeout(
+      final MultipartFile multipartFile =
+          await MultipartFile.fromPath('file', file.path);
+      request.files.add(multipartFile);
+
+      final StreamedResponse streamed = await request.send().timeout(
         const Duration(seconds: kRequestTimeoutSeconds),
         onTimeout: () {
           final String timeoutBody = json.encode(kTimeoutResponsePayload);
-          return http.StreamedResponse(
+          return StreamedResponse(
             ByteStream.fromBytes(utf8.encode(timeoutBody)),
             408,
             headers: buildHeaders(
@@ -117,8 +116,12 @@ abstract class ICustomClient extends BaseClient {
             )..remove('Content-Type'),
           );
         },
-      ),
-    );
+      );
+
+      responses.add(await Response.fromStream(streamed));
+    }
+
+    return responses;
   }
 
   /// Extracts an error message from the response body

@@ -89,10 +89,10 @@ class LimitedVideoGalleryPreviewWidget extends StatelessWidget {
                       child: Center(
                         child: Text(
                           '+ $extraCount',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge
+                              ?.copyWith(color: Colors.white),
                         ),
                       ),
                     ),

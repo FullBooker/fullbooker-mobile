@@ -1,13 +1,16 @@
+import 'dart:async';
+
 import 'package:async_redux/async_redux.dart';
 import 'package:flutter/material.dart';
+import 'package:fullbooker/application/redux/actions/check_and_refresh_token_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/app_widget_view_model.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:fullbooker/application/core/services/analytics_service.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
-import 'package:fullbooker/application/redux/actions/check_and_refresh_token_action.dart';
 import 'package:fullbooker/core/common/app_router.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
+import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/presentation/core/theme/app_theme.dart';
 
 class FullBookerAppWidget extends StatefulWidget {
@@ -19,34 +22,38 @@ class FullBookerAppWidget extends StatefulWidget {
 
 class _FullBookerAppWidgetState extends State<FullBookerAppWidget>
     with WidgetsBindingObserver {
+  Timer? _refreshTimer;
+
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      if (state == AppLifecycleState.resumed) {
-        context.dispatch(
-          CheckAndRefreshTokenAction(
-            client: AppWrapperBase.of(context)!.customClient,
-          ),
-        );
-      }
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+
+    // Start periodic refresh check
+    _refreshTimer =
+        Timer.periodic(Duration(minutes: kRefreshTokenTimerInterval), (_) {
+      context.dispatch(
+        CheckAndRefreshTokenAction(
+          client: AppWrapperBase.of(context)!.customClient,
+        ),
+      );
     });
   }
 
-  // TODO(abiud): restore this when the server returns local time
-  // @override
-  // void didChangeDependencies() {
-  //   super.didChangeDependencies();
-  //   WidgetsBinding.instance.addPostFrameCallback((_) {
-  //     context.dispatch(
-  //       CheckAndRefreshTokenAction(
-  //         client: AppWrapperBase.of(context)!.customClient,
-  //       ),
-  //     );
-  //   });
-  // }
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      context.dispatch(
+        CheckAndRefreshTokenAction(
+          client: AppWrapperBase.of(context)!.customClient,
+        ),
+      );
+    }
+  }
 
   @override
   void dispose() {
+    _refreshTimer?.cancel();
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }

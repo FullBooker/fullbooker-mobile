@@ -310,6 +310,13 @@ class _ChooseLocationPageState extends State<ChooseLocationPage> {
                   spacing: 8,
                   children: <Widget>[
                     Flexible(
+                      child: SecondaryButton(
+                        onPressed: () => context.router.maybePop(),
+                        child: d.right(cancelString),
+                        fillColor: Colors.transparent,
+                      ),
+                    ),
+                    Flexible(
                       child: PrimaryButton(
                         onPressed: () {
                           context.dispatch(
@@ -328,13 +335,6 @@ class _ChooseLocationPageState extends State<ChooseLocationPage> {
                           context.router.maybePop();
                         },
                         child: d.right(continueString),
-                      ),
-                    ),
-                    Flexible(
-                      child: SecondaryButton(
-                        onPressed: () => context.router.maybePop(),
-                        child: d.right(cancelString),
-                        fillColor: Colors.transparent,
                       ),
                     ),
                   ],
