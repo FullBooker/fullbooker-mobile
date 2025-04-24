@@ -40,12 +40,12 @@ class UploadProductVideosAction extends ReduxAction<AppState> {
 
     final String endpoint = GetIt.I.get<AppConfig>().productMediaEndpoint;
 
-    final List<File> imageFiles = pickedVideoFiles
+    final List<File> videoFiles = pickedVideoFiles
         .where((PlatformFile p) => p.path != null)
         .map((PlatformFile p) => File(p.path!))
         .toList();
 
-    if (imageFiles.isEmpty) {
+    if (videoFiles.isEmpty) {
       onError?.call(invalidMediaFilesError);
       return null;
     }
@@ -53,7 +53,7 @@ class UploadProductVideosAction extends ReduxAction<AppState> {
     final Response httpResponse = await client.uploadMedia(
       endpoint: endpoint,
       data: data,
-      files: imageFiles,
+      file: videoFiles.first,
     );
 
     final Map<String, dynamic> body =

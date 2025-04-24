@@ -53,7 +53,7 @@ class UploadProductPhotosAction extends ReduxAction<AppState> {
     final Response httpResponse = await client.uploadMedia(
       endpoint: endpoint,
       data: data,
-      files: imageFiles,
+      file: imageFiles.first,
     );
 
     final Map<String, dynamic> body =

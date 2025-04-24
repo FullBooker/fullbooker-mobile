@@ -82,7 +82,7 @@ abstract class ICustomClient extends BaseClient {
   Future<Response> uploadMedia({
     required String endpoint,
     required Map<String, String> data,
-    required List<File> files,
+    required File file,
     Map<String, String>? customHeaders,
     bool authenticated = true,
   }) async {
@@ -97,11 +97,9 @@ abstract class ICustomClient extends BaseClient {
       )
       ..fields.addAll(data);
 
-    for (final File file in files) {
-      final http.MultipartFile multipartFile =
-          await http.MultipartFile.fromPath('file', file.path);
-      request.files.add(multipartFile);
-    }
+    final http.MultipartFile multipartFile =
+        await http.MultipartFile.fromPath('file', file.path);
+    request.files.add(multipartFile);
 
     return Response.fromStream(
       await request.send().timeout(
