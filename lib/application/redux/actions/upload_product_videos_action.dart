@@ -50,30 +50,34 @@ class UploadProductVideosAction extends ReduxAction<AppState> {
       return null;
     }
 
-    final Response httpResponse = await client.uploadMedia(
+    final List<Response> responses = await client.uploadMedia(
       endpoint: endpoint,
       data: data,
-      file: videoFiles.first,
+      files: videoFiles,
     );
 
-    final Map<String, dynamic> body =
-        json.decode(httpResponse.body) as Map<String, dynamic>;
+    final List<ProductMedia> uploadedVideos = <ProductMedia>[];
 
-    if (httpResponse.statusCode >= 400) {
-      final String? error = client.parseError(body);
+    for (final Response httpResponse in responses) {
+      final Map<String, dynamic> body =
+          json.decode(httpResponse.body) as Map<String, dynamic>;
 
-      onError?.call(error ?? defaultUserFriendlyMessage);
+      if (httpResponse.statusCode >= 400) {
+        final String? error = client.parseError(body);
+        onError?.call(error ?? defaultUserFriendlyMessage);
+        return null;
+      }
 
-      return null;
+      uploadedVideos.add(ProductMedia.fromJson(body));
     }
-
-    final ProductMedia uploadedVideo = ProductMedia.fromJson(body);
 
     dispatch(
       UpdateCurrentProductAction(
-        videos: <ProductMedia?>[...existingVideos, uploadedVideo],
+        photos: <ProductMedia?>[...existingVideos, ...uploadedVideos],
       ),
     );
+
+    onSuccess?.call();
 
     return null;
   }
