@@ -19,6 +19,7 @@ import 'package:heroicons/heroicons.dart';
 @RoutePage()
 class ProductsPage extends StatelessWidget {
   const ProductsPage({super.key});
+
   Future<void> onRefresh(BuildContext context) async {
     context.dispatch(
       FetchProductsAction(

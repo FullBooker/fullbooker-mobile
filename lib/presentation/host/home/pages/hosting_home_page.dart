@@ -25,6 +25,17 @@ import 'package:heroicons/heroicons.dart';
 class HostingHomePage extends StatelessWidget {
   const HostingHomePage({super.key});
 
+  Future<void> onRefresh(BuildContext context) async {
+    context.dispatchAll(<ReduxAction<AppState>>[
+      FetchProductsAction(
+        client: AppWrapperBase.of(context)!.customClient,
+      ),
+      FetchCurrenciesAction(
+        client: AppWrapperBase.of(context)!.customClient,
+      ),
+    ]);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,72 +97,76 @@ class HostingHomePage extends StatelessWidget {
           ],
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12),
-        child: SingleChildScrollView(
-          child: Column(
-            spacing: 12,
-            children: <Widget>[
-              HomeNudgeWidget(),
-              StoreConnector<AppState, HostingHomeViewModel>(
-                converter: (Store<AppState> store) =>
-                    HostingHomeViewModel.fromState(store.state),
-                onInit: (Store<AppState> store) {
-                  context.dispatchAll(<ReduxAction<AppState>>[
-                    FetchProductsAction(
-                      client: AppWrapperBase.of(context)!.customClient,
-                    ),
-                    FetchCurrenciesAction(
-                      client: AppWrapperBase.of(context)!.customClient,
-                    ),
-                  ]);
-                },
-                builder: (BuildContext context, HostingHomeViewModel vm) {
-                  if (context.isWaiting(FetchProductsAction)) {
-                    return AppLoading();
-                  }
-                  final List<Product?>? products = vm.products;
+      body: RefreshIndicator(
+        onRefresh: () => onRefresh(context),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: SingleChildScrollView(
+            child: Column(
+              spacing: 12,
+              children: <Widget>[
+                HomeNudgeWidget(),
+                StoreConnector<AppState, HostingHomeViewModel>(
+                  converter: (Store<AppState> store) =>
+                      HostingHomeViewModel.fromState(store.state),
+                  onInit: (Store<AppState> store) {
+                    context.dispatchAll(<ReduxAction<AppState>>[
+                      FetchProductsAction(
+                        client: AppWrapperBase.of(context)!.customClient,
+                      ),
+                      FetchCurrenciesAction(
+                        client: AppWrapperBase.of(context)!.customClient,
+                      ),
+                    ]);
+                  },
+                  builder: (BuildContext context, HostingHomeViewModel vm) {
+                    if (context.isWaiting(FetchProductsAction)) {
+                      return AppLoading();
+                    }
+                    final List<Product?>? products = vm.products;
 
-                  if (products?.isEmpty ?? true) {
-                    return GenericZeroState(
-                      iconPath: productZeroStateSVGPath,
-                      title: noProducts,
-                      description: noProductsCopy,
-                      onCTATap: () {
-                        context.router.push(SetupProductTypeRoute());
-                      },
-                      ctaText: createProductString,
+                    if (products?.isEmpty ?? true) {
+                      return GenericZeroState(
+                        iconPath: productZeroStateSVGPath,
+                        title: noProducts,
+                        description: noProductsCopy,
+                        onCTATap: () {
+                          context.router.push(SetupProductTypeRoute());
+                        },
+                        ctaText: createProductString,
+                      );
+                    }
+
+                    return Container(
+                      margin: EdgeInsets.only(top: 12),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            myProducts,
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                          ListView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: products?.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              final Product? product = products![index];
+
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 12),
+                                child: ProductCard(product: product!),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
                     );
-                  }
-
-                  return Container(
-                    margin: EdgeInsets.only(top: 12),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          myProducts,
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                        ListView.builder(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: products?.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            final Product? product = products![index];
-
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 12),
-                              child: ProductCard(product: product!),
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ],
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),

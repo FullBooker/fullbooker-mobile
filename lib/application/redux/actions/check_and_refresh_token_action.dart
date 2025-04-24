@@ -81,7 +81,6 @@ class CheckAndRefreshTokenAction extends ReduxAction<AppState> {
     // Update the auth state
     dispatch(
       UpdateAuthStateAction(
-        isSignedIn: true,
         accessToken: newCredentials.accessToken,
         refreshToken: newCredentials.refreshToken,
         expiresAt: newCredentials.expiresAt,
