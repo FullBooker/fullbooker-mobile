@@ -17,6 +17,7 @@ import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:fullbooker/presentation/core/components/custom_badge_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/limited_photo_gallery_preview_widget.dart';
+import 'package:fullbooker/presentation/host/product_setup/widgets/limited_video_gallery_preview_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/pricing_card_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/image_carousel_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/limited_description_widget.dart';
@@ -214,7 +215,7 @@ class ProductDetailPage extends StatelessWidget {
                               spacing: 12,
                               children: <Widget>[
                                 Text(
-                                  photos,
+                                  photosString,
                                   style:
                                       Theme.of(context).textTheme.titleMedium,
                                 ),
@@ -223,6 +224,21 @@ class ProductDetailPage extends StatelessWidget {
                                 ),
                               ],
                             ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              spacing: 12,
+                              children: <Widget>[
+                                Text(
+                                  videosString,
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
+                                ),
+                                LimitedVideoGalleryPreviewWidget(
+                                  workflowState: WorkflowState.VIEW,
+                                ),
+                              ],
+                            ),
+
                             veryLargeVerticalSizedBox,
                             veryLargeVerticalSizedBox,
 

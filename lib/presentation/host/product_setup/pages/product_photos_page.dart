@@ -64,7 +64,7 @@ class ProductPhotosPage extends StatelessWidget {
                           spacing: 8,
                           children: <Widget>[
                             Text(
-                              photos,
+                              photosString,
                               style: Theme.of(context).textTheme.headlineSmall,
                             ),
                             Text(

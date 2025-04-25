@@ -164,7 +164,7 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
 
                           // Photos
                           PreviewHeaderWidget(
-                            title: photos,
+                            title: photosString,
                             onEdit: () {
                               context.dispatch(
                                 UpdateHostStateAction(currentProduct: product),
