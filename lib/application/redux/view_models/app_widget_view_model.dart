@@ -3,7 +3,7 @@ import 'package:fullbooker/application/redux/states/app_state.dart';
 
 class AppWidgetViewModel extends Vm {
   AppWidgetViewModel({required this.isSignedIn})
-      : super(equals: <Object>[isSignedIn]);
+      : super(equals: <bool>[isSignedIn]);
 
   factory AppWidgetViewModel.fromStore(Store<AppState> store) {
     return AppWidgetViewModel(

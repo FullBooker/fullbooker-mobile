@@ -78,7 +78,6 @@ class CheckAndRefreshTokenAction extends ReduxAction<AppState> {
 
     final AuthCredentials newCredentials = AuthCredentials.fromJson(body);
 
-    // Update the auth state
     dispatch(
       UpdateAuthStateAction(
         accessToken: newCredentials.accessToken,
@@ -89,6 +88,6 @@ class CheckAndRefreshTokenAction extends ReduxAction<AppState> {
 
     onSuccess?.call();
 
-    return state;
+    return null;
   }
 }
