@@ -8,7 +8,7 @@ import 'package:fullbooker/app_entry_point.dart';
 import 'package:fullbooker/application/core/services/analytics_service.dart';
 import 'package:fullbooker/application/redux/observers/custom_observer.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
-import 'package:fullbooker/core/utils.dart';
+import 'package:fullbooker/core/utils/utils.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/global_keys.dart';
 import 'package:fullbooker/firebase_options.dart';

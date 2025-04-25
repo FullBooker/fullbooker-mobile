@@ -1,6 +1,6 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
-import 'package:fullbooker/core/utils.dart';
+import 'package:fullbooker/core/utils/utils.dart';
 
 class UpdateAuthStateAction extends ReduxAction<AppState> {
   UpdateAuthStateAction({

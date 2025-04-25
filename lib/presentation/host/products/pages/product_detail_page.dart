@@ -9,7 +9,7 @@ import 'package:fullbooker/application/redux/view_models/product_detail_view_mod
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
-import 'package:fullbooker/core/utils.dart';
+import 'package:fullbooker/core/utils/utils.dart';
 import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/entities/product_pricing.dart';
 import 'package:fullbooker/domain/core/value_objects/app_bar_action.dart';
@@ -169,6 +169,7 @@ class ProductDetailPage extends StatelessWidget {
                             ProductScheduleWidget(
                               workflowState: WorkflowState.VIEW,
                             ),
+
                             if (productStatus == ProductStatus.inReview)
                               ProductAlertWidget(
                                 title: productInReview,
@@ -224,6 +225,7 @@ class ProductDetailPage extends StatelessWidget {
                                 ),
                               ],
                             ),
+
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               spacing: 12,
