@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:fullbooker/application/redux/actions/update_host_state_action.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
-import 'package:fullbooker/core/utils.dart';
+import 'package:fullbooker/core/utils/utils.dart';
 import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
@@ -121,33 +121,32 @@ class ProductCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  if (complete)
-                    Wrap(
-                      runSpacing: 12,
-                      spacing: 12,
-                      children: <Widget>[
-                        // Location
-                        if (product.locations?.isNotEmpty ?? false)
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            spacing: 4,
-                            children: <Widget>[
-                              HeroIcon(
-                                HeroIcons.mapPin,
-                                color: Colors.grey,
-                                size: 20,
+                  Wrap(
+                    runSpacing: 12,
+                    spacing: 12,
+                    children: <Widget>[
+                      // Location
+                      if (product.locations?.isNotEmpty ?? false)
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          spacing: 4,
+                          children: <Widget>[
+                            HeroIcon(
+                              HeroIcons.mapPin,
+                              color: Colors.grey,
+                              size: 20,
+                            ),
+                            Expanded(
+                              child: Text(
+                                product.locations?.first.address ?? '',
+                                style: Theme.of(context).textTheme.bodyMedium,
                               ),
-                              Expanded(
-                                child: Text(
-                                  product.locations?.first.address ?? '',
-                                  style: Theme.of(context).textTheme.bodyMedium,
-                                ),
-                              ),
-                            ],
-                          ),
-                      ],
-                    )
-                  else
+                            ),
+                          ],
+                        ),
+                    ],
+                  ),
+                  if (!complete)
                     SecondaryButton(
                       onPressed: () {
                         context.dispatch(

@@ -9,7 +9,7 @@ import 'package:fullbooker/application/redux/view_models/product_setup_view_mode
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
-import 'package:fullbooker/core/utils.dart';
+import 'package:fullbooker/core/utils/utils.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
@@ -25,8 +25,8 @@ import 'package:fullbooker/shared/widgets/secondary_button.dart';
 import 'package:heroicons/heroicons.dart';
 
 @RoutePage()
-class ProductDateTimePage extends StatelessWidget {
-  const ProductDateTimePage({super.key});
+class ProductSchedulePage extends StatelessWidget {
+  const ProductSchedulePage({super.key});
 
   @override
   Widget build(BuildContext context) {

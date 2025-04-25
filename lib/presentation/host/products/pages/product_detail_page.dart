@@ -9,7 +9,7 @@ import 'package:fullbooker/application/redux/view_models/product_detail_view_mod
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
-import 'package:fullbooker/core/utils.dart';
+import 'package:fullbooker/core/utils/utils.dart';
 import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/entities/product_pricing.dart';
 import 'package:fullbooker/domain/core/value_objects/app_bar_action.dart';
@@ -17,6 +17,7 @@ import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:fullbooker/presentation/core/components/custom_badge_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/limited_photo_gallery_preview_widget.dart';
+import 'package:fullbooker/presentation/host/product_setup/widgets/limited_video_gallery_preview_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/pricing_card_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/image_carousel_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/limited_description_widget.dart';
@@ -27,7 +28,6 @@ import 'package:fullbooker/presentation/host/products/widgets/product_stats_widg
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
-import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:heroicons/heroicons.dart';
 
@@ -47,7 +47,6 @@ class ProductDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const BottomNavBar(),
       appBar: CustomAppBar(
         showBell: false,
         title: productDetailsString,
@@ -64,6 +63,34 @@ class ProductDetailPage extends StatelessWidget {
           ),
         ],
       ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: PrimaryButton(
+          onPressed: () => context.router.push(ScanTicketsRoute()),
+          customRadius: 100,
+          child: left(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              spacing: 12,
+              children: <Widget>[
+                HeroIcon(
+                  HeroIcons.camera,
+                  color: Colors.white,
+                  size: 24,
+                ),
+                Text(
+                  scanTickets,
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: StoreConnector<AppState, ProductDetailViewModel>(
         converter: (Store<AppState> store) =>
             ProductDetailViewModel.fromState(store.state),
@@ -142,7 +169,8 @@ class ProductDetailPage extends StatelessWidget {
                             ProductScheduleWidget(
                               workflowState: WorkflowState.VIEW,
                             ),
-                            if (productStatus == ProductStatus.inReview)
+
+                            if (productStatus == ProductStatus.review)
                               ProductAlertWidget(
                                 title: productInReview,
                                 description: productInReviewCopy,
@@ -188,7 +216,7 @@ class ProductDetailPage extends StatelessWidget {
                               spacing: 12,
                               children: <Widget>[
                                 Text(
-                                  photos,
+                                  photosString,
                                   style:
                                       Theme.of(context).textTheme.titleMedium,
                                 ),
@@ -197,7 +225,25 @@ class ProductDetailPage extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            verySmallVerticalSizedBox,
+
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              spacing: 12,
+                              children: <Widget>[
+                                Text(
+                                  videosString,
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
+                                ),
+                                LimitedVideoGalleryPreviewWidget(
+                                  workflowState: WorkflowState.VIEW,
+                                ),
+                              ],
+                            ),
+
+                            veryLargeVerticalSizedBox,
+                            veryLargeVerticalSizedBox,
+
                             // TODO(abiud): return this when the delete API for a product has proper workflow
                             // SecondaryButton(
                             //   fillColor:
@@ -231,34 +277,34 @@ class ProductDetailPage extends StatelessWidget {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: PrimaryButton(
-                    onPressed: () => context.router.push(ScanTicketsRoute()),
-                    customRadius: 100,
-                    child: left(
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        spacing: 12,
-                        children: <Widget>[
-                          HeroIcon(
-                            HeroIcons.camera,
-                            color: Colors.white,
-                            size: 24,
-                          ),
-                          Text(
-                            scanTickets,
-                            style:
-                                Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 16),
+                //   child: PrimaryButton(
+                //     onPressed: () => context.router.push(ScanTicketsRoute()),
+                //     customRadius: 100,
+                //     child: left(
+                //       Row(
+                //         mainAxisAlignment: MainAxisAlignment.center,
+                //         spacing: 12,
+                //         children: <Widget>[
+                //           HeroIcon(
+                //             HeroIcons.camera,
+                //             color: Colors.white,
+                //             size: 24,
+                //           ),
+                //           Text(
+                //             scanTickets,
+                //             style:
+                //                 Theme.of(context).textTheme.bodyLarge?.copyWith(
+                //                       color: Colors.white,
+                //                       fontWeight: FontWeight.bold,
+                //                     ),
+                //           ),
+                //         ],
+                //       ),
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           );

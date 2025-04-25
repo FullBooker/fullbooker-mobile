@@ -1,10 +1,11 @@
+import 'dart:io';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
+import 'package:get_thumbnail_video/video_thumbnail.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:video_player/video_player.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 class VideoCard extends StatefulWidget {
   const VideoCard({
@@ -25,14 +26,35 @@ class VideoCard extends StatefulWidget {
 class VideoCardState extends State<VideoCard> {
   late final VideoPlayerController _controller;
   bool _initialized = false;
+  String? _thumbnailPath;
 
   @override
   void initState() {
     super.initState();
+    _generateThumbnail();
     _controller = VideoPlayerController.networkUrl(Uri.parse(widget.videoUrl))
       ..initialize().then((_) {
-        setState(() => _initialized = true);
+        if (mounted) {
+          setState(() => _initialized = true);
+        }
       });
+  }
+
+  Future<void> _generateThumbnail() async {
+    try {
+      final XFile file = await VideoThumbnail.thumbnailFile(
+        video: widget.videoUrl,
+        quality: 75,
+      );
+
+      if (File(file.path).existsSync()) {
+        setState(() => _thumbnailPath = file.path);
+      } else {
+        debugPrint('Thumbnail path was null or does not exist');
+      }
+    } catch (e) {
+      debugPrint('Thumbnail generation failed: $e');
+    }
   }
 
   @override
@@ -51,17 +73,16 @@ class VideoCardState extends State<VideoCard> {
   Widget build(BuildContext context) {
     final bool isReadOnly = widget.readOnly;
 
-    const double radius = 8;
+
     return GestureDetector(
       onTap: () => context.router.push(
         FullscreenVideoPlayerRoute(videoUrl: widget.videoUrl),
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(radius),
+        borderRadius: BorderRadius.circular(8),
         child: Stack(
           fit: StackFit.expand,
           children: <Widget>[
-            // Video thumbnail
             if (_initialized)
               FittedBox(
                 fit: BoxFit.cover,
@@ -72,19 +93,14 @@ class VideoCardState extends State<VideoCard> {
                   child: VideoPlayer(_controller),
                 ),
               )
-            else
-              CachedNetworkImage(
-                imageUrl: widget.videoUrl,
+            else if (_thumbnailPath != null &&
+                File(_thumbnailPath!).existsSync())
+              Image.file(
+                File(_thumbnailPath!),
                 fit: BoxFit.cover,
-                progressIndicatorBuilder: (
-                  BuildContext context,
-                  String url,
-                  DownloadProgress progress,
-                ) =>
-                    Center(child: AppLoading()),
-              ),
-
-            // Remove icon
+              )
+            else
+              AppLoading(),
             if (!isReadOnly)
               Positioned(
                 top: 12,
@@ -93,11 +109,11 @@ class VideoCardState extends State<VideoCard> {
                   onTap: widget.onRemove,
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.black.withValues(alpha: .6),
+                      color: Colors.black.withValues(alpha: 0.6),
                       shape: BoxShape.circle,
                     ),
-                    padding: EdgeInsets.all(8),
-                    child: HeroIcon(
+                    padding: const EdgeInsets.all(8),
+                    child: const HeroIcon(
                       HeroIcons.xMark,
                       color: Colors.white,
                       size: 24,
@@ -105,8 +121,6 @@ class VideoCardState extends State<VideoCard> {
                   ),
                 ),
               ),
-
-            // Duration
             if (_initialized)
               Positioned(
                 bottom: isReadOnly ? 0 : 8,
@@ -125,7 +139,6 @@ class VideoCardState extends State<VideoCard> {
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
-                      spacing: 4,
                       children: <Widget>[
                         const HeroIcon(
                           HeroIcons.play,

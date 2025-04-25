@@ -11,7 +11,7 @@ import 'package:fullbooker/application/redux/actions/update_onboarding_state_act
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/reset_password_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
-import 'package:fullbooker/core/utils.dart';
+import 'package:fullbooker/core/utils/utils.dart';
 import 'package:fullbooker/domain/core/value_objects/analytics_events.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';

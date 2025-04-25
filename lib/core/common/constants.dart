@@ -113,4 +113,4 @@ const String kVideoMediaType = 'video';
 
 const String kPlatformTermsURL = 'https://fullbooker.com/terms-of-service';
 
-int kRefreshTokenTimerInterval = 3;
+int kRefreshTokenTimerInterval = 4;

@@ -24,4 +24,12 @@ enum WorkflowState { CREATE, VIEW }
 
 enum UploadMediaType { PHOTO, VIDEO }
 
-enum ProductStatus { published, draft, inReview }
+enum ProductStatus {
+  draft,
+  review,
+  reviewedNeedsChanges,
+  published,
+  deactivated,
+  rejected,
+  invalidated,
+}

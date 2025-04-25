@@ -1,5 +1,6 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
 import 'package:fullbooker/application/redux/actions/fetch_product_bookings_action.dart';
@@ -14,7 +15,7 @@ import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:fullbooker/presentation/core/components/generic_zero_state.dart';
 import 'package:fullbooker/presentation/host/products/widgets/booking_list_item_widget.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
-import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
+import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:heroicons/heroicons.dart';
 
 @RoutePage()
@@ -32,26 +33,38 @@ class ProductBookingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const BottomNavBar(),
       appBar: CustomAppBar(
         showBell: false,
         title: productBookings,
       ),
-      floatingActionButton: GestureDetector(
-        onTap: () => context.router.push(ScanTicketsRoute()),
-        child: Container(
-          decoration: BoxDecoration(
-            color: Theme.of(context).primaryColor,
-            shape: BoxShape.circle,
-          ),
-          padding: const EdgeInsets.all(16),
-          child: HeroIcon(
-            HeroIcons.camera,
-            color: Colors.white,
-            size: 32,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: PrimaryButton(
+          onPressed: () => context.router.push(ScanTicketsRoute()),
+          customRadius: 100,
+          child: left(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              spacing: 12,
+              children: <Widget>[
+                HeroIcon(
+                  HeroIcons.camera,
+                  color: Colors.white,
+                  size: 24,
+                ),
+                Text(
+                  scanTickets,
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: RefreshIndicator(
         onRefresh: () => onRefresh(context),
         child: Padding(

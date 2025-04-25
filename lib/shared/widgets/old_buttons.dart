@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
-import 'package:fullbooker/core/utils.dart';
+import 'package:fullbooker/core/utils/utils.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 
 // TODO(abiud): retire these buttons

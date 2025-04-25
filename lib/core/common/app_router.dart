@@ -8,11 +8,13 @@ class AppRouter extends RootStackRouter {
 
   @override
   List<AutoRoute> get routes => <AutoRoute>[
+        // Shared landing page
+        AutoRoute(page: SharedLandingRoute.page, initial: true),
+
         // Home pages
         AutoRoute(page: ConsumerHomeRoute.page),
-        AutoRoute(page: HostingHomeRoute.page, initial: true),
+        AutoRoute(page: HostingHomeRoute.page),
 
-        AutoRoute(page: SharedLandingRoute.page),
         AutoRoute(page: OverviewRoute.page),
         AutoRoute(page: EventDetailsRoute.page),
         AutoRoute(page: ImagePreviewRoute.page),
@@ -44,7 +46,7 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: ProductSetupPreviewRoute.page),
         AutoRoute(page: ProductBasicDetailsRoute.page),
         AutoRoute(page: ProductLocationRoute.page),
-        AutoRoute(page: ProductDateTimeRoute.page),
+        AutoRoute(page: ProductScheduleRoute.page),
         AutoRoute(page: ProductPhotosRoute.page),
         AutoRoute(page: ProductVideosRoute.page),
         AutoRoute(page: ProductPricingRoute.page),

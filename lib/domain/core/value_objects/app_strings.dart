@@ -501,7 +501,7 @@ const String yearlyRepeatPrompt =
     'Select the days of the year when your event will be repeating';
 
 // Photos page
-const String photos = 'Photos';
+const String photosString = 'Photos';
 const String videosString = 'Videos';
 const String photosCopy = 'Add at least 6 high quality photos of your event';
 const String videosCopy = 'Add at least 2 high quality videos of your event';
