@@ -174,21 +174,12 @@ class ProfilePage extends StatelessWidget {
                         onTap: () =>
                             context.router.push(TermsAndConditionsRoute()),
                       ),
-                      // TODO(abiud): restore this when the change password API is available
-                      // ProfileListItem(
-                      //   iconData: HeroIcons.key,
-                      //   title: changePassword,
-                      //   body: changePasswordCopy,
-                      //   onTap: () {
-                      //     ScaffoldMessenger.of(context)
-                      //       ..hideCurrentSnackBar()
-                      //       ..showSnackBar(
-                      //         const SnackBar(
-                      //           content: Text(comingSoonTitle),
-                      //         ),
-                      //       );
-                      //   },
-                      // ),
+                      ProfileListItem(
+                        iconData: HeroIcons.key,
+                        title: changePassword,
+                        body: changePasswordCopyShort,
+                        onTap: () => context.router.push(UpdatePasswordRoute()),
+                      ),
                     ],
                   ),
                 ],

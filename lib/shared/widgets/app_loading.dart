@@ -8,7 +8,7 @@ class AppLoading extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: CircularProgressIndicator.adaptive(
-        strokeWidth: 1,
+        strokeWidth: 2,
         valueColor:
             AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
       ),

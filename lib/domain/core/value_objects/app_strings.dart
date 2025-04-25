@@ -46,12 +46,22 @@ const String enterNewPasswordTitle = 'Please enter a new password below';
 const String enterNewPasswordString = 'Enter New Password';
 const String reEnterNewPasswordString = 'Re-enter New Password';
 
-const String changePasswordString = 'Set New Password';
+// Set new password
+const String setNewPasswordString = 'Set New Password';
 const String newPasswordLabel = 'New Password';
 const String newPasswordHint = 'Enter you new Password';
-const String confirmNewPasswordLabel = 'New Password';
+const String confirmNewPasswordLabel = 'Confirm New Password';
 const String confirmNewPasswordHint = 'Confirm you new Password';
 const String setAndConfirmPassword = 'Set and confirm your new password';
+const String updatePasswordString = 'Update Password';
+
+// Change password
+const String changePassword = 'Change Password';
+const String changePasswordCopyLong =
+    'Enter your current password and choose a new one to stay protected';
+const String changePasswordCopyShort = 'Change your password';
+const String currentPasswordLabel = 'Current Password';
+const String currentPasswordHint = 'Enter you current Password';
 
 // Login page
 const String welcomeString = 'Welcome back!';
@@ -590,9 +600,6 @@ const String switchToUserCopy =
     'View and purchase your favorite products, and more';
 
 String switchToUser(String appName) => 'Switch To $appName';
-
-const String changePassword = 'Change Password';
-const String changePasswordCopy = 'Update your password';
 
 const String noCategoriesFound = 'No categories found';
 const String noCategoriesFoundCopy =

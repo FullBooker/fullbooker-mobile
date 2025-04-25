@@ -191,7 +191,7 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
                               ),
                             );
                           },
-                          child: d.right(changePasswordString),
+                          child: d.right(setNewPasswordString),
                         );
                       },
                     ),
