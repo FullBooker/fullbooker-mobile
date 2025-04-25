@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:async_redux/async_redux.dart';
@@ -29,13 +28,10 @@ class _SharedLandingPageState extends State<SharedLandingPage> {
       final AppState state = StoreProvider.state<AppState>(context);
       final bool isSignedIn = state.authState?.isSignedIn ?? false;
 
-      // Wait before navigating
-      await Future<Duration>.delayed(const Duration(seconds: 3));
-
       if (!mounted) return;
 
       await context.router.replace(
-        isSignedIn ? const OverviewRoute() : const LoginRoute(),
+        isSignedIn ? const HostingHomeRoute() : const LoginRoute(),
       );
     });
   }
