@@ -170,7 +170,7 @@ class ProductDetailPage extends StatelessWidget {
                               workflowState: WorkflowState.VIEW,
                             ),
 
-                            if (productStatus == ProductStatus.inReview)
+                            if (productStatus == ProductStatus.review)
                               ProductAlertWidget(
                                 title: productInReview,
                                 description: productInReviewCopy,

@@ -37,6 +37,9 @@ class Product with _$Product {
     ProductMedia? video,
     @Default(<ProductLocation>[]) List<ProductLocation>? locations,
     @Default(false) bool? completed,
+    @Default(0) @JsonKey(name: 'images_count') int? imageCount,
+    @Default(0) @JsonKey(name: 'videos_count') int? videoCount,
+    @Default('DRAFT') @JsonKey(name: 'status') String? status,
 
     /// Temp values used when creating a product
     @Default(<ProductMedia>[]) List<ProductMedia?>? photos,

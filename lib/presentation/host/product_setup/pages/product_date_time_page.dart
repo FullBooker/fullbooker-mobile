@@ -25,8 +25,8 @@ import 'package:fullbooker/shared/widgets/secondary_button.dart';
 import 'package:heroicons/heroicons.dart';
 
 @RoutePage()
-class ProductDateTimePage extends StatelessWidget {
-  const ProductDateTimePage({super.key});
+class ProductSchedulePage extends StatelessWidget {
+  const ProductSchedulePage({super.key});
 
   @override
   Widget build(BuildContext context) {

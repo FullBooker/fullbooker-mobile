@@ -340,7 +340,7 @@ void navigateToNextProductStep({
   }
 
   if ((product.scheduleID ?? UNKNOWN) == UNKNOWN) {
-    context.router.push(const ProductDateTimeRoute());
+    context.router.push(const ProductScheduleRoute());
     return;
   }
 
@@ -389,19 +389,44 @@ bool isProductComplete({required Product product}) {
 }
 
 ProductStatus getProductStatus(Product product) {
-  if (product.active ?? false) return ProductStatus.published;
-  if (isProductComplete(product: product)) return ProductStatus.inReview;
-  return ProductStatus.draft;
+  final String status = (product.status ?? '').toUpperCase();
+
+  switch (status) {
+    case 'PUBLISHED':
+      return ProductStatus.published;
+    case 'DRAFT':
+      return ProductStatus.draft;
+    case 'REVIEW':
+      return ProductStatus.review;
+    case 'REVIEWED_NEEDS_CHANGES':
+      return ProductStatus.reviewedNeedsChanges;
+    case 'DEACTIVATED':
+      return ProductStatus.deactivated;
+    case 'REJECTED':
+      return ProductStatus.rejected;
+    case 'INVALIDATED':
+      return ProductStatus.invalidated;
+    default:
+      return ProductStatus.draft;
+  }
 }
 
 String getStatusDisplay({required Product product}) {
   switch (getProductStatus(product)) {
-    case ProductStatus.published:
-      return 'Published';
     case ProductStatus.draft:
       return 'Draft';
-    case ProductStatus.inReview:
+    case ProductStatus.review:
       return 'In Review';
+    case ProductStatus.reviewedNeedsChanges:
+      return 'Needs Changes';
+    case ProductStatus.published:
+      return 'Published';
+    case ProductStatus.deactivated:
+      return 'Deactivated';
+    case ProductStatus.rejected:
+      return 'Rejected';
+    case ProductStatus.invalidated:
+      return 'Invalidated';
   }
 }
 
@@ -411,8 +436,13 @@ Color getProductStatusColor({required Product product}) {
       return AppColors.greenColor;
     case ProductStatus.draft:
       return AppColors.greyTextColor;
-    case ProductStatus.inReview:
+    case ProductStatus.review:
+    case ProductStatus.reviewedNeedsChanges:
       return AppColors.amberColor;
+    case ProductStatus.deactivated:
+    case ProductStatus.rejected:
+    case ProductStatus.invalidated:
+      return AppColors.redColor;
   }
 }
 

@@ -141,7 +141,7 @@ class ProductLocationPage extends StatelessWidget {
                           onPressed: () => context.dispatch(
                             SetProductLocationAction(
                               onSuccess: () {
-                                context.router.push(ProductDateTimeRoute());
+                                context.router.push(ProductScheduleRoute());
                               },
                               onError: (String error) => showAlertDialog(
                                 context: context,
