@@ -62,6 +62,34 @@ class ProductDetailPage extends StatelessWidget {
           ),
         ],
       ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: PrimaryButton(
+          onPressed: () => context.router.push(ScanTicketsRoute()),
+          customRadius: 100,
+          child: left(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              spacing: 12,
+              children: <Widget>[
+                HeroIcon(
+                  HeroIcons.camera,
+                  color: Colors.white,
+                  size: 24,
+                ),
+                Text(
+                  scanTickets,
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: StoreConnector<AppState, ProductDetailViewModel>(
         converter: (Store<AppState> store) =>
             ProductDetailViewModel.fromState(store.state),
@@ -195,7 +223,9 @@ class ProductDetailPage extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            verySmallVerticalSizedBox,
+                            veryLargeVerticalSizedBox,
+                            veryLargeVerticalSizedBox,
+
                             // TODO(abiud): return this when the delete API for a product has proper workflow
                             // SecondaryButton(
                             //   fillColor:
@@ -229,34 +259,34 @@ class ProductDetailPage extends StatelessWidget {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: PrimaryButton(
-                    onPressed: () => context.router.push(ScanTicketsRoute()),
-                    customRadius: 100,
-                    child: left(
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        spacing: 12,
-                        children: <Widget>[
-                          HeroIcon(
-                            HeroIcons.camera,
-                            color: Colors.white,
-                            size: 24,
-                          ),
-                          Text(
-                            scanTickets,
-                            style:
-                                Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 16),
+                //   child: PrimaryButton(
+                //     onPressed: () => context.router.push(ScanTicketsRoute()),
+                //     customRadius: 100,
+                //     child: left(
+                //       Row(
+                //         mainAxisAlignment: MainAxisAlignment.center,
+                //         spacing: 12,
+                //         children: <Widget>[
+                //           HeroIcon(
+                //             HeroIcons.camera,
+                //             color: Colors.white,
+                //             size: 24,
+                //           ),
+                //           Text(
+                //             scanTickets,
+                //             style:
+                //                 Theme.of(context).textTheme.bodyLarge?.copyWith(
+                //                       color: Colors.white,
+                //                       fontWeight: FontWeight.bold,
+                //                     ),
+                //           ),
+                //         ],
+                //       ),
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           );
