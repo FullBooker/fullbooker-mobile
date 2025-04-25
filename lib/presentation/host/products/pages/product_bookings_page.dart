@@ -70,132 +70,112 @@ class ProductBookingsPage extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: SingleChildScrollView(
-            physics: NeverScrollableScrollPhysics(),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              spacing: 12,
               children: <Widget>[
-                Column(
-                  spacing: 24,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Column(
+                StoreConnector<AppState, ProductsBookingsViewModel>(
+                  converter: (Store<AppState> store) =>
+                      ProductsBookingsViewModel.fromState(store.state),
+                  builder: (
+                    BuildContext context,
+                    ProductsBookingsViewModel vm,
+                  ) {
+                    final ProductStats? stats = vm.stats;
+                    final int count = stats?.bookings ?? 0;
+                    final bool hasBookings = count > 0;
+
+                    return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       spacing: 12,
                       children: <Widget>[
-                        StoreConnector<AppState, ProductsBookingsViewModel>(
-                          converter: (Store<AppState> store) =>
-                              ProductsBookingsViewModel.fromState(store.state),
-                          builder: (
-                            BuildContext context,
-                            ProductsBookingsViewModel vm,
-                          ) {
-                            final ProductStats? stats = vm.stats;
-                            final int count = stats?.bookings ?? 0;
-                            final bool hasBookings = count > 0;
-
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              spacing: 12,
-                              children: <Widget>[
-                                Text(
-                                  vm.productName,
-                                  style:
-                                      Theme.of(context).textTheme.titleMedium,
-                                ),
-                                Text(
-                                  hasBookings
-                                      ? bookingsValue(count)
-                                      : noBookingsYet,
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                ),
-                                Text(
-                                  'KES ${stats?.revenue}',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleMedium
-                                      ?.copyWith(
-                                        color: Theme.of(context).primaryColor,
-                                      ),
-                                ),
-                              ],
-                            );
-                          },
+                        Text(
+                          vm.productName,
+                          style: Theme.of(context).textTheme.titleMedium,
                         ),
+                        Text(
+                          hasBookings ? bookingsValue(count) : noBookingsYet,
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                        Text(
+                          'KES ${stats?.revenue}',
+                          style:
+                              Theme.of(context).textTheme.titleMedium?.copyWith(
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                        ),
+                      ],
+                    );
+                  },
+                ),
 
-                        // TODO(abiud): add filter groups here
+                // TODO(abiud): add filter groups here
 
-                        StoreConnector<AppState, ProductsBookingsViewModel>(
-                          converter: (Store<AppState> store) =>
-                              ProductsBookingsViewModel.fromState(store.state),
-                          onInit: (Store<AppState> store) {
-                            context.dispatch(
-                              FetchProductBookingsAction(
-                                client:
-                                    AppWrapperBase.of(context)!.customClient,
+                StoreConnector<AppState, ProductsBookingsViewModel>(
+                  converter: (Store<AppState> store) =>
+                      ProductsBookingsViewModel.fromState(store.state),
+                  onInit: (Store<AppState> store) {
+                    context.dispatch(
+                      FetchProductBookingsAction(
+                        client: AppWrapperBase.of(context)!.customClient,
+                      ),
+                    );
+                  },
+                  builder: (
+                    BuildContext context,
+                    ProductsBookingsViewModel vm,
+                  ) {
+                    if (context.isWaiting(FetchProductBookingsAction)) {
+                      return AppLoading();
+                    }
+
+                    if (vm.bookings?.isEmpty ?? true) {
+                      return GenericZeroState(
+                        iconPath: bookingZeroStateSVGPath,
+                        title: noBookingsYet,
+                        description: noBookingsYetCopy,
+                        onCTATap: () {
+                          context.dispatch(
+                            FetchProductBookingsAction(
+                              client: AppWrapperBase.of(context)!.customClient,
+                            ),
+                          );
+                        },
+                        ctaText: tryAgain,
+                      );
+                    }
+
+                    return Column(
+                      spacing: 16,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        // TODO(abiud): restore this when we link bookings search
+                        // CustomTextInput(
+                        //   hintText: searchBookingsHint,
+                        //   autovalidateMode:
+                        //       AutovalidateMode.onUserInteraction,
+                        //   onChanged: (String param) {},
+                        //   keyboardType: TextInputType.name,
+                        //   prefixIconData: HeroIcons.magnifyingGlass,
+                        // ),
+                        ListView.builder(
+                          itemCount: vm.bookings?.length,
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemBuilder: (BuildContext context, int index) {
+                            final Booking? current = vm.bookings![index];
+
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 4,
                               ),
-                            );
-                          },
-                          builder: (
-                            BuildContext context,
-                            ProductsBookingsViewModel vm,
-                          ) {
-                            if (context.isWaiting(FetchProductBookingsAction)) {
-                              return AppLoading();
-                            }
-
-                            if (vm.bookings?.isEmpty ?? true) {
-                              return GenericZeroState(
-                                iconPath: bookingZeroStateSVGPath,
-                                title: noBookingsYet,
-                                description: noBookingsYetCopy,
-                                onCTATap: () {
-                                  context.dispatch(
-                                    FetchProductBookingsAction(
-                                      client: AppWrapperBase.of(context)!
-                                          .customClient,
-                                    ),
-                                  );
-                                },
-                                ctaText: tryAgain,
-                              );
-                            }
-
-                            return Column(
-                              spacing: 16,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                // TODO(abiud): restore this when we link bookings search
-                                // CustomTextInput(
-                                //   hintText: searchBookingsHint,
-                                //   autovalidateMode:
-                                //       AutovalidateMode.onUserInteraction,
-                                //   onChanged: (String param) {},
-                                //   keyboardType: TextInputType.name,
-                                //   prefixIconData: HeroIcons.magnifyingGlass,
-                                // ),
-                                ListView.builder(
-                                  itemCount: vm.bookings?.length,
-                                  physics: AlwaysScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    final Booking? current =
-                                        vm.bookings![index];
-
-                                    return Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        vertical: 4,
-                                      ),
-                                      child: BookingListItem(booking: current!),
-                                    );
-                                  },
-                                ),
-                              ],
+                              child: BookingListItem(booking: current!),
                             );
                           },
                         ),
                       ],
-                    ),
-                  ],
+                    );
+                  },
                 ),
               ],
             ),
