@@ -1,7 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
-import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:video_player/video_player.dart';
@@ -62,7 +60,9 @@ class FullscreenVideoPlayerPageState extends State<FullscreenVideoPlayerPage> {
 
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: CustomAppBar(title: playVideo),
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+      ),
       body: initialized
           ? GestureDetector(
               onTap: _toggleControls,

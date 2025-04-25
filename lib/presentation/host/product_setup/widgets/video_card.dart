@@ -73,13 +73,13 @@ class VideoCardState extends State<VideoCard> {
   Widget build(BuildContext context) {
     final bool isReadOnly = widget.readOnly;
 
-    const double radius = 8;
+
     return GestureDetector(
       onTap: () => context.router.push(
         FullscreenVideoPlayerRoute(videoUrl: widget.videoUrl),
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(radius),
+        borderRadius: BorderRadius.circular(8),
         child: Stack(
           fit: StackFit.expand,
           children: <Widget>[
