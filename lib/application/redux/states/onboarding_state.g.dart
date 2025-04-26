@@ -34,6 +34,14 @@ _$OnboardingStateImpl _$$OnboardingStateImplFromJson(
       hideResetPassword: json['hideResetPassword'] as bool? ?? true,
       hideResetConfirmPassword:
           json['hideResetConfirmPassword'] as bool? ?? true,
+      currentPassword: json['currentPassword'] as String? ?? UNKNOWN,
+      changePassword: json['changePassword'] as String? ?? UNKNOWN,
+      changePasswordConfirm:
+          json['changePasswordConfirm'] as String? ?? UNKNOWN,
+      hideCurrentPassword: json['hideCurrentPassword'] as bool? ?? true,
+      hideChangePassword: json['hideChangePassword'] as bool? ?? true,
+      hideChangeConfirmPassword:
+          json['hideChangeConfirmPassword'] as bool? ?? true,
     );
 
 Map<String, dynamic> _$$OnboardingStateImplToJson(
@@ -60,6 +68,12 @@ Map<String, dynamic> _$$OnboardingStateImplToJson(
       'resetPasswordConfirm': instance.resetPasswordConfirm,
       'hideResetPassword': instance.hideResetPassword,
       'hideResetConfirmPassword': instance.hideResetConfirmPassword,
+      'currentPassword': instance.currentPassword,
+      'changePassword': instance.changePassword,
+      'changePasswordConfirm': instance.changePasswordConfirm,
+      'hideCurrentPassword': instance.hideCurrentPassword,
+      'hideChangePassword': instance.hideChangePassword,
+      'hideChangeConfirmPassword': instance.hideChangeConfirmPassword,
     };
 
 const _$SignInMethodEnumMap = {

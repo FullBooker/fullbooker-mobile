@@ -6,7 +6,7 @@ import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
 import 'package:fullbooker/application/redux/actions/change_password_action.dart';
 import 'package:fullbooker/application/redux/actions/update_onboarding_state_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
-import 'package:fullbooker/application/redux/view_models/reset_password_view_model.dart';
+import 'package:fullbooker/application/redux/view_models/update_password_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/utils/utils.dart';
 import 'package:fullbooker/domain/core/value_objects/analytics_events.dart';
@@ -38,45 +38,43 @@ class UpdatePasswordPageState extends State<UpdatePasswordPage> {
       appBar: CustomAppBar(title: changePassword, showBell: false),
       floatingActionButton: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: StoreConnector<AppState, ResetPasswordViewModel>(
+        child: StoreConnector<AppState, UpdatePasswordViewModel>(
           converter: (Store<AppState> store) =>
-              ResetPasswordViewModel.fromState(store.state),
+              UpdatePasswordViewModel.fromState(store.state),
           builder: (
             BuildContext context,
-            ResetPasswordViewModel vm,
+            UpdatePasswordViewModel vm,
           ) {
             if (context.isWaiting(ChangePasswordAction)) {
               return AppLoading();
             }
 
             return PrimaryButton(
-              onPressed: () {
-                context.dispatch(
-                  ChangePasswordAction(
-                    onError: (String error) => showAlertDialog(
+              onPressed: () => context.dispatch(
+                ChangePasswordAction(
+                  onError: (String error) => showAlertDialog(
+                    context: context,
+                    assetPath: loginCredentialsSVGPath,
+                    description: error,
+                  ),
+                  onSuccess: () async {
+                    showAlertDialog(
                       context: context,
                       assetPath: loginCredentialsSVGPath,
-                      description: error,
-                    ),
-                    onSuccess: () async {
-                      showAlertDialog(
-                        context: context,
-                        assetPath: loginCredentialsSVGPath,
-                        title: passwordUpdated,
-                        description: passwordUpdatedCopy,
-                        onConfirm: () => context.router.push(LoginRoute()),
-                        showSecondary: false,
-                      );
+                      title: passwordUpdated,
+                      description: passwordUpdatedCopy,
+                      onConfirm: () => context.router.push(LoginRoute()),
+                      showSecondary: false,
+                    );
 
-                      await AnalyticsService().logEvent(
-                        name: changePasswordEvent,
-                        eventType: AnalyticsEventType.ONBOARDING,
-                      );
-                    },
-                    client: AppWrapperBase.of(context)!.customClient,
-                  ),
-                );
-              },
+                    await AnalyticsService().logEvent(
+                      name: changePasswordEvent,
+                      eventType: AnalyticsEventType.ONBOARDING,
+                    );
+                  },
+                  client: AppWrapperBase.of(context)!.customClient,
+                ),
+              ),
               child: d.right(changePassword),
             );
           },
@@ -85,10 +83,10 @@ class UpdatePasswordPageState extends State<UpdatePasswordPage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: Padding(
         padding: const EdgeInsets.all(16),
-        child: StoreConnector<AppState, ResetPasswordViewModel>(
+        child: StoreConnector<AppState, UpdatePasswordViewModel>(
           converter: (Store<AppState> store) =>
-              ResetPasswordViewModel.fromState(store.state),
-          builder: (BuildContext context, ResetPasswordViewModel vm) {
+              UpdatePasswordViewModel.fromState(store.state),
+          builder: (BuildContext context, UpdatePasswordViewModel vm) {
             return Column(
               spacing: 16,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -123,7 +121,7 @@ class UpdatePasswordPageState extends State<UpdatePasswordPage> {
                           onChanged: (String v) {
                             context.dispatch(
                               UpdateOnboardingStateAction(
-                                resetPassword: v.trim(),
+                                currentPassword: v.trim(),
                               ),
                             );
                           },
@@ -136,11 +134,11 @@ class UpdatePasswordPageState extends State<UpdatePasswordPage> {
                           suffixIconFunc: () {
                             context.dispatch(
                               UpdateOnboardingStateAction(
-                                hideResetPassword: !vm.hideResetPassword,
+                                hideCurrentPassword: !vm.hideCurrentPassword,
                               ),
                             );
                           },
-                          obscureText: vm.hideResetPassword,
+                          obscureText: vm.hideCurrentPassword,
                         ),
 
                         // New Password
@@ -153,7 +151,7 @@ class UpdatePasswordPageState extends State<UpdatePasswordPage> {
                           onChanged: (String v) {
                             context.dispatch(
                               UpdateOnboardingStateAction(
-                                resetPassword: v.trim(),
+                                changePassword: v.trim(),
                               ),
                             );
                           },
@@ -166,11 +164,11 @@ class UpdatePasswordPageState extends State<UpdatePasswordPage> {
                           suffixIconFunc: () {
                             context.dispatch(
                               UpdateOnboardingStateAction(
-                                hideResetPassword: !vm.hideResetPassword,
+                                hideChangePassword: !vm.hideChangePassword,
                               ),
                             );
                           },
-                          obscureText: vm.hideResetPassword,
+                          obscureText: vm.hideChangePassword,
                         ),
 
                         // Confirm new password
@@ -183,7 +181,7 @@ class UpdatePasswordPageState extends State<UpdatePasswordPage> {
                           onChanged: (String v) {
                             context.dispatch(
                               UpdateOnboardingStateAction(
-                                resetPasswordConfirm: v.trim(),
+                                changePasswordConfirm: v.trim(),
                               ),
                             );
                           },
@@ -196,12 +194,12 @@ class UpdatePasswordPageState extends State<UpdatePasswordPage> {
                           suffixIconFunc: () {
                             context.dispatch(
                               UpdateOnboardingStateAction(
-                                hideResetConfirmPassword:
-                                    !vm.hideResetConfirmPassword,
+                                hideChangeConfirmPassword:
+                                    !vm.hideChangeConfirmPassword,
                               ),
                             );
                           },
-                          obscureText: vm.hideResetConfirmPassword,
+                          obscureText: vm.hideChangeConfirmPassword,
                         ),
                       ],
                     ),

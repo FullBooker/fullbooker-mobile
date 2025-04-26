@@ -26,6 +26,14 @@ class UpdateOnboardingStateAction extends ReduxAction<AppState> {
     this.resetPasswordDebugOTP,
     this.resetPassword,
     this.resetPasswordConfirm,
+
+    // Update password
+    this.currentPassword,
+    this.changePassword,
+    this.changePasswordConfirm,
+    this.hideCurrentPassword,
+    this.hideChangePassword,
+    this.hideChangeConfirmPassword,
   });
 
   // Login
@@ -51,6 +59,14 @@ class UpdateOnboardingStateAction extends ReduxAction<AppState> {
   final bool? hideResetConfirmPassword;
   final String? resetPassword;
   final String? resetPasswordConfirm;
+
+  // Update password
+  final String? currentPassword;
+  final String? changePassword;
+  final String? changePasswordConfirm;
+  final bool? hideCurrentPassword;
+  final bool? hideChangePassword;
+  final bool? hideChangeConfirmPassword;
 
   @override
   AppState? reduce() {
@@ -86,6 +102,19 @@ class UpdateOnboardingStateAction extends ReduxAction<AppState> {
       resetPasswordConfirm:
           resetPasswordConfirm ?? state.onboardingState!.resetPasswordConfirm,
       phoneNumber: newPhone ?? state.onboardingState!.phoneNumber,
+
+      // Update password
+      currentPassword:
+          currentPassword ?? state.onboardingState!.currentPassword,
+      changePassword: changePassword ?? state.onboardingState!.changePassword,
+      changePasswordConfirm:
+          changePasswordConfirm ?? state.onboardingState!.changePasswordConfirm,
+      hideCurrentPassword:
+          hideCurrentPassword ?? state.onboardingState!.hideCurrentPassword,
+      hideChangePassword:
+          hideChangePassword ?? state.onboardingState!.hideChangePassword,
+      hideChangeConfirmPassword: hideChangeConfirmPassword ??
+          state.onboardingState!.hideChangeConfirmPassword,
     );
 
     return newState;
