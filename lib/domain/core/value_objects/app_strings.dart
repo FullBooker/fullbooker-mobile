@@ -501,6 +501,7 @@ const String ending = 'Ends on';
 const String atString = 'at';
 const String chooseTime = 'Choose time';
 const String repeatsLabel = 'Repeats';
+const String allDayLabel = 'All Day';
 const String dailyRepeatPrompt =
     'Choose a day of the week when your event repeats';
 const String weeklyRepeatPrompt =
@@ -672,7 +673,7 @@ const String debugTicketQR = 'Debug QR Code: ';
 const String fromString = 'From';
 const String toString = 'To';
 
-const String dailyPrompt = 'Your event will repeat daily from 9 AM to 10 PM';
+const String dailyPrompt = 'Your event will repeat daily';
 
 const String closedString = 'Closed';
 const String notProvided = 'Not Provided';

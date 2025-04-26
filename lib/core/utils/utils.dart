@@ -318,6 +318,23 @@ Widget formatTime({
   }
 }
 
+String formatTimeOnly({
+  String? time,
+}) {
+  if (time == null || time.isEmpty || time == UNKNOWN) {
+    return '';
+  }
+
+  try {
+    final TimeOfDay timeOfDay = stringToTimeOfDay(time);
+    final DateTime dateTime =
+        DateTime(0, 1, 1, timeOfDay.hour, timeOfDay.minute);
+    return DateFormat('h:mm a').format(dateTime);
+  } catch (_) {
+    return '';
+  }
+}
+
 void navigateToNextProductStep({
   required BuildContext context,
   required Product product,
@@ -340,7 +357,8 @@ void navigateToNextProductStep({
   }
 
   if ((product.scheduleID ?? UNKNOWN) == UNKNOWN) {
-    context.router.push(const ProductScheduleRoute());
+    context.router
+        .push(ProductScheduleRoute(workflowState: WorkflowState.CREATE));
     return;
   }
 

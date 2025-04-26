@@ -34,10 +34,10 @@ class FetchProductPricingAction extends ReduxAction<AppState> {
     final String currentProductID =
         state.hostState?.currentProduct?.id ?? UNKNOWN;
 
-    final bool isEdit = workflowState == WorkflowState.CREATE;
+    final bool isCreate = workflowState == WorkflowState.CREATE;
 
     final Map<String, dynamic> data = <String, dynamic>{
-      'product': isEdit ? currentProductID : selectProductID,
+      'product': isCreate ? currentProductID : selectProductID,
     };
 
     final Response httpResponse = await client.callRESTAPI(
@@ -60,7 +60,7 @@ class FetchProductPricingAction extends ReduxAction<AppState> {
     final ProductPricingResponse productPricingResponse =
         ProductPricingResponse.fromJson(body);
 
-    if (isEdit) {
+    if (isCreate) {
       dispatch(
         UpdateCurrentProductAction(
           pricing: productPricingResponse.results,

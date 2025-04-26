@@ -33,9 +33,9 @@ class SetProductLocationAction extends ReduxAction<AppState> {
     final String selectedProductID =
         state.hostState?.selectedProduct?.id ?? UNKNOWN;
 
-    final bool isEdit = workflowState == WorkflowState.VIEW;
+    final bool isCreate = workflowState == WorkflowState.VIEW;
 
-    final String ctxProductID = isEdit ? selectedProductID : currentProductID;
+    final String ctxProductID = isCreate ? selectedProductID : currentProductID;
 
     final String lat = state.hostState?.selectedLocation?.lat ?? UNKNOWN;
     final String long = state.hostState?.selectedLocation?.long ?? UNKNOWN;
@@ -82,7 +82,7 @@ class SetProductLocationAction extends ReduxAction<AppState> {
       ],
     );
 
-    if (isEdit) {
+    if (isCreate) {
       dispatch(UpdateHostStateAction(selectedProduct: updatedProduct));
     } else {
       dispatch(UpdateHostStateAction(currentProduct: updatedProduct));

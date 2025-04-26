@@ -2,6 +2,8 @@ import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
+import 'package:fullbooker/application/redux/actions/fetch_product_schedules_action.dart';
+import 'package:fullbooker/application/redux/actions/fetch_single_product_action.dart';
 import 'package:fullbooker/application/redux/actions/set_product_schedule_action.dart';
 import 'package:fullbooker/application/redux/actions/update_current_schedule_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
@@ -17,6 +19,7 @@ import 'package:dartz/dartz.dart' as d;
 import 'package:fullbooker/presentation/host/product_setup/widgets/repeats_monthly_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/repeats_weekly_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/repeats_yearly_widget.dart';
+import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/custom_dropdown.dart';
@@ -26,7 +29,9 @@ import 'package:heroicons/heroicons.dart';
 
 @RoutePage()
 class ProductSchedulePage extends StatelessWidget {
-  const ProductSchedulePage({super.key});
+  const ProductSchedulePage({super.key, required this.workflowState});
+
+  final WorkflowState workflowState;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +45,26 @@ class ProductSchedulePage extends StatelessWidget {
         child: StoreConnector<AppState, ProductSetupViewModel>(
           converter: (Store<AppState> store) =>
               ProductSetupViewModel.fromState(store.state),
+          onInit: (Store<AppState> store) {
+            context.dispatchAll(<ReduxAction<AppState>>[
+              FetchSingleProductAction(
+                client: AppWrapperBase.of(context)!.customClient,
+                workflowState: workflowState,
+              ),
+              FetchProductSchedulesAction(
+                client: AppWrapperBase.of(context)!.customClient,
+                workflowState: workflowState,
+              ),
+            ]);
+          },
           builder: (BuildContext context, ProductSetupViewModel vm) {
+            if (context.isWaiting(<Type>[
+              FetchSingleProductAction,
+              FetchProductSchedulesAction,
+            ])) {
+              return AppLoading();
+            }
+
             return Column(
               spacing: 12,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,6 +88,50 @@ class ProductSchedulePage extends StatelessWidget {
                               style: Theme.of(context).textTheme.bodyMedium,
                             ),
                           ],
+                        ),
+
+                        // All day checkbox
+                        InkWell(
+                          splashColor: Theme.of(context)
+                              .primaryColor
+                              .withValues(alpha: .1),
+                          borderRadius: BorderRadius.circular(8),
+                          highlightColor: Theme.of(context)
+                              .primaryColor
+                              .withValues(alpha: .1),
+                          onTap: () {
+                            context.dispatch(
+                              UpdateCurrentScheduleAction(
+                                isAllDay: !vm.isAllDay,
+                              ),
+                            );
+                          },
+                          child: Row(
+                            children: <Widget>[
+                              Checkbox(
+                                value: vm.isAllDay,
+                                onChanged: (bool? value) {
+                                  context.dispatch(
+                                    UpdateCurrentScheduleAction(
+                                      isAllDay: value,
+                                    ),
+                                  );
+                                },
+                                activeColor:
+                                    Theme.of(context).colorScheme.primary,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  allDayLabel,
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
 
                         // Starts on
@@ -137,72 +205,76 @@ class ProductSchedulePage extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            Expanded(
-                              child: Column(
-                                spacing: 12,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(
-                                    atString,
-                                    style:
-                                        Theme.of(context).textTheme.titleMedium,
-                                  ),
-                                  InkWell(
-                                    borderRadius: BorderRadius.circular(8),
-                                    splashColor: Theme.of(context)
-                                        .primaryColor
-                                        .withValues(alpha: .1),
-                                    onTap: () async {
-                                      final String? time =
-                                          await pickTime(context: context);
+                            if (!vm.isAllDay)
+                              Expanded(
+                                child: Column(
+                                  spacing: 12,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      atString,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium,
+                                    ),
+                                    InkWell(
+                                      borderRadius: BorderRadius.circular(8),
+                                      splashColor: Theme.of(context)
+                                          .primaryColor
+                                          .withValues(alpha: .1),
+                                      onTap: () async {
+                                        final String? time =
+                                            await pickTime(context: context);
 
-                                      context.dispatch(
-                                        UpdateCurrentScheduleAction(
-                                          startTime: time,
-                                        ),
-                                      );
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: Theme.of(context).dividerColor,
-                                        ),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      padding: EdgeInsets.all(12),
-                                      child: Row(
-                                        spacing: 12,
-                                        children: <Widget>[
-                                          HeroIcon(
-                                            HeroIcons.clock,
-                                            size: 20,
-                                            color: AppColors.bodyTextColor,
+                                        context.dispatch(
+                                          UpdateCurrentScheduleAction(
+                                            startTime: time,
                                           ),
-                                          if (vm.startTime != UNKNOWN)
-                                            formatTime(
-                                              time: vm.startTime,
-                                              textStyle: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium
-                                                  ?.copyWith(
-                                                    color: AppColors
-                                                        .textBlackColor,
-                                                  ),
-                                            )
-                                          else
-                                            Text(
-                                              chooseTime,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium,
+                                        );
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                            color:
+                                                Theme.of(context).dividerColor,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        padding: EdgeInsets.all(12),
+                                        child: Row(
+                                          spacing: 12,
+                                          children: <Widget>[
+                                            HeroIcon(
+                                              HeroIcons.clock,
+                                              size: 20,
+                                              color: AppColors.bodyTextColor,
                                             ),
-                                        ],
+                                            if (vm.startTime != UNKNOWN)
+                                              formatTime(
+                                                time: vm.startTime,
+                                                textStyle: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium
+                                                    ?.copyWith(
+                                                      color: AppColors
+                                                          .textBlackColor,
+                                                    ),
+                                              )
+                                            else
+                                              Text(
+                                                chooseTime,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium,
+                                              ),
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
                           ],
                         ),
 
@@ -277,72 +349,76 @@ class ProductSchedulePage extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            Expanded(
-                              child: Column(
-                                spacing: 12,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(
-                                    atString,
-                                    style:
-                                        Theme.of(context).textTheme.titleMedium,
-                                  ),
-                                  InkWell(
-                                    onTap: () async {
-                                      final String? time =
-                                          await pickTime(context: context);
+                            if (!vm.isAllDay)
+                              Expanded(
+                                child: Column(
+                                  spacing: 12,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      atString,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium,
+                                    ),
+                                    InkWell(
+                                      onTap: () async {
+                                        final String? time =
+                                            await pickTime(context: context);
 
-                                      context.dispatch(
-                                        UpdateCurrentScheduleAction(
-                                          endTime: time,
-                                        ),
-                                      );
-                                    },
-                                    splashColor: Theme.of(context)
-                                        .primaryColor
-                                        .withValues(alpha: .1),
-                                    borderRadius: BorderRadius.circular(8),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: Theme.of(context).dividerColor,
-                                        ),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      padding: EdgeInsets.all(12),
-                                      child: Row(
-                                        spacing: 12,
-                                        children: <Widget>[
-                                          HeroIcon(
-                                            HeroIcons.clock,
-                                            size: 20,
-                                            color: AppColors.bodyTextColor,
+                                        context.dispatch(
+                                          UpdateCurrentScheduleAction(
+                                            endTime: time,
                                           ),
-                                          if (vm.endTime != UNKNOWN)
-                                            formatTime(
-                                              time: vm.endTime,
-                                              textStyle: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium
-                                                  ?.copyWith(
-                                                    color: AppColors
-                                                        .textBlackColor,
-                                                  ),
-                                            )
-                                          else
-                                            Text(
-                                              chooseTime,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium,
+                                        );
+                                      },
+                                      splashColor: Theme.of(context)
+                                          .primaryColor
+                                          .withValues(alpha: .1),
+                                      borderRadius: BorderRadius.circular(8),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                            color:
+                                                Theme.of(context).dividerColor,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        padding: EdgeInsets.all(12),
+                                        child: Row(
+                                          spacing: 12,
+                                          children: <Widget>[
+                                            HeroIcon(
+                                              HeroIcons.clock,
+                                              size: 20,
+                                              color: AppColors.bodyTextColor,
                                             ),
-                                        ],
+                                            if (vm.endTime != UNKNOWN)
+                                              formatTime(
+                                                time: vm.endTime,
+                                                textStyle: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium
+                                                    ?.copyWith(
+                                                      color: AppColors
+                                                          .textBlackColor,
+                                                    ),
+                                              )
+                                            else
+                                              Text(
+                                                chooseTime,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium,
+                                              ),
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
                           ],
                         ),
 

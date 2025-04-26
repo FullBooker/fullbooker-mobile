@@ -141,7 +141,11 @@ class ProductLocationPage extends StatelessWidget {
                           onPressed: () => context.dispatch(
                             SetProductLocationAction(
                               onSuccess: () {
-                                context.router.push(ProductScheduleRoute());
+                                context.router.push(
+                                  ProductScheduleRoute(
+                                    workflowState: workflowState,
+                                  ),
+                                );
                               },
                               onError: (String error) => showAlertDialog(
                                 context: context,

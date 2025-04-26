@@ -156,7 +156,16 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                           Divider(),
                           PreviewHeaderWidget(
                             title: dateAndTime,
-                            // onEdit: () {},
+                            onEdit: () {
+                              context.dispatch(
+                                UpdateHostStateAction(currentProduct: product),
+                              );
+                              context.router.push(
+                                ProductScheduleRoute(
+                                  workflowState: workflowState,
+                                ),
+                              );
+                            },
                           ),
                           if ((product?.scheduleID ?? UNKNOWN) != UNKNOWN)
                             ProductScheduleWidget(workflowState: workflowState),

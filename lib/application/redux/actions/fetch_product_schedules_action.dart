@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/core/services/i_custom_client.dart';
 import 'package:fullbooker/application/redux/actions/update_current_product_action.dart';
+import 'package:fullbooker/application/redux/actions/update_host_state_action.dart';
 import 'package:fullbooker/application/redux/actions/update_selected_product_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/core/common/constants.dart';
@@ -54,9 +55,15 @@ class FetchProductSchedulesAction extends ReduxAction<AppState> {
     final ProductSchedule scheduleResponse = ProductSchedule.fromJson(body);
 
     if (workflowState == WorkflowState.CREATE) {
-      dispatch(UpdateCurrentProductAction(schedule: scheduleResponse));
+      dispatchAll(<ReduxAction<AppState>>[
+        UpdateCurrentProductAction(schedule: scheduleResponse),
+        UpdateHostStateAction(selectedSchedule: scheduleResponse),
+      ]);
     } else {
-      dispatch(UpdateSelectedProductAction(schedule: scheduleResponse));
+      dispatchAll(<ReduxAction<AppState>>[
+        UpdateSelectedProductAction(schedule: scheduleResponse),
+        UpdateHostStateAction(selectedSchedule: scheduleResponse),
+      ]);
     }
 
     return null;

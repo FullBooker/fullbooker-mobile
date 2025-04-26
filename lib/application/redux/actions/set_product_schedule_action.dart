@@ -34,6 +34,7 @@ class SetProductScheduleAction extends ReduxAction<AppState> {
     final String startTime = selectedSchedule?.startTime ?? UNKNOWN;
     final String endDate = selectedSchedule?.endDate ?? UNKNOWN;
     final String endTime = selectedSchedule?.endTime ?? UNKNOWN;
+    final bool isAllDay = selectedSchedule?.isAllDay ?? false;
 
     if (productID == UNKNOWN || startTime == UNKNOWN || endTime == UNKNOWN) {
       onError?.call(addDateTimeError);
@@ -51,6 +52,7 @@ class SetProductScheduleAction extends ReduxAction<AppState> {
       'end_date': endDate,
       'end_time': endTime,
       'repeat': repeats ? repeatOption : noRepeatSchedule,
+      'is_all_day': isAllDay,
     };
 
     if (repeats) {

@@ -52,8 +52,6 @@ import 'package:fullbooker/presentation/host/product_setup/pages/choose_location
     as _i7;
 import 'package:fullbooker/presentation/host/product_setup/pages/product_basic_details_page.dart'
     as _i24;
-import 'package:fullbooker/presentation/host/product_setup/pages/product_date_time_page.dart'
-    as _i31;
 import 'package:fullbooker/presentation/host/product_setup/pages/product_location_page.dart'
     as _i27;
 import 'package:fullbooker/presentation/host/product_setup/pages/product_photos_page.dart'
@@ -64,6 +62,8 @@ import 'package:fullbooker/presentation/host/product_setup/pages/product_review_
     as _i30;
 import 'package:fullbooker/presentation/host/product_setup/pages/product_setup_preview_page.dart'
     as _i32;
+import 'package:fullbooker/presentation/host/product_setup/pages/product_shedule_page.dart'
+    as _i31;
 import 'package:fullbooker/presentation/host/product_setup/pages/product_videos_page.dart'
     as _i33;
 import 'package:fullbooker/presentation/host/product_setup/pages/setup_product_category_page.dart'
@@ -1092,18 +1092,43 @@ class ProductReviewAndSubmitRouteArgs {
 
 /// generated route for
 /// [_i31.ProductSchedulePage]
-class ProductScheduleRoute extends _i46.PageRouteInfo<void> {
-  const ProductScheduleRoute({List<_i46.PageRouteInfo>? children})
-    : super(ProductScheduleRoute.name, initialChildren: children);
+class ProductScheduleRoute
+    extends _i46.PageRouteInfo<ProductScheduleRouteArgs> {
+  ProductScheduleRoute({
+    _i47.Key? key,
+    required _i51.WorkflowState workflowState,
+    List<_i46.PageRouteInfo>? children,
+  }) : super(
+         ProductScheduleRoute.name,
+         args: ProductScheduleRouteArgs(key: key, workflowState: workflowState),
+         initialChildren: children,
+       );
 
   static const String name = 'ProductScheduleRoute';
 
   static _i46.PageInfo page = _i46.PageInfo(
     name,
     builder: (data) {
-      return const _i31.ProductSchedulePage();
+      final args = data.argsAs<ProductScheduleRouteArgs>();
+      return _i31.ProductSchedulePage(
+        key: args.key,
+        workflowState: args.workflowState,
+      );
     },
   );
+}
+
+class ProductScheduleRouteArgs {
+  const ProductScheduleRouteArgs({this.key, required this.workflowState});
+
+  final _i47.Key? key;
+
+  final _i51.WorkflowState workflowState;
+
+  @override
+  String toString() {
+    return 'ProductScheduleRouteArgs{key: $key, workflowState: $workflowState}';
+  }
 }
 
 /// generated route for

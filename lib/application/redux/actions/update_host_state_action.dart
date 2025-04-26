@@ -3,6 +3,7 @@ import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/domain/core/entities/currency.dart';
 import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/entities/product_location.dart';
+import 'package:fullbooker/domain/core/entities/product_schedule.dart';
 
 class UpdateHostStateAction extends ReduxAction<AppState> {
   UpdateHostStateAction({
@@ -14,6 +15,7 @@ class UpdateHostStateAction extends ReduxAction<AppState> {
     this.selectedPricingTier,
     this.currentScannedTicketID,
     this.isValidTicket,
+    this.selectedSchedule,
   });
 
   final Product? selectedProduct;
@@ -24,6 +26,7 @@ class UpdateHostStateAction extends ReduxAction<AppState> {
   final String? selectedPricingTier;
   final String? currentScannedTicketID;
   final bool? isValidTicket;
+  final ProductSchedule? selectedSchedule;
 
   @override
   AppState? reduce() {
@@ -38,6 +41,7 @@ class UpdateHostStateAction extends ReduxAction<AppState> {
       currentScannedTicketID:
           currentScannedTicketID ?? state.hostState?.currentScannedTicketID,
       isValidTicket: isValidTicket ?? state.hostState?.isValidTicket,
+      selectedSchedule: selectedSchedule ?? state.hostState?.selectedSchedule,
     );
 
     return newState;

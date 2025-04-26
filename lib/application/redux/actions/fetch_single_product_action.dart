@@ -33,9 +33,9 @@ class FetchSingleProductAction extends ReduxAction<AppState> {
     final String currentProductID =
         state.hostState?.currentProduct?.id ?? UNKNOWN;
 
-    final bool isEdit = workflowState == WorkflowState.CREATE;
+    final bool isCreate = workflowState == WorkflowState.CREATE;
 
-    final String ctxProductId = isEdit ? currentProductID : selectProductID;
+    final String ctxProductId = isCreate ? currentProductID : selectProductID;
 
     final String baseEndpoint = GetIt.I.get<AppConfig>().getProductsEndpoint;
 
@@ -59,17 +59,23 @@ class FetchSingleProductAction extends ReduxAction<AppState> {
 
     final Product product = Product.fromJson(body);
 
-    if (isEdit) {
-      dispatch(UpdateHostStateAction(currentProduct: product));
-      return state;
-    } else {
-      dispatchAll(<ReduxAction<AppState>>[
-        UpdateHostStateAction(selectedProduct: product),
+    if (isCreate) {
+      dispatch(
         UpdateHostStateAction(
+          currentProduct: product,
           selectedLocation:
               product.locations?.first ?? ProductLocation.initial(),
         ),
-      ]);
+      );
+      return state;
+    } else {
+      dispatch(
+        UpdateHostStateAction(
+          selectedProduct: product,
+          selectedLocation:
+              product.locations?.first ?? ProductLocation.initial(),
+        ),
+      );
 
       return state;
     }
