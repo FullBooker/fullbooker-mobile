@@ -924,18 +924,46 @@ class PaymentSummaryRouteArgs {
 
 /// generated route for
 /// [_i24.ProductBasicDetailsPage]
-class ProductBasicDetailsRoute extends _i46.PageRouteInfo<void> {
-  const ProductBasicDetailsRoute({List<_i46.PageRouteInfo>? children})
-    : super(ProductBasicDetailsRoute.name, initialChildren: children);
+class ProductBasicDetailsRoute
+    extends _i46.PageRouteInfo<ProductBasicDetailsRouteArgs> {
+  ProductBasicDetailsRoute({
+    _i47.Key? key,
+    required _i51.WorkflowState workflowState,
+    List<_i46.PageRouteInfo>? children,
+  }) : super(
+         ProductBasicDetailsRoute.name,
+         args: ProductBasicDetailsRouteArgs(
+           key: key,
+           workflowState: workflowState,
+         ),
+         initialChildren: children,
+       );
 
   static const String name = 'ProductBasicDetailsRoute';
 
   static _i46.PageInfo page = _i46.PageInfo(
     name,
     builder: (data) {
-      return const _i24.ProductBasicDetailsPage();
+      final args = data.argsAs<ProductBasicDetailsRouteArgs>();
+      return _i24.ProductBasicDetailsPage(
+        key: args.key,
+        workflowState: args.workflowState,
+      );
     },
   );
+}
+
+class ProductBasicDetailsRouteArgs {
+  const ProductBasicDetailsRouteArgs({this.key, required this.workflowState});
+
+  final _i47.Key? key;
+
+  final _i51.WorkflowState workflowState;
+
+  @override
+  String toString() {
+    return 'ProductBasicDetailsRouteArgs{key: $key, workflowState: $workflowState}';
+  }
 }
 
 /// generated route for

@@ -3,6 +3,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
 import 'package:fullbooker/application/redux/actions/create_product_action.dart';
+import 'package:fullbooker/application/redux/actions/fetch_single_product_action.dart';
 import 'package:fullbooker/application/redux/actions/update_current_product_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/products_page_view_model.dart';
@@ -20,15 +21,11 @@ import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
 
 @RoutePage()
-class ProductBasicDetailsPage extends StatefulWidget {
-  const ProductBasicDetailsPage({super.key});
+class ProductBasicDetailsPage extends StatelessWidget {
+  ProductBasicDetailsPage({super.key, required this.workflowState});
 
-  @override
-  State<ProductBasicDetailsPage> createState() =>
-      _ProductBasicDetailsPageState();
-}
+  final WorkflowState workflowState;
 
-class _ProductBasicDetailsPageState extends State<ProductBasicDetailsPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -71,7 +68,7 @@ class _ProductBasicDetailsPageState extends State<ProductBasicDetailsPage> {
                         ),
                         CustomTextInput(
                           hintText: nameYourProduct,
-                          labelText: nameString,
+                          labelText: '$nameString*',
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (String? value) => validateProductName(
                             value,
@@ -103,6 +100,14 @@ class _ProductBasicDetailsPageState extends State<ProductBasicDetailsPage> {
                   StoreConnector<AppState, ProductsPageViewModel>(
                     converter: (Store<AppState> store) =>
                         ProductsPageViewModel.fromState(store.state),
+                    onInit: (Store<AppState> store) {
+                      context.dispatch(
+                        FetchSingleProductAction(
+                          client: AppWrapperBase.of(context)!.customClient,
+                          workflowState: workflowState,
+                        ),
+                      );
+                    },
                     builder: (BuildContext context, ProductsPageViewModel vm) {
                       if (context.isWaiting(CreateProductAction)) {
                         return AppLoading();

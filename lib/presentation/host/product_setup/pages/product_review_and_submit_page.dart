@@ -102,7 +102,16 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                           // Basic details
                           PreviewHeaderWidget(
                             title: basicDetails,
-                            // onEdit: () {},
+                            onEdit: () {
+                              context.dispatch(
+                                UpdateHostStateAction(currentProduct: product),
+                              );
+                              context.router.push(
+                                ProductBasicDetailsRoute(
+                                  workflowState: workflowState,
+                                ),
+                              );
+                            },
                           ),
                           Column(
                             spacing: 4,
