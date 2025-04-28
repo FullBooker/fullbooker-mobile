@@ -12,6 +12,7 @@ import 'package:fullbooker/shared/entities/location_perms_result.dart';
 class ProductSetupViewModel extends Vm {
   ProductSetupViewModel({
     required this.currentProduct,
+    required this.selectedProduct,
     required this.productCategories,
     required this.locationPerms,
     required this.startDate,
@@ -33,6 +34,8 @@ class ProductSetupViewModel extends Vm {
     required this.selectedPricingTier,
     required this.selectedPricing,
     required this.buyerPaysFee,
+    required this.name,
+    required this.description,
   }) : super(
           equals: <Object?>[
             currentProduct,
@@ -57,10 +60,16 @@ class ProductSetupViewModel extends Vm {
             selectedPricingTier,
             selectedPricing,
             buyerPaysFee,
+            name,
+            description,
           ],
         );
 
   final Product? currentProduct;
+  final Product? selectedProduct;
+  final String name;
+  final String description;
+
   final List<ProductCategory>? productCategories;
   final LocationPermsResult? locationPerms;
   final String startDate;
@@ -88,7 +97,11 @@ class ProductSetupViewModel extends Vm {
   static ProductSetupViewModel fromState(AppState state) {
     return ProductSetupViewModel(
       currentProduct: state.hostState?.currentProduct,
-      productCategories: state.hostState?.productCategories,
+      selectedProduct: state.hostState?.selectedProduct,
+      name: state.hostState?.currentProduct?.name ?? UNKNOWN,
+      description: state.hostState?.currentProduct?.description ?? UNKNOWN,
+      productCategories:
+          state.hostState?.productCategories ?? <ProductCategory>[],
       locationPerms: state.hostState?.locationPerms,
       startDate: state.hostState?.selectedSchedule?.startDate ?? UNKNOWN,
       startTime: state.hostState?.selectedSchedule?.startTime ?? UNKNOWN,

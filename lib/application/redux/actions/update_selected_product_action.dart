@@ -14,8 +14,12 @@ class UpdateSelectedProductAction extends ReduxAction<AppState> {
     this.schedule,
     this.stats,
     this.bookings,
+    this.name,
+    this.description,
   });
 
+  final String? description;
+  final String? name;
   final List<ProductMedia?>? photos;
   final List<ProductMedia?>? videos;
   final List<ProductPricing?>? productPricing;
@@ -31,6 +35,8 @@ class UpdateSelectedProductAction extends ReduxAction<AppState> {
       schedule: schedule ?? state.hostState?.selectedProduct?.schedule,
       stats: stats ?? state.hostState?.selectedProduct?.stats,
       bookings: bookings ?? state.hostState?.selectedProduct?.bookings,
+      name: name ?? state.hostState?.selectedProduct?.name,
+      description: description ?? state.hostState?.selectedProduct?.description,
     );
 
     return newState;

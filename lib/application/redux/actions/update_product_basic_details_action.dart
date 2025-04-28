@@ -12,8 +12,8 @@ import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
 
-class CreateProductAction extends ReduxAction<AppState> {
-  CreateProductAction({
+class UpdateProductBasicDetailsAction extends ReduxAction<AppState> {
+  UpdateProductBasicDetailsAction({
     this.onSuccess,
     this.onError,
     required this.client,
@@ -25,28 +25,30 @@ class CreateProductAction extends ReduxAction<AppState> {
 
   @override
   Future<AppState?> reduce() async {
-    final String name = state.hostState?.currentProduct?.name ?? UNKNOWN;
+    final String productID = state.hostState?.selectedProduct?.id ?? UNKNOWN;
+    final String name = state.hostState?.selectedProduct?.name ?? UNKNOWN;
     final String description =
-        state.hostState?.currentProduct?.description ?? '';
-    final String subcategory =
-        state.hostState?.currentProduct?.selectedProductSubCategory?.id ??
-            UNKNOWN;
+        state.hostState?.selectedProduct?.description ?? UNKNOWN;
 
-    if (name == UNKNOWN || subcategory == UNKNOWN) {
+    if (name == UNKNOWN) {
       onError?.call(createProductError);
 
       return null;
     }
 
     final Map<String, String> data = <String, String>{
+      'product': productID,
       'name': name,
-      'description': description,
-      'subcategory': subcategory,
+      if (description != UNKNOWN && description.isNotEmpty)
+        'description': description,
     };
 
+    final String baseEndpoint = GetIt.I.get<AppConfig>().getProductsEndpoint;
+    final String fullEndpoint = '$baseEndpoint$productID';
+
     final Response httpResponse = await client.callRESTAPI(
-      endpoint: GetIt.I.get<AppConfig>().getProductsEndpoint,
-      method: APIMethods.POST.name.toUpperCase(),
+      endpoint: fullEndpoint,
+      method: APIMethods.PATCH.name.toUpperCase(),
       variables: data,
     );
 
@@ -63,7 +65,7 @@ class CreateProductAction extends ReduxAction<AppState> {
 
     final Product createdProduct = Product.fromJson(body);
 
-    dispatch(UpdateHostStateAction(currentProduct: createdProduct));
+    dispatch(UpdateHostStateAction(selectedProduct: createdProduct));
 
     onSuccess?.call();
 
