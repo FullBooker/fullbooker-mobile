@@ -382,11 +382,6 @@ void navigateToNextProductStep({
 }
 
 bool isProductComplete({required Product product}) {
-  // Explicit true overrides all checks
-  if ((product.completed ?? false) || (product.active ?? false)) {
-    return true;
-  }
-
   final bool hasName = product.name?.trim().isNotEmpty ?? false;
   final bool hasLocation = product.locations?.isNotEmpty ?? false;
   final bool hasSchedule = (product.scheduleID ?? UNKNOWN) != UNKNOWN;

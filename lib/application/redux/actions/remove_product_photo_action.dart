@@ -4,6 +4,7 @@ import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/core/services/i_custom_client.dart';
 import 'package:fullbooker/application/redux/actions/update_product_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
+import 'package:fullbooker/application/redux/states/host_state.dart';
 import 'package:fullbooker/domain/core/entities/product_media.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
@@ -42,13 +43,17 @@ class RemoveProductPhotoAction extends ReduxAction<AppState> {
       return null;
     }
 
-    final List<ProductMedia> currentPhotos = state
-            .hostState?.currentProduct?.photos
-            ?.whereType<ProductMedia>()
-            .toList() ??
-        <ProductMedia>[];
+    final HostState? host = state.hostState;
 
-    final List<ProductMedia> updatedPhotos = currentPhotos
+    final bool isEdit = host?.workflowState == WorkflowState.VIEW;
+
+    final List<ProductMedia> existingPhotos =
+        (isEdit ? host?.selectedProduct?.photos : host?.currentProduct?.photos)
+                ?.whereType<ProductMedia>()
+                .toList() ??
+            <ProductMedia>[];
+
+    final List<ProductMedia> updatedPhotos = existingPhotos
       ..removeWhere((ProductMedia item) => item.id == photo.id);
 
     dispatch(UpdateProductAction(photos: updatedPhotos));

@@ -64,7 +64,7 @@ import 'package:fullbooker/presentation/host/product_setup/pages/product_review_
     as _i31;
 import 'package:fullbooker/presentation/host/product_setup/pages/product_setup_preview_page.dart'
     as _i33;
-import 'package:fullbooker/presentation/host/product_setup/pages/product_shedule_page.dart'
+import 'package:fullbooker/presentation/host/product_setup/pages/product_schedule_page.dart'
     as _i32;
 import 'package:fullbooker/presentation/host/product_setup/pages/product_sub_category_page.dart'
     as _i34;
