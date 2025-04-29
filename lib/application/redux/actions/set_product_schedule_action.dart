@@ -34,6 +34,7 @@ class SetProductScheduleAction extends ReduxAction<AppState> {
     final String startTime = selectedSchedule?.startTime ?? UNKNOWN;
     final String endDate = selectedSchedule?.endDate ?? UNKNOWN;
     final String endTime = selectedSchedule?.endTime ?? UNKNOWN;
+    final bool isAllDay = selectedSchedule?.isAllDay ?? false;
 
     if (productID == UNKNOWN || startTime == UNKNOWN || endTime == UNKNOWN) {
       onError?.call(addDateTimeError);
@@ -51,6 +52,7 @@ class SetProductScheduleAction extends ReduxAction<AppState> {
       'end_date': endDate,
       'end_time': endTime,
       'repeat': repeats ? repeatOption : noRepeatSchedule,
+      'is_all_day': isAllDay,
     };
 
     if (repeats) {
@@ -134,10 +136,12 @@ class SetProductScheduleAction extends ReduxAction<AppState> {
         ProductSchedule.fromJson(responseBody);
 
     final Product? newCurrent = product?.copyWith(schedule: savedSchedule);
-    dispatch(UpdateHostStateAction(currentProduct: newCurrent));
+
+    dispatch(UpdateHostStateAction(contextProduct: newCurrent));
 
     onSuccess?.call();
-    return state;
+
+    return null;
   }
 
   String _monthName(int month) {

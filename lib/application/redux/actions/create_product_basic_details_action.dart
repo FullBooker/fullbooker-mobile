@@ -2,19 +2,18 @@ import 'dart:convert';
 
 import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/core/services/i_custom_client.dart';
-import 'package:fullbooker/application/redux/actions/fetch_single_product_action.dart';
+import 'package:fullbooker/application/redux/actions/update_host_state_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/core/common/constants.dart';
-import 'package:fullbooker/domain/core/entities/currency.dart';
-import 'package:fullbooker/domain/core/entities/product_pricing.dart';
+import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
 
-class SaveProductPricingAction extends ReduxAction<AppState> {
-  SaveProductPricingAction({
+class CreateProductBasicDetailsAction extends ReduxAction<AppState> {
+  CreateProductBasicDetailsAction({
     this.onSuccess,
     this.onError,
     required this.client,
@@ -26,24 +25,27 @@ class SaveProductPricingAction extends ReduxAction<AppState> {
 
   @override
   Future<AppState?> reduce() async {
-    final String productID = state.hostState?.currentProduct?.id ?? UNKNOWN;
-    final ProductPricing? selectedPricing =
-        state.hostState?.selectedProductPricing;
-    final Currency? selectedCurrency = state.hostState?.selectedCurrency;
+    final String name = state.hostState?.currentProduct?.name ?? UNKNOWN;
+    final String description =
+        state.hostState?.currentProduct?.description ?? '';
+    final String subcategory =
+        state.hostState?.currentProduct?.selectedProductSubCategory?.id ??
+            UNKNOWN;
 
-    final Map<String, dynamic> data = <String, dynamic>{
-      'product': productID,
-      'currency': selectedCurrency?.id ?? UNKNOWN,
-      'cost': selectedPricing?.cost,
-      'type': selectedPricing?.type,
-      'ticket_tier': selectedPricing?.ticketTier,
-      'maximum_number_of_tickets': selectedPricing?.maxTickets,
+    if (name == UNKNOWN || subcategory == UNKNOWN) {
+      onError?.call(createProductError);
+
+      return null;
+    }
+
+    final Map<String, String> data = <String, String>{
+      'name': name,
+      'description': description,
+      'subcategory': subcategory,
     };
 
-    final String endpoint = GetIt.I.get<AppConfig>().productPricingEndpoint;
-
     final Response httpResponse = await client.callRESTAPI(
-      endpoint: endpoint,
+      endpoint: GetIt.I.get<AppConfig>().getProductsEndpoint,
       method: APIMethods.POST.name.toUpperCase(),
       variables: data,
     );
@@ -59,10 +61,12 @@ class SaveProductPricingAction extends ReduxAction<AppState> {
       return null;
     }
 
-    dispatch(FetchSingleProductAction(client: client));
+    final Product createdProduct = Product.fromJson(body);
+
+    dispatch(UpdateHostStateAction(contextProduct: createdProduct));
 
     onSuccess?.call();
 
-    return null;
+    return state;
   }
 }

@@ -157,9 +157,7 @@ class ProductSetupPreviewPage extends StatelessWidget {
               ),
             ),
             PrimaryButton(
-              onPressed: () {
-                context.router.push(ProductBasicDetailsRoute());
-              },
+              onPressed: () => context.router.push(ProductBasicDetailsRoute()),
               child: d.right(beginString),
             ),
             SecondaryButton(

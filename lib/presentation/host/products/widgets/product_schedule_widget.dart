@@ -1,7 +1,7 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
-import 'package:fullbooker/application/redux/actions/fetch_product_schedules_action.dart';
+import 'package:fullbooker/application/redux/actions/fetch_product_schedule_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_detail_view_model.dart';
 import 'package:fullbooker/core/common/constants.dart';
@@ -10,14 +10,11 @@ import 'package:fullbooker/core/utils/utils.dart';
 import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/entities/product_schedule.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
-import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:heroicons/heroicons.dart';
 
 class ProductScheduleWidget extends StatelessWidget {
-  const ProductScheduleWidget({super.key, required this.workflowState});
-
-  final WorkflowState workflowState;
+  const ProductScheduleWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +23,8 @@ class ProductScheduleWidget extends StatelessWidget {
           ProductDetailViewModel.fromState(store.state),
       onInit: (Store<AppState> store) {
         context.dispatch(
-          FetchProductSchedulesAction(
+          FetchProductScheduleAction(
             client: AppWrapperBase.of(context)!.customClient,
-            workflowState: workflowState,
           ),
         );
       },
@@ -50,7 +46,7 @@ class ProductScheduleWidget extends StatelessWidget {
             schedule.endTime!.isNotEmpty &&
             schedule.endTime != UNKNOWN;
 
-        if (context.isWaiting(FetchProductSchedulesAction)) {
+        if (context.isWaiting(FetchProductScheduleAction)) {
           return AppLoading();
         }
 

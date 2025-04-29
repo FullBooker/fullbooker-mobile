@@ -10,8 +10,9 @@ const String kDevResetPasswordEndpoint =
 const String kDevRefreshTokenEndpoint = '$kDevAPIBaseURL/accounts/refresh/';
 const String kDevProductsEndpoint = '$kDevAPIBaseURL/products/';
 const String kDevProfileEndpoint = '$kDevAPIBaseURL/accounts/profile';
-const String kDevProductCategoriesEndpoint = '$kDevAPIBaseURL/categories';
-const String kDevProductSubCategoriesEndpoint = '$kDevAPIBaseURL/subcategories';
+const String kDevProductCategoriesEndpoint = '$kDevAPIBaseURL/categories/';
+const String kDevProductSubCategoriesEndpoint =
+    '$kDevAPIBaseURL/subcategories/';
 const String kDevLocationEndpoint = '$kDevAPIBaseURL/location/';
 const String kDevProductScheduleEndpoint = '$kDevAPIBaseURL/schedules/';
 const String kDevMediaEndpoint = '$kDevAPIBaseURL/media/';

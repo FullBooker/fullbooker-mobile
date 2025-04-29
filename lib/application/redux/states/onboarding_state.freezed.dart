@@ -46,7 +46,14 @@ mixin _$OnboardingState {
   String get resetPassword => throw _privateConstructorUsedError;
   String get resetPasswordConfirm => throw _privateConstructorUsedError;
   bool get hideResetPassword => throw _privateConstructorUsedError;
-  bool get hideResetConfirmPassword => throw _privateConstructorUsedError;
+  bool get hideResetConfirmPassword =>
+      throw _privateConstructorUsedError; // CHANGE PASSWORD FROM PROFILE
+  String get currentPassword => throw _privateConstructorUsedError;
+  String get changePassword => throw _privateConstructorUsedError;
+  String get changePasswordConfirm => throw _privateConstructorUsedError;
+  bool get hideCurrentPassword => throw _privateConstructorUsedError;
+  bool get hideChangePassword => throw _privateConstructorUsedError;
+  bool get hideChangeConfirmPassword => throw _privateConstructorUsedError;
 
   /// Serializes this OnboardingState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -85,7 +92,13 @@ abstract class $OnboardingStateCopyWith<$Res> {
       String resetPassword,
       String resetPasswordConfirm,
       bool hideResetPassword,
-      bool hideResetConfirmPassword});
+      bool hideResetConfirmPassword,
+      String currentPassword,
+      String changePassword,
+      String changePasswordConfirm,
+      bool hideCurrentPassword,
+      bool hideChangePassword,
+      bool hideChangeConfirmPassword});
 }
 
 /// @nodoc
@@ -124,6 +137,12 @@ class _$OnboardingStateCopyWithImpl<$Res, $Val extends OnboardingState>
     Object? resetPasswordConfirm = null,
     Object? hideResetPassword = null,
     Object? hideResetConfirmPassword = null,
+    Object? currentPassword = null,
+    Object? changePassword = null,
+    Object? changePasswordConfirm = null,
+    Object? hideCurrentPassword = null,
+    Object? hideChangePassword = null,
+    Object? hideChangeConfirmPassword = null,
   }) {
     return _then(_value.copyWith(
       signInMethod: null == signInMethod
@@ -210,6 +229,30 @@ class _$OnboardingStateCopyWithImpl<$Res, $Val extends OnboardingState>
           ? _value.hideResetConfirmPassword
           : hideResetConfirmPassword // ignore: cast_nullable_to_non_nullable
               as bool,
+      currentPassword: null == currentPassword
+          ? _value.currentPassword
+          : currentPassword // ignore: cast_nullable_to_non_nullable
+              as String,
+      changePassword: null == changePassword
+          ? _value.changePassword
+          : changePassword // ignore: cast_nullable_to_non_nullable
+              as String,
+      changePasswordConfirm: null == changePasswordConfirm
+          ? _value.changePasswordConfirm
+          : changePasswordConfirm // ignore: cast_nullable_to_non_nullable
+              as String,
+      hideCurrentPassword: null == hideCurrentPassword
+          ? _value.hideCurrentPassword
+          : hideCurrentPassword // ignore: cast_nullable_to_non_nullable
+              as bool,
+      hideChangePassword: null == hideChangePassword
+          ? _value.hideChangePassword
+          : hideChangePassword // ignore: cast_nullable_to_non_nullable
+              as bool,
+      hideChangeConfirmPassword: null == hideChangeConfirmPassword
+          ? _value.hideChangeConfirmPassword
+          : hideChangeConfirmPassword // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -243,7 +286,13 @@ abstract class _$$OnboardingStateImplCopyWith<$Res>
       String resetPassword,
       String resetPasswordConfirm,
       bool hideResetPassword,
-      bool hideResetConfirmPassword});
+      bool hideResetConfirmPassword,
+      String currentPassword,
+      String changePassword,
+      String changePasswordConfirm,
+      bool hideCurrentPassword,
+      bool hideChangePassword,
+      bool hideChangeConfirmPassword});
 }
 
 /// @nodoc
@@ -280,6 +329,12 @@ class __$$OnboardingStateImplCopyWithImpl<$Res>
     Object? resetPasswordConfirm = null,
     Object? hideResetPassword = null,
     Object? hideResetConfirmPassword = null,
+    Object? currentPassword = null,
+    Object? changePassword = null,
+    Object? changePasswordConfirm = null,
+    Object? hideCurrentPassword = null,
+    Object? hideChangePassword = null,
+    Object? hideChangeConfirmPassword = null,
   }) {
     return _then(_$OnboardingStateImpl(
       signInMethod: null == signInMethod
@@ -366,6 +421,30 @@ class __$$OnboardingStateImplCopyWithImpl<$Res>
           ? _value.hideResetConfirmPassword
           : hideResetConfirmPassword // ignore: cast_nullable_to_non_nullable
               as bool,
+      currentPassword: null == currentPassword
+          ? _value.currentPassword
+          : currentPassword // ignore: cast_nullable_to_non_nullable
+              as String,
+      changePassword: null == changePassword
+          ? _value.changePassword
+          : changePassword // ignore: cast_nullable_to_non_nullable
+              as String,
+      changePasswordConfirm: null == changePasswordConfirm
+          ? _value.changePasswordConfirm
+          : changePasswordConfirm // ignore: cast_nullable_to_non_nullable
+              as String,
+      hideCurrentPassword: null == hideCurrentPassword
+          ? _value.hideCurrentPassword
+          : hideCurrentPassword // ignore: cast_nullable_to_non_nullable
+              as bool,
+      hideChangePassword: null == hideChangePassword
+          ? _value.hideChangePassword
+          : hideChangePassword // ignore: cast_nullable_to_non_nullable
+              as bool,
+      hideChangeConfirmPassword: null == hideChangeConfirmPassword
+          ? _value.hideChangeConfirmPassword
+          : hideChangeConfirmPassword // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -395,7 +474,13 @@ class _$OnboardingStateImpl implements _OnboardingState {
       this.resetPassword = UNKNOWN,
       this.resetPasswordConfirm = UNKNOWN,
       this.hideResetPassword = true,
-      this.hideResetConfirmPassword = true});
+      this.hideResetConfirmPassword = true,
+      this.currentPassword = UNKNOWN,
+      this.changePassword = UNKNOWN,
+      this.changePasswordConfirm = UNKNOWN,
+      this.hideCurrentPassword = true,
+      this.hideChangePassword = true,
+      this.hideChangeConfirmPassword = true});
 
   factory _$OnboardingStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$OnboardingStateImplFromJson(json);
@@ -469,10 +554,29 @@ class _$OnboardingStateImpl implements _OnboardingState {
   @override
   @JsonKey()
   final bool hideResetConfirmPassword;
+// CHANGE PASSWORD FROM PROFILE
+  @override
+  @JsonKey()
+  final String currentPassword;
+  @override
+  @JsonKey()
+  final String changePassword;
+  @override
+  @JsonKey()
+  final String changePasswordConfirm;
+  @override
+  @JsonKey()
+  final bool hideCurrentPassword;
+  @override
+  @JsonKey()
+  final bool hideChangePassword;
+  @override
+  @JsonKey()
+  final bool hideChangeConfirmPassword;
 
   @override
   String toString() {
-    return 'OnboardingState(signInMethod: $signInMethod, emailAddress: $emailAddress, password: $password, invalidCredentials: $invalidCredentials, hidePassword: $hidePassword, firstName: $firstName, lastName: $lastName, newEmailAddress: $newEmailAddress, phoneNumber: $phoneNumber, newPassword: $newPassword, hideNewPassword: $hideNewPassword, newConfirmPassword: $newConfirmPassword, hideNewConfirmPassword: $hideNewConfirmPassword, invalidOTP: $invalidOTP, resetEmailAddress: $resetEmailAddress, resetPasswordOTP: $resetPasswordOTP, resetPasswordDebugOTP: $resetPasswordDebugOTP, resetPassword: $resetPassword, resetPasswordConfirm: $resetPasswordConfirm, hideResetPassword: $hideResetPassword, hideResetConfirmPassword: $hideResetConfirmPassword)';
+    return 'OnboardingState(signInMethod: $signInMethod, emailAddress: $emailAddress, password: $password, invalidCredentials: $invalidCredentials, hidePassword: $hidePassword, firstName: $firstName, lastName: $lastName, newEmailAddress: $newEmailAddress, phoneNumber: $phoneNumber, newPassword: $newPassword, hideNewPassword: $hideNewPassword, newConfirmPassword: $newConfirmPassword, hideNewConfirmPassword: $hideNewConfirmPassword, invalidOTP: $invalidOTP, resetEmailAddress: $resetEmailAddress, resetPasswordOTP: $resetPasswordOTP, resetPasswordDebugOTP: $resetPasswordDebugOTP, resetPassword: $resetPassword, resetPasswordConfirm: $resetPasswordConfirm, hideResetPassword: $hideResetPassword, hideResetConfirmPassword: $hideResetConfirmPassword, currentPassword: $currentPassword, changePassword: $changePassword, changePasswordConfirm: $changePasswordConfirm, hideCurrentPassword: $hideCurrentPassword, hideChangePassword: $hideChangePassword, hideChangeConfirmPassword: $hideChangeConfirmPassword)';
   }
 
   @override
@@ -522,7 +626,20 @@ class _$OnboardingStateImpl implements _OnboardingState {
                 other.hideResetPassword == hideResetPassword) &&
             (identical(
                     other.hideResetConfirmPassword, hideResetConfirmPassword) ||
-                other.hideResetConfirmPassword == hideResetConfirmPassword));
+                other.hideResetConfirmPassword == hideResetConfirmPassword) &&
+            (identical(other.currentPassword, currentPassword) ||
+                other.currentPassword == currentPassword) &&
+            (identical(other.changePassword, changePassword) ||
+                other.changePassword == changePassword) &&
+            (identical(other.changePasswordConfirm, changePasswordConfirm) ||
+                other.changePasswordConfirm == changePasswordConfirm) &&
+            (identical(other.hideCurrentPassword, hideCurrentPassword) ||
+                other.hideCurrentPassword == hideCurrentPassword) &&
+            (identical(other.hideChangePassword, hideChangePassword) ||
+                other.hideChangePassword == hideChangePassword) &&
+            (identical(other.hideChangeConfirmPassword,
+                    hideChangeConfirmPassword) ||
+                other.hideChangeConfirmPassword == hideChangeConfirmPassword));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -549,7 +666,13 @@ class _$OnboardingStateImpl implements _OnboardingState {
         resetPassword,
         resetPasswordConfirm,
         hideResetPassword,
-        hideResetConfirmPassword
+        hideResetConfirmPassword,
+        currentPassword,
+        changePassword,
+        changePasswordConfirm,
+        hideCurrentPassword,
+        hideChangePassword,
+        hideChangeConfirmPassword
       ]);
 
   /// Create a copy of OnboardingState
@@ -591,7 +714,13 @@ abstract class _OnboardingState implements OnboardingState {
       final String resetPassword,
       final String resetPasswordConfirm,
       final bool hideResetPassword,
-      final bool hideResetConfirmPassword}) = _$OnboardingStateImpl;
+      final bool hideResetConfirmPassword,
+      final String currentPassword,
+      final String changePassword,
+      final String changePasswordConfirm,
+      final bool hideCurrentPassword,
+      final bool hideChangePassword,
+      final bool hideChangeConfirmPassword}) = _$OnboardingStateImpl;
 
   factory _OnboardingState.fromJson(Map<String, dynamic> json) =
       _$OnboardingStateImpl.fromJson;
@@ -643,7 +772,19 @@ abstract class _OnboardingState implements OnboardingState {
   @override
   bool get hideResetPassword;
   @override
-  bool get hideResetConfirmPassword;
+  bool get hideResetConfirmPassword; // CHANGE PASSWORD FROM PROFILE
+  @override
+  String get currentPassword;
+  @override
+  String get changePassword;
+  @override
+  String get changePasswordConfirm;
+  @override
+  bool get hideCurrentPassword;
+  @override
+  bool get hideChangePassword;
+  @override
+  bool get hideChangeConfirmPassword;
 
   /// Create a copy of OnboardingState
   /// with the given fields replaced by the non-null parameter values.

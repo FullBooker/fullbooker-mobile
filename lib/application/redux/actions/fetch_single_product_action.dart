@@ -18,13 +18,11 @@ class FetchSingleProductAction extends ReduxAction<AppState> {
     this.onSuccess,
     this.onError,
     required this.client,
-    required this.workflowState,
   });
 
   final Function(String error)? onError;
   final Function()? onSuccess;
   final ICustomClient client;
-  final WorkflowState workflowState;
 
   @override
   Future<AppState?> reduce() async {
@@ -33,13 +31,16 @@ class FetchSingleProductAction extends ReduxAction<AppState> {
     final String currentProductID =
         state.hostState?.currentProduct?.id ?? UNKNOWN;
 
-    final bool isEdit = workflowState == WorkflowState.CREATE;
+    final WorkflowState workflowState =
+        state.hostState?.workflowState ?? WorkflowState.CREATE;
 
-    final String ctxProductId = isEdit ? currentProductID : selectProductID;
+    final bool isCreate = workflowState == WorkflowState.CREATE;
+
+    final String ctxProductId = isCreate ? currentProductID : selectProductID;
 
     final String baseEndpoint = GetIt.I.get<AppConfig>().getProductsEndpoint;
 
-    final String fullEndpoint = '$baseEndpoint$ctxProductId';
+    final String fullEndpoint = '$baseEndpoint$ctxProductId/';
 
     final Response httpResponse = await client.callRESTAPI(
       endpoint: fullEndpoint,
@@ -59,19 +60,13 @@ class FetchSingleProductAction extends ReduxAction<AppState> {
 
     final Product product = Product.fromJson(body);
 
-    if (isEdit) {
-      dispatch(UpdateHostStateAction(currentProduct: product));
-      return state;
-    } else {
-      dispatchAll(<ReduxAction<AppState>>[
-        UpdateHostStateAction(selectedProduct: product),
-        UpdateHostStateAction(
-          selectedLocation:
-              product.locations?.first ?? ProductLocation.initial(),
-        ),
-      ]);
+    dispatch(
+      UpdateHostStateAction(
+        contextProduct: product,
+        selectedLocation: product.locations?.first ?? ProductLocation.initial(),
+      ),
+    );
 
-      return state;
-    }
+    return null;
   }
 }

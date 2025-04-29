@@ -1,7 +1,7 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:fullbooker/application/redux/actions/update_current_product_action.dart';
+import 'package:fullbooker/application/redux/actions/update_product_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_setup_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
@@ -87,7 +87,7 @@ class SetupProductCategoryPage extends StatelessWidget {
                                         value: current?.name ?? '',
                                         isSelected: selected,
                                         onTap: () => context.dispatch(
-                                          UpdateCurrentProductAction(
+                                          UpdateProductAction(
                                             selectedSubCategory: current,
                                           ),
                                         ),

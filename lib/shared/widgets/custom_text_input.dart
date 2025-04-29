@@ -26,6 +26,7 @@ class CustomTextInput extends StatelessWidget {
     this.autofillHints,
     this.prefixIconActive = false,
     this.suffixIconActive = false,
+    this.controller,
   }) : super(key: inputKey);
 
   final String? Function(String? value)? validator;
@@ -47,6 +48,7 @@ class CustomTextInput extends StatelessWidget {
   final HeroIcons? suffixIconData;
   final bool prefixIconActive;
   final bool suffixIconActive;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +66,7 @@ class CustomTextInput extends StatelessWidget {
           cursorColor: Theme.of(context).primaryColor,
           obscureText: obscureText,
           keyboardType: keyboardType,
-          initialValue: initialValue,
+          controller: controller,
           validator: validator,
           textAlignVertical: TextAlignVertical.center,
           maxLines: maxLines,

@@ -38,6 +38,14 @@ class OnboardingState with _$OnboardingState {
     @Default(true) bool hideResetPassword,
     @Default(true) bool hideResetConfirmPassword,
 
+    // CHANGE PASSWORD FROM PROFILE
+    @Default(UNKNOWN) String currentPassword,
+    @Default(UNKNOWN) String changePassword,
+    @Default(UNKNOWN) String changePasswordConfirm,
+    @Default(true) bool hideCurrentPassword,
+    @Default(true) bool hideChangePassword,
+    @Default(true) bool hideChangeConfirmPassword,
+
     /// WORKFLOW BOOLS
   }) = _OnboardingState;
 

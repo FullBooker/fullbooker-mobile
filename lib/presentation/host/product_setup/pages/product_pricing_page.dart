@@ -15,7 +15,6 @@ import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:dartz/dartz.dart' as d;
 import 'package:fullbooker/presentation/host/product_setup/widgets/pricing_card_widget.dart';
-import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
@@ -66,7 +65,6 @@ class ProductPricingPage extends StatelessWidget {
                           context.dispatch(
                             FetchSingleProductAction(
                               client: AppWrapperBase.of(context)!.customClient,
-                              workflowState: WorkflowState.CREATE,
                             ),
                           );
                         },
@@ -162,11 +160,7 @@ class ProductPricingPage extends StatelessWidget {
                             description: addPricingErrorMsg,
                           );
                         } else {
-                          context.router.push(
-                            ProductReviewAndSubmitRoute(
-                              workflowState: WorkflowState.CREATE,
-                            ),
-                          );
+                          context.router.push(ProductReviewAndSubmitRoute());
                         }
                       },
                       child: d.right(continueString),

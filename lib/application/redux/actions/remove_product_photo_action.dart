@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/core/services/i_custom_client.dart';
-import 'package:fullbooker/application/redux/actions/update_current_product_action.dart';
+import 'package:fullbooker/application/redux/actions/update_product_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/domain/core/entities/product_media.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
@@ -51,8 +51,8 @@ class RemoveProductPhotoAction extends ReduxAction<AppState> {
     final List<ProductMedia> updatedPhotos = currentPhotos
       ..removeWhere((ProductMedia item) => item.id == photo.id);
 
-    dispatch(UpdateCurrentProductAction(photos: updatedPhotos));
+    dispatch(UpdateProductAction(photos: updatedPhotos));
 
-    return state;
+    return null;
   }
 }

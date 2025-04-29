@@ -318,6 +318,23 @@ Widget formatTime({
   }
 }
 
+String formatTimeOnly({
+  String? time,
+}) {
+  if (time == null || time.isEmpty || time == UNKNOWN) {
+    return '';
+  }
+
+  try {
+    final TimeOfDay timeOfDay = stringToTimeOfDay(time);
+    final DateTime dateTime =
+        DateTime(0, 1, 1, timeOfDay.hour, timeOfDay.minute);
+    return DateFormat('h:mm a').format(dateTime);
+  } catch (_) {
+    return '';
+  }
+}
+
 void navigateToNextProductStep({
   required BuildContext context,
   required Product product,
@@ -329,18 +346,17 @@ void navigateToNextProductStep({
   }
 
   if (product.name?.isEmpty ?? true) {
-    context.router.push(const ProductBasicDetailsRoute());
+    context.router.push(ProductBasicDetailsRoute());
     return;
   }
 
   if (product.locations?.isEmpty ?? true) {
-    context.router
-        .push(ProductLocationRoute(workflowState: WorkflowState.CREATE));
+    context.router.push(ProductLocationRoute());
     return;
   }
 
   if ((product.scheduleID ?? UNKNOWN) == UNKNOWN) {
-    context.router.push(const ProductScheduleRoute());
+    context.router.push(ProductScheduleRoute());
     return;
   }
 
@@ -360,9 +376,7 @@ void navigateToNextProductStep({
   }
 
   if (product.active ?? false) {
-    context.router.push(
-      ProductReviewAndSubmitRoute(workflowState: WorkflowState.VIEW),
-    );
+    context.router.push(ProductReviewAndSubmitRoute());
     return;
   }
 }

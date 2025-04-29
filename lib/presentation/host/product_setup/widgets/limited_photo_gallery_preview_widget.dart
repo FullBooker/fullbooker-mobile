@@ -11,16 +11,10 @@ import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/domain/core/entities/product_media.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/presentation/host/products/widgets/min_zero_state.dart';
-import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 
 class LimitedPhotoGalleryPreviewWidget extends StatelessWidget {
-  const LimitedPhotoGalleryPreviewWidget({
-    super.key,
-    required this.workflowState,
-  });
-
-  final WorkflowState workflowState;
+  const LimitedPhotoGalleryPreviewWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +26,6 @@ class LimitedPhotoGalleryPreviewWidget extends StatelessWidget {
       onInit: (Store<AppState> store) => context.dispatch(
         FetchProductMediaAction(
           client: AppWrapperBase.of(context)!.customClient,
-          workflowState: WorkflowState.VIEW,
         ),
       ),
       builder: (BuildContext context, ProductReviewViewModel vm) {
@@ -44,7 +37,7 @@ class LimitedPhotoGalleryPreviewWidget extends StatelessWidget {
         }
 
         final List<ProductMedia?> photos =
-            vm.selectedProduct?.photos ?? <ProductMedia?>[];
+            vm.product?.photos ?? <ProductMedia?>[];
         final List<String?> photoUrls =
             photos.map((ProductMedia? e) => e?.file).toList();
 

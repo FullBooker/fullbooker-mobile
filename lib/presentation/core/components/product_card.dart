@@ -2,6 +2,7 @@ import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:fullbooker/application/redux/actions/set_workflow_state_action.dart';
 import 'package:fullbooker/application/redux/actions/update_host_state_action.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
@@ -11,6 +12,7 @@ import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_badge_widget.dart';
 import 'package:dartz/dartz.dart' as d;
+import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
 import 'package:heroicons/heroicons.dart';
@@ -28,7 +30,10 @@ class ProductCard extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        context.dispatch(UpdateHostStateAction(selectedProduct: product));
+        context.dispatch(
+          SetWorkflowStateAction(workflowState: WorkflowState.VIEW),
+        );
+        context.dispatch(UpdateHostStateAction(contextProduct: product));
         context.router.push(ProductDetailRoute());
       },
       child: Container(
@@ -150,7 +155,12 @@ class ProductCard extends StatelessWidget {
                     SecondaryButton(
                       onPressed: () {
                         context.dispatch(
-                          UpdateHostStateAction(currentProduct: product),
+                          SetWorkflowStateAction(
+                            workflowState: WorkflowState.CREATE,
+                          ),
+                        );
+                        context.dispatch(
+                          UpdateHostStateAction(contextProduct: product),
                         );
                         navigateToNextProductStep(
                           context: context,

@@ -2,10 +2,12 @@ import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
-import 'package:fullbooker/application/redux/actions/create_product_action.dart';
-import 'package:fullbooker/application/redux/actions/update_current_product_action.dart';
+import 'package:fullbooker/application/redux/actions/create_product_basic_details_action.dart';
+import 'package:fullbooker/application/redux/actions/fetch_single_product_action.dart';
+import 'package:fullbooker/application/redux/actions/update_product_action.dart';
+import 'package:fullbooker/application/redux/actions/update_product_basic_details_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
-import 'package:fullbooker/application/redux/view_models/products_page_view_model.dart';
+import 'package:fullbooker/application/redux/view_models/product_setup_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/utils/utils.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
@@ -20,28 +22,34 @@ import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
 
 @RoutePage()
-class ProductBasicDetailsPage extends StatefulWidget {
-  const ProductBasicDetailsPage({super.key});
+class ProductBasicDetailsPage extends StatelessWidget {
+  ProductBasicDetailsPage({super.key});
 
-  @override
-  State<ProductBasicDetailsPage> createState() =>
-      _ProductBasicDetailsPageState();
-}
-
-class _ProductBasicDetailsPageState extends State<ProductBasicDetailsPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController nameController = TextEditingController();
+    final TextEditingController descriptionController = TextEditingController();
+
     return Scaffold(
       appBar: CustomAppBar(
         showBell: false,
         title: setupEvent,
       ),
-      body: StoreConnector<AppState, ProductsPageViewModel>(
+      body: StoreConnector<AppState, ProductSetupViewModel>(
         converter: (Store<AppState> store) =>
-            ProductsPageViewModel.fromState(store.state),
-        builder: (BuildContext context, ProductsPageViewModel vm) {
+            ProductSetupViewModel.fromState(store.state),
+        onDispose: (Store<AppState> store) {
+          nameController.dispose();
+          descriptionController.dispose();
+        },
+        builder: (BuildContext context, ProductSetupViewModel vm) {
+          if (vm.workflowState == WorkflowState.VIEW) {
+            nameController.text = vm.name;
+            descriptionController.text = vm.description;
+          }
+
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: 16),
             child: Form(
@@ -71,27 +79,25 @@ class _ProductBasicDetailsPageState extends State<ProductBasicDetailsPage> {
                         ),
                         CustomTextInput(
                           hintText: nameYourProduct,
-                          labelText: nameString,
+                          controller: nameController,
+                          labelText: '$nameString*',
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (String? value) => validateProductName(
                             value,
                           ),
                           onChanged: (String value) {
-                            context.dispatch(
-                              UpdateCurrentProductAction(name: value.trim()),
-                            );
+                            context.dispatch(UpdateProductAction(name: value));
                           },
                           keyboardType: TextInputType.name,
                         ),
                         CustomTextInput(
                           hintText: productDescriptionCopy,
                           labelText: productDescription,
+                          controller: descriptionController,
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           onChanged: (String value) {
                             context.dispatch(
-                              UpdateCurrentProductAction(
-                                description: value.trim(),
-                              ),
+                              UpdateProductAction(description: value),
                             );
                           },
                           maxLines: 3,
@@ -100,35 +106,65 @@ class _ProductBasicDetailsPageState extends State<ProductBasicDetailsPage> {
                       ],
                     ),
                   ),
-                  StoreConnector<AppState, ProductsPageViewModel>(
+                  StoreConnector<AppState, ProductSetupViewModel>(
                     converter: (Store<AppState> store) =>
-                        ProductsPageViewModel.fromState(store.state),
-                    builder: (BuildContext context, ProductsPageViewModel vm) {
-                      if (context.isWaiting(CreateProductAction)) {
+                        ProductSetupViewModel.fromState(store.state),
+                    onInit: (Store<AppState> store) {
+                      context.dispatch(
+                        FetchSingleProductAction(
+                          client: AppWrapperBase.of(context)!.customClient,
+                        ),
+                      );
+                    },
+                    builder: (BuildContext context, ProductSetupViewModel vm) {
+                      if (context.isWaiting(<Type>[
+                        CreateProductBasicDetailsAction,
+                        UpdateProductBasicDetailsAction,
+                      ])) {
                         return AppLoading();
                       }
+
+                      final bool isCreate =
+                          vm.workflowState == WorkflowState.CREATE;
+
                       return Column(
                         spacing: 12,
                         children: <Widget>[
                           PrimaryButton(
                             onPressed: () {
                               if (_formKey.currentState?.validate() ?? false) {
-                                context.dispatch(
-                                  CreateProductAction(
-                                    client: AppWrapperBase.of(context)!
-                                        .customClient,
-                                    onSuccess: () => context.router.push(
-                                      ProductLocationRoute(
-                                        workflowState: WorkflowState.CREATE,
+                                if (isCreate) {
+                                  context.dispatch(
+                                    CreateProductBasicDetailsAction(
+                                      client: AppWrapperBase.of(context)!
+                                          .customClient,
+                                      onSuccess: () => context.router.push(
+                                        ProductLocationRoute(),
+                                      ),
+                                      onError: (String error) =>
+                                          showAlertDialog(
+                                        context: context,
+                                        assetPath: productZeroStateSVGPath,
+                                        description: error,
                                       ),
                                     ),
-                                    onError: (String error) => showAlertDialog(
-                                      context: context,
-                                      assetPath: productZeroStateSVGPath,
-                                      description: error,
+                                  );
+                                } else {
+                                  context.dispatch(
+                                    UpdateProductBasicDetailsAction(
+                                      client: AppWrapperBase.of(context)!
+                                          .customClient,
+                                      onSuccess: () =>
+                                          context.router.maybePop(),
+                                      onError: (String error) =>
+                                          showAlertDialog(
+                                        context: context,
+                                        assetPath: productZeroStateSVGPath,
+                                        description: error,
+                                      ),
                                     ),
-                                  ),
-                                );
+                                  );
+                                }
                               }
                             },
                             child: d.right(continueString),

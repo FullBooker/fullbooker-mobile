@@ -2,18 +2,17 @@ import 'dart:convert';
 
 import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/core/services/i_custom_client.dart';
-import 'package:fullbooker/application/redux/actions/update_host_state_action.dart';
+import 'package:fullbooker/application/redux/actions/fetch_single_product_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/core/common/constants.dart';
-import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
 
-class CreateProductAction extends ReduxAction<AppState> {
-  CreateProductAction({
+class EditProductAction extends ReduxAction<AppState> {
+  EditProductAction({
     this.onSuccess,
     this.onError,
     required this.client,
@@ -25,14 +24,14 @@ class CreateProductAction extends ReduxAction<AppState> {
 
   @override
   Future<AppState?> reduce() async {
+    final String selectProductID =
+        state.hostState?.selectedProduct?.id ?? UNKNOWN;
+
     final String name = state.hostState?.currentProduct?.name ?? UNKNOWN;
     final String description =
         state.hostState?.currentProduct?.description ?? '';
-    final String subcategory =
-        state.hostState?.currentProduct?.selectedProductSubCategory?.id ??
-            UNKNOWN;
 
-    if (name == UNKNOWN || subcategory == UNKNOWN) {
+    if (name == UNKNOWN) {
       onError?.call(createProductError);
 
       return null;
@@ -41,12 +40,15 @@ class CreateProductAction extends ReduxAction<AppState> {
     final Map<String, String> data = <String, String>{
       'name': name,
       'description': description,
-      'subcategory': subcategory,
     };
 
+    final String baseEndpoint = GetIt.I.get<AppConfig>().getProductsEndpoint;
+
+    final String fullEndpoint = '$baseEndpoint$selectProductID';
+
     final Response httpResponse = await client.callRESTAPI(
-      endpoint: GetIt.I.get<AppConfig>().getProductsEndpoint,
-      method: APIMethods.POST.name.toUpperCase(),
+      endpoint: fullEndpoint,
+      method: APIMethods.PATCH.name.toUpperCase(),
       variables: data,
     );
 
@@ -61,12 +63,8 @@ class CreateProductAction extends ReduxAction<AppState> {
       return null;
     }
 
-    final Product createdProduct = Product.fromJson(body);
+    dispatch(FetchSingleProductAction(client: client));
 
-    dispatch(UpdateHostStateAction(currentProduct: createdProduct));
-
-    onSuccess?.call();
-
-    return state;
+    return null;
   }
 }

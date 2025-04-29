@@ -18,13 +18,11 @@ class SetProductLocationAction extends ReduxAction<AppState> {
     this.onSuccess,
     this.onError,
     required this.client,
-    required this.workflowState,
   });
 
   final Function(String error)? onError;
   final Function()? onSuccess;
   final ICustomClient client;
-  final WorkflowState workflowState;
 
   @override
   Future<AppState?> reduce() async {
@@ -33,9 +31,12 @@ class SetProductLocationAction extends ReduxAction<AppState> {
     final String selectedProductID =
         state.hostState?.selectedProduct?.id ?? UNKNOWN;
 
-    final bool isEdit = workflowState == WorkflowState.VIEW;
+    final WorkflowState workflowState =
+        state.hostState?.workflowState ?? WorkflowState.CREATE;
 
-    final String ctxProductID = isEdit ? selectedProductID : currentProductID;
+    final bool isCreate = workflowState == WorkflowState.VIEW;
+
+    final String ctxProductID = isCreate ? selectedProductID : currentProductID;
 
     final String lat = state.hostState?.selectedLocation?.lat ?? UNKNOWN;
     final String long = state.hostState?.selectedLocation?.long ?? UNKNOWN;
@@ -82,14 +83,10 @@ class SetProductLocationAction extends ReduxAction<AppState> {
       ],
     );
 
-    if (isEdit) {
-      dispatch(UpdateHostStateAction(selectedProduct: updatedProduct));
-    } else {
-      dispatch(UpdateHostStateAction(currentProduct: updatedProduct));
-    }
+    dispatch(UpdateHostStateAction(contextProduct: updatedProduct));
 
     onSuccess?.call();
 
-    return state;
+    return null;
   }
 }

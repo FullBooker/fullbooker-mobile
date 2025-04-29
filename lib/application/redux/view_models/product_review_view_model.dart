@@ -1,20 +1,23 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
+import 'package:fullbooker/application/redux/states/host_state.dart';
 import 'package:fullbooker/domain/core/entities/product.dart';
+import 'package:fullbooker/shared/entities/enums.dart';
 
 class ProductReviewViewModel extends Vm {
-  ProductReviewViewModel({
-    required this.selectedProduct,
-    required this.currentProduct,
-  }) : super(equals: <Object?>[selectedProduct]);
+  ProductReviewViewModel({required this.product})
+      : super(equals: <Object?>[product]);
 
-  final Product? selectedProduct;
-  final Product? currentProduct;
+  final Product? product;
 
   static ProductReviewViewModel fromState(AppState state) {
-    return ProductReviewViewModel(
-      selectedProduct: state.hostState?.selectedProduct,
-      currentProduct: state.hostState?.currentProduct,
-    );
+    final HostState? host = state.hostState;
+    final WorkflowState workflowState =
+        host?.workflowState ?? WorkflowState.CREATE;
+    final Product? prod = workflowState == WorkflowState.CREATE
+        ? host?.currentProduct
+        : host?.selectedProduct;
+
+    return ProductReviewViewModel(product: prod);
   }
 }

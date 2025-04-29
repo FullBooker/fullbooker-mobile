@@ -46,12 +46,22 @@ const String enterNewPasswordTitle = 'Please enter a new password below';
 const String enterNewPasswordString = 'Enter New Password';
 const String reEnterNewPasswordString = 'Re-enter New Password';
 
-const String changePasswordString = 'Set New Password';
+// Set new password
+const String setNewPasswordString = 'Set New Password';
 const String newPasswordLabel = 'New Password';
 const String newPasswordHint = 'Enter you new Password';
-const String confirmNewPasswordLabel = 'New Password';
+const String confirmNewPasswordLabel = 'Confirm New Password';
 const String confirmNewPasswordHint = 'Confirm you new Password';
 const String setAndConfirmPassword = 'Set and confirm your new password';
+const String updatePasswordString = 'Update Password';
+
+// Change password
+const String changePassword = 'Change Password';
+const String changePasswordCopyLong =
+    'Enter your current password and choose a new one to stay protected';
+const String changePasswordCopyShort = 'Change your password';
+const String currentPasswordLabel = 'Current Password';
+const String currentPasswordHint = 'Enter you current Password';
 
 // Login page
 const String welcomeString = 'Welcome back!';
@@ -491,6 +501,7 @@ const String ending = 'Ends on';
 const String atString = 'at';
 const String chooseTime = 'Choose time';
 const String repeatsLabel = 'Repeats';
+const String allDayLabel = 'All Day';
 const String dailyRepeatPrompt =
     'Choose a day of the week when your event repeats';
 const String weeklyRepeatPrompt =
@@ -591,9 +602,6 @@ const String switchToUserCopy =
 
 String switchToUser(String appName) => 'Switch To $appName';
 
-const String changePassword = 'Change Password';
-const String changePasswordCopy = 'Update your password';
-
 const String noCategoriesFound = 'No categories found';
 const String noCategoriesFoundCopy =
     'Try again later or adjust your filters to see more options.';
@@ -665,7 +673,7 @@ const String debugTicketQR = 'Debug QR Code: ';
 const String fromString = 'From';
 const String toString = 'To';
 
-const String dailyPrompt = 'Your event will repeat daily from 9 AM to 10 PM';
+const String dailyPrompt = 'Your event will repeat daily';
 
 const String closedString = 'Closed';
 const String notProvided = 'Not Provided';

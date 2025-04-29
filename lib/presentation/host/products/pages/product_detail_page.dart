@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
 import 'package:fullbooker/application/redux/actions/fetch_single_product_action.dart';
+import 'package:fullbooker/application/redux/actions/set_workflow_state_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_detail_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
@@ -39,7 +40,6 @@ class ProductDetailPage extends StatelessWidget {
     context.dispatch(
       FetchSingleProductAction(
         client: AppWrapperBase.of(context)!.customClient,
-        workflowState: WorkflowState.VIEW,
       ),
     );
   }
@@ -54,11 +54,10 @@ class ProductDetailPage extends StatelessWidget {
           AppBarAction(
             iconUrl: HeroIcons.pencil,
             onTap: () {
-              context.router.push(
-                ProductReviewAndSubmitRoute(
-                  workflowState: WorkflowState.VIEW,
-                ),
+              context.dispatch(
+                SetWorkflowStateAction(workflowState: WorkflowState.VIEW),
               );
+              context.router.push(ProductReviewAndSubmitRoute());
             },
           ),
         ],
@@ -166,9 +165,7 @@ class ProductDetailPage extends StatelessWidget {
                                   ),
                               ],
                             ),
-                            ProductScheduleWidget(
-                              workflowState: WorkflowState.VIEW,
-                            ),
+                            ProductScheduleWidget(),
 
                             if (productStatus == ProductStatus.review)
                               ProductAlertWidget(
@@ -220,9 +217,7 @@ class ProductDetailPage extends StatelessWidget {
                                   style:
                                       Theme.of(context).textTheme.titleMedium,
                                 ),
-                                LimitedPhotoGalleryPreviewWidget(
-                                  workflowState: WorkflowState.VIEW,
-                                ),
+                                LimitedPhotoGalleryPreviewWidget(),
                               ],
                             ),
 
@@ -235,9 +230,7 @@ class ProductDetailPage extends StatelessWidget {
                                   style:
                                       Theme.of(context).textTheme.titleMedium,
                                 ),
-                                LimitedVideoGalleryPreviewWidget(
-                                  workflowState: WorkflowState.VIEW,
-                                ),
+                                LimitedVideoGalleryPreviewWidget(),
                               ],
                             ),
 

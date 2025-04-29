@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/core/services/i_custom_client.dart';
-import 'package:fullbooker/application/redux/actions/update_current_product_action.dart';
+import 'package:fullbooker/application/redux/actions/update_product_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:file_picker/file_picker.dart';
@@ -25,6 +25,7 @@ class UploadProductPhotosAction extends ReduxAction<AppState> {
   final Function()? onSuccess;
   final ICustomClient client;
   final List<PlatformFile> pickedPhotoFiles;
+
   @override
   Future<AppState?> reduce() async {
     final List<ProductMedia?> existingPhotos =
@@ -71,7 +72,7 @@ class UploadProductPhotosAction extends ReduxAction<AppState> {
     }
 
     dispatch(
-      UpdateCurrentProductAction(
+      UpdateProductAction(
         photos: <ProductMedia?>[...existingPhotos, ...uploadedPhotos],
       ),
     );

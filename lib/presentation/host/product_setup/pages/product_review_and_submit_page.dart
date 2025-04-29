@@ -22,16 +22,13 @@ import 'package:fullbooker/presentation/host/product_setup/widgets/pricing_card_
 import 'package:fullbooker/presentation/host/product_setup/widgets/product_type_item.dart';
 import 'package:fullbooker/presentation/host/products/widgets/min_zero_state.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_schedule_widget.dart';
-import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
 
 @RoutePage()
 class ProductReviewAndSubmitPage extends StatelessWidget {
-  const ProductReviewAndSubmitPage({super.key, required this.workflowState});
-
-  final WorkflowState workflowState;
+  const ProductReviewAndSubmitPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -51,9 +48,7 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                 converter: (Store<AppState> store) =>
                     ProductReviewViewModel.fromState(store.state),
                 builder: (BuildContext context, ProductReviewViewModel vm) {
-                  final Product? product = workflowState == WorkflowState.CREATE
-                      ? vm.currentProduct
-                      : vm.selectedProduct;
+                  final Product? product = vm.product;
 
                   final String? name = product?.name;
                   final String? description = product?.description;
@@ -102,7 +97,12 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                           // Basic details
                           PreviewHeaderWidget(
                             title: basicDetails,
-                            // onEdit: () {},
+                            onEdit: () {
+                              context.dispatch(
+                                UpdateHostStateAction(contextProduct: product),
+                              );
+                              context.router.push(ProductBasicDetailsRoute());
+                            },
                           ),
                           Column(
                             spacing: 4,
@@ -131,18 +131,15 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                           PreviewHeaderWidget(
                             title: location,
                             onEdit: () {
+                              // TODO(abiud): this action might not be necessary if set up properly from detail page
                               context.dispatchAll(
                                 <ReduxAction<AppState>>[
                                   UpdateHostStateAction(
-                                    currentProduct: product,
+                                    contextProduct: product,
                                   ),
                                 ],
                               );
-                              context.router.push(
-                                ProductLocationRoute(
-                                  workflowState: workflowState,
-                                ),
-                              );
+                              context.router.push(ProductLocationRoute());
                             },
                           ),
 
@@ -156,10 +153,15 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                           Divider(),
                           PreviewHeaderWidget(
                             title: dateAndTime,
-                            // onEdit: () {},
+                            onEdit: () {
+                              context.dispatch(
+                                UpdateHostStateAction(contextProduct: product),
+                              );
+                              context.router.push(ProductScheduleRoute());
+                            },
                           ),
                           if ((product?.scheduleID ?? UNKNOWN) != UNKNOWN)
-                            ProductScheduleWidget(workflowState: workflowState),
+                            ProductScheduleWidget(),
                           Divider(),
 
                           // Photos
@@ -167,14 +169,12 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                             title: photosString,
                             onEdit: () {
                               context.dispatch(
-                                UpdateHostStateAction(currentProduct: product),
+                                UpdateHostStateAction(contextProduct: product),
                               );
                               context.router.push(const ProductPhotosRoute());
                             },
                           ),
-                          LimitedPhotoGalleryPreviewWidget(
-                            workflowState: workflowState,
-                          ),
+                          LimitedPhotoGalleryPreviewWidget(),
                           Divider(),
 
                           // Videos
@@ -182,14 +182,12 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                             title: videosString,
                             onEdit: () {
                               context.dispatch(
-                                UpdateHostStateAction(currentProduct: product),
+                                UpdateHostStateAction(contextProduct: product),
                               );
                               context.router.push(const ProductVideosRoute());
                             },
                           ),
-                          LimitedVideoGalleryPreviewWidget(
-                            workflowState: workflowState,
-                          ),
+                          LimitedVideoGalleryPreviewWidget(),
                           Divider(),
 
                           // Pricing
@@ -197,7 +195,7 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                             title: pricing,
                             onEdit: () {
                               context.dispatch(
-                                UpdateHostStateAction(currentProduct: product),
+                                UpdateHostStateAction(contextProduct: product),
                               );
                               context.router.push(const ProductPricingRoute());
                             },
@@ -231,9 +229,7 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
               converter: (Store<AppState> store) =>
                   ProductReviewViewModel.fromState(store.state),
               builder: (BuildContext context, ProductReviewViewModel vm) {
-                final Product? product = workflowState == WorkflowState.CREATE
-                    ? vm.currentProduct
-                    : vm.selectedProduct;
+                final Product? product = vm.product;
 
                 return Column(
                   spacing: 12,
@@ -252,7 +248,7 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                         },
                         onCancel: () {
                           context.dispatch(
-                            UpdateHostStateAction(selectedProduct: product),
+                            UpdateHostStateAction(contextProduct: product),
                           );
                           context.router.push(ProductDetailRoute());
                         },
