@@ -35,7 +35,9 @@ mixin _$HostState {
   ProductPricing? get selectedProductPricing =>
       throw _privateConstructorUsedError; // Ticket scanning
   String? get currentScannedTicketID => throw _privateConstructorUsedError;
-  bool? get isValidTicket => throw _privateConstructorUsedError;
+  bool? get isValidTicket =>
+      throw _privateConstructorUsedError; // Tracks editing and viewing
+  WorkflowState? get workflowState => throw _privateConstructorUsedError;
 
   /// Serializes this HostState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -65,7 +67,8 @@ abstract class $HostStateCopyWith<$Res> {
       String? selectedPricingTier,
       ProductPricing? selectedProductPricing,
       String? currentScannedTicketID,
-      bool? isValidTicket});
+      bool? isValidTicket,
+      WorkflowState? workflowState});
 
   $ProductCopyWith<$Res>? get currentProduct;
   $ProductCopyWith<$Res>? get selectedProduct;
@@ -104,6 +107,7 @@ class _$HostStateCopyWithImpl<$Res, $Val extends HostState>
     Object? selectedProductPricing = freezed,
     Object? currentScannedTicketID = freezed,
     Object? isValidTicket = freezed,
+    Object? workflowState = freezed,
   }) {
     return _then(_value.copyWith(
       products: freezed == products
@@ -158,6 +162,10 @@ class _$HostStateCopyWithImpl<$Res, $Val extends HostState>
           ? _value.isValidTicket
           : isValidTicket // ignore: cast_nullable_to_non_nullable
               as bool?,
+      workflowState: freezed == workflowState
+          ? _value.workflowState
+          : workflowState // ignore: cast_nullable_to_non_nullable
+              as WorkflowState?,
     ) as $Val);
   }
 
@@ -282,7 +290,8 @@ abstract class _$$HostStateImplCopyWith<$Res>
       String? selectedPricingTier,
       ProductPricing? selectedProductPricing,
       String? currentScannedTicketID,
-      bool? isValidTicket});
+      bool? isValidTicket,
+      WorkflowState? workflowState});
 
   @override
   $ProductCopyWith<$Res>? get currentProduct;
@@ -326,6 +335,7 @@ class __$$HostStateImplCopyWithImpl<$Res>
     Object? selectedProductPricing = freezed,
     Object? currentScannedTicketID = freezed,
     Object? isValidTicket = freezed,
+    Object? workflowState = freezed,
   }) {
     return _then(_$HostStateImpl(
       products: freezed == products
@@ -380,6 +390,10 @@ class __$$HostStateImplCopyWithImpl<$Res>
           ? _value.isValidTicket
           : isValidTicket // ignore: cast_nullable_to_non_nullable
               as bool?,
+      workflowState: freezed == workflowState
+          ? _value.workflowState
+          : workflowState // ignore: cast_nullable_to_non_nullable
+              as WorkflowState?,
     ));
   }
 }
@@ -401,7 +415,8 @@ class _$HostStateImpl implements _HostState {
       this.selectedPricingTier = UNKNOWN,
       this.selectedProductPricing,
       this.currentScannedTicketID = UNKNOWN,
-      this.isValidTicket = false});
+      this.isValidTicket = false,
+      this.workflowState = WorkflowState.CREATE});
 
   factory _$HostStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$HostStateImplFromJson(json);
@@ -440,10 +455,14 @@ class _$HostStateImpl implements _HostState {
   @override
   @JsonKey()
   final bool? isValidTicket;
+// Tracks editing and viewing
+  @override
+  @JsonKey()
+  final WorkflowState? workflowState;
 
   @override
   String toString() {
-    return 'HostState(products: $products, currentProduct: $currentProduct, selectedProduct: $selectedProduct, productCategories: $productCategories, locationPerms: $locationPerms, selectedLocation: $selectedLocation, selectedSchedule: $selectedSchedule, currencies: $currencies, selectedCurrency: $selectedCurrency, selectedPricingTier: $selectedPricingTier, selectedProductPricing: $selectedProductPricing, currentScannedTicketID: $currentScannedTicketID, isValidTicket: $isValidTicket)';
+    return 'HostState(products: $products, currentProduct: $currentProduct, selectedProduct: $selectedProduct, productCategories: $productCategories, locationPerms: $locationPerms, selectedLocation: $selectedLocation, selectedSchedule: $selectedSchedule, currencies: $currencies, selectedCurrency: $selectedCurrency, selectedPricingTier: $selectedPricingTier, selectedProductPricing: $selectedProductPricing, currentScannedTicketID: $currentScannedTicketID, isValidTicket: $isValidTicket, workflowState: $workflowState)';
   }
 
   @override
@@ -475,7 +494,9 @@ class _$HostStateImpl implements _HostState {
             (identical(other.currentScannedTicketID, currentScannedTicketID) ||
                 other.currentScannedTicketID == currentScannedTicketID) &&
             (identical(other.isValidTicket, isValidTicket) ||
-                other.isValidTicket == isValidTicket));
+                other.isValidTicket == isValidTicket) &&
+            (identical(other.workflowState, workflowState) ||
+                other.workflowState == workflowState));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -494,7 +515,8 @@ class _$HostStateImpl implements _HostState {
       selectedPricingTier,
       selectedProductPricing,
       currentScannedTicketID,
-      isValidTicket);
+      isValidTicket,
+      workflowState);
 
   /// Create a copy of HostState
   /// with the given fields replaced by the non-null parameter values.
@@ -526,7 +548,8 @@ abstract class _HostState implements HostState {
       final String? selectedPricingTier,
       final ProductPricing? selectedProductPricing,
       final String? currentScannedTicketID,
-      final bool? isValidTicket}) = _$HostStateImpl;
+      final bool? isValidTicket,
+      final WorkflowState? workflowState}) = _$HostStateImpl;
 
   factory _HostState.fromJson(Map<String, dynamic> json) =
       _$HostStateImpl.fromJson;
@@ -556,7 +579,9 @@ abstract class _HostState implements HostState {
   @override
   String? get currentScannedTicketID;
   @override
-  bool? get isValidTicket;
+  bool? get isValidTicket; // Tracks editing and viewing
+  @override
+  WorkflowState? get workflowState;
 
   /// Create a copy of HostState
   /// with the given fields replaced by the non-null parameter values.

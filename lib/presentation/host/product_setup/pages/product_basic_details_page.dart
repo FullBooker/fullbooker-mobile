@@ -4,9 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
 import 'package:fullbooker/application/redux/actions/create_product_basic_details_action.dart';
 import 'package:fullbooker/application/redux/actions/fetch_single_product_action.dart';
-import 'package:fullbooker/application/redux/actions/update_current_product_action.dart';
+import 'package:fullbooker/application/redux/actions/update_product_action.dart';
 import 'package:fullbooker/application/redux/actions/update_product_basic_details_action.dart';
-import 'package:fullbooker/application/redux/actions/update_selected_product_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_setup_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
@@ -50,7 +49,6 @@ class ProductBasicDetailsPage extends StatelessWidget {
         builder: (BuildContext context, ProductSetupViewModel vm) {
           nameController.text = vm.name;
           descriptionController.text = vm.description;
-          final bool isCreate = workflowState == WorkflowState.CREATE;
 
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: 16),
@@ -88,16 +86,7 @@ class ProductBasicDetailsPage extends StatelessWidget {
                             value,
                           ),
                           onChanged: (String value) {
-                            if (isCreate) {
-                              context.dispatch(
-                                UpdateCurrentProductAction(name: value),
-                              );
-                            }
-                            {
-                              context.dispatch(
-                                UpdateSelectedProductAction(name: value),
-                              );
-                            }
+                            context.dispatch(UpdateProductAction(name: value));
                           },
                           keyboardType: TextInputType.name,
                         ),
@@ -107,16 +96,9 @@ class ProductBasicDetailsPage extends StatelessWidget {
                           controller: descriptionController,
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           onChanged: (String value) {
-                            if (isCreate) {
-                              context.dispatch(
-                                UpdateCurrentProductAction(description: value),
-                              );
-                            }
-                            {
-                              context.dispatch(
-                                UpdateSelectedProductAction(description: value),
-                              );
-                            }
+                            context.dispatch(
+                              UpdateProductAction(description: value),
+                            );
                           },
                           maxLines: 3,
                           keyboardType: TextInputType.name,

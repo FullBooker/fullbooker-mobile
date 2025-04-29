@@ -53,6 +53,9 @@ _$HostStateImpl _$$HostStateImplFromJson(Map<String, dynamic> json) =>
       currentScannedTicketID:
           json['currentScannedTicketID'] as String? ?? UNKNOWN,
       isValidTicket: json['isValidTicket'] as bool? ?? false,
+      workflowState:
+          $enumDecodeNullable(_$WorkflowStateEnumMap, json['workflowState']) ??
+              WorkflowState.CREATE,
     );
 
 Map<String, dynamic> _$$HostStateImplToJson(_$HostStateImpl instance) =>
@@ -71,4 +74,10 @@ Map<String, dynamic> _$$HostStateImplToJson(_$HostStateImpl instance) =>
       'selectedProductPricing': instance.selectedProductPricing?.toJson(),
       'currentScannedTicketID': instance.currentScannedTicketID,
       'isValidTicket': instance.isValidTicket,
+      'workflowState': _$WorkflowStateEnumMap[instance.workflowState],
     };
+
+const _$WorkflowStateEnumMap = {
+  WorkflowState.CREATE: 'CREATE',
+  WorkflowState.VIEW: 'VIEW',
+};

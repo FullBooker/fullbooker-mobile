@@ -2,8 +2,7 @@ import 'dart:convert';
 
 import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/core/services/i_custom_client.dart';
-import 'package:fullbooker/application/redux/actions/update_current_product_action.dart';
-import 'package:fullbooker/application/redux/actions/update_selected_product_action.dart';
+import 'package:fullbooker/application/redux/actions/update_product_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/domain/core/entities/product_pricing_response.dart';
@@ -18,13 +17,11 @@ class FetchProductPricingAction extends ReduxAction<AppState> {
     this.onSuccess,
     this.onError,
     required this.client,
-    required this.workflowState,
   });
 
   final Function(String error)? onError;
   final Function()? onSuccess;
   final ICustomClient client;
-  final WorkflowState workflowState;
 
   @override
   Future<AppState?> reduce() async {
@@ -33,6 +30,9 @@ class FetchProductPricingAction extends ReduxAction<AppState> {
 
     final String currentProductID =
         state.hostState?.currentProduct?.id ?? UNKNOWN;
+
+    final WorkflowState workflowState =
+        state.hostState?.workflowState ?? WorkflowState.CREATE;
 
     final bool isCreate = workflowState == WorkflowState.CREATE;
 
@@ -60,22 +60,10 @@ class FetchProductPricingAction extends ReduxAction<AppState> {
     final ProductPricingResponse productPricingResponse =
         ProductPricingResponse.fromJson(body);
 
-    if (isCreate) {
-      dispatch(
-        UpdateCurrentProductAction(
-          pricing: productPricingResponse.results,
-        ),
-      );
+    dispatch(
+      UpdateProductAction(pricing: productPricingResponse.results),
+    );
 
-      return state;
-    } else {
-      dispatch(
-        UpdateSelectedProductAction(
-          productPricing: productPricingResponse.results,
-        ),
-      );
-
-      return state;
-    }
+    return null;
   }
 }

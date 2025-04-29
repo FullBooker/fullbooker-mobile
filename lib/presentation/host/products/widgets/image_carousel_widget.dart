@@ -11,7 +11,6 @@ import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/domain/core/entities/product_media.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
-import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 
 class ImageCarouselWidget extends StatefulWidget {
@@ -34,7 +33,6 @@ class _ImageCarouselWidgetState extends State<ImageCarouselWidget> {
       onInit: (Store<AppState> store) => context.dispatch(
         FetchProductMediaAction(
           client: AppWrapperBase.of(context)!.customClient,
-          workflowState: WorkflowState.VIEW,
         ),
       ),
       builder: (BuildContext context, ProductDetailViewModel vm) {

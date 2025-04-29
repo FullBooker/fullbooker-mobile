@@ -8,6 +8,7 @@ import 'package:fullbooker/domain/core/entities/product_location.dart';
 import 'package:fullbooker/domain/core/entities/product_media.dart';
 import 'package:fullbooker/domain/core/entities/product_pricing.dart';
 import 'package:fullbooker/shared/entities/location_perms_result.dart';
+import 'package:fullbooker/shared/entities/enums.dart';
 
 class ProductSetupViewModel extends Vm {
   ProductSetupViewModel({
@@ -67,6 +68,7 @@ class ProductSetupViewModel extends Vm {
 
   final Product? currentProduct;
   final Product? selectedProduct;
+
   final String name;
   final String description;
 
@@ -84,22 +86,29 @@ class ProductSetupViewModel extends Vm {
   final String repeatType;
   final List<int> repeatMonthDates;
   final List<String> repeatYearDates;
+  final Map<String, Map<String, String>> repeatOnDaysOfWeek;
   final List<ProductPricing?>? pricing;
   final List<Currency?>? currencies;
-
-  final Map<String, Map<String, String>> repeatOnDaysOfWeek;
-
   final Currency? selectedCurrency;
   final String selectedPricingTier;
   final ProductPricing? selectedPricing;
   final bool buyerPaysFee;
 
   static ProductSetupViewModel fromState(AppState state) {
+    final WorkflowState workflowState =
+        state.hostState?.workflowState ?? WorkflowState.CREATE;
+
+    final bool isCreate = workflowState == WorkflowState.CREATE;
+
+    final Product? baseProduct = isCreate
+        ? state.hostState?.currentProduct
+        : state.hostState?.selectedProduct;
+
     return ProductSetupViewModel(
       currentProduct: state.hostState?.currentProduct,
       selectedProduct: state.hostState?.selectedProduct,
-      name: state.hostState?.currentProduct?.name ?? UNKNOWN,
-      description: state.hostState?.currentProduct?.description ?? UNKNOWN,
+      name: baseProduct?.name ?? UNKNOWN,
+      description: baseProduct?.description ?? UNKNOWN,
       productCategories:
           state.hostState?.productCategories ?? <ProductCategory>[],
       locationPerms: state.hostState?.locationPerms,
@@ -107,8 +116,8 @@ class ProductSetupViewModel extends Vm {
       startTime: state.hostState?.selectedSchedule?.startTime ?? UNKNOWN,
       endDate: state.hostState?.selectedSchedule?.endDate ?? UNKNOWN,
       endTime: state.hostState?.selectedSchedule?.endTime ?? UNKNOWN,
-      photos: state.hostState?.currentProduct?.photos ?? <ProductMedia?>[],
-      videos: state.hostState?.currentProduct?.videos ?? <ProductMedia?>[],
+      photos: baseProduct?.photos ?? <ProductMedia?>[],
+      videos: baseProduct?.videos ?? <ProductMedia?>[],
       selectedLocation: state.hostState?.selectedLocation,
       isAllDay: state.hostState?.selectedSchedule?.isAllDay ?? false,
       repeats: state.hostState?.selectedSchedule?.repeats ?? false,
@@ -120,7 +129,7 @@ class ProductSetupViewModel extends Vm {
       repeatOnDaysOfWeek:
           state.hostState?.selectedSchedule?.repeatOnDaysOfWeek ??
               <String, Map<String, String>>{},
-      pricing: state.hostState?.currentProduct?.pricing ?? <ProductPricing>[],
+      pricing: baseProduct?.pricing ?? <ProductPricing>[],
       currencies: state.hostState?.currencies ?? <Currency?>[],
       selectedCurrency: state.hostState?.selectedCurrency,
       selectedPricingTier: state.hostState?.selectedPricingTier ?? UNKNOWN,

@@ -2,8 +2,7 @@ import 'dart:convert';
 
 import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/core/services/i_custom_client.dart';
-import 'package:fullbooker/application/redux/actions/update_current_product_action.dart';
-import 'package:fullbooker/application/redux/actions/update_selected_product_action.dart';
+import 'package:fullbooker/application/redux/actions/update_product_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/domain/core/entities/product_media.dart';
@@ -19,16 +18,17 @@ class FetchProductMediaAction extends ReduxAction<AppState> {
     this.onSuccess,
     this.onError,
     required this.client,
-    required this.workflowState,
   });
 
   final Function(String error)? onError;
   final Function()? onSuccess;
   final ICustomClient client;
-  final WorkflowState workflowState;
 
   @override
   Future<AppState?> reduce() async {
+    final WorkflowState workflowState =
+        state.hostState?.workflowState ?? WorkflowState.CREATE;
+
     final String? productId = workflowState == WorkflowState.CREATE
         ? state.hostState?.currentProduct?.id
         : state.hostState?.selectedProduct?.id;
@@ -67,13 +67,10 @@ class FetchProductMediaAction extends ReduxAction<AppState> {
         .where((ProductMedia? m) => m?.mediaType == kVideoMediaType)
         .toList();
 
-    if (workflowState == WorkflowState.CREATE) {
-      dispatch(UpdateCurrentProductAction(photos: photos, videos: videos));
-    } else {
-      dispatch(UpdateSelectedProductAction(photos: photos, videos: videos));
-    }
+    dispatch(UpdateProductAction(photos: photos, videos: videos));
 
     onSuccess?.call();
+
     return null;
   }
 }

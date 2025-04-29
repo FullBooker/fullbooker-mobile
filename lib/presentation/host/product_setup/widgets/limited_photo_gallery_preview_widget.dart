@@ -32,7 +32,6 @@ class LimitedPhotoGalleryPreviewWidget extends StatelessWidget {
       onInit: (Store<AppState> store) => context.dispatch(
         FetchProductMediaAction(
           client: AppWrapperBase.of(context)!.customClient,
-          workflowState: WorkflowState.VIEW,
         ),
       ),
       builder: (BuildContext context, ProductReviewViewModel vm) {

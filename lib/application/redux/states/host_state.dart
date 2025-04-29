@@ -8,6 +8,7 @@ import 'package:fullbooker/domain/core/entities/product_category.dart';
 import 'package:fullbooker/domain/core/entities/product_location.dart';
 import 'package:fullbooker/domain/core/entities/product_pricing.dart';
 import 'package:fullbooker/domain/core/entities/product_schedule.dart';
+import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/location_perms_result.dart';
 
 part 'host_state.freezed.dart';
@@ -34,6 +35,9 @@ class HostState with _$HostState {
     // Ticket scanning
     @Default(UNKNOWN) String? currentScannedTicketID,
     @Default(false) bool? isValidTicket,
+
+    // Tracks editing and viewing
+    @Default(WorkflowState.CREATE) WorkflowState? workflowState,
   }) = _HostState;
 
   factory HostState.initial() => HostState(

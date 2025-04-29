@@ -1,6 +1,7 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:fullbooker/application/redux/actions/set_workflow_state_action.dart';
 import 'package:fullbooker/application/redux/actions/update_host_state_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_review_view_model.dart';
@@ -105,6 +106,11 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                             onEdit: () {
                               context.dispatch(
                                 UpdateHostStateAction(currentProduct: product),
+                              );
+                              context.dispatch(
+                                SetWorkflowStateAction(
+                                  workflowState: WorkflowState.CREATE,
+                                ),
                               );
                               context.router.push(
                                 ProductBasicDetailsRoute(

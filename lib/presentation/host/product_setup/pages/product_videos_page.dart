@@ -45,7 +45,6 @@ class ProductVideosPage extends StatelessWidget {
                 onInit: (Store<AppState> store) => context.dispatch(
                   FetchProductMediaAction(
                     client: AppWrapperBase.of(context)!.customClient,
-                    workflowState: WorkflowState.CREATE,
                   ),
                 ),
                 builder: (BuildContext context, ProductSetupViewModel vm) {
