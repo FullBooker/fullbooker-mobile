@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
 import 'package:fullbooker/application/redux/actions/fetch_currencies_action.dart';
 import 'package:fullbooker/application/redux/actions/fetch_products_action.dart';
+import 'package:fullbooker/application/redux/actions/reset_current_product_action.dart';
+import 'package:fullbooker/application/redux/actions/set_workflow_state_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/hosting_home_view_model.dart';
 import 'package:fullbooker/application/redux/view_models/profile_view_model.dart';
@@ -17,6 +19,7 @@ import 'package:fullbooker/presentation/core/components/generic_zero_state.dart'
 import 'package:fullbooker/presentation/core/components/product_card.dart';
 import 'package:fullbooker/presentation/core/components/profile_avatar.dart';
 import 'package:fullbooker/presentation/host/home/widgets/home_nudge_widget.dart';
+import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
 import 'package:heroicons/heroicons.dart';
@@ -41,7 +44,15 @@ class HostingHomePage extends StatelessWidget {
     return Scaffold(
       bottomNavigationBar: const BottomNavBar(),
       floatingActionButton: GestureDetector(
-        onTap: () => context.router.push(ProductCategoryRoute()),
+        onTap: () {
+          context.dispatchAll(
+            <ReduxAction<AppState>>[
+              ResetCurrentProductAction(),
+              SetWorkflowStateAction(workflowState: WorkflowState.CREATE),
+            ],
+          );
+          context.router.push(ProductCategoryRoute());
+        },
         child: Container(
           decoration: BoxDecoration(
             color: Theme.of(context).primaryColor,
@@ -131,6 +142,12 @@ class HostingHomePage extends StatelessWidget {
                         title: noProducts,
                         description: noProductsCopy,
                         onCTATap: () {
+                          context.dispatchAll(<ReduxAction<AppState>>[
+                            ResetCurrentProductAction(),
+                            SetWorkflowStateAction(
+                              workflowState: WorkflowState.CREATE,
+                            ),
+                          ]);
                           context.router.push(ProductCategoryRoute());
                         },
                         ctaText: createProductString,

@@ -1,9 +1,14 @@
+import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
+import 'package:fullbooker/application/redux/actions/reset_current_product_action.dart';
+import 'package:fullbooker/application/redux/actions/set_workflow_state_action.dart';
+import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
+import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
 
 class HomeNudgeWidget extends StatelessWidget {
@@ -51,7 +56,17 @@ class HomeNudgeWidget extends StatelessWidget {
               PrimaryButton(
                 color: Colors.black,
                 customWidth: width * 0.4,
-                onPressed: () => context.router.push(ProductCategoryRoute()),
+                onPressed: () {
+                  context.dispatchAll(
+                    <ReduxAction<AppState>>[
+                      ResetCurrentProductAction(),
+                      SetWorkflowStateAction(
+                        workflowState: WorkflowState.CREATE,
+                      ),
+                    ],
+                  );
+                  context.router.push(ProductCategoryRoute());
+                },
                 child: right(startSetup),
               ),
             ],
