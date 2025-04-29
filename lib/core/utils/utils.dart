@@ -351,14 +351,12 @@ void navigateToNextProductStep({
   }
 
   if (product.locations?.isEmpty ?? true) {
-    context.router
-        .push(ProductLocationRoute(workflowState: WorkflowState.CREATE));
+    context.router.push(ProductLocationRoute());
     return;
   }
 
   if ((product.scheduleID ?? UNKNOWN) == UNKNOWN) {
-    context.router
-        .push(ProductScheduleRoute(workflowState: WorkflowState.CREATE));
+    context.router.push(ProductScheduleRoute());
     return;
   }
 
@@ -378,9 +376,7 @@ void navigateToNextProductStep({
   }
 
   if (product.active ?? false) {
-    context.router.push(
-      ProductReviewAndSubmitRoute(workflowState: WorkflowState.VIEW),
-    );
+    context.router.push(ProductReviewAndSubmitRoute());
     return;
   }
 }

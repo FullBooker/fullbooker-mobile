@@ -15,7 +15,6 @@ import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:dartz/dartz.dart' as d;
 import 'package:fullbooker/presentation/core/components/generic_zero_state.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/location_preview_widget.dart';
-import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
@@ -24,9 +23,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 @RoutePage()
 class ProductLocationPage extends StatelessWidget {
-  const ProductLocationPage({super.key, required this.workflowState});
-
-  final WorkflowState workflowState;
+  const ProductLocationPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -139,20 +136,14 @@ class ProductLocationPage extends StatelessWidget {
                         PrimaryButton(
                           onPressed: () => context.dispatch(
                             SetProductLocationAction(
-                              onSuccess: () {
-                                context.router.push(
-                                  ProductScheduleRoute(
-                                    workflowState: workflowState,
-                                  ),
-                                );
-                              },
+                              onSuccess: () =>
+                                  context.router.push(ProductScheduleRoute()),
                               onError: (String error) => showAlertDialog(
                                 context: context,
                                 assetPath: productZeroStateSVGPath,
                                 description: error,
                               ),
                               client: AppWrapperBase.of(context)!.customClient,
-                              workflowState: workflowState,
                             ),
                           ),
                           child: d.right(continueString),

@@ -44,7 +44,7 @@ class UpdateProductBasicDetailsAction extends ReduxAction<AppState> {
     };
 
     final String baseEndpoint = GetIt.I.get<AppConfig>().getProductsEndpoint;
-    final String fullEndpoint = '$baseEndpoint$productID';
+    final String fullEndpoint = '$baseEndpoint$productID/';
 
     final Response httpResponse = await client.callRESTAPI(
       endpoint: fullEndpoint,

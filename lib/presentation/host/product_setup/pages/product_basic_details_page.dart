@@ -45,8 +45,10 @@ class ProductBasicDetailsPage extends StatelessWidget {
           descriptionController.dispose();
         },
         builder: (BuildContext context, ProductSetupViewModel vm) {
-          nameController.text = vm.name;
-          descriptionController.text = vm.description;
+          if (vm.workflowState == WorkflowState.VIEW) {
+            nameController.text = vm.name;
+            descriptionController.text = vm.description;
+          }
 
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: 16),
@@ -115,24 +117,29 @@ class ProductBasicDetailsPage extends StatelessWidget {
                       );
                     },
                     builder: (BuildContext context, ProductSetupViewModel vm) {
-                      if (context.isWaiting(CreateProductBasicDetailsAction)) {
+                      if (context.isWaiting(<Type>[
+                        CreateProductBasicDetailsAction,
+                        UpdateProductBasicDetailsAction,
+                      ])) {
                         return AppLoading();
                       }
+
+                      final bool isCreate =
+                          vm.workflowState == WorkflowState.CREATE;
+
                       return Column(
                         spacing: 12,
                         children: <Widget>[
                           PrimaryButton(
                             onPressed: () {
                               if (_formKey.currentState?.validate() ?? false) {
-                                if (vm.workflowState == WorkflowState.CREATE) {
+                                if (isCreate) {
                                   context.dispatch(
                                     CreateProductBasicDetailsAction(
                                       client: AppWrapperBase.of(context)!
                                           .customClient,
                                       onSuccess: () => context.router.push(
-                                        ProductLocationRoute(
-                                          workflowState: vm.workflowState,
-                                        ),
+                                        ProductLocationRoute(),
                                       ),
                                       onError: (String error) =>
                                           showAlertDialog(
@@ -147,11 +154,8 @@ class ProductBasicDetailsPage extends StatelessWidget {
                                     UpdateProductBasicDetailsAction(
                                       client: AppWrapperBase.of(context)!
                                           .customClient,
-                                      onSuccess: () => context.router.push(
-                                        ProductLocationRoute(
-                                          workflowState: vm.workflowState,
-                                        ),
-                                      ),
+                                      onSuccess: () =>
+                                          context.router.maybePop(),
                                       onError: (String error) =>
                                           showAlertDialog(
                                         context: context,

@@ -9,16 +9,10 @@ import 'package:fullbooker/domain/core/entities/product_media.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/video_card.dart';
 import 'package:fullbooker/presentation/host/products/widgets/min_zero_state.dart';
-import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 
 class LimitedVideoGalleryPreviewWidget extends StatelessWidget {
-  const LimitedVideoGalleryPreviewWidget({
-    super.key,
-    required this.workflowState,
-  });
-
-  final WorkflowState workflowState;
+  const LimitedVideoGalleryPreviewWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +31,7 @@ class LimitedVideoGalleryPreviewWidget extends StatelessWidget {
           return const AppLoading();
         }
 
-        final List<ProductMedia?> videos = vm.selectedProduct?.videos
+        final List<ProductMedia?> videos = vm.product?.videos
                 ?.where((ProductMedia? m) => m?.mediaType == kVideoMediaType)
                 .toList() ??
             <ProductMedia?>[];

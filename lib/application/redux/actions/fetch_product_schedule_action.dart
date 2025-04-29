@@ -13,18 +13,16 @@ import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
 
-class FetchProductSchedulesAction extends ReduxAction<AppState> {
-  FetchProductSchedulesAction({
+class FetchProductScheduleAction extends ReduxAction<AppState> {
+  FetchProductScheduleAction({
     this.onSuccess,
     this.onError,
     required this.client,
-    required this.workflowState,
   });
 
   final Function(String error)? onError;
   final Function()? onSuccess;
   final ICustomClient client;
-  final WorkflowState workflowState;
 
   @override
   Future<AppState?> reduce() async {

@@ -1,7 +1,6 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:fullbooker/application/redux/actions/set_workflow_state_action.dart';
 import 'package:fullbooker/application/redux/actions/update_host_state_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_review_view_model.dart';
@@ -23,16 +22,13 @@ import 'package:fullbooker/presentation/host/product_setup/widgets/pricing_card_
 import 'package:fullbooker/presentation/host/product_setup/widgets/product_type_item.dart';
 import 'package:fullbooker/presentation/host/products/widgets/min_zero_state.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_schedule_widget.dart';
-import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
 
 @RoutePage()
 class ProductReviewAndSubmitPage extends StatelessWidget {
-  const ProductReviewAndSubmitPage({super.key, required this.workflowState});
-
-  final WorkflowState workflowState;
+  const ProductReviewAndSubmitPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -52,9 +48,7 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                 converter: (Store<AppState> store) =>
                     ProductReviewViewModel.fromState(store.state),
                 builder: (BuildContext context, ProductReviewViewModel vm) {
-                  final Product? product = workflowState == WorkflowState.CREATE
-                      ? vm.currentProduct
-                      : vm.selectedProduct;
+                  final Product? product = vm.product;
 
                   final String? name = product?.name;
                   final String? description = product?.description;
@@ -107,11 +101,6 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                               context.dispatch(
                                 UpdateHostStateAction(contextProduct: product),
                               );
-                              context.dispatch(
-                                SetWorkflowStateAction(
-                                  workflowState: WorkflowState.CREATE,
-                                ),
-                              );
                               context.router.push(ProductBasicDetailsRoute());
                             },
                           ),
@@ -150,11 +139,7 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                                   ),
                                 ],
                               );
-                              context.router.push(
-                                ProductLocationRoute(
-                                  workflowState: workflowState,
-                                ),
-                              );
+                              context.router.push(ProductLocationRoute());
                             },
                           ),
 
@@ -172,15 +157,11 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                               context.dispatch(
                                 UpdateHostStateAction(contextProduct: product),
                               );
-                              context.router.push(
-                                ProductScheduleRoute(
-                                  workflowState: workflowState,
-                                ),
-                              );
+                              context.router.push(ProductScheduleRoute());
                             },
                           ),
                           if ((product?.scheduleID ?? UNKNOWN) != UNKNOWN)
-                            ProductScheduleWidget(workflowState: workflowState),
+                            ProductScheduleWidget(),
                           Divider(),
 
                           // Photos
@@ -193,9 +174,7 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                               context.router.push(const ProductPhotosRoute());
                             },
                           ),
-                          LimitedPhotoGalleryPreviewWidget(
-                            workflowState: workflowState,
-                          ),
+                          LimitedPhotoGalleryPreviewWidget(),
                           Divider(),
 
                           // Videos
@@ -208,9 +187,7 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                               context.router.push(const ProductVideosRoute());
                             },
                           ),
-                          LimitedVideoGalleryPreviewWidget(
-                            workflowState: workflowState,
-                          ),
+                          LimitedVideoGalleryPreviewWidget(),
                           Divider(),
 
                           // Pricing
@@ -252,9 +229,7 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
               converter: (Store<AppState> store) =>
                   ProductReviewViewModel.fromState(store.state),
               builder: (BuildContext context, ProductReviewViewModel vm) {
-                final Product? product = workflowState == WorkflowState.CREATE
-                    ? vm.currentProduct
-                    : vm.selectedProduct;
+                final Product? product = vm.product;
 
                 return Column(
                   spacing: 12,

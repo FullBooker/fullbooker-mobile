@@ -991,43 +991,18 @@ class ProductDetailRoute extends _i46.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i27.ProductLocationPage]
-class ProductLocationRoute
-    extends _i46.PageRouteInfo<ProductLocationRouteArgs> {
-  ProductLocationRoute({
-    _i47.Key? key,
-    required _i51.WorkflowState workflowState,
-    List<_i46.PageRouteInfo>? children,
-  }) : super(
-         ProductLocationRoute.name,
-         args: ProductLocationRouteArgs(key: key, workflowState: workflowState),
-         initialChildren: children,
-       );
+class ProductLocationRoute extends _i46.PageRouteInfo<void> {
+  const ProductLocationRoute({List<_i46.PageRouteInfo>? children})
+    : super(ProductLocationRoute.name, initialChildren: children);
 
   static const String name = 'ProductLocationRoute';
 
   static _i46.PageInfo page = _i46.PageInfo(
     name,
     builder: (data) {
-      final args = data.argsAs<ProductLocationRouteArgs>();
-      return _i27.ProductLocationPage(
-        key: args.key,
-        workflowState: args.workflowState,
-      );
+      return const _i27.ProductLocationPage();
     },
   );
-}
-
-class ProductLocationRouteArgs {
-  const ProductLocationRouteArgs({this.key, required this.workflowState});
-
-  final _i47.Key? key;
-
-  final _i51.WorkflowState workflowState;
-
-  @override
-  String toString() {
-    return 'ProductLocationRouteArgs{key: $key, workflowState: $workflowState}';
-  }
 }
 
 /// generated route for
@@ -1064,90 +1039,34 @@ class ProductPricingRoute extends _i46.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i30.ProductReviewAndSubmitPage]
-class ProductReviewAndSubmitRoute
-    extends _i46.PageRouteInfo<ProductReviewAndSubmitRouteArgs> {
-  ProductReviewAndSubmitRoute({
-    _i47.Key? key,
-    required _i51.WorkflowState workflowState,
-    List<_i46.PageRouteInfo>? children,
-  }) : super(
-         ProductReviewAndSubmitRoute.name,
-         args: ProductReviewAndSubmitRouteArgs(
-           key: key,
-           workflowState: workflowState,
-         ),
-         initialChildren: children,
-       );
+class ProductReviewAndSubmitRoute extends _i46.PageRouteInfo<void> {
+  const ProductReviewAndSubmitRoute({List<_i46.PageRouteInfo>? children})
+    : super(ProductReviewAndSubmitRoute.name, initialChildren: children);
 
   static const String name = 'ProductReviewAndSubmitRoute';
 
   static _i46.PageInfo page = _i46.PageInfo(
     name,
     builder: (data) {
-      final args = data.argsAs<ProductReviewAndSubmitRouteArgs>();
-      return _i30.ProductReviewAndSubmitPage(
-        key: args.key,
-        workflowState: args.workflowState,
-      );
+      return const _i30.ProductReviewAndSubmitPage();
     },
   );
 }
 
-class ProductReviewAndSubmitRouteArgs {
-  const ProductReviewAndSubmitRouteArgs({
-    this.key,
-    required this.workflowState,
-  });
-
-  final _i47.Key? key;
-
-  final _i51.WorkflowState workflowState;
-
-  @override
-  String toString() {
-    return 'ProductReviewAndSubmitRouteArgs{key: $key, workflowState: $workflowState}';
-  }
-}
-
 /// generated route for
 /// [_i31.ProductSchedulePage]
-class ProductScheduleRoute
-    extends _i46.PageRouteInfo<ProductScheduleRouteArgs> {
-  ProductScheduleRoute({
-    _i47.Key? key,
-    required _i51.WorkflowState workflowState,
-    List<_i46.PageRouteInfo>? children,
-  }) : super(
-         ProductScheduleRoute.name,
-         args: ProductScheduleRouteArgs(key: key, workflowState: workflowState),
-         initialChildren: children,
-       );
+class ProductScheduleRoute extends _i46.PageRouteInfo<void> {
+  const ProductScheduleRoute({List<_i46.PageRouteInfo>? children})
+    : super(ProductScheduleRoute.name, initialChildren: children);
 
   static const String name = 'ProductScheduleRoute';
 
   static _i46.PageInfo page = _i46.PageInfo(
     name,
     builder: (data) {
-      final args = data.argsAs<ProductScheduleRouteArgs>();
-      return _i31.ProductSchedulePage(
-        key: args.key,
-        workflowState: args.workflowState,
-      );
+      return const _i31.ProductSchedulePage();
     },
   );
-}
-
-class ProductScheduleRouteArgs {
-  const ProductScheduleRouteArgs({this.key, required this.workflowState});
-
-  final _i47.Key? key;
-
-  final _i51.WorkflowState workflowState;
-
-  @override
-  String toString() {
-    return 'ProductScheduleRouteArgs{key: $key, workflowState: $workflowState}';
-  }
 }
 
 /// generated route for

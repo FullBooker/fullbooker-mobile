@@ -2,7 +2,7 @@ import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
-import 'package:fullbooker/application/redux/actions/fetch_product_schedules_action.dart';
+import 'package:fullbooker/application/redux/actions/fetch_product_schedule_action.dart';
 import 'package:fullbooker/application/redux/actions/fetch_single_product_action.dart';
 import 'package:fullbooker/application/redux/actions/set_product_schedule_action.dart';
 import 'package:fullbooker/application/redux/actions/update_current_schedule_action.dart';
@@ -19,7 +19,6 @@ import 'package:dartz/dartz.dart' as d;
 import 'package:fullbooker/presentation/host/product_setup/widgets/repeats_monthly_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/repeats_weekly_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/repeats_yearly_widget.dart';
-import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/custom_dropdown.dart';
@@ -29,9 +28,7 @@ import 'package:heroicons/heroicons.dart';
 
 @RoutePage()
 class ProductSchedulePage extends StatelessWidget {
-  const ProductSchedulePage({super.key, required this.workflowState});
-
-  final WorkflowState workflowState;
+  const ProductSchedulePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -50,16 +47,15 @@ class ProductSchedulePage extends StatelessWidget {
               FetchSingleProductAction(
                 client: AppWrapperBase.of(context)!.customClient,
               ),
-              FetchProductSchedulesAction(
+              FetchProductScheduleAction(
                 client: AppWrapperBase.of(context)!.customClient,
-                workflowState: workflowState,
               ),
             ]);
           },
           builder: (BuildContext context, ProductSetupViewModel vm) {
             if (context.isWaiting(<Type>[
               FetchSingleProductAction,
-              FetchProductSchedulesAction,
+              FetchProductScheduleAction,
             ])) {
               return AppLoading();
             }
