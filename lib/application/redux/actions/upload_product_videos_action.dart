@@ -85,7 +85,7 @@ class UploadProductVideosAction extends ReduxAction<AppState> {
 
     dispatch(
       UpdateProductAction(
-        photos: <ProductMedia?>[...existingVideos, ...uploadedVideos],
+        videos: <ProductMedia?>[...existingVideos, ...uploadedVideos],
       ),
     );
 

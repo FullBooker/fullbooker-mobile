@@ -56,7 +56,7 @@ class RemoveProductVideoAction extends ReduxAction<AppState> {
     final List<ProductMedia> updatedVideos = existingVideos
       ..removeWhere((ProductMedia item) => item.id == video.id);
 
-    dispatch(UpdateProductAction(photos: updatedVideos));
+    dispatch(UpdateProductAction(videos: updatedVideos));
 
     return null;
   }
