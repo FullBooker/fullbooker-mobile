@@ -160,14 +160,6 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                             PreviewHeaderWidget(
                               title: location,
                               onEdit: () {
-                                // TODO(abiud): this action might not be necessary if set up properly from detail page
-                                context.dispatchAll(
-                                  <ReduxAction<AppState>>[
-                                    UpdateHostStateAction(
-                                      contextProduct: product,
-                                    ),
-                                  ],
-                                );
                                 context.router.push(ProductLocationRoute());
                               },
                             ),
@@ -183,11 +175,6 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                             PreviewHeaderWidget(
                               title: dateAndTime,
                               onEdit: () {
-                                context.dispatch(
-                                  UpdateHostStateAction(
-                                    contextProduct: product,
-                                  ),
-                                );
                                 context.router.push(ProductScheduleRoute());
                               },
                             ),
