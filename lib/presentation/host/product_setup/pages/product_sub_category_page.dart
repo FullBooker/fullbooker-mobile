@@ -1,7 +1,9 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
 import 'package:fullbooker/application/redux/actions/update_product_action.dart';
+import 'package:fullbooker/application/redux/actions/update_product_category_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_setup_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
@@ -12,6 +14,7 @@ import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:dartz/dartz.dart' as d;
 import 'package:fullbooker/presentation/core/components/custom_chip_widget.dart';
 import 'package:fullbooker/presentation/core/components/generic_zero_state.dart';
+import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
 
@@ -59,10 +62,8 @@ class SetupProductCategoryPage extends StatelessWidget {
                             ProductSetupViewModel.fromState(store.state),
                         builder:
                             (BuildContext context, ProductSetupViewModel vm) {
-                          final List<ProductCategory?>? subCategories = vm
-                              .currentProduct
-                              ?.selectedProductCategory
-                              ?.subcategories;
+                          final List<ProductCategory?>? subCategories =
+                              vm.subCategories;
 
                           if (subCategories?.isEmpty ?? true) {
                             return GenericZeroState(
@@ -102,18 +103,40 @@ class SetupProductCategoryPage extends StatelessWidget {
                 ],
               ),
             ),
-            PrimaryButton(
-              onPressed: () {
-                context.router.push(ProductSetupPreviewRoute());
+            StoreConnector<AppState, ProductSetupViewModel>(
+              converter: (Store<AppState> store) =>
+                  ProductSetupViewModel.fromState(store.state),
+              builder: (BuildContext context, ProductSetupViewModel vm) {
+                final bool isEdit = vm.workflowState == WorkflowState.VIEW;
+
+                return Column(
+                  children: <Widget>[
+                    PrimaryButton(
+                      onPressed: () {
+                        if (isEdit) {
+                          context.dispatch(
+                            UpdateProductCategoryAction(
+                              client: AppWrapperBase.of(context)!.customClient,
+                              onSuccess: () => context.router
+                                  .replace(ProductReviewAndSubmitRoute()),
+                            ),
+                          );
+                        } else {
+                          context.router.push(ProductSetupPreviewRoute());
+                        }
+                      },
+                      child: d.right(continueString),
+                    ),
+                    SecondaryButton(
+                      onPressed: () {
+                        context.router.maybePop();
+                      },
+                      child: d.right(cancelString),
+                      fillColor: Colors.transparent,
+                    ),
+                  ],
+                );
               },
-              child: d.right(continueString),
-            ),
-            SecondaryButton(
-              onPressed: () {
-                context.router.maybePop();
-              },
-              child: d.right(cancelString),
-              fillColor: Colors.transparent,
             ),
           ],
         ),

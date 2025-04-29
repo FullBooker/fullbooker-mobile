@@ -66,7 +66,7 @@ import 'package:fullbooker/presentation/host/product_setup/pages/product_shedule
     as _i31;
 import 'package:fullbooker/presentation/host/product_setup/pages/product_videos_page.dart'
     as _i33;
-import 'package:fullbooker/presentation/host/product_setup/pages/setup_product_category_page.dart'
+import 'package:fullbooker/presentation/host/product_setup/pages/product_sub_category_page.dart'
     as _i38;
 import 'package:fullbooker/presentation/host/product_setup/pages/setup_product_type_page.dart'
     as _i39;

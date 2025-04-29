@@ -81,7 +81,9 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                           // Category and type
                           PreviewHeaderWidget(
                             title: categoryAndType,
-                            // onEdit: () {},
+                            onEdit: () {
+                              context.router.push(SetupProductTypeRoute());
+                            },
                           ),
 
                           ProductTypeItem(
@@ -89,7 +91,6 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                               name: product?.categoryName,
                               description: product?.subcategoryName,
                             ),
-                            isSelected: true,
                           ),
 
                           Divider(),

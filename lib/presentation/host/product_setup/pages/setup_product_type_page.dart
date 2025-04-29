@@ -77,6 +77,7 @@ class SetupProductTypePage extends StatelessWidget {
                           if (context.isWaiting(FetchProductCategoriesAction)) {
                             return AppLoading();
                           }
+                          
                           final List<ProductCategory>? categories =
                               vm.productCategories;
 
