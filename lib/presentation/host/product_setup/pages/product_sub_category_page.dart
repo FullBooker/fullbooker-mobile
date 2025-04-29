@@ -15,6 +15,7 @@ import 'package:dartz/dartz.dart' as d;
 import 'package:fullbooker/presentation/core/components/custom_chip_widget.dart';
 import 'package:fullbooker/presentation/core/components/generic_zero_state.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
+import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
 
@@ -62,6 +63,10 @@ class ProductSubCategoryPage extends StatelessWidget {
                             ProductSetupViewModel.fromState(store.state),
                         builder:
                             (BuildContext context, ProductSetupViewModel vm) {
+                          if (context.isWaiting(UpdateProductCategoryAction)) {
+                            return AppLoading();
+                          }
+
                           final List<ProductCategory?>? subCategories =
                               vm.subCategories;
 
@@ -80,9 +85,8 @@ class ProductSubCategoryPage extends StatelessWidget {
                             runSpacing: 8,
                             children:
                                 subCategories?.map((ProductCategory? current) {
-                                      final bool selected = current?.id ==
-                                          vm.currentProduct
-                                              ?.selectedProductSubCategory?.id;
+                                      final bool selected =
+                                          current?.id == vm.subCategory?.id;
 
                                       return CustomChipWidget(
                                         value: current?.name ?? '',
@@ -107,9 +111,14 @@ class ProductSubCategoryPage extends StatelessWidget {
               converter: (Store<AppState> store) =>
                   ProductSetupViewModel.fromState(store.state),
               builder: (BuildContext context, ProductSetupViewModel vm) {
+                if (context.isWaiting(UpdateProductCategoryAction)) {
+                  return AppLoading();
+                }
+
                 final bool isEdit = vm.workflowState == WorkflowState.VIEW;
 
                 return Column(
+                  spacing: 12,
                   children: <Widget>[
                     PrimaryButton(
                       onPressed: () {

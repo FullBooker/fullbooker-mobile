@@ -39,6 +39,10 @@ class ProductSetupViewModel extends Vm {
     required this.name,
     required this.description,
     required this.subCategories,
+    required this.category,
+    required this.categoryID,
+    required this.subCategoryID,
+    required this.subCategory,
   }) : super(
           equals: <Object?>[
             workflowState,
@@ -67,6 +71,10 @@ class ProductSetupViewModel extends Vm {
             name,
             description,
             subCategories,
+            category,
+            subCategory,
+            categoryID,
+            subCategoryID,
           ],
         );
 
@@ -99,7 +107,13 @@ class ProductSetupViewModel extends Vm {
   final String selectedPricingTier;
   final ProductPricing? selectedPricing;
   final bool buyerPaysFee;
+
+  /// Basic details page
+  final ProductCategory? category;
+  final ProductCategory? subCategory;
+  final String categoryID;
   final List<ProductCategory?>? subCategories;
+  final String subCategoryID;
 
   static ProductSetupViewModel fromState(AppState state) {
     final WorkflowState workflowState =
@@ -145,8 +159,14 @@ class ProductSetupViewModel extends Vm {
           state.hostState?.selectedProductPricing ?? ProductPricing(),
       buyerPaysFee:
           state.hostState?.selectedProductPricing?.buyerPaysFee ?? false,
+      category:
+          baseProduct?.selectedProductCategory ?? ProductCategory.initial(),
+      subCategory:
+          baseProduct?.selectedProductSubCategory ?? ProductCategory.initial(),
       subCategories: baseProduct?.selectedProductCategory?.subcategories ??
           <ProductCategory?>[],
+      subCategoryID: baseProduct?.subcategory ?? UNKNOWN,
+      categoryID: baseProduct?.category ?? UNKNOWN,
     );
   }
 }

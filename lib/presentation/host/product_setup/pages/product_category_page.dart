@@ -106,9 +106,8 @@ class ProductCategoryPage extends StatelessWidget {
                               final ProductCategory current =
                                   categories![index];
 
-                              final bool selected = current.id ==
-                                  vm.currentProduct?.selectedProductCategory
-                                      ?.id;
+                              final bool selected =
+                                  current.id == vm.category?.id;
 
                               return Padding(
                                 padding: const EdgeInsets.only(bottom: 12),
@@ -131,18 +130,22 @@ class ProductCategoryPage extends StatelessWidget {
                 ],
               ),
             ),
-            PrimaryButton(
-              onPressed: () {
-                context.router.push(SetupProductCategoryRoute());
-              },
-              child: d.right(continueString),
-            ),
-            SecondaryButton(
-              onPressed: () {
-                context.router.maybePop();
-              },
-              child: d.right(cancelString),
-              fillColor: Colors.transparent,
+            Column(
+              spacing: 12,
+              children: <Widget>[
+                PrimaryButton(
+                  onPressed: () =>
+                      context.router.push(ProductSubCategoryRoute()),
+                  child: d.right(continueString),
+                ),
+                SecondaryButton(
+                  onPressed: () {
+                    context.router.maybePop();
+                  },
+                  child: d.right(cancelString),
+                  fillColor: Colors.transparent,
+                ),
+              ],
             ),
           ],
         ),
