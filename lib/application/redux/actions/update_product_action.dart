@@ -1,6 +1,7 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/domain/core/entities/product_category.dart';
+import 'package:fullbooker/domain/core/entities/product_location.dart';
 import 'package:fullbooker/domain/core/entities/product_media.dart';
 import 'package:fullbooker/domain/core/entities/product_pricing.dart';
 import 'package:fullbooker/domain/core/entities/product_schedule.dart';
@@ -17,6 +18,7 @@ class UpdateProductAction extends ReduxAction<AppState> {
     this.videos,
     this.pricing,
     this.schedule,
+    this.locations,
   });
 
   final ProductCategory? selectedCategory;
@@ -27,6 +29,7 @@ class UpdateProductAction extends ReduxAction<AppState> {
   final List<ProductMedia?>? videos;
   final List<ProductPricing?>? pricing;
   final ProductSchedule? schedule;
+  final List<ProductLocation>? locations;
 
   @override
   AppState? reduce() {
@@ -46,6 +49,7 @@ class UpdateProductAction extends ReduxAction<AppState> {
         videos: videos ?? state.hostState?.currentProduct?.videos,
         pricing: pricing ?? state.hostState?.currentProduct?.pricing,
         schedule: schedule ?? state.hostState?.currentProduct?.schedule,
+        locations: locations ?? state.hostState?.currentProduct?.locations,
       );
     } else {
       return state.copyWith.hostState?.selectedProduct?.call(
@@ -60,6 +64,7 @@ class UpdateProductAction extends ReduxAction<AppState> {
         videos: videos ?? state.hostState?.selectedProduct?.videos,
         pricing: pricing ?? state.hostState?.selectedProduct?.pricing,
         schedule: schedule ?? state.hostState?.selectedProduct?.schedule,
+        locations: locations ?? state.hostState?.currentProduct?.locations,
       );
     }
   }

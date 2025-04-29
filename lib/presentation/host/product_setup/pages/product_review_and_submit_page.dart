@@ -159,9 +159,8 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                             // Location
                             PreviewHeaderWidget(
                               title: location,
-                              onEdit: () {
-                                context.router.push(ProductLocationRoute());
-                              },
+                              onEdit: () =>
+                                  context.router.push(ProductLocationRoute()),
                             ),
 
                             if (isLocationAvailable)

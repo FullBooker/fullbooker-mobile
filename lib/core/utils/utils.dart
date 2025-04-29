@@ -482,10 +482,7 @@ Future<String?> pickTime({required BuildContext context}) async {
 bool hasValidLocation(ProductLocation? location) {
   if (location == null) return false;
 
-  final bool hasCoordinates = location.lat != UNKNOWN &&
-      location.long != UNKNOWN &&
-      location.lat != null &&
-      location.long != null;
+  final bool hasCoordinates = location.coordinates != UNKNOWN;
 
   final bool hasAddress =
       location.address != null && location.address != UNKNOWN;

@@ -319,6 +319,7 @@ class _ChooseLocationPageState extends State<ChooseLocationPage> {
                     Flexible(
                       child: PrimaryButton(
                         onPressed: () {
+                          // TODO!!(abiud): remove the initialization during editing since it initialized the location with a UNKNOWN ID
                           context.dispatch(
                             UpdateHostStateAction(
                               selectedLocation:

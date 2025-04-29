@@ -5,6 +5,7 @@ import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
 import 'package:fullbooker/application/redux/actions/check_location_permission_action.dart';
 import 'package:fullbooker/application/redux/actions/fetch_single_product_action.dart';
 import 'package:fullbooker/application/redux/actions/set_product_location_action.dart';
+import 'package:fullbooker/application/redux/actions/update_product_location_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_setup_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
@@ -15,6 +16,7 @@ import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:dartz/dartz.dart' as d;
 import 'package:fullbooker/presentation/core/components/generic_zero_state.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/location_preview_widget.dart';
+import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
@@ -130,22 +132,44 @@ class ProductLocationPage extends StatelessWidget {
                       return AppLoading();
                     }
 
+                    final bool isEditing =
+                        vm.workflowState == WorkflowState.VIEW;
+
                     return Column(
                       spacing: 12,
                       children: <Widget>[
                         PrimaryButton(
-                          onPressed: () => context.dispatch(
-                            SetProductLocationAction(
-                              onSuccess: () =>
-                                  context.router.push(ProductScheduleRoute()),
-                              onError: (String error) => showAlertDialog(
-                                context: context,
-                                assetPath: productZeroStateSVGPath,
-                                description: error,
-                              ),
-                              client: AppWrapperBase.of(context)!.customClient,
-                            ),
-                          ),
+                          onPressed: () {
+                            if (isEditing) {
+                              context.dispatch(
+                                UpdateProductLocationAction(
+                                  onSuccess: () => context.router
+                                      .replace(ProductReviewAndSubmitRoute()),
+                                  onError: (String error) => showAlertDialog(
+                                    context: context,
+                                    assetPath: productZeroStateSVGPath,
+                                    description: error,
+                                  ),
+                                  client:
+                                      AppWrapperBase.of(context)!.customClient,
+                                ),
+                              );
+                            } else {
+                              context.dispatch(
+                                SetProductLocationAction(
+                                  onSuccess: () => context.router
+                                      .push(ProductScheduleRoute()),
+                                  onError: (String error) => showAlertDialog(
+                                    context: context,
+                                    assetPath: productZeroStateSVGPath,
+                                    description: error,
+                                  ),
+                                  client:
+                                      AppWrapperBase.of(context)!.customClient,
+                                ),
+                              );
+                            }
+                          },
                           child: d.right(continueString),
                         ),
                         SecondaryButton(
