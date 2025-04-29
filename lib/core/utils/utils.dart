@@ -346,8 +346,7 @@ void navigateToNextProductStep({
   }
 
   if (product.name?.isEmpty ?? true) {
-    context.router
-        .push(ProductBasicDetailsRoute(workflowState: WorkflowState.CREATE));
+    context.router.push(ProductBasicDetailsRoute());
     return;
   }
 

@@ -1,14 +1,15 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
+import 'package:fullbooker/application/redux/states/host_state.dart';
 import 'package:fullbooker/domain/core/entities/currency.dart';
 import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/entities/product_location.dart';
 import 'package:fullbooker/domain/core/entities/product_schedule.dart';
+import 'package:fullbooker/shared/entities/enums.dart'; // for WorkflowState
 
 class UpdateHostStateAction extends ReduxAction<AppState> {
   UpdateHostStateAction({
-    this.selectedProduct,
-    this.currentProduct,
+    this.contextProduct,
     this.selectedLocation,
     this.currencies,
     this.selectedCurrency,
@@ -18,8 +19,7 @@ class UpdateHostStateAction extends ReduxAction<AppState> {
     this.selectedSchedule,
   });
 
-  final Product? selectedProduct;
-  final Product? currentProduct;
+  final Product? contextProduct;
   final ProductLocation? selectedLocation;
   final List<Currency?>? currencies;
   final Currency? selectedCurrency;
@@ -30,20 +30,29 @@ class UpdateHostStateAction extends ReduxAction<AppState> {
 
   @override
   AppState? reduce() {
-    final AppState? newState = state.copyWith.hostState?.call(
-      selectedProduct: selectedProduct ?? state.hostState?.selectedProduct,
-      currentProduct: currentProduct ?? state.hostState?.currentProduct,
-      selectedLocation: selectedLocation ?? state.hostState?.selectedLocation,
-      currencies: currencies ?? state.hostState?.currencies,
-      selectedCurrency: selectedCurrency ?? state.hostState?.selectedCurrency,
-      selectedPricingTier:
-          selectedPricingTier ?? state.hostState?.selectedPricingTier,
-      currentScannedTicketID:
-          currentScannedTicketID ?? state.hostState?.currentScannedTicketID,
-      isValidTicket: isValidTicket ?? state.hostState?.isValidTicket,
-      selectedSchedule: selectedSchedule ?? state.hostState?.selectedSchedule,
-    );
+    final HostState? host = state.hostState;
+    if (host == null) return state;
 
-    return newState;
+    final $HostStateCopyWith<AppState>? hostBuilder = state.copyWith.hostState;
+    if (hostBuilder == null) return state;
+
+    final bool isCreate = host.workflowState == WorkflowState.CREATE;
+
+    return hostBuilder.call(
+      currentProduct: isCreate
+          ? (contextProduct ?? host.currentProduct)
+          : host.currentProduct,
+      selectedProduct: !isCreate
+          ? (contextProduct ?? host.selectedProduct)
+          : host.selectedProduct,
+      selectedLocation: selectedLocation ?? host.selectedLocation,
+      currencies: currencies ?? host.currencies,
+      selectedCurrency: selectedCurrency ?? host.selectedCurrency,
+      selectedPricingTier: selectedPricingTier ?? host.selectedPricingTier,
+      currentScannedTicketID:
+          currentScannedTicketID ?? host.currentScannedTicketID,
+      isValidTicket: isValidTicket ?? host.isValidTicket,
+      selectedSchedule: selectedSchedule ?? host.selectedSchedule,
+    );
   }
 }

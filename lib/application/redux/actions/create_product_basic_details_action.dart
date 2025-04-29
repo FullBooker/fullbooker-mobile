@@ -63,7 +63,7 @@ class CreateProductBasicDetailsAction extends ReduxAction<AppState> {
 
     final Product createdProduct = Product.fromJson(body);
 
-    dispatch(UpdateHostStateAction(currentProduct: createdProduct));
+    dispatch(UpdateHostStateAction(contextProduct: createdProduct));
 
     onSuccess?.call();
 

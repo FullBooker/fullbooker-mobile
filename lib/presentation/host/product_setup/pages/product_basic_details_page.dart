@@ -23,9 +23,7 @@ import 'package:fullbooker/shared/widgets/secondary_button.dart';
 
 @RoutePage()
 class ProductBasicDetailsPage extends StatelessWidget {
-  ProductBasicDetailsPage({super.key, required this.workflowState});
-
-  final WorkflowState workflowState;
+  ProductBasicDetailsPage({super.key});
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -113,7 +111,6 @@ class ProductBasicDetailsPage extends StatelessWidget {
                       context.dispatch(
                         FetchSingleProductAction(
                           client: AppWrapperBase.of(context)!.customClient,
-                          workflowState: workflowState,
                         ),
                       );
                     },
@@ -127,14 +124,14 @@ class ProductBasicDetailsPage extends StatelessWidget {
                           PrimaryButton(
                             onPressed: () {
                               if (_formKey.currentState?.validate() ?? false) {
-                                if (workflowState == WorkflowState.CREATE) {
+                                if (vm.workflowState == WorkflowState.CREATE) {
                                   context.dispatch(
                                     CreateProductBasicDetailsAction(
                                       client: AppWrapperBase.of(context)!
                                           .customClient,
                                       onSuccess: () => context.router.push(
                                         ProductLocationRoute(
-                                          workflowState: workflowState,
+                                          workflowState: vm.workflowState,
                                         ),
                                       ),
                                       onError: (String error) =>
@@ -152,7 +149,7 @@ class ProductBasicDetailsPage extends StatelessWidget {
                                           .customClient,
                                       onSuccess: () => context.router.push(
                                         ProductLocationRoute(
-                                          workflowState: workflowState,
+                                          workflowState: vm.workflowState,
                                         ),
                                       ),
                                       onError: (String error) =>

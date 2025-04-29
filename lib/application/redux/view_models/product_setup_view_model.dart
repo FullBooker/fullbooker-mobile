@@ -12,6 +12,7 @@ import 'package:fullbooker/shared/entities/enums.dart';
 
 class ProductSetupViewModel extends Vm {
   ProductSetupViewModel({
+    required this.workflowState,
     required this.currentProduct,
     required this.selectedProduct,
     required this.productCategories,
@@ -39,6 +40,7 @@ class ProductSetupViewModel extends Vm {
     required this.description,
   }) : super(
           equals: <Object?>[
+            workflowState,
             currentProduct,
             productCategories,
             locationPerms,
@@ -65,6 +67,8 @@ class ProductSetupViewModel extends Vm {
             description,
           ],
         );
+
+  final WorkflowState workflowState;
 
   final Product? currentProduct;
   final Product? selectedProduct;
@@ -105,6 +109,7 @@ class ProductSetupViewModel extends Vm {
         : state.hostState?.selectedProduct;
 
     return ProductSetupViewModel(
+      workflowState: state.hostState?.workflowState ?? WorkflowState.CREATE,
       currentProduct: state.hostState?.currentProduct,
       selectedProduct: state.hostState?.selectedProduct,
       name: baseProduct?.name ?? UNKNOWN,

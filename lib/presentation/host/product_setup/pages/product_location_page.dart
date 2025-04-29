@@ -45,7 +45,6 @@ class ProductLocationPage extends StatelessWidget {
               CheckLocationPermissionAction(),
               FetchSingleProductAction(
                 client: AppWrapperBase.of(context)!.customClient,
-                workflowState: workflowState,
               ),
             ],
           ),

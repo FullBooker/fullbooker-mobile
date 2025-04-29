@@ -30,7 +30,7 @@ class ProductCard extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        context.dispatch(UpdateHostStateAction(selectedProduct: product));
+        context.dispatch(UpdateHostStateAction(contextProduct: product));
         context.dispatch(
           SetWorkflowStateAction(workflowState: WorkflowState.VIEW),
         );
@@ -160,7 +160,7 @@ class ProductCard extends StatelessWidget {
                           ),
                         );
                         context.dispatch(
-                          UpdateHostStateAction(currentProduct: product),
+                          UpdateHostStateAction(contextProduct: product),
                         );
                         navigateToNextProductStep(
                           context: context,

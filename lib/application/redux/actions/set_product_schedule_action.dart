@@ -136,10 +136,12 @@ class SetProductScheduleAction extends ReduxAction<AppState> {
         ProductSchedule.fromJson(responseBody);
 
     final Product? newCurrent = product?.copyWith(schedule: savedSchedule);
-    dispatch(UpdateHostStateAction(currentProduct: newCurrent));
+
+    dispatch(UpdateHostStateAction(contextProduct: newCurrent));
 
     onSuccess?.call();
-    return state;
+
+    return null;
   }
 
   String _monthName(int month) {

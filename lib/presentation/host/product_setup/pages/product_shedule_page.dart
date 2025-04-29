@@ -49,7 +49,6 @@ class ProductSchedulePage extends StatelessWidget {
             context.dispatchAll(<ReduxAction<AppState>>[
               FetchSingleProductAction(
                 client: AppWrapperBase.of(context)!.customClient,
-                workflowState: workflowState,
               ),
               FetchProductSchedulesAction(
                 client: AppWrapperBase.of(context)!.customClient,

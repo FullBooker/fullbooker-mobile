@@ -82,14 +82,10 @@ class SetProductLocationAction extends ReduxAction<AppState> {
       ],
     );
 
-    if (isCreate) {
-      dispatch(UpdateHostStateAction(selectedProduct: updatedProduct));
-    } else {
-      dispatch(UpdateHostStateAction(currentProduct: updatedProduct));
-    }
+    dispatch(UpdateHostStateAction(contextProduct: updatedProduct));
 
     onSuccess?.call();
 
-    return state;
+    return null;
   }
 }

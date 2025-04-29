@@ -18,13 +18,11 @@ class FetchSingleProductAction extends ReduxAction<AppState> {
     this.onSuccess,
     this.onError,
     required this.client,
-    required this.workflowState,
   });
 
   final Function(String error)? onError;
   final Function()? onSuccess;
   final ICustomClient client;
-  final WorkflowState workflowState;
 
   @override
   Future<AppState?> reduce() async {
@@ -32,6 +30,9 @@ class FetchSingleProductAction extends ReduxAction<AppState> {
         state.hostState?.selectedProduct?.id ?? UNKNOWN;
     final String currentProductID =
         state.hostState?.currentProduct?.id ?? UNKNOWN;
+
+    final WorkflowState workflowState =
+        state.hostState?.workflowState ?? WorkflowState.CREATE;
 
     final bool isCreate = workflowState == WorkflowState.CREATE;
 
@@ -59,25 +60,13 @@ class FetchSingleProductAction extends ReduxAction<AppState> {
 
     final Product product = Product.fromJson(body);
 
-    if (isCreate) {
-      dispatch(
-        UpdateHostStateAction(
-          currentProduct: product,
-          selectedLocation:
-              product.locations?.first ?? ProductLocation.initial(),
-        ),
-      );
-      return state;
-    } else {
-      dispatch(
-        UpdateHostStateAction(
-          selectedProduct: product,
-          selectedLocation:
-              product.locations?.first ?? ProductLocation.initial(),
-        ),
-      );
+    dispatch(
+      UpdateHostStateAction(
+        contextProduct: product,
+        selectedLocation: product.locations?.first ?? ProductLocation.initial(),
+      ),
+    );
 
-      return state;
-    }
+    return null;
   }
 }

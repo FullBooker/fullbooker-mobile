@@ -105,18 +105,14 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                             title: basicDetails,
                             onEdit: () {
                               context.dispatch(
-                                UpdateHostStateAction(currentProduct: product),
+                                UpdateHostStateAction(contextProduct: product),
                               );
                               context.dispatch(
                                 SetWorkflowStateAction(
                                   workflowState: WorkflowState.CREATE,
                                 ),
                               );
-                              context.router.push(
-                                ProductBasicDetailsRoute(
-                                  workflowState: workflowState,
-                                ),
-                              );
+                              context.router.push(ProductBasicDetailsRoute());
                             },
                           ),
                           Column(
@@ -146,10 +142,11 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                           PreviewHeaderWidget(
                             title: location,
                             onEdit: () {
+                              // TODO(abiud): this action might not be necessary if set up properly from detail page
                               context.dispatchAll(
                                 <ReduxAction<AppState>>[
                                   UpdateHostStateAction(
-                                    currentProduct: product,
+                                    contextProduct: product,
                                   ),
                                 ],
                               );
@@ -173,7 +170,7 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                             title: dateAndTime,
                             onEdit: () {
                               context.dispatch(
-                                UpdateHostStateAction(currentProduct: product),
+                                UpdateHostStateAction(contextProduct: product),
                               );
                               context.router.push(
                                 ProductScheduleRoute(
@@ -191,7 +188,7 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                             title: photosString,
                             onEdit: () {
                               context.dispatch(
-                                UpdateHostStateAction(currentProduct: product),
+                                UpdateHostStateAction(contextProduct: product),
                               );
                               context.router.push(const ProductPhotosRoute());
                             },
@@ -206,7 +203,7 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                             title: videosString,
                             onEdit: () {
                               context.dispatch(
-                                UpdateHostStateAction(currentProduct: product),
+                                UpdateHostStateAction(contextProduct: product),
                               );
                               context.router.push(const ProductVideosRoute());
                             },
@@ -221,7 +218,7 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                             title: pricing,
                             onEdit: () {
                               context.dispatch(
-                                UpdateHostStateAction(currentProduct: product),
+                                UpdateHostStateAction(contextProduct: product),
                               );
                               context.router.push(const ProductPricingRoute());
                             },
@@ -276,7 +273,7 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                         },
                         onCancel: () {
                           context.dispatch(
-                            UpdateHostStateAction(selectedProduct: product),
+                            UpdateHostStateAction(contextProduct: product),
                           );
                           context.router.push(ProductDetailRoute());
                         },

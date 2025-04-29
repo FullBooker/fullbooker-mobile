@@ -8,7 +8,6 @@ import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:dartz/dartz.dart' as d;
 import 'package:fullbooker/presentation/host/product_setup/widgets/setup_summary_item.dart';
-import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
 
@@ -158,13 +157,7 @@ class ProductSetupPreviewPage extends StatelessWidget {
               ),
             ),
             PrimaryButton(
-              onPressed: () {
-                context.router.push(
-                  ProductBasicDetailsRoute(
-                    workflowState: WorkflowState.CREATE,
-                  ),
-                );
-              },
+              onPressed: () => context.router.push(ProductBasicDetailsRoute()),
               child: d.right(beginString),
             ),
             SecondaryButton(

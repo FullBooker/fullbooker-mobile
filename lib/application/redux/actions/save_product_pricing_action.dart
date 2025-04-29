@@ -59,15 +59,10 @@ class SaveProductPricingAction extends ReduxAction<AppState> {
       return null;
     }
 
-    dispatch(
-      FetchSingleProductAction(
-        client: client,
-        workflowState: WorkflowState.CREATE,
-      ),
-    );
+    dispatch(FetchSingleProductAction(client: client));
 
     onSuccess?.call();
 
-    return state;
+    return null;
   }
 }

@@ -63,12 +63,7 @@ class EditProductAction extends ReduxAction<AppState> {
       return null;
     }
 
-    dispatch(
-      FetchSingleProductAction(
-        client: client,
-        workflowState: WorkflowState.VIEW,
-      ),
-    );
+    dispatch(FetchSingleProductAction(client: client));
 
     return null;
   }

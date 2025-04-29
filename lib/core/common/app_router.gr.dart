@@ -926,43 +926,34 @@ class PaymentSummaryRouteArgs {
 /// [_i24.ProductBasicDetailsPage]
 class ProductBasicDetailsRoute
     extends _i46.PageRouteInfo<ProductBasicDetailsRouteArgs> {
-  ProductBasicDetailsRoute({
-    _i47.Key? key,
-    required _i51.WorkflowState workflowState,
-    List<_i46.PageRouteInfo>? children,
-  }) : super(
-         ProductBasicDetailsRoute.name,
-         args: ProductBasicDetailsRouteArgs(
-           key: key,
-           workflowState: workflowState,
-         ),
-         initialChildren: children,
-       );
+  ProductBasicDetailsRoute({_i47.Key? key, List<_i46.PageRouteInfo>? children})
+    : super(
+        ProductBasicDetailsRoute.name,
+        args: ProductBasicDetailsRouteArgs(key: key),
+        initialChildren: children,
+      );
 
   static const String name = 'ProductBasicDetailsRoute';
 
   static _i46.PageInfo page = _i46.PageInfo(
     name,
     builder: (data) {
-      final args = data.argsAs<ProductBasicDetailsRouteArgs>();
-      return _i24.ProductBasicDetailsPage(
-        key: args.key,
-        workflowState: args.workflowState,
+      final args = data.argsAs<ProductBasicDetailsRouteArgs>(
+        orElse: () => const ProductBasicDetailsRouteArgs(),
       );
+      return _i24.ProductBasicDetailsPage(key: args.key);
     },
   );
 }
 
 class ProductBasicDetailsRouteArgs {
-  const ProductBasicDetailsRouteArgs({this.key, required this.workflowState});
+  const ProductBasicDetailsRouteArgs({this.key});
 
   final _i47.Key? key;
 
-  final _i51.WorkflowState workflowState;
-
   @override
   String toString() {
-    return 'ProductBasicDetailsRouteArgs{key: $key, workflowState: $workflowState}';
+    return 'ProductBasicDetailsRouteArgs{key: $key}';
   }
 }
 

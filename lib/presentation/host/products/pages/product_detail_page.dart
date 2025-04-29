@@ -39,7 +39,6 @@ class ProductDetailPage extends StatelessWidget {
     context.dispatch(
       FetchSingleProductAction(
         client: AppWrapperBase.of(context)!.customClient,
-        workflowState: WorkflowState.VIEW,
       ),
     );
   }
