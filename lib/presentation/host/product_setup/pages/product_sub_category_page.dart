@@ -19,8 +19,8 @@ import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
 
 @RoutePage()
-class SetupProductCategoryPage extends StatelessWidget {
-  const SetupProductCategoryPage({super.key});
+class ProductSubCategoryPage extends StatelessWidget {
+  const ProductSubCategoryPage({super.key});
 
   @override
   Widget build(BuildContext context) {

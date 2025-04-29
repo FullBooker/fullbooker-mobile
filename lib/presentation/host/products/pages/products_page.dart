@@ -37,7 +37,7 @@ class ProductsPage extends StatelessWidget {
         title: productsString,
       ),
       floatingActionButton: GestureDetector(
-        onTap: () => context.router.push(SetupProductTypeRoute()),
+        onTap: () => context.router.push(ProductCategoryRoute()),
         child: Container(
           decoration: BoxDecoration(
             color: Theme.of(context).primaryColor,
@@ -81,7 +81,7 @@ class ProductsPage extends StatelessWidget {
                         title: noProducts,
                         description: noProductsCopy,
                         onCTATap: () {
-                          context.router.push(SetupProductTypeRoute());
+                          context.router.push(ProductCategoryRoute());
                         },
                         ctaText: createProductString,
                       );

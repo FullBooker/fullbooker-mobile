@@ -51,7 +51,7 @@ class HomeNudgeWidget extends StatelessWidget {
               PrimaryButton(
                 color: Colors.black,
                 customWidth: width * 0.4,
-                onPressed: () => context.router.push(SetupProductTypeRoute()),
+                onPressed: () => context.router.push(ProductCategoryRoute()),
                 child: right(startSetup),
               ),
             ],

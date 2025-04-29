@@ -82,7 +82,7 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                           PreviewHeaderWidget(
                             title: categoryAndType,
                             onEdit: () {
-                              context.router.push(SetupProductTypeRoute());
+                              context.router.push(ProductCategoryRoute());
                             },
                           ),
 

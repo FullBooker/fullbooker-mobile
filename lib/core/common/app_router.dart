@@ -42,8 +42,8 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: ProfileRoute.page),
 
         // Hosting side product setup
-        AutoRoute(page: SetupProductTypeRoute.page),
-        AutoRoute(page: SetupProductCategoryRoute.page),
+        AutoRoute(page: ProductCategoryRoute.page),
+        AutoRoute(page: ProductSubCategoryRoute.page),
         AutoRoute(page: ProductSetupPreviewRoute.page),
         AutoRoute(page: ProductBasicDetailsRoute.page),
         AutoRoute(page: ProductLocationRoute.page),

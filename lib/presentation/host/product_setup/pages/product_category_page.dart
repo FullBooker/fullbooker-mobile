@@ -19,8 +19,8 @@ import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
 
 @RoutePage()
-class SetupProductTypePage extends StatelessWidget {
-  const SetupProductTypePage({super.key});
+class ProductCategoryPage extends StatelessWidget {
+  const ProductCategoryPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +77,7 @@ class SetupProductTypePage extends StatelessWidget {
                           if (context.isWaiting(FetchProductCategoriesAction)) {
                             return AppLoading();
                           }
-                          
+
                           final List<ProductCategory>? categories =
                               vm.productCategories;
 

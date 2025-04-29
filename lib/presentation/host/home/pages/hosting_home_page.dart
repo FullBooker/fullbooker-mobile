@@ -41,7 +41,7 @@ class HostingHomePage extends StatelessWidget {
     return Scaffold(
       bottomNavigationBar: const BottomNavBar(),
       floatingActionButton: GestureDetector(
-        onTap: () => context.router.push(SetupProductTypeRoute()),
+        onTap: () => context.router.push(ProductCategoryRoute()),
         child: Container(
           decoration: BoxDecoration(
             color: Theme.of(context).primaryColor,
@@ -131,7 +131,7 @@ class HostingHomePage extends StatelessWidget {
                         title: noProducts,
                         description: noProductsCopy,
                         onCTATap: () {
-                          context.router.push(SetupProductTypeRoute());
+                          context.router.push(ProductCategoryRoute());
                         },
                         ctaText: createProductString,
                       );
