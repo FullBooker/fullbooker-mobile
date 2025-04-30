@@ -55,11 +55,11 @@ class FetchProductScheduleAction extends ReduxAction<AppState> {
       return null;
     }
 
-    final ProductSchedule scheduleResponse = ProductSchedule.fromJson(body);
+    final ProductSchedule schedule = ProductSchedule.fromJson(body);
 
     dispatchAll(<ReduxAction<AppState>>[
-      UpdateProductAction(schedule: scheduleResponse),
-      UpdateHostStateAction(selectedSchedule: scheduleResponse),
+      UpdateProductAction(schedule: schedule),
+      UpdateHostStateAction(selectedSchedule: schedule),
     ]);
 
     return null;

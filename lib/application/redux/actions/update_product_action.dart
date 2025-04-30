@@ -64,7 +64,7 @@ class UpdateProductAction extends ReduxAction<AppState> {
         videos: videos ?? state.hostState?.selectedProduct?.videos,
         pricing: pricing ?? state.hostState?.selectedProduct?.pricing,
         schedule: schedule ?? state.hostState?.selectedProduct?.schedule,
-        locations: locations ?? state.hostState?.currentProduct?.locations,
+        locations: locations ?? state.hostState?.selectedProduct?.locations,
       );
     }
   }
