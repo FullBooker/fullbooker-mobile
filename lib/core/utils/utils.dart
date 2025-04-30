@@ -636,7 +636,9 @@ String? convertToLocalTimestamp(String? utcTimestamp) {
 
 // Format the repeat notification based on the repeat type
 String generateRepeatNotification(ProductSchedule? schedule) {
-  if (schedule?.repeatType == 'weekly') {
+  if (schedule?.repeatType == 'daily') {
+    return 'Repeats daily';
+  } else if (schedule?.repeatType == 'weekly') {
     final List<String> daysOfWeek = <String>[
       'Sun',
       'Mon',
@@ -650,7 +652,7 @@ String generateRepeatNotification(ProductSchedule? schedule) {
     final List<String> days = schedule?.repeatOnDaysOfWeek?.entries
             .map((MapEntry<String, Map<String, String>> entry) {
           final String day = entry.key.toLowerCase();
-          // Match the day name with the proper abbreviation
+
           return daysOfWeek.firstWhere(
             (String d) => d.toLowerCase() == day,
             orElse: () => '',
