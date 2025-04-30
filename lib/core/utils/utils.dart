@@ -382,11 +382,6 @@ void navigateToNextProductStep({
 }
 
 bool isProductComplete({required Product product}) {
-  // Explicit true overrides all checks
-  if ((product.completed ?? false) || (product.active ?? false)) {
-    return true;
-  }
-
   final bool hasName = product.name?.trim().isNotEmpty ?? false;
   final bool hasLocation = product.locations?.isNotEmpty ?? false;
   final bool hasSchedule = (product.scheduleID ?? UNKNOWN) != UNKNOWN;
@@ -487,11 +482,7 @@ Future<String?> pickTime({required BuildContext context}) async {
 bool hasValidLocation(ProductLocation? location) {
   if (location == null) return false;
 
-  final bool hasCoordinates = location.lat != UNKNOWN &&
-      location.long != UNKNOWN &&
-      location.lat != null &&
-      location.long != null;
-
+  final bool hasCoordinates = location.coordinates != UNKNOWN;
   final bool hasAddress =
       location.address != null && location.address != UNKNOWN;
 

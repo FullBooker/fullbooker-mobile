@@ -3,6 +3,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
 import 'package:fullbooker/application/redux/actions/fetch_products_action.dart';
+import 'package:fullbooker/application/redux/actions/reset_current_product_action.dart';
+import 'package:fullbooker/application/redux/actions/set_workflow_state_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/products_page_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
@@ -12,6 +14,7 @@ import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:fullbooker/presentation/core/components/generic_zero_state.dart';
 import 'package:fullbooker/presentation/core/components/product_card.dart';
+import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
 import 'package:heroicons/heroicons.dart';
@@ -37,7 +40,15 @@ class ProductsPage extends StatelessWidget {
         title: productsString,
       ),
       floatingActionButton: GestureDetector(
-        onTap: () => context.router.push(SetupProductTypeRoute()),
+        onTap: () {
+          context.dispatchAll(
+            <ReduxAction<AppState>>[
+              ResetCurrentProductAction(),
+              SetWorkflowStateAction(workflowState: WorkflowState.CREATE),
+            ],
+          );
+          context.router.push(ProductCategoryRoute());
+        },
         child: Container(
           decoration: BoxDecoration(
             color: Theme.of(context).primaryColor,
@@ -81,7 +92,7 @@ class ProductsPage extends StatelessWidget {
                         title: noProducts,
                         description: noProductsCopy,
                         onCTATap: () {
-                          context.router.push(SetupProductTypeRoute());
+                          context.router.push(ProductCategoryRoute());
                         },
                         ctaText: createProductString,
                       );

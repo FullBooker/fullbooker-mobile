@@ -100,8 +100,7 @@ class ProductSetupPreviewPage extends StatelessWidget {
                                   customWidth:
                                       MediaQuery.of(context).size.width / 2,
                                   onPressed: () {
-                                    context.router
-                                        .push(SetupProductTypeRoute());
+                                    context.router.push(ProductCategoryRoute());
                                   },
                                   child: d.right(changeString),
                                 ),

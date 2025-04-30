@@ -1,26 +1,20 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
-import 'package:fullbooker/domain/core/entities/product.dart';
-import 'package:fullbooker/domain/core/entities/product_location.dart';
 
 class SelectLocationAction extends ReduxAction<AppState> {
   SelectLocationAction({
-    this.selectedProduct,
-    this.currentProduct,
-    this.selectedLocation,
     this.lat,
     this.long,
     this.address,
     this.city,
+    this.coordinates,
   });
 
-  Product? selectedProduct;
-  Product? currentProduct;
-  ProductLocation? selectedLocation;
   final String? lat;
   final String? long;
   final String? address;
   final String? city;
+  final String? coordinates;
 
   @override
   AppState? reduce() {
@@ -29,6 +23,8 @@ class SelectLocationAction extends ReduxAction<AppState> {
       long: long ?? state.hostState?.selectedLocation?.long,
       address: address ?? state.hostState?.selectedLocation?.address,
       city: city ?? state.hostState?.selectedLocation?.city,
+      coordinates:
+          coordinates ?? state.hostState?.selectedLocation?.coordinates,
     );
 
     return newState;

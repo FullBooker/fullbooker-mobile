@@ -5,7 +5,7 @@ import 'package:fullbooker/application/core/services/i_custom_client.dart';
 import 'package:fullbooker/application/redux/actions/update_product_action.dart';
 import 'package:fullbooker/application/redux/actions/update_host_state_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
-import 'package:fullbooker/core/common/constants.dart';
+import 'package:fullbooker/application/redux/states/host_state.dart';
 import 'package:fullbooker/domain/core/entities/product_schedule.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
@@ -26,13 +26,19 @@ class FetchProductScheduleAction extends ReduxAction<AppState> {
 
   @override
   Future<AppState?> reduce() async {
-    final String scheduleID =
-        state.hostState?.selectedProduct?.scheduleID ?? UNKNOWN;
+    final HostState? hostState = state.hostState;
+
+    final WorkflowState? workflowState = hostState?.workflowState;
+    final bool isEditing = workflowState == WorkflowState.VIEW;
+
+    final String? productScheduleId = isEditing
+        ? hostState?.selectedProduct?.scheduleID
+        : hostState?.currentProduct?.scheduleID;
 
     final String scheduleEndpoint =
         GetIt.I.get<AppConfig>().productScheduleEndpoint;
 
-    final String fullEndpoint = '$scheduleEndpoint$scheduleID/';
+    final String fullEndpoint = '$scheduleEndpoint$productScheduleId/';
 
     final Response httpResponse = await client.callRESTAPI(
       endpoint: fullEndpoint,
@@ -49,11 +55,11 @@ class FetchProductScheduleAction extends ReduxAction<AppState> {
       return null;
     }
 
-    final ProductSchedule scheduleResponse = ProductSchedule.fromJson(body);
+    final ProductSchedule schedule = ProductSchedule.fromJson(body);
 
     dispatchAll(<ReduxAction<AppState>>[
-      UpdateProductAction(schedule: scheduleResponse),
-      UpdateHostStateAction(selectedSchedule: scheduleResponse),
+      UpdateProductAction(schedule: schedule),
+      UpdateHostStateAction(selectedSchedule: schedule),
     ]);
 
     return null;

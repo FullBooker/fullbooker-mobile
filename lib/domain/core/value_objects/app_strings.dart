@@ -673,12 +673,15 @@ const String debugTicketQR = 'Debug QR Code: ';
 const String fromString = 'From';
 const String toString = 'To';
 
-const String dailyPrompt = 'Your event will repeat daily';
+const String dailyRepeatTitle = 'Repeats daily';
+const String repeatDailyCopy =
+    'Your event will repeat daily on the selected time';
 
 const String closedString = 'Closed';
 const String notProvided = 'Not Provided';
 
 const String noPricingOptionsString = 'No pricing options provided';
+const String noLocationProvided = 'No location added';
 const String noImagesString = 'No photos added';
 const String noVideosString = 'No videos added';
 const String learnMore = 'Learn More';

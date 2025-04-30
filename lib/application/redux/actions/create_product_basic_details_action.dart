@@ -44,8 +44,10 @@ class CreateProductBasicDetailsAction extends ReduxAction<AppState> {
       'subcategory': subcategory,
     };
 
+    final String endpoint = GetIt.I.get<AppConfig>().getProductsEndpoint;
+
     final Response httpResponse = await client.callRESTAPI(
-      endpoint: GetIt.I.get<AppConfig>().getProductsEndpoint,
+      endpoint: endpoint,
       method: APIMethods.POST.name.toUpperCase(),
       variables: data,
     );

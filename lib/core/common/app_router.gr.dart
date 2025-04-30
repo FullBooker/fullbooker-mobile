@@ -52,32 +52,32 @@ import 'package:fullbooker/presentation/host/product_setup/pages/choose_location
     as _i7;
 import 'package:fullbooker/presentation/host/product_setup/pages/product_basic_details_page.dart'
     as _i24;
+import 'package:fullbooker/presentation/host/product_setup/pages/product_category_page.dart'
+    as _i26;
 import 'package:fullbooker/presentation/host/product_setup/pages/product_location_page.dart'
-    as _i27;
-import 'package:fullbooker/presentation/host/product_setup/pages/product_photos_page.dart'
     as _i28;
-import 'package:fullbooker/presentation/host/product_setup/pages/product_pricing_page.dart'
+import 'package:fullbooker/presentation/host/product_setup/pages/product_photos_page.dart'
     as _i29;
-import 'package:fullbooker/presentation/host/product_setup/pages/product_review_and_submit_page.dart'
+import 'package:fullbooker/presentation/host/product_setup/pages/product_pricing_page.dart'
     as _i30;
-import 'package:fullbooker/presentation/host/product_setup/pages/product_setup_preview_page.dart'
-    as _i32;
-import 'package:fullbooker/presentation/host/product_setup/pages/product_shedule_page.dart'
+import 'package:fullbooker/presentation/host/product_setup/pages/product_review_and_submit_page.dart'
     as _i31;
-import 'package:fullbooker/presentation/host/product_setup/pages/product_videos_page.dart'
+import 'package:fullbooker/presentation/host/product_setup/pages/product_setup_preview_page.dart'
     as _i33;
-import 'package:fullbooker/presentation/host/product_setup/pages/setup_product_category_page.dart'
-    as _i38;
-import 'package:fullbooker/presentation/host/product_setup/pages/setup_product_type_page.dart'
-    as _i39;
+import 'package:fullbooker/presentation/host/product_setup/pages/product_schedule_page.dart'
+    as _i32;
+import 'package:fullbooker/presentation/host/product_setup/pages/product_sub_category_page.dart'
+    as _i34;
+import 'package:fullbooker/presentation/host/product_setup/pages/product_videos_page.dart'
+    as _i35;
 import 'package:fullbooker/presentation/host/products/pages/product_bookings_page.dart'
     as _i25;
 import 'package:fullbooker/presentation/host/products/pages/product_detail_page.dart'
-    as _i26;
+    as _i27;
 import 'package:fullbooker/presentation/host/products/pages/products_page.dart'
-    as _i34;
+    as _i36;
 import 'package:fullbooker/presentation/host/products/pages/scan_tickets_page.dart'
-    as _i37;
+    as _i39;
 import 'package:fullbooker/presentation/onboarding/pages/change_password_page.dart'
     as _i6;
 import 'package:fullbooker/presentation/onboarding/pages/create_account_page.dart'
@@ -85,13 +85,13 @@ import 'package:fullbooker/presentation/onboarding/pages/create_account_page.dar
 import 'package:fullbooker/presentation/onboarding/pages/login_page.dart'
     as _i19;
 import 'package:fullbooker/presentation/onboarding/pages/request_otp_page.dart'
-    as _i36;
+    as _i38;
 import 'package:fullbooker/presentation/onboarding/pages/update_password_page.dart'
     as _i43;
 import 'package:fullbooker/presentation/onboarding/pages/verify_otp_page.dart'
     as _i44;
 import 'package:fullbooker/presentation/profile/pages/profile_page.dart'
-    as _i35;
+    as _i37;
 import 'package:fullbooker/presentation/shared/full_screen_video_player_page.dart'
     as _i13;
 import 'package:fullbooker/presentation/shared/image_gallery_page.dart' as _i16;
@@ -974,7 +974,23 @@ class ProductBookingsRoute extends _i46.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i26.ProductDetailPage]
+/// [_i26.ProductCategoryPage]
+class ProductCategoryRoute extends _i46.PageRouteInfo<void> {
+  const ProductCategoryRoute({List<_i46.PageRouteInfo>? children})
+    : super(ProductCategoryRoute.name, initialChildren: children);
+
+  static const String name = 'ProductCategoryRoute';
+
+  static _i46.PageInfo page = _i46.PageInfo(
+    name,
+    builder: (data) {
+      return const _i26.ProductCategoryPage();
+    },
+  );
+}
+
+/// generated route for
+/// [_i27.ProductDetailPage]
 class ProductDetailRoute extends _i46.PageRouteInfo<void> {
   const ProductDetailRoute({List<_i46.PageRouteInfo>? children})
     : super(ProductDetailRoute.name, initialChildren: children);
@@ -984,13 +1000,13 @@ class ProductDetailRoute extends _i46.PageRouteInfo<void> {
   static _i46.PageInfo page = _i46.PageInfo(
     name,
     builder: (data) {
-      return const _i26.ProductDetailPage();
+      return const _i27.ProductDetailPage();
     },
   );
 }
 
 /// generated route for
-/// [_i27.ProductLocationPage]
+/// [_i28.ProductLocationPage]
 class ProductLocationRoute extends _i46.PageRouteInfo<void> {
   const ProductLocationRoute({List<_i46.PageRouteInfo>? children})
     : super(ProductLocationRoute.name, initialChildren: children);
@@ -1000,13 +1016,13 @@ class ProductLocationRoute extends _i46.PageRouteInfo<void> {
   static _i46.PageInfo page = _i46.PageInfo(
     name,
     builder: (data) {
-      return const _i27.ProductLocationPage();
+      return const _i28.ProductLocationPage();
     },
   );
 }
 
 /// generated route for
-/// [_i28.ProductPhotosPage]
+/// [_i29.ProductPhotosPage]
 class ProductPhotosRoute extends _i46.PageRouteInfo<void> {
   const ProductPhotosRoute({List<_i46.PageRouteInfo>? children})
     : super(ProductPhotosRoute.name, initialChildren: children);
@@ -1016,13 +1032,13 @@ class ProductPhotosRoute extends _i46.PageRouteInfo<void> {
   static _i46.PageInfo page = _i46.PageInfo(
     name,
     builder: (data) {
-      return const _i28.ProductPhotosPage();
+      return const _i29.ProductPhotosPage();
     },
   );
 }
 
 /// generated route for
-/// [_i29.ProductPricingPage]
+/// [_i30.ProductPricingPage]
 class ProductPricingRoute extends _i46.PageRouteInfo<void> {
   const ProductPricingRoute({List<_i46.PageRouteInfo>? children})
     : super(ProductPricingRoute.name, initialChildren: children);
@@ -1032,13 +1048,13 @@ class ProductPricingRoute extends _i46.PageRouteInfo<void> {
   static _i46.PageInfo page = _i46.PageInfo(
     name,
     builder: (data) {
-      return const _i29.ProductPricingPage();
+      return const _i30.ProductPricingPage();
     },
   );
 }
 
 /// generated route for
-/// [_i30.ProductReviewAndSubmitPage]
+/// [_i31.ProductReviewAndSubmitPage]
 class ProductReviewAndSubmitRoute extends _i46.PageRouteInfo<void> {
   const ProductReviewAndSubmitRoute({List<_i46.PageRouteInfo>? children})
     : super(ProductReviewAndSubmitRoute.name, initialChildren: children);
@@ -1048,13 +1064,13 @@ class ProductReviewAndSubmitRoute extends _i46.PageRouteInfo<void> {
   static _i46.PageInfo page = _i46.PageInfo(
     name,
     builder: (data) {
-      return const _i30.ProductReviewAndSubmitPage();
+      return const _i31.ProductReviewAndSubmitPage();
     },
   );
 }
 
 /// generated route for
-/// [_i31.ProductSchedulePage]
+/// [_i32.ProductSchedulePage]
 class ProductScheduleRoute extends _i46.PageRouteInfo<void> {
   const ProductScheduleRoute({List<_i46.PageRouteInfo>? children})
     : super(ProductScheduleRoute.name, initialChildren: children);
@@ -1064,13 +1080,13 @@ class ProductScheduleRoute extends _i46.PageRouteInfo<void> {
   static _i46.PageInfo page = _i46.PageInfo(
     name,
     builder: (data) {
-      return const _i31.ProductSchedulePage();
+      return const _i32.ProductSchedulePage();
     },
   );
 }
 
 /// generated route for
-/// [_i32.ProductSetupPreviewPage]
+/// [_i33.ProductSetupPreviewPage]
 class ProductSetupPreviewRoute extends _i46.PageRouteInfo<void> {
   const ProductSetupPreviewRoute({List<_i46.PageRouteInfo>? children})
     : super(ProductSetupPreviewRoute.name, initialChildren: children);
@@ -1080,13 +1096,29 @@ class ProductSetupPreviewRoute extends _i46.PageRouteInfo<void> {
   static _i46.PageInfo page = _i46.PageInfo(
     name,
     builder: (data) {
-      return const _i32.ProductSetupPreviewPage();
+      return const _i33.ProductSetupPreviewPage();
     },
   );
 }
 
 /// generated route for
-/// [_i33.ProductVideosPage]
+/// [_i34.ProductSubCategoryPage]
+class ProductSubCategoryRoute extends _i46.PageRouteInfo<void> {
+  const ProductSubCategoryRoute({List<_i46.PageRouteInfo>? children})
+    : super(ProductSubCategoryRoute.name, initialChildren: children);
+
+  static const String name = 'ProductSubCategoryRoute';
+
+  static _i46.PageInfo page = _i46.PageInfo(
+    name,
+    builder: (data) {
+      return const _i34.ProductSubCategoryPage();
+    },
+  );
+}
+
+/// generated route for
+/// [_i35.ProductVideosPage]
 class ProductVideosRoute extends _i46.PageRouteInfo<void> {
   const ProductVideosRoute({List<_i46.PageRouteInfo>? children})
     : super(ProductVideosRoute.name, initialChildren: children);
@@ -1096,13 +1128,13 @@ class ProductVideosRoute extends _i46.PageRouteInfo<void> {
   static _i46.PageInfo page = _i46.PageInfo(
     name,
     builder: (data) {
-      return const _i33.ProductVideosPage();
+      return const _i35.ProductVideosPage();
     },
   );
 }
 
 /// generated route for
-/// [_i34.ProductsPage]
+/// [_i36.ProductsPage]
 class ProductsRoute extends _i46.PageRouteInfo<void> {
   const ProductsRoute({List<_i46.PageRouteInfo>? children})
     : super(ProductsRoute.name, initialChildren: children);
@@ -1112,13 +1144,13 @@ class ProductsRoute extends _i46.PageRouteInfo<void> {
   static _i46.PageInfo page = _i46.PageInfo(
     name,
     builder: (data) {
-      return const _i34.ProductsPage();
+      return const _i36.ProductsPage();
     },
   );
 }
 
 /// generated route for
-/// [_i35.ProfilePage]
+/// [_i37.ProfilePage]
 class ProfileRoute extends _i46.PageRouteInfo<ProfileRouteArgs> {
   ProfileRoute({_i47.Key? key, List<_i46.PageRouteInfo>? children})
     : super(
@@ -1135,7 +1167,7 @@ class ProfileRoute extends _i46.PageRouteInfo<ProfileRouteArgs> {
       final args = data.argsAs<ProfileRouteArgs>(
         orElse: () => const ProfileRouteArgs(),
       );
-      return _i35.ProfilePage(key: args.key);
+      return _i37.ProfilePage(key: args.key);
     },
   );
 }
@@ -1152,7 +1184,7 @@ class ProfileRouteArgs {
 }
 
 /// generated route for
-/// [_i36.RequestOTPPage]
+/// [_i38.RequestOTPPage]
 class RequestOTPRoute extends _i46.PageRouteInfo<void> {
   const RequestOTPRoute({List<_i46.PageRouteInfo>? children})
     : super(RequestOTPRoute.name, initialChildren: children);
@@ -1162,13 +1194,13 @@ class RequestOTPRoute extends _i46.PageRouteInfo<void> {
   static _i46.PageInfo page = _i46.PageInfo(
     name,
     builder: (data) {
-      return const _i36.RequestOTPPage();
+      return const _i38.RequestOTPPage();
     },
   );
 }
 
 /// generated route for
-/// [_i37.ScanTicketsPage]
+/// [_i39.ScanTicketsPage]
 class ScanTicketsRoute extends _i46.PageRouteInfo<void> {
   const ScanTicketsRoute({List<_i46.PageRouteInfo>? children})
     : super(ScanTicketsRoute.name, initialChildren: children);
@@ -1178,39 +1210,7 @@ class ScanTicketsRoute extends _i46.PageRouteInfo<void> {
   static _i46.PageInfo page = _i46.PageInfo(
     name,
     builder: (data) {
-      return const _i37.ScanTicketsPage();
-    },
-  );
-}
-
-/// generated route for
-/// [_i38.SetupProductCategoryPage]
-class SetupProductCategoryRoute extends _i46.PageRouteInfo<void> {
-  const SetupProductCategoryRoute({List<_i46.PageRouteInfo>? children})
-    : super(SetupProductCategoryRoute.name, initialChildren: children);
-
-  static const String name = 'SetupProductCategoryRoute';
-
-  static _i46.PageInfo page = _i46.PageInfo(
-    name,
-    builder: (data) {
-      return const _i38.SetupProductCategoryPage();
-    },
-  );
-}
-
-/// generated route for
-/// [_i39.SetupProductTypePage]
-class SetupProductTypeRoute extends _i46.PageRouteInfo<void> {
-  const SetupProductTypeRoute({List<_i46.PageRouteInfo>? children})
-    : super(SetupProductTypeRoute.name, initialChildren: children);
-
-  static const String name = 'SetupProductTypeRoute';
-
-  static _i46.PageInfo page = _i46.PageInfo(
-    name,
-    builder: (data) {
-      return const _i39.SetupProductTypePage();
+      return const _i39.ScanTicketsPage();
     },
   );
 }

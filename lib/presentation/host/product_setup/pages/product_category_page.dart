@@ -19,8 +19,8 @@ import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
 
 @RoutePage()
-class SetupProductTypePage extends StatelessWidget {
-  const SetupProductTypePage({super.key});
+class ProductCategoryPage extends StatelessWidget {
+  const ProductCategoryPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +77,7 @@ class SetupProductTypePage extends StatelessWidget {
                           if (context.isWaiting(FetchProductCategoriesAction)) {
                             return AppLoading();
                           }
+
                           final List<ProductCategory>? categories =
                               vm.productCategories;
 
@@ -105,9 +106,8 @@ class SetupProductTypePage extends StatelessWidget {
                               final ProductCategory current =
                                   categories![index];
 
-                              final bool selected = current.id ==
-                                  vm.currentProduct?.selectedProductCategory
-                                      ?.id;
+                              final bool selected =
+                                  current.id == vm.category?.id;
 
                               return Padding(
                                 padding: const EdgeInsets.only(bottom: 12),
@@ -130,18 +130,22 @@ class SetupProductTypePage extends StatelessWidget {
                 ],
               ),
             ),
-            PrimaryButton(
-              onPressed: () {
-                context.router.push(SetupProductCategoryRoute());
-              },
-              child: d.right(continueString),
-            ),
-            SecondaryButton(
-              onPressed: () {
-                context.router.maybePop();
-              },
-              child: d.right(cancelString),
-              fillColor: Colors.transparent,
+            Column(
+              spacing: 12,
+              children: <Widget>[
+                PrimaryButton(
+                  onPressed: () =>
+                      context.router.push(ProductSubCategoryRoute()),
+                  child: d.right(continueString),
+                ),
+                SecondaryButton(
+                  onPressed: () {
+                    context.router.maybePop();
+                  },
+                  child: d.right(cancelString),
+                  fillColor: Colors.transparent,
+                ),
+              ],
             ),
           ],
         ),
