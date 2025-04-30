@@ -16,6 +16,7 @@ import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:dartz/dartz.dart' as d;
+import 'package:fullbooker/presentation/host/product_setup/widgets/repeats_daily_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/repeats_monthly_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/repeats_weekly_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/repeats_yearly_widget.dart';
@@ -481,10 +482,7 @@ class ProductSchedulePage extends StatelessWidget {
 
                               /// Repeats daily
                               if (vm.repeatType == dailyOption)
-                                Text(
-                                  dailyPrompt,
-                                  style: Theme.of(context).textTheme.bodyMedium,
-                                ),
+                                RepeatsDailyWidget(),
 
                               /// Repeats weekly
                               if (vm.repeatType == weeklyOption)
