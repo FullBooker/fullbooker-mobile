@@ -20,6 +20,7 @@ import 'package:fullbooker/presentation/core/components/custom_badge_widget.dart
 import 'package:fullbooker/presentation/host/product_setup/widgets/limited_photo_gallery_preview_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/limited_video_gallery_preview_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/pricing_card_widget.dart';
+import 'package:fullbooker/presentation/host/product_setup/widgets/product_repeat_notification.dart';
 import 'package:fullbooker/presentation/host/products/widgets/image_carousel_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/limited_description_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/min_zero_state.dart';
@@ -173,6 +174,10 @@ class ProductDetailPage extends StatelessWidget {
                               ],
                             ),
                             ProductScheduleWidget(),
+
+                            RepeatNotification(
+                              productSchedule: product.schedule,
+                            ),
 
                             if (productStatus == ProductStatus.review)
                               ProductAlertWidget(

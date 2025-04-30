@@ -26,7 +26,7 @@ class FetchProductsAction extends ReduxAction<AppState> {
   Future<AppState?> reduce() async {
     final Map<String, dynamic> data = <String, dynamic>{
       'page': 1,
-      'page_size': 10,
+      'page_size': 20,
     };
 
     final Response httpResponse = await client.callRESTAPI(
