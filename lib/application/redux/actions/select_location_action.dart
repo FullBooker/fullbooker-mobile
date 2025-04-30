@@ -18,7 +18,7 @@ class SelectLocationAction extends ReduxAction<AppState> {
 
   @override
   AppState? reduce() {
-    return state.copyWith.hostState?.selectedLocation?.call(
+    final AppState? newState = state.copyWith.hostState?.selectedLocation?.call(
       lat: lat ?? state.hostState?.selectedLocation?.lat,
       long: long ?? state.hostState?.selectedLocation?.long,
       address: address ?? state.hostState?.selectedLocation?.address,
@@ -26,5 +26,7 @@ class SelectLocationAction extends ReduxAction<AppState> {
       coordinates:
           coordinates ?? state.hostState?.selectedLocation?.coordinates,
     );
+
+    return newState;
   }
 }

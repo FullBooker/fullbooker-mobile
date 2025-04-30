@@ -5,9 +5,7 @@ import 'package:fullbooker/application/core/services/i_custom_client.dart';
 import 'package:fullbooker/application/redux/actions/update_host_state_action.dart';
 import 'package:fullbooker/application/redux/actions/update_product_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
-import 'package:fullbooker/application/redux/states/host_state.dart';
 import 'package:fullbooker/core/common/constants.dart';
-import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/entities/product_location.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
@@ -33,6 +31,8 @@ class UpdateProductLocationAction extends ReduxAction<AppState> {
     final String lat = selectedLocation?.lat ?? UNKNOWN;
     final String long = selectedLocation?.long ?? UNKNOWN;
     final String address = selectedLocation?.address ?? UNKNOWN;
+    final String city = selectedLocation?.city ?? UNKNOWN;
+    final String coordinates = selectedLocation?.coordinates ?? UNKNOWN;
     final String locationID = selectedLocation?.id ?? UNKNOWN;
 
     final String baseEndpoint =
@@ -50,6 +50,8 @@ class UpdateProductLocationAction extends ReduxAction<AppState> {
       'lat': lat,
       'long': long,
       'address': address,
+      'city': city,
+      'coordinates': coordinates,
     };
 
     final Response httpResponse = await client.callRESTAPI(
@@ -71,17 +73,14 @@ class UpdateProductLocationAction extends ReduxAction<AppState> {
 
     final ProductLocation updatedLocation = ProductLocation.fromJson(body);
 
-    final HostState? hostState = state.hostState;
-
-    final Product? productToUpdate = hostState?.selectedProduct;
-
-    final List<ProductLocation> newLocations = productToUpdate?.locations
-            ?.map(
-              (ProductLocation loc) =>
-                  loc.id == updatedLocation.id ? updatedLocation : loc,
-            )
-            .toList() ??
-        <ProductLocation>[];
+    final List<ProductLocation> newLocations =
+        state.hostState?.selectedProduct?.locations
+                ?.map(
+                  (ProductLocation loc) =>
+                      loc.id == updatedLocation.id ? updatedLocation : loc,
+                )
+                .toList() ??
+            <ProductLocation>[];
 
     dispatchAll(<ReduxAction<AppState>>[
       UpdateProductAction(locations: newLocations),
