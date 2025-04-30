@@ -4,10 +4,8 @@ import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/redux/actions/select_location_action.dart';
-import 'package:fullbooker/application/redux/actions/update_host_state_action.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
-import 'package:fullbooker/domain/core/entities/product_location.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/infrastructure/location/location_handler.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
@@ -103,15 +101,15 @@ class _ChooseLocationPageState extends State<ChooseLocationPage> {
     final String address = result['name'] ?? location['description'];
     final String city = result['formatted_address'] ?? '';
 
-    final ProductLocation newLocation = ProductLocation.initial().copyWith(
-      lat: latLng.latitude.toString(),
-      long: latLng.longitude.toString(),
-      address: address,
-      city: city,
-      coordinates: 'SRID=4326;POINT (${latLng.longitude} ${latLng.latitude})',
+    context.dispatch(
+      SelectLocationAction(
+        lat: latLng.latitude.toString(),
+        long: latLng.longitude.toString(),
+        address: address,
+        city: city,
+        coordinates: 'SRID=4326;POINT (${latLng.longitude} ${latLng.latitude})',
+      ),
     );
-
-    context.dispatch(SelectLocationAction(selectedLocation: newLocation));
 
     setState(() {
       selectedLatLng = latLng;
@@ -143,15 +141,15 @@ class _ChooseLocationPageState extends State<ChooseLocationPage> {
         )?['long_name'] ??
         'Unknown City';
 
-    final ProductLocation tappedLocation = ProductLocation.initial().copyWith(
-      lat: latLng.latitude.toString(),
-      long: latLng.longitude.toString(),
-      address: address,
-      city: city,
-      coordinates: 'SRID=4326;POINT (${latLng.longitude} ${latLng.latitude})',
+    context.dispatch(
+      SelectLocationAction(
+        lat: latLng.latitude.toString(),
+        long: latLng.longitude.toString(),
+        address: address,
+        city: city,
+        coordinates: 'SRID=4326;POINT (${latLng.longitude} ${latLng.latitude})',
+      ),
     );
-
-    context.dispatch(SelectLocationAction(selectedLocation: tappedLocation));
 
     setState(() {
       selectedLatLng = latLng;
@@ -319,18 +317,15 @@ class _ChooseLocationPageState extends State<ChooseLocationPage> {
                     Flexible(
                       child: PrimaryButton(
                         onPressed: () {
-                          // TODO!!(abiud): remove the initialization during editing since it initialized the location with a UNKNOWN ID
                           context.dispatch(
-                            UpdateHostStateAction(
-                              selectedLocation:
-                                  ProductLocation.initial().copyWith(
-                                lat: selectedLatLng.latitude.toString(),
-                                long: selectedLatLng.longitude.toString(),
-                                address: selectedAddress,
-                                city: selectedCity,
-                                coordinates:
-                                    'SRID=4326;POINT (${selectedLatLng.longitude} ${selectedLatLng.latitude})',
-                              ),
+                            SelectLocationAction(
+                              lat: selectedLatLng.latitude.toString(),
+                              long: selectedLatLng.longitude.toString(),
+                              address: selectedAddress,
+                              city: selectedCity,
+                              coordinates:
+                                  'SRID=4326;POINT (${selectedLatLng.longitude}'
+                                  ' ${selectedLatLng.latitude})',
                             ),
                           );
                           context.router.maybePop();

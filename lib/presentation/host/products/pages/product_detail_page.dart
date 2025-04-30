@@ -93,6 +93,13 @@ class ProductDetailPage extends StatelessWidget {
       body: StoreConnector<AppState, ProductDetailViewModel>(
         converter: (Store<AppState> store) =>
             ProductDetailViewModel.fromState(store.state),
+        onInit: (Store<AppState> store) {
+          context.dispatch(
+            FetchSingleProductAction(
+              client: AppWrapperBase.of(context)!.customClient,
+            ),
+          );
+        },
         builder: (BuildContext context, ProductDetailViewModel vm) {
           final Product? product = vm.selectedProduct;
 

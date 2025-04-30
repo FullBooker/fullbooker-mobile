@@ -167,7 +167,9 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                               LocationPreviewWidget(
                                 location: product?.locations?.first,
                                 readOnly: true,
-                              ),
+                              )
+                            else
+                              MinZeroState(copy: noLocationProvided),
 
                             // Date and time
                             Divider(),

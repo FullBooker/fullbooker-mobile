@@ -5,7 +5,7 @@ import 'package:fullbooker/domain/core/entities/currency.dart';
 import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/entities/product_location.dart';
 import 'package:fullbooker/domain/core/entities/product_schedule.dart';
-import 'package:fullbooker/shared/entities/enums.dart'; // for WorkflowState
+import 'package:fullbooker/shared/entities/enums.dart';
 
 class UpdateHostStateAction extends ReduxAction<AppState> {
   UpdateHostStateAction({

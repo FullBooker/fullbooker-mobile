@@ -483,7 +483,6 @@ bool hasValidLocation(ProductLocation? location) {
   if (location == null) return false;
 
   final bool hasCoordinates = location.coordinates != UNKNOWN;
-
   final bool hasAddress =
       location.address != null && location.address != UNKNOWN;
 
