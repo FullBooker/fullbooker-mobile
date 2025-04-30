@@ -3,7 +3,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
 import 'package:fullbooker/application/redux/actions/fetch_product_schedule_action.dart';
-import 'package:fullbooker/application/redux/actions/fetch_single_product_action.dart';
 import 'package:fullbooker/application/redux/actions/set_product_schedule_action.dart';
 import 'package:fullbooker/application/redux/actions/update_current_schedule_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
@@ -45,9 +44,6 @@ class ProductSchedulePage extends StatelessWidget {
               ProductSetupViewModel.fromState(store.state),
           onInit: (Store<AppState> store) {
             context.dispatchAll(<ReduxAction<AppState>>[
-              FetchSingleProductAction(
-                client: AppWrapperBase.of(context)!.customClient,
-              ),
               FetchProductScheduleAction(
                 client: AppWrapperBase.of(context)!.customClient,
               ),
@@ -55,7 +51,6 @@ class ProductSchedulePage extends StatelessWidget {
           },
           builder: (BuildContext context, ProductSetupViewModel vm) {
             if (context.isWaiting(<Type>[
-              FetchSingleProductAction,
               FetchProductScheduleAction,
             ])) {
               return AppLoading();
