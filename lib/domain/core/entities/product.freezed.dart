@@ -53,6 +53,7 @@ mixin _$Product {
   int? get videoCount => throw _privateConstructorUsedError;
   @JsonKey(name: 'status')
   String? get status => throw _privateConstructorUsedError;
+  bool? get termsAccepted => throw _privateConstructorUsedError;
 
   /// Temp values used when creating a product
   List<ProductMedia?>? get photos => throw _privateConstructorUsedError;
@@ -104,6 +105,7 @@ abstract class $ProductCopyWith<$Res> {
       @JsonKey(name: 'images_count') int? imageCount,
       @JsonKey(name: 'videos_count') int? videoCount,
       @JsonKey(name: 'status') String? status,
+      bool? termsAccepted,
       List<ProductMedia?>? photos,
       List<ProductMedia?>? videos,
       List<Booking?>? bookings,
@@ -160,6 +162,7 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
     Object? imageCount = freezed,
     Object? videoCount = freezed,
     Object? status = freezed,
+    Object? termsAccepted = freezed,
     Object? photos = freezed,
     Object? videos = freezed,
     Object? bookings = freezed,
@@ -260,6 +263,10 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String?,
+      termsAccepted: freezed == termsAccepted
+          ? _value.termsAccepted
+          : termsAccepted // ignore: cast_nullable_to_non_nullable
+              as bool?,
       photos: freezed == photos
           ? _value.photos
           : photos // ignore: cast_nullable_to_non_nullable
@@ -419,6 +426,7 @@ abstract class _$$ProductImplCopyWith<$Res> implements $ProductCopyWith<$Res> {
       @JsonKey(name: 'images_count') int? imageCount,
       @JsonKey(name: 'videos_count') int? videoCount,
       @JsonKey(name: 'status') String? status,
+      bool? termsAccepted,
       List<ProductMedia?>? photos,
       List<ProductMedia?>? videos,
       List<Booking?>? bookings,
@@ -480,6 +488,7 @@ class __$$ProductImplCopyWithImpl<$Res>
     Object? imageCount = freezed,
     Object? videoCount = freezed,
     Object? status = freezed,
+    Object? termsAccepted = freezed,
     Object? photos = freezed,
     Object? videos = freezed,
     Object? bookings = freezed,
@@ -580,6 +589,10 @@ class __$$ProductImplCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String?,
+      termsAccepted: freezed == termsAccepted
+          ? _value.termsAccepted
+          : termsAccepted // ignore: cast_nullable_to_non_nullable
+              as bool?,
       photos: freezed == photos
           ? _value.photos
           : photos // ignore: cast_nullable_to_non_nullable
@@ -636,6 +649,7 @@ class _$ProductImpl implements _Product {
       @JsonKey(name: 'images_count') this.imageCount = 0,
       @JsonKey(name: 'videos_count') this.videoCount = 0,
       @JsonKey(name: 'status') this.status = 'DRAFT',
+      this.termsAccepted = false,
       this.photos = const <ProductMedia>[],
       this.videos = const <ProductMedia>[],
       this.bookings = const <Booking>[],
@@ -714,6 +728,9 @@ class _$ProductImpl implements _Product {
   @override
   @JsonKey(name: 'status')
   final String? status;
+  @override
+  @JsonKey()
+  final bool? termsAccepted;
 
   /// Temp values used when creating a product
   @override
@@ -736,7 +753,7 @@ class _$ProductImpl implements _Product {
 
   @override
   String toString() {
-    return 'Product(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, active: $active, host: $host, name: $name, description: $description, number: $number, category: $category, categoryName: $categoryName, subcategory: $subcategory, subcategoryName: $subcategoryName, scheduleID: $scheduleID, schedule: $schedule, pricing: $pricing, pricingOptions: $pricingOptions, image: $image, video: $video, locations: $locations, completed: $completed, imageCount: $imageCount, videoCount: $videoCount, status: $status, photos: $photos, videos: $videos, bookings: $bookings, selectedProductCategory: $selectedProductCategory, selectedProductSubCategory: $selectedProductSubCategory, stats: $stats)';
+    return 'Product(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, active: $active, host: $host, name: $name, description: $description, number: $number, category: $category, categoryName: $categoryName, subcategory: $subcategory, subcategoryName: $subcategoryName, scheduleID: $scheduleID, schedule: $schedule, pricing: $pricing, pricingOptions: $pricingOptions, image: $image, video: $video, locations: $locations, completed: $completed, imageCount: $imageCount, videoCount: $videoCount, status: $status, termsAccepted: $termsAccepted, photos: $photos, videos: $videos, bookings: $bookings, selectedProductCategory: $selectedProductCategory, selectedProductSubCategory: $selectedProductSubCategory, stats: $stats)';
   }
 
   @override
@@ -780,6 +797,8 @@ class _$ProductImpl implements _Product {
             (identical(other.videoCount, videoCount) ||
                 other.videoCount == videoCount) &&
             (identical(other.status, status) || other.status == status) &&
+            (identical(other.termsAccepted, termsAccepted) ||
+                other.termsAccepted == termsAccepted) &&
             const DeepCollectionEquality().equals(other.photos, photos) &&
             const DeepCollectionEquality().equals(other.videos, videos) &&
             const DeepCollectionEquality().equals(other.bookings, bookings) &&
@@ -820,6 +839,7 @@ class _$ProductImpl implements _Product {
         imageCount,
         videoCount,
         status,
+        termsAccepted,
         const DeepCollectionEquality().hash(photos),
         const DeepCollectionEquality().hash(videos),
         const DeepCollectionEquality().hash(bookings),
@@ -869,6 +889,7 @@ abstract class _Product implements Product {
       @JsonKey(name: 'images_count') final int? imageCount,
       @JsonKey(name: 'videos_count') final int? videoCount,
       @JsonKey(name: 'status') final String? status,
+      final bool? termsAccepted,
       final List<ProductMedia?>? photos,
       final List<ProductMedia?>? videos,
       final List<Booking?>? bookings,
@@ -935,6 +956,8 @@ abstract class _Product implements Product {
   @override
   @JsonKey(name: 'status')
   String? get status;
+  @override
+  bool? get termsAccepted;
 
   /// Temp values used when creating a product
   @override

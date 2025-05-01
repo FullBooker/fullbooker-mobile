@@ -43,6 +43,7 @@ class Product with _$Product {
     @Default(0) @JsonKey(name: 'images_count') int? imageCount,
     @Default(0) @JsonKey(name: 'videos_count') int? videoCount,
     @Default('DRAFT') @JsonKey(name: 'status') String? status,
+    @Default(false) bool? termsAccepted,
 
     /// Temp values used when creating a product
     @Default(<ProductMedia>[]) List<ProductMedia?>? photos,

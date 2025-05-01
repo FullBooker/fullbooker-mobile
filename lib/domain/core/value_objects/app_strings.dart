@@ -711,3 +711,5 @@ const String modeOfAccessCopy =
     'What type of access you will provide for this product';
 
 const String backToPreview = 'Back to Preview';
+
+const String iHaveAccepted = 'I have accepted the ';
