@@ -170,8 +170,18 @@ class ProductBasicDetailsPage extends StatelessWidget {
                             child: d.right(continueString),
                           ),
                           SecondaryButton(
-                            onPressed: () => context.router.maybePop(),
-                            child: d.right(previousString),
+                            onPressed: () {
+                              isCreate
+                                  ? context.router.maybePop()
+                                  : context.router.popUntil(
+                                      (Route<dynamic> route) =>
+                                          route.settings.name ==
+                                          ProductReviewAndSubmitRoute.name,
+                                    );
+                            },
+                            child: d.right(
+                              isCreate ? previousString : backToPreview,
+                            ),
                             fillColor: Colors.transparent,
                           ),
                         ],

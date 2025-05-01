@@ -128,7 +128,10 @@ class ProductLocationPage extends StatelessWidget {
                     CheckLocationPermissionAction(),
                   ),
                   builder: (BuildContext context, ProductSetupViewModel vm) {
-                    if (context.isWaiting(SetProductLocationAction)) {
+                    if (context.isWaiting(<Type>[
+                      SetProductLocationAction,
+                      UpdateProductLocationAction,
+                    ])) {
                       return AppLoading();
                     }
 
@@ -143,8 +146,11 @@ class ProductLocationPage extends StatelessWidget {
                             if (isEditing) {
                               context.dispatch(
                                 UpdateProductLocationAction(
-                                  onSuccess: () => context.router
-                                      .replace(ProductReviewAndSubmitRoute()),
+                                  onSuccess: () => context.router.popUntil(
+                                    (Route<dynamic> route) =>
+                                        route.settings.name ==
+                                        ProductReviewAndSubmitRoute.name,
+                                  ),
                                   onError: (String error) => showAlertDialog(
                                     context: context,
                                     assetPath: productZeroStateSVGPath,
@@ -173,8 +179,18 @@ class ProductLocationPage extends StatelessWidget {
                           child: d.right(continueString),
                         ),
                         SecondaryButton(
-                          onPressed: () => context.router.maybePop(),
-                          child: d.right(cancelString),
+                          onPressed: () {
+                            isEditing
+                                ? context.router.popUntil(
+                                    (Route<dynamic> route) =>
+                                        route.settings.name ==
+                                        ProductReviewAndSubmitRoute.name,
+                                  )
+                                : context.router.maybePop();
+                          },
+                          child: d.right(
+                            isEditing ? backToPreview : previousString,
+                          ),
                           fillColor: Colors.transparent,
                         ),
                         verySmallVerticalSizedBox,

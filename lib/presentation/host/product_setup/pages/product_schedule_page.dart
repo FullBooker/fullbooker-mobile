@@ -19,6 +19,7 @@ import 'package:fullbooker/presentation/host/product_setup/widgets/repeats_daily
 import 'package:fullbooker/presentation/host/product_setup/widgets/repeats_monthly_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/repeats_weekly_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/repeats_yearly_widget.dart';
+import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/custom_dropdown.dart';
@@ -504,6 +505,10 @@ class ProductSchedulePage extends StatelessWidget {
                     if (context.isWaiting(SetProductScheduleAction)) {
                       return AppLoading();
                     }
+
+                    final bool isEditing =
+                        vm.workflowState == WorkflowState.VIEW;
+
                     return Column(
                       spacing: 12,
                       children: <Widget>[
@@ -524,8 +529,18 @@ class ProductSchedulePage extends StatelessWidget {
                           child: d.right(continueString),
                         ),
                         SecondaryButton(
-                          onPressed: () => context.router.maybePop(),
-                          child: d.right(previousString),
+                          onPressed: () {
+                            isEditing
+                                ? context.router.popUntil(
+                                    (Route<dynamic> route) =>
+                                        route.settings.name ==
+                                        ProductReviewAndSubmitRoute.name,
+                                  )
+                                : context.router.maybePop();
+                          },
+                          child: d.right(
+                            isEditing ? backToPreview : previousString,
+                          ),
                           fillColor: Colors.transparent,
                         ),
                         verySmallVerticalSizedBox,

@@ -174,16 +174,47 @@ class ProductPhotosPage extends StatelessWidget {
                 },
               ),
             ),
-            PrimaryButton(
-              onPressed: () {
-                context.router.push(ProductVideosRoute());
+            StoreConnector<AppState, ProductSetupViewModel>(
+              converter: (Store<AppState> store) =>
+                  ProductSetupViewModel.fromState(store.state),
+              builder: (BuildContext context, ProductSetupViewModel vm) {
+                final bool isEditing = vm.workflowState == WorkflowState.VIEW;
+
+                return Column(
+                  spacing: 12,
+                  children: <Widget>[
+                    PrimaryButton(
+                      onPressed: () {
+                        if (isEditing) {
+                          context.router.popUntil(
+                            (Route<dynamic> route) =>
+                                route.settings.name ==
+                                ProductReviewAndSubmitRoute.name,
+                          );
+                        } else {
+                          context.router.push(ProductVideosRoute());
+                        }
+                      },
+                      child: d.right(continueString),
+                    ),
+                    SecondaryButton(
+                      onPressed: () {
+                        isEditing
+                            ? context.router.popUntil(
+                                (Route<dynamic> route) =>
+                                    route.settings.name ==
+                                    ProductReviewAndSubmitRoute.name,
+                              )
+                            : context.router.maybePop();
+                      },
+                      child: d.right(
+                        isEditing ? backToPreview : previousString,
+                      ),
+                      fillColor: Colors.transparent,
+                    ),
+                  ],
+                );
               },
-              child: d.right(continueString),
-            ),
-            SecondaryButton(
-              onPressed: () => context.router.maybePop(),
-              child: d.right(previousString),
-              fillColor: Colors.transparent,
             ),
           ],
         ),

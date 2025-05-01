@@ -709,3 +709,5 @@ const String myProducts = 'My Products';
 const String modeOfAccess = 'Mode of access';
 const String modeOfAccessCopy =
     'What type of access you will provide for this product';
+
+const String backToPreview = 'Back to Preview';

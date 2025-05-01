@@ -3,7 +3,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
 import 'package:fullbooker/application/redux/actions/fetch_single_product_action.dart';
-import 'package:fullbooker/application/redux/actions/set_workflow_state_action.dart';
 import 'package:fullbooker/application/redux/actions/update_host_state_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_review_view_model.dart';
@@ -25,7 +24,6 @@ import 'package:fullbooker/presentation/host/product_setup/widgets/pricing_card_
 import 'package:fullbooker/presentation/host/product_setup/widgets/product_category_item.dart';
 import 'package:fullbooker/presentation/host/products/widgets/min_zero_state.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_schedule_widget.dart';
-import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
@@ -133,6 +131,7 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                                 context.router.push(ProductBasicDetailsRoute());
                               },
                             ),
+
                             Column(
                               spacing: 4,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -274,11 +273,6 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                           onConfirm: () =>
                               context.router.popAndPush(ProductsRoute()),
                           onCancel: () {
-                            context.dispatch(
-                              SetWorkflowStateAction(
-                                workflowState: WorkflowState.VIEW,
-                              ),
-                            );
                             context.dispatch(
                               UpdateHostStateAction(contextProduct: product),
                             );
