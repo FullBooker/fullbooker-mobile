@@ -23,10 +23,20 @@ class SubmitProductForReviewAction extends ReduxAction<AppState> {
 
   @override
   Future<AppState?> reduce() async {
-    final String productID = state.hostState?.selectedProduct?.id ?? UNKNOWN;
+    final String selectProductID =
+        state.hostState?.selectedProduct?.id ?? UNKNOWN;
+    final String currentProductID =
+        state.hostState?.currentProduct?.id ?? UNKNOWN;
+
+    final WorkflowState workflowState =
+        state.hostState?.workflowState ?? WorkflowState.CREATE;
+
+    final bool isCreate = workflowState == WorkflowState.CREATE;
+
+    final String ctxProductId = isCreate ? currentProductID : selectProductID;
 
     final Map<String, String> data = <String, String>{
-      'product_id': productID,
+      'product_id': ctxProductId,
       'status_to': 'REVIEW',
     };
 
