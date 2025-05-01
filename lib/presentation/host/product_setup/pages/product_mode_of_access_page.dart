@@ -78,6 +78,7 @@ class ProductModeOfAccessPage extends StatelessWidget {
                               vm.pricingOptions;
 
                           return Column(
+                            spacing: 12,
                             children: <Widget>[
                               if (vm.selectedPricingOptionIDs?.isEmpty ?? true)
                                 Container(
@@ -152,6 +153,10 @@ class ProductModeOfAccessPage extends StatelessWidget {
               converter: (Store<AppState> store) =>
                   ProductSetupViewModel.fromState(store.state),
               builder: (BuildContext context, ProductSetupViewModel vm) {
+                if (context.isWaiting(SetProductPricingOptionsAction)) {
+                  return AppLoading();
+                }
+
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   spacing: 12,
