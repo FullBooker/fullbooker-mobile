@@ -257,7 +257,7 @@ const String pricePerPersonPerSession =
     'What is the price per person per session';
 const String maxTicketsPerSession = 'Maximum number of tickets per session';
 const String maxTicketsPerDayPass = 'Maximum number of tickets per day pass';
-const String submitString = 'Submit';
+const String submitString = 'Submit for Review';
 
 const String selectCategoryPrompt = 'Please select a category for your event';
 
@@ -713,3 +713,5 @@ const String modeOfAccessCopy =
 const String backToPreview = 'Back to Preview';
 
 const String iHaveAccepted = 'I have accepted the ';
+
+const String backString = 'Back';

@@ -4,6 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
 import 'package:fullbooker/application/redux/actions/fetch_single_product_action.dart';
+import 'package:fullbooker/application/redux/actions/submit_product_for_review_action.dart';
 import 'package:fullbooker/application/redux/actions/update_host_state_action.dart';
 import 'package:fullbooker/application/redux/actions/update_product_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
@@ -321,11 +322,13 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                   },
                 ),
               ),
-              smallVerticalSizedBox,
               StoreConnector<AppState, ProductReviewViewModel>(
                 converter: (Store<AppState> store) =>
                     ProductReviewViewModel.fromState(store.state),
                 builder: (BuildContext context, ProductReviewViewModel vm) {
+                  if (context.isWaiting(SubmitProductForReviewAction)) {
+                    return AppLoading();
+                  }
                   final Product? product = vm.product;
 
                   return Column(
@@ -333,27 +336,48 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       PrimaryButton(
-                        onPressed: () => showAlertDialog(
-                          context: context,
-                          assetPath: productSetupSuccessSVGPath,
-                          title: productSubmit,
-                          description: productSubmitCopy,
-                          confirmText: backToProducts,
-                          cancelText: viewProduct,
-                          onConfirm: () =>
-                              context.router.popAndPush(ProductsRoute()),
-                          onCancel: () {
-                            context.dispatch(
-                              UpdateHostStateAction(contextProduct: product),
-                            );
-                            context.router.push(ProductDetailRoute());
-                          },
-                        ),
+                        onPressed: () {
+                          context.dispatch(
+                            SubmitProductForReviewAction(
+                              client: AppWrapperBase.of(context)!.customClient,
+                              onSuccess: () => showAlertDialog(
+                                context: context,
+                                assetPath: productSetupSuccessSVGPath,
+                                title: productSubmit,
+                                description: productSubmitCopy,
+                                confirmText: backToProducts,
+                                cancelText: viewProduct,
+                                onConfirm: () => context.router.popUntil(
+                                  (Route<dynamic> route) =>
+                                      route.settings.name ==
+                                      ProductDetailRoute.name,
+                                ),
+                                onCancel: () {
+                                  context.dispatch(
+                                    UpdateHostStateAction(
+                                      contextProduct: product,
+                                    ),
+                                  );
+                                  context.router.popUntil(
+                                    (Route<dynamic> route) =>
+                                        route.settings.name ==
+                                        ProductDetailRoute.name,
+                                  );
+                                },
+                              ),
+                              onError: (String error) => showAlertDialog(
+                                context: context,
+                                assetPath: productZeroStateSVGPath,
+                                description: error,
+                              ),
+                            ),
+                          );
+                        },
                         child: d.right(submitString),
                       ),
                       SecondaryButton(
                         onPressed: () => context.router.maybePop(),
-                        child: d.right(previousString),
+                        child: d.right(backString),
                         fillColor: Colors.transparent,
                       ),
                       verySmallVerticalSizedBox,

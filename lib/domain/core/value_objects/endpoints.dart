@@ -25,6 +25,8 @@ const String kDevValidateTicketEndpoint = '$kDevAPIBaseURL/validate';
 const String kDevPricingOptionsEndpoint = '$kDevAPIBaseURL/pricingoptions/';
 const String kDevProductPricingOptionsEndpoint =
     '$kDevAPIBaseURL/product-pricing-options/';
+const String kDevProductTransitionEndpoint =
+    '$kDevAPIBaseURL/products/transition/';
 
 /// ---- PROD ENDPOINTS
 const String kProdAPIBaseURL = 'https://api.fullbooker.com';
@@ -53,6 +55,8 @@ const String kProdValidateTicketEndpoint = '$kProdAPIBaseURL/validate';
 const String kProdPricingOptionsEndpoint = '$kProdAPIBaseURL/pricingoptions/';
 const String kProdProductPricingOptionsEndpoint =
     '$kProdAPIBaseURL/product-pricing-options/';
+const String kProdProductTransitionEndpoint =
+    '$kProdAPIBaseURL/products/transition/';
 
 ///---- TEST ENDPOINTS
 const String kTestAPIBaseURL = 'https://api.dev.fullbooker.co.ke';
@@ -81,3 +85,5 @@ const String kTestValidateTicketEndpoint = '$kTestAPIBaseURL/validate';
 const String kTestPricingOptionsEndpoint = '$kTestAPIBaseURL/pricingoptions/';
 const String kTestProductPricingOptionsEndpoint =
     '$kTestAPIBaseURL/product-pricing-options/';
+const String kTestProductTransitionEndpoint =
+    '$kTestAPIBaseURL/products/transition/';
