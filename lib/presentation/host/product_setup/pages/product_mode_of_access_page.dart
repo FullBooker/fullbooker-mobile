@@ -3,6 +3,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
 import 'package:fullbooker/application/redux/actions/fetch_pricing_options_action.dart';
+import 'package:fullbooker/application/redux/actions/set_product_pricing_options_action.dart';
 import 'package:fullbooker/application/redux/actions/toggle_pricing_option_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_setup_view_model.dart';
@@ -17,6 +18,7 @@ import 'package:fullbooker/presentation/host/product_setup/widgets/pricing_optio
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
+import 'package:heroicons/heroicons.dart';
 
 @RoutePage()
 class ProductModeOfAccessPage extends StatelessWidget {
@@ -75,65 +77,69 @@ class ProductModeOfAccessPage extends StatelessWidget {
                           final List<PricingOption?>? pricingOptions =
                               vm.pricingOptions;
 
-                          // if (vm.pricing?.isEmpty ?? true)
-                          //   Container(
-                          //     padding: const EdgeInsets.all(16),
-                          //     decoration: BoxDecoration(
-                          //       borderRadius: BorderRadius.circular(8),
-                          //       color: Theme.of(context)
-                          //           .primaryColor
-                          //           .withValues(alpha: .1),
-                          //     ),
-                          //     child: Row(
-                          //       spacing: 8,
-                          //       children: <Widget>[
-                          //         HeroIcon(
-                          //           HeroIcons.exclamationTriangle,
-                          //           color: Theme.of(context).primaryColor,
-                          //         ),
-                          //         Expanded(
-                          //           child: Text(
-                          //             addPricingErrorMsg,
-                          //             style: Theme.of(context)
-                          //                 .textTheme
-                          //                 .bodySmall
-                          //                 ?.copyWith(
-                          //                   color: Theme.of(context)
-                          //                       .primaryColor,
-                          //                 ),
-                          //           ),
-                          //         ),
-                          //       ],
-                          //     ),
-                          //   ),
-
-                          return ListView.builder(
-                            itemCount: pricingOptions?.length,
-                            physics: NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemBuilder: (BuildContext context, int index) {
-                              final PricingOption? current =
-                                  pricingOptions![index];
-
-                              final bool selected = vm.selectedPricingOptionIDs
-                                      ?.contains(current?.id) ??
-                                  false;
-
-                              return Padding(
-                                padding: const EdgeInsets.only(bottom: 12),
-                                child: PricingOptionItem(
-                                  option: current!,
-                                  isSelected: selected,
-                                  onTap: () {
-                                    context.dispatch(
-                                      TogglePricingOptionAction(
-                                        optionID: current.id,
+                          return Column(
+                            children: <Widget>[
+                              if (vm.selectedPricingOptionIDs?.isEmpty ?? true)
+                                Container(
+                                  padding: const EdgeInsets.all(16),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: Theme.of(context)
+                                        .primaryColor
+                                        .withValues(alpha: .1),
+                                  ),
+                                  child: Row(
+                                    spacing: 8,
+                                    children: <Widget>[
+                                      HeroIcon(
+                                        HeroIcons.exclamationTriangle,
+                                        color: Theme.of(context).primaryColor,
                                       ),
-                                    );
-                                  },
+                                      Expanded(
+                                        child: Text(
+                                          addProductPricingOptionErrorMsg,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall
+                                              ?.copyWith(
+                                                color: Theme.of(context)
+                                                    .primaryColor,
+                                              ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              );
-                            },
+                              ListView.builder(
+                                itemCount: pricingOptions?.length,
+                                physics: NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemBuilder: (BuildContext context, int index) {
+                                  final PricingOption? current =
+                                      pricingOptions![index];
+
+                                  final bool selected = vm
+                                          .selectedPricingOptionIDs
+                                          ?.contains(current?.id) ??
+                                      false;
+
+                                  return Padding(
+                                    padding: const EdgeInsets.only(bottom: 12),
+                                    child: PricingOptionItem(
+                                      option: current!,
+                                      isSelected: selected,
+                                      onTap: () {
+                                        context.dispatch(
+                                          TogglePricingOptionAction(
+                                            optionID: current.id,
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  );
+                                },
+                              ),
+                            ],
                           );
                         },
                       ),
@@ -152,15 +158,20 @@ class ProductModeOfAccessPage extends StatelessWidget {
                   children: <Widget>[
                     PrimaryButton(
                       onPressed: () {
-                        if (vm.pricing?.isEmpty ?? true) {
-                          showAlertDialog(
-                            context: context,
-                            assetPath: productZeroStateSVGPath,
-                            description: addPricingErrorMsg,
-                          );
-                        } else {
-                          context.router.push(ProductReviewAndSubmitRoute());
-                        }
+                        context.dispatch(
+                          SetProductPricingOptionsAction(
+                            client: AppWrapperBase.of(context)!.customClient,
+                            onSuccess: () =>
+                                context.router.push(ProductPricingRoute()),
+                            onError: (String error) {
+                              showAlertDialog(
+                                context: context,
+                                assetPath: productZeroStateSVGPath,
+                                description: error,
+                              );
+                            },
+                          ),
+                        );
                       },
                       child: d.right(continueString),
                     ),

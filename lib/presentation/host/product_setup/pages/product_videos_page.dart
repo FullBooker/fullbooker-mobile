@@ -134,9 +134,7 @@ class ProductVideosPage extends StatelessWidget {
               ),
             ),
             PrimaryButton(
-              onPressed: () {
-                context.router.push(ProductPricingRoute());
-              },
+              onPressed: () => context.router.push(ProductModeOfAccessRoute()),
               child: d.right(continueString),
             ),
             SecondaryButton(

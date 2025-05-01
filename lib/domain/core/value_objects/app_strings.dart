@@ -522,6 +522,8 @@ const String playVideo = 'Play Video';
 
 // Pricing page
 const String addPricingErrorMsg = 'Add at least one pricing option to continue';
+const String addProductPricingOptionErrorMsg =
+    'Add at least one mode of access to continue';
 
 const String earlyBird = 'Early Bird';
 const String standard = 'Standard';

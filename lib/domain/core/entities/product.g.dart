@@ -32,6 +32,12 @@ _$ProductImpl _$$ProductImplFromJson(Map<String, dynamic> json) =>
                   : ProductPricing.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const <ProductPricing>[],
+      pricingOptions: (json['pricingOptions'] as List<dynamic>?)
+              ?.map((e) => e == null
+                  ? null
+                  : ProductPricingOption.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const <ProductPricingOption>[],
       image: json['image'] == null
           ? null
           : ProductMedia.fromJson(json['image'] as Map<String, dynamic>),
@@ -94,6 +100,8 @@ Map<String, dynamic> _$$ProductImplToJson(_$ProductImpl instance) =>
       'schedule_id': instance.scheduleID,
       'schedule': instance.schedule?.toJson(),
       'pricing': instance.pricing?.map((e) => e?.toJson()).toList(),
+      'pricingOptions':
+          instance.pricingOptions?.map((e) => e?.toJson()).toList(),
       'image': instance.image?.toJson(),
       'video': instance.video?.toJson(),
       'locations': instance.locations?.map((e) => e.toJson()).toList(),
