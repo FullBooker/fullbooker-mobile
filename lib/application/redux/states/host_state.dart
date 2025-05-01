@@ -3,6 +3,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/domain/core/entities/currency.dart';
+import 'package:fullbooker/domain/core/entities/pricing_option.dart';
 import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/entities/product_category.dart';
 import 'package:fullbooker/domain/core/entities/product_location.dart';
@@ -38,6 +39,10 @@ class HostState with _$HostState {
 
     // Tracks editing and viewing
     @Default(WorkflowState.CREATE) WorkflowState? workflowState,
+
+    // Modes of access
+    @Default(<PricingOption>[]) List<PricingOption?>? pricingOptions,
+    @Default(<String>[]) List<String?>? selectedPricingOptionIds,
   }) = _HostState;
 
   factory HostState.initial() => HostState(

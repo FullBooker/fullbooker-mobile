@@ -12,7 +12,7 @@ import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:fullbooker/presentation/core/components/generic_zero_state.dart';
-import 'package:fullbooker/presentation/host/product_setup/widgets/product_type_item.dart';
+import 'package:fullbooker/presentation/host/product_setup/widgets/product_category_item.dart';
 import 'package:dartz/dartz.dart' as d;
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
@@ -111,7 +111,7 @@ class ProductCategoryPage extends StatelessWidget {
 
                               return Padding(
                                 padding: const EdgeInsets.only(bottom: 12),
-                                child: ProductTypeItem(
+                                child: ProductCategoryItem(
                                   category: current,
                                   isSelected: selected,
                                   onTap: () => context.dispatch(

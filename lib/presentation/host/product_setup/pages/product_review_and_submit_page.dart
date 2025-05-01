@@ -22,7 +22,7 @@ import 'package:fullbooker/presentation/host/product_setup/widgets/limited_video
 import 'package:fullbooker/presentation/host/product_setup/widgets/location_preview_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/preview_header_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/pricing_card_widget.dart';
-import 'package:fullbooker/presentation/host/product_setup/widgets/product_type_item.dart';
+import 'package:fullbooker/presentation/host/product_setup/widgets/product_category_item.dart';
 import 'package:fullbooker/presentation/host/products/widgets/min_zero_state.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_schedule_widget.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
@@ -112,7 +112,7 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                               },
                             ),
 
-                            ProductTypeItem(
+                            ProductCategoryItem(
                               category: ProductCategory.initial().copyWith(
                                 name: product?.categoryName,
                                 description: product?.subcategoryName,
