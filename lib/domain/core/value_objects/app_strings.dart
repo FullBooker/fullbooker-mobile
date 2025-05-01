@@ -715,3 +715,6 @@ const String backToPreview = 'Back to Preview';
 const String iHaveAccepted = 'I have accepted the ';
 
 const String backString = 'Back';
+
+const String acceptTermsToContinue =
+    'Please accept terms and conditions to proceed';

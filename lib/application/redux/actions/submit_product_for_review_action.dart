@@ -2,8 +2,10 @@ import 'dart:convert';
 
 import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/core/services/i_custom_client.dart';
+import 'package:fullbooker/application/redux/actions/fetch_single_product_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/core/common/constants.dart';
+import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
@@ -23,21 +25,29 @@ class SubmitProductForReviewAction extends ReduxAction<AppState> {
 
   @override
   Future<AppState?> reduce() async {
-    final String selectProductID =
-        state.hostState?.selectedProduct?.id ?? UNKNOWN;
-    final String currentProductID =
-        state.hostState?.currentProduct?.id ?? UNKNOWN;
+    final Product? selectProduct = state.hostState?.selectedProduct;
+    final Product? currentProduct = state.hostState?.currentProduct;
 
     final WorkflowState workflowState =
         state.hostState?.workflowState ?? WorkflowState.CREATE;
-
     final bool isCreate = workflowState == WorkflowState.CREATE;
 
-    final String ctxProductId = isCreate ? currentProductID : selectProductID;
+    final Product? ctxProduct = isCreate ? currentProduct : selectProduct;
 
-    final Map<String, String> data = <String, String>{
-      'product_id': ctxProductId,
+    final String productId = ctxProduct?.id ?? UNKNOWN;
+
+    final bool termsAccepted = ctxProduct?.termsAccepted ?? false;
+
+    if (!termsAccepted) {
+      onError?.call(acceptTermsToContinue);
+
+      return null;
+    }
+
+    final Map<String, dynamic> data = <String, dynamic>{
+      'product_id': productId,
       'status_to': 'REVIEW',
+      'terms_accepted': termsAccepted,
     };
 
     final String endpoint = GetIt.I.get<AppConfig>().productTransitionEndpoint;
@@ -58,6 +68,8 @@ class SubmitProductForReviewAction extends ReduxAction<AppState> {
 
       return null;
     }
+
+    dispatch(FetchSingleProductAction(client: client));
 
     onSuccess?.call();
 
