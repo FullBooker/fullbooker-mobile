@@ -2,6 +2,7 @@ import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/domain/core/entities/currency.dart';
+import 'package:fullbooker/domain/core/entities/pricing_option.dart';
 import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/entities/product_category.dart';
 import 'package:fullbooker/domain/core/entities/product_location.dart';
@@ -43,6 +44,8 @@ class ProductSetupViewModel extends Vm {
     required this.categoryID,
     required this.subCategoryID,
     required this.subCategory,
+    required this.pricingOptions,
+    required this.selectedPricingOptionIDs,
   }) : super(
           equals: <Object?>[
             workflowState,
@@ -75,6 +78,8 @@ class ProductSetupViewModel extends Vm {
             subCategory,
             categoryID,
             subCategoryID,
+            pricingOptions,
+            selectedPricingOptionIDs,
           ],
         );
 
@@ -107,6 +112,9 @@ class ProductSetupViewModel extends Vm {
   final String selectedPricingTier;
   final ProductPricing? selectedPricing;
   final bool buyerPaysFee;
+
+  final List<PricingOption?>? pricingOptions;
+  final List<String?>? selectedPricingOptionIDs;
 
   /// Basic details page
   final ProductCategory? category;
@@ -167,6 +175,9 @@ class ProductSetupViewModel extends Vm {
           <ProductCategory?>[],
       subCategoryID: baseProduct?.subcategory ?? UNKNOWN,
       categoryID: baseProduct?.category ?? UNKNOWN,
+      pricingOptions: state.hostState?.pricingOptions ?? <PricingOption?>[],
+      selectedPricingOptionIDs:
+          state.hostState?.selectedPricingOptionIds ?? <String?>[],
     );
   }
 }

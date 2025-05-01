@@ -633,3 +633,82 @@ String? convertToLocalTimestamp(String? utcTimestamp) {
     return null;
   }
 }
+
+// Format the repeat notification based on the repeat type
+String generateRepeatNotification(ProductSchedule? schedule) {
+  if (schedule?.repeatType == 'daily') {
+    return 'Repeats daily';
+  } else if (schedule?.repeatType == 'weekly') {
+    final List<String> daysOfWeek = <String>[
+      'Sun',
+      'Mon',
+      'Tue',
+      'Wed',
+      'Thu',
+      'Fri',
+      'Sat',
+    ];
+
+    final List<String> days = schedule?.repeatOnDaysOfWeek?.entries
+            .map((MapEntry<String, Map<String, String>> entry) {
+          final String day = entry.key.toLowerCase();
+
+          return daysOfWeek.firstWhere(
+            (String d) => d.toLowerCase() == day,
+            orElse: () => '',
+          );
+        }).toList() ??
+        <String>[];
+    return 'Repeats every week on ${days.join(', ')}';
+  } else if (schedule?.repeatType == 'monthly') {
+    final List<int> monthDates = schedule?.repeatMonthDates ?? <int>[];
+    return 'Repeats every month on ${monthDates.join(', ')}';
+  } else if (schedule?.repeatType == 'yearly') {
+    final List<String> yearDates = schedule?.repeatYearDates ?? <String>[];
+    return generateYearlyRepeat(yearDates);
+  } else {
+    return 'Does not repeat';
+  }
+}
+
+// Generate formatted yearly repeat notification
+String generateYearlyRepeat(List<String> yearDates) {
+  final Map<String, List<int>> groupedByMonth = <String, List<int>>{};
+  for (String entry in yearDates) {
+    final List<String> parts = entry.split('-');
+    if (parts.length == 2) {
+      final int month = int.tryParse(parts[0]) ?? 0;
+      final int day = int.tryParse(parts[1]) ?? 0;
+      if (month >= 1 && month <= 12 && day >= 1 && day <= 31) {
+        final String monthName = _monthName(month);
+        groupedByMonth.putIfAbsent(monthName, () => <int>[]).add(day);
+      }
+    }
+  }
+
+  final List<String> formattedMonthDates =
+      groupedByMonth.entries.map((MapEntry<String, List<int>> entry) {
+    return '${entry.key} ${entry.value.join(', ')}';
+  }).toList();
+
+  return 'Repeats every year on ${formattedMonthDates.join(', ')}';
+}
+
+// Convert month number to month name
+String _monthName(int month) {
+  const List<String> monthNames = <String>[
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+  return monthNames[month - 1];
+}

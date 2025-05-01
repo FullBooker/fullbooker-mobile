@@ -15,10 +15,12 @@ class PricingCardWidget extends StatelessWidget {
     super.key,
     required this.pricing,
     this.onAddOrEdit,
+    this.tierDisplay,
   });
 
   final ProductPricing? pricing;
   final Function()? onAddOrEdit;
+  final String? tierDisplay;
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +37,10 @@ class PricingCardWidget extends StatelessWidget {
         final int maxTickets = pricing?.maxTickets ?? 0;
 
         final String tier = pricing?.ticketTier ?? '';
-        final String iconPath = getTicketIconPath(tier);
+        final String iconPath = getTicketIconPath(tierDisplay ?? tier);
 
-        final String currencyCode = pricing?.currencyCode ?? kDefaultCurrencyCode;
+        final String currencyCode =
+            pricing?.currencyCode ?? kDefaultCurrencyCode;
 
         return Container(
           padding: EdgeInsets.all(16),
@@ -58,7 +61,7 @@ class PricingCardWidget extends StatelessWidget {
                   spacing: 4,
                   children: <Widget>[
                     Text(
-                      getTicketDisplayName(tier),
+                      getTicketDisplayName(tierDisplay ?? tier),
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                     if (discount != null && discount > 0)

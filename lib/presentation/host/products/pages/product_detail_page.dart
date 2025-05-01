@@ -3,6 +3,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
+import 'package:fullbooker/application/redux/actions/deactivate_product_action.dart';
 import 'package:fullbooker/application/redux/actions/fetch_single_product_action.dart';
 import 'package:fullbooker/application/redux/actions/set_workflow_state_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
@@ -15,11 +16,13 @@ import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/entities/product_pricing.dart';
 import 'package:fullbooker/domain/core/value_objects/app_bar_action.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
+import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:fullbooker/presentation/core/components/custom_badge_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/limited_photo_gallery_preview_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/limited_video_gallery_preview_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/pricing_card_widget.dart';
+import 'package:fullbooker/presentation/host/product_setup/widgets/product_repeat_notification.dart';
 import 'package:fullbooker/presentation/host/products/widgets/image_carousel_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/limited_description_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/min_zero_state.dart';
@@ -30,6 +33,7 @@ import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
+import 'package:fullbooker/shared/widgets/secondary_button.dart';
 import 'package:heroicons/heroicons.dart';
 
 @RoutePage()
@@ -173,7 +177,9 @@ class ProductDetailPage extends StatelessWidget {
                               ],
                             ),
                             ProductScheduleWidget(),
-
+                            RepeatNotification(
+                              productSchedule: product.schedule,
+                            ),
                             if (productStatus == ProductStatus.review)
                               ProductAlertWidget(
                                 title: productInReview,
@@ -227,7 +233,6 @@ class ProductDetailPage extends StatelessWidget {
                                 LimitedPhotoGalleryPreviewWidget(),
                               ],
                             ),
-
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               spacing: 12,
@@ -240,71 +245,59 @@ class ProductDetailPage extends StatelessWidget {
                                 LimitedVideoGalleryPreviewWidget(),
                               ],
                             ),
+                            StoreConnector<AppState, ProductDetailViewModel>(
+                              converter: (Store<AppState> store) =>
+                                  ProductDetailViewModel.fromState(store.state),
+                              builder: (
+                                BuildContext context,
+                                ProductDetailViewModel vm,
+                              ) {
+                                if (context
+                                    .isWaiting(DeactivateProductAction)) {
+                                  return AppLoading();
+                                }
 
+                                return SecondaryButton(
+                                  fillColor:
+                                      AppColors.redColor.withValues(alpha: .05),
+                                  textColor: AppColors.redColor,
+                                  onPressed: () => showAlertDialog(
+                                    context: context,
+                                    assetPath: deleteProductSVGPath,
+                                    title: '$deactivateProduct?',
+                                    description: deactivateProductCopy,
+                                    confirmText: deactivateProduct,
+                                    cancelText: noGoBack,
+                                    onConfirm: () {
+                                      context.router.maybePop();
+                                      context.dispatch(
+                                        DeactivateProductAction(
+                                          client: AppWrapperBase.of(context)!
+                                              .customClient,
+                                          onSuccess: () {
+                                            context.router.popUntil(
+                                              (Route<dynamic> route) =>
+                                                  route.settings.name ==
+                                                  HostingHomeRoute.name,
+                                            );
+                                          },
+                                        ),
+                                      );
+                                    },
+                                    onCancel: () => context.router.maybePop(),
+                                  ),
+                                  child: right(deactivateProduct),
+                                );
+                              },
+                            ),
                             veryLargeVerticalSizedBox,
                             veryLargeVerticalSizedBox,
-
-                            // TODO(abiud): return this when the delete API for a product has proper workflow
-                            // SecondaryButton(
-                            //   fillColor:
-                            //       AppColors.redColor.withValues(alpha: .05),
-                            //   textColor: AppColors.redColor,
-                            //   onPressed: () => showAlertDialog(
-                            //     context: context,
-                            //     assetPath: deleteProductSVGPath,
-                            //     title: '$deactivateProduct?',
-                            //     description: deactivateProductCopy,
-                            //     confirmText: deactivateProduct,
-                            //     cancelText: noGoBack,
-                            //     onConfirm: () {
-                            //       // TODO(abiud): deactivate a product
-                            //       context.router.maybePop();
-                            //       ScaffoldMessenger.of(context)
-                            //         ..hideCurrentSnackBar()
-                            //         ..showSnackBar(
-                            //           const SnackBar(
-                            //             content: Text(comingSoonTitle),
-                            //           ),
-                            //         );
-                            //     },
-                            //     onCancel: () => context.router.maybePop(),
-                            //   ),
-                            //   child: right(deactivateProduct),
-                            // ),
                           ],
                         ),
                       ),
                     ],
                   ),
                 ),
-                // Padding(
-                //   padding: const EdgeInsets.symmetric(horizontal: 16),
-                //   child: PrimaryButton(
-                //     onPressed: () => context.router.push(ScanTicketsRoute()),
-                //     customRadius: 100,
-                //     child: left(
-                //       Row(
-                //         mainAxisAlignment: MainAxisAlignment.center,
-                //         spacing: 12,
-                //         children: <Widget>[
-                //           HeroIcon(
-                //             HeroIcons.camera,
-                //             color: Colors.white,
-                //             size: 24,
-                //           ),
-                //           Text(
-                //             scanTickets,
-                //             style:
-                //                 Theme.of(context).textTheme.bodyLarge?.copyWith(
-                //                       color: Colors.white,
-                //                       fontWeight: FontWeight.bold,
-                //                     ),
-                //           ),
-                //         ],
-                //       ),
-                //     ),
-                //   ),
-                // ),
               ],
             ),
           );

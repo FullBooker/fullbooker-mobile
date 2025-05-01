@@ -1,9 +1,12 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
 import 'package:fullbooker/application/redux/actions/fetch_single_product_action.dart';
+import 'package:fullbooker/application/redux/actions/submit_product_for_review_action.dart';
 import 'package:fullbooker/application/redux/actions/update_host_state_action.dart';
+import 'package:fullbooker/application/redux/actions/update_product_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_review_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
@@ -21,13 +24,16 @@ import 'package:fullbooker/presentation/host/product_setup/widgets/limited_video
 import 'package:fullbooker/presentation/host/product_setup/widgets/location_preview_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/preview_header_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/pricing_card_widget.dart';
-import 'package:fullbooker/presentation/host/product_setup/widgets/product_type_item.dart';
+import 'package:fullbooker/presentation/host/product_setup/widgets/product_category_item.dart';
 import 'package:fullbooker/presentation/host/products/widgets/min_zero_state.dart';
+import 'package:fullbooker/presentation/host/products/widgets/product_alert_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_schedule_widget.dart';
+import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
+import 'package:heroicons/heroicons.dart';
 
 @RoutePage()
 class ProductReviewAndSubmitPage extends StatelessWidget {
@@ -79,6 +85,9 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                     final bool isLocationAvailable =
                         product?.locations?.isNotEmpty ?? false;
 
+                    final ProductStatus productStatus =
+                        getProductStatus(product!);
+
                     return ListView(
                       children: <Widget>[
                         Column(
@@ -100,6 +109,13 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                                 ),
                               ],
                             ),
+                            if (productStatus == ProductStatus.review)
+                              ProductAlertWidget(
+                                title: productInReview,
+                                description: productInReviewCopy,
+                                iconData: HeroIcons.clipboardDocumentList,
+                              ),
+
                             Divider(),
 
                             // Category and type
@@ -110,10 +126,10 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                               },
                             ),
 
-                            ProductTypeItem(
+                            ProductCategoryItem(
                               category: ProductCategory.initial().copyWith(
-                                name: product?.categoryName,
-                                description: product?.subcategoryName,
+                                name: product.categoryName,
+                                description: product.subcategoryName,
                               ),
                             ),
 
@@ -131,6 +147,7 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                                 context.router.push(ProductBasicDetailsRoute());
                               },
                             ),
+
                             Column(
                               spacing: 4,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -139,7 +156,7 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                                     name.isNotEmpty &&
                                     name != UNKNOWN)
                                   Text(
-                                    product?.name ?? UNKNOWN,
+                                    product.name ?? UNKNOWN,
                                     style:
                                         Theme.of(context).textTheme.titleSmall,
                                   ),
@@ -165,7 +182,7 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
 
                             if (isLocationAvailable)
                               LocationPreviewWidget(
-                                location: product?.locations?.first,
+                                location: product.locations?.first,
                                 readOnly: true,
                               )
                             else
@@ -179,7 +196,7 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                                 context.router.push(ProductScheduleRoute());
                               },
                             ),
-                            if ((product?.scheduleID ?? UNKNOWN) != UNKNOWN)
+                            if ((product.scheduleID ?? UNKNOWN) != UNKNOWN)
                               ProductScheduleWidget(),
                             Divider(),
 
@@ -226,16 +243,17 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                                     .push(const ProductPricingRoute());
                               },
                             ),
-                            if (product?.pricing?.isEmpty ?? true)
+
+                            if (product.pricing?.isEmpty ?? true)
                               MinZeroState(copy: noPricingOptionsString)
                             else
                               ListView.builder(
                                 shrinkWrap: true,
                                 physics: NeverScrollableScrollPhysics(),
-                                itemCount: product?.pricing?.length,
+                                itemCount: product.pricing?.length,
                                 itemBuilder: (BuildContext context, int index) {
                                   final ProductPricing? current =
-                                      product?.pricing![index];
+                                      product.pricing![index];
 
                                   return Container(
                                     margin: EdgeInsets.only(bottom: 12),
@@ -243,6 +261,73 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                                   );
                                 },
                               ),
+
+                            Divider(),
+
+                            InkWell(
+                              splashColor: Theme.of(context)
+                                  .primaryColor
+                                  .withValues(alpha: .1),
+                              borderRadius: BorderRadius.circular(8),
+                              highlightColor: Theme.of(context)
+                                  .primaryColor
+                                  .withValues(alpha: .1),
+                              onTap: () {
+                                context.dispatch(
+                                  UpdateProductAction(
+                                    termsAccepted: !vm.product!.termsAccepted!,
+                                  ),
+                                );
+                              },
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  Checkbox(
+                                    value: vm.product!.termsAccepted ?? false,
+                                    onChanged: (bool? value) {
+                                      context.dispatch(
+                                        UpdateProductAction(
+                                          termsAccepted: value,
+                                        ),
+                                      );
+                                    },
+                                    activeColor:
+                                        Theme.of(context).colorScheme.primary,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: RichText(
+                                      text: TextSpan(
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium,
+                                        children: <InlineSpan>[
+                                          TextSpan(text: iHaveAccepted),
+                                          TextSpan(
+                                            text: termsOfService,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall
+                                                ?.copyWith(
+                                                  color: Theme.of(context)
+                                                      .primaryColor,
+                                                ),
+                                            recognizer: TapGestureRecognizer()
+                                              ..onTap = () {
+                                                context.router.push(
+                                                  TermsAndConditionsRoute(),
+                                                );
+                                              },
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ],
                         ),
                       ],
@@ -250,40 +335,68 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                   },
                 ),
               ),
-              smallVerticalSizedBox,
               StoreConnector<AppState, ProductReviewViewModel>(
                 converter: (Store<AppState> store) =>
                     ProductReviewViewModel.fromState(store.state),
                 builder: (BuildContext context, ProductReviewViewModel vm) {
+                  if (context.isWaiting(SubmitProductForReviewAction)) {
+                    return AppLoading();
+                  }
                   final Product? product = vm.product;
+
+                  final ProductStatus status = getProductStatus(product!);
+
+                  if (status != ProductStatus.draft) return SizedBox.shrink();
 
                   return Column(
                     spacing: 12,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       PrimaryButton(
-                        onPressed: () => showAlertDialog(
-                          context: context,
-                          assetPath: productSetupSuccessSVGPath,
-                          title: productSubmit,
-                          description: productSubmitCopy,
-                          confirmText: backToProducts,
-                          cancelText: viewProduct,
-                          onConfirm: () {
-                            context.router.popAndPush(ProductsRoute());
-                          },
-                          onCancel: () {
-                            context.dispatch(
-                              UpdateHostStateAction(contextProduct: product),
-                            );
-                            context.router.push(ProductDetailRoute());
-                          },
-                        ),
+                        onPressed: () {
+                          context.dispatch(
+                            SubmitProductForReviewAction(
+                              client: AppWrapperBase.of(context)!.customClient,
+                              onSuccess: () => showAlertDialog(
+                                context: context,
+                                assetPath: productSetupSuccessSVGPath,
+                                title: productSubmit,
+                                description: productSubmitCopy,
+                                confirmText: backToProducts,
+                                cancelText: viewProduct,
+                                onConfirm: () {
+                                  context.router.popUntil(
+                                    (Route<dynamic> route) =>
+                                        route.settings.name ==
+                                        ProductDetailRoute.name,
+                                  );
+                                },
+                                onCancel: () {
+                                  context.dispatch(
+                                    UpdateHostStateAction(
+                                      contextProduct: product,
+                                    ),
+                                  );
+                                  context.router.popUntil(
+                                    (Route<dynamic> route) =>
+                                        route.settings.name ==
+                                        ProductDetailRoute.name,
+                                  );
+                                },
+                              ),
+                              onError: (String error) => showAlertDialog(
+                                context: context,
+                                assetPath: productZeroStateSVGPath,
+                                description: error,
+                              ),
+                            ),
+                          );
+                        },
                         child: d.right(submitString),
                       ),
                       SecondaryButton(
                         onPressed: () => context.router.maybePop(),
-                        child: d.right(previousString),
+                        child: d.right(backString),
                         fillColor: Colors.transparent,
                       ),
                       verySmallVerticalSizedBox,

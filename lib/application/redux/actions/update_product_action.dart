@@ -19,6 +19,7 @@ class UpdateProductAction extends ReduxAction<AppState> {
     this.pricing,
     this.schedule,
     this.locations,
+    this.termsAccepted,
   });
 
   final ProductCategory? selectedCategory;
@@ -30,6 +31,7 @@ class UpdateProductAction extends ReduxAction<AppState> {
   final List<ProductPricing?>? pricing;
   final ProductSchedule? schedule;
   final List<ProductLocation>? locations;
+  final bool? termsAccepted;
 
   @override
   AppState? reduce() {
@@ -50,6 +52,8 @@ class UpdateProductAction extends ReduxAction<AppState> {
         pricing: pricing ?? state.hostState?.currentProduct?.pricing,
         schedule: schedule ?? state.hostState?.currentProduct?.schedule,
         locations: locations ?? state.hostState?.currentProduct?.locations,
+        termsAccepted:
+            termsAccepted ?? state.hostState?.currentProduct?.termsAccepted,
       );
     } else {
       return state.copyWith.hostState?.selectedProduct?.call(
@@ -65,6 +69,8 @@ class UpdateProductAction extends ReduxAction<AppState> {
         pricing: pricing ?? state.hostState?.selectedProduct?.pricing,
         schedule: schedule ?? state.hostState?.selectedProduct?.schedule,
         locations: locations ?? state.hostState?.selectedProduct?.locations,
+        termsAccepted:
+            termsAccepted ?? state.hostState?.currentProduct?.termsAccepted,
       );
     }
   }

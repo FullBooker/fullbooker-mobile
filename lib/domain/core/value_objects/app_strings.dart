@@ -257,7 +257,7 @@ const String pricePerPersonPerSession =
     'What is the price per person per session';
 const String maxTicketsPerSession = 'Maximum number of tickets per session';
 const String maxTicketsPerDayPass = 'Maximum number of tickets per day pass';
-const String submitString = 'Submit';
+const String submitString = 'Submit for Review';
 
 const String selectCategoryPrompt = 'Please select a category for your event';
 
@@ -522,6 +522,8 @@ const String playVideo = 'Play Video';
 
 // Pricing page
 const String addPricingErrorMsg = 'Add at least one pricing option to continue';
+const String addProductPricingOptionErrorMsg =
+    'Add at least one mode of access to continue';
 
 const String earlyBird = 'Early Bird';
 const String standard = 'Standard';
@@ -546,7 +548,7 @@ const String priceHint = 'Enter an amount';
 
 String maximumTickets(String ticketType) =>
     'Maximum number of $ticketType tickets';
-const String maxTicketsHint = 'Enter a number';
+const String maxTicketsHint = 'Enter max no of tickets';
 
 const String discountLabel = 'Discount(optional)';
 const String discountHint = 'Enter discount';
@@ -703,3 +705,16 @@ const String termsOfService = 'Terms of Service';
 const String termsOfServiceCopy = 'Tap to read our terms of service';
 
 const String myProducts = 'My Products';
+
+const String modeOfAccess = 'Mode of access';
+const String modeOfAccessCopy =
+    'What type of access you will provide for this product';
+
+const String backToPreview = 'Back to Preview';
+
+const String iHaveAccepted = 'I have accepted the ';
+
+const String backString = 'Back';
+
+const String acceptTermsToContinue =
+    'Please accept terms and conditions to proceed';

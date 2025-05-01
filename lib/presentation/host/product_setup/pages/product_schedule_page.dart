@@ -3,7 +3,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
 import 'package:fullbooker/application/redux/actions/fetch_product_schedule_action.dart';
-import 'package:fullbooker/application/redux/actions/fetch_single_product_action.dart';
 import 'package:fullbooker/application/redux/actions/set_product_schedule_action.dart';
 import 'package:fullbooker/application/redux/actions/update_current_schedule_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
@@ -20,6 +19,7 @@ import 'package:fullbooker/presentation/host/product_setup/widgets/repeats_daily
 import 'package:fullbooker/presentation/host/product_setup/widgets/repeats_monthly_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/repeats_weekly_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/repeats_yearly_widget.dart';
+import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/custom_dropdown.dart';
@@ -45,9 +45,6 @@ class ProductSchedulePage extends StatelessWidget {
               ProductSetupViewModel.fromState(store.state),
           onInit: (Store<AppState> store) {
             context.dispatchAll(<ReduxAction<AppState>>[
-              FetchSingleProductAction(
-                client: AppWrapperBase.of(context)!.customClient,
-              ),
               FetchProductScheduleAction(
                 client: AppWrapperBase.of(context)!.customClient,
               ),
@@ -55,7 +52,6 @@ class ProductSchedulePage extends StatelessWidget {
           },
           builder: (BuildContext context, ProductSetupViewModel vm) {
             if (context.isWaiting(<Type>[
-              FetchSingleProductAction,
               FetchProductScheduleAction,
             ])) {
               return AppLoading();
@@ -509,6 +505,10 @@ class ProductSchedulePage extends StatelessWidget {
                     if (context.isWaiting(SetProductScheduleAction)) {
                       return AppLoading();
                     }
+
+                    final bool isEditing =
+                        vm.workflowState == WorkflowState.VIEW;
+
                     return Column(
                       spacing: 12,
                       children: <Widget>[
@@ -529,8 +529,18 @@ class ProductSchedulePage extends StatelessWidget {
                           child: d.right(continueString),
                         ),
                         SecondaryButton(
-                          onPressed: () => context.router.maybePop(),
-                          child: d.right(previousString),
+                          onPressed: () {
+                            isEditing
+                                ? context.router.popUntil(
+                                    (Route<dynamic> route) =>
+                                        route.settings.name ==
+                                        ProductReviewAndSubmitRoute.name,
+                                  )
+                                : context.router.maybePop();
+                          },
+                          child: d.right(
+                            isEditing ? backToPreview : previousString,
+                          ),
                           fillColor: Colors.transparent,
                         ),
                         verySmallVerticalSizedBox,

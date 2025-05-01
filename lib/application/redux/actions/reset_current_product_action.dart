@@ -13,6 +13,7 @@ class ResetCurrentProductAction extends ReduxAction<AppState> {
       currentProduct: Product.initial(),
       selectedSchedule: ProductSchedule.initial(),
       selectedLocation: ProductLocation.initial(),
+      selectedPricingOptionIds: <String?>[],
     );
   }
 }

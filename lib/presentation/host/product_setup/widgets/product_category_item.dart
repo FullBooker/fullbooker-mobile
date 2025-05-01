@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/domain/core/entities/product_category.dart';
+import 'package:heroicons/heroicons.dart';
 
-class ProductTypeItem extends StatelessWidget {
-  const ProductTypeItem({
+class ProductCategoryItem extends StatelessWidget {
+  const ProductCategoryItem({
     super.key,
     required this.category,
     this.isSelected = false,
-      this.onTap,
+    this.onTap,
   });
 
   final Function()? onTap;
@@ -35,7 +36,7 @@ class ProductTypeItem extends StatelessWidget {
           ),
         ),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Expanded(
               child: Column(
@@ -44,7 +45,7 @@ class ProductTypeItem extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     category.name ?? UNKNOWN,
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
                           color: isSelected
                               ? Theme.of(context).primaryColor
                               : AppColors.textBlackColor,
@@ -59,6 +60,11 @@ class ProductTypeItem extends StatelessWidget {
                 ],
               ),
             ),
+            if (isSelected)
+              HeroIcon(
+                HeroIcons.checkCircle,
+                color: Theme.of(context).primaryColor,
+              ),
           ],
         ),
       ),

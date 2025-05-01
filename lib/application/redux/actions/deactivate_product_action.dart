@@ -2,17 +2,17 @@ import 'dart:convert';
 
 import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/core/services/i_custom_client.dart';
-import 'package:fullbooker/application/redux/actions/update_host_product_action.dart';
+import 'package:fullbooker/application/redux/actions/fetch_products_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
-import 'package:fullbooker/domain/core/entities/host_product_response.dart';
+import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
 
-class FetchProductsAction extends ReduxAction<AppState> {
-  FetchProductsAction({
+class DeactivateProductAction extends ReduxAction<AppState> {
+  DeactivateProductAction({
     this.onSuccess,
     this.onError,
     required this.client,
@@ -24,21 +24,22 @@ class FetchProductsAction extends ReduxAction<AppState> {
 
   @override
   Future<AppState?> reduce() async {
-    final Map<String, dynamic> data = <String, dynamic>{
-      'page': 1,
-      'page_size': 20,
-    };
+    final String selectProductID =
+        state.hostState?.selectedProduct?.id ?? UNKNOWN;
+
+    final String baseEndpoint = GetIt.I.get<AppConfig>().getProductsEndpoint;
+
+    final String fullEndpoint = '$baseEndpoint$selectProductID/';
 
     final Response httpResponse = await client.callRESTAPI(
-      endpoint: GetIt.I.get<AppConfig>().getProductsEndpoint,
-      method: APIMethods.GET.name.toUpperCase(),
-      variables: data,
+      endpoint: fullEndpoint,
+      method: APIMethods.DELETE.name.toUpperCase(),
     );
 
-    final Map<String, dynamic> body =
-        json.decode(httpResponse.body) as Map<String, dynamic>;
-
     if (httpResponse.statusCode >= 400) {
+      final Map<String, dynamic> body =
+          json.decode(httpResponse.body) as Map<String, dynamic>;
+
       final String? error = client.parseError(body);
 
       onError?.call(error ?? defaultUserFriendlyMessage);
@@ -46,11 +47,10 @@ class FetchProductsAction extends ReduxAction<AppState> {
       return null;
     }
 
-    final HostProductResponse productsResponse =
-        HostProductResponse.fromJson(body);
+    dispatch(FetchProductsAction(client: client));
 
-    dispatch(UpdateHostProductAction(products: productsResponse.results));
+    onSuccess?.call();
 
-    return state;
+    return null;
   }
 }

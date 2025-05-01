@@ -126,31 +126,24 @@ class ProductCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Wrap(
-                    runSpacing: 12,
-                    spacing: 12,
-                    children: <Widget>[
-                      // Location
-                      if (product.locations?.isNotEmpty ?? false)
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          spacing: 4,
-                          children: <Widget>[
-                            HeroIcon(
-                              HeroIcons.mapPin,
-                              color: Colors.grey,
-                              size: 20,
-                            ),
-                            Expanded(
-                              child: Text(
-                                product.locations?.first.address ?? '',
-                                style: Theme.of(context).textTheme.bodyMedium,
-                              ),
-                            ),
-                          ],
+                  if (product.locations?.isNotEmpty ?? false)
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      spacing: 4,
+                      children: <Widget>[
+                        HeroIcon(
+                          HeroIcons.mapPin,
+                          color: Colors.grey,
+                          size: 20,
                         ),
-                    ],
-                  ),
+                        Expanded(
+                          child: Text(
+                            product.locations?.first.address ?? '',
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                        ),
+                      ],
+                    ),
                   if (!complete)
                     SecondaryButton(
                       onPressed: () {

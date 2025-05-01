@@ -37,7 +37,12 @@ mixin _$HostState {
   String? get currentScannedTicketID => throw _privateConstructorUsedError;
   bool? get isValidTicket =>
       throw _privateConstructorUsedError; // Tracks editing and viewing
-  WorkflowState? get workflowState => throw _privateConstructorUsedError;
+  WorkflowState? get workflowState =>
+      throw _privateConstructorUsedError; // Modes of access
+  List<PricingOption?>? get pricingOptions =>
+      throw _privateConstructorUsedError;
+  List<String?>? get selectedPricingOptionIds =>
+      throw _privateConstructorUsedError;
 
   /// Serializes this HostState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -68,7 +73,9 @@ abstract class $HostStateCopyWith<$Res> {
       ProductPricing? selectedProductPricing,
       String? currentScannedTicketID,
       bool? isValidTicket,
-      WorkflowState? workflowState});
+      WorkflowState? workflowState,
+      List<PricingOption?>? pricingOptions,
+      List<String?>? selectedPricingOptionIds});
 
   $ProductCopyWith<$Res>? get currentProduct;
   $ProductCopyWith<$Res>? get selectedProduct;
@@ -108,6 +115,8 @@ class _$HostStateCopyWithImpl<$Res, $Val extends HostState>
     Object? currentScannedTicketID = freezed,
     Object? isValidTicket = freezed,
     Object? workflowState = freezed,
+    Object? pricingOptions = freezed,
+    Object? selectedPricingOptionIds = freezed,
   }) {
     return _then(_value.copyWith(
       products: freezed == products
@@ -166,6 +175,14 @@ class _$HostStateCopyWithImpl<$Res, $Val extends HostState>
           ? _value.workflowState
           : workflowState // ignore: cast_nullable_to_non_nullable
               as WorkflowState?,
+      pricingOptions: freezed == pricingOptions
+          ? _value.pricingOptions
+          : pricingOptions // ignore: cast_nullable_to_non_nullable
+              as List<PricingOption?>?,
+      selectedPricingOptionIds: freezed == selectedPricingOptionIds
+          ? _value.selectedPricingOptionIds
+          : selectedPricingOptionIds // ignore: cast_nullable_to_non_nullable
+              as List<String?>?,
     ) as $Val);
   }
 
@@ -291,7 +308,9 @@ abstract class _$$HostStateImplCopyWith<$Res>
       ProductPricing? selectedProductPricing,
       String? currentScannedTicketID,
       bool? isValidTicket,
-      WorkflowState? workflowState});
+      WorkflowState? workflowState,
+      List<PricingOption?>? pricingOptions,
+      List<String?>? selectedPricingOptionIds});
 
   @override
   $ProductCopyWith<$Res>? get currentProduct;
@@ -336,6 +355,8 @@ class __$$HostStateImplCopyWithImpl<$Res>
     Object? currentScannedTicketID = freezed,
     Object? isValidTicket = freezed,
     Object? workflowState = freezed,
+    Object? pricingOptions = freezed,
+    Object? selectedPricingOptionIds = freezed,
   }) {
     return _then(_$HostStateImpl(
       products: freezed == products
@@ -394,6 +415,14 @@ class __$$HostStateImplCopyWithImpl<$Res>
           ? _value.workflowState
           : workflowState // ignore: cast_nullable_to_non_nullable
               as WorkflowState?,
+      pricingOptions: freezed == pricingOptions
+          ? _value.pricingOptions
+          : pricingOptions // ignore: cast_nullable_to_non_nullable
+              as List<PricingOption?>?,
+      selectedPricingOptionIds: freezed == selectedPricingOptionIds
+          ? _value.selectedPricingOptionIds
+          : selectedPricingOptionIds // ignore: cast_nullable_to_non_nullable
+              as List<String?>?,
     ));
   }
 }
@@ -416,7 +445,9 @@ class _$HostStateImpl implements _HostState {
       this.selectedProductPricing,
       this.currentScannedTicketID = UNKNOWN,
       this.isValidTicket = false,
-      this.workflowState = WorkflowState.CREATE});
+      this.workflowState = WorkflowState.CREATE,
+      this.pricingOptions = const <PricingOption>[],
+      this.selectedPricingOptionIds = const <String>[]});
 
   factory _$HostStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$HostStateImplFromJson(json);
@@ -459,10 +490,17 @@ class _$HostStateImpl implements _HostState {
   @override
   @JsonKey()
   final WorkflowState? workflowState;
+// Modes of access
+  @override
+  @JsonKey()
+  final List<PricingOption?>? pricingOptions;
+  @override
+  @JsonKey()
+  final List<String?>? selectedPricingOptionIds;
 
   @override
   String toString() {
-    return 'HostState(products: $products, currentProduct: $currentProduct, selectedProduct: $selectedProduct, productCategories: $productCategories, locationPerms: $locationPerms, selectedLocation: $selectedLocation, selectedSchedule: $selectedSchedule, currencies: $currencies, selectedCurrency: $selectedCurrency, selectedPricingTier: $selectedPricingTier, selectedProductPricing: $selectedProductPricing, currentScannedTicketID: $currentScannedTicketID, isValidTicket: $isValidTicket, workflowState: $workflowState)';
+    return 'HostState(products: $products, currentProduct: $currentProduct, selectedProduct: $selectedProduct, productCategories: $productCategories, locationPerms: $locationPerms, selectedLocation: $selectedLocation, selectedSchedule: $selectedSchedule, currencies: $currencies, selectedCurrency: $selectedCurrency, selectedPricingTier: $selectedPricingTier, selectedProductPricing: $selectedProductPricing, currentScannedTicketID: $currentScannedTicketID, isValidTicket: $isValidTicket, workflowState: $workflowState, pricingOptions: $pricingOptions, selectedPricingOptionIds: $selectedPricingOptionIds)';
   }
 
   @override
@@ -496,7 +534,11 @@ class _$HostStateImpl implements _HostState {
             (identical(other.isValidTicket, isValidTicket) ||
                 other.isValidTicket == isValidTicket) &&
             (identical(other.workflowState, workflowState) ||
-                other.workflowState == workflowState));
+                other.workflowState == workflowState) &&
+            const DeepCollectionEquality()
+                .equals(other.pricingOptions, pricingOptions) &&
+            const DeepCollectionEquality().equals(
+                other.selectedPricingOptionIds, selectedPricingOptionIds));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -516,7 +558,9 @@ class _$HostStateImpl implements _HostState {
       selectedProductPricing,
       currentScannedTicketID,
       isValidTicket,
-      workflowState);
+      workflowState,
+      const DeepCollectionEquality().hash(pricingOptions),
+      const DeepCollectionEquality().hash(selectedPricingOptionIds));
 
   /// Create a copy of HostState
   /// with the given fields replaced by the non-null parameter values.
@@ -549,7 +593,9 @@ abstract class _HostState implements HostState {
       final ProductPricing? selectedProductPricing,
       final String? currentScannedTicketID,
       final bool? isValidTicket,
-      final WorkflowState? workflowState}) = _$HostStateImpl;
+      final WorkflowState? workflowState,
+      final List<PricingOption?>? pricingOptions,
+      final List<String?>? selectedPricingOptionIds}) = _$HostStateImpl;
 
   factory _HostState.fromJson(Map<String, dynamic> json) =
       _$HostStateImpl.fromJson;
@@ -581,7 +627,11 @@ abstract class _HostState implements HostState {
   @override
   bool? get isValidTicket; // Tracks editing and viewing
   @override
-  WorkflowState? get workflowState;
+  WorkflowState? get workflowState; // Modes of access
+  @override
+  List<PricingOption?>? get pricingOptions;
+  @override
+  List<String?>? get selectedPricingOptionIds;
 
   /// Create a copy of HostState
   /// with the given fields replaced by the non-null parameter values.

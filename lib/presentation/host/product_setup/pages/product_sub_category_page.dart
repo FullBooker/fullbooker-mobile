@@ -126,8 +126,11 @@ class ProductSubCategoryPage extends StatelessWidget {
                           context.dispatch(
                             UpdateProductCategoryAction(
                               client: AppWrapperBase.of(context)!.customClient,
-                              onSuccess: () => context.router
-                                  .replace(ProductReviewAndSubmitRoute()),
+                              onSuccess: () => context.router.popUntil(
+                                (Route<dynamic> route) =>
+                                    route.settings.name ==
+                                    ProductReviewAndSubmitRoute.name,
+                              ),
                             ),
                           );
                         } else {
@@ -138,9 +141,15 @@ class ProductSubCategoryPage extends StatelessWidget {
                     ),
                     SecondaryButton(
                       onPressed: () {
-                        context.router.maybePop();
+                        isEdit
+                            ? context.router.popUntil(
+                                (Route<dynamic> route) =>
+                                    route.settings.name ==
+                                    ProductReviewAndSubmitRoute.name,
+                              )
+                            : context.router.maybePop();
                       },
-                      child: d.right(cancelString),
+                      child: d.right(isEdit ? backToPreview : previousString),
                       fillColor: Colors.transparent,
                     ),
                   ],

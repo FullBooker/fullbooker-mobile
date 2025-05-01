@@ -2,6 +2,7 @@ import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
+import 'package:fullbooker/application/redux/actions/check_and_refresh_token_action.dart';
 import 'package:fullbooker/application/redux/actions/fetch_currencies_action.dart';
 import 'package:fullbooker/application/redux/actions/fetch_products_action.dart';
 import 'package:fullbooker/application/redux/actions/reset_current_product_action.dart';
@@ -122,6 +123,9 @@ class HostingHomePage extends StatelessWidget {
                       HostingHomeViewModel.fromState(store.state),
                   onInit: (Store<AppState> store) {
                     context.dispatchAll(<ReduxAction<AppState>>[
+                      CheckAndRefreshTokenAction(
+                        client: AppWrapperBase.of(context)!.customClient,
+                      ),
                       FetchProductsAction(
                         client: AppWrapperBase.of(context)!.customClient,
                       ),
@@ -172,7 +176,7 @@ class HostingHomePage extends StatelessWidget {
 
                               return Padding(
                                 padding:
-                                    const EdgeInsets.symmetric(vertical: 12),
+                                    const EdgeInsets.symmetric(vertical: 8),
                                 child: ProductCard(product: product!),
                               );
                             },

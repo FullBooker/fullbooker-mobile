@@ -41,6 +41,8 @@ mixin _$Product {
   @JsonKey(name: 'schedule')
   ProductSchedule? get schedule => throw _privateConstructorUsedError;
   List<ProductPricing?>? get pricing => throw _privateConstructorUsedError;
+  List<ProductPricingOption?>? get pricingOptions =>
+      throw _privateConstructorUsedError;
   ProductMedia? get image => throw _privateConstructorUsedError;
   ProductMedia? get video => throw _privateConstructorUsedError;
   List<ProductLocation>? get locations => throw _privateConstructorUsedError;
@@ -51,6 +53,7 @@ mixin _$Product {
   int? get videoCount => throw _privateConstructorUsedError;
   @JsonKey(name: 'status')
   String? get status => throw _privateConstructorUsedError;
+  bool? get termsAccepted => throw _privateConstructorUsedError;
 
   /// Temp values used when creating a product
   List<ProductMedia?>? get photos => throw _privateConstructorUsedError;
@@ -94,6 +97,7 @@ abstract class $ProductCopyWith<$Res> {
       @JsonKey(name: 'schedule_id') String? scheduleID,
       @JsonKey(name: 'schedule') ProductSchedule? schedule,
       List<ProductPricing?>? pricing,
+      List<ProductPricingOption?>? pricingOptions,
       ProductMedia? image,
       ProductMedia? video,
       List<ProductLocation>? locations,
@@ -101,6 +105,7 @@ abstract class $ProductCopyWith<$Res> {
       @JsonKey(name: 'images_count') int? imageCount,
       @JsonKey(name: 'videos_count') int? videoCount,
       @JsonKey(name: 'status') String? status,
+      bool? termsAccepted,
       List<ProductMedia?>? photos,
       List<ProductMedia?>? videos,
       List<Booking?>? bookings,
@@ -149,6 +154,7 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
     Object? scheduleID = freezed,
     Object? schedule = freezed,
     Object? pricing = freezed,
+    Object? pricingOptions = freezed,
     Object? image = freezed,
     Object? video = freezed,
     Object? locations = freezed,
@@ -156,6 +162,7 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
     Object? imageCount = freezed,
     Object? videoCount = freezed,
     Object? status = freezed,
+    Object? termsAccepted = freezed,
     Object? photos = freezed,
     Object? videos = freezed,
     Object? bookings = freezed,
@@ -224,6 +231,10 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
           ? _value.pricing
           : pricing // ignore: cast_nullable_to_non_nullable
               as List<ProductPricing?>?,
+      pricingOptions: freezed == pricingOptions
+          ? _value.pricingOptions
+          : pricingOptions // ignore: cast_nullable_to_non_nullable
+              as List<ProductPricingOption?>?,
       image: freezed == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
@@ -252,6 +263,10 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String?,
+      termsAccepted: freezed == termsAccepted
+          ? _value.termsAccepted
+          : termsAccepted // ignore: cast_nullable_to_non_nullable
+              as bool?,
       photos: freezed == photos
           ? _value.photos
           : photos // ignore: cast_nullable_to_non_nullable
@@ -403,6 +418,7 @@ abstract class _$$ProductImplCopyWith<$Res> implements $ProductCopyWith<$Res> {
       @JsonKey(name: 'schedule_id') String? scheduleID,
       @JsonKey(name: 'schedule') ProductSchedule? schedule,
       List<ProductPricing?>? pricing,
+      List<ProductPricingOption?>? pricingOptions,
       ProductMedia? image,
       ProductMedia? video,
       List<ProductLocation>? locations,
@@ -410,6 +426,7 @@ abstract class _$$ProductImplCopyWith<$Res> implements $ProductCopyWith<$Res> {
       @JsonKey(name: 'images_count') int? imageCount,
       @JsonKey(name: 'videos_count') int? videoCount,
       @JsonKey(name: 'status') String? status,
+      bool? termsAccepted,
       List<ProductMedia?>? photos,
       List<ProductMedia?>? videos,
       List<Booking?>? bookings,
@@ -463,6 +480,7 @@ class __$$ProductImplCopyWithImpl<$Res>
     Object? scheduleID = freezed,
     Object? schedule = freezed,
     Object? pricing = freezed,
+    Object? pricingOptions = freezed,
     Object? image = freezed,
     Object? video = freezed,
     Object? locations = freezed,
@@ -470,6 +488,7 @@ class __$$ProductImplCopyWithImpl<$Res>
     Object? imageCount = freezed,
     Object? videoCount = freezed,
     Object? status = freezed,
+    Object? termsAccepted = freezed,
     Object? photos = freezed,
     Object? videos = freezed,
     Object? bookings = freezed,
@@ -538,6 +557,10 @@ class __$$ProductImplCopyWithImpl<$Res>
           ? _value.pricing
           : pricing // ignore: cast_nullable_to_non_nullable
               as List<ProductPricing?>?,
+      pricingOptions: freezed == pricingOptions
+          ? _value.pricingOptions
+          : pricingOptions // ignore: cast_nullable_to_non_nullable
+              as List<ProductPricingOption?>?,
       image: freezed == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
@@ -566,6 +589,10 @@ class __$$ProductImplCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String?,
+      termsAccepted: freezed == termsAccepted
+          ? _value.termsAccepted
+          : termsAccepted // ignore: cast_nullable_to_non_nullable
+              as bool?,
       photos: freezed == photos
           ? _value.photos
           : photos // ignore: cast_nullable_to_non_nullable
@@ -614,6 +641,7 @@ class _$ProductImpl implements _Product {
       @JsonKey(name: 'schedule_id') this.scheduleID = UNKNOWN,
       @JsonKey(name: 'schedule') this.schedule,
       this.pricing = const <ProductPricing>[],
+      this.pricingOptions = const <ProductPricingOption>[],
       this.image,
       this.video,
       this.locations = const <ProductLocation>[],
@@ -621,6 +649,7 @@ class _$ProductImpl implements _Product {
       @JsonKey(name: 'images_count') this.imageCount = 0,
       @JsonKey(name: 'videos_count') this.videoCount = 0,
       @JsonKey(name: 'status') this.status = 'DRAFT',
+      this.termsAccepted = false,
       this.photos = const <ProductMedia>[],
       this.videos = const <ProductMedia>[],
       this.bookings = const <Booking>[],
@@ -678,6 +707,9 @@ class _$ProductImpl implements _Product {
   @JsonKey()
   final List<ProductPricing?>? pricing;
   @override
+  @JsonKey()
+  final List<ProductPricingOption?>? pricingOptions;
+  @override
   final ProductMedia? image;
   @override
   final ProductMedia? video;
@@ -696,6 +728,9 @@ class _$ProductImpl implements _Product {
   @override
   @JsonKey(name: 'status')
   final String? status;
+  @override
+  @JsonKey()
+  final bool? termsAccepted;
 
   /// Temp values used when creating a product
   @override
@@ -718,7 +753,7 @@ class _$ProductImpl implements _Product {
 
   @override
   String toString() {
-    return 'Product(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, active: $active, host: $host, name: $name, description: $description, number: $number, category: $category, categoryName: $categoryName, subcategory: $subcategory, subcategoryName: $subcategoryName, scheduleID: $scheduleID, schedule: $schedule, pricing: $pricing, image: $image, video: $video, locations: $locations, completed: $completed, imageCount: $imageCount, videoCount: $videoCount, status: $status, photos: $photos, videos: $videos, bookings: $bookings, selectedProductCategory: $selectedProductCategory, selectedProductSubCategory: $selectedProductSubCategory, stats: $stats)';
+    return 'Product(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, active: $active, host: $host, name: $name, description: $description, number: $number, category: $category, categoryName: $categoryName, subcategory: $subcategory, subcategoryName: $subcategoryName, scheduleID: $scheduleID, schedule: $schedule, pricing: $pricing, pricingOptions: $pricingOptions, image: $image, video: $video, locations: $locations, completed: $completed, imageCount: $imageCount, videoCount: $videoCount, status: $status, termsAccepted: $termsAccepted, photos: $photos, videos: $videos, bookings: $bookings, selectedProductCategory: $selectedProductCategory, selectedProductSubCategory: $selectedProductSubCategory, stats: $stats)';
   }
 
   @override
@@ -750,6 +785,8 @@ class _$ProductImpl implements _Product {
             (identical(other.schedule, schedule) ||
                 other.schedule == schedule) &&
             const DeepCollectionEquality().equals(other.pricing, pricing) &&
+            const DeepCollectionEquality()
+                .equals(other.pricingOptions, pricingOptions) &&
             (identical(other.image, image) || other.image == image) &&
             (identical(other.video, video) || other.video == video) &&
             const DeepCollectionEquality().equals(other.locations, locations) &&
@@ -760,6 +797,8 @@ class _$ProductImpl implements _Product {
             (identical(other.videoCount, videoCount) ||
                 other.videoCount == videoCount) &&
             (identical(other.status, status) || other.status == status) &&
+            (identical(other.termsAccepted, termsAccepted) ||
+                other.termsAccepted == termsAccepted) &&
             const DeepCollectionEquality().equals(other.photos, photos) &&
             const DeepCollectionEquality().equals(other.videos, videos) &&
             const DeepCollectionEquality().equals(other.bookings, bookings) &&
@@ -792,6 +831,7 @@ class _$ProductImpl implements _Product {
         scheduleID,
         schedule,
         const DeepCollectionEquality().hash(pricing),
+        const DeepCollectionEquality().hash(pricingOptions),
         image,
         video,
         const DeepCollectionEquality().hash(locations),
@@ -799,6 +839,7 @@ class _$ProductImpl implements _Product {
         imageCount,
         videoCount,
         status,
+        termsAccepted,
         const DeepCollectionEquality().hash(photos),
         const DeepCollectionEquality().hash(videos),
         const DeepCollectionEquality().hash(bookings),
@@ -840,6 +881,7 @@ abstract class _Product implements Product {
       @JsonKey(name: 'schedule_id') final String? scheduleID,
       @JsonKey(name: 'schedule') final ProductSchedule? schedule,
       final List<ProductPricing?>? pricing,
+      final List<ProductPricingOption?>? pricingOptions,
       final ProductMedia? image,
       final ProductMedia? video,
       final List<ProductLocation>? locations,
@@ -847,6 +889,7 @@ abstract class _Product implements Product {
       @JsonKey(name: 'images_count') final int? imageCount,
       @JsonKey(name: 'videos_count') final int? videoCount,
       @JsonKey(name: 'status') final String? status,
+      final bool? termsAccepted,
       final List<ProductMedia?>? photos,
       final List<ProductMedia?>? videos,
       final List<Booking?>? bookings,
@@ -895,6 +938,8 @@ abstract class _Product implements Product {
   @override
   List<ProductPricing?>? get pricing;
   @override
+  List<ProductPricingOption?>? get pricingOptions;
+  @override
   ProductMedia? get image;
   @override
   ProductMedia? get video;
@@ -911,6 +956,8 @@ abstract class _Product implements Product {
   @override
   @JsonKey(name: 'status')
   String? get status;
+  @override
+  bool? get termsAccepted;
 
   /// Temp values used when creating a product
   @override

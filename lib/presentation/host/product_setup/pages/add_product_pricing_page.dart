@@ -240,9 +240,9 @@ class AddProductPricingPage extends StatelessWidget {
 
                             CustomTextInput(
                               hintText: maxTicketsHint,
-                              labelText: maximumTickets(
+                              labelText: '${maximumTickets(
                                 getTicketDisplayName(vm.selectedPricingTier),
-                              ),
+                              )}*',
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
                               validator: (String? email) =>

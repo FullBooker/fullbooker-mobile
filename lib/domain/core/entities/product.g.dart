@@ -32,6 +32,12 @@ _$ProductImpl _$$ProductImplFromJson(Map<String, dynamic> json) =>
                   : ProductPricing.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const <ProductPricing>[],
+      pricingOptions: (json['pricingOptions'] as List<dynamic>?)
+              ?.map((e) => e == null
+                  ? null
+                  : ProductPricingOption.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const <ProductPricingOption>[],
       image: json['image'] == null
           ? null
           : ProductMedia.fromJson(json['image'] as Map<String, dynamic>),
@@ -46,6 +52,7 @@ _$ProductImpl _$$ProductImplFromJson(Map<String, dynamic> json) =>
       imageCount: (json['images_count'] as num?)?.toInt() ?? 0,
       videoCount: (json['videos_count'] as num?)?.toInt() ?? 0,
       status: json['status'] as String? ?? 'DRAFT',
+      termsAccepted: json['termsAccepted'] as bool? ?? false,
       photos: (json['photos'] as List<dynamic>?)
               ?.map((e) => e == null
                   ? null
@@ -94,6 +101,8 @@ Map<String, dynamic> _$$ProductImplToJson(_$ProductImpl instance) =>
       'schedule_id': instance.scheduleID,
       'schedule': instance.schedule?.toJson(),
       'pricing': instance.pricing?.map((e) => e?.toJson()).toList(),
+      'pricingOptions':
+          instance.pricingOptions?.map((e) => e?.toJson()).toList(),
       'image': instance.image?.toJson(),
       'video': instance.video?.toJson(),
       'locations': instance.locations?.map((e) => e.toJson()).toList(),
@@ -101,6 +110,7 @@ Map<String, dynamic> _$$ProductImplToJson(_$ProductImpl instance) =>
       'images_count': instance.imageCount,
       'videos_count': instance.videoCount,
       'status': instance.status,
+      'termsAccepted': instance.termsAccepted,
       'photos': instance.photos?.map((e) => e?.toJson()).toList(),
       'videos': instance.videos?.map((e) => e?.toJson()).toList(),
       'bookings': instance.bookings?.map((e) => e?.toJson()).toList(),

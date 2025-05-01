@@ -2,6 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:fullbooker/application/redux/states/user_state.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/domain/core/entities/booking.dart';
+import 'package:fullbooker/domain/core/entities/product_pricing_option.dart';
 import 'package:fullbooker/domain/core/entities/product_schedule.dart';
 import 'package:fullbooker/domain/core/entities/product_category.dart';
 import 'package:fullbooker/domain/core/entities/product_media.dart';
@@ -33,6 +34,8 @@ class Product with _$Product {
     @JsonKey(name: 'schedule_id') @Default(UNKNOWN) String? scheduleID,
     @JsonKey(name: 'schedule') ProductSchedule? schedule,
     @Default(<ProductPricing>[]) List<ProductPricing?>? pricing,
+    @Default(<ProductPricingOption>[])
+    List<ProductPricingOption?>? pricingOptions,
     ProductMedia? image,
     ProductMedia? video,
     @Default(<ProductLocation>[]) List<ProductLocation>? locations,
@@ -40,6 +43,7 @@ class Product with _$Product {
     @Default(0) @JsonKey(name: 'images_count') int? imageCount,
     @Default(0) @JsonKey(name: 'videos_count') int? videoCount,
     @Default('DRAFT') @JsonKey(name: 'status') String? status,
+    @Default(false) bool? termsAccepted,
 
     /// Temp values used when creating a product
     @Default(<ProductMedia>[]) List<ProductMedia?>? photos,

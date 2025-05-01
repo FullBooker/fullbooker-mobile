@@ -50,6 +50,7 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: ProductScheduleRoute.page),
         AutoRoute(page: ProductPhotosRoute.page),
         AutoRoute(page: ProductVideosRoute.page),
+        AutoRoute(page: ProductModeOfAccessRoute.page),
         AutoRoute(page: ProductPricingRoute.page),
         AutoRoute(page: AddProductPricingRoute.page),
         AutoRoute(page: ProductReviewAndSubmitRoute.page),

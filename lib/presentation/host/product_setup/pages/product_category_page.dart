@@ -12,8 +12,9 @@ import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:fullbooker/presentation/core/components/generic_zero_state.dart';
-import 'package:fullbooker/presentation/host/product_setup/widgets/product_type_item.dart';
+import 'package:fullbooker/presentation/host/product_setup/widgets/product_category_item.dart';
 import 'package:dartz/dartz.dart' as d;
+import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
@@ -111,7 +112,7 @@ class ProductCategoryPage extends StatelessWidget {
 
                               return Padding(
                                 padding: const EdgeInsets.only(bottom: 12),
-                                child: ProductTypeItem(
+                                child: ProductCategoryItem(
                                   category: current,
                                   isSelected: selected,
                                   onTap: () => context.dispatch(
@@ -130,22 +131,36 @@ class ProductCategoryPage extends StatelessWidget {
                 ],
               ),
             ),
-            Column(
-              spacing: 12,
-              children: <Widget>[
-                PrimaryButton(
-                  onPressed: () =>
-                      context.router.push(ProductSubCategoryRoute()),
-                  child: d.right(continueString),
-                ),
-                SecondaryButton(
-                  onPressed: () {
-                    context.router.maybePop();
-                  },
-                  child: d.right(cancelString),
-                  fillColor: Colors.transparent,
-                ),
-              ],
+            StoreConnector<AppState, ProductSetupViewModel>(
+              converter: (Store<AppState> store) =>
+                  ProductSetupViewModel.fromState(store.state),
+              builder: (BuildContext context, ProductSetupViewModel vm) {
+                final bool isEdit = vm.workflowState == WorkflowState.VIEW;
+
+                return Column(
+                  spacing: 12,
+                  children: <Widget>[
+                    PrimaryButton(
+                      onPressed: () =>
+                          context.router.push(ProductSubCategoryRoute()),
+                      child: d.right(continueString),
+                    ),
+                    SecondaryButton(
+                      onPressed: () {
+                        isEdit
+                            ? context.router.popUntil(
+                                (Route<dynamic> route) =>
+                                    route.settings.name ==
+                                    ProductReviewAndSubmitRoute.name,
+                              )
+                            : context.router.maybePop();
+                      },
+                      child: d.right(isEdit ? backToPreview : cancelString),
+                      fillColor: Colors.transparent,
+                    ),
+                  ],
+                );
+              },
             ),
           ],
         ),
