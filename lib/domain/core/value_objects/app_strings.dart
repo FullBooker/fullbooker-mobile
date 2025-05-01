@@ -548,7 +548,7 @@ const String priceHint = 'Enter an amount';
 
 String maximumTickets(String ticketType) =>
     'Maximum number of $ticketType tickets';
-const String maxTicketsHint = 'Enter a number';
+const String maxTicketsHint = 'Enter max no of tickets';
 
 const String discountLabel = 'Discount(optional)';
 const String discountHint = 'Enter discount';

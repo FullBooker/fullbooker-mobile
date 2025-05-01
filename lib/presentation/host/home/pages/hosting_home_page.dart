@@ -48,9 +48,6 @@ class HostingHomePage extends StatelessWidget {
         onTap: () {
           context.dispatchAll(
             <ReduxAction<AppState>>[
-              CheckAndRefreshTokenAction(
-                client: AppWrapperBase.of(context)!.customClient,
-              ),
               ResetCurrentProductAction(),
               SetWorkflowStateAction(workflowState: WorkflowState.CREATE),
             ],
@@ -126,6 +123,9 @@ class HostingHomePage extends StatelessWidget {
                       HostingHomeViewModel.fromState(store.state),
                   onInit: (Store<AppState> store) {
                     context.dispatchAll(<ReduxAction<AppState>>[
+                      CheckAndRefreshTokenAction(
+                        client: AppWrapperBase.of(context)!.customClient,
+                      ),
                       FetchProductsAction(
                         client: AppWrapperBase.of(context)!.customClient,
                       ),

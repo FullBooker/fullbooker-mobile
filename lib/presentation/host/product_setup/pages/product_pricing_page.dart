@@ -80,19 +80,24 @@ class ProductPricingPage extends StatelessWidget {
                               <String, ProductPricing>{};
 
                           for (final ProductPricing? p
-                              in vm.pricing ?? <ProductPricing?>[]) {
-                            final String? key = p?.ticketTier?.toLowerCase();
-                            if (key != null && p != null) {
-                              pricingMap[key] = p;
+                              in vm.pricing ?? <ProductPricing>[]) {
+                            final String? tierKey =
+                                p?.ticketTier?.toLowerCase();
+                            if (tierKey != null) {
+                              pricingMap[tierKey] = p!;
                             }
                           }
+
+                          String _tierKey(String display) =>
+                              display.toLowerCase().replaceAll(' ', '_');
+
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             spacing: 12,
                             children: <Widget>[
                               if (vm.pricing?.isEmpty ?? true)
                                 Container(
-                                  padding: const EdgeInsets.all(16),
+                                  padding: const EdgeInsets.all(12),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(8),
                                     color: Theme.of(context)
@@ -132,7 +137,8 @@ class ProductPricingPage extends StatelessWidget {
                                     context.router
                                         .push(AddProductPricingRoute());
                                   },
-                                  pricing: pricingMap[tier.toLowerCase()],
+                                  pricing: pricingMap[_tierKey(tier)],
+                                  tierDisplay: tier,
                                 ),
                             ],
                           );
