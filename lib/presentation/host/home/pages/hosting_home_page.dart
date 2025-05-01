@@ -176,7 +176,7 @@ class HostingHomePage extends StatelessWidget {
 
                               return Padding(
                                 padding:
-                                    const EdgeInsets.symmetric(vertical: 12),
+                                    const EdgeInsets.symmetric(vertical: 8),
                                 child: ProductCard(product: product!),
                               );
                             },
