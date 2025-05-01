@@ -26,11 +26,14 @@ import 'package:fullbooker/presentation/host/product_setup/widgets/preview_heade
 import 'package:fullbooker/presentation/host/product_setup/widgets/pricing_card_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/product_category_item.dart';
 import 'package:fullbooker/presentation/host/products/widgets/min_zero_state.dart';
+import 'package:fullbooker/presentation/host/products/widgets/product_alert_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_schedule_widget.dart';
+import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
+import 'package:heroicons/heroicons.dart';
 
 @RoutePage()
 class ProductReviewAndSubmitPage extends StatelessWidget {
@@ -82,6 +85,9 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                     final bool isLocationAvailable =
                         product?.locations?.isNotEmpty ?? false;
 
+                    final ProductStatus productStatus =
+                        getProductStatus(product!);
+
                     return ListView(
                       children: <Widget>[
                         Column(
@@ -103,6 +109,13 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                                 ),
                               ],
                             ),
+                            if (productStatus == ProductStatus.review)
+                              ProductAlertWidget(
+                                title: productInReview,
+                                description: productInReviewCopy,
+                                iconData: HeroIcons.clipboardDocumentList,
+                              ),
+
                             Divider(),
 
                             // Category and type
@@ -115,8 +128,8 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
 
                             ProductCategoryItem(
                               category: ProductCategory.initial().copyWith(
-                                name: product?.categoryName,
-                                description: product?.subcategoryName,
+                                name: product.categoryName,
+                                description: product.subcategoryName,
                               ),
                             ),
 
@@ -143,7 +156,7 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                                     name.isNotEmpty &&
                                     name != UNKNOWN)
                                   Text(
-                                    product?.name ?? UNKNOWN,
+                                    product.name ?? UNKNOWN,
                                     style:
                                         Theme.of(context).textTheme.titleSmall,
                                   ),
@@ -169,7 +182,7 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
 
                             if (isLocationAvailable)
                               LocationPreviewWidget(
-                                location: product?.locations?.first,
+                                location: product.locations?.first,
                                 readOnly: true,
                               )
                             else
@@ -183,7 +196,7 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                                 context.router.push(ProductScheduleRoute());
                               },
                             ),
-                            if ((product?.scheduleID ?? UNKNOWN) != UNKNOWN)
+                            if ((product.scheduleID ?? UNKNOWN) != UNKNOWN)
                               ProductScheduleWidget(),
                             Divider(),
 
@@ -231,16 +244,16 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                               },
                             ),
 
-                            if (product?.pricing?.isEmpty ?? true)
+                            if (product.pricing?.isEmpty ?? true)
                               MinZeroState(copy: noPricingOptionsString)
                             else
                               ListView.builder(
                                 shrinkWrap: true,
                                 physics: NeverScrollableScrollPhysics(),
-                                itemCount: product?.pricing?.length,
+                                itemCount: product.pricing?.length,
                                 itemBuilder: (BuildContext context, int index) {
                                   final ProductPricing? current =
-                                      product?.pricing![index];
+                                      product.pricing![index];
 
                                   return Container(
                                     margin: EdgeInsets.only(bottom: 12),
@@ -330,6 +343,10 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                     return AppLoading();
                   }
                   final Product? product = vm.product;
+
+                  final ProductStatus status = getProductStatus(product!);
+
+                  if (status != ProductStatus.draft) return SizedBox.shrink();
 
                   return Column(
                     spacing: 12,
