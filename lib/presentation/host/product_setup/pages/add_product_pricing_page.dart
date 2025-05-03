@@ -26,13 +26,18 @@ import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
 
 @RoutePage()
-class AddProductPricingPage extends StatelessWidget {
+class AddProductPricingPage extends StatefulWidget {
   const AddProductPricingPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  State<AddProductPricingPage> createState() => _AddProductPricingPageState();
+}
 
+class _AddProductPricingPageState extends State<AddProductPricingPage> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
         showBell: false,
