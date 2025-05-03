@@ -22,28 +22,33 @@ import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
 
 @RoutePage()
-class ProductBasicDetailsPage extends StatelessWidget {
-  ProductBasicDetailsPage({super.key});
+class ProductBasicDetailsPage extends StatefulWidget {
+  const ProductBasicDetailsPage({super.key});
 
+  @override
+  State<ProductBasicDetailsPage> createState() =>
+      _ProductBasicDetailsPageState();
+}
+
+class _ProductBasicDetailsPageState extends State<ProductBasicDetailsPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    descriptionController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController nameController = TextEditingController();
-    final TextEditingController descriptionController = TextEditingController();
-
     return Scaffold(
-      appBar: CustomAppBar(
-        showBell: false,
-        title: setupEvent,
-      ),
+      appBar: CustomAppBar(showBell: false, title: setupEvent),
       body: StoreConnector<AppState, ProductSetupViewModel>(
         converter: (Store<AppState> store) =>
             ProductSetupViewModel.fromState(store.state),
-        onDispose: (Store<AppState> store) {
-          nameController.dispose();
-          descriptionController.dispose();
-        },
         builder: (BuildContext context, ProductSetupViewModel vm) {
           if (vm.workflowState == WorkflowState.VIEW) {
             nameController.text = vm.name;
@@ -82,12 +87,7 @@ class ProductBasicDetailsPage extends StatelessWidget {
                           controller: nameController,
                           labelText: '$nameString*',
                           autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (String? value) => validateProductName(
-                            value,
-                          ),
-                          onChanged: (String value) {
-                            context.dispatch(UpdateProductAction(name: value));
-                          },
+                          validator: validateProductName,
                           keyboardType: TextInputType.name,
                         ),
                         CustomTextInput(
@@ -95,12 +95,7 @@ class ProductBasicDetailsPage extends StatelessWidget {
                           labelText: productDescription,
                           controller: descriptionController,
                           autovalidateMode: AutovalidateMode.onUserInteraction,
-                          onChanged: (String value) {
-                            context.dispatch(
-                              UpdateProductAction(description: value),
-                            );
-                          },
-                          maxLines: 3,
+                          maxLines: 4,
                           keyboardType: TextInputType.name,
                         ),
                       ],
@@ -134,6 +129,12 @@ class ProductBasicDetailsPage extends StatelessWidget {
                             onPressed: () {
                               if (_formKey.currentState?.validate() ?? false) {
                                 if (isCreate) {
+                                  context.dispatch(
+                                    UpdateProductAction(
+                                      name: nameController.text,
+                                      description: descriptionController.text,
+                                    ),
+                                  );
                                   context.dispatch(
                                     CreateProductBasicDetailsAction(
                                       client: AppWrapperBase.of(context)!

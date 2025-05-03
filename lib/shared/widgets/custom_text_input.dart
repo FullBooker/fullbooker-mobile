@@ -7,7 +7,7 @@ import 'package:heroicons/heroicons.dart';
 class CustomTextInput extends StatelessWidget {
   const CustomTextInput({
     Key? inputKey,
-    required this.onChanged,
+    this.onChanged,
     this.iconData,
     this.hintText,
     this.obscureText = false,
@@ -43,7 +43,7 @@ class CustomTextInput extends StatelessWidget {
   final String? labelText;
   final int? maxLines;
   final bool obscureText;
-  final FormFieldCallback onChanged;
+  final FormFieldCallback? onChanged;
   final HeroIcons? prefixIconData;
   final HeroIcons? suffixIconData;
   final bool prefixIconActive;
