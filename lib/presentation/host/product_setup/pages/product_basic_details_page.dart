@@ -61,11 +61,6 @@ class _ProductBasicDetailsPageState extends State<ProductBasicDetailsPage> {
 
             final bool isCreate = vm.workflowState == WorkflowState.CREATE;
 
-            if (!isCreate) {
-              nameController.text = vm.name;
-              descriptionController.text = vm.description;
-            }
-
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Row(

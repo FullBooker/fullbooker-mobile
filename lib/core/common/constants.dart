@@ -46,7 +46,7 @@ const List<String> allowedPhoneNumberCountries = <String>[
   'AE',
 ];
 
-const LatLng kDefaultLocation = LatLng(-1.228003, 36.900032);
+const LatLng kDefaultLocation = LatLng(-1.2849541, 36.8212995);
 
 const String kDefaultCurrencyCode = 'KES';
 
@@ -115,3 +115,6 @@ const String kPlatformTermsURL =
     'https://fullbooker.com/terms-of-service?hide_bottom_nav=true';
 
 int kRefreshTokenTimerInterval = 4;
+
+const String kStartOfDayTime = '00:01:00';
+const String kEndOfDayTime = '23:50:00';

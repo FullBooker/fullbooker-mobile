@@ -5,6 +5,7 @@ import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
 import 'package:fullbooker/application/redux/actions/fetch_product_schedule_action.dart';
 import 'package:fullbooker/application/redux/actions/set_product_schedule_action.dart';
 import 'package:fullbooker/application/redux/actions/update_current_schedule_action.dart';
+import 'package:fullbooker/application/redux/actions/update_product_schedule_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_setup_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
@@ -51,9 +52,7 @@ class ProductSchedulePage extends StatelessWidget {
             ]);
           },
           builder: (BuildContext context, ProductSetupViewModel vm) {
-            if (context.isWaiting(<Type>[
-              FetchProductScheduleAction,
-            ])) {
+            if (context.isWaiting(<Type>[FetchProductScheduleAction])) {
               return AppLoading();
             }
 
@@ -502,7 +501,10 @@ class ProductSchedulePage extends StatelessWidget {
                   converter: (Store<AppState> store) =>
                       ProductSetupViewModel.fromState(store.state),
                   builder: (BuildContext context, ProductSetupViewModel vm) {
-                    if (context.isWaiting(SetProductScheduleAction)) {
+                    if (context.isWaiting(<Type>[
+                      SetProductScheduleAction,
+                      UpdateProductScheduleAction,
+                    ])) {
                       return AppLoading();
                     }
 
@@ -513,19 +515,43 @@ class ProductSchedulePage extends StatelessWidget {
                       spacing: 12,
                       children: <Widget>[
                         PrimaryButton(
-                          onPressed: () => context.dispatch(
-                            SetProductScheduleAction(
-                              onSuccess: () {
-                                context.router.push(ProductPhotosRoute());
-                              },
-                              onError: (String error) => showAlertDialog(
-                                context: context,
-                                assetPath: productZeroStateSVGPath,
-                                description: error,
-                              ),
-                              client: AppWrapperBase.of(context)!.customClient,
-                            ),
-                          ),
+                          onPressed: () {
+                            if (isEditing) {
+                              context.dispatch(
+                                UpdateProductScheduleAction(
+                                  onSuccess: () {
+                                    context.router.popUntil(
+                                      (Route<dynamic> route) =>
+                                          route.settings.name ==
+                                          ProductReviewAndSubmitRoute.name,
+                                    );
+                                  },
+                                  onError: (String error) => showAlertDialog(
+                                    context: context,
+                                    assetPath: productZeroStateSVGPath,
+                                    description: error,
+                                  ),
+                                  client:
+                                      AppWrapperBase.of(context)!.customClient,
+                                ),
+                              );
+                            } else {
+                              context.dispatch(
+                                SetProductScheduleAction(
+                                  onSuccess: () {
+                                    context.router.push(ProductPhotosRoute());
+                                  },
+                                  onError: (String error) => showAlertDialog(
+                                    context: context,
+                                    assetPath: productZeroStateSVGPath,
+                                    description: error,
+                                  ),
+                                  client:
+                                      AppWrapperBase.of(context)!.customClient,
+                                ),
+                              );
+                            }
+                          },
                           child: d.right(continueString),
                         ),
                         SecondaryButton(
