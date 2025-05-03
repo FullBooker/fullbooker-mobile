@@ -120,6 +120,8 @@ class ProductCategoryPage extends StatelessWidget {
                                   onTap: () => context.dispatch(
                                     UpdateProductAction(
                                       selectedCategory: current,
+                                      selectedSubCategory:
+                                          ProductCategory.initial(),
                                     ),
                                   ),
                                 ),

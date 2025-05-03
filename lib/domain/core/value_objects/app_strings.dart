@@ -259,7 +259,9 @@ const String maxTicketsPerSession = 'Maximum number of tickets per session';
 const String maxTicketsPerDayPass = 'Maximum number of tickets per day pass';
 const String submitString = 'Submit for Review';
 
-const String selectCategoryPrompt = 'Please select a category for your event';
+const String selectCategoryPrompt = 'Please select a category for your product';
+const String selectSubCategoryPrompt =
+    'Please select a subcategory for your product';
 
 const String tellUsAboutProduct = 'Tell us about your product';
 const String pickOneThatApplies =
