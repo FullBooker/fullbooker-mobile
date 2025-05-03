@@ -44,156 +44,171 @@ class _ProductBasicDetailsPageState extends State<ProductBasicDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(showBell: false, title: setupEvent),
-      body: StoreConnector<AppState, ProductSetupViewModel>(
-        converter: (Store<AppState> store) =>
-            ProductSetupViewModel.fromState(store.state),
-        builder: (BuildContext context, ProductSetupViewModel vm) {
-          if (vm.workflowState == WorkflowState.VIEW) {
-            nameController.text = vm.name;
-            descriptionController.text = vm.description;
-          }
+    return SafeArea(
+      child: Scaffold(
+        appBar: CustomAppBar(showBell: false, title: setupEvent),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: StoreConnector<AppState, ProductSetupViewModel>(
+          converter: (Store<AppState> store) =>
+              ProductSetupViewModel.fromState(store.state),
+          builder: (BuildContext context, ProductSetupViewModel vm) {
+            if (context.isWaiting(<Type>[
+              CreateProductBasicDetailsAction,
+              UpdateProductBasicDetailsAction,
+            ])) {
+              return AppLoading();
+            }
 
-          return Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                spacing: 12,
-                crossAxisAlignment: CrossAxisAlignment.start,
+            final bool isCreate = vm.workflowState == WorkflowState.CREATE;
+
+            if (!isCreate) {
+              nameController.text = vm.name;
+              descriptionController.text = vm.description;
+            }
+
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                spacing: 16,
                 children: <Widget>[
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      spacing: 12,
-                      children: <Widget>[
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          spacing: 8,
-                          children: <Widget>[
-                            Text(
-                              productBasicDetails,
-                              style: Theme.of(context).textTheme.headlineSmall,
-                            ),
-                            Text(
-                              productBasicDetailsCopy,
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                          ],
-                        ),
-                        CustomTextInput(
-                          hintText: nameYourProduct,
-                          controller: nameController,
-                          labelText: '$nameString*',
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: validateProductName,
-                          keyboardType: TextInputType.name,
-                        ),
-                        CustomTextInput(
-                          hintText: productDescriptionCopy,
-                          labelText: productDescription,
-                          controller: descriptionController,
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          maxLines: 4,
-                          keyboardType: TextInputType.name,
-                        ),
-                      ],
+                  Flexible(
+                    child: SecondaryButton(
+                      addBorder: true,
+                      onPressed: () {
+                        isCreate
+                            ? context.router.maybePop()
+                            : context.router.popUntil(
+                                (Route<dynamic> route) =>
+                                    route.settings.name ==
+                                    ProductReviewAndSubmitRoute.name,
+                              );
+                      },
+                      child: d.right(
+                        isCreate ? previousString : backToPreview,
+                      ),
+                      fillColor: Colors.transparent,
                     ),
                   ),
-                  StoreConnector<AppState, ProductSetupViewModel>(
-                    converter: (Store<AppState> store) =>
-                        ProductSetupViewModel.fromState(store.state),
-                    onInit: (Store<AppState> store) {
-                      context.dispatch(
-                        FetchSingleProductAction(
-                          client: AppWrapperBase.of(context)!.customClient,
-                        ),
-                      );
-                    },
-                    builder: (BuildContext context, ProductSetupViewModel vm) {
-                      if (context.isWaiting(<Type>[
-                        CreateProductBasicDetailsAction,
-                        UpdateProductBasicDetailsAction,
-                      ])) {
-                        return AppLoading();
-                      }
-
-                      final bool isCreate =
-                          vm.workflowState == WorkflowState.CREATE;
-
-                      return Column(
-                        spacing: 12,
-                        children: <Widget>[
-                          PrimaryButton(
-                            onPressed: () {
-                              if (_formKey.currentState?.validate() ?? false) {
-                                if (isCreate) {
-                                  context.dispatch(
-                                    UpdateProductAction(
-                                      name: nameController.text,
-                                      description: descriptionController.text,
-                                    ),
-                                  );
-                                  context.dispatch(
-                                    CreateProductBasicDetailsAction(
-                                      client: AppWrapperBase.of(context)!
-                                          .customClient,
-                                      onSuccess: () => context.router.push(
-                                        ProductLocationRoute(),
-                                      ),
-                                      onError: (String error) =>
-                                          showAlertDialog(
-                                        context: context,
-                                        assetPath: productZeroStateSVGPath,
-                                        description: error,
-                                      ),
-                                    ),
-                                  );
-                                } else {
-                                  context.dispatch(
-                                    UpdateProductBasicDetailsAction(
-                                      client: AppWrapperBase.of(context)!
-                                          .customClient,
-                                      onSuccess: () =>
-                                          context.router.maybePop(),
-                                      onError: (String error) =>
-                                          showAlertDialog(
-                                        context: context,
-                                        assetPath: productZeroStateSVGPath,
-                                        description: error,
-                                      ),
-                                    ),
-                                  );
-                                }
-                              }
-                            },
-                            child: d.right(continueString),
-                          ),
-                          SecondaryButton(
-                            onPressed: () {
-                              isCreate
-                                  ? context.router.maybePop()
-                                  : context.router.popUntil(
-                                      (Route<dynamic> route) =>
-                                          route.settings.name ==
-                                          ProductReviewAndSubmitRoute.name,
-                                    );
-                            },
-                            child: d.right(
-                              isCreate ? previousString : backToPreview,
-                            ),
-                            fillColor: Colors.transparent,
-                          ),
-                        ],
-                      );
-                    },
+                  Flexible(
+                    child: PrimaryButton(
+                      onPressed: () {
+                        if (_formKey.currentState?.validate() ?? false) {
+                          if (isCreate) {
+                            context.dispatch(
+                              UpdateProductAction(
+                                name: nameController.text,
+                                description: descriptionController.text,
+                              ),
+                            );
+                            context.dispatch(
+                              CreateProductBasicDetailsAction(
+                                client:
+                                    AppWrapperBase.of(context)!.customClient,
+                                onSuccess: () => context.router.push(
+                                  ProductLocationRoute(),
+                                ),
+                                onError: (String error) => showAlertDialog(
+                                  context: context,
+                                  assetPath: productZeroStateSVGPath,
+                                  description: error,
+                                ),
+                              ),
+                            );
+                          } else {
+                            context.dispatch(
+                              UpdateProductBasicDetailsAction(
+                                client:
+                                    AppWrapperBase.of(context)!.customClient,
+                                onSuccess: () => context.router.maybePop(),
+                                onError: (String error) => showAlertDialog(
+                                  context: context,
+                                  assetPath: productZeroStateSVGPath,
+                                  description: error,
+                                ),
+                              ),
+                            );
+                          }
+                        }
+                      },
+                      child: d.right(continueString),
+                    ),
                   ),
                 ],
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
+        body: StoreConnector<AppState, ProductSetupViewModel>(
+          converter: (Store<AppState> store) =>
+              ProductSetupViewModel.fromState(store.state),
+          onInit: (Store<AppState> store) {
+            context.dispatch(
+              FetchSingleProductAction(
+                client: AppWrapperBase.of(context)!.customClient,
+              ),
+            );
+          },
+          builder: (BuildContext context, ProductSetupViewModel vm) {
+            if (vm.workflowState == WorkflowState.VIEW) {
+              nameController.text = vm.name;
+              descriptionController.text = vm.description;
+            }
+
+            return Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  spacing: 12,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        spacing: 12,
+                        children: <Widget>[
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            spacing: 8,
+                            children: <Widget>[
+                              Text(
+                                productBasicDetails,
+                                style:
+                                    Theme.of(context).textTheme.headlineSmall,
+                              ),
+                              Text(
+                                productBasicDetailsCopy,
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              ),
+                            ],
+                          ),
+                          CustomTextInput(
+                            hintText: nameYourProduct,
+                            controller: nameController,
+                            labelText: '$nameString*',
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            validator: validateProductName,
+                            keyboardType: TextInputType.name,
+                          ),
+                          CustomTextInput(
+                            hintText: productDescriptionCopy,
+                            labelText: productDescription,
+                            controller: descriptionController,
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            maxLines: 4,
+                            keyboardType: TextInputType.name,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
       ),
     );
   }

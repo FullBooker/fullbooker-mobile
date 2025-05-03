@@ -926,37 +926,18 @@ class PaymentSummaryRouteArgs {
 
 /// generated route for
 /// [_i24.ProductBasicDetailsPage]
-class ProductBasicDetailsRoute
-    extends _i47.PageRouteInfo<ProductBasicDetailsRouteArgs> {
-  ProductBasicDetailsRoute({_i48.Key? key, List<_i47.PageRouteInfo>? children})
-    : super(
-        ProductBasicDetailsRoute.name,
-        args: ProductBasicDetailsRouteArgs(key: key),
-        initialChildren: children,
-      );
+class ProductBasicDetailsRoute extends _i47.PageRouteInfo<void> {
+  const ProductBasicDetailsRoute({List<_i47.PageRouteInfo>? children})
+    : super(ProductBasicDetailsRoute.name, initialChildren: children);
 
   static const String name = 'ProductBasicDetailsRoute';
 
   static _i47.PageInfo page = _i47.PageInfo(
     name,
     builder: (data) {
-      final args = data.argsAs<ProductBasicDetailsRouteArgs>(
-        orElse: () => const ProductBasicDetailsRouteArgs(),
-      );
-      return _i24.ProductBasicDetailsPage(key: args.key);
+      return const _i24.ProductBasicDetailsPage();
     },
   );
-}
-
-class ProductBasicDetailsRouteArgs {
-  const ProductBasicDetailsRouteArgs({this.key});
-
-  final _i48.Key? key;
-
-  @override
-  String toString() {
-    return 'ProductBasicDetailsRouteArgs{key: $key}';
-  }
 }
 
 /// generated route for

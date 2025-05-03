@@ -52,7 +52,7 @@ class PrimaryButton extends StatelessWidget {
           id,
           (String text) => Text(
             text,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: textColor ?? Colors.white,
                   fontWeight: FontWeight.bold,
                 ),

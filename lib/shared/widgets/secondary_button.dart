@@ -14,6 +14,7 @@ class SecondaryButton extends StatelessWidget {
     this.textColor,
     this.fillColor,
     this.customWidth,
+    this.addBorder = false,
   });
 
   final void Function()? onPressed;
@@ -23,6 +24,7 @@ class SecondaryButton extends StatelessWidget {
   final double? customWidth;
   final Color? fillColor;
   final Color? textColor;
+  final bool addBorder;
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +33,9 @@ class SecondaryButton extends StatelessWidget {
       width: customWidth ?? double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
+        border: addBorder
+            ? Border.all(color: Theme.of(context).primaryColor)
+            : null,
         color:
             fillColor ?? Theme.of(context).primaryColor.withValues(alpha: 0.1),
       ),
@@ -46,7 +51,7 @@ class SecondaryButton extends StatelessWidget {
             (String text) => Center(
               child: Text(
                 text,
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: textColor ?? Theme.of(context).primaryColor,
                       fontWeight: FontWeight.bold,
                     ),

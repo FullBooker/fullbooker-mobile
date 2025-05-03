@@ -19,6 +19,6 @@ class AppColors {
   static const Color redColor = Color(0xFFFF0000);
 
   static const Color amberColor = Color(0xFFCC9900);
-  
+
   static const Color productBadgeBackgroundColor = Color(0xFF2D2D2D);
 }
