@@ -43,6 +43,10 @@ class HostState with _$HostState {
     // Modes of access
     @Default(<PricingOption>[]) List<PricingOption?>? pricingOptions,
     @Default(<String>[]) List<String?>? selectedPricingOptionIds,
+
+    // Search
+    @Default(false) bool? isSearching,
+    @Default(UNKNOWN) String? searchParam,
   }) = _HostState;
 
   factory HostState.initial() => HostState(
