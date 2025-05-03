@@ -718,3 +718,14 @@ const String backString = 'Back';
 
 const String acceptTermsToContinue =
     'Please accept terms and conditions to proceed';
+
+const String searchProducts = 'Search Products...';
+
+String showingResults(String searchParam) =>
+    'Showing results for “$searchParam”';
+
+const String noProductsFound = 'No Products Found';
+const String noProductsFoundCopy =
+    'We couldn\'t find any products matching your search. Please try adjusting your search terms to explore more options';
+
+const String browseAllProducts = 'Browse All Products';

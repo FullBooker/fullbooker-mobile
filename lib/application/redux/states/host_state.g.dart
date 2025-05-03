@@ -67,6 +67,8 @@ _$HostStateImpl _$$HostStateImplFromJson(Map<String, dynamic> json) =>
                   ?.map((e) => e as String?)
                   .toList() ??
               const <String>[],
+      isSearching: json['isSearching'] as bool? ?? false,
+      searchParam: json['searchParam'] as String? ?? UNKNOWN,
     );
 
 Map<String, dynamic> _$$HostStateImplToJson(_$HostStateImpl instance) =>
@@ -89,6 +91,8 @@ Map<String, dynamic> _$$HostStateImplToJson(_$HostStateImpl instance) =>
       'pricingOptions':
           instance.pricingOptions?.map((e) => e?.toJson()).toList(),
       'selectedPricingOptionIds': instance.selectedPricingOptionIds,
+      'isSearching': instance.isSearching,
+      'searchParam': instance.searchParam,
     };
 
 const _$WorkflowStateEnumMap = {

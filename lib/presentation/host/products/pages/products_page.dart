@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +7,7 @@ import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
 import 'package:fullbooker/application/redux/actions/fetch_products_action.dart';
 import 'package:fullbooker/application/redux/actions/reset_current_product_action.dart';
 import 'package:fullbooker/application/redux/actions/set_workflow_state_action.dart';
+import 'package:fullbooker/application/redux/actions/update_product_search_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/products_page_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
@@ -14,6 +17,7 @@ import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:fullbooker/presentation/core/components/generic_zero_state.dart';
 import 'package:fullbooker/presentation/core/components/product_card.dart';
+import 'package:fullbooker/presentation/host/products/widgets/search_products_input.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
@@ -69,6 +73,7 @@ class ProductsPage extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 12),
             child: Column(
               children: <Widget>[
+                SearchProductsInput(),
                 StoreConnector<AppState, ProductsPageViewModel>(
                   converter: (Store<AppState> store) =>
                       ProductsPageViewModel.fromState(store.state),
@@ -81,20 +86,46 @@ class ProductsPage extends StatelessWidget {
                   },
                   builder: (BuildContext context, ProductsPageViewModel vm) {
                     if (context.isWaiting(FetchProductsAction)) {
-                      return AppLoading();
+                      return Padding(
+                        padding: const EdgeInsets.all(24.0),
+                        child: AppLoading(),
+                      );
                     }
 
                     final List<Product?>? products = vm.products;
 
                     if (products?.isEmpty ?? true) {
-                      return GenericZeroState(
-                        iconPath: productZeroStateSVGPath,
-                        title: noProducts,
-                        description: noProductsCopy,
-                        onCTATap: () {
-                          context.router.push(ProductCategoryRoute());
-                        },
-                        ctaText: createProductString,
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 24),
+                        child: GenericZeroState(
+                          iconPath: vm.isSearching
+                              ? setupZeroStateSVGPath
+                              : productZeroStateSVGPath,
+                          title: vm.isSearching ? noProductsFound : noProducts,
+                          description: vm.isSearching
+                              ? noProductsFoundCopy
+                              : noProductsCopy,
+                          onCTATap: () {
+                            if (vm.isSearching) {
+                              context.dispatch(
+                                UpdateProductSearchAction(
+                                  isSearching: false,
+                                ),
+                              );
+                              context.dispatch(
+                                FetchProductsAction(
+                                  client:
+                                      AppWrapperBase.of(context)!.customClient,
+                                ),
+                              );
+                            } else {
+                              context.router.push(ProductCategoryRoute());
+                            }
+                          },
+                          ctaText: vm.isSearching
+                              ? browseAllProducts
+                              : createProductString,
+                        ),
                       );
                     }
 
