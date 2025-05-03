@@ -11,6 +11,7 @@ import 'package:fullbooker/application/redux/actions/update_product_search_actio
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/products_page_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
+import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
@@ -79,6 +80,12 @@ class ProductsPage extends StatelessWidget {
                       ProductsPageViewModel.fromState(store.state),
                   onInit: (Store<AppState> store) {
                     context.dispatch(
+                      UpdateProductSearchAction(
+                        isSearching: false,
+                        searchParam: UNKNOWN,
+                      ),
+                    );
+                    context.dispatch(
                       FetchProductsAction(
                         client: AppWrapperBase.of(context)!.customClient,
                       ),
@@ -110,6 +117,7 @@ class ProductsPage extends StatelessWidget {
                               context.dispatch(
                                 UpdateProductSearchAction(
                                   isSearching: false,
+                                  searchParam: UNKNOWN,
                                 ),
                               );
                               context.dispatch(

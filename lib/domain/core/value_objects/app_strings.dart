@@ -721,8 +721,7 @@ const String acceptTermsToContinue =
 
 const String searchProducts = 'Search Products...';
 
-String showingResults(String searchParam) =>
-    'Showing results for “$searchParam”';
+String showingResults = 'Showing results for ';
 
 const String noProductsFound = 'No Products Found';
 const String noProductsFoundCopy =

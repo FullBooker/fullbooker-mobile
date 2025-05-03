@@ -7,6 +7,7 @@ import 'package:fullbooker/application/redux/actions/fetch_products_action.dart'
 import 'package:fullbooker/application/redux/actions/update_product_search_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/products_page_view_model.dart';
+import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/widgets/custom_text_input.dart';
 import 'package:heroicons/heroicons.dart';
@@ -90,6 +91,7 @@ class _SearchProductsInputState extends State<SearchProductsInput> {
                 context.dispatch(
                   UpdateProductSearchAction(
                     isSearching: false,
+                    searchParam: UNKNOWN,
                   ),
                 );
                 context.dispatch(
@@ -103,9 +105,17 @@ class _SearchProductsInputState extends State<SearchProductsInput> {
               },
             ),
             if (vm.isSearching)
-              Text(
-                showingResults(vm.searchParam),
-                style: Theme.of(context).textTheme.bodyMedium,
+              RichText(
+                text: TextSpan(
+                  style: Theme.of(context).textTheme.bodyMedium,
+                  children: <InlineSpan>[
+                    TextSpan(text: showingResults),
+                    TextSpan(
+                      text: vm.searchParam,
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
+                  ],
+                ),
               ),
           ],
         );
