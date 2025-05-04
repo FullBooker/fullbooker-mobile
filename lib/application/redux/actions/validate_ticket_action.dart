@@ -26,7 +26,7 @@ class ValidateTicketAction extends ReduxAction<AppState> {
   Future<AppState?> reduce() async {
     final String ticketID = state.hostState?.currentScannedTicketID ?? UNKNOWN;
     final String endpoint =
-        '${GetIt.I.get<AppConfig>().validateTicketsEndpoint}/$ticketID';
+        '${GetIt.I.get<AppConfig>().validateTicketsEndpoint}/$ticketID/';
 
     final Response httpResponse = await client.callRESTAPI(
       endpoint: endpoint,

@@ -2,17 +2,16 @@ import 'dart:convert';
 
 import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/core/services/i_custom_client.dart';
-import 'package:fullbooker/application/redux/actions/update_user_state_action.dart';
+import 'package:fullbooker/application/redux/actions/fetch_profile_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
-import 'package:fullbooker/application/redux/states/user_state.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
 
-class FetchProfileAction extends ReduxAction<AppState> {
-  FetchProfileAction({
+class CheckAndCreateHostAccountAction extends ReduxAction<AppState> {
+  CheckAndCreateHostAccountAction({
     this.onSuccess,
     this.onError,
     required this.client,
@@ -24,9 +23,15 @@ class FetchProfileAction extends ReduxAction<AppState> {
 
   @override
   Future<AppState?> reduce() async {
+    final bool isHost = state.userState?.isHost ?? false;
+
+    if (isHost) return null;
+
+    final String endpoint = GetIt.I.get<AppConfig>().hostsEndpoint;
+
     final Response httpResponse = await client.callRESTAPI(
-      endpoint: '${GetIt.I.get<AppConfig>().getProfileEndpoint}/',
-      method: APIMethods.GET.name.toUpperCase(),
+      endpoint: endpoint,
+      method: APIMethods.POST.name.toUpperCase(),
     );
 
     final Map<String, dynamic> body =
@@ -40,11 +45,7 @@ class FetchProfileAction extends ReduxAction<AppState> {
       return null;
     }
 
-    final UserState user = UserState.fromJson(body);
-
-    dispatch(UpdateUserStateAction(user: user));
-
-    onSuccess?.call();
+    dispatch(FetchProfileAction(client: client));
 
     return state;
   }

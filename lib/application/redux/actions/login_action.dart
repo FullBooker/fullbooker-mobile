@@ -84,6 +84,6 @@ class LoginAction extends ReduxAction<AppState> {
 
     onSuccess?.call();
 
-    return state;
+    return null;
   }
 }

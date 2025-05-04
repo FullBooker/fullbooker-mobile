@@ -90,7 +90,7 @@ class SignInWithGoogleAction extends ReduxAction<AppState> {
 
       onSuccess?.call();
 
-      return state;
+      return null;
     } catch (e) {
       onError?.call(signInFailed);
     }

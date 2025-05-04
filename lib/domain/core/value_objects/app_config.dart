@@ -31,6 +31,7 @@ class AppConfig {
     required this.pricingOptionsEndpoint,
     required this.productPricingOptionsEndpoint,
     required this.productTransitionEndpoint,
+    required this.hostsEndpoint,
   });
 
   /// The context the app is running in
@@ -72,6 +73,7 @@ class AppConfig {
   final String pricingOptionsEndpoint;
   final String productPricingOptionsEndpoint;
   final String productTransitionEndpoint;
+  final String hostsEndpoint;
 
   /// Profile endpoints
   final String getProfileEndpoint;
@@ -105,6 +107,7 @@ final AppConfig devAppConfig = AppConfig(
   pricingOptionsEndpoint: kDevPricingOptionsEndpoint,
   productPricingOptionsEndpoint: kDevProductPricingOptionsEndpoint,
   productTransitionEndpoint: kDevProductTransitionEndpoint,
+  hostsEndpoint: kDevHostsEndpoint,
 );
 
 final AppConfig prodAppConfig = AppConfig(
@@ -135,6 +138,7 @@ final AppConfig prodAppConfig = AppConfig(
   pricingOptionsEndpoint: kProdPricingOptionsEndpoint,
   productPricingOptionsEndpoint: kProdProductPricingOptionsEndpoint,
   productTransitionEndpoint: kProdProductTransitionEndpoint,
+  hostsEndpoint: kProdHostsEndpoint,
 );
 
 final AppConfig testAppConfig = AppConfig(
@@ -165,4 +169,5 @@ final AppConfig testAppConfig = AppConfig(
   pricingOptionsEndpoint: kTestPricingOptionsEndpoint,
   productPricingOptionsEndpoint: kTestProductPricingOptionsEndpoint,
   productTransitionEndpoint: kTestProductTransitionEndpoint,
+  hostsEndpoint: kProdHostsEndpoint,
 );

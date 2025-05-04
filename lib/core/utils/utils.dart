@@ -491,13 +491,13 @@ bool hasValidLocation(ProductLocation? location) {
 
 String getTicketIconPath(String tier) {
   switch (tier.toLowerCase()) {
-    case earlyBirdTier:
+    case kEarlyBirdTier:
       return earlyBirdTicketIconSVGPath;
-    case standardTier:
+    case kStandardTier:
       return standardTicketIconSVGPath;
-    case vipTier:
+    case kVIPTier:
       return vipTicketIconSVGPath;
-    case vvipTier:
+    case kVVIPTier:
       return vvipTicketIconSVGPath;
     default:
       return standardTicketIconSVGPath;
@@ -506,13 +506,13 @@ String getTicketIconPath(String tier) {
 
 String getTicketDisplayName(String tier) {
   switch (tier.toLowerCase()) {
-    case earlyBirdTier:
+    case kEarlyBirdTier:
       return 'Early Bird';
-    case standardTier:
+    case kStandardTier:
       return 'Standard';
-    case vipTier:
+    case kVIPTier:
       return 'VIP';
-    case vvipTier:
+    case kVVIPTier:
       return 'VVIP';
     default:
       return 'Standard';

@@ -25,7 +25,7 @@ class RepeatsWeeklyWidget extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 12,
-          children: weekdays.map((String dayLabel) {
+          children: kDaysOfTheWeek.map((String dayLabel) {
             final String dayKey = dayLabel.toLowerCase();
             final bool isSelected = repeatOnDays.containsKey(dayKey);
             final String startTime = repeatOnDays[dayKey]?['start_time'] ?? '';

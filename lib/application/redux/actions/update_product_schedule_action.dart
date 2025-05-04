@@ -2,10 +2,9 @@ import 'dart:convert';
 
 import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/core/services/i_custom_client.dart';
-import 'package:fullbooker/application/redux/actions/update_host_state_action.dart';
+import 'package:fullbooker/application/redux/actions/fetch_product_schedule_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/core/common/constants.dart';
-import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/entities/product_schedule.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
@@ -13,8 +12,8 @@ import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
 
-class SetProductScheduleAction extends ReduxAction<AppState> {
-  SetProductScheduleAction({
+class UpdateProductScheduleAction extends ReduxAction<AppState> {
+  UpdateProductScheduleAction({
     this.onSuccess,
     this.onError,
     required this.client,
@@ -26,10 +25,8 @@ class SetProductScheduleAction extends ReduxAction<AppState> {
 
   @override
   Future<AppState?> reduce() async {
-    final Product? product = state.hostState?.currentProduct;
     final ProductSchedule? selectedSchedule = state.hostState?.selectedSchedule;
 
-    final String productID = product?.id ?? UNKNOWN;
     final String startDate = selectedSchedule?.startDate ?? UNKNOWN;
     String startTime = selectedSchedule?.startTime ?? UNKNOWN;
     final String endDate = selectedSchedule?.endDate ?? UNKNOWN;
@@ -41,7 +38,7 @@ class SetProductScheduleAction extends ReduxAction<AppState> {
       endTime = kEndOfDayTime;
     }
 
-    if (productID == UNKNOWN || startTime == UNKNOWN || endTime == UNKNOWN) {
+    if (startTime == UNKNOWN || endTime == UNKNOWN) {
       onError?.call(addDateTimeError);
       return null;
     }
@@ -51,7 +48,6 @@ class SetProductScheduleAction extends ReduxAction<AppState> {
         selectedSchedule?.repeatType?.toLowerCase() ?? kNoRepeatSchedule;
 
     final Map<String, dynamic> data = <String, dynamic>{
-      'product': productID,
       'start_date': startDate,
       'start_time': startTime,
       'end_date': endDate,
@@ -119,11 +115,16 @@ class SetProductScheduleAction extends ReduxAction<AppState> {
       }
     }
 
-    final String endpoint = GetIt.I.get<AppConfig>().productScheduleEndpoint;
+    final String scheduleID = selectedSchedule?.id ?? UNKNOWN;
+
+    final String baseEndpoint =
+        GetIt.I.get<AppConfig>().productScheduleEndpoint;
+
+    final String fullEndpoint = '$baseEndpoint$scheduleID/';
 
     final Response httpResponse = await client.callRESTAPI(
-      endpoint: endpoint,
-      method: APIMethods.POST.name.toUpperCase(),
+      endpoint: fullEndpoint,
+      method: APIMethods.PATCH.name.toUpperCase(),
       variables: data,
     );
 
@@ -135,14 +136,7 @@ class SetProductScheduleAction extends ReduxAction<AppState> {
       return null;
     }
 
-    final Map<String, dynamic> responseBody =
-        json.decode(httpResponse.body) as Map<String, dynamic>;
-    final ProductSchedule savedSchedule =
-        ProductSchedule.fromJson(responseBody);
-
-    final Product? newCurrent = product?.copyWith(schedule: savedSchedule);
-
-    dispatch(UpdateHostStateAction(contextProduct: newCurrent));
+    dispatch(FetchProductScheduleAction(client: client));
 
     onSuccess?.call();
 

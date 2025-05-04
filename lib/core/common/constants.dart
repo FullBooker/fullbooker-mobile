@@ -40,13 +40,13 @@ const String kDevBuild = 'dev-build';
 
 const int kOTPRetryTimeout = 120;
 
-const List<String> allowedPhoneNumberCountries = <String>[
+const List<String> kAllowedPhoneNumberCountries = <String>[
   'KE',
   'US',
-  'SA',
+  'AE',
 ];
 
-const LatLng kDefaultLocation = LatLng(-1.228003, 36.900032);
+const LatLng kDefaultLocation = LatLng(-1.2849541, 36.8212995);
 
 const String kDefaultCurrencyCode = 'KES';
 
@@ -72,7 +72,7 @@ const List<String> kAllowedVideoExtensions = <String>[
   'mov',
 ];
 
-const List<String> weekdays = <String>[
+const List<String> kDaysOfTheWeek = <String>[
   'monday',
   'tuesday',
   'wednesday',
@@ -82,30 +82,30 @@ const List<String> weekdays = <String>[
   'sunday',
 ];
 
-const String dailyOption = 'Daily';
-const String weeklyOption = 'Weekly';
-const String monthlyOption = 'Monthly';
-const String yearlyOption = 'Yearly';
+const String kDailyOption = 'Daily';
+const String kWeeklyOption = 'Weekly';
+const String kMonthlyOption = 'Monthly';
+const String kYearlyOption = 'Yearly';
 
 const List<String> scheduleRepeatOptions = <String>[
-  dailyOption,
-  weeklyOption,
-  monthlyOption,
-  yearlyOption,
+  kDailyOption,
+  kWeeklyOption,
+  kMonthlyOption,
+  kYearlyOption,
 ];
 
-const String noRepeatSchedule = 'none';
+const String kNoRepeatSchedule = 'none';
 
-const String earlyBirdTier = 'early_bird';
-const String standardTier = 'standard';
-const String vipTier = 'vip';
-const String vvipTier = 'vvip';
+const String kEarlyBirdTier = 'early_bird';
+const String kStandardTier = 'standard';
+const String kVIPTier = 'vip';
+const String kVVIPTier = 'vvip';
 
 final List<String> allTicketTiers = <String>[
-  earlyBirdTier,
-  standardTier,
-  vipTier,
-  vvipTier,
+  kEarlyBirdTier,
+  kStandardTier,
+  kVIPTier,
+  kVVIPTier,
 ];
 
 const String kImageMediaType = 'image';
@@ -115,3 +115,6 @@ const String kPlatformTermsURL =
     'https://fullbooker.com/terms-of-service?hide_bottom_nav=true';
 
 int kRefreshTokenTimerInterval = 4;
+
+const String kStartOfDayTime = '00:01:00';
+const String kEndOfDayTime = '23:50:00';

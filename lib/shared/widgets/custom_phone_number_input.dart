@@ -36,7 +36,7 @@ class CustomPhoneInput extends StatelessWidget {
         InternationalPhoneNumberInput(
           onInputChanged: onInputChanged,
           initialValue: initialValue,
-          countries: allowedPhoneNumberCountries,
+          countries: kAllowedPhoneNumberCountries,
           selectorConfig: const SelectorConfig(
             selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
             leadingPadding: 12,
