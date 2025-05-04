@@ -7,9 +7,11 @@ class AppLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: SpinKitThreeBounce(
-        color: Theme.of(context).primaryColor,
-        size: 30.0,
+      child: FittedBox(
+        child: SpinKitThreeBounce(
+          color: Theme.of(context).primaryColor,
+          size: 30.0,
+        ),
       ),
     );
   }
