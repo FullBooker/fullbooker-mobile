@@ -27,13 +27,18 @@ class DeactivateProductAction extends ReduxAction<AppState> {
     final String selectProductID =
         state.hostState?.selectedProduct?.id ?? UNKNOWN;
 
-    final String baseEndpoint = GetIt.I.get<AppConfig>().getProductsEndpoint;
+    final Map<String, dynamic> data = <String, dynamic>{
+      'product_id': selectProductID,
+      'status_to': ProductStatus.deactivated.name.toUpperCase(),
+      'reason': 'User initiated',
+    };
 
-    final String fullEndpoint = '$baseEndpoint$selectProductID/';
+    final String endpoint = GetIt.I.get<AppConfig>().productTransitionEndpoint;
 
     final Response httpResponse = await client.callRESTAPI(
-      endpoint: fullEndpoint,
-      method: APIMethods.DELETE.name.toUpperCase(),
+      endpoint: endpoint,
+      method: APIMethods.POST.name.toUpperCase(),
+      variables: data,
     );
 
     if (httpResponse.statusCode >= 400) {

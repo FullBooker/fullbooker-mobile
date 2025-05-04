@@ -46,7 +46,7 @@ class SubmitProductForReviewAction extends ReduxAction<AppState> {
 
     final Map<String, dynamic> data = <String, dynamic>{
       'product_id': productId,
-      'status_to': 'REVIEW',
+      'status_to': ProductStatus.review.name.toUpperCase(),
       'terms_accepted': termsAccepted,
     };
 
