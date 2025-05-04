@@ -375,11 +375,7 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                                       contextProduct: product,
                                     ),
                                   );
-                                  context.router.popUntil(
-                                    (Route<dynamic> route) =>
-                                        route.settings.name ==
-                                        ProductDetailRoute.name,
-                                  );
+                                  context.router.push(ProductDetailRoute());
                                 },
                               ),
                               onError: (String error) => showAlertDialog(
