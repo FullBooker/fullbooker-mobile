@@ -19,7 +19,7 @@ _$ProductPricingImpl _$$ProductPricingImplFromJson(Map<String, dynamic> json) =>
       currencyCode: json['currency_code'] as String? ?? UNKNOWN,
       cost: json['cost'] as String? ?? UNKNOWN,
       type: json['type'] as String? ?? 'ticket',
-      ticketTier: json['ticket_tier'] as String? ?? standardTier,
+      ticketTier: json['ticket_tier'] as String? ?? kStandardTier,
       maxTickets: (json['maximum_number_of_tickets'] as num?)?.toInt() ?? 0,
       remainingTickets: (json['remaining_tickets'] as num?)?.toInt() ?? 0,
       soldTickets: (json['sold_tickets'] as num?)?.toInt() ?? 0,

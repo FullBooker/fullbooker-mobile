@@ -322,7 +322,7 @@ class _$ProductPricingImpl implements _ProductPricing {
       @JsonKey(name: 'currency_code') this.currencyCode = UNKNOWN,
       this.cost = UNKNOWN,
       this.type = 'ticket',
-      @JsonKey(name: 'ticket_tier') this.ticketTier = standardTier,
+      @JsonKey(name: 'ticket_tier') this.ticketTier = kStandardTier,
       @JsonKey(name: 'maximum_number_of_tickets') this.maxTickets = 0,
       @JsonKey(name: 'remaining_tickets') this.remainingTickets = 0,
       @JsonKey(name: 'sold_tickets') this.soldTickets = 0,
