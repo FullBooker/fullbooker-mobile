@@ -8,6 +8,7 @@ import 'package:fullbooker/domain/core/entities/product_category.dart';
 import 'package:fullbooker/domain/core/entities/product_location.dart';
 import 'package:fullbooker/domain/core/entities/product_media.dart';
 import 'package:fullbooker/domain/core/entities/product_pricing.dart';
+import 'package:fullbooker/domain/core/entities/product_schedule.dart';
 import 'package:fullbooker/shared/entities/location_perms_result.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 
@@ -104,8 +105,8 @@ class ProductSetupViewModel extends Vm {
   final bool repeats;
   final String repeatType;
   final List<int> repeatMonthDates;
-  final List<String> repeatYearDates;
-  final Map<String, Map<String, String>> repeatOnDaysOfWeek;
+  final List<RepeatYearlySchedule>? repeatYearDates;
+  final List<RepeatWeeklySchedule>? repeatOnDaysOfWeek;
   final List<ProductPricing?>? pricing;
   final List<Currency?>? currencies;
   final Currency? selectedCurrency;
@@ -154,11 +155,11 @@ class ProductSetupViewModel extends Vm {
       repeatType: state.hostState?.selectedSchedule?.repeatType ?? UNKNOWN,
       repeatMonthDates:
           state.hostState?.selectedSchedule?.repeatMonthDates ?? <int>[],
-      repeatYearDates:
-          state.hostState?.selectedSchedule?.repeatYearDates ?? <String>[],
+      repeatYearDates: state.hostState?.selectedSchedule?.repeatYearDates ??
+          <RepeatYearlySchedule>[],
       repeatOnDaysOfWeek:
           state.hostState?.selectedSchedule?.repeatOnDaysOfWeek ??
-              <String, Map<String, String>>{},
+              <RepeatWeeklySchedule>[],
       pricing: baseProduct?.pricing ?? <ProductPricing>[],
       currencies: state.hostState?.currencies ?? <Currency?>[],
       selectedCurrency: state.hostState?.selectedCurrency,

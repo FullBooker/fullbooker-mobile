@@ -5,6 +5,7 @@ import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_setup_view_model.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/utils/utils.dart';
+import 'package:fullbooker/domain/core/entities/product_schedule.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/time_slot_widget.dart';
 import 'package:heroicons/heroicons.dart';
@@ -19,37 +20,51 @@ class RepeatsWeeklyWidget extends StatelessWidget {
       converter: (Store<AppState> store) =>
           ProductSetupViewModel.fromState(store.state),
       builder: (BuildContext context, ProductSetupViewModel vm) {
-        final Map<String, Map<String, String>> repeatOnDays =
-            vm.repeatOnDaysOfWeek;
+        final List<RepeatWeeklySchedule>? repeatOnDays = vm.repeatOnDaysOfWeek;
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 12,
-          children: weekdays.map((String dayLabel) {
+          children: kDaysOfTheWeek.map((String dayLabel) {
             final String dayKey = dayLabel.toLowerCase();
-            final bool isSelected = repeatOnDays.containsKey(dayKey);
-            final String startTime = repeatOnDays[dayKey]?['start_time'] ?? '';
-            final String endTime = repeatOnDays[dayKey]?['end_time'] ?? '';
+
+            final RepeatWeeklySchedule? dayOfWeekSchedule =
+                repeatOnDays?.firstWhere(
+              (RepeatWeeklySchedule week) => week.day?.toLowerCase() == dayKey,
+              orElse: () => RepeatWeeklySchedule.initial(),
+            );
+
+            final bool isSelected = dayOfWeekSchedule != null;
+            final String startTime = dayOfWeekSchedule?.startTime ?? '';
+            final String endTime = dayOfWeekSchedule?.endTime ?? '';
 
             return Row(
               spacing: 12,
               children: <Widget>[
                 GestureDetector(
                   onTap: () {
-                    final Map<String, Map<String, String>> updated =
-                        Map<String, Map<String, String>>.from(repeatOnDays);
+                    final List<RepeatWeeklySchedule> updated =
+                        List<RepeatWeeklySchedule>.from(
+                      repeatOnDays ?? <RepeatWeeklySchedule>[],
+                    );
+
                     if (isSelected) {
-                      updated.remove(dayKey);
+                      updated.removeWhere(
+                        (RepeatWeeklySchedule weekly) => weekly.day == dayKey,
+                      );
                     } else {
-                      updated[dayKey] = <String, String>{
-                        'start_time': '09:00',
-                        'end_time': '17:00',
-                      };
+                      // Default start and end time
+                      updated.add(
+                        RepeatWeeklySchedule(
+                          day: dayKey,
+                          startTime: '09:00',
+                          endTime: '17:00',
+                        ),
+                      );
                     }
+
                     context.dispatch(
-                      UpdateCurrentScheduleAction(
-                        repeatOnDaysOfWeek: updated,
-                      ),
+                      UpdateCurrentScheduleAction(repeatOnDaysOfWeek: updated),
                     );
                   },
                   child: Container(
@@ -85,9 +100,22 @@ class RepeatsWeeklyWidget extends StatelessWidget {
                     onTap: () async {
                       final String? picked = await pickTime(context: context);
                       if (picked != null) {
-                        final Map<String, Map<String, String>> updated =
-                            Map<String, Map<String, String>>.from(repeatOnDays);
-                        updated[dayKey]?['start_time'] = picked;
+                        final List<RepeatWeeklySchedule> updated =
+                            List<RepeatWeeklySchedule>.from(
+                          repeatOnDays ?? <RepeatWeeklySchedule>[],
+                        );
+
+                        final RepeatWeeklySchedule dayIndex =
+                            updated.firstWhere(
+                          (RepeatWeeklySchedule week) => week.day == dayKey,
+                          orElse: () => RepeatWeeklySchedule.initial(),
+                        );
+
+                        final RepeatWeeklySchedule newIndex =
+                            dayIndex.copyWith.call(startTime: picked);
+
+                            
+
                         context.dispatch(
                           UpdateCurrentScheduleAction(
                             repeatOnDaysOfWeek: updated,
@@ -102,9 +130,16 @@ class RepeatsWeeklyWidget extends StatelessWidget {
                     onTap: () async {
                       final String? picked = await pickTime(context: context);
                       if (picked != null) {
-                        final Map<String, Map<String, String>> updated =
-                            Map<String, Map<String, String>>.from(repeatOnDays);
-                        updated[dayKey]?['end_time'] = picked;
+                        final List<Map<String, dynamic>> updated =
+                            List<Map<String, dynamic>>.from(
+                          repeatOnDays ?? <Map<String, dynamic>>[],
+                        );
+
+                        final int dayIndex = updated.indexWhere(
+                          (Map<String, dynamic> day) => day['day'] == dayKey,
+                        );
+                        updated[dayIndex]['end_time'] = picked;
+
                         context.dispatch(
                           UpdateCurrentScheduleAction(
                             repeatOnDaysOfWeek: updated,

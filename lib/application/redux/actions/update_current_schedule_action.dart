@@ -25,8 +25,8 @@ class UpdateCurrentScheduleAction extends ReduxAction<AppState> {
   final bool? repeats;
   final String? repeatType;
   final List<int>? repeatMonthDates;
-  final List<String>? repeatYearDates;
-  Map<String, Map<String, String>>? repeatOnDaysOfWeek;
+  final List<RepeatYearlySchedule>? repeatYearDates;
+  final List<RepeatWeeklySchedule>? repeatOnDaysOfWeek;
 
   @override
   AppState? reduce() {

@@ -23,18 +23,20 @@ _$ProductScheduleImpl _$$ProductScheduleImplFromJson(
       duration: (json['duration'] as num?)?.toInt() ?? 0,
       openDays: json['open_days'] as List<dynamic>? ?? const <dynamic>[],
       closedDates: json['closed_dates'] as List<dynamic>? ?? const <dynamic>[],
-      repeatOnDaysOfWeek:
-          (json['repeatOnDaysOfWeek'] as Map<String, dynamic>?)?.map(
-        (k, e) => MapEntry(k, Map<String, String>.from(e as Map)),
-      ),
-      repeatMonthDates: (json['repeatMonthDates'] as List<dynamic>?)
+      repeatOnDaysOfWeek: (json['repeat_on_days_of_week'] as List<dynamic>?)
+              ?.map((e) =>
+                  RepeatWeeklySchedule.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const <RepeatWeeklySchedule>[],
+      repeatMonthDates: (json['repeat_on_date_of_month'] as List<dynamic>?)
               ?.map((e) => (e as num).toInt())
               .toList() ??
           const <int>[],
-      repeatYearDates: (json['repeatYearDates'] as List<dynamic>?)
-              ?.map((e) => e as String)
+      repeatYearDates: (json['repeat_on_month_of_year'] as List<dynamic>?)
+              ?.map((e) =>
+                  RepeatYearlySchedule.fromJson(e as Map<String, dynamic>))
               .toList() ??
-          const <String>[],
+          const <RepeatYearlySchedule>[],
     );
 
 Map<String, dynamic> _$$ProductScheduleImplToJson(
@@ -54,7 +56,42 @@ Map<String, dynamic> _$$ProductScheduleImplToJson(
       'duration': instance.duration,
       'open_days': instance.openDays,
       'closed_dates': instance.closedDates,
-      'repeatOnDaysOfWeek': instance.repeatOnDaysOfWeek,
-      'repeatMonthDates': instance.repeatMonthDates,
-      'repeatYearDates': instance.repeatYearDates,
+      'repeat_on_days_of_week':
+          instance.repeatOnDaysOfWeek?.map((e) => e.toJson()).toList(),
+      'repeat_on_date_of_month': instance.repeatMonthDates,
+      'repeat_on_month_of_year':
+          instance.repeatYearDates?.map((e) => e.toJson()).toList(),
+    };
+
+_$RepeatWeeklyScheduleImpl _$$RepeatWeeklyScheduleImplFromJson(
+        Map<String, dynamic> json) =>
+    _$RepeatWeeklyScheduleImpl(
+      day: json['day'] as String? ?? UNKNOWN,
+      startTime: json['start_time'] as String? ?? UNKNOWN,
+      endTime: json['end_time'] as String? ?? UNKNOWN,
+    );
+
+Map<String, dynamic> _$$RepeatWeeklyScheduleImplToJson(
+        _$RepeatWeeklyScheduleImpl instance) =>
+    <String, dynamic>{
+      'day': instance.day,
+      'start_time': instance.startTime,
+      'end_time': instance.endTime,
+    };
+
+_$RepeatYearlyScheduleImpl _$$RepeatYearlyScheduleImplFromJson(
+        Map<String, dynamic> json) =>
+    _$RepeatYearlyScheduleImpl(
+      month: json['month'] as String? ?? UNKNOWN,
+      repeatOnDateOfMonth: (json['repeat_on_date_of_month'] as List<dynamic>?)
+              ?.map((e) => (e as num).toInt())
+              .toList() ??
+          const <int>[],
+    );
+
+Map<String, dynamic> _$$RepeatYearlyScheduleImplToJson(
+        _$RepeatYearlyScheduleImpl instance) =>
+    <String, dynamic>{
+      'month': instance.month,
+      'repeat_on_date_of_month': instance.repeatOnDateOfMonth,
     };

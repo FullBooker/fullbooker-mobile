@@ -72,7 +72,7 @@ const List<String> kAllowedVideoExtensions = <String>[
   'mov',
 ];
 
-const List<String> weekdays = <String>[
+const List<String> kDaysOfTheWeek = <String>[
   'monday',
   'tuesday',
   'wednesday',
@@ -82,30 +82,30 @@ const List<String> weekdays = <String>[
   'sunday',
 ];
 
-const String dailyOption = 'Daily';
-const String weeklyOption = 'Weekly';
-const String monthlyOption = 'Monthly';
-const String yearlyOption = 'Yearly';
+const String kDailyOption = 'daily';
+const String kWeeklyOption = 'weekly';
+const String kMonthlyOption = 'monthly';
+const String kYearlyOption = 'yearly';
 
 const List<String> scheduleRepeatOptions = <String>[
-  dailyOption,
-  weeklyOption,
-  monthlyOption,
-  yearlyOption,
+  kDailyOption,
+  kWeeklyOption,
+  kMonthlyOption,
+  kYearlyOption,
 ];
 
-const String noRepeatSchedule = 'none';
+const String kNoRepeatSchedule = 'none';
 
-const String earlyBirdTier = 'early_bird';
-const String standardTier = 'standard';
-const String vipTier = 'vip';
-const String vvipTier = 'vvip';
+const String kEarlyBirdTier = 'early_bird';
+const String kStandardTier = 'standard';
+const String kVIPTier = 'vip';
+const String kVVIPTier = 'vvip';
 
 final List<String> allTicketTiers = <String>[
-  earlyBirdTier,
-  standardTier,
-  vipTier,
-  vvipTier,
+  kEarlyBirdTier,
+  kStandardTier,
+  kVIPTier,
+  kVVIPTier,
 ];
 
 const String kImageMediaType = 'image';

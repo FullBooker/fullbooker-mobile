@@ -491,13 +491,13 @@ bool hasValidLocation(ProductLocation? location) {
 
 String getTicketIconPath(String tier) {
   switch (tier.toLowerCase()) {
-    case earlyBirdTier:
+    case kEarlyBirdTier:
       return earlyBirdTicketIconSVGPath;
-    case standardTier:
+    case kStandardTier:
       return standardTicketIconSVGPath;
-    case vipTier:
+    case kVIPTier:
       return vipTicketIconSVGPath;
-    case vvipTier:
+    case kVVIPTier:
       return vvipTicketIconSVGPath;
     default:
       return standardTicketIconSVGPath;
@@ -506,13 +506,13 @@ String getTicketIconPath(String tier) {
 
 String getTicketDisplayName(String tier) {
   switch (tier.toLowerCase()) {
-    case earlyBirdTier:
+    case kEarlyBirdTier:
       return 'Early Bird';
-    case standardTier:
+    case kStandardTier:
       return 'Standard';
-    case vipTier:
+    case kVIPTier:
       return 'VIP';
-    case vvipTier:
+    case kVVIPTier:
       return 'VVIP';
     default:
       return 'Standard';
@@ -649,22 +649,25 @@ String generateRepeatNotification(ProductSchedule? schedule) {
       'Sat',
     ];
 
-    final List<String> days = schedule?.repeatOnDaysOfWeek?.entries
-            .map((MapEntry<String, Map<String, String>> entry) {
-          final String day = entry.key.toLowerCase();
+    final List<String>? days = schedule?.repeatOnDaysOfWeek?.map(
+      (RepeatWeeklySchedule e) {
+        final String? day = e.day;
 
-          return daysOfWeek.firstWhere(
-            (String d) => d.toLowerCase() == day,
-            orElse: () => '',
-          );
-        }).toList() ??
-        <String>[];
-    return 'Repeats every week on ${days.join(', ')}';
+        return daysOfWeek.firstWhere(
+          (String element) => element.toLowerCase() == day,
+          orElse: () => '',
+        );
+      },
+    ).toList();
+
+    return 'Repeats every week on ${days?.join(', ')}';
   } else if (schedule?.repeatType == 'monthly') {
     final List<int> monthDates = schedule?.repeatMonthDates ?? <int>[];
     return 'Repeats every month on ${monthDates.join(', ')}';
   } else if (schedule?.repeatType == 'yearly') {
-    final List<String> yearDates = schedule?.repeatYearDates ?? <String>[];
+    final List<RepeatYearlySchedule> yearDates =
+        schedule?.repeatYearDates ?? <RepeatYearlySchedule>[];
+
     return generateYearlyRepeat(yearDates);
   } else {
     return 'Does not repeat';
@@ -672,43 +675,47 @@ String generateRepeatNotification(ProductSchedule? schedule) {
 }
 
 // Generate formatted yearly repeat notification
-String generateYearlyRepeat(List<String> yearDates) {
+String generateYearlyRepeat(List<RepeatYearlySchedule> yearDates) {
   final Map<String, List<int>> groupedByMonth = <String, List<int>>{};
-  for (String entry in yearDates) {
-    final List<String> parts = entry.split('-');
-    if (parts.length == 2) {
-      final int month = int.tryParse(parts[0]) ?? 0;
-      final int day = int.tryParse(parts[1]) ?? 0;
-      if (month >= 1 && month <= 12 && day >= 1 && day <= 31) {
-        final String monthName = _monthName(month);
-        groupedByMonth.putIfAbsent(monthName, () => <int>[]).add(day);
-      }
+
+  for (final RepeatYearlySchedule entry in yearDates) {
+    final String monthName = entry.month?.toLowerCase() ?? '';
+    final List<int> days = entry.repeatOnDateOfMonth ?? <int>[];
+
+    if (monthName.isNotEmpty && days.isNotEmpty) {
+      groupedByMonth[monthName] = days;
     }
   }
 
+  // Map the grouped months and days into the formatted string
   final List<String> formattedMonthDates =
       groupedByMonth.entries.map((MapEntry<String, List<int>> entry) {
-    return '${entry.key} ${entry.value.join(', ')}';
+    return '${_capitalizeMonth(entry.key)} ${entry.value.join(', ')}';
   }).toList();
 
   return 'Repeats every year on ${formattedMonthDates.join(', ')}';
 }
 
-// Convert month number to month name
-String _monthName(int month) {
-  const List<String> monthNames = <String>[
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ];
-  return monthNames[month - 1];
+// Capitalize the first letter of the month name for proper formatting
+String _capitalizeMonth(String month) {
+  return month.isNotEmpty ? month[0].toUpperCase() + month.substring(1) : '';
 }
+
+// // Convert month number to month name
+// String _monthName(int month) {
+//   const List<String> monthNames = <String>[
+//     'January',
+//     'February',
+//     'March',
+//     'April',
+//     'May',
+//     'June',
+//     'July',
+//     'August',
+//     'September',
+//     'October',
+//     'November',
+//     'December',
+//   ];
+//   return monthNames[month - 1];
+// }

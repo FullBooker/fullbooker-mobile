@@ -4,6 +4,7 @@ import 'package:fullbooker/application/redux/actions/update_current_schedule_act
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_setup_view_model.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
+import 'package:fullbooker/domain/core/entities/product_schedule.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:heroicons/heroicons.dart';
 
@@ -17,7 +18,7 @@ class RepeatsYearlyWidget extends StatelessWidget {
       converter: (Store<AppState> store) =>
           ProductSetupViewModel.fromState(store.state),
       builder: (BuildContext context, ProductSetupViewModel vm) {
-        final List<String> repeatDates = vm.repeatYearDates;
+        final List<RepeatYearlySchedule>? repeatDates = vm.repeatYearDates;
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,69 +28,74 @@ class RepeatsYearlyWidget extends StatelessWidget {
               yearlyRepeatPrompt,
               style: Theme.of(context).textTheme.bodyMedium,
             ),
-
-            // Selected date chips
-            if (repeatDates.isNotEmpty)
+            if (repeatDates?.isNotEmpty ?? false)
               Wrap(
                 runSpacing: 12,
-                children: repeatDates.map((String date) {
-                  final List<String> parts = date.split('-');
-                  final int? month =
-                      parts.isNotEmpty ? int.tryParse(parts[0]) : null;
-                  final int? day =
-                      parts.length > 1 ? int.tryParse(parts[1]) : null;
+                children: repeatDates!.map((RepeatYearlySchedule yearItem) {
+                  final List<int> days =
+                      yearItem.repeatOnDateOfMonth ?? <int>[];
+                  final String monthName = yearItem.month ?? '';
 
-                  if (month == null ||
-                      day == null ||
-                      month < 1 ||
-                      month > 12 ||
-                      day < 1 ||
-                      day > 31) {
+                  if (monthName.isEmpty || days.isEmpty) {
                     return const SizedBox.shrink();
                   }
 
-                  final String shortMonth = _monthName(month).substring(0, 3);
-                  final String label = '$day $shortMonth';
+                  // Formatting the month and day labels
+                  final String shortMonth = _monthName(monthName);
+                  final List<String> labels = days.map((int day) {
+                    return '$day $shortMonth';
+                  }).toList();
 
-                  return Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    margin: EdgeInsets.only(right: 12),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(24),
-                      border: Border.all(color: AppColors.borderColor),
-                      color: Colors.white,
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Text(
-                          label,
-                          style: Theme.of(context).textTheme.bodyMedium,
+                  return Row(
+                    children: labels.map((String label) {
+                      return Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 8,
                         ),
-                        const SizedBox(width: 8),
-                        GestureDetector(
-                          onTap: () {
-                            final List<String> updated =
-                                List<String>.from(repeatDates)..remove(date);
-                            context.dispatch(
-                              UpdateCurrentScheduleAction(
-                                repeatYearDates: updated,
+                        margin: const EdgeInsets.only(right: 12),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(24),
+                          border: Border.all(color: AppColors.borderColor),
+                          color: Colors.white,
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Text(
+                              label,
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                            const SizedBox(width: 8),
+                            GestureDetector(
+                              onTap: () {
+                                final List<RepeatYearlySchedule> updated =
+                                    List<RepeatYearlySchedule>.from(
+                                  repeatDates,
+                                )..removeWhere(
+                                        (RepeatYearlySchedule element) =>
+                                            element.month == label,
+                                      );
+
+                                context.dispatch(
+                                  UpdateCurrentScheduleAction(
+                                    repeatYearDates: updated,
+                                  ),
+                                );
+                              },
+                              child: const Icon(
+                                Icons.close,
+                                size: 16,
+                                color: AppColors.textBlackColor,
                               ),
-                            );
-                          },
-                          child: const Icon(
-                            Icons.close,
-                            size: 16,
-                            color: AppColors.textBlackColor,
-                          ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      );
+                    }).toList(),
                   );
                 }).toList(),
               ),
-
             InkWell(
               borderRadius: BorderRadius.circular(24),
               onTap: () async {
@@ -107,9 +113,9 @@ class RepeatsYearlyWidget extends StatelessWidget {
                 final String day = picked.day.toString().padLeft(2, '0');
                 final String value = '$month-$day';
 
-                if (!repeatDates.contains(value)) {
-                  final List<String> updated = List<String>.from(repeatDates)
-                    ..add(value);
+                if (!repeatDates?.contains()) {
+                  final List<String> updated =
+                      List<String>.from(repeatDates ?? <String>[])..add(value);
                   context.dispatch(
                     UpdateCurrentScheduleAction(repeatYearDates: updated),
                   );
@@ -148,21 +154,22 @@ class RepeatsYearlyWidget extends StatelessWidget {
     );
   }
 
-  String _monthName(int month) {
-    const List<String> months = <String>[
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December',
-    ];
-    return months[month - 1];
+  // Helper function to map month string to the full name
+  String _monthName(String month) {
+    const Map<String, String> monthMap = <String, String>{
+      'january': 'January',
+      'february': 'February',
+      'march': 'March',
+      'april': 'April',
+      'may': 'May',
+      'june': 'June',
+      'july': 'July',
+      'august': 'August',
+      'september': 'September',
+      'october': 'October',
+      'november': 'November',
+      'december': 'December',
+    };
+    return monthMap[month.toLowerCase()] ?? '';
   }
 }

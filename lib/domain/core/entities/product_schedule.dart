@@ -26,13 +26,50 @@ class ProductSchedule with _$ProductSchedule {
     List<dynamic>? closedDates,
 
     // Other fields used for setup
-    final Map<String, Map<String, String>>? repeatOnDaysOfWeek,
-    @Default(<int>[]) List<int>? repeatMonthDates,
-    @Default(<String>[]) List<String>? repeatYearDates,
+    @JsonKey(name: 'repeat_on_days_of_week')
+    @Default(<RepeatWeeklySchedule>[])
+    final List<RepeatWeeklySchedule>? repeatOnDaysOfWeek,
+    @JsonKey(name: 'repeat_on_date_of_month')
+    @Default(<int>[])
+    List<int>? repeatMonthDates,
+    @JsonKey(name: 'repeat_on_month_of_year')
+    @Default(<RepeatYearlySchedule>[])
+    List<RepeatYearlySchedule>? repeatYearDates,
   }) = _ProductSchedule;
 
   factory ProductSchedule.initial() => ProductSchedule();
 
   factory ProductSchedule.fromJson(Map<String, dynamic> json) =>
       _$ProductScheduleFromJson(json);
+}
+
+@Freezed(makeCollectionsUnmodifiable: false)
+class RepeatWeeklySchedule with _$RepeatWeeklySchedule {
+  @JsonSerializable(explicitToJson: true)
+  factory RepeatWeeklySchedule({
+    @Default(UNKNOWN) @JsonKey(name: 'day') String? day,
+    @Default(UNKNOWN) @JsonKey(name: 'start_time') String? startTime,
+    @Default(UNKNOWN) @JsonKey(name: 'end_time') String? endTime,
+  }) = _RepeatWeeklySchedule;
+
+  factory RepeatWeeklySchedule.initial() => RepeatWeeklySchedule();
+
+  factory RepeatWeeklySchedule.fromJson(Map<String, dynamic> json) =>
+      _$RepeatWeeklyScheduleFromJson(json);
+}
+
+@Freezed(makeCollectionsUnmodifiable: false)
+class RepeatYearlySchedule with _$RepeatYearlySchedule {
+  @JsonSerializable(explicitToJson: true)
+  factory RepeatYearlySchedule({
+    @Default(UNKNOWN) @JsonKey(name: 'month') String? month,
+    @Default(<int>[])
+    @JsonKey(name: 'repeat_on_date_of_month')
+    List<int>? repeatOnDateOfMonth,
+  }) = _RepeatYearlySchedule;
+
+  factory RepeatYearlySchedule.initial() => RepeatYearlySchedule();
+
+  factory RepeatYearlySchedule.fromJson(Map<String, dynamic> json) =>
+      _$RepeatYearlyScheduleFromJson(json);
 }

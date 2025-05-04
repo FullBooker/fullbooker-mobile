@@ -45,39 +45,40 @@ class UpdateProductScheduleAction extends ReduxAction<AppState> {
 
     final bool repeats = selectedSchedule?.repeats ?? false;
     final String repeatOption =
-        selectedSchedule?.repeatType?.toLowerCase() ?? noRepeatSchedule;
+        selectedSchedule?.repeatType?.toLowerCase() ?? kNoRepeatSchedule;
 
     final Map<String, dynamic> data = <String, dynamic>{
       'start_date': startDate,
       'start_time': startTime,
       'end_date': endDate,
       'end_time': endTime,
-      'repeat': repeats ? repeatOption : noRepeatSchedule,
+      'repeat': repeats ? repeatOption : kNoRepeatSchedule,
       'is_all_day': isAllDay,
     };
 
     if (repeats) {
-      if (repeatOption == weeklyOption.toLowerCase()) {
-        final Map<String, Map<String, String>> weekly =
-            selectedSchedule?.repeatOnDaysOfWeek ??
-                <String, Map<String, String>>{};
-        data['repeat_on_days_of_week'] = weekly.entries.map(
-          (MapEntry<String, Map<String, String>> entry) {
-            return <String, String?>{
-              'day': entry.key.toLowerCase(),
-              'start_time': entry.value['start_time'],
-              'end_time': entry.value['end_time'],
-            };
-          },
-        ).toList();
+      if (repeatOption == kWeeklyOption.toLowerCase()) {
+        final List<RepeatWeeklySchedule> weekly =
+            selectedSchedule?.repeatOnDaysOfWeek ?? <RepeatWeeklySchedule>[];
+
+        // data['repeat_on_days_of_week'] =
+        // weekly.map(
+        //   (Map<String, dynamic> weeklyOption) {
+        //     return <String, String?>{
+        //       'day': weeklyOption['day'],
+        //       'start_time': weeklyOption['start_time'],
+        //       'end_time': weeklyOption['end_time'],
+        //     };
+        //   },
+        // ).toList();
       }
 
-      if (repeatOption == monthlyOption.toLowerCase()) {
+      if (repeatOption == kMonthlyOption.toLowerCase()) {
         final List<int> dates = selectedSchedule?.repeatMonthDates ?? <int>[];
         data['repeat_on_date_of_month'] = dates;
       }
 
-      if (repeatOption == yearlyOption.toLowerCase()) {
+      if (repeatOption == kYearlyOption.toLowerCase()) {
         final List<String> yearDates =
             selectedSchedule?.repeatYearDates ?? <String>[];
 
