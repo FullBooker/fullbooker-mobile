@@ -45,19 +45,19 @@ class UpdateProductScheduleAction extends ReduxAction<AppState> {
 
     final bool repeats = selectedSchedule?.repeats ?? false;
     final String repeatOption =
-        selectedSchedule?.repeatType?.toLowerCase() ?? noRepeatSchedule;
+        selectedSchedule?.repeatType?.toLowerCase() ?? kNoRepeatSchedule;
 
     final Map<String, dynamic> data = <String, dynamic>{
       'start_date': startDate,
       'start_time': startTime,
       'end_date': endDate,
       'end_time': endTime,
-      'repeat': repeats ? repeatOption : noRepeatSchedule,
+      'repeat': repeats ? repeatOption : kNoRepeatSchedule,
       'is_all_day': isAllDay,
     };
 
     if (repeats) {
-      if (repeatOption == weeklyOption.toLowerCase()) {
+      if (repeatOption == kWeeklyOption.toLowerCase()) {
         final Map<String, Map<String, String>> weekly =
             selectedSchedule?.repeatOnDaysOfWeek ??
                 <String, Map<String, String>>{};
@@ -72,12 +72,12 @@ class UpdateProductScheduleAction extends ReduxAction<AppState> {
         ).toList();
       }
 
-      if (repeatOption == monthlyOption.toLowerCase()) {
+      if (repeatOption == kMonthlyOption.toLowerCase()) {
         final List<int> dates = selectedSchedule?.repeatMonthDates ?? <int>[];
         data['repeat_on_date_of_month'] = dates;
       }
 
-      if (repeatOption == yearlyOption.toLowerCase()) {
+      if (repeatOption == kYearlyOption.toLowerCase()) {
         final List<String> yearDates =
             selectedSchedule?.repeatYearDates ?? <String>[];
 

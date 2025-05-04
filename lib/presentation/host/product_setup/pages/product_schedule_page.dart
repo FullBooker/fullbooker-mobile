@@ -437,7 +437,7 @@ class ProductSchedulePage extends StatelessWidget {
                                   context.dispatch(
                                     UpdateCurrentScheduleAction(
                                       repeats: value,
-                                      repeatType: dailyOption,
+                                      repeatType: kDailyOption,
                                     ),
                                   );
                                 },
@@ -476,19 +476,19 @@ class ProductSchedulePage extends StatelessWidget {
                               ),
 
                               /// Repeats daily
-                              if (vm.repeatType == dailyOption)
+                              if (vm.repeatType == kDailyOption)
                                 RepeatsDailyWidget(),
 
                               /// Repeats weekly
-                              if (vm.repeatType == weeklyOption)
+                              if (vm.repeatType == kWeeklyOption)
                                 RepeatsWeeklyWidget(),
 
                               /// Repeats monthly
-                              if (vm.repeatType == monthlyOption)
+                              if (vm.repeatType == kMonthlyOption)
                                 RepeatsMonthlyWidget(),
 
                               /// Repeats yearly
-                              if (vm.repeatType == yearlyOption)
+                              if (vm.repeatType == kYearlyOption)
                                 RepeatsYearlyWidget(),
                             ],
                           ),

@@ -14,7 +14,7 @@ class RepeatNotification extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (productSchedule?.repeatType == noRepeatSchedule ||
+    if (productSchedule?.repeatType == kNoRepeatSchedule ||
         productSchedule?.repeatType == null) {
       return SizedBox.shrink();
     }
