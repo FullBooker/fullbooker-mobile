@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/core/services/i_custom_client.dart';
-import 'package:fullbooker/application/redux/actions/check_and_create_host_account_action.dart';
 import 'package:fullbooker/application/redux/actions/set_sign_in_method_action.dart';
 import 'package:fullbooker/application/redux/actions/update_auth_state_action.dart';
 import 'package:fullbooker/application/redux/actions/update_user_state_action.dart';
@@ -83,10 +82,8 @@ class LoginAction extends ReduxAction<AppState> {
 
     dispatch(UpdateUserStateAction(user: loginResponse.user));
 
-    dispatch(CheckAndCreateHostAccountAction(client: client));
-
     onSuccess?.call();
 
-    return state;
+    return null;
   }
 }

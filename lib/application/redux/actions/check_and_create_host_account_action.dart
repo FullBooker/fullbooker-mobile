@@ -31,7 +31,7 @@ class CheckAndCreateHostAccountAction extends ReduxAction<AppState> {
 
     final Response httpResponse = await client.callRESTAPI(
       endpoint: endpoint,
-      method: APIMethods.GET.name.toUpperCase(),
+      method: APIMethods.POST.name.toUpperCase(),
     );
 
     final Map<String, dynamic> body =

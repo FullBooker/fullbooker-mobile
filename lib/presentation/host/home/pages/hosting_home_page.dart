@@ -2,6 +2,7 @@ import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
+import 'package:fullbooker/application/redux/actions/check_and_create_host_account_action.dart';
 import 'package:fullbooker/application/redux/actions/fetch_currencies_action.dart';
 import 'package:fullbooker/application/redux/actions/fetch_products_action.dart';
 import 'package:fullbooker/application/redux/actions/reset_current_product_action.dart';
@@ -121,6 +122,14 @@ class HostingHomePage extends StatelessWidget {
                   converter: (Store<AppState> store) =>
                       HostingHomeViewModel.fromState(store.state),
                   onInit: (Store<AppState> store) {
+                    context.dispatchAndWait(
+                      CheckAndCreateHostAccountAction(
+                        client: AppWrapperBase.of(
+                          context,
+                        )!
+                            .customClient,
+                      ),
+                    );
                     context.dispatchAll(<ReduxAction<AppState>>[
                       FetchProductsAction(
                         client: AppWrapperBase.of(context)!.customClient,
