@@ -365,13 +365,11 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                                 confirmText: backToProducts,
                                 cancelText: viewProduct,
                                 onConfirm: () {
-                                  context.router.popUntil(
-                                    (Route<dynamic> route) =>
-                                        route.settings.name ==
-                                        ProductDetailRoute.name,
-                                  );
+                                  context.router.maybePop();
+                                  context.router.replace(ProductsRoute());
                                 },
                                 onCancel: () {
+                                  context.router.maybePop();
                                   context.dispatch(
                                     UpdateHostStateAction(
                                       contextProduct: product,
