@@ -8,6 +8,7 @@ import 'package:fullbooker/domain/core/entities/product_category.dart';
 import 'package:fullbooker/domain/core/entities/product_location.dart';
 import 'package:fullbooker/domain/core/entities/product_media.dart';
 import 'package:fullbooker/domain/core/entities/product_pricing.dart';
+import 'package:fullbooker/domain/core/entities/product_schedule.dart';
 import 'package:fullbooker/shared/entities/location_perms_result.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 
@@ -28,9 +29,9 @@ class ProductSetupViewModel extends Vm {
     required this.isAllDay,
     required this.repeats,
     required this.repeatType,
-    required this.repeatMonthDates,
-    required this.repeatYearDates,
-    required this.repeatOnDaysOfWeek,
+    required this.repeatMonthly,
+    required this.repeatYearly,
+    required this.repeatWeekly,
     required this.pricing,
     required this.currencies,
     required this.selectedCurrency,
@@ -62,9 +63,9 @@ class ProductSetupViewModel extends Vm {
             isAllDay,
             repeats,
             repeatType,
-            repeatMonthDates,
-            repeatYearDates,
-            repeatOnDaysOfWeek,
+            repeatMonthly,
+            repeatYearly,
+            repeatWeekly,
             pricing,
             currencies,
             selectedCurrency,
@@ -102,10 +103,12 @@ class ProductSetupViewModel extends Vm {
   final ProductLocation? selectedLocation;
   final bool isAllDay;
   final bool repeats;
+
   final String repeatType;
-  final List<int> repeatMonthDates;
-  final List<String> repeatYearDates;
-  final Map<String, Map<String, String>> repeatOnDaysOfWeek;
+  final List<int> repeatMonthly;
+  final List<RepeatYearlySchedule> repeatYearly;
+  final List<RepeatWeeklySchedule> repeatWeekly;
+
   final List<ProductPricing?>? pricing;
   final List<Currency?>? currencies;
   final Currency? selectedCurrency;
@@ -150,15 +153,15 @@ class ProductSetupViewModel extends Vm {
       videos: baseProduct?.videos ?? <ProductMedia?>[],
       selectedLocation: state.hostState?.selectedLocation,
       isAllDay: state.hostState?.selectedSchedule?.isAllDay ?? false,
-      repeats: state.hostState?.selectedSchedule?.repeats ?? false,
+      repeats:
+          state.hostState?.selectedSchedule?.repeatType != kNoRepeatSchedule,
       repeatType: state.hostState?.selectedSchedule?.repeatType ?? UNKNOWN,
-      repeatMonthDates:
-          state.hostState?.selectedSchedule?.repeatMonthDates ?? <int>[],
-      repeatYearDates:
-          state.hostState?.selectedSchedule?.repeatYearDates ?? <String>[],
-      repeatOnDaysOfWeek:
-          state.hostState?.selectedSchedule?.repeatOnDaysOfWeek ??
-              <String, Map<String, String>>{},
+      repeatMonthly:
+          state.hostState?.selectedSchedule?.repeatMonthly ?? <int>[],
+      repeatYearly: state.hostState?.selectedSchedule?.repeatYearly ??
+          <RepeatYearlySchedule>[],
+      repeatWeekly: state.hostState?.selectedSchedule?.repeatWeekly ??
+          <RepeatWeeklySchedule>[],
       pricing: baseProduct?.pricing ?? <ProductPricing>[],
       currencies: state.hostState?.currencies ?? <Currency?>[],
       selectedCurrency: state.hostState?.selectedCurrency,

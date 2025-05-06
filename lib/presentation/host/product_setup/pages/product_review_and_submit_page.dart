@@ -25,6 +25,7 @@ import 'package:fullbooker/presentation/host/product_setup/widgets/location_prev
 import 'package:fullbooker/presentation/host/product_setup/widgets/preview_header_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/pricing_card_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/product_category_item.dart';
+import 'package:fullbooker/presentation/host/product_setup/widgets/product_repeat_notification.dart';
 import 'package:fullbooker/presentation/host/products/widgets/min_zero_state.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_alert_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_schedule_widget.dart';
@@ -197,7 +198,16 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                               },
                             ),
                             if ((product.scheduleID ?? UNKNOWN) != UNKNOWN)
-                              ProductScheduleWidget(),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                spacing: 12,
+                                children: <Widget>[
+                                  ProductScheduleWidget(),
+                                  RepeatNotification(
+                                    productSchedule: product.schedule,
+                                  ),
+                                ],
+                              ),
                             Divider(),
 
                             // Photos

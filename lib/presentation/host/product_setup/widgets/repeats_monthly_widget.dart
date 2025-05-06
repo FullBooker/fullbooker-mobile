@@ -15,7 +15,7 @@ class RepeatsMonthlyWidget extends StatelessWidget {
       converter: (Store<AppState> store) =>
           ProductSetupViewModel.fromState(store.state),
       builder: (BuildContext context, ProductSetupViewModel vm) {
-        final List<int> selectedDates = vm.repeatMonthDates;
+        final List<int> selectedDates = vm.repeatMonthly;
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,7 +41,7 @@ class RepeatsMonthlyWidget extends StatelessWidget {
                       updated.add(day);
                     }
                     context.dispatch(
-                      UpdateCurrentScheduleAction(repeatMonthDates: updated),
+                      UpdateCurrentScheduleAction(repeatMonthly: updated),
                     );
                   },
                   child: Container(

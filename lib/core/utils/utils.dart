@@ -476,7 +476,7 @@ Future<String?> pickTime({required BuildContext context}) async {
   if (picked == null) return null;
 
   final DateTime dateTime = DateTime(0, 1, 1, picked.hour, picked.minute);
-  return DateFormat('HH:mm:ss').format(dateTime);
+  return DateFormat('HH:mm').format(dateTime);
 }
 
 bool hasValidLocation(ProductLocation? location) {
@@ -639,64 +639,89 @@ String generateRepeatNotification(ProductSchedule? schedule) {
   if (schedule?.repeatType == 'daily') {
     return 'Repeats daily';
   } else if (schedule?.repeatType == 'weekly') {
-    final List<String> daysOfWeek = <String>[
-      'Sun',
-      'Mon',
-      'Tue',
-      'Wed',
-      'Thu',
-      'Fri',
-      'Sat',
-    ];
+    final List<String> days =
+        schedule?.repeatWeekly?.map((RepeatWeeklySchedule weekday) {
+              final String day = weekday.day ?? UNKNOWN;
 
-    final List<String> days = schedule?.repeatOnDaysOfWeek?.entries
-            .map((MapEntry<String, Map<String, String>> entry) {
-          final String day = entry.key.toLowerCase();
+              final String matched = kDaysOfTheWeek.firstWhere(
+                (String d) => d.toLowerCase() == day,
+                orElse: () => '',
+              );
 
-          return daysOfWeek.firstWhere(
-            (String d) => d.toLowerCase() == day,
-            orElse: () => '',
-          );
-        }).toList() ??
-        <String>[];
-    return 'Repeats every week on ${days.join(', ')}';
+              return toBeginningOfSentenceCase(matched.substring(0, 3));
+            }).toList() ??
+            <String>[];
+
+    return 'Repeats weekly on ${days.join(', ')}';
   } else if (schedule?.repeatType == 'monthly') {
-    final List<int> monthDates = schedule?.repeatMonthDates ?? <int>[];
+    final List<int> monthDates = schedule?.repeatMonthly ?? <int>[];
     return 'Repeats every month on ${monthDates.join(', ')}';
   } else if (schedule?.repeatType == 'yearly') {
-    final List<String> yearDates = schedule?.repeatYearDates ?? <String>[];
-    return generateYearlyRepeat(yearDates);
+    return generateYearlyRepeat(
+      schedule?.repeatYearly ?? <RepeatYearlySchedule>[],
+    );
   } else {
     return 'Does not repeat';
   }
 }
 
 // Generate formatted yearly repeat notification
-String generateYearlyRepeat(List<String> yearDates) {
+String generateYearlyRepeat(List<RepeatYearlySchedule> yearMonths) {
   final Map<String, List<int>> groupedByMonth = <String, List<int>>{};
-  for (String entry in yearDates) {
-    final List<String> parts = entry.split('-');
-    if (parts.length == 2) {
-      final int month = int.tryParse(parts[0]) ?? 0;
-      final int day = int.tryParse(parts[1]) ?? 0;
-      if (month >= 1 && month <= 12 && day >= 1 && day <= 31) {
-        final String monthName = _monthName(month);
-        groupedByMonth.putIfAbsent(monthName, () => <int>[]).add(day);
-      }
-    }
+
+  for (final RepeatYearlySchedule yearMonth in yearMonths) {
+    final String monthName =
+        toBeginningOfSentenceCase(yearMonth.month ?? UNKNOWN);
+
+    final List<int> dates = yearMonth.repeatOnDateOfMonth ?? <int>[];
+
+    if (dates.isEmpty) continue;
+
+    groupedByMonth.putIfAbsent(monthName, () => <int>[]).addAll(dates);
   }
 
-  final List<String> formattedMonthDates =
-      groupedByMonth.entries.map((MapEntry<String, List<int>> entry) {
-    return '${entry.key} ${entry.value.join(', ')}';
+  final List<String> formatted =
+      groupedByMonth.entries.map((MapEntry<String, List<int>> e) {
+    final List<int> sorted = <int>[...e.value]..sort();
+    final String datesStr = sorted.join(', ');
+    return '${e.key} $datesStr';
   }).toList();
 
-  return 'Repeats every year on ${formattedMonthDates.join(', ')}';
+  return 'Repeats every year on ${formatted.join('; ')}';
 }
 
-// Convert month number to month name
-String _monthName(int month) {
-  const List<String> monthNames = <String>[
+/// “Mar” from “March” (capitalized first 3 letters)
+String abbreviateMonth(String rawMonth) {
+  if (rawMonth.isEmpty) return '';
+
+  return toBeginningOfSentenceCase(rawMonth.substring(0, 3));
+}
+
+/// Remove one single date from a given month, dropping the month if empty
+List<RepeatYearlySchedule> removeOneYearlyDate(
+  List<RepeatYearlySchedule> schedules,
+  String monthToRemove,
+  int dateToRemove,
+) {
+  final String target = monthToRemove.toLowerCase();
+  return schedules
+      .map((RepeatYearlySchedule s) {
+        if (s.month?.toLowerCase() == target) {
+          final List<int> filtered = (s.repeatOnDateOfMonth ?? <int>[])
+              .where((int d) => d != dateToRemove)
+              .toList();
+          return filtered.isEmpty
+              ? null
+              : s.copyWith(repeatOnDateOfMonth: filtered);
+        }
+        return s;
+      })
+      .whereType<RepeatYearlySchedule>()
+      .toList();
+}
+
+String getMonthNameFromInt(int month) {
+  const List<String> months = <String>[
     'January',
     'February',
     'March',
@@ -710,5 +735,5 @@ String _monthName(int month) {
     'November',
     'December',
   ];
-  return monthNames[month - 1];
+  return months[month - 1];
 }

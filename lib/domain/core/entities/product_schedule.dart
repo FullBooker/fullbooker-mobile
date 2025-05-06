@@ -17,7 +17,7 @@ class ProductSchedule with _$ProductSchedule {
     @Default(UNKNOWN) @JsonKey(name: 'end_time') String? endTime,
     @Default(false) @JsonKey(name: 'is_all_day') bool? isAllDay,
     @Default(false) bool? repeats,
-    @Default('daily') @JsonKey(name: 'repeat') String? repeatType,
+    @Default(kNoRepeatSchedule) @JsonKey(name: 'repeat') String? repeatType,
     @Default('sunday') @JsonKey(name: 'week_starts_on') String? weekStartsOn,
     @Default(0) int? duration,
     @Default(<dynamic>[]) @JsonKey(name: 'open_days') List<dynamic>? openDays,
@@ -26,13 +26,50 @@ class ProductSchedule with _$ProductSchedule {
     List<dynamic>? closedDates,
 
     // Other fields used for setup
-    final Map<String, Map<String, String>>? repeatOnDaysOfWeek,
-    @Default(<int>[]) List<int>? repeatMonthDates,
-    @Default(<String>[]) List<String>? repeatYearDates,
+    @JsonKey(name: 'repeat_on_days_of_week')
+    @Default(<RepeatWeeklySchedule>[])
+    final List<RepeatWeeklySchedule>? repeatWeekly,
+    @JsonKey(name: 'repeat_on_date_of_month')
+    @Default(<int>[])
+    List<int>? repeatMonthly,
+    @JsonKey(name: 'repeat_on_month_of_year')
+    @Default(<RepeatYearlySchedule>[])
+    List<RepeatYearlySchedule>? repeatYearly,
   }) = _ProductSchedule;
-
-  factory ProductSchedule.initial() => ProductSchedule();
 
   factory ProductSchedule.fromJson(Map<String, dynamic> json) =>
       _$ProductScheduleFromJson(json);
+
+  factory ProductSchedule.initial() => ProductSchedule();
+}
+
+@Freezed(makeCollectionsUnmodifiable: false)
+class RepeatWeeklySchedule with _$RepeatWeeklySchedule {
+  @JsonSerializable(explicitToJson: true)
+  factory RepeatWeeklySchedule({
+    @Default(UNKNOWN) @JsonKey(name: 'day') String? day,
+    @Default(UNKNOWN) @JsonKey(name: 'start_time') String? startTime,
+    @Default(UNKNOWN) @JsonKey(name: 'end_time') String? endTime,
+  }) = _RepeatWeeklySchedule;
+
+  factory RepeatWeeklySchedule.fromJson(Map<String, dynamic> json) =>
+      _$RepeatWeeklyScheduleFromJson(json);
+
+  factory RepeatWeeklySchedule.initial() => RepeatWeeklySchedule();
+}
+
+@Freezed(makeCollectionsUnmodifiable: false)
+class RepeatYearlySchedule with _$RepeatYearlySchedule {
+  @JsonSerializable(explicitToJson: true)
+  factory RepeatYearlySchedule({
+    @Default(UNKNOWN) @JsonKey(name: 'month') String? month,
+    @Default(<int>[])
+    @JsonKey(name: 'repeat_on_date_of_month')
+    List<int>? repeatOnDateOfMonth,
+  }) = _RepeatYearlySchedule;
+
+  factory RepeatYearlySchedule.fromJson(Map<String, dynamic> json) =>
+      _$RepeatYearlyScheduleFromJson(json);
+
+  factory RepeatYearlySchedule.initial() => RepeatYearlySchedule();
 }

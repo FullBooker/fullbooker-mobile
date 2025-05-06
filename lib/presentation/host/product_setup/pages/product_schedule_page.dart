@@ -56,6 +56,8 @@ class ProductSchedulePage extends StatelessWidget {
               return AppLoading();
             }
 
+            final bool repeats = vm.repeatType != kNoRepeatSchedule;
+
             return Column(
               spacing: 12,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -425,19 +427,23 @@ class ProductSchedulePage extends StatelessWidget {
                           onTap: () {
                             context.dispatch(
                               UpdateCurrentScheduleAction(
-                                repeats: !vm.repeats,
+                                repeatType: repeats
+                                    ? kNoRepeatSchedule
+                                    : kDailyRepeatOption,
                               ),
                             );
                           },
                           child: Row(
                             children: <Widget>[
                               Checkbox(
-                                value: vm.repeats,
+                                value: repeats,
                                 onChanged: (bool? value) {
                                   context.dispatch(
                                     UpdateCurrentScheduleAction(
                                       repeats: value,
-                                      repeatType: kDailyOption,
+                                      repeatType: repeats
+                                          ? kNoRepeatSchedule
+                                          : kDailyRepeatOption,
                                     ),
                                   );
                                 },
@@ -458,13 +464,13 @@ class ProductSchedulePage extends StatelessWidget {
                           ),
                         ),
 
-                        if (vm.repeats) ...<Widget>[
+                        if (repeats)
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             spacing: 12,
                             children: <Widget>[
                               CustomDropdown(
-                                value: vm.repeatType,
+                                value: vm.repeatType.toLowerCase(),
                                 onChanged: (String? selected) {
                                   context.dispatch(
                                     UpdateCurrentScheduleAction(
@@ -476,23 +482,22 @@ class ProductSchedulePage extends StatelessWidget {
                               ),
 
                               /// Repeats daily
-                              if (vm.repeatType == kDailyOption)
+                              if (vm.repeatType == kDailyRepeatOption)
                                 RepeatsDailyWidget(),
 
                               /// Repeats weekly
-                              if (vm.repeatType == kWeeklyOption)
+                              if (vm.repeatType == kWeeklyRepeatOption)
                                 RepeatsWeeklyWidget(),
 
                               /// Repeats monthly
-                              if (vm.repeatType == kMonthlyOption)
+                              if (vm.repeatType == kMonthlyRepeatOption)
                                 RepeatsMonthlyWidget(),
 
                               /// Repeats yearly
-                              if (vm.repeatType == kYearlyOption)
+                              if (vm.repeatType == kYearlyRepeatOption)
                                 RepeatsYearlyWidget(),
                             ],
                           ),
-                        ],
                       ],
                     ),
                   ),
