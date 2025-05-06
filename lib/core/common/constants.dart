@@ -82,16 +82,17 @@ const List<String> kDaysOfTheWeek = <String>[
   'sunday',
 ];
 
-const String kDailyOption = 'Daily';
-const String kWeeklyOption = 'Weekly';
-const String kMonthlyOption = 'Monthly';
-const String kYearlyOption = 'Yearly';
+const String kDailyRepeatOption = 'daily';
+const String kWeeklyRepeatOption = 'weekly';
+const String kMonthlyRepeatOption = 'monthly';
+const String kYearlyRepeatOption = 'yearly';
 
 const List<String> scheduleRepeatOptions = <String>[
-  kDailyOption,
-  kWeeklyOption,
-  kMonthlyOption,
-  kYearlyOption,
+  kNoRepeatSchedule,
+  kDailyRepeatOption,
+  kWeeklyRepeatOption,
+  kMonthlyRepeatOption,
+  kYearlyRepeatOption,
 ];
 
 const String kNoRepeatSchedule = 'none';
@@ -118,3 +119,6 @@ int kRefreshTokenTimerInterval = 4;
 
 const String kStartOfDayTime = '00:01:00';
 const String kEndOfDayTime = '23:50:00';
+
+const String kDefaultWeeklyScheduleStartTime = '09:00';
+const String kDefaultWeeklyScheduleEndTime = '17:00';

@@ -12,9 +12,9 @@ class UpdateCurrentScheduleAction extends ReduxAction<AppState> {
     this.isAllDay,
     this.repeats,
     this.repeatType,
-    this.repeatOnDaysOfWeek,
-    this.repeatMonthDates,
-    this.repeatYearDates,
+    this.repeatWeekly,
+    this.repeatMonthly,
+    this.repeatYearly,
   });
 
   final String? startDate;
@@ -24,9 +24,9 @@ class UpdateCurrentScheduleAction extends ReduxAction<AppState> {
   final bool? isAllDay;
   final bool? repeats;
   final String? repeatType;
-  final List<int>? repeatMonthDates;
-  final List<String>? repeatYearDates;
-  Map<String, Map<String, String>>? repeatOnDaysOfWeek;
+  final List<int>? repeatMonthly;
+  final List<RepeatYearlySchedule>? repeatYearly;
+  List<RepeatWeeklySchedule>? repeatWeekly;
 
   @override
   AppState? reduce() {
@@ -40,10 +40,9 @@ class UpdateCurrentScheduleAction extends ReduxAction<AppState> {
       isAllDay: isAllDay ?? currentSchedule.isAllDay,
       repeats: repeats ?? currentSchedule.repeats,
       repeatType: repeatType ?? currentSchedule.repeatType,
-      repeatOnDaysOfWeek:
-          repeatOnDaysOfWeek ?? currentSchedule.repeatOnDaysOfWeek,
-      repeatMonthDates: repeatMonthDates ?? currentSchedule.repeatMonthDates,
-      repeatYearDates: repeatYearDates ?? currentSchedule.repeatYearDates,
+      repeatWeekly: repeatWeekly ?? currentSchedule.repeatWeekly,
+      repeatMonthly: repeatMonthly ?? currentSchedule.repeatMonthly,
+      repeatYearly: repeatYearly ?? currentSchedule.repeatYearly,
     );
 
     final HostState? updatedHost =

@@ -45,10 +45,14 @@ mixin _$ProductSchedule {
   @JsonKey(name: 'closed_dates')
   List<dynamic>? get closedDates =>
       throw _privateConstructorUsedError; // Other fields used for setup
-  Map<String, Map<String, String>>? get repeatOnDaysOfWeek =>
+  @JsonKey(name: 'repeat_on_days_of_week')
+  List<RepeatWeeklySchedule>? get repeatWeekly =>
       throw _privateConstructorUsedError;
-  List<int>? get repeatMonthDates => throw _privateConstructorUsedError;
-  List<String>? get repeatYearDates => throw _privateConstructorUsedError;
+  @JsonKey(name: 'repeat_on_date_of_month')
+  List<int>? get repeatMonthly => throw _privateConstructorUsedError;
+  @JsonKey(name: 'repeat_on_month_of_year')
+  List<RepeatYearlySchedule>? get repeatYearly =>
+      throw _privateConstructorUsedError;
 
   /// Serializes this ProductSchedule to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -81,9 +85,11 @@ abstract class $ProductScheduleCopyWith<$Res> {
       int? duration,
       @JsonKey(name: 'open_days') List<dynamic>? openDays,
       @JsonKey(name: 'closed_dates') List<dynamic>? closedDates,
-      Map<String, Map<String, String>>? repeatOnDaysOfWeek,
-      List<int>? repeatMonthDates,
-      List<String>? repeatYearDates});
+      @JsonKey(name: 'repeat_on_days_of_week')
+      List<RepeatWeeklySchedule>? repeatWeekly,
+      @JsonKey(name: 'repeat_on_date_of_month') List<int>? repeatMonthly,
+      @JsonKey(name: 'repeat_on_month_of_year')
+      List<RepeatYearlySchedule>? repeatYearly});
 }
 
 /// @nodoc
@@ -115,9 +121,9 @@ class _$ProductScheduleCopyWithImpl<$Res, $Val extends ProductSchedule>
     Object? duration = freezed,
     Object? openDays = freezed,
     Object? closedDates = freezed,
-    Object? repeatOnDaysOfWeek = freezed,
-    Object? repeatMonthDates = freezed,
-    Object? repeatYearDates = freezed,
+    Object? repeatWeekly = freezed,
+    Object? repeatMonthly = freezed,
+    Object? repeatYearly = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -176,18 +182,18 @@ class _$ProductScheduleCopyWithImpl<$Res, $Val extends ProductSchedule>
           ? _value.closedDates
           : closedDates // ignore: cast_nullable_to_non_nullable
               as List<dynamic>?,
-      repeatOnDaysOfWeek: freezed == repeatOnDaysOfWeek
-          ? _value.repeatOnDaysOfWeek
-          : repeatOnDaysOfWeek // ignore: cast_nullable_to_non_nullable
-              as Map<String, Map<String, String>>?,
-      repeatMonthDates: freezed == repeatMonthDates
-          ? _value.repeatMonthDates
-          : repeatMonthDates // ignore: cast_nullable_to_non_nullable
+      repeatWeekly: freezed == repeatWeekly
+          ? _value.repeatWeekly
+          : repeatWeekly // ignore: cast_nullable_to_non_nullable
+              as List<RepeatWeeklySchedule>?,
+      repeatMonthly: freezed == repeatMonthly
+          ? _value.repeatMonthly
+          : repeatMonthly // ignore: cast_nullable_to_non_nullable
               as List<int>?,
-      repeatYearDates: freezed == repeatYearDates
-          ? _value.repeatYearDates
-          : repeatYearDates // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+      repeatYearly: freezed == repeatYearly
+          ? _value.repeatYearly
+          : repeatYearly // ignore: cast_nullable_to_non_nullable
+              as List<RepeatYearlySchedule>?,
     ) as $Val);
   }
 }
@@ -215,9 +221,11 @@ abstract class _$$ProductScheduleImplCopyWith<$Res>
       int? duration,
       @JsonKey(name: 'open_days') List<dynamic>? openDays,
       @JsonKey(name: 'closed_dates') List<dynamic>? closedDates,
-      Map<String, Map<String, String>>? repeatOnDaysOfWeek,
-      List<int>? repeatMonthDates,
-      List<String>? repeatYearDates});
+      @JsonKey(name: 'repeat_on_days_of_week')
+      List<RepeatWeeklySchedule>? repeatWeekly,
+      @JsonKey(name: 'repeat_on_date_of_month') List<int>? repeatMonthly,
+      @JsonKey(name: 'repeat_on_month_of_year')
+      List<RepeatYearlySchedule>? repeatYearly});
 }
 
 /// @nodoc
@@ -247,9 +255,9 @@ class __$$ProductScheduleImplCopyWithImpl<$Res>
     Object? duration = freezed,
     Object? openDays = freezed,
     Object? closedDates = freezed,
-    Object? repeatOnDaysOfWeek = freezed,
-    Object? repeatMonthDates = freezed,
-    Object? repeatYearDates = freezed,
+    Object? repeatWeekly = freezed,
+    Object? repeatMonthly = freezed,
+    Object? repeatYearly = freezed,
   }) {
     return _then(_$ProductScheduleImpl(
       id: freezed == id
@@ -308,18 +316,18 @@ class __$$ProductScheduleImplCopyWithImpl<$Res>
           ? _value.closedDates
           : closedDates // ignore: cast_nullable_to_non_nullable
               as List<dynamic>?,
-      repeatOnDaysOfWeek: freezed == repeatOnDaysOfWeek
-          ? _value.repeatOnDaysOfWeek
-          : repeatOnDaysOfWeek // ignore: cast_nullable_to_non_nullable
-              as Map<String, Map<String, String>>?,
-      repeatMonthDates: freezed == repeatMonthDates
-          ? _value.repeatMonthDates
-          : repeatMonthDates // ignore: cast_nullable_to_non_nullable
+      repeatWeekly: freezed == repeatWeekly
+          ? _value.repeatWeekly
+          : repeatWeekly // ignore: cast_nullable_to_non_nullable
+              as List<RepeatWeeklySchedule>?,
+      repeatMonthly: freezed == repeatMonthly
+          ? _value.repeatMonthly
+          : repeatMonthly // ignore: cast_nullable_to_non_nullable
               as List<int>?,
-      repeatYearDates: freezed == repeatYearDates
-          ? _value.repeatYearDates
-          : repeatYearDates // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+      repeatYearly: freezed == repeatYearly
+          ? _value.repeatYearly
+          : repeatYearly // ignore: cast_nullable_to_non_nullable
+              as List<RepeatYearlySchedule>?,
     ));
   }
 }
@@ -338,14 +346,17 @@ class _$ProductScheduleImpl implements _ProductSchedule {
       @JsonKey(name: 'end_time') this.endTime = UNKNOWN,
       @JsonKey(name: 'is_all_day') this.isAllDay = false,
       this.repeats = false,
-      @JsonKey(name: 'repeat') this.repeatType = 'daily',
+      @JsonKey(name: 'repeat') this.repeatType = kNoRepeatSchedule,
       @JsonKey(name: 'week_starts_on') this.weekStartsOn = 'sunday',
       this.duration = 0,
       @JsonKey(name: 'open_days') this.openDays = const <dynamic>[],
       @JsonKey(name: 'closed_dates') this.closedDates = const <dynamic>[],
-      this.repeatOnDaysOfWeek,
-      this.repeatMonthDates = const <int>[],
-      this.repeatYearDates = const <String>[]});
+      @JsonKey(name: 'repeat_on_days_of_week')
+      this.repeatWeekly = const <RepeatWeeklySchedule>[],
+      @JsonKey(name: 'repeat_on_date_of_month')
+      this.repeatMonthly = const <int>[],
+      @JsonKey(name: 'repeat_on_month_of_year')
+      this.repeatYearly = const <RepeatYearlySchedule>[]});
 
   factory _$ProductScheduleImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProductScheduleImplFromJson(json);
@@ -394,17 +405,18 @@ class _$ProductScheduleImpl implements _ProductSchedule {
   final List<dynamic>? closedDates;
 // Other fields used for setup
   @override
-  final Map<String, Map<String, String>>? repeatOnDaysOfWeek;
+  @JsonKey(name: 'repeat_on_days_of_week')
+  final List<RepeatWeeklySchedule>? repeatWeekly;
   @override
-  @JsonKey()
-  final List<int>? repeatMonthDates;
+  @JsonKey(name: 'repeat_on_date_of_month')
+  final List<int>? repeatMonthly;
   @override
-  @JsonKey()
-  final List<String>? repeatYearDates;
+  @JsonKey(name: 'repeat_on_month_of_year')
+  final List<RepeatYearlySchedule>? repeatYearly;
 
   @override
   String toString() {
-    return 'ProductSchedule(id: $id, product: $product, productName: $productName, startDate: $startDate, startTime: $startTime, endDate: $endDate, endTime: $endTime, isAllDay: $isAllDay, repeats: $repeats, repeatType: $repeatType, weekStartsOn: $weekStartsOn, duration: $duration, openDays: $openDays, closedDates: $closedDates, repeatOnDaysOfWeek: $repeatOnDaysOfWeek, repeatMonthDates: $repeatMonthDates, repeatYearDates: $repeatYearDates)';
+    return 'ProductSchedule(id: $id, product: $product, productName: $productName, startDate: $startDate, startTime: $startTime, endDate: $endDate, endTime: $endTime, isAllDay: $isAllDay, repeats: $repeats, repeatType: $repeatType, weekStartsOn: $weekStartsOn, duration: $duration, openDays: $openDays, closedDates: $closedDates, repeatWeekly: $repeatWeekly, repeatMonthly: $repeatMonthly, repeatYearly: $repeatYearly)';
   }
 
   @override
@@ -435,11 +447,11 @@ class _$ProductScheduleImpl implements _ProductSchedule {
             const DeepCollectionEquality()
                 .equals(other.closedDates, closedDates) &&
             const DeepCollectionEquality()
-                .equals(other.repeatOnDaysOfWeek, repeatOnDaysOfWeek) &&
+                .equals(other.repeatWeekly, repeatWeekly) &&
             const DeepCollectionEquality()
-                .equals(other.repeatMonthDates, repeatMonthDates) &&
+                .equals(other.repeatMonthly, repeatMonthly) &&
             const DeepCollectionEquality()
-                .equals(other.repeatYearDates, repeatYearDates));
+                .equals(other.repeatYearly, repeatYearly));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -460,9 +472,9 @@ class _$ProductScheduleImpl implements _ProductSchedule {
       duration,
       const DeepCollectionEquality().hash(openDays),
       const DeepCollectionEquality().hash(closedDates),
-      const DeepCollectionEquality().hash(repeatOnDaysOfWeek),
-      const DeepCollectionEquality().hash(repeatMonthDates),
-      const DeepCollectionEquality().hash(repeatYearDates));
+      const DeepCollectionEquality().hash(repeatWeekly),
+      const DeepCollectionEquality().hash(repeatMonthly),
+      const DeepCollectionEquality().hash(repeatYearly));
 
   /// Create a copy of ProductSchedule
   /// with the given fields replaced by the non-null parameter values.
@@ -497,9 +509,11 @@ abstract class _ProductSchedule implements ProductSchedule {
       final int? duration,
       @JsonKey(name: 'open_days') final List<dynamic>? openDays,
       @JsonKey(name: 'closed_dates') final List<dynamic>? closedDates,
-      final Map<String, Map<String, String>>? repeatOnDaysOfWeek,
-      final List<int>? repeatMonthDates,
-      final List<String>? repeatYearDates}) = _$ProductScheduleImpl;
+      @JsonKey(name: 'repeat_on_days_of_week')
+      final List<RepeatWeeklySchedule>? repeatWeekly,
+      @JsonKey(name: 'repeat_on_date_of_month') final List<int>? repeatMonthly,
+      @JsonKey(name: 'repeat_on_month_of_year')
+      final List<RepeatYearlySchedule>? repeatYearly}) = _$ProductScheduleImpl;
 
   factory _ProductSchedule.fromJson(Map<String, dynamic> json) =
       _$ProductScheduleImpl.fromJson;
@@ -543,11 +557,14 @@ abstract class _ProductSchedule implements ProductSchedule {
   @JsonKey(name: 'closed_dates')
   List<dynamic>? get closedDates; // Other fields used for setup
   @override
-  Map<String, Map<String, String>>? get repeatOnDaysOfWeek;
+  @JsonKey(name: 'repeat_on_days_of_week')
+  List<RepeatWeeklySchedule>? get repeatWeekly;
   @override
-  List<int>? get repeatMonthDates;
+  @JsonKey(name: 'repeat_on_date_of_month')
+  List<int>? get repeatMonthly;
   @override
-  List<String>? get repeatYearDates;
+  @JsonKey(name: 'repeat_on_month_of_year')
+  List<RepeatYearlySchedule>? get repeatYearly;
 
   /// Create a copy of ProductSchedule
   /// with the given fields replaced by the non-null parameter values.
@@ -555,4 +572,401 @@ abstract class _ProductSchedule implements ProductSchedule {
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ProductScheduleImplCopyWith<_$ProductScheduleImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+RepeatWeeklySchedule _$RepeatWeeklyScheduleFromJson(Map<String, dynamic> json) {
+  return _RepeatWeeklySchedule.fromJson(json);
+}
+
+/// @nodoc
+mixin _$RepeatWeeklySchedule {
+  @JsonKey(name: 'day')
+  String? get day => throw _privateConstructorUsedError;
+  @JsonKey(name: 'start_time')
+  String? get startTime => throw _privateConstructorUsedError;
+  @JsonKey(name: 'end_time')
+  String? get endTime => throw _privateConstructorUsedError;
+
+  /// Serializes this RepeatWeeklySchedule to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of RepeatWeeklySchedule
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $RepeatWeeklyScheduleCopyWith<RepeatWeeklySchedule> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $RepeatWeeklyScheduleCopyWith<$Res> {
+  factory $RepeatWeeklyScheduleCopyWith(RepeatWeeklySchedule value,
+          $Res Function(RepeatWeeklySchedule) then) =
+      _$RepeatWeeklyScheduleCopyWithImpl<$Res, RepeatWeeklySchedule>;
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'day') String? day,
+      @JsonKey(name: 'start_time') String? startTime,
+      @JsonKey(name: 'end_time') String? endTime});
+}
+
+/// @nodoc
+class _$RepeatWeeklyScheduleCopyWithImpl<$Res,
+        $Val extends RepeatWeeklySchedule>
+    implements $RepeatWeeklyScheduleCopyWith<$Res> {
+  _$RepeatWeeklyScheduleCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of RepeatWeeklySchedule
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? day = freezed,
+    Object? startTime = freezed,
+    Object? endTime = freezed,
+  }) {
+    return _then(_value.copyWith(
+      day: freezed == day
+          ? _value.day
+          : day // ignore: cast_nullable_to_non_nullable
+              as String?,
+      startTime: freezed == startTime
+          ? _value.startTime
+          : startTime // ignore: cast_nullable_to_non_nullable
+              as String?,
+      endTime: freezed == endTime
+          ? _value.endTime
+          : endTime // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$RepeatWeeklyScheduleImplCopyWith<$Res>
+    implements $RepeatWeeklyScheduleCopyWith<$Res> {
+  factory _$$RepeatWeeklyScheduleImplCopyWith(_$RepeatWeeklyScheduleImpl value,
+          $Res Function(_$RepeatWeeklyScheduleImpl) then) =
+      __$$RepeatWeeklyScheduleImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'day') String? day,
+      @JsonKey(name: 'start_time') String? startTime,
+      @JsonKey(name: 'end_time') String? endTime});
+}
+
+/// @nodoc
+class __$$RepeatWeeklyScheduleImplCopyWithImpl<$Res>
+    extends _$RepeatWeeklyScheduleCopyWithImpl<$Res, _$RepeatWeeklyScheduleImpl>
+    implements _$$RepeatWeeklyScheduleImplCopyWith<$Res> {
+  __$$RepeatWeeklyScheduleImplCopyWithImpl(_$RepeatWeeklyScheduleImpl _value,
+      $Res Function(_$RepeatWeeklyScheduleImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of RepeatWeeklySchedule
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? day = freezed,
+    Object? startTime = freezed,
+    Object? endTime = freezed,
+  }) {
+    return _then(_$RepeatWeeklyScheduleImpl(
+      day: freezed == day
+          ? _value.day
+          : day // ignore: cast_nullable_to_non_nullable
+              as String?,
+      startTime: freezed == startTime
+          ? _value.startTime
+          : startTime // ignore: cast_nullable_to_non_nullable
+              as String?,
+      endTime: freezed == endTime
+          ? _value.endTime
+          : endTime // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+
+@JsonSerializable(explicitToJson: true)
+class _$RepeatWeeklyScheduleImpl implements _RepeatWeeklySchedule {
+  _$RepeatWeeklyScheduleImpl(
+      {@JsonKey(name: 'day') this.day = UNKNOWN,
+      @JsonKey(name: 'start_time') this.startTime = UNKNOWN,
+      @JsonKey(name: 'end_time') this.endTime = UNKNOWN});
+
+  factory _$RepeatWeeklyScheduleImpl.fromJson(Map<String, dynamic> json) =>
+      _$$RepeatWeeklyScheduleImplFromJson(json);
+
+  @override
+  @JsonKey(name: 'day')
+  final String? day;
+  @override
+  @JsonKey(name: 'start_time')
+  final String? startTime;
+  @override
+  @JsonKey(name: 'end_time')
+  final String? endTime;
+
+  @override
+  String toString() {
+    return 'RepeatWeeklySchedule(day: $day, startTime: $startTime, endTime: $endTime)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RepeatWeeklyScheduleImpl &&
+            (identical(other.day, day) || other.day == day) &&
+            (identical(other.startTime, startTime) ||
+                other.startTime == startTime) &&
+            (identical(other.endTime, endTime) || other.endTime == endTime));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, day, startTime, endTime);
+
+  /// Create a copy of RepeatWeeklySchedule
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RepeatWeeklyScheduleImplCopyWith<_$RepeatWeeklyScheduleImpl>
+      get copyWith =>
+          __$$RepeatWeeklyScheduleImplCopyWithImpl<_$RepeatWeeklyScheduleImpl>(
+              this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$RepeatWeeklyScheduleImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _RepeatWeeklySchedule implements RepeatWeeklySchedule {
+  factory _RepeatWeeklySchedule(
+          {@JsonKey(name: 'day') final String? day,
+          @JsonKey(name: 'start_time') final String? startTime,
+          @JsonKey(name: 'end_time') final String? endTime}) =
+      _$RepeatWeeklyScheduleImpl;
+
+  factory _RepeatWeeklySchedule.fromJson(Map<String, dynamic> json) =
+      _$RepeatWeeklyScheduleImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'day')
+  String? get day;
+  @override
+  @JsonKey(name: 'start_time')
+  String? get startTime;
+  @override
+  @JsonKey(name: 'end_time')
+  String? get endTime;
+
+  /// Create a copy of RepeatWeeklySchedule
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$RepeatWeeklyScheduleImplCopyWith<_$RepeatWeeklyScheduleImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+RepeatYearlySchedule _$RepeatYearlyScheduleFromJson(Map<String, dynamic> json) {
+  return _RepeatYearlySchedule.fromJson(json);
+}
+
+/// @nodoc
+mixin _$RepeatYearlySchedule {
+  @JsonKey(name: 'month')
+  String? get month => throw _privateConstructorUsedError;
+  @JsonKey(name: 'repeat_on_date_of_month')
+  List<int>? get repeatOnDateOfMonth => throw _privateConstructorUsedError;
+
+  /// Serializes this RepeatYearlySchedule to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of RepeatYearlySchedule
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $RepeatYearlyScheduleCopyWith<RepeatYearlySchedule> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $RepeatYearlyScheduleCopyWith<$Res> {
+  factory $RepeatYearlyScheduleCopyWith(RepeatYearlySchedule value,
+          $Res Function(RepeatYearlySchedule) then) =
+      _$RepeatYearlyScheduleCopyWithImpl<$Res, RepeatYearlySchedule>;
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'month') String? month,
+      @JsonKey(name: 'repeat_on_date_of_month')
+      List<int>? repeatOnDateOfMonth});
+}
+
+/// @nodoc
+class _$RepeatYearlyScheduleCopyWithImpl<$Res,
+        $Val extends RepeatYearlySchedule>
+    implements $RepeatYearlyScheduleCopyWith<$Res> {
+  _$RepeatYearlyScheduleCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of RepeatYearlySchedule
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? month = freezed,
+    Object? repeatOnDateOfMonth = freezed,
+  }) {
+    return _then(_value.copyWith(
+      month: freezed == month
+          ? _value.month
+          : month // ignore: cast_nullable_to_non_nullable
+              as String?,
+      repeatOnDateOfMonth: freezed == repeatOnDateOfMonth
+          ? _value.repeatOnDateOfMonth
+          : repeatOnDateOfMonth // ignore: cast_nullable_to_non_nullable
+              as List<int>?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$RepeatYearlyScheduleImplCopyWith<$Res>
+    implements $RepeatYearlyScheduleCopyWith<$Res> {
+  factory _$$RepeatYearlyScheduleImplCopyWith(_$RepeatYearlyScheduleImpl value,
+          $Res Function(_$RepeatYearlyScheduleImpl) then) =
+      __$$RepeatYearlyScheduleImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'month') String? month,
+      @JsonKey(name: 'repeat_on_date_of_month')
+      List<int>? repeatOnDateOfMonth});
+}
+
+/// @nodoc
+class __$$RepeatYearlyScheduleImplCopyWithImpl<$Res>
+    extends _$RepeatYearlyScheduleCopyWithImpl<$Res, _$RepeatYearlyScheduleImpl>
+    implements _$$RepeatYearlyScheduleImplCopyWith<$Res> {
+  __$$RepeatYearlyScheduleImplCopyWithImpl(_$RepeatYearlyScheduleImpl _value,
+      $Res Function(_$RepeatYearlyScheduleImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of RepeatYearlySchedule
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? month = freezed,
+    Object? repeatOnDateOfMonth = freezed,
+  }) {
+    return _then(_$RepeatYearlyScheduleImpl(
+      month: freezed == month
+          ? _value.month
+          : month // ignore: cast_nullable_to_non_nullable
+              as String?,
+      repeatOnDateOfMonth: freezed == repeatOnDateOfMonth
+          ? _value.repeatOnDateOfMonth
+          : repeatOnDateOfMonth // ignore: cast_nullable_to_non_nullable
+              as List<int>?,
+    ));
+  }
+}
+
+/// @nodoc
+
+@JsonSerializable(explicitToJson: true)
+class _$RepeatYearlyScheduleImpl implements _RepeatYearlySchedule {
+  _$RepeatYearlyScheduleImpl(
+      {@JsonKey(name: 'month') this.month = UNKNOWN,
+      @JsonKey(name: 'repeat_on_date_of_month')
+      this.repeatOnDateOfMonth = const <int>[]});
+
+  factory _$RepeatYearlyScheduleImpl.fromJson(Map<String, dynamic> json) =>
+      _$$RepeatYearlyScheduleImplFromJson(json);
+
+  @override
+  @JsonKey(name: 'month')
+  final String? month;
+  @override
+  @JsonKey(name: 'repeat_on_date_of_month')
+  final List<int>? repeatOnDateOfMonth;
+
+  @override
+  String toString() {
+    return 'RepeatYearlySchedule(month: $month, repeatOnDateOfMonth: $repeatOnDateOfMonth)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RepeatYearlyScheduleImpl &&
+            (identical(other.month, month) || other.month == month) &&
+            const DeepCollectionEquality()
+                .equals(other.repeatOnDateOfMonth, repeatOnDateOfMonth));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, month,
+      const DeepCollectionEquality().hash(repeatOnDateOfMonth));
+
+  /// Create a copy of RepeatYearlySchedule
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RepeatYearlyScheduleImplCopyWith<_$RepeatYearlyScheduleImpl>
+      get copyWith =>
+          __$$RepeatYearlyScheduleImplCopyWithImpl<_$RepeatYearlyScheduleImpl>(
+              this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$RepeatYearlyScheduleImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _RepeatYearlySchedule implements RepeatYearlySchedule {
+  factory _RepeatYearlySchedule(
+      {@JsonKey(name: 'month') final String? month,
+      @JsonKey(name: 'repeat_on_date_of_month')
+      final List<int>? repeatOnDateOfMonth}) = _$RepeatYearlyScheduleImpl;
+
+  factory _RepeatYearlySchedule.fromJson(Map<String, dynamic> json) =
+      _$RepeatYearlyScheduleImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'month')
+  String? get month;
+  @override
+  @JsonKey(name: 'repeat_on_date_of_month')
+  List<int>? get repeatOnDateOfMonth;
+
+  /// Create a copy of RepeatYearlySchedule
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$RepeatYearlyScheduleImplCopyWith<_$RepeatYearlyScheduleImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
