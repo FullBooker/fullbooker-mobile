@@ -105,6 +105,7 @@ jobs:
         uses: r0adkll/upload-google-play@v1
         with:
           serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
+          changesNotSentForReview: true
           packageName: com.fullbooker.fullbooker
           releaseFiles: build/app/outputs/bundle/release/app-release.aab
           track: production
