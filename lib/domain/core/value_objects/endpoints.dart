@@ -40,9 +40,9 @@ const String kProdResetPasswordEndpoint =
 const String kProdRefreshTokenEndpoint = '$kProdAPIBaseURL/accounts/refresh/';
 const String kProdProductsEndpoint = '$kProdAPIBaseURL/products/';
 const String kProdProfileEndpoint = '$kProdAPIBaseURL/accounts/profile';
-const String kProdProductCategoriesEndpoint = '$kProdAPIBaseURL/categories';
+const String kProdProductCategoriesEndpoint = '$kProdAPIBaseURL/categories/';
 const String kProdProductSubCategoriesEndpoint =
-    '$kProdAPIBaseURL/subcategories';
+    '$kProdAPIBaseURL/subcategories/';
 const String kProdLocationEndpoint = '$kProdAPIBaseURL/location/';
 const String kProdProductScheduleEndpoint = '$kProdAPIBaseURL/schedules/';
 const String kProdMediaEndpoint = '$kProdAPIBaseURL/media/';
@@ -67,12 +67,12 @@ const String kTestRequestOTPEndpoint = '$kTestAPIBaseURL/accounts/otp/request';
 const String kTestVerifyOTPEndpoint = '$kTestAPIBaseURL/accounts/otp/verify';
 const String kTestResetPasswordEndpoint =
     '$kTestAPIBaseURL/accounts/password/reset';
-const String kTestRefreshTokenEndpoint = '$kTestAPIBaseURL/accounts/refresh';
+const String kTestRefreshTokenEndpoint = '$kTestAPIBaseURL/accounts/refresh/';
 const String kTestProductsEndpoint = '$kTestAPIBaseURL/products/';
 const String kTestProfileEndpoint = '$kTestAPIBaseURL/accounts/profile';
-const String kTestProductCategoriesEndpoint = '$kTestAPIBaseURL/categories';
+const String kTestProductCategoriesEndpoint = '$kTestAPIBaseURL/categories/';
 const String kTestProductSubCategoriesEndpoint =
-    '$kTestAPIBaseURL/subcategories';
+    '$kTestAPIBaseURL/subcategories/';
 const String kTestLocationEndpoint = '$kTestAPIBaseURL/location/';
 const String kTestProductScheduleEndpoint = '$kTestAPIBaseURL/schedules/';
 const String kTestMediaEndpoint = '$kTestAPIBaseURL/media/';
