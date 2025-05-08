@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/core/utils/utils.dart';
 import 'package:fullbooker/domain/core/entities/booking.dart';
@@ -12,6 +13,7 @@ class BookingFanWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final String fullName =
         getFullName(booking.user?.firstName, booking.user?.lastName);
+    final String email = booking.user?.emailAddress ?? UNKNOWN;
 
     return Container(
       padding: const EdgeInsets.all(12),
@@ -51,6 +53,10 @@ class BookingFanWidget extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyLarge,
                   overflow: TextOverflow.visible,
                   softWrap: true,
+                ),
+                Text(
+                  email,
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 humanizeDate(
                   loadedDate:

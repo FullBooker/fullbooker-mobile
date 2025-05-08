@@ -47,6 +47,8 @@ mixin _$HostState {
   String? get searchParam =>
       throw _privateConstructorUsedError; // Bookings page
   Booking? get selectedBooking => throw _privateConstructorUsedError;
+  List<Ticket?>? get selectedBookingTickets =>
+      throw _privateConstructorUsedError;
 
   /// Serializes this HostState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -82,7 +84,8 @@ abstract class $HostStateCopyWith<$Res> {
       List<String?>? selectedPricingOptionIds,
       bool? isSearching,
       String? searchParam,
-      Booking? selectedBooking});
+      Booking? selectedBooking,
+      List<Ticket?>? selectedBookingTickets});
 
   $ProductCopyWith<$Res>? get currentProduct;
   $ProductCopyWith<$Res>? get selectedProduct;
@@ -128,6 +131,7 @@ class _$HostStateCopyWithImpl<$Res, $Val extends HostState>
     Object? isSearching = freezed,
     Object? searchParam = freezed,
     Object? selectedBooking = freezed,
+    Object? selectedBookingTickets = freezed,
   }) {
     return _then(_value.copyWith(
       products: freezed == products
@@ -206,6 +210,10 @@ class _$HostStateCopyWithImpl<$Res, $Val extends HostState>
           ? _value.selectedBooking
           : selectedBooking // ignore: cast_nullable_to_non_nullable
               as Booking?,
+      selectedBookingTickets: freezed == selectedBookingTickets
+          ? _value.selectedBookingTickets
+          : selectedBookingTickets // ignore: cast_nullable_to_non_nullable
+              as List<Ticket?>?,
     ) as $Val);
   }
 
@@ -350,7 +358,8 @@ abstract class _$$HostStateImplCopyWith<$Res>
       List<String?>? selectedPricingOptionIds,
       bool? isSearching,
       String? searchParam,
-      Booking? selectedBooking});
+      Booking? selectedBooking,
+      List<Ticket?>? selectedBookingTickets});
 
   @override
   $ProductCopyWith<$Res>? get currentProduct;
@@ -402,6 +411,7 @@ class __$$HostStateImplCopyWithImpl<$Res>
     Object? isSearching = freezed,
     Object? searchParam = freezed,
     Object? selectedBooking = freezed,
+    Object? selectedBookingTickets = freezed,
   }) {
     return _then(_$HostStateImpl(
       products: freezed == products
@@ -480,6 +490,10 @@ class __$$HostStateImplCopyWithImpl<$Res>
           ? _value.selectedBooking
           : selectedBooking // ignore: cast_nullable_to_non_nullable
               as Booking?,
+      selectedBookingTickets: freezed == selectedBookingTickets
+          ? _value.selectedBookingTickets
+          : selectedBookingTickets // ignore: cast_nullable_to_non_nullable
+              as List<Ticket?>?,
     ));
   }
 }
@@ -507,7 +521,8 @@ class _$HostStateImpl implements _HostState {
       this.selectedPricingOptionIds = const <String>[],
       this.isSearching = false,
       this.searchParam = UNKNOWN,
-      this.selectedBooking});
+      this.selectedBooking,
+      this.selectedBookingTickets = const <Ticket>[]});
 
   factory _$HostStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$HostStateImplFromJson(json);
@@ -567,10 +582,13 @@ class _$HostStateImpl implements _HostState {
 // Bookings page
   @override
   final Booking? selectedBooking;
+  @override
+  @JsonKey()
+  final List<Ticket?>? selectedBookingTickets;
 
   @override
   String toString() {
-    return 'HostState(products: $products, currentProduct: $currentProduct, selectedProduct: $selectedProduct, productCategories: $productCategories, locationPerms: $locationPerms, selectedLocation: $selectedLocation, selectedSchedule: $selectedSchedule, currencies: $currencies, selectedCurrency: $selectedCurrency, selectedPricingTier: $selectedPricingTier, selectedProductPricing: $selectedProductPricing, currentScannedTicketID: $currentScannedTicketID, isValidTicket: $isValidTicket, workflowState: $workflowState, pricingOptions: $pricingOptions, selectedPricingOptionIds: $selectedPricingOptionIds, isSearching: $isSearching, searchParam: $searchParam, selectedBooking: $selectedBooking)';
+    return 'HostState(products: $products, currentProduct: $currentProduct, selectedProduct: $selectedProduct, productCategories: $productCategories, locationPerms: $locationPerms, selectedLocation: $selectedLocation, selectedSchedule: $selectedSchedule, currencies: $currencies, selectedCurrency: $selectedCurrency, selectedPricingTier: $selectedPricingTier, selectedProductPricing: $selectedProductPricing, currentScannedTicketID: $currentScannedTicketID, isValidTicket: $isValidTicket, workflowState: $workflowState, pricingOptions: $pricingOptions, selectedPricingOptionIds: $selectedPricingOptionIds, isSearching: $isSearching, searchParam: $searchParam, selectedBooking: $selectedBooking, selectedBookingTickets: $selectedBookingTickets)';
   }
 
   @override
@@ -614,7 +632,9 @@ class _$HostStateImpl implements _HostState {
             (identical(other.searchParam, searchParam) ||
                 other.searchParam == searchParam) &&
             (identical(other.selectedBooking, selectedBooking) ||
-                other.selectedBooking == selectedBooking));
+                other.selectedBooking == selectedBooking) &&
+            const DeepCollectionEquality()
+                .equals(other.selectedBookingTickets, selectedBookingTickets));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -639,7 +659,8 @@ class _$HostStateImpl implements _HostState {
         const DeepCollectionEquality().hash(selectedPricingOptionIds),
         isSearching,
         searchParam,
-        selectedBooking
+        selectedBooking,
+        const DeepCollectionEquality().hash(selectedBookingTickets)
       ]);
 
   /// Create a copy of HostState
@@ -678,7 +699,8 @@ abstract class _HostState implements HostState {
       final List<String?>? selectedPricingOptionIds,
       final bool? isSearching,
       final String? searchParam,
-      final Booking? selectedBooking}) = _$HostStateImpl;
+      final Booking? selectedBooking,
+      final List<Ticket?>? selectedBookingTickets}) = _$HostStateImpl;
 
   factory _HostState.fromJson(Map<String, dynamic> json) =
       _$HostStateImpl.fromJson;
@@ -721,6 +743,8 @@ abstract class _HostState implements HostState {
   String? get searchParam; // Bookings page
   @override
   Booking? get selectedBooking;
+  @override
+  List<Ticket?>? get selectedBookingTickets;
 
   /// Create a copy of HostState
   /// with the given fields replaced by the non-null parameter values.

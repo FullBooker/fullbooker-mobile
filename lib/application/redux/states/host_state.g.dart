@@ -72,6 +72,11 @@ _$HostStateImpl _$$HostStateImplFromJson(Map<String, dynamic> json) =>
       selectedBooking: json['selectedBooking'] == null
           ? null
           : Booking.fromJson(json['selectedBooking'] as Map<String, dynamic>),
+      selectedBookingTickets: (json['selectedBookingTickets'] as List<dynamic>?)
+              ?.map((e) =>
+                  e == null ? null : Ticket.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const <Ticket>[],
     );
 
 Map<String, dynamic> _$$HostStateImplToJson(_$HostStateImpl instance) =>
@@ -97,6 +102,8 @@ Map<String, dynamic> _$$HostStateImplToJson(_$HostStateImpl instance) =>
       'isSearching': instance.isSearching,
       'searchParam': instance.searchParam,
       'selectedBooking': instance.selectedBooking?.toJson(),
+      'selectedBookingTickets':
+          instance.selectedBookingTickets?.map((e) => e?.toJson()).toList(),
     };
 
 const _$WorkflowStateEnumMap = {

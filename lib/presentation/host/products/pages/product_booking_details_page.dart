@@ -3,16 +3,17 @@ import 'package:auto_route/auto_route.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
-import 'package:fullbooker/application/redux/actions/fetch_product_bookings_action.dart';
+import 'package:fullbooker/application/redux/actions/fetch_booking_tickets_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_booking_detail_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/utils/utils.dart';
 import 'package:fullbooker/domain/core/entities/product_stats.dart';
+import 'package:fullbooker/domain/core/entities/ticket.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:fullbooker/presentation/host/products/widgets/booking_fan_widget.dart';
-import 'package:fullbooker/presentation/host/products/widgets/booking_list_item_widget.dart';
+import 'package:fullbooker/presentation/host/products/widgets/booking_ticket_item_widget.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:heroicons/heroicons.dart';
@@ -23,7 +24,7 @@ class ProductBookingDetailsPage extends StatelessWidget {
 
   Future<void> onRefresh(BuildContext context) async {
     context.dispatch(
-      FetchProductBookingsAction(
+      FetchBookingTicketsAction(
         client: AppWrapperBase.of(context)!.customClient,
       ),
     );
@@ -106,11 +107,18 @@ class ProductBookingDetailsPage extends StatelessWidget {
                 StoreConnector<AppState, ProductBookingDetailsViewModel>(
                   converter: (Store<AppState> store) =>
                       ProductBookingDetailsViewModel.fromState(store.state),
+                  onInit: (Store<AppState> store) {
+                    context.dispatch(
+                      FetchBookingTicketsAction(
+                        client: AppWrapperBase.of(context)!.customClient,
+                      ),
+                    );
+                  },
                   builder: (
                     BuildContext context,
                     ProductBookingDetailsViewModel vm,
                   ) {
-                    if (context.isWaiting(FetchProductBookingsAction)) {
+                    if (context.isWaiting(FetchBookingTicketsAction)) {
                       return AppLoading();
                     }
 
@@ -136,14 +144,22 @@ class ProductBookingDetailsPage extends StatelessWidget {
                           ),
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 4,
-                          ),
-                          child: BookingListItem(
-                            booking: vm.selectedBooking,
-                            readOnly: true,
-                          ),
+                        Column(
+                          children: <Widget>[
+                            ...vm.selectedBookingTickets?.map(
+                                  (Ticket? ticket) {
+                                    return Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: 4,
+                                      ),
+                                      child: BookingTicketItemWidget(
+                                        ticket: ticket,
+                                      ),
+                                    );
+                                  },
+                                ).toList() ??
+                                <Widget>[],
+                          ],
                         ),
                       ],
                     );
