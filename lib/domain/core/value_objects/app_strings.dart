@@ -508,7 +508,7 @@ const String allDayLabel = 'All Day';
 const String dailyRepeatPrompt =
     'Choose a day of the week when your event repeats';
 const String weeklyRepeatPrompt =
-    'Choose a day of the week when your event repeats';
+    'Select the days of the week when your event repeats';
 const String monthlyRepeatPrompt =
     'Select the days of the month when your event will be repeating';
 const String yearlyRepeatPrompt =
