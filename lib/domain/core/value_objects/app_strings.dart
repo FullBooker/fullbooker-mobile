@@ -730,3 +730,5 @@ const String noProductsFoundCopy =
     'We couldn\'t find any products matching your search. Please try adjusting your search terms to explore more options';
 
 const String browseAllProducts = 'Browse All Products';
+
+const String fatalPlatformError = 'Fatal platform error';
