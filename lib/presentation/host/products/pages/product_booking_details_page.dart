@@ -11,6 +11,7 @@ import 'package:fullbooker/core/utils/utils.dart';
 import 'package:fullbooker/domain/core/entities/product_stats.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
+import 'package:fullbooker/presentation/host/products/widgets/booking_fan_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/booking_list_item_widget.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
@@ -125,9 +126,8 @@ class ProductBookingDetailsPage extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(
                             vertical: 4,
                           ),
-                          child: BookingListItem(
+                          child: BookingFanWidget(
                             booking: vm.selectedBooking,
-                            readOnly: true,
                           ),
                         ),
                         Text(
