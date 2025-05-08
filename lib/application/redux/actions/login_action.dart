@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/core/services/i_custom_client.dart';
+import 'package:fullbooker/application/core/services/sentry_service.dart';
 import 'package:fullbooker/application/redux/actions/set_sign_in_method_action.dart';
 import 'package:fullbooker/application/redux/actions/update_auth_state_action.dart';
 import 'package:fullbooker/application/redux/actions/update_user_state_action.dart';
@@ -65,6 +66,13 @@ class LoginAction extends ReduxAction<AppState> {
       final String? error = client.parseError(body);
 
       onError?.call(error ?? defaultUserFriendlyMessage);
+
+      await SentryService().reportError(
+        hint: error ?? defaultUserFriendlyMessage,
+        state: state,
+        response: httpResponse,
+        stackTrace: StackTrace.fromString(error ?? defaultUserFriendlyMessage),
+      );
 
       return null;
     }

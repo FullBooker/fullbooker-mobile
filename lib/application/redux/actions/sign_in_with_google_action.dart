@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/core/services/i_custom_client.dart';
+import 'package:fullbooker/application/core/services/sentry_service.dart';
 import 'package:fullbooker/application/redux/actions/set_sign_in_method_action.dart';
 import 'package:fullbooker/application/redux/actions/update_auth_state_action.dart';
 import 'package:fullbooker/application/redux/actions/update_user_state_action.dart';
@@ -93,7 +94,14 @@ class SignInWithGoogleAction extends ReduxAction<AppState> {
       return null;
     } catch (e) {
       onError?.call(signInFailed);
+      await SentryService().reportError(
+        hint: signInFailed,
+        state: state,
+        exception: e,
+        stackTrace: StackTrace.fromString(signInFailed),
+      );
     }
+
     return null;
   }
 }

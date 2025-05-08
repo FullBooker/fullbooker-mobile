@@ -24,7 +24,8 @@ class SentryService {
           ..dsn = dsn
           ..environment = environment
           ..enableNativeCrashHandling = enableNativeCrashHandling
-          ..tracesSampleRate = tracesSampleRate;
+          ..tracesSampleRate = tracesSampleRate
+          ..enableDeduplication = false;
       },
       appRunner: appRunner,
     );
@@ -36,10 +37,9 @@ class SentryService {
     AppState? state,
     Response? response,
     String? route,
-    Object? exception,
+    dynamic exception,
     StackTrace? stackTrace,
     Map<String, dynamic>? variables,
-    String? userEmailOverride,
   }) {
     final Map<String, Object?> extras = <String, Object?>{
       'hint': hint,

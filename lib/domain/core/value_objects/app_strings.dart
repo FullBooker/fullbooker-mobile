@@ -386,6 +386,7 @@ const String comingSoonCopy =
 const String signInCancelled =
     'Sign-in canceled. Please select an account to continue.';
 const String signInFailed = 'Sign-in failed. Please try again.';
+const String signOutFailed = 'Sign-out failed';
 const String createAccountFailedString =
     'Something went wrong while creating your account. Please try again later';
 const String fillInAllFields = 'Please fill in all required fields to continue';

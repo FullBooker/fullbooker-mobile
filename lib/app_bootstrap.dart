@@ -75,6 +75,9 @@ Future<void> appBootStrap() async {
     );
   }, (Object error, StackTrace stack) async {
     FirebaseCrashlytics.instance.recordError(error, stack);
-    await SentryService().reportError(hint: fatalPlatformError);
+    await SentryService().reportError(
+      hint: fatalPlatformError,
+      exception: error,
+    );
   });
 }
