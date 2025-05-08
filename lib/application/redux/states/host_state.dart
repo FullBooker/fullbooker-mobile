@@ -2,6 +2,7 @@
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:fullbooker/core/common/constants.dart';
+import 'package:fullbooker/domain/core/entities/booking.dart';
 import 'package:fullbooker/domain/core/entities/currency.dart';
 import 'package:fullbooker/domain/core/entities/pricing_option.dart';
 import 'package:fullbooker/domain/core/entities/product.dart';
@@ -47,6 +48,9 @@ class HostState with _$HostState {
     // Search
     @Default(false) bool? isSearching,
     @Default(UNKNOWN) String? searchParam,
+
+    // Bookings page
+    Booking? selectedBooking,
   }) = _HostState;
 
   factory HostState.initial() => HostState(

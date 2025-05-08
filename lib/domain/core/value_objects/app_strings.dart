@@ -661,6 +661,8 @@ const String noGoBack = 'No, Go Back';
 
 const String productBookings = 'Product Bookings';
 
+const String productBookingDetails = 'Booking Details';
+
 const String searchBookingsHint = 'Search bookings...';
 
 const String verifiedString = 'Verified';
@@ -733,3 +735,6 @@ const String noProductsFoundCopy =
 const String browseAllProducts = 'Browse All Products';
 
 const String fatalPlatformError = 'Fatal platform error';
+
+const String bookedBy = 'Booked by';
+String ticketsDisplay(int tickets) => 'Tickets ($tickets)';
