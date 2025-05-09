@@ -33,3 +33,5 @@ enum ProductStatus {
   rejected,
   invalidated,
 }
+
+enum BookingStatus { pending, confirmed, canceled, completed, expired }
