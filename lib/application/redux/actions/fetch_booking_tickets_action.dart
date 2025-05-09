@@ -32,7 +32,7 @@ class FetchBookingTicketsAction extends ReduxAction<AppState> {
     };
 
     final Response httpResponse = await client.callRESTAPI(
-      endpoint: '${GetIt.I.get<AppConfig>().ticketsEndpoint}/',
+      endpoint: GetIt.I.get<AppConfig>().ticketsEndpoint,
       method: APIMethods.GET.name.toUpperCase(),
       queryParams: data,
     );
