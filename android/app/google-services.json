@@ -30,6 +30,14 @@
           }
         },
         {
+          "client_id": "273711950325-iqbanksd04clgd5ujtbl3ua3rninvbto.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fullbooker.fullbooker",
+            "certificate_hash": "ecae42743ba5b7d96490c121c6b1acb99f2a6af1"
+          }
+        },
+        {
           "client_id": "273711950325-m62plnkrpco5tbn1j70sbvodo24dcfj4.apps.googleusercontent.com",
           "client_type": 3
         }
