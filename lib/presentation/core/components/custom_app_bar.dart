@@ -95,7 +95,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ),
                 ),
               ),
-            if (showBell) const NotificationBell(),
+            Visibility(visible: showBell, child: const NotificationBell()),
           ],
         ),
       ),
