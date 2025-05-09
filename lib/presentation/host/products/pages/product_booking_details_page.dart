@@ -8,7 +8,6 @@ import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_booking_detail_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/utils/utils.dart';
-import 'package:fullbooker/domain/core/entities/product_stats.dart';
 import 'package:fullbooker/domain/core/entities/ticket.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
@@ -81,9 +80,9 @@ class ProductBookingDetailsPage extends StatelessWidget {
                     BuildContext context,
                     ProductBookingDetailsViewModel vm,
                   ) {
-                    final ProductStats? stats = vm.stats;
                     final double revenue =
-                        double.tryParse(stats?.revenue ?? '0') ?? 0;
+                        double.tryParse(vm.selectedBooking.totalCost ?? '0') ??
+                            0;
 
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,7 +95,7 @@ class ProductBookingDetailsPage extends StatelessWidget {
                         Text(
                           formatCurrency(revenue),
                           style:
-                              Theme.of(context).textTheme.titleMedium?.copyWith(
+                              Theme.of(context).textTheme.titleLarge?.copyWith(
                                     color: Theme.of(context).primaryColor,
                                   ),
                         ),
