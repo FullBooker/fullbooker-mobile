@@ -24,8 +24,7 @@ class SentryService {
           ..dsn = dsn
           ..environment = environment
           ..enableNativeCrashHandling = enableNativeCrashHandling
-          ..tracesSampleRate = tracesSampleRate
-          ..enableDeduplication = false;
+          ..tracesSampleRate = tracesSampleRate;
       },
       appRunner: appRunner,
     );
