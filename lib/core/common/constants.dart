@@ -122,3 +122,6 @@ const String kEndOfDayTime = '23:50:00';
 
 const String kDefaultWeeklyScheduleStartTime = '09:00';
 const String kDefaultWeeklyScheduleEndTime = '17:00';
+
+const String kSentryDSN =
+    'https://e2a8637cbe85e5d6e4aad642ba8db7cc@o4509281741766656.ingest.de.sentry.io/4509281743208528';

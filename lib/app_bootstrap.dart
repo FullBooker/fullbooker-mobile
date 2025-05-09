@@ -6,10 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fullbooker/app_entry_point.dart';
 import 'package:fullbooker/application/core/services/analytics_service.dart';
+import 'package:fullbooker/application/core/services/sentry_service.dart';
 import 'package:fullbooker/application/redux/observers/custom_observer.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/core/utils/utils.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
+import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/global_keys.dart';
 import 'package:fullbooker/firebase_options.dart';
 import 'package:fullbooker/infrastructure/repository/state_persistor.dart';
@@ -61,13 +63,21 @@ Future<void> appBootStrap() async {
 
     NavigateAction.setNavigatorKey(appGlobalNavigatorKey);
 
-    runApp(
-      AppEntryPoint(
-        appStore: store,
-        appName: appConfig.applicationName,
+    SentryService().init(
+      dsn: appConfig.sentryDsn,
+      environment: appConfig.environment,
+      appRunner: () => runApp(
+        AppEntryPoint(
+          appStore: store,
+          appName: appConfig.applicationName,
+        ),
       ),
     );
   }, (Object error, StackTrace stack) async {
     FirebaseCrashlytics.instance.recordError(error, stack);
+    await SentryService().reportError(
+      hint: fatalPlatformError,
+      exception: error,
+    );
   });
 }

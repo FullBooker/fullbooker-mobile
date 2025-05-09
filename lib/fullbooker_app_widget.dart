@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/analytics_service.dart';
 import 'package:fullbooker/core/common/app_router.dart';
 import 'package:fullbooker/presentation/core/theme/app_theme.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class FullBookerAppWidget extends StatefulWidget {
   const FullBookerAppWidget({super.key});
@@ -32,6 +33,7 @@ class _FullBookerAppWidgetState extends State<FullBookerAppWidget>
       routerConfig: appRouter.config(
         navigatorObservers: () => <NavigatorObserver>[
           AnalyticsService().getAnalyticsObserver(),
+          SentryNavigatorObserver(),
         ],
       ),
       debugShowCheckedModeBanner: false,

@@ -2,6 +2,7 @@
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:fullbooker/core/common/constants.dart';
+import 'package:fullbooker/domain/core/entities/booking.dart';
 import 'package:fullbooker/domain/core/entities/currency.dart';
 import 'package:fullbooker/domain/core/entities/pricing_option.dart';
 import 'package:fullbooker/domain/core/entities/product.dart';
@@ -9,6 +10,7 @@ import 'package:fullbooker/domain/core/entities/product_category.dart';
 import 'package:fullbooker/domain/core/entities/product_location.dart';
 import 'package:fullbooker/domain/core/entities/product_pricing.dart';
 import 'package:fullbooker/domain/core/entities/product_schedule.dart';
+import 'package:fullbooker/domain/core/entities/ticket.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/location_perms_result.dart';
 
@@ -47,6 +49,10 @@ class HostState with _$HostState {
     // Search
     @Default(false) bool? isSearching,
     @Default(UNKNOWN) String? searchParam,
+
+    // Bookings page
+    Booking? selectedBooking,
+    @Default(<Ticket>[]) List<Ticket?>? selectedBookingTickets,
   }) = _HostState;
 
   factory HostState.initial() => HostState(
