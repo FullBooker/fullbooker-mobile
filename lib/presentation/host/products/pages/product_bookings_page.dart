@@ -165,6 +165,7 @@ class ProductBookingsPage extends StatelessWidget {
                           itemCount: vm.bookings?.length,
                           physics: NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
+                          padding: EdgeInsets.only(bottom: 100),
                           itemBuilder: (BuildContext context, int index) {
                             final Booking? current = vm.bookings![index];
 

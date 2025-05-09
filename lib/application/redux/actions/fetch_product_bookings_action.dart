@@ -29,10 +29,11 @@ class FetchProductBookingsAction extends ReduxAction<AppState> {
 
     final Map<String, dynamic> data = <String, dynamic>{
       'product': productID,
+      'status': 'completed',
     };
 
     final Response httpResponse = await client.callRESTAPI(
-      endpoint: '${GetIt.I.get<AppConfig>().bookingsEndpoint}/',
+      endpoint: GetIt.I.get<AppConfig>().bookingsEndpoint,
       method: APIMethods.GET.name.toUpperCase(),
       queryParams: data,
     );
