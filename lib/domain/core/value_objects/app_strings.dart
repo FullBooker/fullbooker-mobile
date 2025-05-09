@@ -386,6 +386,7 @@ const String comingSoonCopy =
 const String signInCancelled =
     'Sign-in canceled. Please select an account to continue.';
 const String signInFailed = 'Sign-in failed. Please try again.';
+const String signOutFailed = 'Sign-out failed';
 const String createAccountFailedString =
     'Something went wrong while creating your account. Please try again later';
 const String fillInAllFields = 'Please fill in all required fields to continue';
@@ -507,7 +508,7 @@ const String allDayLabel = 'All Day';
 const String dailyRepeatPrompt =
     'Choose a day of the week when your event repeats';
 const String weeklyRepeatPrompt =
-    'Choose a day of the week when your event repeats';
+    'Select the days of the week when your event repeats';
 const String monthlyRepeatPrompt =
     'Select the days of the month when your event will be repeating';
 const String yearlyRepeatPrompt =
@@ -660,6 +661,8 @@ const String noGoBack = 'No, Go Back';
 
 const String productBookings = 'Product Bookings';
 
+const String productBookingDetails = 'Booking Details';
+
 const String searchBookingsHint = 'Search bookings...';
 
 const String verifiedString = 'Verified';
@@ -730,3 +733,8 @@ const String noProductsFoundCopy =
     'We couldn\'t find any products matching your search. Please try adjusting your search terms to explore more options';
 
 const String browseAllProducts = 'Browse All Products';
+
+const String fatalPlatformError = 'Fatal platform error';
+
+const String bookedBy = 'Booked by';
+String ticketsDisplay(int tickets) => 'Tickets ($tickets)';

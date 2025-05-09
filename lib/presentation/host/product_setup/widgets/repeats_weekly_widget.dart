@@ -25,145 +25,164 @@ class RepeatsWeeklyWidget extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 12,
-          children: kDaysOfTheWeek.map((String dayOfWeek) {
-            final String dayKey = dayOfWeek.toLowerCase();
-
-            final RepeatWeeklySchedule dayOfWeekSchedule =
-                weeklySchedule.firstWhere(
-              (RepeatWeeklySchedule week) => week.day?.toLowerCase() == dayKey,
-              orElse: () => RepeatWeeklySchedule.initial(),
-            );
-
-            final bool isSelected = dayOfWeekSchedule.day == dayOfWeek;
-
-            final String startTime = dayOfWeekSchedule.startTime ?? '';
-            final String endTime = dayOfWeekSchedule.endTime ?? '';
-
-            return Row(
+          children: <Widget>[
+            Text(
+              weeklyRepeatPrompt,
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               spacing: 12,
-              children: <Widget>[
-                GestureDetector(
-                  onTap: () {
-                    final List<RepeatWeeklySchedule> updated =
-                        List<RepeatWeeklySchedule>.from(weeklySchedule);
+              children: kDaysOfTheWeek.map((String dayOfWeek) {
+                final String dayKey = dayOfWeek.toLowerCase();
 
-                    if (isSelected) {
-                      updated.removeWhere(
-                        (RepeatWeeklySchedule element) =>
-                            element.day == dayOfWeek,
-                      );
-                    } else {
-                      updated.add(
-                        RepeatWeeklySchedule(
-                          day: dayOfWeek,
-                          startTime: kDefaultWeeklyScheduleStartTime,
-                          endTime: kDefaultWeeklyScheduleEndTime,
+                final RepeatWeeklySchedule dayOfWeekSchedule =
+                    weeklySchedule.firstWhere(
+                  (RepeatWeeklySchedule week) =>
+                      week.day?.toLowerCase() == dayKey,
+                  orElse: () => RepeatWeeklySchedule.initial(),
+                );
+
+                final bool isSelected = dayOfWeekSchedule.day == dayOfWeek;
+
+                final String startTime = dayOfWeekSchedule.startTime ?? '';
+                final String endTime = dayOfWeekSchedule.endTime ?? '';
+
+                return Row(
+                  spacing: 12,
+                  children: <Widget>[
+                    GestureDetector(
+                      onTap: () {
+                        final List<RepeatWeeklySchedule> updated =
+                            List<RepeatWeeklySchedule>.from(weeklySchedule);
+
+                        if (isSelected) {
+                          updated.removeWhere(
+                            (RepeatWeeklySchedule element) =>
+                                element.day == dayOfWeek,
+                          );
+                        } else {
+                          updated.add(
+                            RepeatWeeklySchedule(
+                              day: dayOfWeek,
+                              startTime: kDefaultWeeklyScheduleStartTime,
+                              endTime: kDefaultWeeklyScheduleEndTime,
+                            ),
+                          );
+                        }
+
+                        context.dispatch(
+                          UpdateCurrentScheduleAction(repeatWeekly: updated),
+                        );
+                      },
+                      child: Container(
+                        width: 24,
+                        height: 24,
+                        decoration: BoxDecoration(
+                          color: isSelected
+                              ? Theme.of(context).colorScheme.primary
+                              : Colors.transparent,
+                          border: Border.all(
+                            color: isSelected
+                                ? Theme.of(context).colorScheme.primary
+                                : Theme.of(context).dividerColor,
+                          ),
+                          borderRadius: BorderRadius.circular(4),
                         ),
-                      );
-                    }
-
-                    context.dispatch(
-                      UpdateCurrentScheduleAction(repeatWeekly: updated),
-                    );
-                  },
-                  child: Container(
-                    width: 24,
-                    height: 24,
-                    decoration: BoxDecoration(
-                      color: isSelected
-                          ? Theme.of(context).colorScheme.primary
-                          : Colors.transparent,
-                      border: Border.all(
-                        color: isSelected
-                            ? Theme.of(context).colorScheme.primary
-                            : Theme.of(context).dividerColor,
+                        child: isSelected
+                            ? HeroIcon(
+                                HeroIcons.check,
+                                size: 16,
+                                color: Colors.white,
+                              )
+                            : null,
                       ),
-                      borderRadius: BorderRadius.circular(4),
                     ),
-                    child: isSelected
-                        ? HeroIcon(
-                            HeroIcons.check,
-                            size: 16,
-                            color: Colors.white,
-                          )
-                        : null,
-                  ),
-                ),
-                Text(
-                  toBeginningOfSentenceCase(dayOfWeek),
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-                const Spacer(),
-                if (isSelected) ...<Widget>[
-                  GestureDetector(
-                    onTap: () async {
-                      final String? picked = await pickTime(context: context);
-                      if (picked != null) {
-                        final List<RepeatWeeklySchedule> updated =
-                            List<RepeatWeeklySchedule>.from(weeklySchedule);
+                    Text(
+                      toBeginningOfSentenceCase(dayOfWeek),
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    const Spacer(),
+                    if (isSelected) ...<Widget>[
+                      GestureDetector(
+                        onTap: () async {
+                          final String? picked =
+                              await pickTime(context: context);
+                          if (picked != null) {
+                            final List<RepeatWeeklySchedule> updated =
+                                List<RepeatWeeklySchedule>.from(weeklySchedule);
 
-                        final int index = updated.indexWhere(
-                          (RepeatWeeklySchedule s) =>
-                              s.day?.toLowerCase() == dayOfWeek.toLowerCase(),
-                        );
+                            final int index = updated.indexWhere(
+                              (RepeatWeeklySchedule s) =>
+                                  s.day?.toLowerCase() ==
+                                  dayOfWeek.toLowerCase(),
+                            );
 
-                        if (index >= 0) {
-                          updated[index] =
-                              updated[index].copyWith(startTime: picked);
-                        } else {
-                          updated.add(
-                            RepeatWeeklySchedule(
-                              day: dayOfWeek,
-                              startTime: picked,
-                            ),
-                          );
-                        }
+                            if (index >= 0) {
+                              updated[index] =
+                                  updated[index].copyWith(startTime: picked);
+                            } else {
+                              updated.add(
+                                RepeatWeeklySchedule(
+                                  day: dayOfWeek,
+                                  startTime: picked,
+                                ),
+                              );
+                            }
 
-                        context.dispatch(
-                          UpdateCurrentScheduleAction(repeatWeekly: updated),
-                        );
-                      }
-                    },
-                    child: TimeSlotWidget(value: startTime),
-                  ),
-                  const Text(' - '),
-                  GestureDetector(
-                    onTap: () async {
-                      final String? picked = await pickTime(context: context);
-                      if (picked != null) {
-                        final List<RepeatWeeklySchedule> updated =
-                            List<RepeatWeeklySchedule>.from(weeklySchedule);
+                            context.dispatch(
+                              UpdateCurrentScheduleAction(
+                                repeatWeekly: updated,
+                              ),
+                            );
+                          }
+                        },
+                        child: TimeSlotWidget(value: startTime),
+                      ),
+                      const Text(' - '),
+                      GestureDetector(
+                        onTap: () async {
+                          final String? picked =
+                              await pickTime(context: context);
+                          if (picked != null) {
+                            final List<RepeatWeeklySchedule> updated =
+                                List<RepeatWeeklySchedule>.from(weeklySchedule);
 
-                        final int index = updated.indexWhere(
-                          (RepeatWeeklySchedule s) =>
-                              s.day?.toLowerCase() == dayOfWeek.toLowerCase(),
-                        );
+                            final int index = updated.indexWhere(
+                              (RepeatWeeklySchedule s) =>
+                                  s.day?.toLowerCase() ==
+                                  dayOfWeek.toLowerCase(),
+                            );
 
-                        if (index >= 0) {
-                          updated[index] =
-                              updated[index].copyWith(endTime: picked);
-                        } else {
-                          updated.add(
-                            RepeatWeeklySchedule(
-                              day: dayOfWeek,
-                              endTime: picked,
-                            ),
-                          );
-                        }
+                            if (index >= 0) {
+                              updated[index] =
+                                  updated[index].copyWith(endTime: picked);
+                            } else {
+                              updated.add(
+                                RepeatWeeklySchedule(
+                                  day: dayOfWeek,
+                                  endTime: picked,
+                                ),
+                              );
+                            }
 
-                        context.dispatch(
-                          UpdateCurrentScheduleAction(repeatWeekly: updated),
-                        );
-                      }
-                    },
-                    child: TimeSlotWidget(value: endTime),
-                  ),
-                ] else ...<Widget>[
-                  TimeSlotWidget(value: closedString, isClosed: true),
-                ],
-              ],
-            );
-          }).toList(),
+                            context.dispatch(
+                              UpdateCurrentScheduleAction(
+                                repeatWeekly: updated,
+                              ),
+                            );
+                          }
+                        },
+                        child: TimeSlotWidget(value: endTime),
+                      ),
+                    ] else ...<Widget>[
+                      TimeSlotWidget(value: closedString, isClosed: true),
+                    ],
+                  ],
+                );
+              }).toList(),
+            ),
+          ],
         );
       },
     );

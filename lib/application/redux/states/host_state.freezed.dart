@@ -44,7 +44,11 @@ mixin _$HostState {
   List<String?>? get selectedPricingOptionIds =>
       throw _privateConstructorUsedError; // Search
   bool? get isSearching => throw _privateConstructorUsedError;
-  String? get searchParam => throw _privateConstructorUsedError;
+  String? get searchParam =>
+      throw _privateConstructorUsedError; // Bookings page
+  Booking? get selectedBooking => throw _privateConstructorUsedError;
+  List<Ticket?>? get selectedBookingTickets =>
+      throw _privateConstructorUsedError;
 
   /// Serializes this HostState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -79,7 +83,9 @@ abstract class $HostStateCopyWith<$Res> {
       List<PricingOption?>? pricingOptions,
       List<String?>? selectedPricingOptionIds,
       bool? isSearching,
-      String? searchParam});
+      String? searchParam,
+      Booking? selectedBooking,
+      List<Ticket?>? selectedBookingTickets});
 
   $ProductCopyWith<$Res>? get currentProduct;
   $ProductCopyWith<$Res>? get selectedProduct;
@@ -88,6 +94,7 @@ abstract class $HostStateCopyWith<$Res> {
   $ProductScheduleCopyWith<$Res>? get selectedSchedule;
   $CurrencyCopyWith<$Res>? get selectedCurrency;
   $ProductPricingCopyWith<$Res>? get selectedProductPricing;
+  $BookingCopyWith<$Res>? get selectedBooking;
 }
 
 /// @nodoc
@@ -123,6 +130,8 @@ class _$HostStateCopyWithImpl<$Res, $Val extends HostState>
     Object? selectedPricingOptionIds = freezed,
     Object? isSearching = freezed,
     Object? searchParam = freezed,
+    Object? selectedBooking = freezed,
+    Object? selectedBookingTickets = freezed,
   }) {
     return _then(_value.copyWith(
       products: freezed == products
@@ -197,6 +206,14 @@ class _$HostStateCopyWithImpl<$Res, $Val extends HostState>
           ? _value.searchParam
           : searchParam // ignore: cast_nullable_to_non_nullable
               as String?,
+      selectedBooking: freezed == selectedBooking
+          ? _value.selectedBooking
+          : selectedBooking // ignore: cast_nullable_to_non_nullable
+              as Booking?,
+      selectedBookingTickets: freezed == selectedBookingTickets
+          ? _value.selectedBookingTickets
+          : selectedBookingTickets // ignore: cast_nullable_to_non_nullable
+              as List<Ticket?>?,
     ) as $Val);
   }
 
@@ -298,6 +315,20 @@ class _$HostStateCopyWithImpl<$Res, $Val extends HostState>
       return _then(_value.copyWith(selectedProductPricing: value) as $Val);
     });
   }
+
+  /// Create a copy of HostState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $BookingCopyWith<$Res>? get selectedBooking {
+    if (_value.selectedBooking == null) {
+      return null;
+    }
+
+    return $BookingCopyWith<$Res>(_value.selectedBooking!, (value) {
+      return _then(_value.copyWith(selectedBooking: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -326,7 +357,9 @@ abstract class _$$HostStateImplCopyWith<$Res>
       List<PricingOption?>? pricingOptions,
       List<String?>? selectedPricingOptionIds,
       bool? isSearching,
-      String? searchParam});
+      String? searchParam,
+      Booking? selectedBooking,
+      List<Ticket?>? selectedBookingTickets});
 
   @override
   $ProductCopyWith<$Res>? get currentProduct;
@@ -342,6 +375,8 @@ abstract class _$$HostStateImplCopyWith<$Res>
   $CurrencyCopyWith<$Res>? get selectedCurrency;
   @override
   $ProductPricingCopyWith<$Res>? get selectedProductPricing;
+  @override
+  $BookingCopyWith<$Res>? get selectedBooking;
 }
 
 /// @nodoc
@@ -375,6 +410,8 @@ class __$$HostStateImplCopyWithImpl<$Res>
     Object? selectedPricingOptionIds = freezed,
     Object? isSearching = freezed,
     Object? searchParam = freezed,
+    Object? selectedBooking = freezed,
+    Object? selectedBookingTickets = freezed,
   }) {
     return _then(_$HostStateImpl(
       products: freezed == products
@@ -449,6 +486,14 @@ class __$$HostStateImplCopyWithImpl<$Res>
           ? _value.searchParam
           : searchParam // ignore: cast_nullable_to_non_nullable
               as String?,
+      selectedBooking: freezed == selectedBooking
+          ? _value.selectedBooking
+          : selectedBooking // ignore: cast_nullable_to_non_nullable
+              as Booking?,
+      selectedBookingTickets: freezed == selectedBookingTickets
+          ? _value.selectedBookingTickets
+          : selectedBookingTickets // ignore: cast_nullable_to_non_nullable
+              as List<Ticket?>?,
     ));
   }
 }
@@ -475,7 +520,9 @@ class _$HostStateImpl implements _HostState {
       this.pricingOptions = const <PricingOption>[],
       this.selectedPricingOptionIds = const <String>[],
       this.isSearching = false,
-      this.searchParam = UNKNOWN});
+      this.searchParam = UNKNOWN,
+      this.selectedBooking,
+      this.selectedBookingTickets = const <Ticket>[]});
 
   factory _$HostStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$HostStateImplFromJson(json);
@@ -532,10 +579,16 @@ class _$HostStateImpl implements _HostState {
   @override
   @JsonKey()
   final String? searchParam;
+// Bookings page
+  @override
+  final Booking? selectedBooking;
+  @override
+  @JsonKey()
+  final List<Ticket?>? selectedBookingTickets;
 
   @override
   String toString() {
-    return 'HostState(products: $products, currentProduct: $currentProduct, selectedProduct: $selectedProduct, productCategories: $productCategories, locationPerms: $locationPerms, selectedLocation: $selectedLocation, selectedSchedule: $selectedSchedule, currencies: $currencies, selectedCurrency: $selectedCurrency, selectedPricingTier: $selectedPricingTier, selectedProductPricing: $selectedProductPricing, currentScannedTicketID: $currentScannedTicketID, isValidTicket: $isValidTicket, workflowState: $workflowState, pricingOptions: $pricingOptions, selectedPricingOptionIds: $selectedPricingOptionIds, isSearching: $isSearching, searchParam: $searchParam)';
+    return 'HostState(products: $products, currentProduct: $currentProduct, selectedProduct: $selectedProduct, productCategories: $productCategories, locationPerms: $locationPerms, selectedLocation: $selectedLocation, selectedSchedule: $selectedSchedule, currencies: $currencies, selectedCurrency: $selectedCurrency, selectedPricingTier: $selectedPricingTier, selectedProductPricing: $selectedProductPricing, currentScannedTicketID: $currentScannedTicketID, isValidTicket: $isValidTicket, workflowState: $workflowState, pricingOptions: $pricingOptions, selectedPricingOptionIds: $selectedPricingOptionIds, isSearching: $isSearching, searchParam: $searchParam, selectedBooking: $selectedBooking, selectedBookingTickets: $selectedBookingTickets)';
   }
 
   @override
@@ -577,31 +630,38 @@ class _$HostStateImpl implements _HostState {
             (identical(other.isSearching, isSearching) ||
                 other.isSearching == isSearching) &&
             (identical(other.searchParam, searchParam) ||
-                other.searchParam == searchParam));
+                other.searchParam == searchParam) &&
+            (identical(other.selectedBooking, selectedBooking) ||
+                other.selectedBooking == selectedBooking) &&
+            const DeepCollectionEquality()
+                .equals(other.selectedBookingTickets, selectedBookingTickets));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(products),
-      currentProduct,
-      selectedProduct,
-      const DeepCollectionEquality().hash(productCategories),
-      locationPerms,
-      selectedLocation,
-      selectedSchedule,
-      const DeepCollectionEquality().hash(currencies),
-      selectedCurrency,
-      selectedPricingTier,
-      selectedProductPricing,
-      currentScannedTicketID,
-      isValidTicket,
-      workflowState,
-      const DeepCollectionEquality().hash(pricingOptions),
-      const DeepCollectionEquality().hash(selectedPricingOptionIds),
-      isSearching,
-      searchParam);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        const DeepCollectionEquality().hash(products),
+        currentProduct,
+        selectedProduct,
+        const DeepCollectionEquality().hash(productCategories),
+        locationPerms,
+        selectedLocation,
+        selectedSchedule,
+        const DeepCollectionEquality().hash(currencies),
+        selectedCurrency,
+        selectedPricingTier,
+        selectedProductPricing,
+        currentScannedTicketID,
+        isValidTicket,
+        workflowState,
+        const DeepCollectionEquality().hash(pricingOptions),
+        const DeepCollectionEquality().hash(selectedPricingOptionIds),
+        isSearching,
+        searchParam,
+        selectedBooking,
+        const DeepCollectionEquality().hash(selectedBookingTickets)
+      ]);
 
   /// Create a copy of HostState
   /// with the given fields replaced by the non-null parameter values.
@@ -638,7 +698,9 @@ abstract class _HostState implements HostState {
       final List<PricingOption?>? pricingOptions,
       final List<String?>? selectedPricingOptionIds,
       final bool? isSearching,
-      final String? searchParam}) = _$HostStateImpl;
+      final String? searchParam,
+      final Booking? selectedBooking,
+      final List<Ticket?>? selectedBookingTickets}) = _$HostStateImpl;
 
   factory _HostState.fromJson(Map<String, dynamic> json) =
       _$HostStateImpl.fromJson;
@@ -678,7 +740,11 @@ abstract class _HostState implements HostState {
   @override
   bool? get isSearching;
   @override
-  String? get searchParam;
+  String? get searchParam; // Bookings page
+  @override
+  Booking? get selectedBooking;
+  @override
+  List<Ticket?>? get selectedBookingTickets;
 
   /// Create a copy of HostState
   /// with the given fields replaced by the non-null parameter values.

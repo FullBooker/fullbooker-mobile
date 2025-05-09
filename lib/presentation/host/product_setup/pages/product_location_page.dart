@@ -29,178 +29,181 @@ class ProductLocationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(
-        showBell: false,
-        title: setupEvent,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: StoreConnector<AppState, ProductSetupViewModel>(
-          converter: (Store<AppState> store) =>
-              ProductSetupViewModel.fromState(store.state),
-          onInit: (Store<AppState> store) => context.dispatchAll(
-            <ReduxAction<AppState>>[
-              CheckLocationPermissionAction(),
-              FetchSingleProductAction(
-                client: AppWrapperBase.of(context)!.customClient,
-              ),
-            ],
-          ),
-          builder: (BuildContext context, ProductSetupViewModel vm) {
-            if (context.isWaiting(FetchSingleProductAction)) {
-              return AppLoading();
-            }
-
-            final bool isLocationAdded = hasValidLocation(vm.selectedLocation);
-
-            final bool locationDenied = vm.locationPerms?.denied ?? true;
-            final bool locationDeniedPermanently =
-                vm.locationPerms?.deniedForever ?? true;
-
-            return Column(
-              spacing: 12,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Expanded(
-                  child: ListView(
-                    shrinkWrap: true,
-                    children: <Widget>[
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        spacing: 12,
-                        children: <Widget>[
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            spacing: 8,
-                            children: <Widget>[
-                              Text(
-                                location,
-                                style:
-                                    Theme.of(context).textTheme.headlineSmall,
-                              ),
-                              Text(
-                                locationCopy,
-                                style: Theme.of(context).textTheme.bodyMedium,
-                              ),
-                            ],
-                          ),
-                          if (locationDenied || locationDeniedPermanently)
-                            GenericZeroState(
-                              iconPath: locationSVGPath,
-                              title: locationPermsTitle,
-                              description: locationPermsCopy,
-                              onCTATap: () {
-                                if (locationDeniedPermanently) {
-                                  openAppSettings();
-                                } else {
-                                  context.dispatch(
-                                    CheckLocationPermissionAction(),
-                                  );
-                                }
-                              },
-                              ctaText: locationDeniedPermanently
-                                  ? openSettings
-                                  : enableLocation,
-                            )
-                          else if (isLocationAdded)
-                            LocationPreviewWidget(
-                              location: vm.selectedLocation,
-                            )
-                          else
-                            GenericZeroState(
-                              iconPath: locationSVGPath,
-                              title: setEventLocation,
-                              description: locationZeroStateCopy,
-                              onCTATap: () =>
-                                  context.router.push(ChooseLocationRoute()),
-                              ctaText: pickLocation,
-                            ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                StoreConnector<AppState, ProductSetupViewModel>(
-                  converter: (Store<AppState> store) =>
-                      ProductSetupViewModel.fromState(store.state),
-                  onInit: (Store<AppState> store) => context.dispatch(
-                    CheckLocationPermissionAction(),
-                  ),
-                  builder: (BuildContext context, ProductSetupViewModel vm) {
-                    if (context.isWaiting(<Type>[
-                      SetProductLocationAction,
-                      UpdateProductLocationAction,
-                    ])) {
-                      return AppLoading();
-                    }
-
-                    final bool isEditing =
-                        vm.workflowState == WorkflowState.VIEW;
-
-                    return Column(
-                      spacing: 12,
-                      children: <Widget>[
-                        PrimaryButton(
-                          onPressed: () {
-                            if (isEditing) {
-                              context.dispatch(
-                                UpdateProductLocationAction(
-                                  onSuccess: () => context.router.popUntil(
-                                    (Route<dynamic> route) =>
-                                        route.settings.name ==
-                                        ProductReviewAndSubmitRoute.name,
-                                  ),
-                                  onError: (String error) => showAlertDialog(
-                                    context: context,
-                                    assetPath: productZeroStateSVGPath,
-                                    description: error,
-                                  ),
-                                  client:
-                                      AppWrapperBase.of(context)!.customClient,
-                                ),
-                              );
-                            } else {
-                              context.dispatch(
-                                SetProductLocationAction(
-                                  onSuccess: () => context.router
-                                      .push(ProductScheduleRoute()),
-                                  onError: (String error) => showAlertDialog(
-                                    context: context,
-                                    assetPath: productZeroStateSVGPath,
-                                    description: error,
-                                  ),
-                                  client:
-                                      AppWrapperBase.of(context)!.customClient,
-                                ),
-                              );
-                            }
-                          },
-                          child: d.right(continueString),
-                        ),
-                        SecondaryButton(
-                          onPressed: () {
-                            isEditing
-                                ? context.router.popUntil(
-                                    (Route<dynamic> route) =>
-                                        route.settings.name ==
-                                        ProductReviewAndSubmitRoute.name,
-                                  )
-                                : context.router.maybePop();
-                          },
-                          child: d.right(
-                            isEditing ? backToPreview : previousString,
-                          ),
-                          fillColor: Colors.transparent,
-                        ),
-                        verySmallVerticalSizedBox,
-                      ],
-                    );
-                  },
+    return SafeArea(
+      child: Scaffold(
+        appBar: CustomAppBar(
+          showBell: false,
+          title: setupEvent,
+        ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: StoreConnector<AppState, ProductSetupViewModel>(
+            converter: (Store<AppState> store) =>
+                ProductSetupViewModel.fromState(store.state),
+            onInit: (Store<AppState> store) => context.dispatchAll(
+              <ReduxAction<AppState>>[
+                CheckLocationPermissionAction(),
+                FetchSingleProductAction(
+                  client: AppWrapperBase.of(context)!.customClient,
                 ),
               ],
-            );
-          },
+            ),
+            builder: (BuildContext context, ProductSetupViewModel vm) {
+              if (context.isWaiting(FetchSingleProductAction)) {
+                return AppLoading();
+              }
+
+              final bool isLocationAdded =
+                  hasValidLocation(vm.selectedLocation);
+
+              final bool locationDenied = vm.locationPerms?.denied ?? true;
+              final bool locationDeniedPermanently =
+                  vm.locationPerms?.deniedForever ?? true;
+
+              return Column(
+                spacing: 12,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Expanded(
+                    child: ListView(
+                      shrinkWrap: true,
+                      children: <Widget>[
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          spacing: 12,
+                          children: <Widget>[
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              spacing: 8,
+                              children: <Widget>[
+                                Text(
+                                  location,
+                                  style:
+                                      Theme.of(context).textTheme.headlineSmall,
+                                ),
+                                Text(
+                                  locationCopy,
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                ),
+                              ],
+                            ),
+                            if (locationDenied || locationDeniedPermanently)
+                              GenericZeroState(
+                                iconPath: locationSVGPath,
+                                title: locationPermsTitle,
+                                description: locationPermsCopy,
+                                onCTATap: () {
+                                  if (locationDeniedPermanently) {
+                                    openAppSettings();
+                                  } else {
+                                    context.dispatch(
+                                      CheckLocationPermissionAction(),
+                                    );
+                                  }
+                                },
+                                ctaText: locationDeniedPermanently
+                                    ? openSettings
+                                    : enableLocation,
+                              )
+                            else if (isLocationAdded)
+                              LocationPreviewWidget(
+                                location: vm.selectedLocation,
+                              )
+                            else
+                              GenericZeroState(
+                                iconPath: locationSVGPath,
+                                title: setEventLocation,
+                                description: locationZeroStateCopy,
+                                onCTATap: () =>
+                                    context.router.push(ChooseLocationRoute()),
+                                ctaText: pickLocation,
+                              ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  StoreConnector<AppState, ProductSetupViewModel>(
+                    converter: (Store<AppState> store) =>
+                        ProductSetupViewModel.fromState(store.state),
+                    onInit: (Store<AppState> store) => context.dispatch(
+                      CheckLocationPermissionAction(),
+                    ),
+                    builder: (BuildContext context, ProductSetupViewModel vm) {
+                      if (context.isWaiting(<Type>[
+                        SetProductLocationAction,
+                        UpdateProductLocationAction,
+                      ])) {
+                        return AppLoading();
+                      }
+
+                      final bool isEditing =
+                          vm.workflowState == WorkflowState.VIEW;
+
+                      return Column(
+                        spacing: 12,
+                        children: <Widget>[
+                          PrimaryButton(
+                            onPressed: () {
+                              if (isEditing) {
+                                context.dispatch(
+                                  UpdateProductLocationAction(
+                                    onSuccess: () => context.router.popUntil(
+                                      (Route<dynamic> route) =>
+                                          route.settings.name ==
+                                          ProductReviewAndSubmitRoute.name,
+                                    ),
+                                    onError: (String error) => showAlertDialog(
+                                      context: context,
+                                      assetPath: productZeroStateSVGPath,
+                                      description: error,
+                                    ),
+                                    client: AppWrapperBase.of(context)!
+                                        .customClient,
+                                  ),
+                                );
+                              } else {
+                                context.dispatch(
+                                  SetProductLocationAction(
+                                    onSuccess: () => context.router
+                                        .push(ProductScheduleRoute()),
+                                    onError: (String error) => showAlertDialog(
+                                      context: context,
+                                      assetPath: productZeroStateSVGPath,
+                                      description: error,
+                                    ),
+                                    client: AppWrapperBase.of(context)!
+                                        .customClient,
+                                  ),
+                                );
+                              }
+                            },
+                            child: d.right(continueString),
+                          ),
+                          SecondaryButton(
+                            onPressed: () {
+                              isEditing
+                                  ? context.router.popUntil(
+                                      (Route<dynamic> route) =>
+                                          route.settings.name ==
+                                          ProductReviewAndSubmitRoute.name,
+                                    )
+                                  : context.router.maybePop();
+                            },
+                            child: d.right(
+                              isEditing ? backToPreview : previousString,
+                            ),
+                            fillColor: Colors.transparent,
+                          ),
+                          verySmallVerticalSizedBox,
+                        ],
+                      );
+                    },
+                  ),
+                ],
+              );
+            },
+          ),
         ),
       ),
     );

@@ -82,7 +82,7 @@ class AppConfig {
 final AppConfig devAppConfig = AppConfig(
   appContext: AppContext.dev,
   databaseName: kDevDatabaseName,
-  sentryDsn: '',
+  sentryDsn: kSentryDSN,
   environment: AppEnvironment.dev.name,
   applicationName: kDevAppName,
   loginEndpoint: kDevLoginEndpoint,
@@ -113,7 +113,7 @@ final AppConfig devAppConfig = AppConfig(
 final AppConfig prodAppConfig = AppConfig(
   appContext: AppContext.prod,
   databaseName: kProdDatabaseName,
-  sentryDsn: '',
+  sentryDsn: kSentryDSN,
   environment: AppEnvironment.prod.name,
   applicationName: kAppName,
   loginEndpoint: kProdLoginEndpoint,
@@ -144,7 +144,7 @@ final AppConfig prodAppConfig = AppConfig(
 final AppConfig testAppConfig = AppConfig(
   appContext: AppContext.test,
   databaseName: kDevDatabaseName,
-  sentryDsn: '',
+  sentryDsn: kSentryDSN,
   environment: AppEnvironment.dev.name,
   applicationName: kDevAppName,
   loginEndpoint: kTestLoginEndpoint,
