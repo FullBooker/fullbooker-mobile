@@ -1,7 +1,9 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/core/services/i_custom_client.dart';
+import 'package:fullbooker/application/redux/actions/fetch_product_pricing_options_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
@@ -20,6 +22,13 @@ class SetProductPricingOptionsAction extends ReduxAction<AppState> {
   final Function(String error)? onError;
   final Function()? onSuccess;
   final ICustomClient client;
+
+  @override
+  void after() {
+    dispatch(FetchProductPricingOptionsAction(client: client));
+
+    return super.after();
+  }
 
   @override
   Future<AppState?> reduce() async {

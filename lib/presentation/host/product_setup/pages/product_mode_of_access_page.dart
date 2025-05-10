@@ -73,9 +73,9 @@ class ProductModeOfAccessPage extends StatelessWidget {
                     Flexible(
                       child: GestureDetector(
                         onTap: () {
-                          
                           showModalBottomSheet(
                             context: context,
+                            isDismissible: false,
                             backgroundColor: Colors.white,
                             isScrollControlled: true,
                             shape: const RoundedRectangleBorder(
@@ -133,6 +133,7 @@ class ProductModeOfAccessPage extends StatelessWidget {
                               onCTATap: () {
                                 showModalBottomSheet(
                                   context: context,
+                                  isDismissible: false,
                                   backgroundColor: Colors.white,
                                   isScrollControlled: true,
                                   shape: const RoundedRectangleBorder(

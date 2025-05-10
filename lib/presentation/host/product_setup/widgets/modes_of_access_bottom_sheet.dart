@@ -1,15 +1,20 @@
 import 'package:async_redux/async_redux.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
+import 'package:fullbooker/application/redux/actions/clear_pricing_options_action.dart';
 import 'package:fullbooker/application/redux/actions/fetch_pricing_options_action.dart';
-import 'package:fullbooker/application/redux/actions/pick_pricing_option_action.dart';
+import 'package:fullbooker/application/redux/actions/set_product_pricing_options_action.dart';
+import 'package:fullbooker/application/redux/actions/toggle_pricing_option_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_setup_view_model.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
+import 'package:fullbooker/core/utils/utils.dart';
 import 'package:fullbooker/domain/core/entities/pricing_option.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
+import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:heroicons/heroicons.dart';
@@ -31,17 +36,41 @@ class ModesOfAccessBottomSheet extends StatelessWidget {
             spacing: 16,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: 8,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                spacing: 16,
                 children: <Widget>[
-                  Text(
-                    modeOfAccess,
-                    style: Theme.of(context).textTheme.headlineSmall,
+                  Flexible(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      spacing: 8,
+                      children: <Widget>[
+                        Text(
+                          modeOfAccess,
+                          style: Theme.of(context).textTheme.headlineSmall,
+                        ),
+                        Text(
+                          modeOfAccessBottomSheetCopy,
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ],
+                    ),
                   ),
-                  Text(
-                    modeOfAccessBottomSheetCopy,
-                    style: Theme.of(context).textTheme.bodyMedium,
+                  Container(
+                    decoration: BoxDecoration(
+                      color:
+                          Theme.of(context).primaryColor.withValues(alpha: .1),
+                      shape: BoxShape.circle,
+                    ),
+                    padding: EdgeInsets.all(4),
+                    child: IconButton(
+                      onPressed: () => context.router.maybePop(),
+                      icon: HeroIcon(
+                        HeroIcons.xMark,
+                        color: Theme.of(context).primaryColor,
+                        size: 40,
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -49,6 +78,7 @@ class ModesOfAccessBottomSheet extends StatelessWidget {
                 converter: (Store<AppState> store) =>
                     ProductSetupViewModel.fromState(store.state),
                 onInit: (Store<AppState> store) {
+                  context.dispatch(ClearPricingOptionsAction());
                   context.dispatch(
                     FetchPricingOptionsAction(
                       client: AppWrapperBase.of(context)!.customClient,
@@ -69,7 +99,8 @@ class ModesOfAccessBottomSheet extends StatelessWidget {
                       final PricingOption? option = options![index];
 
                       final bool isSelected =
-                          vm.pickedPricingOption?.id == option?.id;
+                          vm.selectedPricingOptionIDs?.contains(option?.id) ??
+                              false;
 
                       return InkWell(
                         splashColor: Theme.of(context)
@@ -81,7 +112,7 @@ class ModesOfAccessBottomSheet extends StatelessWidget {
                             .withValues(alpha: .1),
                         onTap: () {
                           context.dispatch(
-                            PickPricingOptionAction(option: option),
+                            TogglePricingOptionAction(optionID: option?.id),
                           );
                         },
                         child: Container(
@@ -105,6 +136,7 @@ class ModesOfAccessBottomSheet extends StatelessWidget {
                             children: <Widget>[
                               Expanded(
                                 child: Column(
+                                  spacing: 8,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Text(
@@ -143,9 +175,33 @@ class ModesOfAccessBottomSheet extends StatelessWidget {
                   );
                 },
               ),
-              PrimaryButton(
-                onPressed: () {},
-                child: right(addModeOfAccess),
+              StoreConnector<AppState, ProductSetupViewModel>(
+                converter: (Store<AppState> store) =>
+                    ProductSetupViewModel.fromState(store.state),
+                builder: (BuildContext context, ProductSetupViewModel vm) {
+                  if (context.isWaiting(SetProductPricingOptionsAction)) {
+                    return AppLoading();
+                  }
+
+                  return PrimaryButton(
+                    onPressed: () {
+                      context.dispatch(
+                        SetProductPricingOptionsAction(
+                          client: AppWrapperBase.of(context)!.customClient,
+                          onSuccess: () => context.router.maybePop(),
+                          onError: (String error) {
+                            showAlertDialog(
+                              context: context,
+                              assetPath: productZeroStateSVGPath,
+                              description: error,
+                            );
+                          },
+                        ),
+                      );
+                    },
+                    child: right(saveString),
+                  );
+                },
               ),
             ],
           ),
