@@ -747,3 +747,8 @@ const String sessionExpired =
     'Your session has expired. Please sign in again to continue';
 const String viewPricing = 'View Pricing';
 const String setupPricing = 'Setup Pricing';
+
+const String setupModesOfAccess = 'Setup Modes of Access';
+const String setupModesOfAccessCopy =
+    'Select and customize how users can access this feature. Tap below to get started';
+const String addModeOfAccess = 'Add Mode of Access';

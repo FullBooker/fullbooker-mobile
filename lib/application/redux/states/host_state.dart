@@ -44,6 +44,7 @@ class HostState with _$HostState {
 
     // Modes of access
     @Default(<PricingOption>[]) List<PricingOption?>? pricingOptions,
+    @Default(<PricingOption>[]) List<PricingOption?>? productPricingOptions,
     @Default(<String>[]) List<String?>? selectedPricingOptionIds,
 
     // Search

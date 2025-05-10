@@ -21,6 +21,7 @@ class UpdateHostStateAction extends ReduxAction<AppState> {
     this.selectedSchedule,
     this.pricingOptions,
     this.selectedBookingTickets,
+    this.productPricingOptions,
   });
 
   final Product? contextProduct;
@@ -32,6 +33,7 @@ class UpdateHostStateAction extends ReduxAction<AppState> {
   final bool? isValidTicket;
   final ProductSchedule? selectedSchedule;
   final List<PricingOption?>? pricingOptions;
+  final List<PricingOption?>? productPricingOptions;
   final List<Ticket?>? selectedBookingTickets;
 
   @override
@@ -62,6 +64,8 @@ class UpdateHostStateAction extends ReduxAction<AppState> {
       pricingOptions: pricingOptions ?? host.pricingOptions,
       selectedBookingTickets:
           selectedBookingTickets ?? host.selectedBookingTickets,
+      productPricingOptions:
+          productPricingOptions ?? host.productPricingOptions,
     );
   }
 }

@@ -20,53 +20,48 @@ class ModeOfAccessItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      highlightColor: Theme.of(context).primaryColor.withValues(alpha: 0.1),
-      borderRadius: BorderRadius.circular(8),
-      onTap: onCTATap,
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        color: isSelected
+            ? Theme.of(context).primaryColor.withValues(alpha: .05)
+            : null,
+        border: Border.all(
           color: isSelected
-              ? Theme.of(context).primaryColor.withValues(alpha: .05)
-              : null,
-          border: Border.all(
-            color: isSelected
-                ? Theme.of(context).primaryColor
-                : Theme.of(context).dividerColor,
-          ),
+              ? Theme.of(context).primaryColor
+              : Theme.of(context).dividerColor,
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 12,
-          children: <Widget>[
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              spacing: 4,
-              children: <Widget>[
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        spacing: 12,
+        children: <Widget>[
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 4,
+            children: <Widget>[
+              Text(
+                option.name ?? UNKNOWN,
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      color: isSelected
+                          ? Theme.of(context).primaryColor
+                          : AppColors.textBlackColor,
+                    ),
+              ),
+              if (option.description?.isNotEmpty ?? false)
                 Text(
-                  option.name ?? UNKNOWN,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        color: isSelected
-                            ? Theme.of(context).primaryColor
-                            : AppColors.textBlackColor,
-                      ),
+                  option.description ?? '',
+                  softWrap: true,
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
-                if (option.description?.isNotEmpty ?? false)
-                  Text(
-                    option.description ?? '',
-                    softWrap: true,
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-              ],
-            ),
-            SecondaryButton(
-              child: right(setupPricing),
-              onPressed: () {},
-            ),
-          ],
-        ),
+            ],
+          ),
+          SecondaryButton(
+            child: right(setupPricing),
+            onPressed: onCTATap,
+          ),
+        ],
       ),
     );
   }
