@@ -48,6 +48,7 @@ class ProductSetupViewModel extends Vm {
     required this.pricingOptions,
     required this.selectedPricingOptionIDs,
     required this.productPricingOptions,
+    required this.pickedPricingOption,
   }) : super(
           equals: <Object?>[
             workflowState,
@@ -83,6 +84,7 @@ class ProductSetupViewModel extends Vm {
             pricingOptions,
             selectedPricingOptionIDs,
             productPricingOptions,
+            pickedPricingOption,
           ],
         );
 
@@ -119,6 +121,7 @@ class ProductSetupViewModel extends Vm {
   final bool buyerPaysFee;
 
   final List<PricingOption?>? pricingOptions;
+  final PricingOption? pickedPricingOption;
   final List<String?>? selectedPricingOptionIDs;
 
   /// Basic details page
@@ -187,6 +190,8 @@ class ProductSetupViewModel extends Vm {
           state.hostState?.selectedPricingOptionIds ?? <String?>[],
       productPricingOptions:
           state.hostState?.productPricingOptions ?? <PricingOption?>[],
+      pickedPricingOption:
+          state.hostState?.pickedPricingOption ?? PricingOption.initial(),
     );
   }
 }

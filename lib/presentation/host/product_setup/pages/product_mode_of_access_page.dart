@@ -16,6 +16,7 @@ import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:dartz/dartz.dart' as d;
 import 'package:fullbooker/presentation/core/components/generic_zero_state.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/mode_of_access_item.dart';
+import 'package:fullbooker/presentation/host/product_setup/widgets/modes_of_access_bottom_sheet.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
@@ -71,7 +72,20 @@ class ProductModeOfAccessPage extends StatelessWidget {
                     ),
                     Flexible(
                       child: GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          
+                          showModalBottomSheet(
+                            context: context,
+                            backgroundColor: Colors.white,
+                            isScrollControlled: true,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(16),
+                              ),
+                            ),
+                            builder: (_) => ModesOfAccessBottomSheet(),
+                          );
+                        },
                         child: Container(
                           decoration: BoxDecoration(
                             color: Theme.of(context).primaryColor,
@@ -116,7 +130,19 @@ class ProductModeOfAccessPage extends StatelessWidget {
                               iconPath: bookingTicketsZeroStateSVGPath,
                               title: setupModesOfAccess,
                               description: setupModesOfAccessCopy,
-                              onCTATap: () {},
+                              onCTATap: () {
+                                showModalBottomSheet(
+                                  context: context,
+                                  backgroundColor: Colors.white,
+                                  isScrollControlled: true,
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.vertical(
+                                      top: Radius.circular(16),
+                                    ),
+                                  ),
+                                  builder: (_) => ModesOfAccessBottomSheet(),
+                                );
+                              },
                               ctaText: addModeOfAccess,
                             );
                           }

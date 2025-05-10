@@ -58,6 +58,9 @@ class HostState with _$HostState {
     // Bookings page
     Booking? selectedBooking,
     @Default(<Ticket>[]) List<Ticket?>? selectedBookingTickets,
+
+    // Add modes of access bottom sheet
+    PricingOption? pickedPricingOption,
   }) = _HostState;
 
   factory HostState.initial() => HostState(
@@ -68,6 +71,7 @@ class HostState with _$HostState {
         selectedSchedule: ProductSchedule.initial(),
         selectedProductPricing: ProductPricing.initial(),
         selectedCurrency: Currency(),
+        pickedPricingOption: PricingOption.initial(),
       );
 
   factory HostState.fromJson(Map<String, dynamic> json) =>

@@ -750,5 +750,7 @@ const String setupPricing = 'Setup Pricing';
 
 const String setupModesOfAccess = 'Setup Modes of Access';
 const String setupModesOfAccessCopy =
-    'Select and customize how users can access this feature. Tap below to get started';
+    'Tap below to select and customize how users can access this product';
 const String addModeOfAccess = 'Add Mode of Access';
+const String modeOfAccessBottomSheetCopy =
+    'Choose your preferred mode of access';

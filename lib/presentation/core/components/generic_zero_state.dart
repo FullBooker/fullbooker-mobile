@@ -40,10 +40,7 @@ class GenericZeroState extends StatelessWidget {
             ),
             Text(
               title,
-              style: Theme.of(context)
-                  .textTheme
-                  .titleMedium
-                  ?.copyWith(color: Theme.of(context).primaryColor),
+              style: Theme.of(context).textTheme.titleMedium,
             ),
             Text(
               description,
