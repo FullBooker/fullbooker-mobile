@@ -3,10 +3,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
+import 'package:fullbooker/application/redux/actions/accept_product_terms_action.dart';
 import 'package:fullbooker/application/redux/actions/fetch_single_product_action.dart';
 import 'package:fullbooker/application/redux/actions/submit_product_for_review_action.dart';
 import 'package:fullbooker/application/redux/actions/update_host_state_action.dart';
-import 'package:fullbooker/application/redux/actions/update_product_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_review_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
@@ -274,69 +274,70 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
 
                             Divider(),
 
-                            InkWell(
-                              splashColor: Theme.of(context)
-                                  .primaryColor
-                                  .withValues(alpha: .1),
-                              borderRadius: BorderRadius.circular(8),
-                              highlightColor: Theme.of(context)
-                                  .primaryColor
-                                  .withValues(alpha: .1),
-                              onTap: () {
-                                context.dispatch(
-                                  UpdateProductAction(
-                                    termsAccepted: !vm.product!.termsAccepted!,
+                            StoreConnector<AppState, ProductReviewViewModel>(
+                              converter: (Store<AppState> store) =>
+                                  ProductReviewViewModel.fromState(store.state),
+                              builder: (
+                                BuildContext context,
+                                ProductReviewViewModel vm,
+                              ) {
+                                if (context
+                                    .isWaiting(AcceptProductTermsAction)) {
+                                  return AppLoading();
+                                }
+
+                                return CheckboxListTile(
+                                  value: vm.product!.termsAccepted,
+                                  onChanged: (bool? v) {
+                                    context.dispatch(
+                                      AcceptProductTermsAction(
+                                        termsAccepted:
+                                            !vm.product!.termsAccepted!,
+                                        client: AppWrapperBase.of(context)!
+                                            .customClient,
+                                      ),
+                                    );
+                                  },
+                                  title: RichText(
+                                    text: TextSpan(
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium,
+                                      children: <InlineSpan>[
+                                        TextSpan(text: iHaveAccepted),
+                                        TextSpan(
+                                          text: termsOfService,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall
+                                              ?.copyWith(
+                                                color: Theme.of(context)
+                                                    .primaryColor,
+                                              ),
+                                          recognizer: TapGestureRecognizer()
+                                            ..onTap = () {
+                                              context.router.push(
+                                                TermsAndConditionsRoute(),
+                                              );
+                                            },
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  controlAffinity:
+                                      ListTileControlAffinity.leading,
+                                  contentPadding: EdgeInsets.zero,
+                                  dense: true,
+                                  visualDensity: const VisualDensity(
+                                    horizontal: -4,
+                                    vertical: -4,
+                                  ),
+                                  activeColor: Theme.of(context).primaryColor,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
                                   ),
                                 );
                               },
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  Checkbox(
-                                    value: vm.product!.termsAccepted ?? false,
-                                    onChanged: (bool? value) {
-                                      context.dispatch(
-                                        UpdateProductAction(
-                                          termsAccepted: value,
-                                        ),
-                                      );
-                                    },
-                                    activeColor:
-                                        Theme.of(context).colorScheme.primary,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(4),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: RichText(
-                                      text: TextSpan(
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium,
-                                        children: <InlineSpan>[
-                                          TextSpan(text: iHaveAccepted),
-                                          TextSpan(
-                                            text: termsOfService,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleSmall
-                                                ?.copyWith(
-                                                  color: Theme.of(context)
-                                                      .primaryColor,
-                                                ),
-                                            recognizer: TapGestureRecognizer()
-                                              ..onTap = () {
-                                                context.router.push(
-                                                  TermsAndConditionsRoute(),
-                                                );
-                                              },
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
                             ),
                           ],
                         ),
