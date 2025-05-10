@@ -9,7 +9,7 @@ import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_setup_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/utils/utils.dart';
-import 'package:fullbooker/domain/core/entities/pricing_option.dart';
+import 'package:fullbooker/domain/core/entities/product_pricing_option.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
@@ -122,8 +122,8 @@ class ProductModeOfAccessPage extends StatelessWidget {
                             return AppLoading();
                           }
 
-                          final List<PricingOption?>? productPricingOptions =
-                              vm.productPricingOptions;
+                          final List<ProductPricingOption?>?
+                              productPricingOptions = vm.productPricingOptions;
 
                           if (productPricingOptions?.isEmpty ?? true) {
                             return GenericZeroState(
@@ -156,19 +156,13 @@ class ProductModeOfAccessPage extends StatelessWidget {
                                 physics: NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
                                 itemBuilder: (BuildContext context, int index) {
-                                  final PricingOption? current =
+                                  final ProductPricingOption? current =
                                       productPricingOptions![index];
-
-                                  final bool selected = vm
-                                          .selectedPricingOptionIDs
-                                          ?.contains(current?.id) ??
-                                      false;
 
                                   return Padding(
                                     padding: const EdgeInsets.only(bottom: 12),
                                     child: ModeOfAccessItem(
                                       option: current!,
-                                      isSelected: selected,
                                       onCTATap: () {
                                         context.dispatch(
                                           TogglePricingOptionAction(

@@ -41,7 +41,7 @@ mixin _$HostState {
       throw _privateConstructorUsedError; // Modes of access
   List<PricingOption?>? get pricingOptions =>
       throw _privateConstructorUsedError;
-  List<PricingOption?>? get productPricingOptions =>
+  List<ProductPricingOption?>? get productPricingOptions =>
       throw _privateConstructorUsedError;
   List<String?>? get selectedPricingOptionIds =>
       throw _privateConstructorUsedError; // Search
@@ -86,7 +86,7 @@ abstract class $HostStateCopyWith<$Res> {
       bool? isValidTicket,
       WorkflowState? workflowState,
       List<PricingOption?>? pricingOptions,
-      List<PricingOption?>? productPricingOptions,
+      List<ProductPricingOption?>? productPricingOptions,
       List<String?>? selectedPricingOptionIds,
       bool? isSearching,
       String? searchParam,
@@ -209,7 +209,7 @@ class _$HostStateCopyWithImpl<$Res, $Val extends HostState>
       productPricingOptions: freezed == productPricingOptions
           ? _value.productPricingOptions
           : productPricingOptions // ignore: cast_nullable_to_non_nullable
-              as List<PricingOption?>?,
+              as List<ProductPricingOption?>?,
       selectedPricingOptionIds: freezed == selectedPricingOptionIds
           ? _value.selectedPricingOptionIds
           : selectedPricingOptionIds // ignore: cast_nullable_to_non_nullable
@@ -393,7 +393,7 @@ abstract class _$$HostStateImplCopyWith<$Res>
       bool? isValidTicket,
       WorkflowState? workflowState,
       List<PricingOption?>? pricingOptions,
-      List<PricingOption?>? productPricingOptions,
+      List<ProductPricingOption?>? productPricingOptions,
       List<String?>? selectedPricingOptionIds,
       bool? isSearching,
       String? searchParam,
@@ -523,7 +523,7 @@ class __$$HostStateImplCopyWithImpl<$Res>
       productPricingOptions: freezed == productPricingOptions
           ? _value.productPricingOptions
           : productPricingOptions // ignore: cast_nullable_to_non_nullable
-              as List<PricingOption?>?,
+              as List<ProductPricingOption?>?,
       selectedPricingOptionIds: freezed == selectedPricingOptionIds
           ? _value.selectedPricingOptionIds
           : selectedPricingOptionIds // ignore: cast_nullable_to_non_nullable
@@ -576,7 +576,7 @@ class _$HostStateImpl implements _HostState {
       this.isValidTicket = false,
       this.workflowState = WorkflowState.CREATE,
       this.pricingOptions = const <PricingOption>[],
-      this.productPricingOptions = const <PricingOption>[],
+      this.productPricingOptions = const <ProductPricingOption>[],
       this.selectedPricingOptionIds = const <String>[],
       this.isSearching = false,
       this.searchParam = UNKNOWN,
@@ -632,7 +632,7 @@ class _$HostStateImpl implements _HostState {
   final List<PricingOption?>? pricingOptions;
   @override
   @JsonKey()
-  final List<PricingOption?>? productPricingOptions;
+  final List<ProductPricingOption?>? productPricingOptions;
   @override
   @JsonKey()
   final List<String?>? selectedPricingOptionIds;
@@ -778,7 +778,7 @@ abstract class _HostState implements HostState {
       final bool? isValidTicket,
       final WorkflowState? workflowState,
       final List<PricingOption?>? pricingOptions,
-      final List<PricingOption?>? productPricingOptions,
+      final List<ProductPricingOption?>? productPricingOptions,
       final List<String?>? selectedPricingOptionIds,
       final bool? isSearching,
       final String? searchParam,
@@ -821,7 +821,7 @@ abstract class _HostState implements HostState {
   @override
   List<PricingOption?>? get pricingOptions;
   @override
-  List<PricingOption?>? get productPricingOptions;
+  List<ProductPricingOption?>? get productPricingOptions;
   @override
   List<String?>? get selectedPricingOptionIds; // Search
   @override

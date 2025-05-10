@@ -9,6 +9,7 @@ import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/entities/product_category.dart';
 import 'package:fullbooker/domain/core/entities/product_location.dart';
 import 'package:fullbooker/domain/core/entities/product_pricing.dart';
+import 'package:fullbooker/domain/core/entities/product_pricing_option.dart';
 import 'package:fullbooker/domain/core/entities/product_schedule.dart';
 import 'package:fullbooker/domain/core/entities/ticket.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
@@ -44,7 +45,8 @@ class HostState with _$HostState {
 
     // Modes of access
     @Default(<PricingOption>[]) List<PricingOption?>? pricingOptions,
-    @Default(<PricingOption>[]) List<PricingOption?>? productPricingOptions,
+    @Default(<ProductPricingOption>[])
+    List<ProductPricingOption?>? productPricingOptions,
     @Default(<String>[]) List<String?>? selectedPricingOptionIds,
 
     // Search

@@ -250,7 +250,7 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                                   ),
                                 );
                                 context.router
-                                    .push(const ProductPricingRoute());
+                                    .push(const ProductModeOfAccessRoute());
                               },
                             ),
 

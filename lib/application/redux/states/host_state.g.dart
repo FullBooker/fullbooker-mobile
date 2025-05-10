@@ -65,9 +65,9 @@ _$HostStateImpl _$$HostStateImplFromJson(Map<String, dynamic> json) =>
       productPricingOptions: (json['productPricingOptions'] as List<dynamic>?)
               ?.map((e) => e == null
                   ? null
-                  : PricingOption.fromJson(e as Map<String, dynamic>))
+                  : ProductPricingOption.fromJson(e as Map<String, dynamic>))
               .toList() ??
-          const <PricingOption>[],
+          const <ProductPricingOption>[],
       selectedPricingOptionIds:
           (json['selectedPricingOptionIds'] as List<dynamic>?)
                   ?.map((e) => e as String?)

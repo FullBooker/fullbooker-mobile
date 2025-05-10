@@ -8,6 +8,7 @@ import 'package:fullbooker/domain/core/entities/product_category.dart';
 import 'package:fullbooker/domain/core/entities/product_location.dart';
 import 'package:fullbooker/domain/core/entities/product_media.dart';
 import 'package:fullbooker/domain/core/entities/product_pricing.dart';
+import 'package:fullbooker/domain/core/entities/product_pricing_option.dart';
 import 'package:fullbooker/domain/core/entities/product_schedule.dart';
 import 'package:fullbooker/shared/entities/location_perms_result.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
@@ -131,7 +132,7 @@ class ProductSetupViewModel extends Vm {
   final List<ProductCategory?>? subCategories;
   final String subCategoryID;
 
-  final List<PricingOption?>? productPricingOptions;
+  final List<ProductPricingOption?>? productPricingOptions;
 
   static ProductSetupViewModel fromState(AppState state) {
     final WorkflowState workflowState =
@@ -189,7 +190,7 @@ class ProductSetupViewModel extends Vm {
       selectedPricingOptionIDs:
           state.hostState?.selectedPricingOptionIds ?? <String?>[],
       productPricingOptions:
-          state.hostState?.productPricingOptions ?? <PricingOption?>[],
+          state.hostState?.productPricingOptions ?? <ProductPricingOption?>[],
       pickedPricingOption:
           state.hostState?.pickedPricingOption ?? PricingOption.initial(),
     );
