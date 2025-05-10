@@ -1,22 +1,19 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
 import 'package:fullbooker/application/redux/actions/fetch_booking_tickets_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_booking_detail_view_model.dart';
-import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/utils/utils.dart';
-import 'package:fullbooker/domain/core/entities/product_stats.dart';
 import 'package:fullbooker/domain/core/entities/ticket.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
+import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
+import 'package:fullbooker/presentation/core/components/generic_zero_state.dart';
 import 'package:fullbooker/presentation/host/products/widgets/booking_fan_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/booking_ticket_item_widget.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
-import 'package:fullbooker/shared/widgets/primary_button.dart';
-import 'package:heroicons/heroicons.dart';
 
 @RoutePage()
 class ProductBookingDetailsPage extends StatelessWidget {
@@ -37,33 +34,6 @@ class ProductBookingDetailsPage extends StatelessWidget {
         showBell: false,
         title: productBookingDetails,
       ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: PrimaryButton(
-          onPressed: () => context.router.push(ScanTicketsRoute()),
-          customRadius: 100,
-          child: left(
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              spacing: 12,
-              children: <Widget>[
-                HeroIcon(
-                  HeroIcons.camera,
-                  color: Colors.white,
-                  size: 24,
-                ),
-                Text(
-                  scanTickets,
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: RefreshIndicator(
         onRefresh: () => onRefresh(context),
@@ -81,9 +51,9 @@ class ProductBookingDetailsPage extends StatelessWidget {
                     BuildContext context,
                     ProductBookingDetailsViewModel vm,
                   ) {
-                    final ProductStats? stats = vm.stats;
                     final double revenue =
-                        double.tryParse(stats?.revenue ?? '0') ?? 0;
+                        double.tryParse(vm.selectedBooking.totalCost ?? '0') ??
+                            0;
 
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,9 +66,21 @@ class ProductBookingDetailsPage extends StatelessWidget {
                         Text(
                           formatCurrency(revenue),
                           style:
-                              Theme.of(context).textTheme.titleMedium?.copyWith(
+                              Theme.of(context).textTheme.titleLarge?.copyWith(
                                     color: Theme.of(context).primaryColor,
                                   ),
+                        ),
+                        Text(
+                          bookedBy,
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 4,
+                          ),
+                          child: BookingFanWidget(
+                            booking: vm.selectedBooking,
+                          ),
                         ),
                       ],
                     );
@@ -122,45 +104,48 @@ class ProductBookingDetailsPage extends StatelessWidget {
                       return AppLoading();
                     }
 
+                    if (vm.selectedBookingTickets?.isEmpty ?? true) {
+                      return GenericZeroState(
+                        iconPath: bookingTicketsZeroStateSVGPath,
+                        title: noTickets,
+                        description: noTicketsCopy,
+                        onCTATap: () {
+                          context.dispatch(
+                            FetchBookingTicketsAction(
+                              client: AppWrapperBase.of(context)!.customClient,
+                            ),
+                          );
+                        },
+                        ctaText: tryAgain,
+                      );
+                    }
+
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       spacing: 12,
                       children: <Widget>[
-                        Text(
-                          bookedBy,
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 4,
-                          ),
-                          child: BookingFanWidget(
-                            booking: vm.selectedBooking,
-                          ),
-                        ),
                         Text(
                           ticketsDisplay(
                             vm.selectedBooking.totalTicketsCount ?? 0,
                           ),
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
-                        Column(
-                          children: <Widget>[
-                            ...vm.selectedBookingTickets?.map(
-                                  (Ticket? ticket) {
-                                    return Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        vertical: 4,
-                                      ),
-                                      child: BookingTicketItemWidget(
-                                        ticket: ticket,
-                                      ),
-                                    );
-                                  },
-                                ).toList() ??
-                                <Widget>[],
-                          ],
-                        ),
+                        if (vm.selectedBookingTickets?.isNotEmpty ?? false)
+                          ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: vm.selectedBookingTickets?.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              final Ticket? current =
+                                  vm.selectedBookingTickets?[index];
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 4),
+                                child: BookingTicketItemWidget(
+                                  ticket: current,
+                                ),
+                              );
+                            },
+                          ),
                       ],
                     );
                   },

@@ -36,19 +36,19 @@ class GenericZeroState extends StatelessWidget {
           children: <Widget>[
             SvgPicture.asset(
               iconPath,
-              width: MediaQuery.of(context).size.width / 2,
+              width: MediaQuery.of(context).size.width / 2.5,
             ),
             Text(
               title,
               style: Theme.of(context)
                   .textTheme
-                  .titleLarge
+                  .titleMedium
                   ?.copyWith(color: Theme.of(context).primaryColor),
             ),
             Text(
               description,
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyLarge,
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
             if (onCTATap != null)
               PrimaryButton(

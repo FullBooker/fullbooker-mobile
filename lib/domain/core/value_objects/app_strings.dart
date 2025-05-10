@@ -738,3 +738,7 @@ const String fatalPlatformError = 'Fatal platform error';
 
 const String bookedBy = 'Booked by';
 String ticketsDisplay(int tickets) => 'Tickets ($tickets)';
+
+const String noTickets = 'You don’t have any tickets yet';
+const String noTicketsCopy =
+    'We couldn’t find any tickets for this booking. Please check back later or contact support';
