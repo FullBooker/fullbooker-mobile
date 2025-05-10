@@ -18,6 +18,8 @@ _$ProductPricingOptionImpl _$$ProductPricingOptionImplFromJson(
       pricingOptionID: json['pricing_option'] as String? ?? UNKNOWN,
       productName: json['product_name'] as String? ?? UNKNOWN,
       pricingOptionName: json['pricing_option_name'] as String? ?? UNKNOWN,
+      pricingOptionDescription:
+          json['pricing_option_description'] as String? ?? UNKNOWN,
       pricingOptionType: json['pricing_option_type'] as String? ?? UNKNOWN,
     );
 
@@ -33,5 +35,6 @@ Map<String, dynamic> _$$ProductPricingOptionImplToJson(
       'pricing_option': instance.pricingOptionID,
       'product_name': instance.productName,
       'pricing_option_name': instance.pricingOptionName,
+      'pricing_option_description': instance.pricingOptionDescription,
       'pricing_option_type': instance.pricingOptionType,
     };

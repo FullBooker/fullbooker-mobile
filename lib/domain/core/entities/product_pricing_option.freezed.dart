@@ -34,6 +34,8 @@ mixin _$ProductPricingOption {
   String? get productName => throw _privateConstructorUsedError;
   @JsonKey(name: 'pricing_option_name')
   String? get pricingOptionName => throw _privateConstructorUsedError;
+  @JsonKey(name: 'pricing_option_description')
+  String? get pricingOptionDescription => throw _privateConstructorUsedError;
   @JsonKey(name: 'pricing_option_type')
   String? get pricingOptionType => throw _privateConstructorUsedError;
 
@@ -63,6 +65,8 @@ abstract class $ProductPricingOptionCopyWith<$Res> {
       @JsonKey(name: 'pricing_option') String? pricingOptionID,
       @JsonKey(name: 'product_name') String? productName,
       @JsonKey(name: 'pricing_option_name') String? pricingOptionName,
+      @JsonKey(name: 'pricing_option_description')
+      String? pricingOptionDescription,
       @JsonKey(name: 'pricing_option_type') String? pricingOptionType});
 }
 
@@ -91,6 +95,7 @@ class _$ProductPricingOptionCopyWithImpl<$Res,
     Object? pricingOptionID = freezed,
     Object? productName = freezed,
     Object? pricingOptionName = freezed,
+    Object? pricingOptionDescription = freezed,
     Object? pricingOptionType = freezed,
   }) {
     return _then(_value.copyWith(
@@ -130,6 +135,10 @@ class _$ProductPricingOptionCopyWithImpl<$Res,
           ? _value.pricingOptionName
           : pricingOptionName // ignore: cast_nullable_to_non_nullable
               as String?,
+      pricingOptionDescription: freezed == pricingOptionDescription
+          ? _value.pricingOptionDescription
+          : pricingOptionDescription // ignore: cast_nullable_to_non_nullable
+              as String?,
       pricingOptionType: freezed == pricingOptionType
           ? _value.pricingOptionType
           : pricingOptionType // ignore: cast_nullable_to_non_nullable
@@ -156,6 +165,8 @@ abstract class _$$ProductPricingOptionImplCopyWith<$Res>
       @JsonKey(name: 'pricing_option') String? pricingOptionID,
       @JsonKey(name: 'product_name') String? productName,
       @JsonKey(name: 'pricing_option_name') String? pricingOptionName,
+      @JsonKey(name: 'pricing_option_description')
+      String? pricingOptionDescription,
       @JsonKey(name: 'pricing_option_type') String? pricingOptionType});
 }
 
@@ -181,6 +192,7 @@ class __$$ProductPricingOptionImplCopyWithImpl<$Res>
     Object? pricingOptionID = freezed,
     Object? productName = freezed,
     Object? pricingOptionName = freezed,
+    Object? pricingOptionDescription = freezed,
     Object? pricingOptionType = freezed,
   }) {
     return _then(_$ProductPricingOptionImpl(
@@ -220,6 +232,10 @@ class __$$ProductPricingOptionImplCopyWithImpl<$Res>
           ? _value.pricingOptionName
           : pricingOptionName // ignore: cast_nullable_to_non_nullable
               as String?,
+      pricingOptionDescription: freezed == pricingOptionDescription
+          ? _value.pricingOptionDescription
+          : pricingOptionDescription // ignore: cast_nullable_to_non_nullable
+              as String?,
       pricingOptionType: freezed == pricingOptionType
           ? _value.pricingOptionType
           : pricingOptionType // ignore: cast_nullable_to_non_nullable
@@ -242,6 +258,8 @@ class _$ProductPricingOptionImpl implements _ProductPricingOption {
       @JsonKey(name: 'pricing_option') this.pricingOptionID = UNKNOWN,
       @JsonKey(name: 'product_name') this.productName = UNKNOWN,
       @JsonKey(name: 'pricing_option_name') this.pricingOptionName = UNKNOWN,
+      @JsonKey(name: 'pricing_option_description')
+      this.pricingOptionDescription = UNKNOWN,
       @JsonKey(name: 'pricing_option_type') this.pricingOptionType = UNKNOWN});
 
   factory _$ProductPricingOptionImpl.fromJson(Map<String, dynamic> json) =>
@@ -275,12 +293,15 @@ class _$ProductPricingOptionImpl implements _ProductPricingOption {
   @JsonKey(name: 'pricing_option_name')
   final String? pricingOptionName;
   @override
+  @JsonKey(name: 'pricing_option_description')
+  final String? pricingOptionDescription;
+  @override
   @JsonKey(name: 'pricing_option_type')
   final String? pricingOptionType;
 
   @override
   String toString() {
-    return 'ProductPricingOption(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, active: $active, host: $host, product: $product, pricingOptionID: $pricingOptionID, productName: $productName, pricingOptionName: $pricingOptionName, pricingOptionType: $pricingOptionType)';
+    return 'ProductPricingOption(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, active: $active, host: $host, product: $product, pricingOptionID: $pricingOptionID, productName: $productName, pricingOptionName: $pricingOptionName, pricingOptionDescription: $pricingOptionDescription, pricingOptionType: $pricingOptionType)';
   }
 
   @override
@@ -302,6 +323,9 @@ class _$ProductPricingOptionImpl implements _ProductPricingOption {
                 other.productName == productName) &&
             (identical(other.pricingOptionName, pricingOptionName) ||
                 other.pricingOptionName == pricingOptionName) &&
+            (identical(
+                    other.pricingOptionDescription, pricingOptionDescription) ||
+                other.pricingOptionDescription == pricingOptionDescription) &&
             (identical(other.pricingOptionType, pricingOptionType) ||
                 other.pricingOptionType == pricingOptionType));
   }
@@ -319,6 +343,7 @@ class _$ProductPricingOptionImpl implements _ProductPricingOption {
       pricingOptionID,
       productName,
       pricingOptionName,
+      pricingOptionDescription,
       pricingOptionType);
 
   /// Create a copy of ProductPricingOption
@@ -350,6 +375,8 @@ abstract class _ProductPricingOption implements ProductPricingOption {
       @JsonKey(name: 'pricing_option') final String? pricingOptionID,
       @JsonKey(name: 'product_name') final String? productName,
       @JsonKey(name: 'pricing_option_name') final String? pricingOptionName,
+      @JsonKey(name: 'pricing_option_description')
+      final String? pricingOptionDescription,
       @JsonKey(name: 'pricing_option_type')
       final String? pricingOptionType}) = _$ProductPricingOptionImpl;
 
@@ -379,6 +406,9 @@ abstract class _ProductPricingOption implements ProductPricingOption {
   @override
   @JsonKey(name: 'pricing_option_name')
   String? get pricingOptionName;
+  @override
+  @JsonKey(name: 'pricing_option_description')
+  String? get pricingOptionDescription;
   @override
   @JsonKey(name: 'pricing_option_type')
   String? get pricingOptionType;

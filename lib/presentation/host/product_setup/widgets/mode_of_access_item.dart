@@ -40,12 +40,12 @@ class ModeOfAccessItem extends StatelessWidget {
                       color: AppColors.textBlackColor,
                     ),
               ),
-              // if (option.pricingOptionDescription?.isNotEmpty ?? false)
-              //   Text(
-              //     option.description ?? '',
-              //     softWrap: true,
-              //     style: Theme.of(context).textTheme.bodySmall,
-              //   ),
+              if (option.pricingOptionDescription?.isNotEmpty ?? false)
+                Text(
+                  option.pricingOptionDescription ?? '',
+                  softWrap: true,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
             ],
           ),
           SecondaryButton(

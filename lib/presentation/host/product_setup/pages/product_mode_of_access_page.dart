@@ -8,7 +8,6 @@ import 'package:fullbooker/application/redux/actions/toggle_pricing_option_actio
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_setup_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
-import 'package:fullbooker/core/utils/utils.dart';
 import 'package:fullbooker/domain/core/entities/product_pricing_option.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
@@ -17,6 +16,7 @@ import 'package:dartz/dartz.dart' as d;
 import 'package:fullbooker/presentation/core/components/generic_zero_state.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/mode_of_access_item.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/modes_of_access_bottom_sheet.dart';
+import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
@@ -189,27 +189,25 @@ class ProductModeOfAccessPage extends StatelessWidget {
                       return AppLoading();
                     }
 
+                    final bool isEditing =
+                        vm.workflowState == WorkflowState.VIEW;
+
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       spacing: 12,
                       children: <Widget>[
                         PrimaryButton(
                           onPressed: () {
-                            context.dispatch(
-                              SetProductPricingOptionsAction(
-                                client:
-                                    AppWrapperBase.of(context)!.customClient,
-                                onSuccess: () =>
-                                    context.router.push(ProductPricingRoute()),
-                                onError: (String error) {
-                                  showAlertDialog(
-                                    context: context,
-                                    assetPath: productZeroStateSVGPath,
-                                    description: error,
-                                  );
-                                },
-                              ),
-                            );
+                            if (isEditing) {
+                              context.router.popUntil(
+                                (Route<dynamic> route) =>
+                                    route.settings.name ==
+                                    ProductReviewAndSubmitRoute.name,
+                              );
+                            } else {
+                              context.router
+                                  .push(ProductReviewAndSubmitRoute());
+                            }
                           },
                           child: d.right(continueString),
                         ),
