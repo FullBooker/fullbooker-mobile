@@ -2,6 +2,7 @@ import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
+import 'package:fullbooker/application/redux/actions/clear_selected_ticket_type_options_action.dart';
 import 'package:fullbooker/application/redux/actions/fetch_product_pricing_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_setup_view_model.dart';
@@ -14,7 +15,6 @@ import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:dartz/dartz.dart' as d;
 import 'package:fullbooker/presentation/core/components/generic_zero_state.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/pricing_card_widget.dart';
-import 'package:fullbooker/presentation/host/product_setup/widgets/ticket_types_bottom_sheet.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
@@ -84,18 +84,11 @@ class ProductPricingPage extends StatelessWidget {
                               Flexible(
                                 child: GestureDetector(
                                   onTap: () {
-                                    showModalBottomSheet(
-                                      context: context,
-                                      isDismissible: false,
-                                      backgroundColor: Colors.white,
-                                      isScrollControlled: true,
-                                      shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.vertical(
-                                          top: Radius.circular(16),
-                                        ),
-                                      ),
-                                      builder: (_) => TicketTypesBottomSheet(),
+                                    context.dispatch(
+                                      ClearSelectedTicketTypeOptionsAction(),
                                     );
+                                    context.router
+                                        .push(AddProductPricingRoute());
                                   },
                                   child: Container(
                                     decoration: BoxDecoration(
@@ -139,18 +132,11 @@ class ProductPricingPage extends StatelessWidget {
                                   title: noPricingAdded,
                                   description: noPricingAddedCopy,
                                   onCTATap: () {
-                                    showModalBottomSheet(
-                                      context: context,
-                                      isDismissible: false,
-                                      backgroundColor: Colors.white,
-                                      isScrollControlled: true,
-                                      shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.vertical(
-                                          top: Radius.circular(16),
-                                        ),
-                                      ),
-                                      builder: (_) => TicketTypesBottomSheet(),
+                                    context.dispatch(
+                                      ClearSelectedTicketTypeOptionsAction(),
                                     );
+                                    context.router
+                                        .push(AddProductPricingRoute());
                                   },
                                   ctaText: addPricingString,
                                 );
@@ -176,6 +162,8 @@ class ProductPricingPage extends StatelessWidget {
 
                                   return PricingCardWidget(
                                     onAddOrEdit: () {
+                                      context.router
+                                          .push(AddProductPricingRoute());
                                       // context.dispatch(
                                       //   UpdateHostStateAction(
                                       //     selectedPricingTier: tier,

@@ -763,3 +763,6 @@ const String addPricingString = 'Add Pricing';
 
 const String selectTicketType = 'Select ticket type';
 const String selectTicketTypeCopy = 'Choose your preferred ticket type';
+
+const String chooseTicketType = 'Choose a ticket type';
+const String addString = 'Add';
