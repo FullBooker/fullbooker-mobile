@@ -49,7 +49,7 @@ class ModeOfAccessItem extends StatelessWidget {
             ],
           ),
           SecondaryButton(
-            child: right(setupPricing),
+            child: right(viewPricing),
             onPressed: onCTATap,
           ),
         ],

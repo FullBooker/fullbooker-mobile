@@ -3,8 +3,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
 import 'package:fullbooker/application/redux/actions/fetch_product_pricing_options_action.dart';
+import 'package:fullbooker/application/redux/actions/select_product_pricing_option_action.dart';
 import 'package:fullbooker/application/redux/actions/set_product_pricing_options_action.dart';
-import 'package:fullbooker/application/redux/actions/toggle_pricing_option_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_setup_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
@@ -165,10 +165,12 @@ class ProductModeOfAccessPage extends StatelessWidget {
                                       option: current!,
                                       onCTATap: () {
                                         context.dispatch(
-                                          TogglePricingOptionAction(
-                                            optionID: current.id,
+                                          SelectProductPricingOptionAction(
+                                            productPricingOption: current,
                                           ),
                                         );
+                                        context.router
+                                            .push(ProductPricingRoute());
                                       },
                                     ),
                                   );

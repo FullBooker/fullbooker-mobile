@@ -44,6 +44,8 @@ mixin _$HostState {
   List<ProductPricingOption?>? get productPricingOptions =>
       throw _privateConstructorUsedError;
   List<String?>? get selectedPricingOptionIds =>
+      throw _privateConstructorUsedError;
+  ProductPricingOption? get selectedProductPricingOption =>
       throw _privateConstructorUsedError; // Search
   bool? get isSearching => throw _privateConstructorUsedError;
   String? get searchParam =>
@@ -88,6 +90,7 @@ abstract class $HostStateCopyWith<$Res> {
       List<PricingOption?>? pricingOptions,
       List<ProductPricingOption?>? productPricingOptions,
       List<String?>? selectedPricingOptionIds,
+      ProductPricingOption? selectedProductPricingOption,
       bool? isSearching,
       String? searchParam,
       ProductStatus? selectedProductStatusFilter,
@@ -102,6 +105,7 @@ abstract class $HostStateCopyWith<$Res> {
   $ProductScheduleCopyWith<$Res>? get selectedSchedule;
   $CurrencyCopyWith<$Res>? get selectedCurrency;
   $ProductPricingCopyWith<$Res>? get selectedProductPricing;
+  $ProductPricingOptionCopyWith<$Res>? get selectedProductPricingOption;
   $BookingCopyWith<$Res>? get selectedBooking;
   $PricingOptionCopyWith<$Res>? get pickedPricingOption;
 }
@@ -138,6 +142,7 @@ class _$HostStateCopyWithImpl<$Res, $Val extends HostState>
     Object? pricingOptions = freezed,
     Object? productPricingOptions = freezed,
     Object? selectedPricingOptionIds = freezed,
+    Object? selectedProductPricingOption = freezed,
     Object? isSearching = freezed,
     Object? searchParam = freezed,
     Object? selectedProductStatusFilter = freezed,
@@ -214,6 +219,10 @@ class _$HostStateCopyWithImpl<$Res, $Val extends HostState>
           ? _value.selectedPricingOptionIds
           : selectedPricingOptionIds // ignore: cast_nullable_to_non_nullable
               as List<String?>?,
+      selectedProductPricingOption: freezed == selectedProductPricingOption
+          ? _value.selectedProductPricingOption
+          : selectedProductPricingOption // ignore: cast_nullable_to_non_nullable
+              as ProductPricingOption?,
       isSearching: freezed == isSearching
           ? _value.isSearching
           : isSearching // ignore: cast_nullable_to_non_nullable
@@ -344,6 +353,22 @@ class _$HostStateCopyWithImpl<$Res, $Val extends HostState>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
+  $ProductPricingOptionCopyWith<$Res>? get selectedProductPricingOption {
+    if (_value.selectedProductPricingOption == null) {
+      return null;
+    }
+
+    return $ProductPricingOptionCopyWith<$Res>(
+        _value.selectedProductPricingOption!, (value) {
+      return _then(
+          _value.copyWith(selectedProductPricingOption: value) as $Val);
+    });
+  }
+
+  /// Create a copy of HostState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
   $BookingCopyWith<$Res>? get selectedBooking {
     if (_value.selectedBooking == null) {
       return null;
@@ -395,6 +420,7 @@ abstract class _$$HostStateImplCopyWith<$Res>
       List<PricingOption?>? pricingOptions,
       List<ProductPricingOption?>? productPricingOptions,
       List<String?>? selectedPricingOptionIds,
+      ProductPricingOption? selectedProductPricingOption,
       bool? isSearching,
       String? searchParam,
       ProductStatus? selectedProductStatusFilter,
@@ -416,6 +442,8 @@ abstract class _$$HostStateImplCopyWith<$Res>
   $CurrencyCopyWith<$Res>? get selectedCurrency;
   @override
   $ProductPricingCopyWith<$Res>? get selectedProductPricing;
+  @override
+  $ProductPricingOptionCopyWith<$Res>? get selectedProductPricingOption;
   @override
   $BookingCopyWith<$Res>? get selectedBooking;
   @override
@@ -452,6 +480,7 @@ class __$$HostStateImplCopyWithImpl<$Res>
     Object? pricingOptions = freezed,
     Object? productPricingOptions = freezed,
     Object? selectedPricingOptionIds = freezed,
+    Object? selectedProductPricingOption = freezed,
     Object? isSearching = freezed,
     Object? searchParam = freezed,
     Object? selectedProductStatusFilter = freezed,
@@ -528,6 +557,10 @@ class __$$HostStateImplCopyWithImpl<$Res>
           ? _value.selectedPricingOptionIds
           : selectedPricingOptionIds // ignore: cast_nullable_to_non_nullable
               as List<String?>?,
+      selectedProductPricingOption: freezed == selectedProductPricingOption
+          ? _value.selectedProductPricingOption
+          : selectedProductPricingOption // ignore: cast_nullable_to_non_nullable
+              as ProductPricingOption?,
       isSearching: freezed == isSearching
           ? _value.isSearching
           : isSearching // ignore: cast_nullable_to_non_nullable
@@ -578,6 +611,7 @@ class _$HostStateImpl implements _HostState {
       this.pricingOptions = const <PricingOption>[],
       this.productPricingOptions = const <ProductPricingOption>[],
       this.selectedPricingOptionIds = const <String>[],
+      this.selectedProductPricingOption,
       this.isSearching = false,
       this.searchParam = UNKNOWN,
       this.selectedProductStatusFilter = ProductStatus.all,
@@ -636,6 +670,8 @@ class _$HostStateImpl implements _HostState {
   @override
   @JsonKey()
   final List<String?>? selectedPricingOptionIds;
+  @override
+  final ProductPricingOption? selectedProductPricingOption;
 // Search
   @override
   @JsonKey()
@@ -659,7 +695,7 @@ class _$HostStateImpl implements _HostState {
 
   @override
   String toString() {
-    return 'HostState(products: $products, currentProduct: $currentProduct, selectedProduct: $selectedProduct, productCategories: $productCategories, locationPerms: $locationPerms, selectedLocation: $selectedLocation, selectedSchedule: $selectedSchedule, currencies: $currencies, selectedCurrency: $selectedCurrency, selectedPricingTier: $selectedPricingTier, selectedProductPricing: $selectedProductPricing, currentScannedTicketID: $currentScannedTicketID, isValidTicket: $isValidTicket, workflowState: $workflowState, pricingOptions: $pricingOptions, productPricingOptions: $productPricingOptions, selectedPricingOptionIds: $selectedPricingOptionIds, isSearching: $isSearching, searchParam: $searchParam, selectedProductStatusFilter: $selectedProductStatusFilter, selectedBooking: $selectedBooking, selectedBookingTickets: $selectedBookingTickets, pickedPricingOption: $pickedPricingOption)';
+    return 'HostState(products: $products, currentProduct: $currentProduct, selectedProduct: $selectedProduct, productCategories: $productCategories, locationPerms: $locationPerms, selectedLocation: $selectedLocation, selectedSchedule: $selectedSchedule, currencies: $currencies, selectedCurrency: $selectedCurrency, selectedPricingTier: $selectedPricingTier, selectedProductPricing: $selectedProductPricing, currentScannedTicketID: $currentScannedTicketID, isValidTicket: $isValidTicket, workflowState: $workflowState, pricingOptions: $pricingOptions, productPricingOptions: $productPricingOptions, selectedPricingOptionIds: $selectedPricingOptionIds, selectedProductPricingOption: $selectedProductPricingOption, isSearching: $isSearching, searchParam: $searchParam, selectedBooking: $selectedBooking, selectedBookingTickets: $selectedBookingTickets, pickedPricingOption: $pickedPricingOption)';
   }
 
   @override
@@ -700,6 +736,10 @@ class _$HostStateImpl implements _HostState {
                 .equals(other.productPricingOptions, productPricingOptions) &&
             const DeepCollectionEquality().equals(
                 other.selectedPricingOptionIds, selectedPricingOptionIds) &&
+            (identical(other.selectedProductPricingOption,
+                    selectedProductPricingOption) ||
+                other.selectedProductPricingOption ==
+                    selectedProductPricingOption) &&
             (identical(other.isSearching, isSearching) ||
                 other.isSearching == isSearching) &&
             (identical(other.searchParam, searchParam) ||
@@ -737,6 +777,7 @@ class _$HostStateImpl implements _HostState {
         const DeepCollectionEquality().hash(pricingOptions),
         const DeepCollectionEquality().hash(productPricingOptions),
         const DeepCollectionEquality().hash(selectedPricingOptionIds),
+        selectedProductPricingOption,
         isSearching,
         searchParam,
         selectedProductStatusFilter,
@@ -780,6 +821,7 @@ abstract class _HostState implements HostState {
       final List<PricingOption?>? pricingOptions,
       final List<ProductPricingOption?>? productPricingOptions,
       final List<String?>? selectedPricingOptionIds,
+      final ProductPricingOption? selectedProductPricingOption,
       final bool? isSearching,
       final String? searchParam,
       final ProductStatus? selectedProductStatusFilter,
@@ -823,7 +865,9 @@ abstract class _HostState implements HostState {
   @override
   List<ProductPricingOption?>? get productPricingOptions;
   @override
-  List<String?>? get selectedPricingOptionIds; // Search
+  List<String?>? get selectedPricingOptionIds;
+  @override
+  ProductPricingOption? get selectedProductPricingOption; // Search
   @override
   bool? get isSearching;
   @override

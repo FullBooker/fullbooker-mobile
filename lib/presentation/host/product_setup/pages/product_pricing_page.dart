@@ -2,6 +2,7 @@ import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
+import 'package:fullbooker/application/redux/actions/fetch_product_pricing_action.dart';
 import 'package:fullbooker/application/redux/actions/fetch_single_product_action.dart';
 import 'package:fullbooker/application/redux/actions/update_host_state_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
@@ -64,7 +65,7 @@ class ProductPricingPage extends StatelessWidget {
                             ProductSetupViewModel.fromState(store.state),
                         onInit: (Store<AppState> store) {
                           context.dispatch(
-                            FetchSingleProductAction(
+                            FetchProductPricingAction(
                               client: AppWrapperBase.of(context)!.customClient,
                             ),
                           );
@@ -73,7 +74,7 @@ class ProductPricingPage extends StatelessWidget {
                           BuildContext context,
                           ProductSetupViewModel vm,
                         ) {
-                          if (context.isWaiting(FetchSingleProductAction)) {
+                          if (context.isWaiting(FetchProductPricingAction)) {
                             return AppLoading();
                           }
 

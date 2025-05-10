@@ -48,6 +48,7 @@ class HostState with _$HostState {
     @Default(<ProductPricingOption>[])
     List<ProductPricingOption?>? productPricingOptions,
     @Default(<String>[]) List<String?>? selectedPricingOptionIds,
+    ProductPricingOption? selectedProductPricingOption,
 
     // Search
     @Default(false) bool? isSearching,
@@ -74,6 +75,7 @@ class HostState with _$HostState {
         selectedProductPricing: ProductPricing.initial(),
         selectedCurrency: Currency(),
         pickedPricingOption: PricingOption.initial(),
+        selectedProductPricingOption: ProductPricingOption.initial(),
       );
 
   factory HostState.fromJson(Map<String, dynamic> json) =>
