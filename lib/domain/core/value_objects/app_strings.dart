@@ -754,3 +754,12 @@ const String setupModesOfAccessCopy =
 const String addModeOfAccess = 'Add Mode of Access';
 const String modeOfAccessBottomSheetCopy =
     'Choose your preferred mode of access';
+
+const String noPricingAdded = 'No Pricing Added';
+const String noPricingAddedCopy =
+    'Set up your product pricing to start receiving bookings and payments';
+
+const String addPricingString = 'Add Pricing';
+
+const String selectTicketType = 'Select ticket type';
+const String selectTicketTypeCopy = 'Choose your preferred ticket type';

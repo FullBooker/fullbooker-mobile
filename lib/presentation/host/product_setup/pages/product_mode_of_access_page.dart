@@ -148,35 +148,29 @@ class ProductModeOfAccessPage extends StatelessWidget {
                             );
                           }
 
-                          return Column(
-                            spacing: 12,
-                            children: <Widget>[
-                              ListView.builder(
-                                itemCount: productPricingOptions?.length,
-                                physics: NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                itemBuilder: (BuildContext context, int index) {
-                                  final ProductPricingOption? current =
-                                      productPricingOptions![index];
+                          return ListView.builder(
+                            itemCount: productPricingOptions?.length,
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemBuilder: (BuildContext context, int index) {
+                              final ProductPricingOption? current =
+                                  productPricingOptions![index];
 
-                                  return Padding(
-                                    padding: const EdgeInsets.only(bottom: 12),
-                                    child: ModeOfAccessItem(
-                                      option: current!,
-                                      onCTATap: () {
-                                        context.dispatch(
-                                          SelectProductPricingOptionAction(
-                                            productPricingOption: current,
-                                          ),
-                                        );
-                                        context.router
-                                            .push(ProductPricingRoute());
-                                      },
-                                    ),
-                                  );
-                                },
-                              ),
-                            ],
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 12),
+                                child: ModeOfAccessItem(
+                                  option: current!,
+                                  onCTATap: () {
+                                    context.dispatch(
+                                      SelectProductPricingOptionAction(
+                                        productPricingOption: current,
+                                      ),
+                                    );
+                                    context.router.push(ProductPricingRoute());
+                                  },
+                                ),
+                              );
+                            },
                           );
                         },
                       ),

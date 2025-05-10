@@ -50,3 +50,6 @@ const String vipTicketIconSVGPath = 'assets/vectors/vvip_ticket_icon.svg';
 
 const String bookingTicketsZeroStateSVGPath =
     'assets/vectors/booking_tickets_zero_state.svg';
+
+const String productPricingZeroStateSVGPath =
+    'assets/vectors/product_pricing_zero_state_svg.svg';

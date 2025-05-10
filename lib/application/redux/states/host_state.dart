@@ -12,6 +12,7 @@ import 'package:fullbooker/domain/core/entities/product_pricing.dart';
 import 'package:fullbooker/domain/core/entities/product_pricing_option.dart';
 import 'package:fullbooker/domain/core/entities/product_schedule.dart';
 import 'package:fullbooker/domain/core/entities/ticket.dart';
+import 'package:fullbooker/domain/core/entities/ticket_type.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/location_perms_result.dart';
 
@@ -64,6 +65,9 @@ class HostState with _$HostState {
 
     // Add modes of access bottom sheet
     PricingOption? pickedPricingOption,
+
+    // Pricing page
+    @Default(<TicketType>[]) List<TicketType?>? ticketTypes,
   }) = _HostState;
 
   factory HostState.initial() => HostState(
