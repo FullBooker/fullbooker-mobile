@@ -745,3 +745,5 @@ const String noTicketsCopy =
 
 const String sessionExpired =
     'Your session has expired. Please sign in again to continue';
+const String viewPricing = 'View Pricing';
+const String setupPricing = 'Setup Pricing';

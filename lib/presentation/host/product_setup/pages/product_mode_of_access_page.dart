@@ -14,7 +14,7 @@ import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:dartz/dartz.dart' as d;
-import 'package:fullbooker/presentation/host/product_setup/widgets/pricing_option_item.dart';
+import 'package:fullbooker/presentation/host/product_setup/widgets/mode_of_access_item.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
@@ -26,170 +26,160 @@ class ProductModeOfAccessPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(
-        showBell: false,
-        title: setupEvent,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          spacing: 12,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Expanded(
-              child: ListView(
+    return SafeArea(
+      child: Scaffold(
+        appBar: CustomAppBar(
+          showBell: false,
+          title: setupEvent,
+        ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            spacing: 12,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Row(
+                spacing: 16,
                 children: <Widget>[
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    spacing: 12,
-                    children: <Widget>[
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        spacing: 8,
-                        children: <Widget>[
-                          Text(
-                            modeOfAccess,
-                            style: Theme.of(context).textTheme.headlineSmall,
-                          ),
-                          Text(
-                            modeOfAccessCopy,
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                        ],
+                  Flexible(
+                    flex: 5,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      spacing: 8,
+                      children: <Widget>[
+                        Text(
+                          modeOfAccess,
+                          style: Theme.of(context).textTheme.headlineSmall,
+                        ),
+                        Text(
+                          modeOfAccessCopy,
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Flexible(
+                    child: GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).primaryColor,
+                          shape: BoxShape.circle,
+                        ),
+                        padding: const EdgeInsets.all(12),
+                        child: HeroIcon(
+                          HeroIcons.plus,
+                          color: Colors.white,
+                          size: 32,
+                        ),
                       ),
-                      StoreConnector<AppState, ProductSetupViewModel>(
-                        converter: (Store<AppState> store) =>
-                            ProductSetupViewModel.fromState(store.state),
-                        onInit: (Store<AppState> store) {
-                          context.dispatch(
-                            FetchPricingOptionsAction(
-                              client: AppWrapperBase.of(context)!.customClient,
-                            ),
-                          );
-                        },
-                        builder:
-                            (BuildContext context, ProductSetupViewModel vm) {
-                          if (context.isWaiting(FetchPricingOptionsAction)) {
-                            return AppLoading();
-                          }
-
-                          final List<PricingOption?>? pricingOptions =
-                              vm.pricingOptions;
-
-                          return Column(
-                            spacing: 12,
-                            children: <Widget>[
-                              if (vm.selectedPricingOptionIDs?.isEmpty ?? true)
-                                Container(
-                                  padding: const EdgeInsets.all(16),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    color: Theme.of(context)
-                                        .primaryColor
-                                        .withValues(alpha: .1),
-                                  ),
-                                  child: Row(
-                                    spacing: 8,
-                                    children: <Widget>[
-                                      HeroIcon(
-                                        HeroIcons.exclamationTriangle,
-                                        color: Theme.of(context).primaryColor,
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                          addProductPricingOptionErrorMsg,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodySmall
-                                              ?.copyWith(
-                                                color: Theme.of(context)
-                                                    .primaryColor,
-                                              ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ListView.builder(
-                                itemCount: pricingOptions?.length,
-                                physics: NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                itemBuilder: (BuildContext context, int index) {
-                                  final PricingOption? current =
-                                      pricingOptions![index];
-
-                                  final bool selected = vm
-                                          .selectedPricingOptionIDs
-                                          ?.contains(current?.id) ??
-                                      false;
-
-                                  return Padding(
-                                    padding: const EdgeInsets.only(bottom: 12),
-                                    child: PricingOptionItem(
-                                      option: current!,
-                                      isSelected: selected,
-                                      onTap: () {
-                                        context.dispatch(
-                                          TogglePricingOptionAction(
-                                            optionID: current.id,
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  );
-                                },
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-                    ],
+                    ),
                   ),
                 ],
               ),
-            ),
-            StoreConnector<AppState, ProductSetupViewModel>(
-              converter: (Store<AppState> store) =>
-                  ProductSetupViewModel.fromState(store.state),
-              builder: (BuildContext context, ProductSetupViewModel vm) {
-                if (context.isWaiting(SetProductPricingOptionsAction)) {
-                  return AppLoading();
-                }
-
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  spacing: 12,
+              Expanded(
+                child: ListView(
                   children: <Widget>[
-                    PrimaryButton(
-                      onPressed: () {
+                    StoreConnector<AppState, ProductSetupViewModel>(
+                      converter: (Store<AppState> store) =>
+                          ProductSetupViewModel.fromState(store.state),
+                      onInit: (Store<AppState> store) {
                         context.dispatch(
-                          SetProductPricingOptionsAction(
+                          FetchPricingOptionsAction(
                             client: AppWrapperBase.of(context)!.customClient,
-                            onSuccess: () =>
-                                context.router.push(ProductPricingRoute()),
-                            onError: (String error) {
-                              showAlertDialog(
-                                context: context,
-                                assetPath: productZeroStateSVGPath,
-                                description: error,
-                              );
-                            },
                           ),
                         );
                       },
-                      child: d.right(continueString),
-                    ),
-                    SecondaryButton(
-                      onPressed: () => context.router.maybePop(),
-                      child: d.right(previousString),
-                      fillColor: Colors.transparent,
+                      builder:
+                          (BuildContext context, ProductSetupViewModel vm) {
+                        if (context.isWaiting(FetchPricingOptionsAction)) {
+                          return AppLoading();
+                        }
+
+                        final List<PricingOption?>? pricingOptions =
+                            vm.pricingOptions;
+
+                        return Column(
+                          spacing: 12,
+                          children: <Widget>[
+                            ListView.builder(
+                              itemCount: pricingOptions?.length,
+                              physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemBuilder: (BuildContext context, int index) {
+                                final PricingOption? current =
+                                    pricingOptions![index];
+
+                                final bool selected = vm
+                                        .selectedPricingOptionIDs
+                                        ?.contains(current?.id) ??
+                                    false;
+
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 12),
+                                  child: ModeOfAccessItem(
+                                    option: current!,
+                                    isSelected: selected,
+                                    onCTATap: () {
+                                      context.dispatch(
+                                        TogglePricingOptionAction(
+                                          optionID: current.id,
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                );
+                              },
+                            ),
+                          ],
+                        );
+                      },
                     ),
                   ],
-                );
-              },
-            ),
-          ],
+                ),
+              ),
+              StoreConnector<AppState, ProductSetupViewModel>(
+                converter: (Store<AppState> store) =>
+                    ProductSetupViewModel.fromState(store.state),
+                builder: (BuildContext context, ProductSetupViewModel vm) {
+                  if (context.isWaiting(SetProductPricingOptionsAction)) {
+                    return AppLoading();
+                  }
+
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    spacing: 12,
+                    children: <Widget>[
+                      PrimaryButton(
+                        onPressed: () {
+                          context.dispatch(
+                            SetProductPricingOptionsAction(
+                              client: AppWrapperBase.of(context)!.customClient,
+                              onSuccess: () =>
+                                  context.router.push(ProductPricingRoute()),
+                              onError: (String error) {
+                                showAlertDialog(
+                                  context: context,
+                                  assetPath: productZeroStateSVGPath,
+                                  description: error,
+                                );
+                              },
+                            ),
+                          );
+                        },
+                        child: d.right(continueString),
+                      ),
+                      SecondaryButton(
+                        onPressed: () => context.router.maybePop(),
+                        child: d.right(previousString),
+                        fillColor: Colors.transparent,
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
