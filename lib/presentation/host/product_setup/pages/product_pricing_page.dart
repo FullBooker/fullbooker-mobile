@@ -3,12 +3,9 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
 import 'package:fullbooker/application/redux/actions/fetch_product_pricing_action.dart';
-import 'package:fullbooker/application/redux/actions/fetch_single_product_action.dart';
-import 'package:fullbooker/application/redux/actions/update_host_state_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_setup_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
-import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/utils/utils.dart';
 import 'package:fullbooker/domain/core/entities/product_pricing.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
@@ -16,9 +13,8 @@ import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:dartz/dartz.dart' as d;
 import 'package:fullbooker/presentation/core/components/generic_zero_state.dart';
-import 'package:fullbooker/presentation/host/product_setup/widgets/modes_of_access_bottom_sheet.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/pricing_card_widget.dart';
-import 'package:fullbooker/presentation/host/product_setup/widgets/pricing_options_bottom_sheet.dart';
+import 'package:fullbooker/presentation/host/product_setup/widgets/ticket_types_bottom_sheet.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
@@ -60,18 +56,60 @@ class ProductPricingPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         spacing: 12,
                         children: <Widget>[
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            spacing: 8,
+                          Row(
+                            spacing: 16,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
-                              Text(
-                                pricing,
-                                style:
-                                    Theme.of(context).textTheme.headlineSmall,
+                              Flexible(
+                                flex: 5,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  spacing: 8,
+                                  children: <Widget>[
+                                    Text(
+                                      pricing,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headlineSmall,
+                                    ),
+                                    Text(
+                                      pricingCopy,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium,
+                                    ),
+                                  ],
+                                ),
                               ),
-                              Text(
-                                pricingCopy,
-                                style: Theme.of(context).textTheme.bodyMedium,
+                              Flexible(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    showModalBottomSheet(
+                                      context: context,
+                                      isDismissible: false,
+                                      backgroundColor: Colors.white,
+                                      isScrollControlled: true,
+                                      shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.vertical(
+                                          top: Radius.circular(16),
+                                        ),
+                                      ),
+                                      builder: (_) => TicketTypesBottomSheet(),
+                                    );
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Theme.of(context).primaryColor,
+                                      shape: BoxShape.circle,
+                                    ),
+                                    padding: const EdgeInsets.all(12),
+                                    child: HeroIcon(
+                                      HeroIcons.plus,
+                                      color: Colors.white,
+                                      size: 32,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ],
                           ),
@@ -111,8 +149,7 @@ class ProductPricingPage extends StatelessWidget {
                                           top: Radius.circular(16),
                                         ),
                                       ),
-                                      builder: (_) =>
-                                          PricingOptionsBottomSheet(),
+                                      builder: (_) => TicketTypesBottomSheet(),
                                     );
                                   },
                                   ctaText: addPricingString,
@@ -131,60 +168,26 @@ class ProductPricingPage extends StatelessWidget {
                                 }
                               }
 
-                              String _tierKey(String display) =>
-                                  display.toLowerCase().replaceAll(' ', '_');
+                              return ListView.builder(
+                                itemCount: vm.pricing?.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  final ProductPricing? current =
+                                      vm.pricing![index];
 
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                spacing: 12,
-                                children: <Widget>[
-                                  if (vm.pricing?.isEmpty ?? true)
-                                    Container(
-                                      padding: const EdgeInsets.all(12),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(8),
-                                        color: Theme.of(context)
-                                            .primaryColor
-                                            .withValues(alpha: .1),
-                                      ),
-                                      child: Row(
-                                        spacing: 8,
-                                        children: <Widget>[
-                                          HeroIcon(
-                                            HeroIcons.exclamationTriangle,
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                          ),
-                                          Expanded(
-                                            child: Text(
-                                              addPricingErrorMsg,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodySmall
-                                                  ?.copyWith(
-                                                    color: Theme.of(context)
-                                                        .primaryColor,
-                                                  ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  // for (final String tier in allTicketTiers)
-                                  //   PricingCardWidget(
-                                  //     onAddOrEdit: () {
-                                  //       context.dispatch(
-                                  //         UpdateHostStateAction(
-                                  //           selectedPricingTier: tier,
-                                  //         ),
-                                  //       );
-                                  //       context.router
-                                  //           .push(AddProductPricingRoute());
-                                  //     },
-                                  //     pricing: pricingMap[_tierKey(tier)],
-                                  //     tierDisplay: tier,
-                                  //   ),
-                                ],
+                                  return PricingCardWidget(
+                                    onAddOrEdit: () {
+                                      // context.dispatch(
+                                      //   UpdateHostStateAction(
+                                      //     selectedPricingTier: tier,
+                                      //   ),
+                                      // );
+                                      // context.router
+                                      //     .push(AddProductPricingRoute());
+                                    },
+                                    pricing: current,
+                                    tierDisplay: current?.name,
+                                  );
+                                },
                               );
                             },
                           ),

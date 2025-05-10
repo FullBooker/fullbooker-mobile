@@ -10,6 +10,7 @@ import 'package:fullbooker/domain/core/entities/product_media.dart';
 import 'package:fullbooker/domain/core/entities/product_pricing.dart';
 import 'package:fullbooker/domain/core/entities/product_pricing_option.dart';
 import 'package:fullbooker/domain/core/entities/product_schedule.dart';
+import 'package:fullbooker/domain/core/entities/ticket_type.dart';
 import 'package:fullbooker/shared/entities/location_perms_result.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 
@@ -50,6 +51,8 @@ class ProductSetupViewModel extends Vm {
     required this.selectedPricingOptionIDs,
     required this.productPricingOptions,
     required this.pickedPricingOption,
+    required this.ticketTypes,
+    required this.selectedTicketType,
   }) : super(
           equals: <Object?>[
             workflowState,
@@ -86,6 +89,8 @@ class ProductSetupViewModel extends Vm {
             selectedPricingOptionIDs,
             productPricingOptions,
             pickedPricingOption,
+            ticketTypes,
+            selectedTicketType,
           ],
         );
 
@@ -132,7 +137,10 @@ class ProductSetupViewModel extends Vm {
   final List<ProductCategory?>? subCategories;
   final String subCategoryID;
 
+  // Pricing page
   final List<ProductPricingOption?>? productPricingOptions;
+  final List<TicketType?> ticketTypes;
+  final TicketType? selectedTicketType;
 
   static ProductSetupViewModel fromState(AppState state) {
     final WorkflowState workflowState =
@@ -193,6 +201,8 @@ class ProductSetupViewModel extends Vm {
           state.hostState?.productPricingOptions ?? <ProductPricingOption?>[],
       pickedPricingOption:
           state.hostState?.pickedPricingOption ?? PricingOption.initial(),
+      ticketTypes: state.hostState?.ticketTypes ?? <TicketType?>[],
+      selectedTicketType: state.hostState?.selectedTicketType ?? TicketType(),
     );
   }
 }

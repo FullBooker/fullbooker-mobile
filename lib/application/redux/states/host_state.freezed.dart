@@ -58,6 +58,7 @@ mixin _$HostState {
   PricingOption? get pickedPricingOption =>
       throw _privateConstructorUsedError; // Pricing page
   List<TicketType?>? get ticketTypes => throw _privateConstructorUsedError;
+  TicketType? get selectedTicketType => throw _privateConstructorUsedError;
 
   /// Serializes this HostState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -99,7 +100,8 @@ abstract class $HostStateCopyWith<$Res> {
       Booking? selectedBooking,
       List<Ticket?>? selectedBookingTickets,
       PricingOption? pickedPricingOption,
-      List<TicketType?>? ticketTypes});
+      List<TicketType?>? ticketTypes,
+      TicketType? selectedTicketType});
 
   $ProductCopyWith<$Res>? get currentProduct;
   $ProductCopyWith<$Res>? get selectedProduct;
@@ -111,6 +113,7 @@ abstract class $HostStateCopyWith<$Res> {
   $ProductPricingOptionCopyWith<$Res>? get selectedProductPricingOption;
   $BookingCopyWith<$Res>? get selectedBooking;
   $PricingOptionCopyWith<$Res>? get pickedPricingOption;
+  $TicketTypeCopyWith<$Res>? get selectedTicketType;
 }
 
 /// @nodoc
@@ -153,6 +156,7 @@ class _$HostStateCopyWithImpl<$Res, $Val extends HostState>
     Object? selectedBookingTickets = freezed,
     Object? pickedPricingOption = freezed,
     Object? ticketTypes = freezed,
+    Object? selectedTicketType = freezed,
   }) {
     return _then(_value.copyWith(
       products: freezed == products
@@ -255,6 +259,10 @@ class _$HostStateCopyWithImpl<$Res, $Val extends HostState>
           ? _value.ticketTypes
           : ticketTypes // ignore: cast_nullable_to_non_nullable
               as List<TicketType?>?,
+      selectedTicketType: freezed == selectedTicketType
+          ? _value.selectedTicketType
+          : selectedTicketType // ignore: cast_nullable_to_non_nullable
+              as TicketType?,
     ) as $Val);
   }
 
@@ -400,6 +408,20 @@ class _$HostStateCopyWithImpl<$Res, $Val extends HostState>
       return _then(_value.copyWith(pickedPricingOption: value) as $Val);
     });
   }
+
+  /// Create a copy of HostState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $TicketTypeCopyWith<$Res>? get selectedTicketType {
+    if (_value.selectedTicketType == null) {
+      return null;
+    }
+
+    return $TicketTypeCopyWith<$Res>(_value.selectedTicketType!, (value) {
+      return _then(_value.copyWith(selectedTicketType: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -435,7 +457,8 @@ abstract class _$$HostStateImplCopyWith<$Res>
       Booking? selectedBooking,
       List<Ticket?>? selectedBookingTickets,
       PricingOption? pickedPricingOption,
-      List<TicketType?>? ticketTypes});
+      List<TicketType?>? ticketTypes,
+      TicketType? selectedTicketType});
 
   @override
   $ProductCopyWith<$Res>? get currentProduct;
@@ -457,6 +480,8 @@ abstract class _$$HostStateImplCopyWith<$Res>
   $BookingCopyWith<$Res>? get selectedBooking;
   @override
   $PricingOptionCopyWith<$Res>? get pickedPricingOption;
+  @override
+  $TicketTypeCopyWith<$Res>? get selectedTicketType;
 }
 
 /// @nodoc
@@ -497,6 +522,7 @@ class __$$HostStateImplCopyWithImpl<$Res>
     Object? selectedBookingTickets = freezed,
     Object? pickedPricingOption = freezed,
     Object? ticketTypes = freezed,
+    Object? selectedTicketType = freezed,
   }) {
     return _then(_$HostStateImpl(
       products: freezed == products
@@ -599,6 +625,10 @@ class __$$HostStateImplCopyWithImpl<$Res>
           ? _value.ticketTypes
           : ticketTypes // ignore: cast_nullable_to_non_nullable
               as List<TicketType?>?,
+      selectedTicketType: freezed == selectedTicketType
+          ? _value.selectedTicketType
+          : selectedTicketType // ignore: cast_nullable_to_non_nullable
+              as TicketType?,
     ));
   }
 }
@@ -632,7 +662,8 @@ class _$HostStateImpl implements _HostState {
       this.selectedBooking,
       this.selectedBookingTickets = const <Ticket>[],
       this.pickedPricingOption,
-      this.ticketTypes = const <TicketType>[]});
+      this.ticketTypes = const <TicketType>[],
+      this.selectedTicketType});
 
   factory _$HostStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$HostStateImplFromJson(json);
@@ -711,10 +742,12 @@ class _$HostStateImpl implements _HostState {
   @override
   @JsonKey()
   final List<TicketType?>? ticketTypes;
+  @override
+  final TicketType? selectedTicketType;
 
   @override
   String toString() {
-    return 'HostState(products: $products, currentProduct: $currentProduct, selectedProduct: $selectedProduct, productCategories: $productCategories, locationPerms: $locationPerms, selectedLocation: $selectedLocation, selectedSchedule: $selectedSchedule, currencies: $currencies, selectedCurrency: $selectedCurrency, selectedPricingTier: $selectedPricingTier, selectedProductPricing: $selectedProductPricing, currentScannedTicketID: $currentScannedTicketID, isValidTicket: $isValidTicket, workflowState: $workflowState, pricingOptions: $pricingOptions, productPricingOptions: $productPricingOptions, selectedPricingOptionIds: $selectedPricingOptionIds, selectedProductPricingOption: $selectedProductPricingOption, isSearching: $isSearching, searchParam: $searchParam, selectedBooking: $selectedBooking, selectedBookingTickets: $selectedBookingTickets, pickedPricingOption: $pickedPricingOption, ticketTypes: $ticketTypes)';
+    return 'HostState(products: $products, currentProduct: $currentProduct, selectedProduct: $selectedProduct, productCategories: $productCategories, locationPerms: $locationPerms, selectedLocation: $selectedLocation, selectedSchedule: $selectedSchedule, currencies: $currencies, selectedCurrency: $selectedCurrency, selectedPricingTier: $selectedPricingTier, selectedProductPricing: $selectedProductPricing, currentScannedTicketID: $currentScannedTicketID, isValidTicket: $isValidTicket, workflowState: $workflowState, pricingOptions: $pricingOptions, productPricingOptions: $productPricingOptions, selectedPricingOptionIds: $selectedPricingOptionIds, selectedProductPricingOption: $selectedProductPricingOption, isSearching: $isSearching, searchParam: $searchParam, selectedBooking: $selectedBooking, selectedBookingTickets: $selectedBookingTickets, pickedPricingOption: $pickedPricingOption, ticketTypes: $ticketTypes, selectedTicketType: $selectedTicketType)';
   }
 
   @override
@@ -774,7 +807,9 @@ class _$HostStateImpl implements _HostState {
             (identical(other.pickedPricingOption, pickedPricingOption) ||
                 other.pickedPricingOption == pickedPricingOption) &&
             const DeepCollectionEquality()
-                .equals(other.ticketTypes, ticketTypes));
+                .equals(other.ticketTypes, ticketTypes) &&
+            (identical(other.selectedTicketType, selectedTicketType) ||
+                other.selectedTicketType == selectedTicketType));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -805,7 +840,8 @@ class _$HostStateImpl implements _HostState {
         selectedBooking,
         const DeepCollectionEquality().hash(selectedBookingTickets),
         pickedPricingOption,
-        const DeepCollectionEquality().hash(ticketTypes)
+        const DeepCollectionEquality().hash(ticketTypes),
+        selectedTicketType
       ]);
 
   /// Create a copy of HostState
@@ -850,7 +886,8 @@ abstract class _HostState implements HostState {
       final Booking? selectedBooking,
       final List<Ticket?>? selectedBookingTickets,
       final PricingOption? pickedPricingOption,
-      final List<TicketType?>? ticketTypes}) = _$HostStateImpl;
+      final List<TicketType?>? ticketTypes,
+      final TicketType? selectedTicketType}) = _$HostStateImpl;
 
   factory _HostState.fromJson(Map<String, dynamic> json) =
       _$HostStateImpl.fromJson;
@@ -905,6 +942,8 @@ abstract class _HostState implements HostState {
   PricingOption? get pickedPricingOption; // Pricing page
   @override
   List<TicketType?>? get ticketTypes;
+  @override
+  TicketType? get selectedTicketType;
 
   /// Create a copy of HostState
   /// with the given fields replaced by the non-null parameter values.

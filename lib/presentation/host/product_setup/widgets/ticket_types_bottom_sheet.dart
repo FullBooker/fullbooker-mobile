@@ -3,20 +3,22 @@ import 'package:auto_route/auto_route.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
-import 'package:fullbooker/application/redux/actions/fetch_pricing_options_action.dart';
+import 'package:fullbooker/application/redux/actions/clear_selected_ticket_type_options_action.dart';
+import 'package:fullbooker/application/redux/actions/fetch_ticket_types_action.dart';
+import 'package:fullbooker/application/redux/actions/select_product_ticket_type_action.dart';
 import 'package:fullbooker/application/redux/actions/set_product_pricing_options_action.dart';
-import 'package:fullbooker/application/redux/actions/toggle_pricing_option_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_setup_view_model.dart';
+import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
-import 'package:fullbooker/domain/core/entities/pricing_option.dart';
+import 'package:fullbooker/domain/core/entities/ticket_type.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:heroicons/heroicons.dart';
 
-class PricingOptionsBottomSheet extends StatelessWidget {
-  const PricingOptionsBottomSheet({super.key});
+class TicketTypesBottomSheet extends StatelessWidget {
+  const TicketTypesBottomSheet({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -72,29 +74,28 @@ class PricingOptionsBottomSheet extends StatelessWidget {
                 converter: (Store<AppState> store) =>
                     ProductSetupViewModel.fromState(store.state),
                 onInit: (Store<AppState> store) {
-                  // context.dispatch(ClearPricingOptionsAction());
+                  context.dispatch(ClearSelectedTicketTypeOptionsAction());
                   context.dispatch(
-                    FetchPricingOptionsAction(
+                    FetchTicketTypesAction(
                       client: AppWrapperBase.of(context)!.customClient,
                     ),
                   );
                 },
                 builder: (BuildContext context, ProductSetupViewModel vm) {
-                  if (context.isWaiting(FetchPricingOptionsAction)) {
+                  if (context.isWaiting(FetchTicketTypesAction)) {
                     return AppLoading();
                   }
 
-                  final List<PricingOption?>? options = vm.pricingOptions;
+                  final List<TicketType?> options = vm.ticketTypes;
 
                   return ListView.builder(
                     shrinkWrap: true,
-                    itemCount: options?.length,
+                    itemCount: options.length,
                     itemBuilder: (BuildContext context, int index) {
-                      final PricingOption? option = options![index];
+                      final TicketType? ticketType = options[index];
 
                       final bool isSelected =
-                          vm.selectedPricingOptionIDs?.contains(option?.id) ??
-                              false;
+                          ticketType?.id == vm.selectedTicketType?.id;
 
                       return InkWell(
                         splashColor: Theme.of(context)
@@ -105,9 +106,11 @@ class PricingOptionsBottomSheet extends StatelessWidget {
                             .primaryColor
                             .withValues(alpha: .1),
                         onTap: () {
-                          // context.dispatch(
-                          //   TogglePricingOptionAction(optionID: option?.id),
-                          // );
+                          context.dispatch(
+                            SelectProductTicketTypeAction(
+                              selectedTicketType: ticketType,
+                            ),
+                          );
                         },
                         child: Container(
                           width: double.infinity,
@@ -134,7 +137,7 @@ class PricingOptionsBottomSheet extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Text(
-                                      option?.name ?? '',
+                                      ticketType?.name ?? UNKNOWN,
                                       style: Theme.of(context)
                                           .textTheme
                                           .titleMedium
