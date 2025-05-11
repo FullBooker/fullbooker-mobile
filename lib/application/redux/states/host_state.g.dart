@@ -69,6 +69,9 @@ _$HostStateImpl _$$HostStateImplFromJson(Map<String, dynamic> json) =>
               const <String>[],
       isSearching: json['isSearching'] as bool? ?? false,
       searchParam: json['searchParam'] as String? ?? UNKNOWN,
+      selectedProductStatusFilter: $enumDecodeNullable(
+              _$ProductStatusEnumMap, json['selectedProductStatusFilter']) ??
+          ProductStatus.all,
       selectedBooking: json['selectedBooking'] == null
           ? null
           : Booking.fromJson(json['selectedBooking'] as Map<String, dynamic>),
@@ -101,6 +104,8 @@ Map<String, dynamic> _$$HostStateImplToJson(_$HostStateImpl instance) =>
       'selectedPricingOptionIds': instance.selectedPricingOptionIds,
       'isSearching': instance.isSearching,
       'searchParam': instance.searchParam,
+      'selectedProductStatusFilter':
+          _$ProductStatusEnumMap[instance.selectedProductStatusFilter],
       'selectedBooking': instance.selectedBooking?.toJson(),
       'selectedBookingTickets':
           instance.selectedBookingTickets?.map((e) => e?.toJson()).toList(),
@@ -109,4 +114,15 @@ Map<String, dynamic> _$$HostStateImplToJson(_$HostStateImpl instance) =>
 const _$WorkflowStateEnumMap = {
   WorkflowState.CREATE: 'CREATE',
   WorkflowState.VIEW: 'VIEW',
+};
+
+const _$ProductStatusEnumMap = {
+  ProductStatus.all: 'all',
+  ProductStatus.draft: 'draft',
+  ProductStatus.review: 'review',
+  ProductStatus.published: 'published',
+  ProductStatus.deactivated: 'deactivated',
+  ProductStatus.reviewedNeedsChanges: 'reviewedNeedsChanges',
+  ProductStatus.rejected: 'rejected',
+  ProductStatus.invalidated: 'invalidated',
 };

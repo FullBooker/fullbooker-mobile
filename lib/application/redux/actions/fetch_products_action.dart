@@ -18,12 +18,14 @@ class FetchProductsAction extends ReduxAction<AppState> {
     this.onError,
     required this.client,
     this.searchParam,
+    this.productStatus,
   });
 
   final Function(String error)? onError;
   final Function()? onSuccess;
   final ICustomClient client;
   final String? searchParam;
+  final ProductStatus? productStatus;
 
   @override
   Future<AppState?> reduce() async {
@@ -35,14 +37,15 @@ class FetchProductsAction extends ReduxAction<AppState> {
     final bool isSearching = searchParam != null && searchParam != UNKNOWN;
 
     final Map<String, String?> queryParams = <String, String?>{
-      'search': searchParam,
+      if (isSearching) 'search': searchParam,
+      if (productStatus != null) 'status': productStatus?.apiValue,
     };
 
     final Response httpResponse = await client.callRESTAPI(
       endpoint: GetIt.I.get<AppConfig>().getProductsEndpoint,
       method: APIMethods.GET.name.toUpperCase(),
       variables: data,
-      queryParams: isSearching ? queryParams : null,
+      queryParams: queryParams,
     );
 
     final Map<String, dynamic> body =

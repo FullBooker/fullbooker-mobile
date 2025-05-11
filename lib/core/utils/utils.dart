@@ -436,6 +436,8 @@ String getStatusDisplay({required Product product}) {
       return 'Rejected';
     case ProductStatus.invalidated:
       return 'Invalidated';
+    case ProductStatus.all:
+      return 'All';
   }
 }
 
@@ -452,6 +454,8 @@ Color getProductStatusColor({required Product product}) {
     case ProductStatus.rejected:
     case ProductStatus.invalidated:
       return AppColors.redColor;
+    case ProductStatus.all:
+      return AppColors.primaryColor;
   }
 }
 

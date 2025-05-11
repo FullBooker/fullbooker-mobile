@@ -18,6 +18,7 @@ import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:fullbooker/presentation/core/components/generic_zero_state.dart';
 import 'package:fullbooker/presentation/core/components/product_card.dart';
+import 'package:fullbooker/presentation/host/products/widgets/product_filters_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/search_products_input.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
@@ -73,7 +74,9 @@ class ProductsPage extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
             child: Column(
+              spacing: 12,
               children: <Widget>[
+                ProductFiltersWidget(),
                 SearchProductsInput(),
                 StoreConnector<AppState, ProductsPageViewModel>(
                   converter: (Store<AppState> store) =>

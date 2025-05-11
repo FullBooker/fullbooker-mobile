@@ -50,6 +50,10 @@ class HostState with _$HostState {
     @Default(false) bool? isSearching,
     @Default(UNKNOWN) String? searchParam,
 
+    // Filter chips on product details page
+    @Default(ProductStatus.all) ProductStatus? selectedProductStatusFilter,
+
+
     // Bookings page
     Booking? selectedBooking,
     @Default(<Ticket>[]) List<Ticket?>? selectedBookingTickets,
