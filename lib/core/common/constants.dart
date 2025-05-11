@@ -125,3 +125,9 @@ const String kDefaultWeeklyScheduleEndTime = '17:00';
 
 const String kSentryDSN =
     'https://e2a8637cbe85e5d6e4aad642ba8db7cc@o4509281741766656.ingest.de.sentry.io/4509281743208528';
+
+// Token refresh duration in minutes
+int kTokenRefreshDurationMinutes = 4;
+
+// Refresh token expiry duration is 24hrs so we refresh on, or before 22hrs
+int kRefreshTokenExpiryDurationHours = 22;

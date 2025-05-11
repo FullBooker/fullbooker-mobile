@@ -207,7 +207,13 @@ String getFullName(String? firstName, String? lastName) {
 /// returns true if token expires in 10 minutes or less
 /// otherwise returns false
 bool hasTokenExpired(DateTime expiresAt, DateTime now) =>
-    expiresAt.difference(now).inMinutes < 3;
+    expiresAt.difference(now).inMinutes <= kTokenRefreshDurationMinutes;
+
+// Refresh token can no longer be used
+bool isRefreshTokenStale(DateTime expiresAt, DateTime now) {
+  final int elapsed = now.difference(expiresAt).inHours;
+  return elapsed >= kRefreshTokenExpiryDurationHours;
+}
 
 /// Generates a personalized greeting based on the current time and the provided [name].
 String greetings(String name, {DateTime? currentTime}) {
