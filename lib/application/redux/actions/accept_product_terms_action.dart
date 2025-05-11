@@ -4,7 +4,7 @@ import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/core/services/i_custom_client.dart';
 import 'package:fullbooker/application/redux/actions/update_product_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
-import 'package:fullbooker/core/common/constants.dart';
+import 'package:fullbooker/application/redux/states/host_state.dart';
 import 'package:fullbooker/domain/core/entities/product_terms_response.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
@@ -27,11 +27,18 @@ class AcceptProductTermsAction extends ReduxAction<AppState> {
 
   @override
   Future<AppState?> reduce() async {
-    final String productID = state.hostState?.selectedProduct?.id ?? UNKNOWN;
+    final HostState? hostState = state.hostState;
+
+    final WorkflowState? workflowState = hostState?.workflowState;
+    final bool isEditing = workflowState == WorkflowState.VIEW;
+
+    final String? ctxProductID = isEditing
+        ? hostState?.selectedProduct?.id
+        : hostState?.currentProduct?.id;
 
     final Map<String, dynamic> data = <String, dynamic>{
-      'accepted': true,
-      'product': productID,
+      'accepted': termsAccepted,
+      'product': ctxProductID,
     };
 
     final Response httpResponse = await client.callRESTAPI(

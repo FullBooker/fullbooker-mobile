@@ -274,111 +274,112 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
 
                             Divider(),
 
-                            StoreConnector<AppState, ProductReviewViewModel>(
-                              converter: (Store<AppState> store) =>
-                                  ProductReviewViewModel.fromState(store.state),
-                              builder: (
-                                BuildContext context,
-                                ProductReviewViewModel vm,
-                              ) {
-                                if (context
-                                    .isWaiting(AcceptProductTermsAction)) {
-                                  return AppLoading();
-                                }
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 30),
+                              child: StoreConnector<AppState,
+                                  ProductReviewViewModel>(
+                                converter: (Store<AppState> store) =>
+                                    ProductReviewViewModel.fromState(
+                                  store.state,
+                                ),
+                                builder: (
+                                  BuildContext context,
+                                  ProductReviewViewModel vm,
+                                ) {
+                                  if (context
+                                      .isWaiting(AcceptProductTermsAction)) {
+                                    return AppLoading();
+                                  }
 
-                                final bool termsAccepted =
-                                    vm.product?.termsAccepted ?? false;
+                                  final bool termsAccepted =
+                                      vm.product?.termsAccepted ?? false;
 
-                                if (termsAccepted) {
-                                  return Row(
-                                    spacing: 8,
-                                    children: <Widget>[
-                                      HeroIcon(
-                                        HeroIcons.checkCircle,
-                                        size: 24,
-                                        color: Theme.of(context).primaryColor,
-                                      ),
-                                      RichText(
-                                        text: TextSpan(
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium,
-                                          children: <InlineSpan>[
-                                            TextSpan(text: iHaveAccepted),
-                                            TextSpan(
-                                              text: termsOfService,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .titleSmall
-                                                  ?.copyWith(
-                                                    color: Theme.of(context)
-                                                        .primaryColor,
-                                                  ),
-                                              recognizer: TapGestureRecognizer()
-                                                ..onTap = () {
-                                                  context.router.push(
-                                                    TermsAndConditionsRoute(),
+                                  return InkWell(
+                                    splashColor: Theme.of(context)
+                                        .primaryColor
+                                        .withValues(alpha: .1),
+                                    borderRadius: BorderRadius.circular(8),
+                                    highlightColor: Theme.of(context)
+                                        .primaryColor
+                                        .withValues(alpha: .1),
+                                    onTap: termsAccepted
+                                        ? null
+                                        : () {
+                                            context.dispatch(
+                                              AcceptProductTermsAction(
+                                                termsAccepted: true,
+                                                client: AppWrapperBase.of(
+                                                  context,
+                                                )!
+                                                    .customClient,
+                                              ),
+                                            );
+                                          },
+                                    child: Row(
+                                      children: <Widget>[
+                                        Checkbox(
+                                          value: termsAccepted,
+                                          fillColor:
+                                              WidgetStateColor.resolveWith(
+                                            (Set<WidgetState> states) {
+                                              if (states.contains(
+                                                WidgetState.selected,
+                                              )) {
+                                                return Theme.of(context)
+                                                    .primaryColor;
+                                              }
+
+                                              return Colors.white;
+                                            },
+                                          ),
+                                          onChanged: termsAccepted
+                                              ? null
+                                              : (bool? v) {
+                                                  context.dispatch(
+                                                    AcceptProductTermsAction(
+                                                      termsAccepted: v ?? true,
+                                                      client: AppWrapperBase.of(
+                                                        context,
+                                                      )!
+                                                          .customClient,
+                                                    ),
                                                   );
                                                 },
-                                            ),
-                                          ],
                                         ),
-                                      ),
-                                    ],
-                                  );
-                                }
-
-                                return CheckboxListTile(
-                                  value: termsAccepted,
-                                  onChanged: (bool? v) {
-                                    context.dispatch(
-                                      AcceptProductTermsAction(
-                                        termsAccepted: !termsAccepted,
-                                        client: AppWrapperBase.of(context)!
-                                            .customClient,
-                                      ),
-                                    );
-                                  },
-                                  title: RichText(
-                                    text: TextSpan(
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium,
-                                      children: <InlineSpan>[
-                                        TextSpan(text: iHaveAccepted),
-                                        TextSpan(
-                                          text: termsOfService,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleSmall
-                                              ?.copyWith(
-                                                color: Theme.of(context)
-                                                    .primaryColor,
-                                              ),
-                                          recognizer: TapGestureRecognizer()
-                                            ..onTap = () {
-                                              context.router.push(
-                                                TermsAndConditionsRoute(),
-                                              );
-                                            },
+                                        Expanded(
+                                          child: RichText(
+                                            text: TextSpan(
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium,
+                                              children: <InlineSpan>[
+                                                TextSpan(text: iHaveAccepted),
+                                                TextSpan(
+                                                  text: termsOfService,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .titleSmall
+                                                      ?.copyWith(
+                                                        color: Theme.of(context)
+                                                            .primaryColor,
+                                                      ),
+                                                  recognizer:
+                                                      TapGestureRecognizer()
+                                                        ..onTap = () {
+                                                          context.router.push(
+                                                            TermsAndConditionsRoute(),
+                                                          );
+                                                        },
+                                                ),
+                                              ],
+                                            ),
+                                          ),
                                         ),
                                       ],
                                     ),
-                                  ),
-                                  controlAffinity:
-                                      ListTileControlAffinity.leading,
-                                  contentPadding: EdgeInsets.zero,
-                                  dense: true,
-                                  visualDensity: const VisualDensity(
-                                    horizontal: -4,
-                                    vertical: -4,
-                                  ),
-                                  activeColor: Theme.of(context).primaryColor,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                );
-                              },
+                                  );
+                                },
+                              ),
                             ),
                           ],
                         ),

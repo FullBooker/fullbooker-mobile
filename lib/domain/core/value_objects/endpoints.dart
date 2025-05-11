@@ -60,7 +60,7 @@ const String kProdProductPricingOptionsEndpoint =
 const String kProdProductTransitionEndpoint =
     '$kProdAPIBaseURL/products/transition/';
 const String kProdAcceptProductTermsEndpoint =
-    '$kDevAPIBaseURL/product-terms-accepted/';
+    '$kProdAPIBaseURL/product-terms-accepted/';
 
 ///---- TEST ENDPOINTS
 const String kTestAPIBaseURL = 'https://api.dev.fullbooker.co.ke';
@@ -92,4 +92,4 @@ const String kTestProductPricingOptionsEndpoint =
 const String kTestProductTransitionEndpoint =
     '$kTestAPIBaseURL/products/transition/';
 const String kTestAcceptProductTermsEndpoint =
-    '$kDevAPIBaseURL/product-terms-accepted/';
+    '$kTestAPIBaseURL/product-terms-accepted/';
