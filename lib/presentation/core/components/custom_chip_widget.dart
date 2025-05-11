@@ -29,11 +29,12 @@ class CustomChipWidget extends StatelessWidget {
           ),
         ),
         child: Row(
+          spacing: 4,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             if (isSelected)
               HeroIcon(
-                HeroIcons.check,
+                HeroIcons.checkCircle,
                 size: 16,
                 color: Theme.of(context).primaryColor,
               ),
