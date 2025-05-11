@@ -52,6 +52,7 @@ class ProductModeOfAccessPage extends StatelessWidget {
               children: <Widget>[
                 Row(
                   spacing: 16,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Flexible(
                       flex: 5,
@@ -91,11 +92,11 @@ class ProductModeOfAccessPage extends StatelessWidget {
                             color: Theme.of(context).primaryColor,
                             shape: BoxShape.circle,
                           ),
-                          padding: const EdgeInsets.all(12),
+                          padding: const EdgeInsets.all(8),
                           child: HeroIcon(
                             HeroIcons.plus,
                             color: Colors.white,
-                            size: 32,
+                            size: 28,
                           ),
                         ),
                       ),

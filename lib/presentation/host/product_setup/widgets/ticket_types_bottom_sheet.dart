@@ -172,21 +172,7 @@ class TicketTypesBottomSheet extends StatelessWidget {
                   }
 
                   return PrimaryButton(
-                    onPressed: () {
-                      // context.dispatch(
-                      //   SetProductPricingOptionsAction(
-                      //     client: AppWrapperBase.of(context)!.customClient,
-                      //     onSuccess: () => context.router.maybePop(),
-                      //     onError: (String error) {
-                      //       showAlertDialog(
-                      //         context: context,
-                      //         assetPath: productZeroStateSVGPath,
-                      //         description: error,
-                      //       );
-                      //     },
-                      //   ),
-                      // );
-                    },
+                    onPressed: () => context.router.maybePop(),
                     child: right(saveString),
                   );
                 },
