@@ -286,13 +286,54 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
                                   return AppLoading();
                                 }
 
+                                final bool termsAccepted =
+                                    vm.product?.termsAccepted ?? false;
+
+                                if (termsAccepted) {
+                                  return Row(
+                                    spacing: 8,
+                                    children: <Widget>[
+                                      HeroIcon(
+                                        HeroIcons.checkCircle,
+                                        size: 24,
+                                        color: Theme.of(context).primaryColor,
+                                      ),
+                                      RichText(
+                                        text: TextSpan(
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium,
+                                          children: <InlineSpan>[
+                                            TextSpan(text: iHaveAccepted),
+                                            TextSpan(
+                                              text: termsOfService,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleSmall
+                                                  ?.copyWith(
+                                                    color: Theme.of(context)
+                                                        .primaryColor,
+                                                  ),
+                                              recognizer: TapGestureRecognizer()
+                                                ..onTap = () {
+                                                  context.router.push(
+                                                    TermsAndConditionsRoute(),
+                                                  );
+                                                },
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                }
+
                                 return CheckboxListTile(
-                                  value: vm.product!.termsAccepted,
+                                  value: termsAccepted,
                                   onChanged: (bool? v) {
                                     context.dispatch(
                                       AcceptProductTermsAction(
-                                        termsAccepted:
-                                            !vm.product!.termsAccepted!,
+                                        termsAccepted: !termsAccepted,
                                         client: AppWrapperBase.of(context)!
                                             .customClient,
                                       ),
