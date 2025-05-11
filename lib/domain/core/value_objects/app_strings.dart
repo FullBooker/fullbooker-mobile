@@ -742,3 +742,6 @@ String ticketsDisplay(int tickets) => 'Tickets ($tickets)';
 const String noTickets = 'You don’t have any tickets yet';
 const String noTicketsCopy =
     'We couldn’t find any tickets for this booking. Please check back later or contact support';
+
+const String sessionExpired =
+    'Your session has expired. Please sign in again to continue';
