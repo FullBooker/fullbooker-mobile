@@ -131,3 +131,5 @@ int kTokenRefreshDurationMinutes = 1;
 
 // Refresh token expiry duration is 24hrs so we refresh on, or before 22hrs
 int kRefreshTokenExpiryDurationHours = 22;
+
+const String kTicketPricingType = 'ticket';

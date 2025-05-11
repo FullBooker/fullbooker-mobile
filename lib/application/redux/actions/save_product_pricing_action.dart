@@ -4,9 +4,12 @@ import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/core/services/i_custom_client.dart';
 import 'package:fullbooker/application/redux/actions/fetch_single_product_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
+import 'package:fullbooker/application/redux/states/host_state.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/domain/core/entities/currency.dart';
 import 'package:fullbooker/domain/core/entities/product_pricing.dart';
+import 'package:fullbooker/domain/core/entities/product_pricing_option.dart';
+import 'package:fullbooker/domain/core/entities/ticket_type.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
@@ -26,17 +29,29 @@ class SaveProductPricingAction extends ReduxAction<AppState> {
 
   @override
   Future<AppState?> reduce() async {
-    final String productID = state.hostState?.currentProduct?.id ?? UNKNOWN;
-    final ProductPricing? selectedPricing =
-        state.hostState?.selectedProductPricing;
-    final Currency? selectedCurrency = state.hostState?.selectedCurrency;
+    final HostState? hostState = state.hostState;
+
+    final ProductPricing? selectedPricing = hostState?.selectedProductPricing;
+    final Currency? selectedCurrency = hostState?.selectedCurrency;
+    final ProductPricingOption? selectedPricingOption =
+        hostState?.selectedProductPricingOption;
+
+    final TicketType? chosenTicketType = state.hostState?.selectedTicketType;
+
+    final WorkflowState? workflowState = hostState?.workflowState;
+    final bool isEditing = workflowState == WorkflowState.VIEW;
+
+    final String? ctxProductID = isEditing
+        ? hostState?.selectedProduct?.id
+        : hostState?.currentProduct?.id;
 
     final Map<String, dynamic> data = <String, dynamic>{
-      'product': productID,
+      'product': ctxProductID,
       'currency': selectedCurrency?.id ?? UNKNOWN,
       'cost': selectedPricing?.cost,
-      'type': selectedPricing?.type,
-      'ticket_tier': selectedPricing?.ticketTier,
+      'type': selectedPricing?.type ?? kTicketPricingType,
+      'ticket_tier': chosenTicketType?.name?.toLowerCase(),
+      'pricing_option': selectedPricingOption?.id,
       'maximum_number_of_tickets': selectedPricing?.maxTickets,
     };
 

@@ -5,6 +5,7 @@ import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/core/services/i_custom_client.dart';
 import 'package:fullbooker/application/redux/actions/fetch_product_pricing_options_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
+import 'package:fullbooker/application/redux/states/host_state.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
@@ -32,12 +33,19 @@ class SetProductPricingOptionsAction extends ReduxAction<AppState> {
 
   @override
   Future<AppState?> reduce() async {
-    final String productID = state.hostState?.currentProduct?.id ?? UNKNOWN;
+    final HostState? hostState = state.hostState;
+
+    final WorkflowState? workflowState = hostState?.workflowState;
+    final bool isEditing = workflowState == WorkflowState.VIEW;
+
+    final String? ctxProductID = isEditing
+        ? hostState?.selectedProduct?.id
+        : hostState?.currentProduct?.id;
 
     final List<String?> selectedOptionIds =
         state.hostState?.selectedPricingOptionIds ?? <String?>[];
 
-    if (productID == UNKNOWN || (selectedOptionIds.isEmpty)) {
+    if (ctxProductID == UNKNOWN || (selectedOptionIds.isEmpty)) {
       onError?.call(addProductPricingOptionErrorMsg);
 
       return null;
@@ -47,8 +55,8 @@ class SetProductPricingOptionsAction extends ReduxAction<AppState> {
         GetIt.I.get<AppConfig>().productPricingOptionsEndpoint;
 
     for (final String? optionId in selectedOptionIds) {
-      final Map<String, String> payload = <String, String>{
-        'product': productID,
+      final Map<String, dynamic> payload = <String, dynamic>{
+        'product': ctxProductID,
         'pricing_option': optionId!,
       };
 

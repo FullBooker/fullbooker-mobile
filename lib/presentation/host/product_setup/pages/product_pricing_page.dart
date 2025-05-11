@@ -155,25 +155,21 @@ class ProductPricingPage extends StatelessWidget {
                               }
 
                               return ListView.builder(
+                                shrinkWrap: true,
                                 itemCount: vm.pricing?.length,
                                 itemBuilder: (BuildContext context, int index) {
                                   final ProductPricing? current =
                                       vm.pricing![index];
 
-                                  return PricingCardWidget(
-                                    onAddOrEdit: () {
-                                      context.router
-                                          .push(AddProductPricingRoute());
-                                      // context.dispatch(
-                                      //   UpdateHostStateAction(
-                                      //     selectedPricingTier: tier,
-                                      //   ),
-                                      // );
-                                      // context.router
-                                      //     .push(AddProductPricingRoute());
-                                    },
-                                    pricing: current,
-                                    tierDisplay: current?.name,
+                                  return Padding(
+                                    padding: const EdgeInsets.only(bottom: 12),
+                                    child: PricingCardWidget(
+                                      onAddOrEdit: () {
+                                        context.router
+                                            .push(AddProductPricingRoute());
+                                      },
+                                      pricing: current,
+                                    ),
                                   );
                                 },
                               );

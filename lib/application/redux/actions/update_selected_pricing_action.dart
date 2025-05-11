@@ -3,17 +3,19 @@ import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/domain/core/entities/product_pricing.dart';
 
 class UpdateSelectedPricingAction extends ReduxAction<AppState> {
-  final String? cost;
-  final int? maxTickets;
-  final String? currency;
-  final bool? buyerPaysFee;
-
   UpdateSelectedPricingAction({
     this.cost,
     this.maxTickets,
     this.currency,
     this.buyerPaysFee,
+    this.selectedPricingTier,
   });
+
+  final bool? buyerPaysFee;
+  final String? cost;
+  final String? currency;
+  final int? maxTickets;
+  final String? selectedPricingTier;
 
   @override
   AppState? reduce() {
@@ -24,7 +26,7 @@ class UpdateSelectedPricingAction extends ReduxAction<AppState> {
       cost: cost ?? existing.cost,
       maxTickets: maxTickets ?? existing.maxTickets,
       currency: currency ?? existing.currency,
-      ticketTier: state.hostState?.selectedPricingTier,
+      ticketTier: selectedPricingTier ?? state.hostState?.selectedPricingTier,
       buyerPaysFee:
           buyerPaysFee ?? state.hostState?.selectedProductPricing?.buyerPaysFee,
     );

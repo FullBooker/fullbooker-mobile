@@ -6,7 +6,6 @@ import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
 import 'package:fullbooker/application/redux/actions/clear_selected_ticket_type_options_action.dart';
 import 'package:fullbooker/application/redux/actions/fetch_ticket_types_action.dart';
 import 'package:fullbooker/application/redux/actions/select_product_ticket_type_action.dart';
-import 'package:fullbooker/application/redux/actions/set_product_pricing_options_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_setup_view_model.dart';
 import 'package:fullbooker/core/common/constants.dart';
@@ -167,7 +166,7 @@ class TicketTypesBottomSheet extends StatelessWidget {
                 converter: (Store<AppState> store) =>
                     ProductSetupViewModel.fromState(store.state),
                 builder: (BuildContext context, ProductSetupViewModel vm) {
-                  if (context.isWaiting(SetProductPricingOptionsAction)) {
+                  if (context.isWaiting(FetchTicketTypesAction)) {
                     return AppLoading();
                   }
 

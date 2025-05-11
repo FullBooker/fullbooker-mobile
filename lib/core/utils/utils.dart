@@ -379,7 +379,7 @@ void navigateToNextProductStep({
   }
 
   if (product.pricing?.isEmpty ?? true) {
-    context.router.push(const ProductPricingRoute());
+    context.router.push(const ProductModeOfAccessRoute());
     return;
   }
 

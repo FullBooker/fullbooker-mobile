@@ -9,7 +9,6 @@ import 'package:fullbooker/application/redux/actions/update_host_state_action.da
 import 'package:fullbooker/application/redux/actions/update_selected_pricing_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_setup_view_model.dart';
-import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/utils/utils.dart';
 import 'package:fullbooker/domain/core/entities/currency.dart';
@@ -121,15 +120,47 @@ class _AddProductPricingPageState extends State<AddProductPricingPage> {
                                 child: Row(
                                   spacing: 12,
                                   children: <Widget>[
-                                    SvgPicture.asset(
-                                      getTicketIconPath(vm.selectedPricingTier),
-                                    ),
-                                    Text(
-                                      getTicketDisplayName(
-                                        vm.selectedPricingTier,
+                                    Expanded(
+                                      flex: 3,
+                                      child: Row(
+                                        spacing: 12,
+                                        children: <Widget>[
+                                          SvgPicture.asset(
+                                            getTicketIconPath(
+                                              vm.selectedTicketType!.name ??
+                                                  UNKNOWN,
+                                            ),
+                                          ),
+                                          Text(
+                                            vm.selectedTicketType!.name ??
+                                                UNKNOWN,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge,
+                                          ),
+                                        ],
                                       ),
-                                      style:
-                                          Theme.of(context).textTheme.bodyLarge,
+                                    ),
+                                    Expanded(
+                                      child: SecondaryButton(
+                                        child: d.right(changeString),
+                                        onPressed: () {
+                                          showModalBottomSheet(
+                                            context: context,
+                                            isDismissible: false,
+                                            backgroundColor: Colors.white,
+                                            isScrollControlled: true,
+                                            shape: const RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.vertical(
+                                                top: Radius.circular(16),
+                                              ),
+                                            ),
+                                            builder: (_) =>
+                                                TicketTypesBottomSheet(),
+                                          );
+                                        },
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -352,8 +383,7 @@ class _AddProductPricingPageState extends State<AddProductPricingPage> {
                           context.dispatch(
                             SaveProductPricingAction(
                               client: AppWrapperBase.of(context)!.customClient,
-                              onSuccess: () =>
-                                  context.router.push(ProductPricingRoute()),
+                              onSuccess: () => context.router.maybePop(),
                               onError: (String error) => showAlertDialog(
                                 context: context,
                                 assetPath: productZeroStateSVGPath,
