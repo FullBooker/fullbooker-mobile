@@ -170,175 +170,182 @@ class _ChooseLocationPageState extends State<ChooseLocationPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(showBell: false, title: pickLocation),
-      body: Column(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: Column(
-              children: <Widget>[
-                CustomTextInput(
-                  hintText: searchLocation,
-                  onChanged: _onSearchChanged,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  keyboardType: TextInputType.name,
-                  prefixIconData: HeroIcons.mapPin,
-                  initialValue: _searchController.text,
-                ),
-                if (_isSearching)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    child: AppLoading(),
-                  ),
-                if (_showSearchResults)
-                  ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: _searchResults.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      final Map<String, dynamic> location =
-                          _searchResults[index];
-
-                      final String title = location['title'] ?? kUnknownAddress;
-                      final String subtitle =
-                          location['description'] ?? kUnknownAddress;
-
-                      return GestureDetector(
-                        onTap: () => selectLocation(location),
-                        child: Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: Row(
-                            spacing: 8,
-                            children: <Widget>[
-                              const HeroIcon(HeroIcons.mapPin, size: 32),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  spacing: 4,
-                                  children: <Widget>[
-                                    Text(
-                                      title,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium
-                                          ?.copyWith(
-                                            color: AppColors.textBlackColor,
-                                          ),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    if (subtitle.isNotEmpty)
-                                      Text(
-                                        subtitle,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 12),
-          Expanded(
-            child: GoogleMap(
-              initialCameraPosition: CameraPosition(
-                target: selectedLatLng,
-                zoom: 15,
+    return SafeArea(
+      child: Scaffold(
+        appBar: CustomAppBar(showBell: false, title: pickLocation),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                color: AppColors.bodyTextColor.withAlpha(25),
+                blurRadius: 6,
+                offset: const Offset(0, -2),
               ),
-              myLocationEnabled: true,
-              onMapCreated: (GoogleMapController controller) =>
-                  _mapController = controller,
-              onTap: _onMapTap,
-              markers: <Marker>{
-                Marker(
-                  markerId: const MarkerId('selected'),
-                  position: selectedLatLng,
-                ),
-              },
-            ),
+            ],
           ),
-          if (_isResolving)
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              child: AppLoading(),
-            ),
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: <BoxShadow>[
-                BoxShadow(
-                  color: AppColors.bodyTextColor.withAlpha(25),
-                  blurRadius: 6,
-                  offset: const Offset(0, -2),
-                ),
-              ],
-            ),
-            child: Column(
-              spacing: 12,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                if (selectedAddress.isNotEmpty || selectedCity.isNotEmpty)
-                  Column(
-                    spacing: 8,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      if (selectedAddress.isNotEmpty)
-                        Text(
-                          selectedAddress,
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                      if (selectedCity.isNotEmpty)
-                        Text(
-                          selectedCity,
-                          style: Theme.of(context).textTheme.bodySmall,
-                        ),
-                    ],
-                  ),
-                Row(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            spacing: 12,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              if (selectedAddress.isNotEmpty || selectedCity.isNotEmpty)
+                Column(
                   spacing: 8,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Flexible(
-                      child: SecondaryButton(
-                        onPressed: () => context.router.maybePop(),
-                        child: d.right(cancelString),
-                        fillColor: Colors.transparent,
+                    if (selectedAddress.isNotEmpty)
+                      Text(
+                        selectedAddress,
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
-                    ),
-                    Flexible(
-                      child: PrimaryButton(
-                        onPressed: () {
-                          context.dispatch(
-                            SelectLocationAction(
-                              lat: selectedLatLng.latitude.toString(),
-                              long: selectedLatLng.longitude.toString(),
-                              address: selectedAddress,
-                              city: selectedCity,
-                              coordinates:
-                                  'SRID=4326;POINT (${selectedLatLng.longitude}'
-                                  ' ${selectedLatLng.latitude})',
-                            ),
-                          );
-                          context.router.maybePop();
-                        },
-                        child: d.right(continueString),
+                    if (selectedCity.isNotEmpty)
+                      Text(
+                        selectedCity,
+                        style: Theme.of(context).textTheme.bodySmall,
                       ),
-                    ),
                   ],
                 ),
-              ],
-            ),
+              Row(
+                spacing: 16,
+                children: <Widget>[
+                  Flexible(
+                    child: SecondaryButton(
+                      addBorder: true,
+                      onPressed: () => context.router.maybePop(),
+                      child: d.right(cancelString),
+                      fillColor: Colors.transparent,
+                    ),
+                  ),
+                  Flexible(
+                    child: PrimaryButton(
+                      onPressed: () {
+                        context.dispatch(
+                          SelectLocationAction(
+                            lat: selectedLatLng.latitude.toString(),
+                            long: selectedLatLng.longitude.toString(),
+                            address: selectedAddress,
+                            city: selectedCity,
+                            coordinates:
+                                'SRID=4326;POINT (${selectedLatLng.longitude}'
+                                ' ${selectedLatLng.latitude})',
+                          ),
+                        );
+                        context.router.maybePop();
+                      },
+                      child: d.right(continueString),
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
-        ],
+        ),
+        body: Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: Column(
+                children: <Widget>[
+                  CustomTextInput(
+                    hintText: searchLocation,
+                    onChanged: _onSearchChanged,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    keyboardType: TextInputType.name,
+                    prefixIconData: HeroIcons.mapPin,
+                    initialValue: _searchController.text,
+                  ),
+                  if (_isSearching)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      child: AppLoading(),
+                    ),
+                  if (_showSearchResults)
+                    ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: _searchResults.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final Map<String, dynamic> location =
+                            _searchResults[index];
+
+                        final String title =
+                            location['title'] ?? kUnknownAddress;
+                        final String subtitle =
+                            location['description'] ?? kUnknownAddress;
+
+                        return GestureDetector(
+                          onTap: () => selectLocation(location),
+                          child: Padding(
+                            padding: const EdgeInsets.all(12),
+                            child: Row(
+                              spacing: 8,
+                              children: <Widget>[
+                                const HeroIcon(HeroIcons.mapPin, size: 32),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    spacing: 4,
+                                    children: <Widget>[
+                                      Text(
+                                        title,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium
+                                            ?.copyWith(
+                                              color: AppColors.textBlackColor,
+                                            ),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      if (subtitle.isNotEmpty)
+                                        Text(
+                                          subtitle,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 12),
+            Expanded(
+              child: GoogleMap(
+                initialCameraPosition: CameraPosition(
+                  target: selectedLatLng,
+                  zoom: 15,
+                ),
+                myLocationEnabled: true,
+                onMapCreated: (GoogleMapController controller) =>
+                    _mapController = controller,
+                onTap: _onMapTap,
+                markers: <Marker>{
+                  Marker(
+                    markerId: const MarkerId('selected'),
+                    position: selectedLatLng,
+                  ),
+                },
+              ),
+            ),
+            if (_isResolving)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                child: AppLoading(),
+              ),
+          ],
+        ),
       ),
     );
   }

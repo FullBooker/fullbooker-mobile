@@ -16,7 +16,6 @@ import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:dartz/dartz.dart' as d;
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/validators.dart';
-import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/custom_text_input.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
@@ -52,12 +51,10 @@ class _ProductBasicDetailsPageState extends State<ProductBasicDetailsPage> {
           converter: (Store<AppState> store) =>
               ProductSetupViewModel.fromState(store.state),
           builder: (BuildContext context, ProductSetupViewModel vm) {
-            if (context.isWaiting(<Type>[
+            final bool isLoading = context.isWaiting(<Type>[
               CreateProductBasicDetailsAction,
               UpdateProductBasicDetailsAction,
-            ])) {
-              return AppLoading();
-            }
+            ]);
 
             final bool isCreate = vm.workflowState == WorkflowState.CREATE;
 
@@ -68,6 +65,7 @@ class _ProductBasicDetailsPageState extends State<ProductBasicDetailsPage> {
                 children: <Widget>[
                   Flexible(
                     child: SecondaryButton(
+                      disabled: isLoading,
                       addBorder: true,
                       onPressed: () {
                         isCreate
@@ -86,6 +84,7 @@ class _ProductBasicDetailsPageState extends State<ProductBasicDetailsPage> {
                   ),
                   Flexible(
                     child: PrimaryButton(
+                      isLoading: isLoading,
                       onPressed: () {
                         if (_formKey.currentState?.validate() ?? false) {
                           if (isCreate) {

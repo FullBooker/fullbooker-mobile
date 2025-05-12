@@ -18,9 +18,30 @@ class ProductSetupPreviewPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        showBell: false,
-        title: setupEvent,
+      appBar: CustomAppBar(showBell: false, title: setupEvent),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 12),
+        child: Row(
+          spacing: 16,
+          children: <Widget>[
+            Flexible(
+              child: SecondaryButton(
+                addBorder: true,
+                onPressed: () => context.router.maybePop(),
+                child: d.right(previousString),
+                fillColor: Colors.transparent,
+              ),
+            ),
+            Flexible(
+              child: PrimaryButton(
+                onPressed: () =>
+                    context.router.push(ProductBasicDetailsRoute()),
+                child: d.right(beginString),
+              ),
+            ),
+          ],
+        ),
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16),
@@ -154,15 +175,6 @@ class ProductSetupPreviewPage extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
-            PrimaryButton(
-              onPressed: () => context.router.push(ProductBasicDetailsRoute()),
-              child: d.right(beginString),
-            ),
-            SecondaryButton(
-              onPressed: () => context.router.maybePop(),
-              child: d.right(cancelString),
-              fillColor: Colors.transparent,
             ),
           ],
         ),
