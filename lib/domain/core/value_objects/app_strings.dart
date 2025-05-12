@@ -745,3 +745,24 @@ const String noTicketsCopy =
 
 const String sessionExpired =
     'Your session has expired. Please sign in again to continue';
+const String viewPricing = 'View Pricing';
+const String setupPricing = 'Setup Pricing';
+
+const String setupModesOfAccess = 'Setup Modes of Access';
+const String setupModesOfAccessCopy =
+    'Tap below to select and customize how users can access this product';
+const String addModeOfAccess = 'Add Mode of Access';
+const String modeOfAccessBottomSheetCopy =
+    'Choose your preferred mode of access';
+
+const String noPricingAdded = 'No Pricing Added';
+const String noPricingAddedCopy =
+    'Set up your product pricing to start receiving bookings and payments';
+
+const String addPricingString = 'Add Pricing';
+
+const String selectTicketType = 'Select ticket type';
+const String selectTicketTypeCopy = 'Choose your preferred ticket type';
+
+const String chooseTicketType = 'Choose a ticket type';
+const String addString = 'Add';

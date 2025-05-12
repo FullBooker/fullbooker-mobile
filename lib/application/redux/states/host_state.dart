@@ -9,8 +9,10 @@ import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/entities/product_category.dart';
 import 'package:fullbooker/domain/core/entities/product_location.dart';
 import 'package:fullbooker/domain/core/entities/product_pricing.dart';
+import 'package:fullbooker/domain/core/entities/product_pricing_option.dart';
 import 'package:fullbooker/domain/core/entities/product_schedule.dart';
 import 'package:fullbooker/domain/core/entities/ticket.dart';
+import 'package:fullbooker/domain/core/entities/ticket_type.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/location_perms_result.dart';
 
@@ -44,7 +46,10 @@ class HostState with _$HostState {
 
     // Modes of access
     @Default(<PricingOption>[]) List<PricingOption?>? pricingOptions,
+    @Default(<ProductPricingOption>[])
+    List<ProductPricingOption?>? productPricingOptions,
     @Default(<String>[]) List<String?>? selectedPricingOptionIds,
+    ProductPricingOption? selectedProductPricingOption,
 
     // Search
     @Default(false) bool? isSearching,
@@ -57,6 +62,13 @@ class HostState with _$HostState {
     // Bookings page
     Booking? selectedBooking,
     @Default(<Ticket>[]) List<Ticket?>? selectedBookingTickets,
+
+    // Add modes of access bottom sheet
+    PricingOption? pickedPricingOption,
+
+    // Pricing page
+    @Default(<TicketType>[]) List<TicketType?>? ticketTypes,
+    TicketType? selectedTicketType,
   }) = _HostState;
 
   factory HostState.initial() => HostState(
@@ -67,6 +79,9 @@ class HostState with _$HostState {
         selectedSchedule: ProductSchedule.initial(),
         selectedProductPricing: ProductPricing.initial(),
         selectedCurrency: Currency(),
+        pickedPricingOption: PricingOption.initial(),
+        selectedProductPricingOption: ProductPricingOption.initial(),
+        selectedTicketType: TicketType(),
       );
 
   factory HostState.fromJson(Map<String, dynamic> json) =>

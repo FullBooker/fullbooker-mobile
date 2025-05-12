@@ -20,6 +20,9 @@ class ProductPricingOption with _$ProductPricingOption {
     @JsonKey(name: 'pricing_option_name')
     String? pricingOptionName,
     @Default(UNKNOWN)
+    @JsonKey(name: 'pricing_option_description')
+    String? pricingOptionDescription,
+    @Default(UNKNOWN)
     @JsonKey(name: 'pricing_option_type')
     String? pricingOptionType,
   }) = _ProductPricingOption;

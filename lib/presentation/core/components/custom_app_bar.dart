@@ -68,6 +68,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                       ?.copyWith(color: Theme.of(context).primaryColor),
                 ),
               ),
+          centerTitle: true,
           actions: <Widget>[
             if (actions?.isNotEmpty ?? false)
               ...actions!.map(

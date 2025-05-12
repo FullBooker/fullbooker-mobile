@@ -2,22 +2,18 @@ import 'dart:convert';
 
 import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/core/services/i_custom_client.dart';
-import 'package:fullbooker/application/redux/actions/fetch_single_product_action.dart';
+import 'package:fullbooker/application/redux/actions/update_host_state_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/states/host_state.dart';
-import 'package:fullbooker/core/common/constants.dart';
-import 'package:fullbooker/domain/core/entities/currency.dart';
-import 'package:fullbooker/domain/core/entities/product_pricing.dart';
-import 'package:fullbooker/domain/core/entities/product_pricing_option.dart';
-import 'package:fullbooker/domain/core/entities/ticket_type.dart';
+import 'package:fullbooker/domain/core/entities/product_pricing_option_response.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
 
-class SaveProductPricingAction extends ReduxAction<AppState> {
-  SaveProductPricingAction({
+class FetchProductPricingOptionsAction extends ReduxAction<AppState> {
+  FetchProductPricingOptionsAction({
     this.onSuccess,
     this.onError,
     required this.client,
@@ -31,13 +27,6 @@ class SaveProductPricingAction extends ReduxAction<AppState> {
   Future<AppState?> reduce() async {
     final HostState? hostState = state.hostState;
 
-    final ProductPricing? selectedPricing = hostState?.selectedProductPricing;
-    final Currency? selectedCurrency = hostState?.selectedCurrency;
-    final ProductPricingOption? selectedPricingOption =
-        hostState?.selectedProductPricingOption;
-
-    final TicketType? chosenTicketType = state.hostState?.selectedTicketType;
-
     final WorkflowState? workflowState = hostState?.workflowState;
     final bool isEditing = workflowState == WorkflowState.VIEW;
 
@@ -47,20 +36,12 @@ class SaveProductPricingAction extends ReduxAction<AppState> {
 
     final Map<String, dynamic> data = <String, dynamic>{
       'product': ctxProductID,
-      'currency': selectedCurrency?.id ?? UNKNOWN,
-      'cost': selectedPricing?.cost,
-      'type': selectedPricing?.type ?? kTicketPricingType,
-      'ticket_tier': chosenTicketType?.name?.toLowerCase(),
-      'pricing_option': selectedPricingOption?.id,
-      'maximum_number_of_tickets': selectedPricing?.maxTickets,
     };
 
-    final String endpoint = GetIt.I.get<AppConfig>().productPricingEndpoint;
-
     final Response httpResponse = await client.callRESTAPI(
-      endpoint: endpoint,
-      method: APIMethods.POST.name.toUpperCase(),
-      variables: data,
+      endpoint: GetIt.I.get<AppConfig>().productPricingOptionsEndpoint,
+      method: APIMethods.GET.name.toUpperCase(),
+      queryParams: data,
     );
 
     final Map<String, dynamic> body =
@@ -74,10 +55,15 @@ class SaveProductPricingAction extends ReduxAction<AppState> {
       return null;
     }
 
-    dispatch(FetchSingleProductAction(client: client));
+    final ProductPricingOptionResponse pricingOptionResponse =
+        ProductPricingOptionResponse.fromJson(body);
 
-    onSuccess?.call();
+    dispatch(
+      UpdateHostStateAction(
+        productPricingOptions: pricingOptionResponse.results,
+      ),
+    );
 
-    return null;
+    return state;
   }
 }

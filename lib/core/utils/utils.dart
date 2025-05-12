@@ -206,8 +206,10 @@ String getFullName(String? firstName, String? lastName) {
 /// Checks if token has expired based on expiry date
 /// returns true if token expires in 10 minutes or less
 /// otherwise returns false
-bool hasTokenExpired(DateTime expiresAt, DateTime now) =>
-    expiresAt.difference(now).inMinutes <= kTokenRefreshDurationMinutes;
+bool hasTokenExpired(DateTime expiresAt, DateTime now) {
+  final int difference = expiresAt.difference(now).inMinutes;
+  return difference <= kTokenRefreshDurationMinutes;
+}
 
 // Refresh token can no longer be used
 bool isRefreshTokenStale(DateTime expiresAt, DateTime now) {
@@ -377,7 +379,7 @@ void navigateToNextProductStep({
   }
 
   if (product.pricing?.isEmpty ?? true) {
-    context.router.push(const ProductPricingRoute());
+    context.router.push(const ProductModeOfAccessRoute());
     return;
   }
 

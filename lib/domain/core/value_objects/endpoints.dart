@@ -29,6 +29,7 @@ const String kDevProductTransitionEndpoint =
     '$kDevAPIBaseURL/products/transition/';
 const String kDevAcceptProductTermsEndpoint =
     '$kDevAPIBaseURL/product-terms-accepted/';
+const String kDevProductTicketTypesEndpoint = '$kDevAPIBaseURL/ticket-types/';
 
 /// ---- PROD ENDPOINTS
 const String kProdAPIBaseURL = 'https://api.fullbooker.com';
@@ -61,6 +62,7 @@ const String kProdProductTransitionEndpoint =
     '$kProdAPIBaseURL/products/transition/';
 const String kProdAcceptProductTermsEndpoint =
     '$kProdAPIBaseURL/product-terms-accepted/';
+const String kProdProductTicketTypesEndpoint = '$kDevAPIBaseURL/ticket-types/';
 
 ///---- TEST ENDPOINTS
 const String kTestAPIBaseURL = 'https://api.dev.fullbooker.co.ke';
@@ -93,3 +95,4 @@ const String kTestProductTransitionEndpoint =
     '$kTestAPIBaseURL/products/transition/';
 const String kTestAcceptProductTermsEndpoint =
     '$kTestAPIBaseURL/product-terms-accepted/';
+const String kTestProductTicketTypesEndpoint = '$kDevAPIBaseURL/ticket-types/';

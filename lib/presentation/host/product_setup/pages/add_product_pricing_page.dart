@@ -9,15 +9,16 @@ import 'package:fullbooker/application/redux/actions/update_host_state_action.da
 import 'package:fullbooker/application/redux/actions/update_selected_pricing_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_setup_view_model.dart';
-import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/utils/utils.dart';
 import 'package:fullbooker/domain/core/entities/currency.dart';
+import 'package:fullbooker/domain/core/entities/ticket_type.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:dartz/dartz.dart' as d;
 import 'package:fullbooker/presentation/host/product_setup/widgets/pricing_breakdown_widget.dart';
+import 'package:fullbooker/presentation/host/product_setup/widgets/ticket_types_bottom_sheet.dart';
 import 'package:fullbooker/shared/validators.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/custom_dropdown.dart';
@@ -53,12 +54,36 @@ class _AddProductPricingPageState extends State<AddProductPricingPage> {
               child: StoreConnector<AppState, ProductSetupViewModel>(
                 converter: (Store<AppState> store) =>
                     ProductSetupViewModel.fromState(store.state),
-                onInit: (Store<AppState> store) => context.dispatch(
-                  FetchCurrenciesAction(
-                    client: AppWrapperBase.of(context)!.customClient,
-                  ),
-                ),
+                onInit: (Store<AppState> store) {
+                  context.dispatch(
+                    FetchCurrenciesAction(
+                      client: AppWrapperBase.of(context)!.customClient,
+                    ),
+                  );
+                },
                 builder: (BuildContext context, ProductSetupViewModel vm) {
+                  final TicketType? selectedTicketType = vm.selectedTicketType;
+                  final bool isTicketTypeSelected =
+                      selectedTicketType?.id != UNKNOWN;
+
+                  final String selectedCurrencyCode =
+                      vm.selectedCurrency?.code ?? UNKNOWN;
+
+                  bool _isValidCode(String code) =>
+                      code.isNotEmpty && code != UNKNOWN;
+
+                  final String selectedCurrency =
+                      _isValidCode(selectedCurrencyCode)
+                          ? selectedCurrencyCode
+                          : vm.currencies
+                                  ?.firstWhere(
+                                    (Currency? c) =>
+                                        _isValidCode(c?.code ?? UNKNOWN),
+                                    orElse: () => null,
+                                  )
+                                  ?.code ??
+                              UNKNOWN;
+
                   return Form(
                     key: _formKey,
                     child: ListView(
@@ -82,30 +107,108 @@ class _AddProductPricingPageState extends State<AddProductPricingPage> {
                                 ),
                               ],
                             ),
-                            Container(
-                              padding: EdgeInsets.all(12),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(
-                                  color: Theme.of(context).primaryColor,
+
+                            if (isTicketTypeSelected)
+                              Container(
+                                padding: EdgeInsets.all(12),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  border: Border.all(
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                                ),
+                                child: Row(
+                                  spacing: 12,
+                                  children: <Widget>[
+                                    Expanded(
+                                      flex: 3,
+                                      child: Row(
+                                        spacing: 12,
+                                        children: <Widget>[
+                                          SvgPicture.asset(
+                                            getTicketIconPath(
+                                              vm.selectedTicketType!.name ??
+                                                  UNKNOWN,
+                                            ),
+                                          ),
+                                          Text(
+                                            vm.selectedTicketType!.name ??
+                                                UNKNOWN,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: SecondaryButton(
+                                        child: d.right(changeString),
+                                        onPressed: () {
+                                          showModalBottomSheet(
+                                            context: context,
+                                            isDismissible: false,
+                                            backgroundColor: Colors.white,
+                                            isScrollControlled: true,
+                                            shape: const RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.vertical(
+                                                top: Radius.circular(16),
+                                              ),
+                                            ),
+                                            builder: (_) =>
+                                                TicketTypesBottomSheet(),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            else
+                              Container(
+                                padding: EdgeInsets.all(12),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  border: Border.all(
+                                    color: Theme.of(context).dividerColor,
+                                  ),
+                                ),
+                                child: Row(
+                                  children: <Widget>[
+                                    Expanded(
+                                      flex: 3,
+                                      child: Text(
+                                        chooseTicketType,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: SecondaryButton(
+                                        child: d.right(addString),
+                                        onPressed: () {
+                                          showModalBottomSheet(
+                                            context: context,
+                                            isDismissible: false,
+                                            backgroundColor: Colors.white,
+                                            isScrollControlled: true,
+                                            shape: const RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.vertical(
+                                                top: Radius.circular(16),
+                                              ),
+                                            ),
+                                            builder: (_) =>
+                                                TicketTypesBottomSheet(),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              child: Row(
-                                spacing: 12,
-                                children: <Widget>[
-                                  SvgPicture.asset(
-                                    getTicketIconPath(vm.selectedPricingTier),
-                                  ),
-                                  Text(
-                                    getTicketDisplayName(
-                                      vm.selectedPricingTier,
-                                    ),
-                                    style:
-                                        Theme.of(context).textTheme.bodyLarge,
-                                  ),
-                                ],
-                              ),
-                            ),
 
                             // Currency dropdown
                             Column(
@@ -226,21 +329,7 @@ class _AddProductPricingPageState extends State<AddProductPricingPage> {
                                     ),
                                   );
                                 },
-                                selectedCurrency:
-                                    (vm.selectedCurrency?.code?.isNotEmpty ??
-                                                false) &&
-                                            vm.selectedCurrency?.code != UNKNOWN
-                                        ? vm.selectedCurrency!.code!
-                                        : (vm.currencies
-                                                ?.firstWhere(
-                                                  (Currency? c) =>
-                                                      (c?.code?.isNotEmpty ??
-                                                          false) &&
-                                                      c?.code != UNKNOWN,
-                                                  orElse: () => null,
-                                                )
-                                                ?.code ??
-                                            UNKNOWN),
+                                selectedCurrency: selectedCurrency,
                               ),
 
                             CustomTextInput(
@@ -294,8 +383,7 @@ class _AddProductPricingPageState extends State<AddProductPricingPage> {
                           context.dispatch(
                             SaveProductPricingAction(
                               client: AppWrapperBase.of(context)!.customClient,
-                              onSuccess: () =>
-                                  context.router.push(ProductPricingRoute()),
+                              onSuccess: () => context.router.maybePop(),
                               onError: (String error) => showAlertDialog(
                                 context: context,
                                 assetPath: productZeroStateSVGPath,

@@ -62,11 +62,21 @@ _$HostStateImpl _$$HostStateImplFromJson(Map<String, dynamic> json) =>
                   : PricingOption.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const <PricingOption>[],
+      productPricingOptions: (json['productPricingOptions'] as List<dynamic>?)
+              ?.map((e) => e == null
+                  ? null
+                  : ProductPricingOption.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const <ProductPricingOption>[],
       selectedPricingOptionIds:
           (json['selectedPricingOptionIds'] as List<dynamic>?)
                   ?.map((e) => e as String?)
                   .toList() ??
               const <String>[],
+      selectedProductPricingOption: json['selectedProductPricingOption'] == null
+          ? null
+          : ProductPricingOption.fromJson(
+              json['selectedProductPricingOption'] as Map<String, dynamic>),
       isSearching: json['isSearching'] as bool? ?? false,
       searchParam: json['searchParam'] as String? ?? UNKNOWN,
       selectedProductStatusFilter: $enumDecodeNullable(
@@ -80,6 +90,20 @@ _$HostStateImpl _$$HostStateImplFromJson(Map<String, dynamic> json) =>
                   e == null ? null : Ticket.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const <Ticket>[],
+      pickedPricingOption: json['pickedPricingOption'] == null
+          ? null
+          : PricingOption.fromJson(
+              json['pickedPricingOption'] as Map<String, dynamic>),
+      ticketTypes: (json['ticketTypes'] as List<dynamic>?)
+              ?.map((e) => e == null
+                  ? null
+                  : TicketType.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const <TicketType>[],
+      selectedTicketType: json['selectedTicketType'] == null
+          ? null
+          : TicketType.fromJson(
+              json['selectedTicketType'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$HostStateImplToJson(_$HostStateImpl instance) =>
@@ -101,7 +125,11 @@ Map<String, dynamic> _$$HostStateImplToJson(_$HostStateImpl instance) =>
       'workflowState': _$WorkflowStateEnumMap[instance.workflowState],
       'pricingOptions':
           instance.pricingOptions?.map((e) => e?.toJson()).toList(),
+      'productPricingOptions':
+          instance.productPricingOptions?.map((e) => e?.toJson()).toList(),
       'selectedPricingOptionIds': instance.selectedPricingOptionIds,
+      'selectedProductPricingOption':
+          instance.selectedProductPricingOption?.toJson(),
       'isSearching': instance.isSearching,
       'searchParam': instance.searchParam,
       'selectedProductStatusFilter':
@@ -109,6 +137,9 @@ Map<String, dynamic> _$$HostStateImplToJson(_$HostStateImpl instance) =>
       'selectedBooking': instance.selectedBooking?.toJson(),
       'selectedBookingTickets':
           instance.selectedBookingTickets?.map((e) => e?.toJson()).toList(),
+      'pickedPricingOption': instance.pickedPricingOption?.toJson(),
+      'ticketTypes': instance.ticketTypes?.map((e) => e?.toJson()).toList(),
+      'selectedTicketType': instance.selectedTicketType?.toJson(),
     };
 
 const _$WorkflowStateEnumMap = {
