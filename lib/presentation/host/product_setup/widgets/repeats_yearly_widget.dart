@@ -28,147 +28,152 @@ class RepeatsYearlyWidget extends StatelessWidget {
               .map((int day) => MapEntry<int, String>(day, m));
         }).toList();
 
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 12,
-          children: <Widget>[
-            Text(
-              yearlyRepeatPrompt,
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 40),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 12,
+            children: <Widget>[
+              Text(
+                yearlyRepeatPrompt,
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
 
-            // Selected date chips
-            if (entries.isNotEmpty)
-              Wrap(
-                spacing: 8,
-                runSpacing: 12,
-                children: entries.map((MapEntry<int, String> entry) {
-                  final int day = entry.key;
-                  final String month = entry.value;
-                  final String label = '$day ${abbreviateMonth(month)}';
+              // Selected date chips
+              if (entries.isNotEmpty)
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 12,
+                  children: entries.map((MapEntry<int, String> entry) {
+                    final int day = entry.key;
+                    final String month = entry.value;
+                    final String label = '$day ${abbreviateMonth(month)}';
 
-                  return Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(24),
-                      border: Border.all(color: AppColors.borderColor),
-                      color: Colors.white,
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Text(
-                          label,
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
-                        const SizedBox(width: 8),
-                        GestureDetector(
-                          onTap: () {
-                            final List<RepeatYearlySchedule> updated =
-                                removeOneYearlyDate(
-                              repeatMonths,
-                              month,
-                              day,
-                            );
-                            context.dispatch(
-                              UpdateCurrentScheduleAction(
-                                repeatYearly: updated,
-                              ),
-                            );
-                          },
-                          child: const Icon(
-                            Icons.close,
-                            size: 16,
-                            color: AppColors.textBlackColor,
+                    return Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 8,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(24),
+                        border: Border.all(color: AppColors.borderColor),
+                        color: Colors.white,
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Text(
+                            label,
+                            style: Theme.of(context).textTheme.bodyMedium,
                           ),
-                        ),
-                      ],
-                    ),
+                          const SizedBox(width: 8),
+                          GestureDetector(
+                            onTap: () {
+                              final List<RepeatYearlySchedule> updated =
+                                  removeOneYearlyDate(
+                                repeatMonths,
+                                month,
+                                day,
+                              );
+                              context.dispatch(
+                                UpdateCurrentScheduleAction(
+                                  repeatYearly: updated,
+                                ),
+                              );
+                            },
+                            child: const Icon(
+                              Icons.close,
+                              size: 16,
+                              color: AppColors.textBlackColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }).toList(),
+                ),
+
+              InkWell(
+                borderRadius: BorderRadius.circular(24),
+                onTap: () async {
+                  final DateTime now = DateTime.now();
+                  final DateTime? picked = await showDatePicker(
+                    context: context,
+                    initialDate: now,
+                    firstDate: DateTime(now.year),
+                    lastDate: DateTime(now.year + 5),
                   );
-                }).toList(),
-              ),
 
-            InkWell(
-              borderRadius: BorderRadius.circular(24),
-              onTap: () async {
-                final DateTime now = DateTime.now();
-                final DateTime? picked = await showDatePicker(
-                  context: context,
-                  initialDate: now,
-                  firstDate: DateTime(now.year),
-                  lastDate: DateTime(now.year + 5),
-                );
+                  if (picked == null) return;
 
-                if (picked == null) return;
+                  final String monthName =
+                      getMonthNameFromInt(picked.month).toLowerCase();
 
-                final String monthName =
-                    getMonthNameFromInt(picked.month).toLowerCase();
+                  final int day = picked.day;
 
-                final int day = picked.day;
+                  final List<RepeatYearlySchedule> updated =
+                      List<RepeatYearlySchedule>.from(repeatMonths);
 
-                final List<RepeatYearlySchedule> updated =
-                    List<RepeatYearlySchedule>.from(repeatMonths);
+                  final int idx = updated.indexWhere(
+                    (RepeatYearlySchedule s) =>
+                        s.month?.toLowerCase() == monthName,
+                  );
 
-                final int idx = updated.indexWhere(
-                  (RepeatYearlySchedule s) =>
-                      s.month?.toLowerCase() == monthName,
-                );
+                  if (idx >= 0) {
+                    final RepeatYearlySchedule schedule = updated[idx];
 
-                if (idx >= 0) {
-                  final RepeatYearlySchedule schedule = updated[idx];
+                    final List<int> dates =
+                        List<int>.from(schedule.repeatOnDateOfMonth ?? <int>[]);
 
-                  final List<int> dates =
-                      List<int>.from(schedule.repeatOnDateOfMonth ?? <int>[]);
-
-                  if (!dates.contains(day)) {
-                    dates.add(day);
-                    dates.sort();
-                    updated[idx] =
-                        schedule.copyWith(repeatOnDateOfMonth: dates);
+                    if (!dates.contains(day)) {
+                      dates.add(day);
+                      dates.sort();
+                      updated[idx] =
+                          schedule.copyWith(repeatOnDateOfMonth: dates);
+                    }
+                  } else {
+                    // Create new month schedule if none exists
+                    updated.add(
+                      RepeatYearlySchedule(
+                        month: monthName,
+                        repeatOnDateOfMonth: <int>[day],
+                      ),
+                    );
                   }
-                } else {
-                  // Create new month schedule if none exists
-                  updated.add(
-                    RepeatYearlySchedule(
-                      month: monthName,
-                      repeatOnDateOfMonth: <int>[day],
-                    ),
-                  );
-                }
 
-                context.dispatch(
-                  UpdateCurrentScheduleAction(repeatYearly: updated),
-                );
-              },
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(24),
-                  color: Theme.of(context).primaryColor,
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Text(
-                      addDateString,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyMedium
-                          ?.copyWith(color: Colors.white),
-                    ),
-                    const SizedBox(width: 8),
-                    const HeroIcon(
-                      HeroIcons.plus,
-                      size: 16,
-                      color: Colors.white,
-                    ),
-                  ],
+                  context.dispatch(
+                    UpdateCurrentScheduleAction(repeatYearly: updated),
+                  );
+                },
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(24),
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Text(
+                        addDateString,
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium
+                            ?.copyWith(color: Colors.white),
+                      ),
+                      const SizedBox(width: 8),
+                      const HeroIcon(
+                        HeroIcons.plus,
+                        size: 16,
+                        color: Colors.white,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         );
       },
     );

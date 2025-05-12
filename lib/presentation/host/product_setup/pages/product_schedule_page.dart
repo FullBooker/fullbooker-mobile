@@ -21,7 +21,6 @@ import 'package:fullbooker/presentation/host/product_setup/widgets/repeats_month
 import 'package:fullbooker/presentation/host/product_setup/widgets/repeats_weekly_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/repeats_yearly_widget.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
-import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/custom_dropdown.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
@@ -34,554 +33,532 @@ class ProductSchedulePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(
-        showBell: false,
-        title: setupEvent,
-      ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16),
-        child: StoreConnector<AppState, ProductSetupViewModel>(
-          converter: (Store<AppState> store) =>
-              ProductSetupViewModel.fromState(store.state),
-          onInit: (Store<AppState> store) {
-            context.dispatchAll(<ReduxAction<AppState>>[
-              FetchProductScheduleAction(
-                client: AppWrapperBase.of(context)!.customClient,
-              ),
-            ]);
-          },
-          builder: (BuildContext context, ProductSetupViewModel vm) {
-            if (context.isWaiting(<Type>[FetchProductScheduleAction])) {
-              return AppLoading();
-            }
+    return SafeArea(
+      child: Scaffold(
+        appBar: CustomAppBar(showBell: false, title: setupEvent),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          child: StoreConnector<AppState, ProductSetupViewModel>(
+            converter: (Store<AppState> store) =>
+                ProductSetupViewModel.fromState(store.state),
+            builder: (BuildContext context, ProductSetupViewModel vm) {
+              final bool isLoading = context.isWaiting(<Type>[
+                SetProductScheduleAction,
+                UpdateProductScheduleAction,
+              ]);
 
-            final bool repeats = vm.repeatType != kNoRepeatSchedule;
+              final bool isEditing = vm.workflowState == WorkflowState.VIEW;
 
-            return Column(
-              spacing: 12,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Column(
+              return Row(
+                spacing: 16,
+                children: <Widget>[
+                  Flexible(
+                    child: SecondaryButton(
+                      addBorder: true,
+                      disabled: isLoading,
+                      onPressed: () {
+                        isEditing
+                            ? context.router.popUntil(
+                                (Route<dynamic> route) =>
+                                    route.settings.name ==
+                                    ProductReviewAndSubmitRoute.name,
+                              )
+                            : context.router.maybePop();
+                      },
+                      child: d.right(
+                        isEditing ? backToPreview : previousString,
+                      ),
+                      fillColor: Colors.white,
+                    ),
+                  ),
+                  Flexible(
+                    child: PrimaryButton(
+                      isLoading: isLoading,
+                      onPressed: () {
+                        if (isEditing) {
+                          context.dispatch(
+                            UpdateProductScheduleAction(
+                              onSuccess: () {
+                                context.router.popUntil(
+                                  (Route<dynamic> route) =>
+                                      route.settings.name ==
+                                      ProductReviewAndSubmitRoute.name,
+                                );
+                              },
+                              onError: (String error) => showAlertDialog(
+                                context: context,
+                                assetPath: productZeroStateSVGPath,
+                                description: error,
+                              ),
+                              client: AppWrapperBase.of(context)!.customClient,
+                            ),
+                          );
+                        } else {
+                          context.dispatch(
+                            SetProductScheduleAction(
+                              onSuccess: () {
+                                context.router.push(ProductPhotosRoute());
+                              },
+                              onError: (String error) => showAlertDialog(
+                                context: context,
+                                assetPath: productZeroStateSVGPath,
+                                description: error,
+                              ),
+                              client: AppWrapperBase.of(context)!.customClient,
+                            ),
+                          );
+                        }
+                      },
+                      child: d.right(continueString),
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          child: StoreConnector<AppState, ProductSetupViewModel>(
+            converter: (Store<AppState> store) =>
+                ProductSetupViewModel.fromState(store.state),
+            onInit: (Store<AppState> store) {
+              context.dispatchAll(<ReduxAction<AppState>>[
+                FetchProductScheduleAction(
+                  client: AppWrapperBase.of(context)!.customClient,
+                ),
+              ]);
+            },
+            builder: (BuildContext context, ProductSetupViewModel vm) {
+              if (context.isWaiting(<Type>[FetchProductScheduleAction])) {
+                return AppLoading();
+              }
+
+              final bool repeats = vm.repeatType != kNoRepeatSchedule;
+
+              return SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  spacing: 12,
+                  children: <Widget>[
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      spacing: 12,
+                      spacing: 8,
                       children: <Widget>[
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          spacing: 8,
-                          children: <Widget>[
-                            Text(
-                              dateAndTime,
-                              style: Theme.of(context).textTheme.headlineSmall,
-                            ),
-                            Text(
-                              dateAndTimeCopy,
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                          ],
+                        Text(
+                          dateAndTime,
+                          style: Theme.of(context).textTheme.headlineSmall,
                         ),
+                        Text(
+                          dateAndTimeCopy,
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ],
+                    ),
 
-                        // All day checkbox
-                        InkWell(
-                          splashColor: Theme.of(context)
-                              .primaryColor
-                              .withValues(alpha: .1),
-                          borderRadius: BorderRadius.circular(8),
-                          highlightColor: Theme.of(context)
-                              .primaryColor
-                              .withValues(alpha: .1),
-                          onTap: () {
-                            context.dispatch(
-                              UpdateCurrentScheduleAction(
-                                isAllDay: !vm.isAllDay,
-                              ),
-                            );
-                          },
-                          child: Row(
-                            children: <Widget>[
-                              Checkbox(
-                                value: vm.isAllDay,
-                                onChanged: (bool? value) {
-                                  context.dispatch(
-                                    UpdateCurrentScheduleAction(
-                                      isAllDay: value,
-                                    ),
-                                  );
-                                },
-                                activeColor:
-                                    Theme.of(context).colorScheme.primary,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(4),
-                                ),
-                              ),
-                              Expanded(
-                                child: Text(
-                                  allDayLabel,
-                                  style:
-                                      Theme.of(context).textTheme.titleMedium,
-                                ),
-                              ),
-                            ],
+                    // All day checkbox
+                    InkWell(
+                      splashColor:
+                          Theme.of(context).primaryColor.withValues(alpha: .1),
+                      borderRadius: BorderRadius.circular(8),
+                      highlightColor:
+                          Theme.of(context).primaryColor.withValues(alpha: .1),
+                      onTap: () {
+                        context.dispatch(
+                          UpdateCurrentScheduleAction(
+                            isAllDay: !vm.isAllDay,
                           ),
-                        ),
-
-                        // Starts on
-                        Row(
-                          spacing: 12,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Expanded(
-                              child: Column(
-                                spacing: 12,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(
-                                    starting,
-                                    style:
-                                        Theme.of(context).textTheme.titleMedium,
-                                  ),
-                                  InkWell(
-                                    splashColor: Theme.of(context)
-                                        .primaryColor
-                                        .withValues(alpha: .1),
-                                    borderRadius: BorderRadius.circular(8),
-                                    onTap: () async {
-                                      final String? date =
-                                          await pickDate(context: context);
-
-                                      context.dispatch(
-                                        UpdateCurrentScheduleAction(
-                                          startDate: date,
-                                        ),
-                                      );
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: Theme.of(context).dividerColor,
-                                        ),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      padding: EdgeInsets.all(12),
-                                      child: Row(
-                                        spacing: 12,
-                                        children: <Widget>[
-                                          HeroIcon(
-                                            HeroIcons.calendar,
-                                            size: 20,
-                                            color: AppColors.bodyTextColor,
-                                          ),
-                                          if (vm.startDate != UNKNOWN)
-                                            humanizeDate(
-                                              loadedDate: vm.startDate,
-                                              dateTextStyle: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium
-                                                  ?.copyWith(
-                                                    color: AppColors
-                                                        .textBlackColor,
-                                                  ),
-                                            )
-                                          else
-                                            Text(
-                                              selectDateHint,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium,
-                                            ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                        );
+                      },
+                      child: Row(
+                        children: <Widget>[
+                          Checkbox(
+                            value: vm.isAllDay,
+                            onChanged: (bool? value) {
+                              context.dispatch(
+                                UpdateCurrentScheduleAction(
+                                  isAllDay: value,
+                                ),
+                              );
+                            },
+                            activeColor: Theme.of(context).colorScheme.primary,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(4),
                             ),
-                            if (!vm.isAllDay)
-                              Expanded(
-                                child: Column(
-                                  spacing: 12,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                      atString,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleMedium,
-                                    ),
-                                    InkWell(
-                                      borderRadius: BorderRadius.circular(8),
-                                      splashColor: Theme.of(context)
-                                          .primaryColor
-                                          .withValues(alpha: .1),
-                                      onTap: () async {
-                                        final String? time =
-                                            await pickTime(context: context);
-
-                                        context.dispatch(
-                                          UpdateCurrentScheduleAction(
-                                            startTime: time,
-                                          ),
-                                        );
-                                      },
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                            color:
-                                                Theme.of(context).dividerColor,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                        ),
-                                        padding: EdgeInsets.all(12),
-                                        child: Row(
-                                          spacing: 12,
-                                          children: <Widget>[
-                                            HeroIcon(
-                                              HeroIcons.clock,
-                                              size: 20,
-                                              color: AppColors.bodyTextColor,
-                                            ),
-                                            if (vm.startTime != UNKNOWN)
-                                              formatTime(
-                                                time: vm.startTime,
-                                                textStyle: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyMedium
-                                                    ?.copyWith(
-                                                      color: AppColors
-                                                          .textBlackColor,
-                                                    ),
-                                              )
-                                            else
-                                              Text(
-                                                chooseTime,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyMedium,
-                                              ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                          ],
-                        ),
-
-                        // Ends on
-                        Row(
-                          spacing: 12,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Expanded(
-                              child: Column(
-                                spacing: 12,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(
-                                    ending,
-                                    style:
-                                        Theme.of(context).textTheme.titleMedium,
-                                  ),
-                                  InkWell(
-                                    onTap: () async {
-                                      final String? date =
-                                          await pickDate(context: context);
-
-                                      context.dispatch(
-                                        UpdateCurrentScheduleAction(
-                                          endDate: date,
-                                        ),
-                                      );
-                                    },
-                                    splashColor: Theme.of(context)
-                                        .primaryColor
-                                        .withValues(alpha: .1),
-                                    borderRadius: BorderRadius.circular(8),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: Theme.of(context).dividerColor,
-                                        ),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      padding: EdgeInsets.all(12),
-                                      child: Row(
-                                        spacing: 12,
-                                        children: <Widget>[
-                                          HeroIcon(
-                                            HeroIcons.calendar,
-                                            size: 20,
-                                            color: AppColors.bodyTextColor,
-                                          ),
-                                          if (vm.endDate != UNKNOWN)
-                                            humanizeDate(
-                                              loadedDate: vm.endDate,
-                                              dateTextStyle: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium
-                                                  ?.copyWith(
-                                                    color: AppColors
-                                                        .textBlackColor,
-                                                  ),
-                                            )
-                                          else
-                                            Text(
-                                              selectDateHint,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium,
-                                            ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            if (!vm.isAllDay)
-                              Expanded(
-                                child: Column(
-                                  spacing: 12,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                      atString,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleMedium,
-                                    ),
-                                    InkWell(
-                                      onTap: () async {
-                                        final String? time =
-                                            await pickTime(context: context);
-
-                                        context.dispatch(
-                                          UpdateCurrentScheduleAction(
-                                            endTime: time,
-                                          ),
-                                        );
-                                      },
-                                      splashColor: Theme.of(context)
-                                          .primaryColor
-                                          .withValues(alpha: .1),
-                                      borderRadius: BorderRadius.circular(8),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                            color:
-                                                Theme.of(context).dividerColor,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                        ),
-                                        padding: EdgeInsets.all(12),
-                                        child: Row(
-                                          spacing: 12,
-                                          children: <Widget>[
-                                            HeroIcon(
-                                              HeroIcons.clock,
-                                              size: 20,
-                                              color: AppColors.bodyTextColor,
-                                            ),
-                                            if (vm.endTime != UNKNOWN)
-                                              formatTime(
-                                                time: vm.endTime,
-                                                textStyle: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyMedium
-                                                    ?.copyWith(
-                                                      color: AppColors
-                                                          .textBlackColor,
-                                                    ),
-                                              )
-                                            else
-                                              Text(
-                                                chooseTime,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyMedium,
-                                              ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                          ],
-                        ),
-
-                        // Repeats checkbox
-                        InkWell(
-                          splashColor: Theme.of(context)
-                              .primaryColor
-                              .withValues(alpha: .1),
-                          borderRadius: BorderRadius.circular(8),
-                          highlightColor: Theme.of(context)
-                              .primaryColor
-                              .withValues(alpha: .1),
-                          onTap: () {
-                            context.dispatch(
-                              UpdateCurrentScheduleAction(
-                                repeatType: repeats
-                                    ? kNoRepeatSchedule
-                                    : kDailyRepeatOption,
-                              ),
-                            );
-                          },
-                          child: Row(
-                            children: <Widget>[
-                              Checkbox(
-                                value: repeats,
-                                onChanged: (bool? value) {
-                                  context.dispatch(
-                                    UpdateCurrentScheduleAction(
-                                      repeats: value,
-                                      repeatType: repeats
-                                          ? kNoRepeatSchedule
-                                          : kDailyRepeatOption,
-                                    ),
-                                  );
-                                },
-                                activeColor:
-                                    Theme.of(context).colorScheme.primary,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(4),
-                                ),
-                              ),
-                              Expanded(
-                                child: Text(
-                                  repeatsLabel,
-                                  style:
-                                      Theme.of(context).textTheme.titleMedium,
-                                ),
-                              ),
-                            ],
                           ),
-                        ),
+                          Expanded(
+                            child: Text(
+                              allDayLabel,
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
 
-                        if (repeats)
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                    // Starts on
+                    Row(
+                      spacing: 12,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Expanded(
+                          child: Column(
                             spacing: 12,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              CustomDropdown(
-                                value: vm.repeatType.toLowerCase(),
-                                onChanged: (String? selected) {
+                              Text(
+                                starting,
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                              InkWell(
+                                splashColor: Theme.of(context)
+                                    .primaryColor
+                                    .withValues(alpha: .1),
+                                borderRadius: BorderRadius.circular(8),
+                                onTap: () async {
+                                  final String? date =
+                                      await pickDate(context: context);
+
                                   context.dispatch(
                                     UpdateCurrentScheduleAction(
-                                      repeatType: selected,
+                                      startDate: date,
                                     ),
                                   );
                                 },
-                                options: scheduleRepeatOptions,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Theme.of(context).dividerColor,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  padding: EdgeInsets.all(12),
+                                  child: Row(
+                                    spacing: 12,
+                                    children: <Widget>[
+                                      HeroIcon(
+                                        HeroIcons.calendar,
+                                        size: 20,
+                                        color: AppColors.bodyTextColor,
+                                      ),
+                                      if (vm.startDate != UNKNOWN)
+                                        humanizeDate(
+                                          loadedDate: vm.startDate,
+                                          dateTextStyle: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium
+                                              ?.copyWith(
+                                                color: AppColors.textBlackColor,
+                                              ),
+                                        )
+                                      else
+                                        Text(
+                                          selectDateHint,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium,
+                                        ),
+                                    ],
+                                  ),
+                                ),
                               ),
-
-                              /// Repeats daily
-                              if (vm.repeatType == kDailyRepeatOption)
-                                RepeatsDailyWidget(),
-
-                              /// Repeats weekly
-                              if (vm.repeatType == kWeeklyRepeatOption)
-                                RepeatsWeeklyWidget(),
-
-                              /// Repeats monthly
-                              if (vm.repeatType == kMonthlyRepeatOption)
-                                RepeatsMonthlyWidget(),
-
-                              /// Repeats yearly
-                              if (vm.repeatType == kYearlyRepeatOption)
-                                RepeatsYearlyWidget(),
                             ],
+                          ),
+                        ),
+                        if (!vm.isAllDay)
+                          Expanded(
+                            child: Column(
+                              spacing: 12,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  atString,
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
+                                ),
+                                InkWell(
+                                  borderRadius: BorderRadius.circular(8),
+                                  splashColor: Theme.of(context)
+                                      .primaryColor
+                                      .withValues(alpha: .1),
+                                  onTap: () async {
+                                    final String? time =
+                                        await pickTime(context: context);
+
+                                    context.dispatch(
+                                      UpdateCurrentScheduleAction(
+                                        startTime: time,
+                                      ),
+                                    );
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: Theme.of(context).dividerColor,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    padding: EdgeInsets.all(12),
+                                    child: Row(
+                                      spacing: 12,
+                                      children: <Widget>[
+                                        HeroIcon(
+                                          HeroIcons.clock,
+                                          size: 20,
+                                          color: AppColors.bodyTextColor,
+                                        ),
+                                        if (vm.startTime != UNKNOWN)
+                                          formatTime(
+                                            time: vm.startTime,
+                                            textStyle: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium
+                                                ?.copyWith(
+                                                  color:
+                                                      AppColors.textBlackColor,
+                                                ),
+                                          )
+                                        else
+                                          Text(
+                                            chooseTime,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium,
+                                          ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                       ],
                     ),
-                  ),
-                ),
-                StoreConnector<AppState, ProductSetupViewModel>(
-                  converter: (Store<AppState> store) =>
-                      ProductSetupViewModel.fromState(store.state),
-                  builder: (BuildContext context, ProductSetupViewModel vm) {
-                    if (context.isWaiting(<Type>[
-                      SetProductScheduleAction,
-                      UpdateProductScheduleAction,
-                    ])) {
-                      return AppLoading();
-                    }
 
-                    final bool isEditing =
-                        vm.workflowState == WorkflowState.VIEW;
-
-                    return Column(
+                    // Ends on
+                    Row(
                       spacing: 12,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        PrimaryButton(
-                          onPressed: () {
-                            if (isEditing) {
-                              context.dispatch(
-                                UpdateProductScheduleAction(
-                                  onSuccess: () {
-                                    context.router.popUntil(
-                                      (Route<dynamic> route) =>
-                                          route.settings.name ==
-                                          ProductReviewAndSubmitRoute.name,
+                        Expanded(
+                          child: Column(
+                            spacing: 12,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                ending,
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                              InkWell(
+                                onTap: () async {
+                                  final String? date =
+                                      await pickDate(context: context);
+
+                                  context.dispatch(
+                                    UpdateCurrentScheduleAction(
+                                      endDate: date,
+                                    ),
+                                  );
+                                },
+                                splashColor: Theme.of(context)
+                                    .primaryColor
+                                    .withValues(alpha: .1),
+                                borderRadius: BorderRadius.circular(8),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Theme.of(context).dividerColor,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  padding: EdgeInsets.all(12),
+                                  child: Row(
+                                    spacing: 12,
+                                    children: <Widget>[
+                                      HeroIcon(
+                                        HeroIcons.calendar,
+                                        size: 20,
+                                        color: AppColors.bodyTextColor,
+                                      ),
+                                      if (vm.endDate != UNKNOWN)
+                                        humanizeDate(
+                                          loadedDate: vm.endDate,
+                                          dateTextStyle: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium
+                                              ?.copyWith(
+                                                color: AppColors.textBlackColor,
+                                              ),
+                                        )
+                                      else
+                                        Text(
+                                          selectDateHint,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium,
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        if (!vm.isAllDay)
+                          Expanded(
+                            child: Column(
+                              spacing: 12,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  atString,
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
+                                ),
+                                InkWell(
+                                  onTap: () async {
+                                    final String? time =
+                                        await pickTime(context: context);
+
+                                    context.dispatch(
+                                      UpdateCurrentScheduleAction(
+                                        endTime: time,
+                                      ),
                                     );
                                   },
-                                  onError: (String error) => showAlertDialog(
-                                    context: context,
-                                    assetPath: productZeroStateSVGPath,
-                                    description: error,
+                                  splashColor: Theme.of(context)
+                                      .primaryColor
+                                      .withValues(alpha: .1),
+                                  borderRadius: BorderRadius.circular(8),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: Theme.of(context).dividerColor,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    padding: EdgeInsets.all(12),
+                                    child: Row(
+                                      spacing: 12,
+                                      children: <Widget>[
+                                        HeroIcon(
+                                          HeroIcons.clock,
+                                          size: 20,
+                                          color: AppColors.bodyTextColor,
+                                        ),
+                                        if (vm.endTime != UNKNOWN)
+                                          formatTime(
+                                            time: vm.endTime,
+                                            textStyle: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium
+                                                ?.copyWith(
+                                                  color:
+                                                      AppColors.textBlackColor,
+                                                ),
+                                          )
+                                        else
+                                          Text(
+                                            chooseTime,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium,
+                                          ),
+                                      ],
+                                    ),
                                   ),
-                                  client:
-                                      AppWrapperBase.of(context)!.customClient,
                                 ),
-                              );
-                            } else {
-                              context.dispatch(
-                                SetProductScheduleAction(
-                                  onSuccess: () {
-                                    context.router.push(ProductPhotosRoute());
-                                  },
-                                  onError: (String error) => showAlertDialog(
-                                    context: context,
-                                    assetPath: productZeroStateSVGPath,
-                                    description: error,
-                                  ),
-                                  client:
-                                      AppWrapperBase.of(context)!.customClient,
-                                ),
-                              );
-                            }
-                          },
-                          child: d.right(continueString),
-                        ),
-                        SecondaryButton(
-                          onPressed: () {
-                            isEditing
-                                ? context.router.popUntil(
-                                    (Route<dynamic> route) =>
-                                        route.settings.name ==
-                                        ProductReviewAndSubmitRoute.name,
-                                  )
-                                : context.router.maybePop();
-                          },
-                          child: d.right(
-                            isEditing ? backToPreview : previousString,
+                              ],
+                            ),
                           ),
-                          fillColor: Colors.transparent,
-                        ),
-                        verySmallVerticalSizedBox,
                       ],
-                    );
-                  },
+                    ),
+
+                    // Repeats checkbox
+                    InkWell(
+                      splashColor:
+                          Theme.of(context).primaryColor.withValues(alpha: .1),
+                      borderRadius: BorderRadius.circular(8),
+                      highlightColor:
+                          Theme.of(context).primaryColor.withValues(alpha: .1),
+                      onTap: () {
+                        context.dispatch(
+                          UpdateCurrentScheduleAction(
+                            repeatType: repeats
+                                ? kNoRepeatSchedule
+                                : kDailyRepeatOption,
+                          ),
+                        );
+                      },
+                      child: Row(
+                        children: <Widget>[
+                          Checkbox(
+                            value: repeats,
+                            onChanged: (bool? value) {
+                              context.dispatch(
+                                UpdateCurrentScheduleAction(
+                                  repeats: value,
+                                  repeatType: repeats
+                                      ? kNoRepeatSchedule
+                                      : kDailyRepeatOption,
+                                ),
+                              );
+                            },
+                            activeColor: Theme.of(context).colorScheme.primary,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              repeatsLabel,
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    if (repeats)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        spacing: 12,
+                        children: <Widget>[
+                          CustomDropdown(
+                            value: vm.repeatType.toLowerCase(),
+                            onChanged: (String? selected) {
+                              context.dispatch(
+                                UpdateCurrentScheduleAction(
+                                  repeatType: selected,
+                                ),
+                              );
+                            },
+                            options: scheduleRepeatOptions,
+                          ),
+
+                          /// Repeats daily
+                          if (vm.repeatType == kDailyRepeatOption)
+                            RepeatsDailyWidget(),
+
+                          /// Repeats weekly
+                          if (vm.repeatType == kWeeklyRepeatOption)
+                            RepeatsWeeklyWidget(),
+
+                          /// Repeats monthly
+                          if (vm.repeatType == kMonthlyRepeatOption)
+                            RepeatsMonthlyWidget(),
+
+                          /// Repeats yearly
+                          if (vm.repeatType == kYearlyRepeatOption)
+                            RepeatsYearlyWidget(),
+                        ],
+                      ),
+                  ],
                 ),
-              ],
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );

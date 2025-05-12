@@ -37,9 +37,66 @@ class ProductPricingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: CustomAppBar(
-          showBell: false,
-          title: setupEvent,
+        appBar: CustomAppBar(showBell: false, title: setupEvent),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 12),
+          child: StoreConnector<AppState, ProductSetupViewModel>(
+            converter: (Store<AppState> store) =>
+                ProductSetupViewModel.fromState(store.state),
+            builder: (BuildContext context, ProductSetupViewModel vm) {
+              final bool isEditing = vm.workflowState == WorkflowState.VIEW;
+
+              return Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: 12,
+                children: <Widget>[
+                  Flexible(
+                    child: SecondaryButton(
+                      addBorder: true,
+                      onPressed: () {
+                        isEditing
+                            ? context.router.popUntil(
+                                (Route<dynamic> route) =>
+                                    route.settings.name ==
+                                    ProductReviewAndSubmitRoute.name,
+                              )
+                            : context.router.maybePop();
+                      },
+                      child: d.right(
+                        isEditing ? backToPreview : previousString,
+                      ),
+                      fillColor: Colors.transparent,
+                    ),
+                  ),
+                  Flexible(
+                    child: PrimaryButton(
+                      onPressed: () {
+                        if (isEditing) {
+                          context.router.popUntil(
+                            (Route<dynamic> route) =>
+                                route.settings.name ==
+                                ProductReviewAndSubmitRoute.name,
+                          );
+                        } else {
+                          if (vm.pricing?.isEmpty ?? true) {
+                            showAlertDialog(
+                              context: context,
+                              assetPath: productZeroStateSVGPath,
+                              description: addPricingErrorMsg,
+                            );
+                          } else {
+                            context.router.push(ProductReviewAndSubmitRoute());
+                          }
+                        }
+                      },
+                      child: d.right(continueString),
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
         ),
         body: RefreshIndicator(
           onRefresh: () => onRefresh(context),
@@ -179,59 +236,6 @@ class ProductPricingPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                ),
-                StoreConnector<AppState, ProductSetupViewModel>(
-                  converter: (Store<AppState> store) =>
-                      ProductSetupViewModel.fromState(store.state),
-                  builder: (BuildContext context, ProductSetupViewModel vm) {
-                    final bool isEditing =
-                        vm.workflowState == WorkflowState.VIEW;
-
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      spacing: 12,
-                      children: <Widget>[
-                        PrimaryButton(
-                          onPressed: () {
-                            if (isEditing) {
-                              context.router.popUntil(
-                                (Route<dynamic> route) =>
-                                    route.settings.name ==
-                                    ProductReviewAndSubmitRoute.name,
-                              );
-                            } else {
-                              if (vm.pricing?.isEmpty ?? true) {
-                                showAlertDialog(
-                                  context: context,
-                                  assetPath: productZeroStateSVGPath,
-                                  description: addPricingErrorMsg,
-                                );
-                              } else {
-                                context.router
-                                    .push(ProductReviewAndSubmitRoute());
-                              }
-                            }
-                          },
-                          child: d.right(continueString),
-                        ),
-                        SecondaryButton(
-                          onPressed: () {
-                            isEditing
-                                ? context.router.popUntil(
-                                    (Route<dynamic> route) =>
-                                        route.settings.name ==
-                                        ProductReviewAndSubmitRoute.name,
-                                  )
-                                : context.router.maybePop();
-                          },
-                          child: d.right(
-                            isEditing ? backToPreview : previousString,
-                          ),
-                          fillColor: Colors.transparent,
-                        ),
-                      ],
-                    );
-                  },
                 ),
               ],
             ),

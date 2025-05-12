@@ -17,62 +17,68 @@ class RepeatsMonthlyWidget extends StatelessWidget {
       builder: (BuildContext context, ProductSetupViewModel vm) {
         final List<int> selectedDates = vm.repeatMonthly;
 
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 12,
-          children: <Widget>[
-            Text(
-              monthlyRepeatPrompt,
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: List<Widget>.generate(31, (int index) {
-                final int day = index + 1;
-                final bool isSelected = selectedDates.contains(day);
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 80),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 12,
+            children: <Widget>[
+              Text(
+                monthlyRepeatPrompt,
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: List<Widget>.generate(31, (int index) {
+                  final int day = index + 1;
+                  final bool isSelected = selectedDates.contains(day);
 
-                return GestureDetector(
-                  onTap: () {
-                    final List<int> updated = List<int>.from(selectedDates);
-                    if (isSelected) {
-                      updated.remove(day);
-                    } else {
-                      updated.add(day);
-                    }
-                    context.dispatch(
-                      UpdateCurrentScheduleAction(repeatMonthly: updated),
-                    );
-                  },
-                  child: Container(
-                    width: 48,
-                    height: 48,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: isSelected
-                          ? Theme.of(context).colorScheme.primary
-                          : Colors.transparent,
-                      border: Border.all(
+                  return GestureDetector(
+                    onTap: () {
+                      final List<int> updated = List<int>.from(selectedDates);
+                      if (isSelected) {
+                        updated.remove(day);
+                      } else {
+                        updated.add(day);
+                      }
+                      context.dispatch(
+                        UpdateCurrentScheduleAction(repeatMonthly: updated),
+                      );
+                    },
+                    child: Container(
+                      width: 48,
+                      height: 48,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
                         color: isSelected
                             ? Theme.of(context).colorScheme.primary
-                            : Theme.of(context).dividerColor,
+                            : Colors.transparent,
+                        border: Border.all(
+                          color: isSelected
+                              ? Theme.of(context).colorScheme.primary
+                              : Theme.of(context).dividerColor,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
                       ),
-                      borderRadius: BorderRadius.circular(8),
+                      child: Text(
+                        '$day',
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              color: isSelected
+                                  ? Colors.white
+                                  : Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium
+                                      ?.color,
+                            ),
+                      ),
                     ),
-                    child: Text(
-                      '$day',
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: isSelected
-                                ? Colors.white
-                                : Theme.of(context).textTheme.bodyMedium?.color,
-                          ),
-                    ),
-                  ),
-                );
-              }),
-            ),
-            verySmallVerticalSizedBox,
-          ],
+                  );
+                }),
+              ),
+              verySmallVerticalSizedBox,
+            ],
+          ),
         );
       },
     );

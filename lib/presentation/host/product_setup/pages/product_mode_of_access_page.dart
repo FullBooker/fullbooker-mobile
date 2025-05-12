@@ -40,9 +40,52 @@ class ProductModeOfAccessPage extends StatelessWidget {
       onRefresh: () => onRefresh(context),
       child: SafeArea(
         child: Scaffold(
-          appBar: CustomAppBar(
-            showBell: false,
-            title: setupEvent,
+          appBar: CustomAppBar(showBell: false, title: setupEvent),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerFloat,
+          floatingActionButton: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: StoreConnector<AppState, ProductSetupViewModel>(
+              converter: (Store<AppState> store) =>
+                  ProductSetupViewModel.fromState(store.state),
+              builder: (BuildContext context, ProductSetupViewModel vm) {
+                if (context.isWaiting(SetProductPricingOptionsAction)) {
+                  return AppLoading();
+                }
+
+                final bool isEditing = vm.workflowState == WorkflowState.VIEW;
+
+                return Row(
+                  spacing: 12,
+                  children: <Widget>[
+                    Flexible(
+                      child: SecondaryButton(
+                        addBorder: true,
+                        onPressed: () => context.router.maybePop(),
+                        child: d.right(previousString),
+                        fillColor: Colors.transparent,
+                      ),
+                    ),
+                    Flexible(
+                      child: PrimaryButton(
+                        onPressed: () {
+                          if (isEditing) {
+                            context.router.popUntil(
+                              (Route<dynamic> route) =>
+                                  route.settings.name ==
+                                  ProductReviewAndSubmitRoute.name,
+                            );
+                          } else {
+                            context.router.push(ProductReviewAndSubmitRoute());
+                          }
+                        },
+                        child: d.right(continueString),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
           ),
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -177,45 +220,6 @@ class ProductModeOfAccessPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                ),
-                StoreConnector<AppState, ProductSetupViewModel>(
-                  converter: (Store<AppState> store) =>
-                      ProductSetupViewModel.fromState(store.state),
-                  builder: (BuildContext context, ProductSetupViewModel vm) {
-                    if (context.isWaiting(SetProductPricingOptionsAction)) {
-                      return AppLoading();
-                    }
-
-                    final bool isEditing =
-                        vm.workflowState == WorkflowState.VIEW;
-
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      spacing: 12,
-                      children: <Widget>[
-                        PrimaryButton(
-                          onPressed: () {
-                            if (isEditing) {
-                              context.router.popUntil(
-                                (Route<dynamic> route) =>
-                                    route.settings.name ==
-                                    ProductReviewAndSubmitRoute.name,
-                              );
-                            } else {
-                              context.router
-                                  .push(ProductReviewAndSubmitRoute());
-                            }
-                          },
-                          child: d.right(continueString),
-                        ),
-                        SecondaryButton(
-                          onPressed: () => context.router.maybePop(),
-                          child: d.right(previousString),
-                          fillColor: Colors.transparent,
-                        ),
-                      ],
-                    );
-                  },
                 ),
               ],
             ),
