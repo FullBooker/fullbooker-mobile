@@ -173,7 +173,7 @@ class _ChooseLocationPageState extends State<ChooseLocationPage> {
     return SafeArea(
       child: Scaffold(
         appBar: CustomAppBar(showBell: false, title: pickLocation),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: Container(
           width: double.infinity,
           padding: const EdgeInsets.all(12),
@@ -214,6 +214,7 @@ class _ChooseLocationPageState extends State<ChooseLocationPage> {
                 children: <Widget>[
                   Flexible(
                     child: SecondaryButton(
+                      disabled: _isResolving || _isSearching,
                       addBorder: true,
                       onPressed: () => context.router.maybePop(),
                       child: d.right(cancelString),
@@ -222,6 +223,7 @@ class _ChooseLocationPageState extends State<ChooseLocationPage> {
                   ),
                   Flexible(
                     child: PrimaryButton(
+                      isLoading: _isResolving || _isSearching,
                       onPressed: () {
                         context.dispatch(
                           SelectLocationAction(
@@ -245,10 +247,12 @@ class _ChooseLocationPageState extends State<ChooseLocationPage> {
           ),
         ),
         body: Column(
+          spacing: 12,
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12),
               child: Column(
+                spacing: 8,
                 children: <Widget>[
                   CustomTextInput(
                     hintText: searchLocation,
@@ -276,7 +280,14 @@ class _ChooseLocationPageState extends State<ChooseLocationPage> {
                         final String subtitle =
                             location['description'] ?? kUnknownAddress;
 
-                        return GestureDetector(
+                        return InkWell(
+                          splashColor: Theme.of(context)
+                              .primaryColor
+                              .withValues(alpha: .1),
+                          borderRadius: BorderRadius.circular(8),
+                          highlightColor: Theme.of(context)
+                              .primaryColor
+                              .withValues(alpha: .1),
                           onTap: () => selectLocation(location),
                           child: Padding(
                             padding: const EdgeInsets.all(12),
@@ -320,7 +331,6 @@ class _ChooseLocationPageState extends State<ChooseLocationPage> {
                 ],
               ),
             ),
-            const SizedBox(height: 12),
             Expanded(
               child: GoogleMap(
                 initialCameraPosition: CameraPosition(
@@ -339,11 +349,6 @@ class _ChooseLocationPageState extends State<ChooseLocationPage> {
                 },
               ),
             ),
-            if (_isResolving)
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                child: AppLoading(),
-              ),
           ],
         ),
       ),
