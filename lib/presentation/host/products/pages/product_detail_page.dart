@@ -3,7 +3,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
-import 'package:fullbooker/application/redux/actions/deactivate_product_action.dart';
+import 'package:fullbooker/application/redux/actions/transition_product_action.dart';
 import 'package:fullbooker/application/redux/actions/fetch_single_product_action.dart';
 import 'package:fullbooker/application/redux/actions/set_workflow_state_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
@@ -30,7 +30,6 @@ import 'package:fullbooker/presentation/host/products/widgets/product_alert_widg
 import 'package:fullbooker/presentation/host/products/widgets/product_schedule_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_stats_widget.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
-import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
@@ -129,7 +128,7 @@ class ProductDetailPage extends StatelessWidget {
                     physics: AlwaysScrollableScrollPhysics(),
                     children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.fromLTRB(16, 16, 16, 40),
                         child: Column(
                           spacing: 16,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -245,64 +244,63 @@ class ProductDetailPage extends StatelessWidget {
                                 LimitedVideoGalleryPreviewWidget(),
                               ],
                             ),
-                            if(productStatus != ProductStatus.deactivated)
-                            StoreConnector<AppState,
-                                ProductDetailViewModel>(
-                              converter: (Store<AppState> store) =>
-                                  ProductDetailViewModel.fromState(
-                                store.state,
-                              ),
-                              builder: (
-                                BuildContext context,
-                                ProductDetailViewModel vm,
-                              ) {
-                                if (context
-                                    .isWaiting(DeactivateProductAction)) {
-                                  return AppLoading();
-                                }
-                            
-                                return SecondaryButton(
-                                  fillColor: AppColors.redColor
-                                      .withValues(alpha: .05),
-                                  textColor: AppColors.redColor,
-                                  onPressed: () => showAlertDialog(
-                                    context: context,
-                                    assetPath: deleteProductSVGPath,
-                                    title: '$deactivateProduct?',
-                                    description: deactivateProductCopy,
-                                    confirmText: deactivateProduct,
-                                    cancelText: noGoBack,
-                                    onConfirm: () {
-                                      context.router.maybePop();
-                                      context.dispatch(
-                                        DeactivateProductAction(
-                                          client: AppWrapperBase.of(context)!
-                                              .customClient,
-                                          onSuccess: () {
-                                            context.router.popUntil(
-                                              (Route<dynamic> route) =>
-                                                  route.settings.name ==
-                                                  HostingHomeRoute.name,
-                                            );
-                                          },
-                                          onError: (String error) =>
-                                              showAlertDialog(
-                                            context: context,
-                                            assetPath:
-                                                productZeroStateSVGPath,
-                                            description: error,
+                            if (productStatus != ProductStatus.deactivated)
+                              StoreConnector<AppState, ProductDetailViewModel>(
+                                converter: (Store<AppState> store) =>
+                                    ProductDetailViewModel.fromState(
+                                  store.state,
+                                ),
+                                builder: (
+                                  BuildContext context,
+                                  ProductDetailViewModel vm,
+                                ) {
+                                  if (context
+                                      .isWaiting(TransitionProductAction)) {
+                                    return AppLoading();
+                                  }
+
+                                  return SecondaryButton(
+                                    fillColor: AppColors.redColor
+                                        .withValues(alpha: .05),
+                                    textColor: AppColors.redColor,
+                                    onPressed: () => showAlertDialog(
+                                      context: context,
+                                      assetPath: deleteProductSVGPath,
+                                      title: '$deactivateProduct?',
+                                      description: deactivateProductCopy,
+                                      confirmText: deactivateProduct,
+                                      cancelText: noGoBack,
+                                      onConfirm: () {
+                                        context.router.maybePop();
+                                        context.dispatch(
+                                          TransitionProductAction(
+                                            statusTo: ProductStatus.deactivated,
+                                            reason: userInitiatedString,
+                                            client: AppWrapperBase.of(context)!
+                                                .customClient,
+                                            onSuccess: () {
+                                              context.router.popUntil(
+                                                (Route<dynamic> route) =>
+                                                    route.settings.name ==
+                                                    HostingHomeRoute.name,
+                                              );
+                                            },
+                                            onError: (String error) =>
+                                                showAlertDialog(
+                                              context: context,
+                                              assetPath:
+                                                  productZeroStateSVGPath,
+                                              description: error,
+                                            ),
                                           ),
-                                        ),
-                                      );
-                                    },
-                                    onCancel: () => context.router.maybePop(),
-                                  ),
-                                  child: right(deactivateProduct),
-                                );
-                              },
-                            ),
-                            veryLargeVerticalSizedBox,
-                            veryLargeVerticalSizedBox,
+                                        );
+                                      },
+                                      onCancel: () => context.router.maybePop(),
+                                    ),
+                                    child: right(deactivateProduct),
+                                  );
+                                },
+                              ),
                           ],
                         ),
                       ),
