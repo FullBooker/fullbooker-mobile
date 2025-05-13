@@ -31,16 +31,17 @@ class ProductPhotosPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(title: setupEvent),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Padding(
-        padding: EdgeInsetsDirectional.symmetric(horizontal: 12),
-        child: StoreConnector<AppState, ProductSetupViewModel>(
-          converter: (Store<AppState> store) =>
-              ProductSetupViewModel.fromState(store.state),
-          builder: (BuildContext context, ProductSetupViewModel vm) {
-            final bool isEditing = vm.workflowState == WorkflowState.VIEW;
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: StoreConnector<AppState, ProductSetupViewModel>(
+        converter: (Store<AppState> store) =>
+            ProductSetupViewModel.fromState(store.state),
+        builder: (BuildContext context, ProductSetupViewModel vm) {
+          final bool isEditing = vm.workflowState == WorkflowState.VIEW;
 
-            return Row(
+          return Container(
+            color: Colors.white,
+            padding: EdgeInsets.all(16),
+            child: Row(
               spacing: 16,
               children: <Widget>[
                 Flexible(
@@ -58,7 +59,7 @@ class ProductPhotosPage extends StatelessWidget {
                     child: d.right(
                       isEditing ? backToPreview : previousString,
                     ),
-                    fillColor: Colors.transparent,
+                    fillColor: Colors.white,
                   ),
                 ),
                 Flexible(
@@ -78,9 +79,9 @@ class ProductPhotosPage extends StatelessWidget {
                   ),
                 ),
               ],
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16),

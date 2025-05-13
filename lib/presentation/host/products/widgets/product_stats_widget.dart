@@ -53,7 +53,7 @@ class ProductStatsWidget extends StatelessWidget {
               children: <Widget>[
                 Text(
                   totalRevenue,
-                  style: Theme.of(context).textTheme.bodySmall,
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 Text(
                   'KES ${stats.revenue}',

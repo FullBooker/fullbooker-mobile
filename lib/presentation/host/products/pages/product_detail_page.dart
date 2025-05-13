@@ -140,7 +140,7 @@ class ProductDetailPage extends StatelessWidget {
                           Expanded(
                             child: Text(
                               product.name ?? '',
-                              style: Theme.of(context).textTheme.titleMedium,
+                              style: Theme.of(context).textTheme.titleLarge,
                             ),
                           ),
                           CustomBadgeWidget(
@@ -236,7 +236,8 @@ class ProductDetailPage extends StatelessWidget {
                           LimitedVideoGalleryPreviewWidget(),
                         ],
                       ),
-                      if (productStatus != ProductStatus.deactivated)
+                      if (productStatus !=
+                          ProductStatus.deactivated) ...<Widget>[
                         StoreConnector<AppState, ProductDetailViewModel>(
                           converter: ProductDetailViewModel.fromStore,
                           builder: (
@@ -292,6 +293,7 @@ class ProductDetailPage extends StatelessWidget {
                             );
                           },
                         ),
+                      ],
                     ],
                   ),
                 ),

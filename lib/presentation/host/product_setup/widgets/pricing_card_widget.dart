@@ -17,8 +17,8 @@ class PricingCardWidget extends StatelessWidget {
     this.onAddOrEdit,
   });
 
-  final ProductPricing? pricing;
   final Function()? onAddOrEdit;
+  final ProductPricing? pricing;
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +27,6 @@ class PricingCardWidget extends StatelessWidget {
       builder: (BuildContext context, ProductDetailViewModel vm) {
         final double? parsedPrice = double.tryParse(pricing?.cost ?? '');
         final bool hasPrice = parsedPrice != null && parsedPrice > 0;
-
-        // TODO(abiud): change this when the discount is available from the API
-        const double? discount = null;
 
         final int maxTickets = pricing?.maxTickets ?? 0;
 
@@ -52,7 +49,7 @@ class PricingCardWidget extends StatelessWidget {
             children: <Widget>[
               SvgPicture.asset(iconPath),
               Expanded(
-                flex: 6,
+                flex: 2,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   spacing: 4,
@@ -61,24 +58,15 @@ class PricingCardWidget extends StatelessWidget {
                       getTicketDisplayName(tier),
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
-                    if (discount != null && discount > 0)
-                      Text(
-                        discountValue(discount),
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodySmall
-                            ?.copyWith(color: Theme.of(context).primaryColor),
-                      ),
                     if (maxTickets > 0)
                       Text(
                         maxAllowedTickets(maxTickets),
-                        style: Theme.of(context).textTheme.bodySmall,
+                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
                   ],
                 ),
               ),
               Expanded(
-                flex: 3,
                 child: Column(
                   spacing: 8,
                   children: <Widget>[
