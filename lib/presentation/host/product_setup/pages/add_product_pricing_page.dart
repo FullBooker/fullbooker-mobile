@@ -40,7 +40,7 @@ class _AddProductPricingPageState extends State<AddProductPricingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(showBell: false, title: addTicketPrice),
+      appBar: CustomAppBar(title: addTicketPrice),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Padding(
         padding: EdgeInsetsDirectional.symmetric(horizontal: 16),

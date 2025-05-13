@@ -17,7 +17,6 @@ import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/validators.dart';
-import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/custom_text_input.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:dartz/dartz.dart' as d;
@@ -40,8 +39,7 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: StoreConnector<AppState, ResetPasswordViewModel>(
-          converter: (Store<AppState> store) =>
-              ResetPasswordViewModel.fromState(store.state),
+          converter: ResetPasswordViewModel.fromStore,
           builder: (BuildContext context, ResetPasswordViewModel vm) {
             return Column(
               children: <Widget>[
@@ -151,17 +149,16 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
                   spacing: 12,
                   children: <Widget>[
                     StoreConnector<AppState, ResetPasswordViewModel>(
-                      converter: (Store<AppState> store) =>
-                          ResetPasswordViewModel.fromState(store.state),
+                      converter: ResetPasswordViewModel.fromStore,
                       builder: (
                         BuildContext context,
                         ResetPasswordViewModel vm,
                       ) {
-                        if (context.isWaiting(ChangePasswordAction)) {
-                          return AppLoading();
-                        }
+                        final bool loading =
+                            context.isWaiting(ChangePasswordAction);
 
                         return PrimaryButton(
+                          isLoading: loading,
                           onPressed: () {
                             context.dispatch(
                               ChangePasswordAction(

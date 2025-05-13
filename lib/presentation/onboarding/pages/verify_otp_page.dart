@@ -84,8 +84,7 @@ class VerifyOTPPageState extends State<VerifyOTPPage> {
           children: <Widget>[
             Expanded(
               child: StoreConnector<AppState, ResetPasswordViewModel>(
-                converter: (Store<AppState> store) =>
-                    ResetPasswordViewModel.fromState(store.state),
+                converter: ResetPasswordViewModel.fromStore,
                 builder: (BuildContext context, ResetPasswordViewModel vm) {
                   final bool showDebugOTP =
                       GetIt.I.get<AppConfig>().environment.toLowerCase() ==
@@ -162,10 +161,7 @@ class VerifyOTPPageState extends State<VerifyOTPPage> {
                               )
                             else
                               StoreConnector<AppState, ResetPasswordViewModel>(
-                                converter: (Store<AppState> store) =>
-                                    ResetPasswordViewModel.fromState(
-                                  store.state,
-                                ),
+                                converter: ResetPasswordViewModel.fromStore,
                                 builder: (
                                   BuildContext context,
                                   ResetPasswordViewModel vm,
@@ -224,17 +220,15 @@ class VerifyOTPPageState extends State<VerifyOTPPage> {
               spacing: 12,
               children: <Widget>[
                 StoreConnector<AppState, ResetPasswordViewModel>(
-                  converter: (Store<AppState> store) =>
-                      ResetPasswordViewModel.fromState(store.state),
+                  converter: ResetPasswordViewModel.fromStore,
                   builder: (
                     BuildContext context,
                     ResetPasswordViewModel vm,
                   ) {
-                    if (context.isWaiting(VerifyOTPAction)) {
-                      return AppLoading();
-                    }
+                    final bool loading = context.isWaiting(VerifyOTPAction);
 
                     return PrimaryButton(
+                      isLoading: loading,
                       onPressed: () {
                         context.dispatch(
                           VerifyOTPAction(

@@ -69,8 +69,9 @@ class HostingHomePage extends StatelessWidget {
       ),
       appBar: CustomAppBar(
         preferredSize: const Size(double.infinity, 80),
+        centerTile: false,
         leading: Padding(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8.0),
           child: GestureDetector(
             onTap: () => context.router.push(ProfileRoute()),
             child: StoreConnector<AppState, ProfileViewModel>(
@@ -82,7 +83,7 @@ class HostingHomePage extends StatelessWidget {
                 return ProfileAvatar(
                   avatarURI: photoURL,
                   displayName: vm.fullName,
-                  aviSize: 48,
+                  aviSize: 56,
                 );
               },
             ),

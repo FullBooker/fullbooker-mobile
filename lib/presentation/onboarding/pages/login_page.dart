@@ -20,7 +20,6 @@ import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/validators.dart';
-import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/custom_text_input.dart';
 import 'package:fullbooker/shared/widgets/divider_with_text.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
@@ -53,8 +52,7 @@ class LoginPageState extends State<LoginPage> {
           children: <Widget>[
             Expanded(
               child: StoreConnector<AppState, LoginPageViewModel>(
-                converter: (Store<AppState> store) =>
-                    LoginPageViewModel.fromState(store.state),
+                converter: LoginPageViewModel.fromStore,
                 builder: (BuildContext context, LoginPageViewModel vm) {
                   return ListView(
                     children: <Widget>[
@@ -94,8 +92,7 @@ class LoginPageState extends State<LoginPage> {
                                 labelText: emailAddressString,
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
-                                validator: (String? email) =>
-                                    validateEmail(email),
+                                validator: validateEmail,
                                 onChanged: (String email) {
                                   context.dispatch(
                                     UpdateOnboardingStateAction(
@@ -116,8 +113,7 @@ class LoginPageState extends State<LoginPage> {
                                 hintText: passwordHint,
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
-                                validator: (String? password) =>
-                                    validatePassword(password),
+                                validator: validatePassword,
                                 onChanged: (String v) {
                                   context.dispatch(
                                     UpdateOnboardingStateAction(
@@ -161,17 +157,16 @@ class LoginPageState extends State<LoginPage> {
                               ),
 
                               StoreConnector<AppState, LoginPageViewModel>(
-                                converter: (Store<AppState> store) =>
-                                    LoginPageViewModel.fromState(store.state),
+                                converter: LoginPageViewModel.fromStore,
                                 builder: (
                                   BuildContext context,
                                   LoginPageViewModel snapshot,
                                 ) {
-                                  if (context.isWaiting(LoginAction)) {
-                                    return AppLoading();
-                                  }
+                                  final bool isLoading =
+                                      context.isWaiting(LoginAction);
 
                                   return PrimaryButton(
+                                    isLoading: isLoading,
                                     onPressed: () {
                                       if (_formKey.currentState!.validate()) {
                                         TextInput.finishAutofillContext();
@@ -217,17 +212,16 @@ class LoginPageState extends State<LoginPage> {
                               ),
 
                               StoreConnector<AppState, LoginPageViewModel>(
-                                converter: (Store<AppState> store) =>
-                                    LoginPageViewModel.fromState(store.state),
+                                converter: LoginPageViewModel.fromStore,
                                 builder: (
                                   BuildContext context,
                                   LoginPageViewModel snapshot,
                                 ) {
-                                  if (context
-                                      .isWaiting(SignInWithGoogleAction)) {
-                                    return AppLoading();
-                                  }
+                                  final bool isLoading =
+                                      context.isWaiting(SignInWithGoogleAction);
+
                                   return SecondaryButton(
+                                    isLoading: isLoading,
                                     onPressed: () {
                                       context.dispatch(
                                         SignInWithGoogleAction(
