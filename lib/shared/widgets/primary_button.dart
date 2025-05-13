@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
+import 'package:fullbooker/shared/widgets/app_loading.dart';
 
 class PrimaryButton extends StatelessWidget {
   const PrimaryButton({
@@ -9,12 +10,13 @@ class PrimaryButton extends StatelessWidget {
     required this.child,
     this.onLongPressed,
     this.color,
-    this.isEnabled = true,
+    this.disabled = false,
     this.textColor,
     this.customHeight,
     this.customWidth,
     this.buttonKey,
     this.customRadius,
+    this.isLoading = false,
   });
 
   final void Function()? onPressed;
@@ -25,11 +27,13 @@ class PrimaryButton extends StatelessWidget {
   final double? customHeight;
   final double? customWidth;
 
-  final bool isEnabled;
   final Color? textColor;
 
   final Key? buttonKey;
   final double? customRadius;
+
+  final bool disabled;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +44,7 @@ class PrimaryButton extends StatelessWidget {
       height: customHeight ?? 48,
       child: RawMaterialButton(
         key: buttonKey,
-        onPressed: onPressed,
+        onPressed: (disabled || isLoading) ? null : onPressed,
         onLongPress: onLongPressed,
         fillColor: color ?? Theme.of(context).primaryColor,
         elevation: 0,
@@ -48,16 +52,18 @@ class PrimaryButton extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(customRadius ?? 8),
         ),
-        child: child.fold(
-          id,
-          (String text) => Text(
-            text,
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: textColor ?? Colors.white,
-                  fontWeight: FontWeight.bold,
+        child: isLoading
+            ? AppLoading(fillColor: Colors.white)
+            : child.fold(
+                id,
+                (String text) => Text(
+                  text,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: textColor ?? Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                 ),
-          ),
-        ),
+              ),
       ),
     );
   }

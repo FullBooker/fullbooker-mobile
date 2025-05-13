@@ -179,11 +179,14 @@ class ModesOfAccessBottomSheet extends StatelessWidget {
                 converter: (Store<AppState> store) =>
                     ProductSetupViewModel.fromState(store.state),
                 builder: (BuildContext context, ProductSetupViewModel vm) {
-                  if (context.isWaiting(SetProductPricingOptionsAction)) {
-                    return AppLoading();
-                  }
+                  final bool isLoading = context.isWaiting(<Type>[
+                    FetchPricingOptionsAction,
+                    SetProductPricingOptionsAction,
+                  ]);
 
                   return PrimaryButton(
+                    disabled: isLoading,
+                    isLoading: isLoading,
                     onPressed: () {
                       context.dispatch(
                         SetProductPricingOptionsAction(

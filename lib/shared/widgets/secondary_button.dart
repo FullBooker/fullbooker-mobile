@@ -15,6 +15,7 @@ class SecondaryButton extends StatelessWidget {
     this.fillColor,
     this.customWidth,
     this.addBorder = false,
+    this.disabled = false,
   });
 
   final void Function()? onPressed;
@@ -25,6 +26,8 @@ class SecondaryButton extends StatelessWidget {
   final Color? fillColor;
   final Color? textColor;
   final bool addBorder;
+
+  final bool disabled;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +44,7 @@ class SecondaryButton extends StatelessWidget {
       ),
       child: InkWell(
         key: buttonKey,
-        onTap: onPressed,
+        onTap: disabled ? null : onPressed,
         highlightColor: Theme.of(context).primaryColor.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(8),
         child: DecoratedBox(

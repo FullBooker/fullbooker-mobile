@@ -11,16 +11,20 @@ import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
 
-class DeactivateProductAction extends ReduxAction<AppState> {
-  DeactivateProductAction({
+class TransitionProductAction extends ReduxAction<AppState> {
+  TransitionProductAction({
     this.onSuccess,
     this.onError,
     required this.client,
+    required this.statusTo,
+    required this.reason,
   });
 
   final Function(String error)? onError;
   final Function()? onSuccess;
   final ICustomClient client;
+  final ProductStatus statusTo;
+  final String? reason;
 
   @override
   Future<AppState?> reduce() async {
@@ -29,8 +33,8 @@ class DeactivateProductAction extends ReduxAction<AppState> {
 
     final Map<String, dynamic> data = <String, dynamic>{
       'product_id': selectProductID,
-      'status_to': ProductStatus.deactivated.name.toUpperCase(),
-      'reason': 'User initiated',
+      'status_to': statusTo.name.toUpperCase(),
+      'reason': reason ?? noReasonProvided,
     };
 
     final String endpoint = GetIt.I.get<AppConfig>().productTransitionEndpoint;

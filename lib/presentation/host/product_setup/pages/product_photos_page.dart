@@ -34,189 +34,187 @@ class ProductPhotosPage extends StatelessWidget {
         showBell: false,
         title: setupEvent,
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          spacing: 12,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Expanded(
-              child: StoreConnector<AppState, ProductSetupViewModel>(
-                converter: (Store<AppState> store) =>
-                    ProductSetupViewModel.fromState(store.state),
-                onInit: (Store<AppState> store) => context.dispatch(
-                  FetchProductMediaAction(
-                    client: AppWrapperBase.of(context)!.customClient,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Padding(
+        padding: EdgeInsetsDirectional.symmetric(horizontal: 12),
+        child: StoreConnector<AppState, ProductSetupViewModel>(
+          converter: (Store<AppState> store) =>
+              ProductSetupViewModel.fromState(store.state),
+          builder: (BuildContext context, ProductSetupViewModel vm) {
+            final bool isEditing = vm.workflowState == WorkflowState.VIEW;
+
+            return Row(
+              spacing: 16,
+              children: <Widget>[
+                Flexible(
+                  child: SecondaryButton(
+                    addBorder: true,
+                    onPressed: () {
+                      isEditing
+                          ? context.router.popUntil(
+                              (Route<dynamic> route) =>
+                                  route.settings.name ==
+                                  ProductReviewAndSubmitRoute.name,
+                            )
+                          : context.router.maybePop();
+                    },
+                    child: d.right(
+                      isEditing ? backToPreview : previousString,
+                    ),
+                    fillColor: Colors.transparent,
                   ),
                 ),
-                builder: (BuildContext context, ProductSetupViewModel vm) {
-                  final List<ProductMedia?> productPhotos =
-                      vm.photos ?? <ProductMedia>[];
+                Flexible(
+                  child: PrimaryButton(
+                    onPressed: () {
+                      if (isEditing) {
+                        context.router.popUntil(
+                          (Route<dynamic> route) =>
+                              route.settings.name ==
+                              ProductReviewAndSubmitRoute.name,
+                        );
+                      } else {
+                        context.router.push(ProductVideosRoute());
+                      }
+                    },
+                    child: d.right(continueString),
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
+      ),
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16),
+        child: StoreConnector<AppState, ProductSetupViewModel>(
+          converter: (Store<AppState> store) =>
+              ProductSetupViewModel.fromState(store.state),
+          onInit: (Store<AppState> store) => context.dispatch(
+            FetchProductMediaAction(
+              client: AppWrapperBase.of(context)!.customClient,
+            ),
+          ),
+          builder: (BuildContext context, ProductSetupViewModel vm) {
+            final List<ProductMedia?> productPhotos =
+                vm.photos ?? <ProductMedia>[];
 
-                  return SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      spacing: 12,
-                      children: <Widget>[
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          spacing: 8,
-                          children: <Widget>[
-                            Text(
-                              photosString,
-                              style: Theme.of(context).textTheme.headlineSmall,
-                            ),
-                            Text(
-                              photosCopy,
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                          ],
-                        ),
-                        GridView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 8,
-                            mainAxisSpacing: 8,
-                          ),
-                          itemCount: productPhotos.length + 1,
-                          itemBuilder: (BuildContext context, int index) {
-                            if (index == productPhotos.length) {
-                              if (context.isWaiting(<Type>[
-                                UploadProductPhotosAction,
-                                RemoveProductPhotoAction,
-                              ])) {
-                                return AppLoading();
-                              }
-                              return UploadMediaZeroState(
-                                mediaType: UploadMediaType.PHOTO,
-                                onTap: () async {
-                                  final FilePickerResult? result =
-                                      await pickMediaFiles(
-                                    type: UploadMediaType.PHOTO,
-                                  );
+            return SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: 12,
+                children: <Widget>[
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    spacing: 8,
+                    children: <Widget>[
+                      Text(
+                        photosString,
+                        style: Theme.of(context).textTheme.headlineSmall,
+                      ),
+                      Text(
+                        photosCopy,
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ],
+                  ),
+                  GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 8,
+                      mainAxisSpacing: 8,
+                    ),
+                    itemCount: productPhotos.length + 1,
+                    itemBuilder: (BuildContext context, int index) {
+                      if (index == productPhotos.length) {
+                        if (context.isWaiting(<Type>[
+                          UploadProductPhotosAction,
+                          RemoveProductPhotoAction,
+                        ])) {
+                          return AppLoading();
+                        }
+                        return UploadMediaZeroState(
+                          mediaType: UploadMediaType.PHOTO,
+                          onTap: () async {
+                            final FilePickerResult? result =
+                                await pickMediaFiles(
+                              type: UploadMediaType.PHOTO,
+                            );
 
-                                  if (result != null &&
-                                      result.files.isNotEmpty) {
-                                    context.dispatch(
-                                      UploadProductPhotosAction(
-                                        pickedPhotoFiles: result.files,
-                                        client: AppWrapperBase.of(context)!
-                                            .customClient,
-                                      ),
-                                    );
-                                  }
-                                },
+                            if (result != null && result.files.isNotEmpty) {
+                              context.dispatch(
+                                UploadProductPhotosAction(
+                                  pickedPhotoFiles: result.files,
+                                  client:
+                                      AppWrapperBase.of(context)!.customClient,
+                                ),
                               );
                             }
-
-                            final ProductMedia? item = productPhotos[index];
-                            final bool isLoading = item?.file == UNKNOWN;
-
-                            return Stack(
-                              fit: StackFit.expand,
-                              children: <Widget>[
-                                if (isLoading)
-                                  const Center(
-                                    child: CircularProgressIndicator(),
-                                  )
-                                else
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(8),
-                                    child: CachedNetworkImage(
-                                      imageUrl: item?.file ?? '',
-                                      fit: BoxFit.cover,
-                                      progressIndicatorBuilder: (
-                                        BuildContext context,
-                                        String url,
-                                        DownloadProgress progress,
-                                      ) =>
-                                          Center(child: AppLoading()),
-                                    ),
-                                  ),
-                                Positioned(
-                                  top: 12,
-                                  right: 12,
-                                  child: GestureDetector(
-                                    onTap: () =>
-                                        StoreProvider.dispatch<AppState>(
-                                      context,
-                                      RemoveProductPhotoAction(
-                                        photo: item!,
-                                        client: AppWrapperBase.of(context)!
-                                            .customClient,
-                                      ),
-                                    ),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color:
-                                            Colors.black.withValues(alpha: .6),
-                                        shape: BoxShape.circle,
-                                      ),
-                                      padding: EdgeInsets.all(8),
-                                      child: HeroIcon(
-                                        HeroIcons.xMark,
-                                        color: Colors.white,
-                                        size: 24,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            );
                           },
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ),
-            StoreConnector<AppState, ProductSetupViewModel>(
-              converter: (Store<AppState> store) =>
-                  ProductSetupViewModel.fromState(store.state),
-              builder: (BuildContext context, ProductSetupViewModel vm) {
-                final bool isEditing = vm.workflowState == WorkflowState.VIEW;
+                        );
+                      }
 
-                return Column(
-                  spacing: 12,
-                  children: <Widget>[
-                    PrimaryButton(
-                      onPressed: () {
-                        if (isEditing) {
-                          context.router.popUntil(
-                            (Route<dynamic> route) =>
-                                route.settings.name ==
-                                ProductReviewAndSubmitRoute.name,
-                          );
-                        } else {
-                          context.router.push(ProductVideosRoute());
-                        }
-                      },
-                      child: d.right(continueString),
-                    ),
-                    SecondaryButton(
-                      onPressed: () {
-                        isEditing
-                            ? context.router.popUntil(
-                                (Route<dynamic> route) =>
-                                    route.settings.name ==
-                                    ProductReviewAndSubmitRoute.name,
-                              )
-                            : context.router.maybePop();
-                      },
-                      child: d.right(
-                        isEditing ? backToPreview : previousString,
-                      ),
-                      fillColor: Colors.transparent,
-                    ),
-                  ],
-                );
-              },
-            ),
-          ],
+                      final ProductMedia? item = productPhotos[index];
+                      final bool isLoading = item?.file == UNKNOWN;
+
+                      return Stack(
+                        fit: StackFit.expand,
+                        children: <Widget>[
+                          if (isLoading)
+                            const Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          else
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: CachedNetworkImage(
+                                imageUrl: item?.file ?? '',
+                                fit: BoxFit.cover,
+                                progressIndicatorBuilder: (
+                                  BuildContext context,
+                                  String url,
+                                  DownloadProgress progress,
+                                ) =>
+                                    Center(child: AppLoading()),
+                              ),
+                            ),
+                          Positioned(
+                            top: 12,
+                            right: 12,
+                            child: GestureDetector(
+                              onTap: () => StoreProvider.dispatch<AppState>(
+                                context,
+                                RemoveProductPhotoAction(
+                                  photo: item!,
+                                  client:
+                                      AppWrapperBase.of(context)!.customClient,
+                                ),
+                              ),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.black.withValues(alpha: .6),
+                                  shape: BoxShape.circle,
+                                ),
+                                padding: EdgeInsets.all(8),
+                                child: HeroIcon(
+                                  HeroIcons.xMark,
+                                  color: Colors.white,
+                                  size: 24,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

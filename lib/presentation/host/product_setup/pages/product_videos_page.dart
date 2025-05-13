@@ -28,9 +28,57 @@ class ProductVideosPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        showBell: false,
-        title: setupEvent,
+      appBar: CustomAppBar(showBell: false, title: setupEvent),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: StoreConnector<AppState, ProductSetupViewModel>(
+        converter: (Store<AppState> store) =>
+            ProductSetupViewModel.fromState(store.state),
+        builder: (BuildContext context, ProductSetupViewModel vm) {
+          final bool isEditing = vm.workflowState == WorkflowState.VIEW;
+
+          return Padding(
+            padding: EdgeInsets.symmetric(horizontal: 12),
+            child: Row(
+              spacing: 12,
+              children: <Widget>[
+                Flexible(
+                  child: SecondaryButton(
+                    addBorder: true,
+                    onPressed: () {
+                      isEditing
+                          ? context.router.popUntil(
+                              (Route<dynamic> route) =>
+                                  route.settings.name ==
+                                  ProductReviewAndSubmitRoute.name,
+                            )
+                          : context.router.maybePop();
+                    },
+                    child: d.right(
+                      isEditing ? backToPreview : previousString,
+                    ),
+                    fillColor: Colors.transparent,
+                  ),
+                ),
+                Flexible(
+                  child: PrimaryButton(
+                    onPressed: () {
+                      if (isEditing) {
+                        context.router.popUntil(
+                          (Route<dynamic> route) =>
+                              route.settings.name ==
+                              ProductReviewAndSubmitRoute.name,
+                        );
+                      } else {
+                        context.router.push(ProductModeOfAccessRoute());
+                      }
+                    },
+                    child: d.right(continueString),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16),
@@ -132,48 +180,6 @@ class ProductVideosPage extends StatelessWidget {
                   );
                 },
               ),
-            ),
-            StoreConnector<AppState, ProductSetupViewModel>(
-              converter: (Store<AppState> store) =>
-                  ProductSetupViewModel.fromState(store.state),
-              builder: (BuildContext context, ProductSetupViewModel vm) {
-                final bool isEditing = vm.workflowState == WorkflowState.VIEW;
-
-                return Column(
-                  spacing: 12,
-                  children: <Widget>[
-                    PrimaryButton(
-                      onPressed: () {
-                        if (isEditing) {
-                          context.router.popUntil(
-                            (Route<dynamic> route) =>
-                                route.settings.name ==
-                                ProductReviewAndSubmitRoute.name,
-                          );
-                        } else {
-                          context.router.push(ProductModeOfAccessRoute());
-                        }
-                      },
-                      child: d.right(continueString),
-                    ),
-                    SecondaryButton(
-                      onPressed: () {
-                        isEditing
-                            ? context.router.popUntil(
-                                (Route<dynamic> route) =>
-                                    route.settings.name ==
-                                    ProductReviewAndSubmitRoute.name,
-                              )
-                            : context.router.maybePop();
-                      },
-                      child: d.right(
-                        isEditing ? backToPreview : previousString,
-                      ),
-                      fillColor: Colors.transparent,
-                    ),
-                  ],
-                );
-              },
             ),
           ],
         ),

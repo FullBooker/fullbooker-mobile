@@ -766,3 +766,7 @@ const String selectTicketTypeCopy = 'Choose your preferred ticket type';
 
 const String chooseTicketType = 'Choose a ticket type';
 const String addString = 'Add';
+
+const String noReasonProvided = 'No reason provided';
+
+const String userInitiatedString = 'User initiated';

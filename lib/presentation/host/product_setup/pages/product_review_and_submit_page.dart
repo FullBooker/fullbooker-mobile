@@ -30,7 +30,6 @@ import 'package:fullbooker/presentation/host/products/widgets/min_zero_state.dar
 import 'package:fullbooker/presentation/host/products/widgets/product_alert_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_schedule_widget.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
-import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
@@ -50,408 +49,429 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(
-        showBell: false,
-        title: setupEvent,
-      ),
-      body: RefreshIndicator(
-        onRefresh: () => onRefresh(context),
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            spacing: 12,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Expanded(
-                child: StoreConnector<AppState, ProductReviewViewModel>(
-                  converter: (Store<AppState> store) =>
-                      ProductReviewViewModel.fromState(store.state),
-                  onInit: (Store<AppState> store) {
-                    context.dispatch(
-                      FetchSingleProductAction(
-                        client: AppWrapperBase.of(context)!.customClient,
-                      ),
-                    );
-                  },
-                  builder: (BuildContext context, ProductReviewViewModel vm) {
-                    if (context.isWaiting(FetchSingleProductAction)) {
-                      return AppLoading();
-                    }
+    return SafeArea(
+      child: Scaffold(
+        appBar: CustomAppBar(showBell: false, title: setupEvent),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 12),
+          child: StoreConnector<AppState, ProductReviewViewModel>(
+            converter: (Store<AppState> store) =>
+                ProductReviewViewModel.fromState(store.state),
+            builder: (BuildContext context, ProductReviewViewModel vm) {
+              final bool isLoading =
+                  context.isWaiting(SubmitProductForReviewAction);
 
-                    final Product? product = vm.product;
+              final Product? product = vm.product;
 
-                    final String? name = product?.name;
-                    final String? description = product?.description;
-                    final bool isLocationAvailable =
-                        product?.locations?.isNotEmpty ?? false;
+              final ProductStatus status = getProductStatus(product!);
 
-                    final ProductStatus productStatus =
-                        getProductStatus(product!);
+              if (status != ProductStatus.draft) return SizedBox.shrink();
 
-                    return ListView(
-                      children: <Widget>[
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          spacing: 12,
-                          children: <Widget>[
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              spacing: 8,
-                              children: <Widget>[
-                                Text(
-                                  reviewAndSubmit,
-                                  style:
-                                      Theme.of(context).textTheme.headlineSmall,
-                                ),
-                                Text(
-                                  reviewCopy,
-                                  style: Theme.of(context).textTheme.bodyMedium,
-                                ),
-                              ],
-                            ),
-                            if (productStatus == ProductStatus.review)
-                              ProductAlertWidget(
-                                title: productInReview,
-                                description: productInReviewCopy,
-                                iconData: HeroIcons.clipboardDocumentList,
-                              ),
-
-                            Divider(),
-
-                            // Category and type
-                            PreviewHeaderWidget(
-                              title: categoryAndType,
-                              onEdit: () {
-                                context.router.push(ProductCategoryRoute());
+              return Row(
+                spacing: 12,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Flexible(
+                    child: SecondaryButton(
+                      disabled: isLoading,
+                      addBorder: true,
+                      onPressed: () => context.router.maybePop(),
+                      child: d.right(backString),
+                      fillColor: Colors.white,
+                    ),
+                  ),
+                  Flexible(
+                    child: PrimaryButton(
+                      isLoading: isLoading,
+                      onPressed: () {
+                        context.dispatch(
+                          SubmitProductForReviewAction(
+                            client: AppWrapperBase.of(context)!.customClient,
+                            onSuccess: () => showAlertDialog(
+                              context: context,
+                              assetPath: productSetupSuccessSVGPath,
+                              title: productSubmit,
+                              description: productSubmitCopy,
+                              confirmText: backToProducts,
+                              cancelText: viewProduct,
+                              onConfirm: () {
+                                context.router.maybePop();
+                                context.router.replace(ProductsRoute());
                               },
-                            ),
-
-                            ProductCategoryItem(
-                              category: ProductCategory.initial().copyWith(
-                                name: product.categoryName,
-                                description: product.subcategoryName,
-                              ),
-                            ),
-
-                            Divider(),
-
-                            // Basic details
-                            PreviewHeaderWidget(
-                              title: basicDetails,
-                              onEdit: () {
+                              onCancel: () {
+                                context.router.maybePop();
                                 context.dispatch(
                                   UpdateHostStateAction(
                                     contextProduct: product,
                                   ),
                                 );
-                                context.router.push(ProductBasicDetailsRoute());
+                                context.router.push(ProductDetailRoute());
                               },
                             ),
+                            onError: (String error) => showAlertDialog(
+                              context: context,
+                              assetPath: productZeroStateSVGPath,
+                              description: error,
+                            ),
+                          ),
+                        );
+                      },
+                      child: d.right(submitString),
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
+        body: RefreshIndicator(
+          onRefresh: () => onRefresh(context),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              spacing: 12,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Expanded(
+                  child: StoreConnector<AppState, ProductReviewViewModel>(
+                    converter: (Store<AppState> store) =>
+                        ProductReviewViewModel.fromState(store.state),
+                    onInit: (Store<AppState> store) {
+                      context.dispatch(
+                        FetchSingleProductAction(
+                          client: AppWrapperBase.of(context)!.customClient,
+                        ),
+                      );
+                    },
+                    builder: (BuildContext context, ProductReviewViewModel vm) {
+                      if (context.isWaiting(FetchSingleProductAction)) {
+                        return AppLoading();
+                      }
 
-                            Column(
-                              spacing: 4,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                if (name != null &&
-                                    name.isNotEmpty &&
-                                    name != UNKNOWN)
+                      final Product? product = vm.product;
+
+                      final String? name = product?.name;
+                      final String? description = product?.description;
+                      final bool isLocationAvailable =
+                          product?.locations?.isNotEmpty ?? false;
+
+                      final ProductStatus productStatus =
+                          getProductStatus(product!);
+
+                      return ListView(
+                        children: <Widget>[
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            spacing: 12,
+                            children: <Widget>[
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                spacing: 8,
+                                children: <Widget>[
                                   Text(
-                                    product.name ?? UNKNOWN,
-                                    style:
-                                        Theme.of(context).textTheme.titleSmall,
+                                    reviewAndSubmit,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineSmall,
                                   ),
-                                if (description != null &&
-                                    description.isNotEmpty &&
-                                    description != UNKNOWN)
                                   Text(
-                                    description,
+                                    reviewCopy,
                                     style:
                                         Theme.of(context).textTheme.bodyMedium,
                                   ),
-                              ],
-                            ),
-
-                            Divider(),
-
-                            // Location
-                            PreviewHeaderWidget(
-                              title: location,
-                              onEdit: () =>
-                                  context.router.push(ProductLocationRoute()),
-                            ),
-
-                            if (isLocationAvailable)
-                              LocationPreviewWidget(
-                                location: product.locations?.first,
-                                readOnly: true,
-                              )
-                            else
-                              MinZeroState(copy: noLocationProvided),
-
-                            // Date and time
-                            Divider(),
-                            PreviewHeaderWidget(
-                              title: dateAndTime,
-                              onEdit: () {
-                                context.router.push(ProductScheduleRoute());
-                              },
-                            ),
-                            if ((product.scheduleID ?? UNKNOWN) != UNKNOWN)
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                spacing: 12,
-                                children: <Widget>[
-                                  ProductScheduleWidget(),
-                                  RepeatNotification(
-                                    productSchedule: product.schedule,
-                                  ),
                                 ],
                               ),
-                            Divider(),
-
-                            // Photos
-                            PreviewHeaderWidget(
-                              title: photosString,
-                              onEdit: () {
-                                context.dispatch(
-                                  UpdateHostStateAction(
-                                    contextProduct: product,
-                                  ),
-                                );
-                                context.router.push(const ProductPhotosRoute());
-                              },
-                            ),
-                            LimitedPhotoGalleryPreviewWidget(),
-                            Divider(),
-
-                            // Videos
-                            PreviewHeaderWidget(
-                              title: videosString,
-                              onEdit: () {
-                                context.dispatch(
-                                  UpdateHostStateAction(
-                                    contextProduct: product,
-                                  ),
-                                );
-                                context.router.push(const ProductVideosRoute());
-                              },
-                            ),
-                            LimitedVideoGalleryPreviewWidget(),
-                            Divider(),
-
-                            // Pricing
-                            PreviewHeaderWidget(
-                              title: pricing,
-                              onEdit: () {
-                                context.dispatch(
-                                  UpdateHostStateAction(
-                                    contextProduct: product,
-                                  ),
-                                );
-                                context.router
-                                    .push(const ProductModeOfAccessRoute());
-                              },
-                            ),
-
-                            if (product.pricing?.isEmpty ?? true)
-                              MinZeroState(copy: noPricingOptionsString)
-                            else
-                              ListView.builder(
-                                shrinkWrap: true,
-                                physics: NeverScrollableScrollPhysics(),
-                                itemCount: product.pricing?.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  final ProductPricing? current =
-                                      product.pricing![index];
-
-                                  return Container(
-                                    margin: EdgeInsets.only(bottom: 12),
-                                    child: PricingCardWidget(pricing: current),
-                                  );
-                                },
-                              ),
-
-                            Divider(),
-
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 30),
-                              child: StoreConnector<AppState,
-                                  ProductReviewViewModel>(
-                                converter: (Store<AppState> store) =>
-                                    ProductReviewViewModel.fromState(
-                                  store.state,
+                              if (productStatus == ProductStatus.review)
+                                ProductAlertWidget(
+                                  title: productInReview,
+                                  description: productInReviewCopy,
+                                  iconData: HeroIcons.clipboardDocumentList,
                                 ),
-                                builder: (
-                                  BuildContext context,
-                                  ProductReviewViewModel vm,
-                                ) {
-                                  if (context
-                                      .isWaiting(AcceptProductTermsAction)) {
-                                    return AppLoading();
-                                  }
 
-                                  final bool termsAccepted =
-                                      vm.product?.termsAccepted ?? false;
+                              Divider(),
 
-                                  return InkWell(
-                                    splashColor: Theme.of(context)
-                                        .primaryColor
-                                        .withValues(alpha: .1),
-                                    borderRadius: BorderRadius.circular(8),
-                                    highlightColor: Theme.of(context)
-                                        .primaryColor
-                                        .withValues(alpha: .1),
-                                    onTap: termsAccepted
-                                        ? null
-                                        : () {
-                                            context.dispatch(
-                                              AcceptProductTermsAction(
-                                                termsAccepted: true,
-                                                client: AppWrapperBase.of(
-                                                  context,
-                                                )!
-                                                    .customClient,
-                                              ),
-                                            );
-                                          },
-                                    child: Row(
-                                      children: <Widget>[
-                                        Checkbox(
-                                          value: termsAccepted,
-                                          fillColor:
-                                              WidgetStateColor.resolveWith(
-                                            (Set<WidgetState> states) {
-                                              if (states.contains(
-                                                WidgetState.selected,
-                                              )) {
-                                                return Theme.of(context)
-                                                    .primaryColor;
-                                              }
-
-                                              return Colors.white;
-                                            },
-                                          ),
-                                          onChanged: termsAccepted
-                                              ? null
-                                              : (bool? v) {
-                                                  context.dispatch(
-                                                    AcceptProductTermsAction(
-                                                      termsAccepted: v ?? true,
-                                                      client: AppWrapperBase.of(
-                                                        context,
-                                                      )!
-                                                          .customClient,
-                                                    ),
-                                                  );
-                                                },
-                                        ),
-                                        Expanded(
-                                          child: RichText(
-                                            text: TextSpan(
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium,
-                                              children: <InlineSpan>[
-                                                TextSpan(text: iHaveAccepted),
-                                                TextSpan(
-                                                  text: termsOfService,
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .titleSmall
-                                                      ?.copyWith(
-                                                        color: Theme.of(context)
-                                                            .primaryColor,
-                                                      ),
-                                                  recognizer:
-                                                      TapGestureRecognizer()
-                                                        ..onTap = () {
-                                                          context.router.push(
-                                                            TermsAndConditionsRoute(),
-                                                          );
-                                                        },
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  );
+                              // Category and type
+                              PreviewHeaderWidget(
+                                title: categoryAndType,
+                                onEdit: () {
+                                  context.router.push(ProductCategoryRoute());
                                 },
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    );
-                  },
-                ),
-              ),
-              StoreConnector<AppState, ProductReviewViewModel>(
-                converter: (Store<AppState> store) =>
-                    ProductReviewViewModel.fromState(store.state),
-                builder: (BuildContext context, ProductReviewViewModel vm) {
-                  if (context.isWaiting(SubmitProductForReviewAction)) {
-                    return AppLoading();
-                  }
-                  final Product? product = vm.product;
 
-                  final ProductStatus status = getProductStatus(product!);
+                              ProductCategoryItem(
+                                category: ProductCategory.initial().copyWith(
+                                  name: product.categoryName,
+                                  description: product.subcategoryName,
+                                ),
+                              ),
 
-                  if (status != ProductStatus.draft) return SizedBox.shrink();
+                              Divider(),
 
-                  return Column(
-                    spacing: 12,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      PrimaryButton(
-                        onPressed: () {
-                          context.dispatch(
-                            SubmitProductForReviewAction(
-                              client: AppWrapperBase.of(context)!.customClient,
-                              onSuccess: () => showAlertDialog(
-                                context: context,
-                                assetPath: productSetupSuccessSVGPath,
-                                title: productSubmit,
-                                description: productSubmitCopy,
-                                confirmText: backToProducts,
-                                cancelText: viewProduct,
-                                onConfirm: () {
-                                  context.router.maybePop();
-                                  context.router.replace(ProductsRoute());
-                                },
-                                onCancel: () {
-                                  context.router.maybePop();
+                              // Basic details
+                              PreviewHeaderWidget(
+                                title: basicDetails,
+                                onEdit: () {
                                   context.dispatch(
                                     UpdateHostStateAction(
                                       contextProduct: product,
                                     ),
                                   );
-                                  context.router.push(ProductDetailRoute());
+                                  context.router
+                                      .push(ProductBasicDetailsRoute());
                                 },
                               ),
-                              onError: (String error) => showAlertDialog(
-                                context: context,
-                                assetPath: productZeroStateSVGPath,
-                                description: error,
+
+                              Column(
+                                spacing: 4,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  if (name != null &&
+                                      name.isNotEmpty &&
+                                      name != UNKNOWN)
+                                    Text(
+                                      product.name ?? UNKNOWN,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall,
+                                    ),
+                                  if (description != null &&
+                                      description.isNotEmpty &&
+                                      description != UNKNOWN)
+                                    Text(
+                                      description,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium,
+                                    ),
+                                ],
                               ),
-                            ),
-                          );
-                        },
-                        child: d.right(submitString),
-                      ),
-                      SecondaryButton(
-                        onPressed: () => context.router.maybePop(),
-                        child: d.right(backString),
-                        fillColor: Colors.transparent,
-                      ),
-                      verySmallVerticalSizedBox,
-                    ],
-                  );
-                },
-              ),
-            ],
+
+                              Divider(),
+
+                              // Location
+                              PreviewHeaderWidget(
+                                title: location,
+                                onEdit: () =>
+                                    context.router.push(ProductLocationRoute()),
+                              ),
+
+                              if (isLocationAvailable)
+                                LocationPreviewWidget(
+                                  location: product.locations?.first,
+                                  readOnly: true,
+                                )
+                              else
+                                MinZeroState(copy: noLocationProvided),
+
+                              // Date and time
+                              Divider(),
+                              PreviewHeaderWidget(
+                                title: dateAndTime,
+                                onEdit: () {
+                                  context.router.push(ProductScheduleRoute());
+                                },
+                              ),
+                              if ((product.scheduleID ?? UNKNOWN) != UNKNOWN)
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  spacing: 12,
+                                  children: <Widget>[
+                                    ProductScheduleWidget(),
+                                    RepeatNotification(
+                                      productSchedule: product.schedule,
+                                    ),
+                                  ],
+                                ),
+                              Divider(),
+
+                              // Photos
+                              PreviewHeaderWidget(
+                                title: photosString,
+                                onEdit: () {
+                                  context.dispatch(
+                                    UpdateHostStateAction(
+                                      contextProduct: product,
+                                    ),
+                                  );
+                                  context.router
+                                      .push(const ProductPhotosRoute());
+                                },
+                              ),
+                              LimitedPhotoGalleryPreviewWidget(),
+                              Divider(),
+
+                              // Videos
+                              PreviewHeaderWidget(
+                                title: videosString,
+                                onEdit: () {
+                                  context.dispatch(
+                                    UpdateHostStateAction(
+                                      contextProduct: product,
+                                    ),
+                                  );
+                                  context.router
+                                      .push(const ProductVideosRoute());
+                                },
+                              ),
+                              LimitedVideoGalleryPreviewWidget(),
+                              Divider(),
+
+                              // Pricing
+                              PreviewHeaderWidget(
+                                title: pricing,
+                                onEdit: () {
+                                  context.dispatch(
+                                    UpdateHostStateAction(
+                                      contextProduct: product,
+                                    ),
+                                  );
+                                  context.router
+                                      .push(const ProductModeOfAccessRoute());
+                                },
+                              ),
+
+                              if (product.pricing?.isEmpty ?? true)
+                                MinZeroState(copy: noPricingOptionsString)
+                              else
+                                ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemCount: product.pricing?.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    final ProductPricing? current =
+                                        product.pricing![index];
+
+                                    return Container(
+                                      margin: EdgeInsets.only(bottom: 12),
+                                      child:
+                                          PricingCardWidget(pricing: current),
+                                    );
+                                  },
+                                ),
+
+                              Divider(),
+
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 80),
+                                child: StoreConnector<AppState,
+                                    ProductReviewViewModel>(
+                                  converter: (Store<AppState> store) =>
+                                      ProductReviewViewModel.fromState(
+                                    store.state,
+                                  ),
+                                  builder: (
+                                    BuildContext context,
+                                    ProductReviewViewModel vm,
+                                  ) {
+                                    if (context
+                                        .isWaiting(AcceptProductTermsAction)) {
+                                      return AppLoading();
+                                    }
+
+                                    final bool termsAccepted =
+                                        vm.product?.termsAccepted ?? false;
+
+                                    return InkWell(
+                                      splashColor: Theme.of(context)
+                                          .primaryColor
+                                          .withValues(alpha: .1),
+                                      borderRadius: BorderRadius.circular(8),
+                                      highlightColor: Theme.of(context)
+                                          .primaryColor
+                                          .withValues(alpha: .1),
+                                      onTap: termsAccepted
+                                          ? null
+                                          : () {
+                                              context.dispatch(
+                                                AcceptProductTermsAction(
+                                                  termsAccepted: true,
+                                                  client: AppWrapperBase.of(
+                                                    context,
+                                                  )!
+                                                      .customClient,
+                                                ),
+                                              );
+                                            },
+                                      child: Row(
+                                        children: <Widget>[
+                                          Checkbox(
+                                            value: termsAccepted,
+                                            fillColor:
+                                                WidgetStateColor.resolveWith(
+                                              (Set<WidgetState> states) {
+                                                if (states.contains(
+                                                  WidgetState.selected,
+                                                )) {
+                                                  return Theme.of(context)
+                                                      .primaryColor;
+                                                }
+
+                                                return Colors.white;
+                                              },
+                                            ),
+                                            onChanged: termsAccepted
+                                                ? null
+                                                : (bool? v) {
+                                                    context.dispatch(
+                                                      AcceptProductTermsAction(
+                                                        termsAccepted:
+                                                            v ?? true,
+                                                        client:
+                                                            AppWrapperBase.of(
+                                                          context,
+                                                        )!
+                                                                .customClient,
+                                                      ),
+                                                    );
+                                                  },
+                                          ),
+                                          Expanded(
+                                            child: RichText(
+                                              text: TextSpan(
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium,
+                                                children: <InlineSpan>[
+                                                  TextSpan(text: iHaveAccepted),
+                                                  TextSpan(
+                                                    text: termsOfService,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .titleSmall
+                                                        ?.copyWith(
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .primaryColor,
+                                                        ),
+                                                    recognizer:
+                                                        TapGestureRecognizer()
+                                                          ..onTap = () {
+                                                            context.router.push(
+                                                              TermsAndConditionsRoute(),
+                                                            );
+                                                          },
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

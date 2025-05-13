@@ -40,9 +40,42 @@ class _AddProductPricingPageState extends State<AddProductPricingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        showBell: false,
-        title: addTicketPrice,
+      appBar: CustomAppBar(showBell: false, title: addTicketPrice),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Padding(
+        padding: EdgeInsetsDirectional.symmetric(horizontal: 16),
+        child: StoreConnector<AppState, ProductSetupViewModel>(
+          converter: (Store<AppState> store) =>
+              ProductSetupViewModel.fromState(store.state),
+          onInit: (Store<AppState> store) => context.dispatch(
+            FetchCurrenciesAction(
+              client: AppWrapperBase.of(context)!.customClient,
+            ),
+          ),
+          builder: (BuildContext context, ProductSetupViewModel vm) {
+            final bool isLoading = context.isWaiting(SaveProductPricingAction);
+
+            return PrimaryButton(
+              isLoading: isLoading,
+              onPressed: () {
+                if (_formKey.currentState?.validate() ?? false) {
+                  context.dispatch(
+                    SaveProductPricingAction(
+                      client: AppWrapperBase.of(context)!.customClient,
+                      onSuccess: () => context.router.maybePop(),
+                      onError: (String error) => showAlertDialog(
+                        context: context,
+                        assetPath: productZeroStateSVGPath,
+                        description: error,
+                      ),
+                    ),
+                  );
+                }
+              },
+              child: d.right(saveString),
+            );
+          },
+        ),
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16),
@@ -144,6 +177,7 @@ class _AddProductPricingPageState extends State<AddProductPricingPage> {
                                     Expanded(
                                       child: SecondaryButton(
                                         child: d.right(changeString),
+                                        customHeight: 40,
                                         onPressed: () {
                                           showModalBottomSheet(
                                             context: context,
@@ -187,6 +221,7 @@ class _AddProductPricingPageState extends State<AddProductPricingPage> {
                                     ),
                                     Expanded(
                                       child: SecondaryButton(
+                                        customHeight: 40,
                                         child: d.right(addString),
                                         onPressed: () {
                                           showModalBottomSheet(
@@ -293,7 +328,7 @@ class _AddProductPricingPageState extends State<AddProductPricingPage> {
                                       child: CustomTextInput(
                                         hintText: priceHint,
                                         autovalidateMode:
-                                            AutovalidateMode.onUserInteraction,
+                                            AutovalidateMode.onUnfocus,
                                         validator: (String? email) =>
                                             validateAmount(email),
                                         onChanged: (String value) {
@@ -360,49 +395,6 @@ class _AddProductPricingPageState extends State<AddProductPricingPage> {
                   );
                 },
               ),
-            ),
-            StoreConnector<AppState, ProductSetupViewModel>(
-              converter: (Store<AppState> store) =>
-                  ProductSetupViewModel.fromState(store.state),
-              onInit: (Store<AppState> store) => context.dispatch(
-                FetchCurrenciesAction(
-                  client: AppWrapperBase.of(context)!.customClient,
-                ),
-              ),
-              builder: (BuildContext context, ProductSetupViewModel vm) {
-                if (context.isWaiting(SaveProductPricingAction)) {
-                  return AppLoading();
-                }
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  spacing: 12,
-                  children: <Widget>[
-                    PrimaryButton(
-                      onPressed: () {
-                        if (_formKey.currentState?.validate() ?? false) {
-                          context.dispatch(
-                            SaveProductPricingAction(
-                              client: AppWrapperBase.of(context)!.customClient,
-                              onSuccess: () => context.router.maybePop(),
-                              onError: (String error) => showAlertDialog(
-                                context: context,
-                                assetPath: productZeroStateSVGPath,
-                                description: error,
-                              ),
-                            ),
-                          );
-                        }
-                      },
-                      child: d.right(saveString),
-                    ),
-                    SecondaryButton(
-                      onPressed: () => context.router.maybePop(),
-                      child: d.right(cancelString),
-                      fillColor: Colors.transparent,
-                    ),
-                  ],
-                );
-              },
             ),
           ],
         ),
