@@ -14,6 +14,7 @@ import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/core/utils/utils.dart';
 import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/entities/product_pricing.dart';
+import 'package:fullbooker/domain/core/entities/product_schedule.dart';
 import 'package:fullbooker/domain/core/value_objects/app_bar_action.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
@@ -111,6 +112,11 @@ class ProductDetailPage extends StatelessWidget {
           final Color statusColor = getProductStatusColor(product: product);
           final ProductStatus productStatus = getProductStatus(product);
 
+          final ProductSchedule? productSchedule = product.schedule;
+
+          final bool productRepeats = productSchedule?.repeatType != null &&
+              productSchedule?.repeatType != kNoRepeatSchedule;
+
           if (context.isWaiting(FetchSingleProductAction)) {
             return AppLoading();
           }
@@ -123,7 +129,7 @@ class ProductDetailPage extends StatelessWidget {
               children: <Widget>[
                 ImageCarouselWidget(),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 100),
+                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 150),
                   child: Column(
                     spacing: 16,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -168,9 +174,8 @@ class ProductDetailPage extends StatelessWidget {
                         ],
                       ),
                       ProductScheduleWidget(),
-                      RepeatNotification(
-                        productSchedule: product.schedule,
-                      ),
+                      if (productRepeats)
+                        RepeatNotification(productSchedule: productSchedule),
                       if (productStatus == ProductStatus.review)
                         ProductAlertWidget(
                           title: productInReview,
