@@ -30,7 +30,7 @@ class PricingCardWidget extends StatelessWidget {
 
         final int maxTickets = pricing?.maxTickets ?? 0;
 
-        final String tier = pricing?.ticketTier ?? '';
+        final String tier = pricing?.ticketTier ?? UNKNOWN;
         final String iconPath = getTicketIconPath(tier);
 
         final String currencyCode =
@@ -52,7 +52,6 @@ class PricingCardWidget extends StatelessWidget {
                 flex: 2,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  spacing: 4,
                   children: <Widget>[
                     Text(
                       getTicketDisplayName(tier),

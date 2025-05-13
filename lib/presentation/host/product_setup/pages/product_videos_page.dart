@@ -29,15 +29,16 @@ class ProductVideosPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(title: setupEvent),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: StoreConnector<AppState, ProductSetupViewModel>(
         converter: (Store<AppState> store) =>
             ProductSetupViewModel.fromState(store.state),
         builder: (BuildContext context, ProductSetupViewModel vm) {
           final bool isEditing = vm.workflowState == WorkflowState.VIEW;
 
-          return Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12),
+          return Container(
+            color: Colors.white,
+            padding: EdgeInsets.all(16),
             child: Row(
               spacing: 12,
               children: <Widget>[

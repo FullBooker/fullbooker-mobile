@@ -56,7 +56,7 @@ class ProductPhotosPage extends StatelessWidget {
                             )
                           : context.router.maybePop();
                     },
-                    child: d.right(
+                  child: d.right(
                       isEditing ? backToPreview : previousString,
                     ),
                     fillColor: Colors.white,

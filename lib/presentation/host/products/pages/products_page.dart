@@ -73,7 +73,7 @@ class ProductsPage extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
             child: Column(
-              spacing: 12,
+              spacing: 16,
               children: <Widget>[
                 ProductFiltersWidget(),
                 SearchProductsInput(),
@@ -139,18 +139,28 @@ class ProductsPage extends StatelessWidget {
                       );
                     }
 
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: products?.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        final Product? product = products![index];
+                    return Column(
+                      spacing: 4,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          vm.selectedProductStatus.displayName,
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: products?.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            final Product? product = products![index];
 
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 12),
-                          child: ProductCard(product: product!),
-                        );
-                      },
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                              child: ProductCard(product: product!),
+                            );
+                          },
+                        ),
+                      ],
                     );
                   },
                 ),
