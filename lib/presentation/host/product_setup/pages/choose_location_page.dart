@@ -172,7 +172,7 @@ class _ChooseLocationPageState extends State<ChooseLocationPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: CustomAppBar(showBell: false, title: pickLocation),
+        appBar: CustomAppBar(title: pickLocation),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: Container(
           width: double.infinity,

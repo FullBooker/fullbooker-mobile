@@ -18,7 +18,7 @@ class ProductSetupPreviewPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(showBell: false, title: setupEvent),
+      appBar: CustomAppBar(title: setupEvent),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Padding(
         padding: EdgeInsets.symmetric(horizontal: 12),

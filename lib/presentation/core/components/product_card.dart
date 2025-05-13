@@ -108,7 +108,7 @@ class ProductCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(16),
               child: Column(
-                spacing: 12,
+                spacing: 8,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Row(
@@ -116,7 +116,10 @@ class ProductCard extends StatelessWidget {
                       Expanded(
                         child: Text(
                           product.name ?? '',
-                          style: Theme.of(context).textTheme.titleMedium,
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium
+                              ?.copyWith(fontSize: 18),
                         ),
                       ),
                       CustomBadgeWidget(
@@ -133,7 +136,7 @@ class ProductCard extends StatelessWidget {
                       children: <Widget>[
                         HeroIcon(
                           HeroIcons.mapPin,
-                          color: Colors.grey,
+                          color: Theme.of(context).textTheme.bodyMedium?.color,
                           size: 20,
                         ),
                         Expanded(

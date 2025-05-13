@@ -17,7 +17,6 @@ import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
-import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/custom_text_input.dart';
 import 'package:fullbooker/shared/validators.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
@@ -38,15 +37,13 @@ class RequestOTPPageState extends State<RequestOTPPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: <Widget>[
             Expanded(
               child: StoreConnector<AppState, ResetPasswordViewModel>(
-                converter: (Store<AppState> store) =>
-                    ResetPasswordViewModel.fromState(store.state),
+                converter: ResetPasswordViewModel.fromStore,
                 builder: (BuildContext context, ResetPasswordViewModel vm) {
                   return ListView(
                     children: <Widget>[
@@ -114,17 +111,15 @@ class RequestOTPPageState extends State<RequestOTPPage> {
               spacing: 12,
               children: <Widget>[
                 StoreConnector<AppState, ResetPasswordViewModel>(
-                  converter: (Store<AppState> store) =>
-                      ResetPasswordViewModel.fromState(store.state),
+                  converter: ResetPasswordViewModel.fromStore,
                   builder: (
                     BuildContext context,
                     ResetPasswordViewModel vm,
                   ) {
-                    if (context.isWaiting(RequestOtpAction)) {
-                      return AppLoading();
-                    }
+                    final bool isLoading = context.isWaiting(RequestOtpAction);
 
                     return PrimaryButton(
+                      isLoading: isLoading,
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           TextInput.finishAutofillContext();

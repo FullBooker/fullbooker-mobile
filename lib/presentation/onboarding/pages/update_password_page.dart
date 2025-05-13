@@ -35,7 +35,7 @@ class UpdatePasswordPageState extends State<UpdatePasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: changePassword, showBell: false),
+      appBar: CustomAppBar(title: changePassword),
       floatingActionButton: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: StoreConnector<AppState, UpdatePasswordViewModel>(

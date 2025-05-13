@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/utils/utils.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 
@@ -14,7 +15,7 @@ class LimitedDescriptionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (description.trim().isEmpty || description == 'UNKNOWN') {
+    if (description.trim().isEmpty || description == UNKNOWN) {
       return const SizedBox.shrink();
     }
 
@@ -22,6 +23,10 @@ class LimitedDescriptionWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: 8,
       children: <Widget>[
+        Text(
+          aboutProduct,
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
         Text(
           description,
           maxLines: 3,

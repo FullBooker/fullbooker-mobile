@@ -30,10 +30,7 @@ class ProductBookingDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        showBell: false,
-        title: productBookingDetails,
-      ),
+      appBar: CustomAppBar(title: productBookingDetails),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: RefreshIndicator(
         onRefresh: () => onRefresh(context),

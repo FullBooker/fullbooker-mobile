@@ -27,7 +27,9 @@ class ResetPasswordViewModel extends Vm {
   final String resetPasswordOTP;
   final String resetPasswordDebugOTP;
 
-  static ResetPasswordViewModel fromState(AppState state) {
+  static ResetPasswordViewModel fromStore(Store<AppState> store) {
+    final AppState state = store.state;
+
     return ResetPasswordViewModel(
       resetEmailAddress: state.onboardingState?.resetEmailAddress ?? '',
       password: state.onboardingState?.password,

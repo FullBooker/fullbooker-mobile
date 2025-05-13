@@ -770,3 +770,5 @@ const String addString = 'Add';
 const String noReasonProvided = 'No reason provided';
 
 const String userInitiatedString = 'User initiated';
+
+const String aboutProduct = 'About your product';

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:heroicons/heroicons.dart';
 
 class CustomChipWidget extends StatelessWidget {
   const CustomChipWidget({
@@ -27,22 +26,17 @@ class CustomChipWidget extends StatelessWidget {
                 ? Theme.of(context).primaryColor
                 : Theme.of(context).dividerColor,
           ),
+          color: isSelected ? Theme.of(context).primaryColor : null,
         ),
         child: Row(
           spacing: 4,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            if (isSelected)
-              HeroIcon(
-                HeroIcons.checkCircle,
-                size: 16,
-                color: Theme.of(context).primaryColor,
-              ),
             Text(
               value,
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     color: isSelected
-                        ? Theme.of(context).primaryColor
+                        ? Colors.white
                         : Theme.of(context).colorScheme.tertiary,
                   ),
             ),
