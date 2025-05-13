@@ -23,8 +23,7 @@ class PricingCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, ProductDetailViewModel>(
-      converter: (Store<AppState> store) =>
-          ProductDetailViewModel.fromState(store.state),
+      converter: ProductDetailViewModel.fromStore,
       builder: (BuildContext context, ProductDetailViewModel vm) {
         final double? parsedPrice = double.tryParse(pricing?.cost ?? '');
         final bool hasPrice = parsedPrice != null && parsedPrice > 0;

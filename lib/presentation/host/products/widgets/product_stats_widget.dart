@@ -20,8 +20,7 @@ class ProductStatsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, ProductDetailViewModel>(
-      converter: (Store<AppState> store) =>
-          ProductDetailViewModel.fromState(store.state),
+      converter: ProductDetailViewModel.fromStore,
       onInit: (Store<AppState> store) => context.dispatch(
         FetchProductStatsAction(
           client: AppWrapperBase.of(context)!.customClient,

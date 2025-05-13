@@ -28,8 +28,7 @@ class _ImageCarouselWidgetState extends State<ImageCarouselWidget> {
     final double customHeight = MediaQuery.of(context).size.height * .25;
 
     return StoreConnector<AppState, ProductDetailViewModel>(
-      converter: (Store<AppState> store) =>
-          ProductDetailViewModel.fromState(store.state),
+      converter: ProductDetailViewModel.fromStore,
       onInit: (Store<AppState> store) => context.dispatch(
         FetchProductMediaAction(
           client: AppWrapperBase.of(context)!.customClient,

@@ -12,10 +12,10 @@ class ProductDetailViewModel extends Vm {
   final Product? selectedProduct;
   final List<Currency?>? currencies;
 
-  static ProductDetailViewModel fromState(AppState state) {
+  static ProductDetailViewModel fromStore(Store<AppState> store) {
     return ProductDetailViewModel(
-      selectedProduct: state.hostState?.selectedProduct,
-      currencies: state.hostState?.currencies,
+      selectedProduct: store.state.hostState?.selectedProduct,
+      currencies: store.state.hostState?.currencies,
     );
   }
 }

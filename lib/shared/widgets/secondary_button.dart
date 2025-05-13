@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:dartz/dartz.dart';
+import 'package:fullbooker/shared/widgets/app_loading.dart';
 
 class SecondaryButton extends StatelessWidget {
   const SecondaryButton({
@@ -16,6 +17,7 @@ class SecondaryButton extends StatelessWidget {
     this.customWidth,
     this.addBorder = false,
     this.disabled = false,
+    this.isLoading = false,
   });
 
   final void Function()? onPressed;
@@ -28,6 +30,7 @@ class SecondaryButton extends StatelessWidget {
   final bool addBorder;
 
   final bool disabled;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -44,23 +47,25 @@ class SecondaryButton extends StatelessWidget {
       ),
       child: InkWell(
         key: buttonKey,
-        onTap: disabled ? null : onPressed,
+        onTap: (disabled || isLoading) ? null : onPressed,
         highlightColor: Theme.of(context).primaryColor.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(8),
         child: DecoratedBox(
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
-          child: child.fold(
-            id,
-            (String text) => Center(
-              child: Text(
-                text,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: textColor ?? Theme.of(context).primaryColor,
-                      fontWeight: FontWeight.bold,
+          child: isLoading
+              ? AppLoading()
+              : child.fold(
+                  id,
+                  (String text) => Center(
+                    child: Text(
+                      text,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: textColor ?? Theme.of(context).primaryColor,
+                            fontWeight: FontWeight.bold,
+                          ),
                     ),
-              ),
-            ),
-          ),
+                  ),
+                ),
         ),
       ),
     );
