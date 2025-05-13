@@ -45,7 +45,7 @@ class _ProductBasicDetailsPageState extends State<ProductBasicDetailsPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: CustomAppBar(showBell: false, title: setupEvent),
+        appBar: CustomAppBar(title: setupEvent),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: StoreConnector<AppState, ProductSetupViewModel>(
           converter: (Store<AppState> store) =>

@@ -34,10 +34,7 @@ class ProductBookingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        showBell: false,
-        title: productBookings,
-      ),
+      appBar: CustomAppBar(title: productBookings),
       floatingActionButton: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: PrimaryButton(
@@ -48,11 +45,7 @@ class ProductBookingsPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               spacing: 12,
               children: <Widget>[
-                HeroIcon(
-                  HeroIcons.camera,
-                  color: Colors.white,
-                  size: 24,
-                ),
+                HeroIcon(HeroIcons.camera, color: Colors.white, size: 24),
                 Text(
                   scanTickets,
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(

@@ -30,10 +30,7 @@ class ProductPhotosPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        showBell: false,
-        title: setupEvent,
-      ),
+      appBar: CustomAppBar(title: setupEvent),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Padding(
         padding: EdgeInsetsDirectional.symmetric(horizontal: 12),

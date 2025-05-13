@@ -28,7 +28,7 @@ class ProductSubCategoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(showBell: false, title: setupProductCategory),
+      appBar: CustomAppBar(title: setupProductCategory),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16),
@@ -94,7 +94,7 @@ class ProductSubCategoryPage extends StatelessWidget {
         ),
       ),
       body: ListView(
-      padding: EdgeInsets.symmetric(horizontal: 16),
+        padding: EdgeInsets.symmetric(horizontal: 16),
         children: <Widget>[
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -125,10 +125,10 @@ class ProductSubCategoryPage extends StatelessWidget {
                   if (context.isWaiting(UpdateProductCategoryAction)) {
                     return AppLoading();
                   }
-      
+
                   final List<ProductCategory?>? subCategories =
                       vm.subCategories;
-      
+
                   if (subCategories?.isEmpty ?? true) {
                     return GenericZeroState(
                       iconPath: setupZeroStateSVGPath,
@@ -138,14 +138,14 @@ class ProductSubCategoryPage extends StatelessWidget {
                       ctaText: tryAgain,
                     );
                   }
-      
+
                   return Wrap(
                     spacing: 8,
                     runSpacing: 8,
                     children: subCategories?.map((ProductCategory? current) {
                           final bool selected =
                               current?.id == vm.subCategory?.id;
-      
+
                           return CustomChipWidget(
                             value: current?.name ?? '',
                             isSelected: selected,

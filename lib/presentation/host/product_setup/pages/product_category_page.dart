@@ -29,7 +29,6 @@ class ProductCategoryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        showBell: false,
         title: setupProductType,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

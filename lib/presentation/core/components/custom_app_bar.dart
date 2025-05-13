@@ -2,7 +2,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/domain/core/value_objects/app_bar_action.dart';
-import 'package:fullbooker/presentation/core/components/notification_bell.dart';
 
 // Package imports:
 import 'package:heroicons/heroicons.dart';
@@ -14,19 +13,23 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.leading,
     this.onLeadingTap,
     this.actions = const <AppBarAction>[],
-    this.showBell = true,
+    this.showBell = false,
     this.bodyWidget,
     this.leadingKey,
     this.preferredSize = const Size.fromHeight(60),
+    this.centerTile = true,
   });
 
-  final String? title;
-  final Widget? leading;
   final Function()? onLeadingTap;
   final List<AppBarAction>? actions;
-  final bool showBell;
   final Widget? bodyWidget;
+  final Widget? leading;
   final Key? leadingKey;
+  final bool showBell;
+  final String? title;
+
+  final bool? centerTile;
+
   @override
   final Size preferredSize;
 
@@ -35,9 +38,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return SafeArea(
       left: false,
       child: Padding(
-        padding: const EdgeInsets.only(top: 8),
+        padding: const EdgeInsets.only(top: 8, left: 8),
         child: AppBar(
+          centerTitle: centerTile,
           elevation: 0,
+          titleSpacing: 4,
           leading: leading ??
               InkWell(
                 key: leadingKey,
@@ -68,7 +73,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                       ?.copyWith(color: Theme.of(context).primaryColor),
                 ),
               ),
-          centerTitle: true,
           actions: <Widget>[
             if (actions?.isNotEmpty ?? false)
               ...actions!.map(
@@ -96,7 +100,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ),
                 ),
               ),
-            Visibility(visible: showBell, child: const NotificationBell()),
+            // Visibility(
+            //   visible: actions?.isEmpty ?? true,
+            //   child: const SizedBox(
+            //     width: 32,
+            //   ),
+            // ),
           ],
         ),
       ),

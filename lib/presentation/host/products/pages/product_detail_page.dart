@@ -51,7 +51,6 @@ class ProductDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        showBell: false,
         title: productDetailsString,
         actions: <AppBarAction>[
           AppBarAction(

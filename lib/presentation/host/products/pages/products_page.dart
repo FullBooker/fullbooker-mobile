@@ -42,7 +42,6 @@ class ProductsPage extends StatelessWidget {
     return Scaffold(
       bottomNavigationBar: const BottomNavBar(),
       appBar: CustomAppBar(
-        showBell: false,
         title: productsString,
       ),
       floatingActionButton: GestureDetector(

@@ -40,7 +40,7 @@ class ProductModeOfAccessPage extends StatelessWidget {
       onRefresh: () => onRefresh(context),
       child: SafeArea(
         child: Scaffold(
-          appBar: CustomAppBar(showBell: false, title: setupEvent),
+          appBar: CustomAppBar(title: setupEvent),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
           floatingActionButton: Padding(
