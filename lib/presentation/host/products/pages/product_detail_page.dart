@@ -29,6 +29,7 @@ import 'package:fullbooker/presentation/host/products/widgets/limited_descriptio
 import 'package:fullbooker/presentation/host/products/widgets/min_zero_state.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_alert_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_schedule_widget.dart';
+import 'package:fullbooker/presentation/host/products/widgets/product_stats_widget.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
@@ -186,7 +187,7 @@ class ProductDetailPage extends StatelessWidget {
                           name: product.name ?? UNKNOWN,
                           description: product.description ?? UNKNOWN,
                         ),
-                        // ProductStatsWidget(),
+                        ProductStatsWidget(),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           spacing: 12,
