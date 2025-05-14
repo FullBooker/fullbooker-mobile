@@ -58,7 +58,6 @@ class HostState with _$HostState {
     // Filter chips on product details page
     @Default(ProductStatus.all) ProductStatus? selectedProductStatusFilter,
 
-
     // Bookings page
     Booking? selectedBooking,
     @Default(<Ticket>[]) List<Ticket?>? selectedBookingTickets,
@@ -69,6 +68,9 @@ class HostState with _$HostState {
     // Pricing page
     @Default(<TicketType>[]) List<TicketType?>? ticketTypes,
     TicketType? selectedTicketType,
+
+    // Product setup steps
+    @Default(ProductSetupStep.category) ProductSetupStep? currentSetupStep,
   }) = _HostState;
 
   factory HostState.initial() => HostState(

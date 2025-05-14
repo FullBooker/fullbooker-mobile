@@ -104,6 +104,9 @@ _$HostStateImpl _$$HostStateImplFromJson(Map<String, dynamic> json) =>
           ? null
           : TicketType.fromJson(
               json['selectedTicketType'] as Map<String, dynamic>),
+      currentSetupStep: $enumDecodeNullable(
+              _$ProductSetupStepEnumMap, json['currentSetupStep']) ??
+          ProductSetupStep.category,
     );
 
 Map<String, dynamic> _$$HostStateImplToJson(_$HostStateImpl instance) =>
@@ -140,6 +143,7 @@ Map<String, dynamic> _$$HostStateImplToJson(_$HostStateImpl instance) =>
       'pickedPricingOption': instance.pickedPricingOption?.toJson(),
       'ticketTypes': instance.ticketTypes?.map((e) => e?.toJson()).toList(),
       'selectedTicketType': instance.selectedTicketType?.toJson(),
+      'currentSetupStep': _$ProductSetupStepEnumMap[instance.currentSetupStep],
     };
 
 const _$WorkflowStateEnumMap = {
@@ -156,4 +160,10 @@ const _$ProductStatusEnumMap = {
   ProductStatus.reviewedNeedsChanges: 'reviewedNeedsChanges',
   ProductStatus.rejected: 'rejected',
   ProductStatus.invalidated: 'invalidated',
+};
+
+const _$ProductSetupStepEnumMap = {
+  ProductSetupStep.category: 'category',
+  ProductSetupStep.subcategory: 'subcategory',
+  ProductSetupStep.basic_details: 'basic_details',
 };

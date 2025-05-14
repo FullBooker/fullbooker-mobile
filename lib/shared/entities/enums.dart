@@ -80,3 +80,15 @@ extension ProductStatusExtension on ProductStatus {
 }
 
 enum BookingStatus { pending, confirmed, canceled, completed, expired }
+
+enum ProductSetupStep {
+  category,
+  subcategory,
+  basic_details,
+}
+
+const Map<ProductSetupStep, String> stepLabels = <ProductSetupStep, String>{
+  ProductSetupStep.category: 'Category',
+  ProductSetupStep.subcategory: 'Sub Category',
+  ProductSetupStep.basic_details: 'Basic Details',
+};

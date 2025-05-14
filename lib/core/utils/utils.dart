@@ -749,3 +749,22 @@ String getMonthNameFromInt(int month) {
   ];
   return months[month - 1];
 }
+
+// TODO(abiud): check for unknowns as well
+ProductSetupStep detectCurrentStep(Product? product) {
+  if (product == null) return ProductSetupStep.category;
+
+  if (product.category?.isEmpty ?? true) {
+    return ProductSetupStep.category;
+  }
+
+  if (product.subcategory?.isEmpty ?? true) {
+    return ProductSetupStep.subcategory;
+  }
+
+  if (product.name?.isEmpty ?? true) {
+    return ProductSetupStep.basic_details;
+  }
+
+  return ProductSetupStep.basic_details;
+}

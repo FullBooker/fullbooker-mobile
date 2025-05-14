@@ -61,5 +61,6 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: FullscreenVideoPlayerRoute.page),
         AutoRoute(page: TermsAndConditionsRoute.page),
         AutoRoute(page: ProductBookingDetailsRoute.page),
+        AutoRoute(page: ProductSetupRouteView.page),
       ];
 }
