@@ -29,7 +29,6 @@ import 'package:fullbooker/presentation/host/products/widgets/limited_descriptio
 import 'package:fullbooker/presentation/host/products/widgets/min_zero_state.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_alert_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_schedule_widget.dart';
-import 'package:fullbooker/presentation/host/products/widgets/product_stats_widget.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
@@ -123,181 +122,183 @@ class ProductDetailPage extends StatelessWidget {
 
           return RefreshIndicator(
             onRefresh: () => onRefresh(context),
-            child: ListView(
-              shrinkWrap: true,
-              physics: AlwaysScrollableScrollPhysics(),
-              children: <Widget>[
-                ImageCarouselWidget(),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 150),
-                  child: Column(
-                    spacing: 16,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Expanded(
-                            child: Text(
-                              product.name ?? '',
-                              style: Theme.of(context).textTheme.titleLarge,
+            child: SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              child: Column(
+                children: <Widget>[
+                  ImageCarouselWidget(),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 150),
+                    child: Column(
+                      spacing: 16,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Expanded(
+                              child: Text(
+                                product.name ?? '',
+                                style: Theme.of(context).textTheme.titleLarge,
+                              ),
                             ),
-                          ),
-                          CustomBadgeWidget(
-                            text: statusDisplay,
-                            backgroundColor: statusColor,
-                            textColor: statusColor,
-                          ),
-                        ],
-                      ),
-                      Wrap(
-                        runSpacing: 12,
-                        spacing: 12,
-                        children: <Widget>[
-                          // Location
-                          if (isLocationAvailable)
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              spacing: 4,
-                              children: <Widget>[
-                                HeroIcon(
-                                  HeroIcons.mapPin,
-                                  color: AppColors.greyTextColor,
-                                  size: 20,
-                                ),
-                                Text(
-                                  product.locations?.first.address ?? '',
-                                  style: Theme.of(context).textTheme.bodyMedium,
-                                ),
-                              ],
+                            CustomBadgeWidget(
+                              text: statusDisplay,
+                              backgroundColor: statusColor,
+                              textColor: statusColor,
                             ),
-                        ],
-                      ),
-                      ProductScheduleWidget(),
-                      if (productRepeats)
-                        RepeatNotification(productSchedule: productSchedule),
-                      if (productStatus == ProductStatus.review)
-                        ProductAlertWidget(
-                          title: productInReview,
-                          description: productInReviewCopy,
-                          iconData: HeroIcons.clipboardDocumentList,
+                          ],
                         ),
-                      LimitedDescriptionWidget(
-                        name: product.name ?? UNKNOWN,
-                        description: product.description ?? UNKNOWN,
-                      ),
-                      ProductStatsWidget(),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        spacing: 12,
-                        children: <Widget>[
-                          Text(
-                            pricing,
-                            style: Theme.of(context).textTheme.titleMedium,
+                        Wrap(
+                          runSpacing: 12,
+                          spacing: 12,
+                          children: <Widget>[
+                            // Location
+                            if (isLocationAvailable)
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                spacing: 4,
+                                children: <Widget>[
+                                  HeroIcon(
+                                    HeroIcons.mapPin,
+                                    color: AppColors.greyTextColor,
+                                    size: 20,
+                                  ),
+                                  Text(
+                                    product.locations?.first.address ?? '',
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium,
+                                  ),
+                                ],
+                              ),
+                          ],
+                        ),
+                        ProductScheduleWidget(),
+                        if (productRepeats)
+                          RepeatNotification(productSchedule: productSchedule),
+                        if (productStatus == ProductStatus.review)
+                          ProductAlertWidget(
+                            title: productInReview,
+                            description: productInReviewCopy,
+                            iconData: HeroIcons.clipboardDocumentList,
                           ),
-                          if (product.pricing?.isEmpty ?? true)
-                            MinZeroState(copy: noPricingOptionsString)
-                          else
-                            ListView.builder(
-                              physics: NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: product.pricing?.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                final ProductPricing? current =
-                                    product.pricing![index];
-
-                                return Container(
-                                  margin: EdgeInsets.only(bottom: 12),
-                                  child: PricingCardWidget(pricing: current),
-                                );
-                              },
+                        LimitedDescriptionWidget(
+                          name: product.name ?? UNKNOWN,
+                          description: product.description ?? UNKNOWN,
+                        ),
+                        // ProductStatsWidget(),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          spacing: 12,
+                          children: <Widget>[
+                            Text(
+                              pricing,
+                              style: Theme.of(context).textTheme.titleMedium,
                             ),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        spacing: 12,
-                        children: <Widget>[
-                          Text(
-                            photosString,
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
-                          LimitedPhotoGalleryPreviewWidget(),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        spacing: 12,
-                        children: <Widget>[
-                          Text(
-                            videosString,
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
-                          LimitedVideoGalleryPreviewWidget(),
-                        ],
-                      ),
-                      if (productStatus !=
-                          ProductStatus.deactivated) ...<Widget>[
-                        StoreConnector<AppState, ProductDetailViewModel>(
-                          converter: ProductDetailViewModel.fromStore,
-                          builder: (
-                            BuildContext context,
-                            ProductDetailViewModel vm,
-                          ) {
-                            final bool isLoading =
-                                context.isWaiting(TransitionProductAction);
+                            if (product.pricing?.isEmpty ?? true)
+                              MinZeroState(copy: noPricingOptionsString)
+                            else
+                              ListView.builder(
+                                physics: NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: product.pricing?.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  final ProductPricing? current =
+                                      product.pricing![index];
 
-                            if (isLoading) {
-                              return AppLoading();
-                            }
-
-                            return SecondaryButton(
-                              isLoading: isLoading,
-                              fillColor:
-                                  AppColors.redColor.withValues(alpha: .05),
-                              textColor: AppColors.redColor,
-                              onPressed: () => showAlertDialog(
-                                context: context,
-                                assetPath: deleteProductSVGPath,
-                                title: '$deactivateProduct?',
-                                description: deactivateProductCopy,
-                                confirmText: deactivateProduct,
-                                cancelText: noGoBack,
-                                onConfirm: () {
-                                  context.router.maybePop();
-                                  context.dispatch(
-                                    TransitionProductAction(
-                                      statusTo: ProductStatus.deactivated,
-                                      reason: userInitiatedString,
-                                      client: AppWrapperBase.of(context)!
-                                          .customClient,
-                                      onSuccess: () {
-                                        context.router.popUntil(
-                                          (Route<dynamic> route) =>
-                                              route.settings.name ==
-                                              HostingHomeRoute.name,
-                                        );
-                                      },
-                                      onError: (String error) =>
-                                          showAlertDialog(
-                                        context: context,
-                                        assetPath: productZeroStateSVGPath,
-                                        description: error,
-                                      ),
-                                    ),
+                                  return Container(
+                                    margin: EdgeInsets.only(bottom: 12),
+                                    child: PricingCardWidget(pricing: current),
                                   );
                                 },
-                                onCancel: () => context.router.maybePop(),
                               ),
-                              child: right(deactivateProduct),
-                            );
-                          },
+                          ],
                         ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          spacing: 12,
+                          children: <Widget>[
+                            Text(
+                              photosString,
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                            LimitedPhotoGalleryPreviewWidget(),
+                          ],
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          spacing: 12,
+                          children: <Widget>[
+                            Text(
+                              videosString,
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                            LimitedVideoGalleryPreviewWidget(),
+                          ],
+                        ),
+                        if (productStatus !=
+                            ProductStatus.deactivated) ...<Widget>[
+                          StoreConnector<AppState, ProductDetailViewModel>(
+                            converter: ProductDetailViewModel.fromStore,
+                            builder: (
+                              BuildContext context,
+                              ProductDetailViewModel vm,
+                            ) {
+                              final bool isLoading =
+                                  context.isWaiting(TransitionProductAction);
+
+                              if (isLoading) {
+                                return AppLoading();
+                              }
+
+                              return SecondaryButton(
+                                isLoading: isLoading,
+                                fillColor:
+                                    AppColors.redColor.withValues(alpha: .05),
+                                textColor: AppColors.redColor,
+                                onPressed: () => showAlertDialog(
+                                  context: context,
+                                  assetPath: deleteProductSVGPath,
+                                  title: '$deactivateProduct?',
+                                  description: deactivateProductCopy,
+                                  confirmText: deactivateProduct,
+                                  cancelText: noGoBack,
+                                  onConfirm: () {
+                                    context.router.maybePop();
+                                    context.dispatch(
+                                      TransitionProductAction(
+                                        statusTo: ProductStatus.deactivated,
+                                        reason: userInitiatedString,
+                                        client: AppWrapperBase.of(context)!
+                                            .customClient,
+                                        onSuccess: () {
+                                          context.router.popUntil(
+                                            (Route<dynamic> route) =>
+                                                route.settings.name ==
+                                                HostingHomeRoute.name,
+                                          );
+                                        },
+                                        onError: (String error) =>
+                                            showAlertDialog(
+                                          context: context,
+                                          assetPath: productZeroStateSVGPath,
+                                          description: error,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  onCancel: () => context.router.maybePop(),
+                                ),
+                                child: right(deactivateProduct),
+                              );
+                            },
+                          ),
+                        ],
                       ],
-                    ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         },

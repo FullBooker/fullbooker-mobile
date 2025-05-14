@@ -29,11 +29,13 @@ class _ImageCarouselWidgetState extends State<ImageCarouselWidget> {
 
     return StoreConnector<AppState, ProductDetailViewModel>(
       converter: ProductDetailViewModel.fromStore,
-      onInit: (Store<AppState> store) => context.dispatch(
-        FetchProductMediaAction(
-          client: AppWrapperBase.of(context)!.customClient,
-        ),
-      ),
+      onInit: (Store<AppState> store) {
+        context.dispatch(
+          FetchProductMediaAction(
+            client: AppWrapperBase.of(context)!.customClient,
+          ),
+        );
+      },
       builder: (BuildContext context, ProductDetailViewModel vm) {
         if (context.isWaiting(FetchProductMediaAction)) {
           return SizedBox(
@@ -74,18 +76,10 @@ class _ImageCarouselWidgetState extends State<ImageCarouselWidget> {
         return Column(
           spacing: 12,
           children: <Widget>[
-            CarouselSlider(
-              options: CarouselOptions(
-                height: customHeight,
-                autoPlay: true,
-                autoPlayInterval: Duration(seconds: 5),
-                autoPlayCurve: Curves.easeInOut,
-                viewportFraction: 1.0,
-                onPageChanged: (int index, CarouselPageChangedReason reason) {
-                  setState(() => _currentIndex = index);
-                },
-              ),
-              items: images.map((ProductMedia? image) {
+            CarouselSlider.builder(
+              itemCount: images.length,
+              itemBuilder: (BuildContext context, int index, int realIndex) {
+                final ProductMedia? image = images[index];
                 if (image?.file != null) {
                   final String imageUrl = image?.file ?? UNKNOWN;
 
@@ -123,7 +117,17 @@ class _ImageCarouselWidgetState extends State<ImageCarouselWidget> {
                     ),
                   );
                 }
-              }).toList(),
+              },
+              options: CarouselOptions(
+                height: customHeight,
+                autoPlay: true,
+                autoPlayInterval: Duration(seconds: 5),
+                autoPlayCurve: Curves.easeInOut,
+                viewportFraction: 1.0,
+                onPageChanged: (int index, CarouselPageChangedReason reason) {
+                  setState(() => _currentIndex = index);
+                },
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
