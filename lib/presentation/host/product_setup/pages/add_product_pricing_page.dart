@@ -39,364 +39,375 @@ class _AddProductPricingPageState extends State<AddProductPricingPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(title: addTicketPrice),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Padding(
-        padding: EdgeInsetsDirectional.symmetric(horizontal: 16),
-        child: StoreConnector<AppState, ProductSetupViewModel>(
-          converter: (Store<AppState> store) =>
-              ProductSetupViewModel.fromState(store.state),
-          onInit: (Store<AppState> store) => context.dispatch(
-            FetchCurrenciesAction(
-              client: AppWrapperBase.of(context)!.customClient,
-            ),
-          ),
-          builder: (BuildContext context, ProductSetupViewModel vm) {
-            final bool isLoading = context.isWaiting(SaveProductPricingAction);
-
-            return PrimaryButton(
-              isLoading: isLoading,
-              onPressed: () {
-                if (_formKey.currentState?.validate() ?? false) {
-                  context.dispatch(
-                    SaveProductPricingAction(
-                      client: AppWrapperBase.of(context)!.customClient,
-                      onSuccess: () => context.router.maybePop(),
-                      onError: (String error) => showAlertDialog(
-                        context: context,
-                        assetPath: productZeroStateSVGPath,
-                        description: error,
-                      ),
-                    ),
-                  );
-                }
-              },
-              child: d.right(saveString),
-            );
-          },
-        ),
-      ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          spacing: 12,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Expanded(
-              child: StoreConnector<AppState, ProductSetupViewModel>(
-                converter: (Store<AppState> store) =>
-                    ProductSetupViewModel.fromState(store.state),
-                onInit: (Store<AppState> store) {
-                  context.dispatch(
-                    FetchCurrenciesAction(
-                      client: AppWrapperBase.of(context)!.customClient,
-                    ),
-                  );
-                },
-                builder: (BuildContext context, ProductSetupViewModel vm) {
-                  final TicketType? selectedTicketType = vm.selectedTicketType;
-                  final bool isTicketTypeSelected =
-                      selectedTicketType?.id != UNKNOWN;
-
-                  final String selectedCurrencyCode =
-                      vm.selectedCurrency?.code ?? UNKNOWN;
-
-                  bool _isValidCode(String code) =>
-                      code.isNotEmpty && code != UNKNOWN;
-
-                  final String selectedCurrency =
-                      _isValidCode(selectedCurrencyCode)
-                          ? selectedCurrencyCode
-                          : vm.currencies
-                                  ?.firstWhere(
-                                    (Currency? c) =>
-                                        _isValidCode(c?.code ?? UNKNOWN),
-                                    orElse: () => null,
-                                  )
-                                  ?.code ??
-                              UNKNOWN;
-
-                  return Form(
-                    key: _formKey,
-                    child: ListView(
-                      children: <Widget>[
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          spacing: 16,
-                          children: <Widget>[
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              spacing: 8,
-                              children: <Widget>[
-                                Text(
-                                  setupTickerPrice,
-                                  style:
-                                      Theme.of(context).textTheme.headlineSmall,
-                                ),
-                                Text(
-                                  setupTickerPriceCopy,
-                                  style: Theme.of(context).textTheme.bodyMedium,
-                                ),
-                              ],
-                            ),
-
-                            if (isTicketTypeSelected)
-                              Container(
-                                padding: EdgeInsets.all(12),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(
-                                    color: Theme.of(context).primaryColor,
-                                  ),
-                                ),
-                                child: Row(
-                                  spacing: 12,
-                                  children: <Widget>[
-                                    Expanded(
-                                      flex: 3,
-                                      child: Row(
-                                        spacing: 12,
-                                        children: <Widget>[
-                                          SvgPicture.asset(
-                                            getTicketIconPath(
-                                              vm.selectedTicketType!.name ??
-                                                  UNKNOWN,
-                                            ),
-                                          ),
-                                          Text(
-                                            vm.selectedTicketType!.name ??
-                                                UNKNOWN,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyLarge,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: SecondaryButton(
-                                        child: d.right(changeString),
-                                        customHeight: 40,
-                                        onPressed: () {
-                                          showModalBottomSheet(
-                                            context: context,
-                                            isDismissible: false,
-                                            backgroundColor: Colors.white,
-                                            isScrollControlled: true,
-                                            shape: const RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.vertical(
-                                                top: Radius.circular(16),
-                                              ),
-                                            ),
-                                            builder: (_) =>
-                                                TicketTypesBottomSheet(),
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            else
-                              Container(
-                                padding: EdgeInsets.all(12),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(
-                                    color: Theme.of(context).dividerColor,
-                                  ),
-                                ),
-                                child: Row(
-                                  children: <Widget>[
-                                    Expanded(
-                                      flex: 3,
-                                      child: Text(
-                                        chooseTicketType,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: SecondaryButton(
-                                        customHeight: 40,
-                                        child: d.right(addString),
-                                        onPressed: () {
-                                          showModalBottomSheet(
-                                            context: context,
-                                            isDismissible: false,
-                                            backgroundColor: Colors.white,
-                                            isScrollControlled: true,
-                                            shape: const RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.vertical(
-                                                top: Radius.circular(16),
-                                              ),
-                                            ),
-                                            builder: (_) =>
-                                                TicketTypesBottomSheet(),
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-
-                            // Currency dropdown
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              spacing: 12,
-                              children: <Widget>[
-                                Text(
-                                  priceString,
-                                  style:
-                                      Theme.of(context).textTheme.titleMedium,
-                                ),
-                                Row(
-                                  spacing: 12,
-                                  children: <Widget>[
-                                    Flexible(
-                                      flex: 3,
-                                      child: context
-                                              .isWaiting(FetchCurrenciesAction)
-                                          ? const AppLoading()
-                                          : CustomDropdown(
-                                              options: vm.currencies
-                                                      ?.whereType<Currency>()
-                                                      .map(
-                                                        (Currency c) =>
-                                                            c.code ?? UNKNOWN,
-                                                      )
-                                                      .where(
-                                                        (String code) =>
-                                                            code.isNotEmpty &&
-                                                            code != UNKNOWN,
-                                                      )
-                                                      .toList() ??
-                                                  <String>[],
-                                              value: (vm.selectedCurrency?.code
-                                                              ?.isNotEmpty ??
-                                                          false) &&
-                                                      vm.selectedCurrency
-                                                              ?.code !=
-                                                          UNKNOWN
-                                                  ? vm.selectedCurrency!.code!
-                                                  : (vm.currencies
-                                                          ?.firstWhere(
-                                                            (Currency? c) =>
-                                                                (c?.code?.isNotEmpty ??
-                                                                    false) &&
-                                                                c?.code !=
-                                                                    UNKNOWN,
-                                                            orElse: () => null,
-                                                          )
-                                                          ?.code ??
-                                                      UNKNOWN),
-                                              onChanged: (String? value) {
-                                                if (value != null &&
-                                                    value.isNotEmpty) {
-                                                  final Currency? selected =
-                                                      vm.currencies?.firstWhere(
-                                                    (Currency? c) =>
-                                                        c?.code == value,
-                                                    orElse: () => null,
-                                                  );
-                                                  if (selected != null) {
-                                                    context
-                                                        .dispatchAll(<ReduxAction<
-                                                            AppState>>[
-                                                      UpdateHostStateAction(
-                                                        selectedCurrency:
-                                                            selected,
-                                                      ),
-                                                      UpdateSelectedPricingAction(
-                                                        currency:
-                                                            selected.code ??
-                                                                UNKNOWN,
-                                                      ),
-                                                    ]);
-                                                  }
-                                                }
-                                              },
-                                            ),
-                                    ),
-                                    Flexible(
-                                      flex: 9,
-                                      child: CustomTextInput(
-                                        hintText: priceHint,
-                                        autovalidateMode:
-                                            AutovalidateMode.onUnfocus,
-                                        validator: (String? email) =>
-                                            validateAmount(email),
-                                        onChanged: (String value) {
-                                          context.dispatch(
-                                            UpdateSelectedPricingAction(
-                                              cost: value,
-                                            ),
-                                          );
-                                        },
-                                        keyboardType: TextInputType.number,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-
-                            if (double.tryParse(
-                                  vm.selectedPricing?.cost ?? '',
-                                ) !=
-                                null)
-                              PricingBreakDownWidget(
-                                ticketPrice: double.tryParse(
-                                      vm.selectedPricing?.cost ?? '0',
-                                    ) ??
-                                    0,
-                                buyerPaysFee:
-                                    vm.selectedPricing?.buyerPaysFee ?? false,
-                                onToggleFeeResponsibility: () {
-                                  context.dispatch(
-                                    UpdateSelectedPricingAction(
-                                      buyerPaysFee: !vm.buyerPaysFee,
-                                    ),
-                                  );
-                                },
-                                selectedCurrency: selectedCurrency,
-                              ),
-
-                            CustomTextInput(
-                              hintText: maxTicketsHint,
-                              labelText: '${maximumTickets(
-                                getTicketDisplayName(vm.selectedPricingTier),
-                              )}*',
-                              autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
-                              validator: (String? email) =>
-                                  validateMaxTickets(email),
-                              onChanged: (String value) {
-                                final int? parsed = int.tryParse(value);
-                                if (parsed != null) {
-                                  context.dispatch(
-                                    UpdateSelectedPricingAction(
-                                      maxTickets: parsed,
-                                    ),
-                                  );
-                                }
-                              },
-                              keyboardType: TextInputType.number,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  );
-                },
+    return SafeArea(
+      child: Scaffold(
+        appBar: CustomAppBar(title: addTicketPrice),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: Padding(
+          padding: EdgeInsetsDirectional.symmetric(horizontal: 16),
+          child: StoreConnector<AppState, ProductSetupViewModel>(
+            converter: (Store<AppState> store) =>
+                ProductSetupViewModel.fromState(store.state),
+            onInit: (Store<AppState> store) => context.dispatch(
+              FetchCurrenciesAction(
+                client: AppWrapperBase.of(context)!.customClient,
               ),
             ),
-          ],
+            builder: (BuildContext context, ProductSetupViewModel vm) {
+              final bool isLoading =
+                  context.isWaiting(SaveProductPricingAction);
+
+              return PrimaryButton(
+                isLoading: isLoading,
+                onPressed: () {
+                  if (_formKey.currentState?.validate() ?? false) {
+                    context.dispatch(
+                      SaveProductPricingAction(
+                        client: AppWrapperBase.of(context)!.customClient,
+                        onSuccess: () => context.router.maybePop(),
+                        onError: (String error) => showAlertDialog(
+                          context: context,
+                          assetPath: productZeroStateSVGPath,
+                          description: error,
+                        ),
+                      ),
+                    );
+                  }
+                },
+                child: d.right(saveString),
+              );
+            },
+          ),
+        ),
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            spacing: 12,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                child: StoreConnector<AppState, ProductSetupViewModel>(
+                  converter: (Store<AppState> store) =>
+                      ProductSetupViewModel.fromState(store.state),
+                  onInit: (Store<AppState> store) {
+                    context.dispatch(
+                      FetchCurrenciesAction(
+                        client: AppWrapperBase.of(context)!.customClient,
+                      ),
+                    );
+                  },
+                  builder: (BuildContext context, ProductSetupViewModel vm) {
+                    final TicketType? selectedTicketType =
+                        vm.selectedTicketType;
+                    final bool isTicketTypeSelected =
+                        selectedTicketType?.id != UNKNOWN;
+
+                    final String selectedCurrencyCode =
+                        vm.selectedCurrency?.code ?? UNKNOWN;
+
+                    bool _isValidCode(String code) =>
+                        code.isNotEmpty && code != UNKNOWN;
+
+                    final String selectedCurrency =
+                        _isValidCode(selectedCurrencyCode)
+                            ? selectedCurrencyCode
+                            : vm.currencies
+                                    ?.firstWhere(
+                                      (Currency? c) =>
+                                          _isValidCode(c?.code ?? UNKNOWN),
+                                      orElse: () => null,
+                                    )
+                                    ?.code ??
+                                UNKNOWN;
+
+                    return Form(
+                      key: _formKey,
+                      child: ListView(
+                        children: <Widget>[
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            spacing: 16,
+                            children: <Widget>[
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                spacing: 8,
+                                children: <Widget>[
+                                  Text(
+                                    setupTickerPrice,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineSmall,
+                                  ),
+                                  Text(
+                                    setupTickerPriceCopy,
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium,
+                                  ),
+                                ],
+                              ),
+
+                              if (isTicketTypeSelected)
+                                Container(
+                                  padding: EdgeInsets.all(12),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    border: Border.all(
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                                  ),
+                                  child: Row(
+                                    spacing: 12,
+                                    children: <Widget>[
+                                      Expanded(
+                                        flex: 3,
+                                        child: Row(
+                                          spacing: 12,
+                                          children: <Widget>[
+                                            SvgPicture.asset(
+                                              getTicketIconPath(
+                                                vm.selectedTicketType!.name ??
+                                                    UNKNOWN,
+                                              ),
+                                            ),
+                                            Text(
+                                              vm.selectedTicketType!.name ??
+                                                  UNKNOWN,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyLarge,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: SecondaryButton(
+                                          child: d.right(changeString),
+                                          customHeight: 40,
+                                          onPressed: () {
+                                            showModalBottomSheet(
+                                              context: context,
+                                              isDismissible: false,
+                                              backgroundColor: Colors.white,
+                                              isScrollControlled: true,
+                                              shape:
+                                                  const RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.vertical(
+                                                  top: Radius.circular(16),
+                                                ),
+                                              ),
+                                              builder: (_) =>
+                                                  TicketTypesBottomSheet(),
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              else
+                                Container(
+                                  padding: EdgeInsets.all(12),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    border: Border.all(
+                                      color: Theme.of(context).dividerColor,
+                                    ),
+                                  ),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Expanded(
+                                        flex: 3,
+                                        child: Text(
+                                          chooseTicketType,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium,
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: SecondaryButton(
+                                          customHeight: 40,
+                                          child: d.right(addString),
+                                          onPressed: () {
+                                            showModalBottomSheet(
+                                              context: context,
+                                              isDismissible: false,
+                                              backgroundColor: Colors.white,
+                                              isScrollControlled: true,
+                                              shape:
+                                                  const RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.vertical(
+                                                  top: Radius.circular(16),
+                                                ),
+                                              ),
+                                              builder: (_) =>
+                                                  TicketTypesBottomSheet(),
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+
+                              // Currency dropdown
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                spacing: 12,
+                                children: <Widget>[
+                                  Text(
+                                    priceString,
+                                    style:
+                                        Theme.of(context).textTheme.titleMedium,
+                                  ),
+                                  Row(
+                                    spacing: 12,
+                                    children: <Widget>[
+                                      Flexible(
+                                        flex: 3,
+                                        child: context.isWaiting(
+                                          FetchCurrenciesAction,
+                                        )
+                                            ? const AppLoading()
+                                            : CustomDropdown(
+                                                options: vm.currencies
+                                                        ?.whereType<Currency>()
+                                                        .map(
+                                                          (Currency c) =>
+                                                              c.code ?? UNKNOWN,
+                                                        )
+                                                        .where(
+                                                          (String code) =>
+                                                              code.isNotEmpty &&
+                                                              code != UNKNOWN,
+                                                        )
+                                                        .toList() ??
+                                                    <String>[],
+                                                value: (vm.selectedCurrency?.code
+                                                                ?.isNotEmpty ??
+                                                            false) &&
+                                                        vm.selectedCurrency
+                                                                ?.code !=
+                                                            UNKNOWN
+                                                    ? vm.selectedCurrency!.code!
+                                                    : (vm.currencies
+                                                            ?.firstWhere(
+                                                              (Currency? c) =>
+                                                                  (c?.code?.isNotEmpty ??
+                                                                      false) &&
+                                                                  c?.code !=
+                                                                      UNKNOWN,
+                                                              orElse: () =>
+                                                                  null,
+                                                            )
+                                                            ?.code ??
+                                                        UNKNOWN),
+                                                onChanged: (String? value) {
+                                                  if (value != null &&
+                                                      value.isNotEmpty) {
+                                                    final Currency? selected =
+                                                        vm.currencies
+                                                            ?.firstWhere(
+                                                      (Currency? c) =>
+                                                          c?.code == value,
+                                                      orElse: () => null,
+                                                    );
+                                                    if (selected != null) {
+                                                      context
+                                                          .dispatchAll(<ReduxAction<
+                                                              AppState>>[
+                                                        UpdateHostStateAction(
+                                                          selectedCurrency:
+                                                              selected,
+                                                        ),
+                                                        UpdateSelectedPricingAction(
+                                                          currency:
+                                                              selected.code ??
+                                                                  UNKNOWN,
+                                                        ),
+                                                      ]);
+                                                    }
+                                                  }
+                                                },
+                                              ),
+                                      ),
+                                      Flexible(
+                                        flex: 9,
+                                        child: CustomTextInput(
+                                          hintText: priceHint,
+                                          autovalidateMode:
+                                              AutovalidateMode.onUnfocus,
+                                          validator: (String? email) =>
+                                              validateAmount(email),
+                                          onChanged: (String value) {
+                                            context.dispatch(
+                                              UpdateSelectedPricingAction(
+                                                cost: value,
+                                              ),
+                                            );
+                                          },
+                                          keyboardType: TextInputType.number,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+
+                              if (double.tryParse(
+                                    vm.selectedPricing?.cost ?? '',
+                                  ) !=
+                                  null)
+                                PricingBreakDownWidget(
+                                  ticketPrice: double.tryParse(
+                                        vm.selectedPricing?.cost ?? '0',
+                                      ) ??
+                                      0,
+                                  buyerPaysFee:
+                                      vm.selectedPricing?.buyerPaysFee ?? false,
+                                  onToggleFeeResponsibility: () {
+                                    context.dispatch(
+                                      UpdateSelectedPricingAction(
+                                        buyerPaysFee: !vm.buyerPaysFee,
+                                      ),
+                                    );
+                                  },
+                                  selectedCurrency: selectedCurrency,
+                                ),
+
+                              CustomTextInput(
+                                hintText: maxTicketsHint,
+                                labelText: '${maximumTickets(
+                                  getTicketDisplayName(vm.selectedPricingTier),
+                                )}*',
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                validator: (String? email) =>
+                                    validateMaxTickets(email),
+                                onChanged: (String value) {
+                                  final int? parsed = int.tryParse(value);
+                                  if (parsed != null) {
+                                    context.dispatch(
+                                      UpdateSelectedPricingAction(
+                                        maxTickets: parsed,
+                                      ),
+                                    );
+                                  }
+                                },
+                                keyboardType: TextInputType.number,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
