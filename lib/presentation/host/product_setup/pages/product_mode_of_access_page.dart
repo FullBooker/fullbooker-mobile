@@ -43,8 +43,9 @@ class ProductModeOfAccessPage extends StatelessWidget {
           appBar: CustomAppBar(title: setupEvent),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
-          floatingActionButton: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
+          bottomNavigationBar: Container(
+            color: Colors.white,
+            padding: const EdgeInsets.all(12),
             child: StoreConnector<AppState, ProductSetupViewModel>(
               converter: (Store<AppState> store) =>
                   ProductSetupViewModel.fromState(store.state),
@@ -63,7 +64,7 @@ class ProductModeOfAccessPage extends StatelessWidget {
                         addBorder: true,
                         onPressed: () => context.router.maybePop(),
                         child: d.right(previousString),
-                        fillColor: Colors.transparent,
+                        fillColor: Colors.white,
                       ),
                     ),
                     Flexible(
@@ -87,141 +88,135 @@ class ProductModeOfAccessPage extends StatelessWidget {
               },
             ),
           ),
-          body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
-              spacing: 12,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Row(
-                  spacing: 16,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Flexible(
-                      flex: 5,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        spacing: 8,
-                        children: <Widget>[
-                          Text(
-                            modeOfAccess,
-                            style: Theme.of(context).textTheme.headlineSmall,
-                          ),
-                          Text(
-                            modeOfAccessCopy,
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Flexible(
-                      child: GestureDetector(
-                        onTap: () {
-                          showModalBottomSheet(
-                            context: context,
-                            isDismissible: false,
-                            backgroundColor: Colors.white,
-                            isScrollControlled: true,
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.vertical(
-                                top: Radius.circular(16),
-                              ),
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+              child: Column(
+                spacing: 12,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Row(
+                    spacing: 16,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Flexible(
+                        flex: 5,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          spacing: 8,
+                          children: <Widget>[
+                            Text(
+                              modeOfAccess,
+                              style: Theme.of(context).textTheme.headlineSmall,
                             ),
-                            builder: (_) => ModesOfAccessBottomSheet(),
-                          );
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).primaryColor,
-                            shape: BoxShape.circle,
-                          ),
-                          padding: const EdgeInsets.all(8),
-                          child: HeroIcon(
-                            HeroIcons.plus,
-                            color: Colors.white,
-                            size: 28,
+                            Text(
+                              modeOfAccessCopy,
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Flexible(
+                        child: GestureDetector(
+                          onTap: () {
+                            showModalBottomSheet(
+                              context: context,
+                              isDismissible: false,
+                              backgroundColor: Colors.white,
+                              isScrollControlled: true,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(16),
+                                ),
+                              ),
+                              builder: (_) => ModesOfAccessBottomSheet(),
+                            );
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).primaryColor,
+                              shape: BoxShape.circle,
+                            ),
+                            padding: const EdgeInsets.all(8),
+                            child: HeroIcon(
+                              HeroIcons.plus,
+                              color: Colors.white,
+                              size: 28,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                Expanded(
-                  child: ListView(
-                    children: <Widget>[
-                      StoreConnector<AppState, ProductSetupViewModel>(
-                        converter: (Store<AppState> store) =>
-                            ProductSetupViewModel.fromState(store.state),
-                        onInit: (Store<AppState> store) {
-                          context.dispatch(
-                            FetchProductPricingOptionsAction(
-                              client: AppWrapperBase.of(context)!.customClient,
+                    ],
+                  ),
+                  StoreConnector<AppState, ProductSetupViewModel>(
+                    converter: (Store<AppState> store) =>
+                        ProductSetupViewModel.fromState(store.state),
+                    onInit: (Store<AppState> store) {
+                      context.dispatch(
+                        FetchProductPricingOptionsAction(
+                          client: AppWrapperBase.of(context)!.customClient,
+                        ),
+                      );
+                    },
+                    builder: (BuildContext context, ProductSetupViewModel vm) {
+                      if (context.isWaiting(FetchProductPricingOptionsAction)) {
+                        return AppLoading();
+                      }
+
+                      final List<ProductPricingOption?>? productPricingOptions =
+                          vm.productPricingOptions;
+
+                      if (productPricingOptions?.isEmpty ?? true) {
+                        return GenericZeroState(
+                          iconPath: bookingTicketsZeroStateSVGPath,
+                          title: setupModesOfAccess,
+                          description: setupModesOfAccessCopy,
+                          onCTATap: () {
+                            showModalBottomSheet(
+                              context: context,
+                              isDismissible: false,
+                              backgroundColor: Colors.white,
+                              isScrollControlled: true,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(16),
+                                ),
+                              ),
+                              builder: (_) => ModesOfAccessBottomSheet(),
+                            );
+                          },
+                          ctaText: addModeOfAccess,
+                        );
+                      }
+
+                      return ListView.builder(
+                        itemCount: productPricingOptions?.length,
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemBuilder: (BuildContext context, int index) {
+                          final ProductPricingOption? current =
+                              productPricingOptions![index];
+
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 12),
+                            child: ModeOfAccessItem(
+                              option: current!,
+                              onCTATap: () {
+                                context.dispatch(
+                                  SelectProductPricingOptionAction(
+                                    productPricingOption: current,
+                                  ),
+                                );
+                                context.router.push(ProductPricingRoute());
+                              },
                             ),
                           );
                         },
-                        builder:
-                            (BuildContext context, ProductSetupViewModel vm) {
-                          if (context
-                              .isWaiting(FetchProductPricingOptionsAction)) {
-                            return AppLoading();
-                          }
-
-                          final List<ProductPricingOption?>?
-                              productPricingOptions = vm.productPricingOptions;
-
-                          if (productPricingOptions?.isEmpty ?? true) {
-                            return GenericZeroState(
-                              iconPath: bookingTicketsZeroStateSVGPath,
-                              title: setupModesOfAccess,
-                              description: setupModesOfAccessCopy,
-                              onCTATap: () {
-                                showModalBottomSheet(
-                                  context: context,
-                                  isDismissible: false,
-                                  backgroundColor: Colors.white,
-                                  isScrollControlled: true,
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.vertical(
-                                      top: Radius.circular(16),
-                                    ),
-                                  ),
-                                  builder: (_) => ModesOfAccessBottomSheet(),
-                                );
-                              },
-                              ctaText: addModeOfAccess,
-                            );
-                          }
-
-                          return ListView.builder(
-                            itemCount: productPricingOptions?.length,
-                            physics: NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemBuilder: (BuildContext context, int index) {
-                              final ProductPricingOption? current =
-                                  productPricingOptions![index];
-
-                              return Padding(
-                                padding: const EdgeInsets.only(bottom: 12),
-                                child: ModeOfAccessItem(
-                                  option: current!,
-                                  onCTATap: () {
-                                    context.dispatch(
-                                      SelectProductPricingOptionAction(
-                                        productPricingOption: current,
-                                      ),
-                                    );
-                                    context.router.push(ProductPricingRoute());
-                                  },
-                                ),
-                              );
-                            },
-                          );
-                        },
-                      ),
-                    ],
+                      );
+                    },
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

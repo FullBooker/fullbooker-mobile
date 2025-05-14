@@ -42,9 +42,9 @@ class _AddProductPricingPageState extends State<AddProductPricingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(title: addTicketPrice),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Padding(
-        padding: EdgeInsetsDirectional.symmetric(horizontal: 16),
+      bottomNavigationBar: Container(
+        padding: EdgeInsetsDirectional.all(16),
+        color: Colors.white,
         child: StoreConnector<AppState, ProductSetupViewModel>(
           converter: (Store<AppState> store) =>
               ProductSetupViewModel.fromState(store.state),
