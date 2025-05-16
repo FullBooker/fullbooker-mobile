@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fullbooker/application/core/services/analytics_service.dart';
@@ -19,6 +18,7 @@ import 'package:fullbooker/domain/core/value_objects/analytics_events.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
+import 'package:fullbooker/presentation/onboarding/widgets/already_have_account_banner.dart';
 import 'package:fullbooker/presentation/shared/custom_bottom_nav_container.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
@@ -123,24 +123,7 @@ class VerifyOTPPageState extends State<VerifyOTPPage> {
                   );
                 },
               ),
-              RichText(
-                text: TextSpan(
-                  children: <InlineSpan>[
-                    TextSpan(
-                      text: alreadyHaveAnAccountString,
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                    TextSpan(
-                      text: loginString,
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                            color: Theme.of(context).primaryColor,
-                          ),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () => context.router.replace(LoginRoute()),
-                    ),
-                  ],
-                ),
-              ),
+              AlreadyHaveAccountWidget(),
             ],
           ),
         ),
