@@ -20,7 +20,6 @@ import 'package:fullbooker/presentation/host/product_setup/widgets/pricing_break
 import 'package:fullbooker/presentation/host/product_setup/widgets/ticket_types_dropdown.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/validators.dart';
-import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/custom_dropdown.dart';
 import 'package:fullbooker/shared/widgets/custom_text_input.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
@@ -162,64 +161,58 @@ class _AddProductPricingPageState extends State<AddProductPricingPage> {
                               children: <Widget>[
                                 Flexible(
                                   flex: 3,
-                                  child: context
-                                          .isWaiting(FetchCurrenciesAction)
-                                      ? const AppLoading()
-                                      : CustomDropdown(
-                                          options: vm.currencies
-                                                  ?.whereType<Currency>()
-                                                  .map(
-                                                    (Currency c) =>
-                                                        c.code ?? UNKNOWN,
-                                                  )
-                                                  .where(
-                                                    (String code) =>
-                                                        code.isNotEmpty &&
-                                                        code != UNKNOWN,
-                                                  )
-                                                  .toList() ??
-                                              <String>[],
-                                          value: (vm.selectedCurrency?.code
-                                                          ?.isNotEmpty ??
-                                                      false) &&
-                                                  vm.selectedCurrency?.code !=
-                                                      UNKNOWN
-                                              ? vm.selectedCurrency!.code!
-                                              : (vm.currencies
-                                                      ?.firstWhere(
-                                                        (Currency? c) =>
-                                                            (c?.code?.isNotEmpty ??
-                                                                false) &&
-                                                            c?.code != UNKNOWN,
-                                                        orElse: () => null,
-                                                      )
-                                                      ?.code ??
-                                                  UNKNOWN),
-                                          onChanged: (String? value) {
-                                            if (value != null &&
-                                                value.isNotEmpty) {
-                                              final Currency? selected =
-                                                  vm.currencies?.firstWhere(
-                                                (Currency? c) =>
-                                                    c?.code == value,
-                                                orElse: () => null,
-                                              );
-                                              if (selected != null) {
-                                                context
-                                                    .dispatchAll(<ReduxAction<
-                                                        AppState>>[
-                                                  UpdateHostStateAction(
-                                                    selectedCurrency: selected,
-                                                  ),
-                                                  UpdateSelectedPricingAction(
-                                                    currency: selected.code ??
-                                                        UNKNOWN,
-                                                  ),
-                                                ]);
-                                              }
-                                            }
-                                          },
-                                        ),
+                                  child: CustomDropdown(
+                                    isLoading: context
+                                        .isWaiting(FetchCurrenciesAction),
+                                    options: vm.currencies
+                                            ?.whereType<Currency>()
+                                            .map(
+                                              (Currency c) => c.code ?? UNKNOWN,
+                                            )
+                                            .where(
+                                              (String code) =>
+                                                  code.isNotEmpty &&
+                                                  code != UNKNOWN,
+                                            )
+                                            .toList() ??
+                                        <String>[],
+                                    value: (vm.selectedCurrency?.code
+                                                    ?.isNotEmpty ??
+                                                false) &&
+                                            vm.selectedCurrency?.code != UNKNOWN
+                                        ? vm.selectedCurrency!.code!
+                                        : (vm.currencies
+                                                ?.firstWhere(
+                                                  (Currency? c) =>
+                                                      (c?.code?.isNotEmpty ??
+                                                          false) &&
+                                                      c?.code != UNKNOWN,
+                                                  orElse: () => null,
+                                                )
+                                                ?.code ??
+                                            UNKNOWN),
+                                    onChanged: (String? value) {
+                                      if (value != null && value.isNotEmpty) {
+                                        final Currency? selected =
+                                            vm.currencies?.firstWhere(
+                                          (Currency? c) => c?.code == value,
+                                          orElse: () => null,
+                                        );
+                                        if (selected != null) {
+                                          context.dispatchAll(<ReduxAction<
+                                              AppState>>[
+                                            UpdateHostStateAction(
+                                              selectedCurrency: selected,
+                                            ),
+                                            UpdateSelectedPricingAction(
+                                              currency:
+                                                  selected.code ?? UNKNOWN,
+                                            ),
+                                          ]);
+                                        }
+                                      }
+                                    },
+                                  ),
                                 ),
                                 Flexible(
                                   flex: 9,

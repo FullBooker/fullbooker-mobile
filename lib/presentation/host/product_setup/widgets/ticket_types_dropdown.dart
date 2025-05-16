@@ -8,7 +8,6 @@ import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_setup_view_model.dart';
 import 'package:fullbooker/domain/core/entities/ticket_type.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
-import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/custom_dropdown.dart';
 
 class TicketTypesDropdown extends StatelessWidget {
@@ -37,10 +36,6 @@ class TicketTypesDropdown extends StatelessWidget {
         );
       },
       builder: (BuildContext context, ProductSetupViewModel vm) {
-        if (context.isWaiting(FetchTicketTypesAction)) {
-          return AppLoading();
-        }
-
         final List<TicketType> validTypes = vm.ticketTypes
             .where(
               (TicketType? t) => t != null && (t.name?.isNotEmpty ?? false),
@@ -60,6 +55,7 @@ class TicketTypesDropdown extends StatelessWidget {
                 : _placeholder;
 
         return CustomDropdown(
+          isLoading: context.isWaiting(FetchTicketTypesAction),
           labelText: ticketTypeString,
           options: options,
           fieldKey: fieldKey,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
+import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:heroicons/heroicons.dart';
 
 class CustomDropdown extends StatelessWidget {
@@ -12,6 +13,7 @@ class CustomDropdown extends StatelessWidget {
     this.autovalidateMode,
     this.fieldKey,
     this.validator,
+    this.isLoading = false,
   });
 
   final String? Function(String?)? validator;
@@ -21,6 +23,7 @@ class CustomDropdown extends StatelessWidget {
   final ValueChanged<String?> onChanged;
   final List<String> options;
   final String value;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -33,58 +36,61 @@ class CustomDropdown extends StatelessWidget {
             labelText!,
             style: Theme.of(context).textTheme.titleMedium,
           ),
-        DropdownButtonFormField<String>(
-          key: fieldKey,
-          autovalidateMode: autovalidateMode,
-          value: value,
-          validator: validator,
-          icon: HeroIcon(
-            HeroIcons.chevronDown,
-            color: AppColors.bodyTextColor,
-            size: 20,
-          ),
-          isExpanded: true,
-          decoration: InputDecoration(
-            filled: true,
-            fillColor: AppColors.inputBackgroundColor,
-            contentPadding: const EdgeInsets.all(12),
-            enabledBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: AppColors.borderColor),
-              borderRadius: BorderRadius.all(Radius.circular(8)),
+        if (isLoading)
+          AppLoading()
+        else
+          DropdownButtonFormField<String>(
+            key: fieldKey,
+            autovalidateMode: autovalidateMode,
+            value: value,
+            validator: validator,
+            icon: HeroIcon(
+              HeroIcons.chevronDown,
+              color: AppColors.bodyTextColor,
+              size: 20,
             ),
-            disabledBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey),
-              borderRadius: BorderRadius.all(Radius.circular(8)),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: AppColors.primaryColor.withValues(alpha: 0.4),
+            isExpanded: true,
+            decoration: InputDecoration(
+              filled: true,
+              fillColor: AppColors.inputBackgroundColor,
+              contentPadding: const EdgeInsets.all(12),
+              enabledBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: AppColors.borderColor),
+                borderRadius: BorderRadius.all(Radius.circular(8)),
               ),
-              borderRadius: const BorderRadius.all(Radius.circular(8)),
-            ),
-            errorBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.red),
-              borderRadius: BorderRadius.all(Radius.circular(8)),
-            ),
-            focusedErrorBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.red),
-              borderRadius: BorderRadius.all(Radius.circular(8)),
-            ),
-          ),
-          style: Theme.of(context).textTheme.bodyMedium,
-          items: options
-              .map(
-                (String option) => DropdownMenuItem<String>(
-                  value: option,
-                  child: Text(
-                    option,
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
+              disabledBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey),
+                borderRadius: BorderRadius.all(Radius.circular(8)),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: AppColors.primaryColor.withValues(alpha: 0.4),
                 ),
-              )
-              .toList(),
-          onChanged: onChanged,
-        ),
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
+              ),
+              errorBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.red),
+                borderRadius: BorderRadius.all(Radius.circular(8)),
+              ),
+              focusedErrorBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.red),
+                borderRadius: BorderRadius.all(Radius.circular(8)),
+              ),
+            ),
+            style: Theme.of(context).textTheme.bodyMedium,
+            items: options
+                .map(
+                  (String option) => DropdownMenuItem<String>(
+                    value: option,
+                    child: Text(
+                      option,
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ),
+                )
+                .toList(),
+            onChanged: onChanged,
+          ),
       ],
     );
   }
