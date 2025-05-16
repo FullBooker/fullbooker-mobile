@@ -16,6 +16,7 @@ import 'package:dartz/dartz.dart' as d;
 import 'package:fullbooker/presentation/core/components/generic_zero_state.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/mode_of_access_item.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/modes_of_access_bottom_sheet.dart';
+import 'package:fullbooker/presentation/shared/custom_bottom_nav_container.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
@@ -41,11 +42,7 @@ class ProductModeOfAccessPage extends StatelessWidget {
       child: SafeArea(
         child: Scaffold(
           appBar: CustomAppBar(title: setupEvent),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerFloat,
-          bottomNavigationBar: Container(
-            color: Colors.white,
-            padding: const EdgeInsets.all(12),
+          bottomNavigationBar: CustomBottomNavContainer(
             child: StoreConnector<AppState, ProductSetupViewModel>(
               converter: (Store<AppState> store) =>
                   ProductSetupViewModel.fromState(store.state),
@@ -57,13 +54,23 @@ class ProductModeOfAccessPage extends StatelessWidget {
                 final bool isEditing = vm.workflowState == WorkflowState.VIEW;
 
                 return Row(
-                  spacing: 12,
+                  spacing: 16,
                   children: <Widget>[
                     Flexible(
                       child: SecondaryButton(
                         addBorder: true,
-                        onPressed: () => context.router.maybePop(),
-                        child: d.right(previousString),
+                        onPressed: () {
+                          isEditing
+                              ? context.router.popUntil(
+                                  (Route<dynamic> route) =>
+                                      route.settings.name ==
+                                      ProductReviewAndSubmitRoute.name,
+                                )
+                              : context.router.maybePop();
+                        },
+                        child: d.right(
+                          isEditing ? backToPreview : previousString,
+                        ),
                         fillColor: Colors.white,
                       ),
                     ),

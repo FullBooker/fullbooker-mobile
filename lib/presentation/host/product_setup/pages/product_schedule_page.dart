@@ -20,6 +20,7 @@ import 'package:fullbooker/presentation/host/product_setup/widgets/repeats_daily
 import 'package:fullbooker/presentation/host/product_setup/widgets/repeats_monthly_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/repeats_weekly_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/repeats_yearly_widget.dart';
+import 'package:fullbooker/presentation/shared/custom_bottom_nav_container.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/custom_dropdown.dart';
@@ -36,9 +37,7 @@ class ProductSchedulePage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: CustomAppBar(title: setupEvent),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
+        bottomNavigationBar: CustomBottomNavContainer(
           child: StoreConnector<AppState, ProductSetupViewModel>(
             converter: (Store<AppState> store) =>
                 ProductSetupViewModel.fromState(store.state),

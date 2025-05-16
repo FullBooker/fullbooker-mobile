@@ -16,6 +16,7 @@ import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:dartz/dartz.dart' as d;
 import 'package:fullbooker/presentation/core/components/custom_chip_widget.dart';
 import 'package:fullbooker/presentation/core/components/generic_zero_state.dart';
+import 'package:fullbooker/presentation/shared/custom_bottom_nav_container.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
@@ -27,142 +28,142 @@ class ProductSubCategoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(title: setupProductCategory),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16),
-        child: StoreConnector<AppState, ProductSetupViewModel>(
-          converter: (Store<AppState> store) =>
-              ProductSetupViewModel.fromState(store.state),
-          builder: (BuildContext context, ProductSetupViewModel vm) {
-            if (context.isWaiting(UpdateProductCategoryAction)) {
-              return AppLoading();
-            }
+    return SafeArea(
+      child: Scaffold(
+        appBar: CustomAppBar(title: setupProductCategory),
+        bottomNavigationBar: CustomBottomNavContainer(
+          child: StoreConnector<AppState, ProductSetupViewModel>(
+            converter: (Store<AppState> store) =>
+                ProductSetupViewModel.fromState(store.state),
+            builder: (BuildContext context, ProductSetupViewModel vm) {
+              if (context.isWaiting(UpdateProductCategoryAction)) {
+                return AppLoading();
+              }
 
-            final bool isEdit = vm.workflowState == WorkflowState.VIEW;
+              final bool isEdit = vm.workflowState == WorkflowState.VIEW;
 
-            return Row(
-              spacing: 16,
-              children: <Widget>[
-                Flexible(
-                  child: SecondaryButton(
-                    addBorder: true,
-                    onPressed: () {
-                      isEdit
-                          ? context.router.popUntil(
-                              (Route<dynamic> route) =>
-                                  route.settings.name ==
-                                  ProductReviewAndSubmitRoute.name,
-                            )
-                          : context.router.maybePop();
-                    },
-                    child: d.right(isEdit ? backToPreview : previousString),
-                    fillColor: Colors.transparent,
-                  ),
-                ),
-                Flexible(
-                  child: PrimaryButton(
-                    onPressed: () {
-                      if (vm.subCategory?.id == UNKNOWN) {
-                        showAlertDialog(
-                          context: context,
-                          assetPath: productZeroStateSVGPath,
-                          description: selectSubCategoryPrompt,
-                        );
-                      } else if (isEdit) {
-                        context.dispatch(
-                          UpdateProductCategoryAction(
-                            client: AppWrapperBase.of(context)!.customClient,
-                            onSuccess: () => context.router.popUntil(
-                              (Route<dynamic> route) =>
-                                  route.settings.name ==
-                                  ProductReviewAndSubmitRoute.name,
-                            ),
-                          ),
-                        );
-                      } else {
-                        context.router.push(ProductSetupPreviewRoute());
-                      }
-                    },
-                    child: d.right(continueString),
-                  ),
-                ),
-              ],
-            );
-          },
-        ),
-      ),
-      body: ListView(
-        padding: EdgeInsets.symmetric(horizontal: 16),
-        children: <Widget>[
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 12,
-            children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: 8,
+              return Row(
+                spacing: 16,
                 children: <Widget>[
-                  Text(
-                    categoryStep2,
-                    style: Theme.of(context).textTheme.titleSmall,
+                  Flexible(
+                    child: SecondaryButton(
+                      addBorder: true,
+                      onPressed: () {
+                        isEdit
+                            ? context.router.popUntil(
+                                (Route<dynamic> route) =>
+                                    route.settings.name ==
+                                    ProductReviewAndSubmitRoute.name,
+                              )
+                            : context.router.maybePop();
+                      },
+                      child: d.right(isEdit ? backToPreview : previousString),
+                      fillColor: Colors.transparent,
+                    ),
                   ),
-                  Text(
-                    productCategory,
-                    style: Theme.of(context).textTheme.headlineSmall,
-                  ),
-                  Text(
-                    productCategoryCopy,
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                ],
-              ),
-              StoreConnector<AppState, ProductSetupViewModel>(
-                converter: (Store<AppState> store) =>
-                    ProductSetupViewModel.fromState(store.state),
-                builder: (BuildContext context, ProductSetupViewModel vm) {
-                  if (context.isWaiting(UpdateProductCategoryAction)) {
-                    return AppLoading();
-                  }
-
-                  final List<ProductCategory?>? subCategories =
-                      vm.subCategories;
-
-                  if (subCategories?.isEmpty ?? true) {
-                    return GenericZeroState(
-                      iconPath: setupZeroStateSVGPath,
-                      title: noCategoriesFound,
-                      description: noCategoriesFoundCopy,
-                      onCTATap: () {},
-                      ctaText: tryAgain,
-                    );
-                  }
-
-                  return Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
-                    children: subCategories?.map((ProductCategory? current) {
-                          final bool selected =
-                              current?.id == vm.subCategory?.id;
-
-                          return CustomChipWidget(
-                            value: current?.name ?? '',
-                            isSelected: selected,
-                            onTap: () => context.dispatch(
-                              UpdateProductAction(
-                                selectedSubCategory: current,
+                  Flexible(
+                    child: PrimaryButton(
+                      onPressed: () {
+                        if (vm.subCategory?.id == UNKNOWN) {
+                          showAlertDialog(
+                            context: context,
+                            assetPath: productZeroStateSVGPath,
+                            description: selectSubCategoryPrompt,
+                          );
+                        } else if (isEdit) {
+                          context.dispatch(
+                            UpdateProductCategoryAction(
+                              client: AppWrapperBase.of(context)!.customClient,
+                              onSuccess: () => context.router.popUntil(
+                                (Route<dynamic> route) =>
+                                    route.settings.name ==
+                                    ProductReviewAndSubmitRoute.name,
                               ),
                             ),
                           );
-                        }).toList() ??
-                        <Widget>[],
-                  );
-                },
-              ),
-            ],
+                        } else {
+                          context.router.push(ProductSetupPreviewRoute());
+                        }
+                      },
+                      child: d.right(continueString),
+                    ),
+                  ),
+                ],
+              );
+            },
           ),
-        ],
+        ),
+        body: ListView(
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          children: <Widget>[
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              spacing: 12,
+              children: <Widget>[
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  spacing: 8,
+                  children: <Widget>[
+                    Text(
+                      categoryStep2,
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
+                    Text(
+                      productCategory,
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    ),
+                    Text(
+                      productCategoryCopy,
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ],
+                ),
+                StoreConnector<AppState, ProductSetupViewModel>(
+                  converter: (Store<AppState> store) =>
+                      ProductSetupViewModel.fromState(store.state),
+                  builder: (BuildContext context, ProductSetupViewModel vm) {
+                    if (context.isWaiting(UpdateProductCategoryAction)) {
+                      return AppLoading();
+                    }
+
+                    final List<ProductCategory?>? subCategories =
+                        vm.subCategories;
+
+                    if (subCategories?.isEmpty ?? true) {
+                      return GenericZeroState(
+                        iconPath: setupZeroStateSVGPath,
+                        title: noCategoriesFound,
+                        description: noCategoriesFoundCopy,
+                        onCTATap: () {},
+                        ctaText: tryAgain,
+                      );
+                    }
+
+                    return Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: subCategories?.map((ProductCategory? current) {
+                            final bool selected =
+                                current?.id == vm.subCategory?.id;
+
+                            return CustomChipWidget(
+                              value: current?.name ?? '',
+                              isSelected: selected,
+                              onTap: () => context.dispatch(
+                                UpdateProductAction(
+                                  selectedSubCategory: current,
+                                ),
+                              ),
+                            );
+                          }).toList() ??
+                          <Widget>[],
+                    );
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

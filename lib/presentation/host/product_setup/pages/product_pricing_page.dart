@@ -15,10 +15,10 @@ import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:dartz/dartz.dart' as d;
 import 'package:fullbooker/presentation/core/components/generic_zero_state.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/pricing_card_widget.dart';
+import 'package:fullbooker/presentation/shared/custom_bottom_nav_container.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
-import 'package:fullbooker/shared/widgets/secondary_button.dart';
 import 'package:heroicons/heroicons.dart';
 
 @RoutePage()
@@ -39,43 +39,22 @@ class ProductPricingPage extends StatelessWidget {
       child: Scaffold(
         appBar: CustomAppBar(title: setupEvent),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        bottomNavigationBar: Container(
-          padding: EdgeInsets.all(12),
-          color: Colors.white,
+        bottomNavigationBar: CustomBottomNavContainer(
           child: StoreConnector<AppState, ProductSetupViewModel>(
             converter: (Store<AppState> store) =>
                 ProductSetupViewModel.fromState(store.state),
             builder: (BuildContext context, ProductSetupViewModel vm) {
-              if (context.isWaiting(FetchProductPricingAction)) {
-                return AppLoading();
-              }
-              final bool isEditing = vm.workflowState == WorkflowState.VIEW;
-
               return Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 spacing: 12,
                 children: <Widget>[
                   Flexible(
-                    child: SecondaryButton(
-                      addBorder: true,
-                      onPressed: () {
-                        isEditing
-                            ? context.router.popUntil(
-                                (Route<dynamic> route) =>
-                                    route.settings.name ==
-                                    ProductReviewAndSubmitRoute.name,
-                              )
-                            : context.router.maybePop();
-                      },
-                      child: d.right(
-                        isEditing ? backToPreview : previousString,
-                      ),
-                      fillColor: Colors.transparent,
-                    ),
-                  ),
-                  Flexible(
                     child: PrimaryButton(
+                      isLoading: context.isWaiting(FetchProductPricingAction),
                       onPressed: () {
+                        final bool isEditing =
+                            vm.workflowState == WorkflowState.VIEW;
+
                         if (isEditing) {
                           context.router.popUntil(
                             (Route<dynamic> route) =>

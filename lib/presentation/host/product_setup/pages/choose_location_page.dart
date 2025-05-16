@@ -9,6 +9,7 @@ import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/infrastructure/location/location_handler.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
+import 'package:fullbooker/presentation/shared/custom_bottom_nav_container.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/custom_text_input.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
@@ -173,20 +174,7 @@ class _ChooseLocationPageState extends State<ChooseLocationPage> {
     return SafeArea(
       child: Scaffold(
         appBar: CustomAppBar(title: pickLocation),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            boxShadow: <BoxShadow>[
-              BoxShadow(
-                color: AppColors.bodyTextColor.withAlpha(25),
-                blurRadius: 6,
-                offset: const Offset(0, -2),
-              ),
-            ],
-          ),
+        bottomNavigationBar: CustomBottomNavContainer(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             spacing: 12,
