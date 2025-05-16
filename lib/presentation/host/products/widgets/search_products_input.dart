@@ -20,11 +20,16 @@ class SearchProductsInput extends StatefulWidget {
 }
 
 class _SearchProductsInputState extends State<SearchProductsInput> {
-  late TextEditingController _controller;
-
-  late Timer _debounce = Timer(Duration.zero, () {});
-
+  late final TextEditingController _controller;
+  Timer? _debounce;
   String _searchQuery = '';
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    _debounce?.cancel();
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -32,39 +37,49 @@ class _SearchProductsInputState extends State<SearchProductsInput> {
     _controller = TextEditingController();
   }
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    _debounce.cancel();
-    super.dispose();
-  }
-
   void _onSearchChanged(String query) {
-    setState(() {
-      _searchQuery = query;
-    });
+    _debounce?.cancel();
 
-    if (_debounce.isActive) {
-      _debounce.cancel();
-    }
+    setState(() => _searchQuery = query);
 
-    _debounce = Timer(const Duration(milliseconds: 1500), () {
-      if (_searchQuery.length >= 3) {
-        context.dispatch(
-          UpdateProductSearchAction(
-            searchParam: _searchQuery,
-            isSearching: true,
-          ),
-        );
+    context.dispatch(
+      UpdateProductSearchAction(searchParam: query, isSearching: true),
+    );
 
-        context.dispatch(
+    _debounce = Timer(const Duration(milliseconds: 1000), () async {
+      if (_searchQuery.length >= 2) {
+        await context.dispatch(
           FetchProductsAction(
             searchParam: _searchQuery,
             client: AppWrapperBase.of(context)!.customClient,
+            onDone: () {
+              context.dispatch(UpdateProductSearchAction(isSearching: false));
+            },
           ),
         );
+        context.dispatch(UpdateProductSearchAction(isSearching: false));
+      } else {
+        return;
       }
+      FocusScope.of(context).unfocus();
     });
+  }
+
+  void _clearSearch() {
+    _controller.clear();
+    _debounce?.cancel();
+    setState(() => _searchQuery = '');
+    context.dispatch(
+      UpdateProductSearchAction(
+        searchParam: '',
+        isSearching: false,
+      ),
+    );
+    context.dispatch(
+      FetchProductsAction(
+        client: AppWrapperBase.of(context)!.customClient,
+      ),
+    );
   }
 
   @override
@@ -74,47 +89,36 @@ class _SearchProductsInputState extends State<SearchProductsInput> {
           ProductsPageViewModel.fromState(store.state),
       builder: (BuildContext context, ProductsPageViewModel vm) {
         return Column(
-          spacing: 8,
           crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 8,
           children: <Widget>[
             CustomTextInput(
               hintText: searchProducts,
-              autovalidateMode: AutovalidateMode.onUserInteraction,
               controller: _controller,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
               onChanged: _onSearchChanged,
               keyboardType: TextInputType.text,
               prefixIconData: HeroIcons.magnifyingGlass,
               suffixIconData:
                   _searchQuery.isNotEmpty ? HeroIcons.xCircle : null,
-              suffixIconFunc: () {
-                _controller.clear();
-                context.dispatch(
-                  UpdateProductSearchAction(
-                    isSearching: false,
-                    searchParam: UNKNOWN,
-                  ),
-                );
-                context.dispatch(
-                  FetchProductsAction(
-                    client: AppWrapperBase.of(context)!.customClient,
-                  ),
-                );
-                setState(() {
-                  _searchQuery = '';
-                });
-              },
+              suffixIconFunc: _clearSearch,
             ),
-            if (vm.isSearching)
-              RichText(
-                text: TextSpan(
-                  style: Theme.of(context).textTheme.bodyMedium,
-                  children: <InlineSpan>[
-                    TextSpan(text: showingResults),
-                    TextSpan(
-                      text: vm.searchParam,
-                      style: Theme.of(context).textTheme.titleSmall,
-                    ),
-                  ],
+            if (!vm.isSearching &&
+                vm.searchParam.isNotEmpty &&
+                vm.searchParam != UNKNOWN)
+              Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: RichText(
+                  text: TextSpan(
+                    style: Theme.of(context).textTheme.bodyMedium,
+                    children: <InlineSpan>[
+                      TextSpan(text: showingResults),
+                      TextSpan(
+                        text: vm.searchParam,
+                        style: Theme.of(context).textTheme.titleSmall,
+                      ),
+                    ],
+                  ),
                 ),
               ),
           ],

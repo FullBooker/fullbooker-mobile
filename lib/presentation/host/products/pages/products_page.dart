@@ -43,6 +43,10 @@ class ProductsPage extends StatelessWidget {
       bottomNavigationBar: const BottomNavBar(),
       appBar: CustomAppBar(
         title: productsString,
+        onLeadingTap: () => context.router.popUntil(
+          (Route<dynamic> route) =>
+              route.settings.name == HostingHomeRoute.name,
+        ),
       ),
       floatingActionButton: GestureDetector(
         onTap: () {
