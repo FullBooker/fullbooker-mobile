@@ -27,8 +27,8 @@ class ProductsPageViewModel extends Vm {
   static ProductsPageViewModel fromState(AppState state) {
     return ProductsPageViewModel(
       products: state.hostState?.products ?? <Product>[],
-      isSearching: state.hostState?.isSearching ?? false,
-      searchParam: state.hostState?.searchParam ?? UNKNOWN,
+      isSearching: state.hostState?.isSearchingProducts ?? false,
+      searchParam: state.hostState?.productSearchParam ?? UNKNOWN,
       selectedProductStatus:
           state.hostState?.selectedProductStatusFilter ?? ProductStatus.all,
     );

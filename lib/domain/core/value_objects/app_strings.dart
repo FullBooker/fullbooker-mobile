@@ -549,8 +549,7 @@ String serviceFeeDisclaimer(double percentage) =>
 
 const String priceHint = 'Enter an amount';
 
-String maximumTickets(String ticketType) =>
-    'Maximum number of $ticketType tickets';
+String maximumTickets = 'Maximum number of tickets';
 const String maxTicketsHint = 'Enter max no of tickets';
 
 const String discountLabel = 'Discount(optional)';
@@ -623,7 +622,7 @@ const String addDateTimeError =
 
 const String selectCurrencyHint = 'Choose currency';
 
-const String pricingBreakdown = 'Pricing breakdown';
+const String pricingBreakdownString = 'Pricing breakdown';
 
 String serviceFeeLabel({
   required String currency,
@@ -761,8 +760,10 @@ const String noPricingAddedCopy =
 
 const String addPricingString = 'Add Pricing';
 
+const String ticketTypeString = 'Ticket type';
 const String selectTicketType = 'Select ticket type';
 const String selectTicketTypeCopy = 'Choose your preferred ticket type';
+const String selectValidTicketTypePrompt = 'Please select a ticket type';
 
 const String chooseTicketType = 'Choose a ticket type';
 const String addString = 'Add';

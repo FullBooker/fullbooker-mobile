@@ -14,6 +14,7 @@ import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:dartz/dartz.dart' as d;
+import 'package:fullbooker/presentation/shared/custom_bottom_nav_container.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/validators.dart';
 import 'package:fullbooker/shared/widgets/custom_text_input.dart';
@@ -46,21 +47,19 @@ class _ProductBasicDetailsPageState extends State<ProductBasicDetailsPage> {
     return SafeArea(
       child: Scaffold(
         appBar: CustomAppBar(title: setupEvent),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: StoreConnector<AppState, ProductSetupViewModel>(
-          converter: (Store<AppState> store) =>
-              ProductSetupViewModel.fromState(store.state),
-          builder: (BuildContext context, ProductSetupViewModel vm) {
-            final bool isLoading = context.isWaiting(<Type>[
-              CreateProductBasicDetailsAction,
-              UpdateProductBasicDetailsAction,
-            ]);
+        bottomNavigationBar: CustomBottomNavContainer(
+          child: StoreConnector<AppState, ProductSetupViewModel>(
+            converter: (Store<AppState> store) =>
+                ProductSetupViewModel.fromState(store.state),
+            builder: (BuildContext context, ProductSetupViewModel vm) {
+              final bool isLoading = context.isWaiting(<Type>[
+                CreateProductBasicDetailsAction,
+                UpdateProductBasicDetailsAction,
+              ]);
 
-            final bool isCreate = vm.workflowState == WorkflowState.CREATE;
+              final bool isCreate = vm.workflowState == WorkflowState.CREATE;
 
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Row(
+              return Row(
                 spacing: 16,
                 children: <Widget>[
                   Flexible(
@@ -128,9 +127,9 @@ class _ProductBasicDetailsPageState extends State<ProductBasicDetailsPage> {
                     ),
                   ),
                 ],
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
         body: StoreConnector<AppState, ProductSetupViewModel>(
           converter: (Store<AppState> store) =>
@@ -182,7 +181,7 @@ class _ProductBasicDetailsPageState extends State<ProductBasicDetailsPage> {
                             labelText: '$nameString*',
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
-                            validator: validateProductName,
+                            validator: Validators.validateProductName,
                             keyboardType: TextInputType.name,
                           ),
                           CustomTextInput(

@@ -41,8 +41,10 @@ class RequestOtpAction extends ReduxAction<AppState> {
       'identifier': resetEmailAddress,
     };
 
+    final String endpoint = GetIt.I.get<AppConfig>().requestOTPEndpoint;
+
     final Response httpResponse = await client.callRESTAPI(
-      endpoint: GetIt.I.get<AppConfig>().requestOTPEndpoint,
+      endpoint: endpoint,
       authenticated: false,
       method: APIMethods.POST.name.toUpperCase(),
       variables: data,

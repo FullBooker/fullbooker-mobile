@@ -133,3 +133,5 @@ int kTokenRefreshDurationMinutes = 1;
 int kRefreshTokenExpiryDurationHours = 22;
 
 const String kTicketPricingType = 'ticket';
+
+const String kBookingPriceType = 'booking';

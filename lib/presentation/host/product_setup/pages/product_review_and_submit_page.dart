@@ -29,6 +29,7 @@ import 'package:fullbooker/presentation/host/product_setup/widgets/product_repea
 import 'package:fullbooker/presentation/host/products/widgets/min_zero_state.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_alert_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/product_schedule_widget.dart';
+import 'package:fullbooker/presentation/shared/custom_bottom_nav_container.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
@@ -52,9 +53,7 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: CustomAppBar(title: setupEvent),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 12),
+        bottomNavigationBar: CustomBottomNavContainer(
           child: StoreConnector<AppState, ProductReviewViewModel>(
             converter: (Store<AppState> store) =>
                 ProductReviewViewModel.fromState(store.state),
@@ -69,7 +68,7 @@ class ProductReviewAndSubmitPage extends StatelessWidget {
               if (status != ProductStatus.draft) return SizedBox.shrink();
 
               return Row(
-                spacing: 12,
+                spacing: 16,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Flexible(

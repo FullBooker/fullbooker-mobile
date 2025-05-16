@@ -53,6 +53,6 @@ class FetchPricingOptionsAction extends ReduxAction<AppState> {
       UpdateHostStateAction(pricingOptions: pricingOptionResponse.results),
     );
 
-    return state;
+    return null;
   }
 }

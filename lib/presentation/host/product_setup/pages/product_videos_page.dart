@@ -16,6 +16,7 @@ import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:dartz/dartz.dart' as d;
 import 'package:fullbooker/presentation/host/product_setup/widgets/upload_media_zero_state.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/video_card.dart';
+import 'package:fullbooker/presentation/shared/custom_bottom_nav_container.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
@@ -29,18 +30,15 @@ class ProductVideosPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(title: setupEvent),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: StoreConnector<AppState, ProductSetupViewModel>(
-        converter: (Store<AppState> store) =>
-            ProductSetupViewModel.fromState(store.state),
-        builder: (BuildContext context, ProductSetupViewModel vm) {
-          final bool isEditing = vm.workflowState == WorkflowState.VIEW;
+      bottomNavigationBar: CustomBottomNavContainer(
+        child: StoreConnector<AppState, ProductSetupViewModel>(
+          converter: (Store<AppState> store) =>
+              ProductSetupViewModel.fromState(store.state),
+          builder: (BuildContext context, ProductSetupViewModel vm) {
+            final bool isEditing = vm.workflowState == WorkflowState.VIEW;
 
-          return Container(
-            color: Colors.white,
-            padding: EdgeInsets.all(16),
-            child: Row(
-              spacing: 12,
+            return Row(
+              spacing: 16,
               children: <Widget>[
                 Flexible(
                   child: SecondaryButton(
@@ -77,9 +75,9 @@ class ProductVideosPage extends StatelessWidget {
                   ),
                 ),
               ],
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16),

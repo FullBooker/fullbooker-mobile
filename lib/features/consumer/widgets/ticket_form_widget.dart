@@ -130,7 +130,7 @@ class _TicketFormWidgetState extends State<TicketFormWidget> {
                     Icons.email,
                     emailAddressString,
                     controller: emailController,
-                    validator: validateEmail,
+                    validator: Validators.validateEmail,
                   ),
                   GestureDetector(
                     onTap: onAddClicked,

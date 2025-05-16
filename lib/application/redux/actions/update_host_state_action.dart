@@ -2,6 +2,7 @@ import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/states/host_state.dart';
 import 'package:fullbooker/domain/core/entities/currency.dart';
+import 'package:fullbooker/domain/core/entities/pricing_breakdown.dart';
 import 'package:fullbooker/domain/core/entities/pricing_option.dart';
 import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/entities/product_location.dart';
@@ -25,6 +26,8 @@ class UpdateHostStateAction extends ReduxAction<AppState> {
     this.selectedBookingTickets,
     this.productPricingOptions,
     this.ticketTypes,
+    this.selectedPricingOptionIds,
+    this.currentPricingBreakdown,
   });
 
   final Product? contextProduct;
@@ -39,18 +42,20 @@ class UpdateHostStateAction extends ReduxAction<AppState> {
   final List<ProductPricingOption?>? productPricingOptions;
   final List<Ticket?>? selectedBookingTickets;
   final List<TicketType?>? ticketTypes;
+  final List<String?>? selectedPricingOptionIds;
+  final PricingBreakdown? currentPricingBreakdown;
 
   @override
   AppState? reduce() {
     final HostState? host = state.hostState;
     if (host == null) return state;
 
-    final $HostStateCopyWith<AppState>? hostBuilder = state.copyWith.hostState;
-    if (hostBuilder == null) return state;
+    final $HostStateCopyWith<AppState>? stateBuilder = state.copyWith.hostState;
+    if (stateBuilder == null) return state;
 
     final bool isCreate = host.workflowState == WorkflowState.CREATE;
 
-    return hostBuilder.call(
+    return stateBuilder.call(
       currentProduct: isCreate
           ? (contextProduct ?? host.currentProduct)
           : host.currentProduct,
@@ -71,6 +76,10 @@ class UpdateHostStateAction extends ReduxAction<AppState> {
       productPricingOptions:
           productPricingOptions ?? host.productPricingOptions,
       ticketTypes: ticketTypes ?? host.ticketTypes,
+      selectedPricingOptionIds:
+          selectedPricingOptionIds ?? host.selectedPricingOptionIds,
+      currentPricingBreakdown:
+          currentPricingBreakdown ?? host.currentPricingBreakdown,
     );
   }
 }

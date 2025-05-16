@@ -1,29 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
+import 'package:fullbooker/domain/core/entities/pricing_breakdown.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 
 class PricingBreakDownWidget extends StatelessWidget {
   const PricingBreakDownWidget({
     super.key,
-    required this.ticketPrice,
+    required this.pricingBreakdown,
     required this.buyerPaysFee,
     required this.onToggleFeeResponsibility,
     required this.selectedCurrency,
   });
 
-  final double ticketPrice;
+  final PricingBreakdown? pricingBreakdown;
   final bool buyerPaysFee;
   final VoidCallback onToggleFeeResponsibility;
   final String selectedCurrency;
 
   @override
   Widget build(BuildContext context) {
-    final double serviceFee = (ticketPrice * 0.07) + kBasePlatformFee;
-    final double yourBuyersPay =
-        buyerPaysFee ? ticketPrice + serviceFee : ticketPrice;
-    final double yourRevenue =
-        buyerPaysFee ? ticketPrice : ticketPrice - serviceFee;
+    final double serviceFee = pricingBreakdown!.feeCharged;
+    final double yourBuyersPay = buyerPaysFee
+        ? pricingBreakdown!.buyersPayWithFees
+        : pricingBreakdown!.buyersPayWithoutFees;
+    final double yourRevenue = buyerPaysFee
+        ? pricingBreakdown!.revenueIfBuyersPay
+        : pricingBreakdown!.revenue;
+
     final double total = yourBuyersPay;
 
     return Container(
@@ -37,7 +41,7 @@ class PricingBreakDownWidget extends StatelessWidget {
         spacing: 16,
         children: <Widget>[
           Text(
-            pricingBreakdown,
+            pricingBreakdownString,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   color: Theme.of(context).primaryColor,
                 ),
@@ -111,6 +115,7 @@ class PricingBreakDownWidget extends StatelessWidget {
               ),
             ),
           ),
+          Divider(thickness: 0.2),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[

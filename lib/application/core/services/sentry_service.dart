@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:http/http.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -21,7 +22,8 @@ class SentryService {
     await SentryFlutter.init(
       (SentryFlutterOptions options) {
         options
-          ..dsn = dsn
+          ..dsn = kDebugMode ? '' : dsn
+          ..debug = kDebugMode
           ..environment = environment
           ..enableNativeCrashHandling = enableNativeCrashHandling
           ..tracesSampleRate = tracesSampleRate;

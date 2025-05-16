@@ -27,6 +27,7 @@ class CustomTextInput extends StatelessWidget {
     this.prefixIconActive = false,
     this.suffixIconActive = false,
     this.controller,
+    this.textInputAction,
   }) : super(key: inputKey);
 
   final String? Function(String? value)? validator;
@@ -49,6 +50,7 @@ class CustomTextInput extends StatelessWidget {
   final bool prefixIconActive;
   final bool suffixIconActive;
   final TextEditingController? controller;
+  final TextInputAction? textInputAction;
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +74,7 @@ class CustomTextInput extends StatelessWidget {
           maxLines: maxLines,
           autofillHints: autofillHints,
           inputFormatters: inputFormatters,
+          textInputAction: textInputAction,
           autovalidateMode: autoValidate ?? false
               ? AutovalidateMode.always
               : AutovalidateMode.disabled,

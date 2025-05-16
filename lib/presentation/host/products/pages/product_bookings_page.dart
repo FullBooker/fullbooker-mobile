@@ -15,6 +15,8 @@ import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:fullbooker/presentation/core/components/generic_zero_state.dart';
 import 'package:fullbooker/presentation/host/products/widgets/booking_list_item_widget.dart';
+import 'package:fullbooker/presentation/host/products/widgets/search_product_bookings_input.dart';
+import 'package:fullbooker/presentation/shared/custom_bottom_nav_container.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:heroicons/heroicons.dart';
@@ -35,8 +37,7 @@ class ProductBookingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(title: productBookings),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+      bottomNavigationBar: CustomBottomNavContainer(
         child: PrimaryButton(
           onPressed: () => context.router.push(ScanTicketsRoute()),
           customRadius: 100,
@@ -106,6 +107,7 @@ class ProductBookingsPage extends StatelessWidget {
                 ),
 
                 // TODO(abiud): add filter groups here
+                SearchProductBookingsInput(),
 
                 StoreConnector<AppState, ProductsBookingsViewModel>(
                   converter: (Store<AppState> store) =>
@@ -141,36 +143,21 @@ class ProductBookingsPage extends StatelessWidget {
                       );
                     }
 
-                    return Column(
-                      spacing: 16,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        // TODO(abiud): restore this when we link bookings search
-                        // CustomTextInput(
-                        //   hintText: searchBookingsHint,
-                        //   autovalidateMode:
-                        //       AutovalidateMode.onUserInteraction,
-                        //   onChanged: (String param) {},
-                        //   keyboardType: TextInputType.name,
-                        //   prefixIconData: HeroIcons.magnifyingGlass,
-                        // ),
-                        ListView.builder(
-                          itemCount: vm.bookings?.length,
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          padding: EdgeInsets.only(bottom: 100),
-                          itemBuilder: (BuildContext context, int index) {
-                            final Booking? current = vm.bookings![index];
+                    return ListView.builder(
+                      itemCount: vm.bookings?.length,
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      padding: EdgeInsets.only(bottom: 100),
+                      itemBuilder: (BuildContext context, int index) {
+                        final Booking? current = vm.bookings![index];
 
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 4,
-                              ),
-                              child: BookingListItem(booking: current!),
-                            );
-                          },
-                        ),
-                      ],
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 4,
+                          ),
+                          child: BookingListItem(booking: current!),
+                        );
+                      },
                     );
                   },
                 ),

@@ -2,129 +2,128 @@ import 'package:fullbooker/shared/entities/regexes.dart';
 
 // Login
 
-String? validateEmail(String? email, {bool isOptional = false}) {
-  final String? trimmedEmail = email?.trim();
+class Validators {
+  static String? validateEmail(String? email, {bool isOptional = false}) {
+    final String? trimmedEmail = email?.trim();
 
-  // If nothing was entered…
-  if (trimmedEmail == null || trimmedEmail.isEmpty) {
-    return isOptional ? null : 'Please enter your email address.';
+    // If nothing was entered…
+    if (trimmedEmail == null || trimmedEmail.isEmpty) {
+      return isOptional ? null : 'Please enter your email address.';
+    }
+
+    final bool emailValid = validEmailRegex.hasMatch(trimmedEmail);
+    if (!emailValid) return 'Please enter a valid email';
+    return null;
   }
 
-  final bool emailValid = validEmailRegex.hasMatch(trimmedEmail);
-  if (!emailValid) return 'Please enter a valid email';
-  return null;
-}
+  static String? validatePassword(String? password) {
+    final String? trimmedPass = password?.trim();
 
-String? validatePassword(String? password) {
-  final String? trimmedPass = password?.trim();
+    if (trimmedPass == null || trimmedPass.trim().isEmpty) {
+      return 'Please enter your password.';
+    }
 
-  if (trimmedPass == null || trimmedPass.trim().isEmpty) {
-    return 'Please enter your password.';
+    if (trimmedPass.length < 8) {
+      return 'Password must be at least 8 characters';
+    }
+
+    return null;
   }
 
-  if (trimmedPass.length < 8) {
-    return 'Password must be at least 8 characters';
+  static String? validateConfirmPassword(
+    String? confirmPassword,
+    String? currentPassword,
+  ) {
+    final String? trimmedConfirmPass = confirmPassword?.trim();
+
+    if (trimmedConfirmPass == null || trimmedConfirmPass.isEmpty) {
+      return 'Please confirm your password.';
+    }
+
+    if (trimmedConfirmPass.length < 8) {
+      return 'Confirm password must be at least 8 characters';
+    }
+
+    if (currentPassword?.trim() != trimmedConfirmPass) {
+      return 'Passwords don\'t match.';
+    }
+
+    return null;
   }
 
-  return null;
-}
+  static String? validateName(
+    String? name, {
+    required String fieldName,
+    bool isOptional = false,
+  }) {
+    final String? trimmedName = name?.trim();
 
-String? validateConfirmPassword(
-  String? confirmPassword,
-  String? currentPassword,
-) {
-  final String? trimmedConfirmPass = confirmPassword?.trim();
+    if (trimmedName == null || trimmedName.isEmpty) {
+      return isOptional ? null : 'Please enter your $fieldName.';
+    }
 
-  if (trimmedConfirmPass == null || trimmedConfirmPass.isEmpty) {
-    return 'Please confirm your password.';
+    if (trimmedName.length < 2) {
+      return '$fieldName is too short.';
+    }
+
+    return null;
   }
 
-  if (trimmedConfirmPass.length < 8) {
-    return 'Confirm password must be at least 8 characters';
+  static String? validateProductName(String? name) {
+    final String? trimmedName = name?.trim();
+
+    if (trimmedName == null || trimmedName.isEmpty) {
+      return 'Please name your product';
+    }
+
+    if (trimmedName.length < 3) {
+      return 'Product name is too short.';
+    }
+
+    return null;
   }
 
-  if (currentPassword?.trim() != trimmedConfirmPass) {
-    return 'Passwords don\'t match.';
+  static String? validateAmount(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'Amount is required';
+    }
+
+    final double? parsed = double.tryParse(value);
+    if (parsed == null) {
+      return 'Please enter a valid amount';
+    }
+
+    if (parsed < 150) {
+      return 'Amount must be at least 150';
+    }
+
+    if (parsed > 1000000) {
+      return 'Amount must not exceed 1,000,000';
+    }
+
+    return null;
   }
 
-  return null;
-}
+  static String? validateMaxTickets(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'Please enter max tickets';
+    }
 
-String? validateName(
-  String? name, {
-  required String fieldName,
-  bool isOptional = false,
-}) {
-  final String? trimmedName = name?.trim();
+    final int? parsed = int.tryParse(value);
+    if (parsed == null) {
+      return 'Enter a valid number';
+    }
 
-  if (trimmedName == null || trimmedName.isEmpty) {
-    return isOptional ? null : 'Please enter your $fieldName.';
+    if (parsed < 1) {
+      return 'At least one ticket is required';
+    }
+
+    if (parsed > 100000) {
+      return 'Tickets must not exceed 10,000';
+    }
+
+    return null;
   }
-
-  if (trimmedName.length < 2) {
-    return '$fieldName is too short.';
-  }
-
-  return null;
-}
-
-String? validateProductName(
-  String? name, {
-  bool isOptional = false,
-}) {
-  final String? trimmedName = name?.trim();
-
-  if (trimmedName == null || trimmedName.isEmpty) {
-    return isOptional ? null : 'Please name your product';
-  }
-
-  if (trimmedName.length < 3) {
-    return 'Product name is too short.';
-  }
-
-  return null;
-}
-
-String? validateAmount(String? value) {
-  if (value == null || value.trim().isEmpty) {
-    return 'Amount is required';
-  }
-
-  final double? parsed = double.tryParse(value);
-  if (parsed == null) {
-    return 'Please enter a valid amount';
-  }
-
-  if (parsed < 150) {
-    return 'Amount must be at least 150';
-  }
-
-  if (parsed > 1000000) {
-    return 'Amount must not exceed 1,000,000';
-  }
-
-  return null;
-}
-
-String? validateMaxTickets(String? value) {
-  if (value == null || value.trim().isEmpty) {
-    return 'Please enter max tickets';
-  }
-
-  final int? parsed = int.tryParse(value);
-  if (parsed == null) {
-    return 'Enter a valid number';
-  }
-
-  if (parsed < 1) {
-    return 'At least one ticket is required';
-  }
-
-  if (parsed > 100000) {
-    return 'Tickets must not exceed 10,000';
-  }
-
-  return null;
 }
 
 ///------ OTHERS ------ REMOVE once done

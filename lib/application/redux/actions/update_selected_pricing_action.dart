@@ -27,8 +27,7 @@ class UpdateSelectedPricingAction extends ReduxAction<AppState> {
       maxTickets: maxTickets ?? existing.maxTickets,
       currency: currency ?? existing.currency,
       ticketTier: selectedPricingTier ?? state.hostState?.selectedPricingTier,
-      buyerPaysFee:
-          buyerPaysFee ?? state.hostState?.selectedProductPricing?.buyerPaysFee,
+      buyerPaysFee: buyerPaysFee ?? existing.buyerPaysFee,
     );
 
     return state.copyWith.hostState?.call(selectedProductPricing: updated);

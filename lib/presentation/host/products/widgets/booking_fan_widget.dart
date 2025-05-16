@@ -14,6 +14,7 @@ class BookingFanWidget extends StatelessWidget {
     final String fullName =
         getFullName(booking.user?.firstName, booking.user?.lastName);
     final String email = booking.user?.emailAddress ?? UNKNOWN;
+    final String phone = booking.user?.phoneNumber ?? UNKNOWN;
 
     return Container(
       padding: const EdgeInsets.all(12),
@@ -23,6 +24,7 @@ class BookingFanWidget extends StatelessWidget {
       ),
       child: Row(
         spacing: 12,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           // Avatar
           Container(
@@ -50,9 +52,13 @@ class BookingFanWidget extends StatelessWidget {
               children: <Widget>[
                 Text(
                   fullName,
-                  style: Theme.of(context).textTheme.bodyLarge,
+                  style: Theme.of(context).textTheme.titleMedium,
                   overflow: TextOverflow.visible,
                   softWrap: true,
+                ),
+                Text(
+                  phone,
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 Text(
                   email,
@@ -62,6 +68,7 @@ class BookingFanWidget extends StatelessWidget {
                   loadedDate:
                       booking.confirmedOn ?? DateTime.now().toIso8601String(),
                   dateTextStyle: Theme.of(context).textTheme.bodySmall,
+                  showTime: true,
                 ),
               ],
             ),

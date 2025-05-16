@@ -19,13 +19,15 @@ class FetchProductsAction extends ReduxAction<AppState> {
     required this.client,
     this.searchParam,
     this.productStatus,
+    this.onDone,
   });
 
   final Function(String error)? onError;
   final Function()? onSuccess;
   final ICustomClient client;
-  final String? searchParam;
+  final Function? onDone;
   final ProductStatus? productStatus;
+  final String? searchParam;
 
   @override
   Future<AppState?> reduce() async {
@@ -64,6 +66,8 @@ class FetchProductsAction extends ReduxAction<AppState> {
 
     dispatch(UpdateHostProductAction(products: productsResponse.results));
 
-    return state;
+    onDone?.call();
+
+    return null;
   }
 }

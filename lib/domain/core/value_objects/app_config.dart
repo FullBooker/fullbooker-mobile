@@ -34,6 +34,7 @@ class AppConfig {
     required this.hostsEndpoint,
     required this.productTermsEndpoint,
     required this.ticketTypesEndpoint,
+    required this.calculatePriceEndpoint,
   });
 
   /// The context the app is running in
@@ -78,6 +79,7 @@ class AppConfig {
   final String hostsEndpoint;
   final String productTermsEndpoint;
   final String ticketTypesEndpoint;
+  final String calculatePriceEndpoint;
 
   /// Profile endpoints
   final String getProfileEndpoint;
@@ -114,6 +116,7 @@ final AppConfig devAppConfig = AppConfig(
   hostsEndpoint: kDevHostsEndpoint,
   productTermsEndpoint: kDevAcceptProductTermsEndpoint,
   ticketTypesEndpoint: kDevProductTicketTypesEndpoint,
+  calculatePriceEndpoint: kDevCalculatePriceEndpoint,
 );
 
 final AppConfig prodAppConfig = AppConfig(
@@ -147,6 +150,7 @@ final AppConfig prodAppConfig = AppConfig(
   hostsEndpoint: kProdHostsEndpoint,
   productTermsEndpoint: kProdAcceptProductTermsEndpoint,
   ticketTypesEndpoint: kProdProductTicketTypesEndpoint,
+  calculatePriceEndpoint: kProdCalculatePriceEndpoint,
 );
 
 final AppConfig testAppConfig = AppConfig(
@@ -180,4 +184,5 @@ final AppConfig testAppConfig = AppConfig(
   productTermsEndpoint: kTestAcceptProductTermsEndpoint,
   hostsEndpoint: kTestHostsEndpoint,
   ticketTypesEndpoint: kTestProductTicketTypesEndpoint,
+  calculatePriceEndpoint: kTestCalculatePriceEndpoint,
 );

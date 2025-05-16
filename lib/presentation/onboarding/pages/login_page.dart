@@ -92,7 +92,7 @@ class LoginPageState extends State<LoginPage> {
                                 labelText: emailAddressString,
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
-                                validator: validateEmail,
+                                validator: Validators.validateEmail,
                                 onChanged: (String email) {
                                   context.dispatch(
                                     UpdateOnboardingStateAction(
@@ -102,6 +102,7 @@ class LoginPageState extends State<LoginPage> {
                                 },
                                 keyboardType: TextInputType.emailAddress,
                                 prefixIconData: HeroIcons.envelope,
+                                textInputAction: TextInputAction.next,
                                 autofillHints: const <String>[
                                   AutofillHints.email,
                                 ],
@@ -113,7 +114,7 @@ class LoginPageState extends State<LoginPage> {
                                 hintText: passwordHint,
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
-                                validator: validatePassword,
+                                validator: Validators.validatePassword,
                                 onChanged: (String v) {
                                   context.dispatch(
                                     UpdateOnboardingStateAction(
@@ -127,6 +128,7 @@ class LoginPageState extends State<LoginPage> {
                                 ],
                                 prefixIconData: HeroIcons.key,
                                 suffixIconData: HeroIcons.eyeSlash,
+                                textInputAction: TextInputAction.done,
                                 suffixIconFunc: () {
                                   context.dispatch(
                                     UpdateOnboardingStateAction(

@@ -3,7 +3,7 @@ import 'dart:async';
 
 import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
-import 'package:fullbooker/application/redux/actions/fetch_products_action.dart';
+import 'package:fullbooker/application/redux/actions/fetch_product_bookings_action.dart';
 import 'package:fullbooker/application/redux/actions/update_search_filters_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_search_view_model.dart';
@@ -12,14 +12,16 @@ import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/widgets/custom_text_input.dart';
 import 'package:heroicons/heroicons.dart';
 
-class SearchProductsInput extends StatefulWidget {
-  const SearchProductsInput({super.key});
+class SearchProductBookingsInput extends StatefulWidget {
+  const SearchProductBookingsInput({super.key});
 
   @override
-  State<SearchProductsInput> createState() => _SearchProductsInputState();
+  State<SearchProductBookingsInput> createState() =>
+      _SearchProductBookingsInputState();
 }
 
-class _SearchProductsInputState extends State<SearchProductsInput> {
+class _SearchProductBookingsInputState
+    extends State<SearchProductBookingsInput> {
   late final TextEditingController _controller;
   Timer? _debounce;
   String _searchQuery = '';
@@ -44,25 +46,27 @@ class _SearchProductsInputState extends State<SearchProductsInput> {
 
     context.dispatch(
       UpdateSearchFiltersAction(
-        productSearchParam: query,
-        isSearchingProducts: true,
+        productBookingSearchParam: query,
+        isSearchingProductBooking: true,
       ),
     );
 
     _debounce = Timer(const Duration(milliseconds: 1000), () async {
       if (_searchQuery.length >= 2) {
         await context.dispatch(
-          FetchProductsAction(
+          FetchProductBookingsAction(
             searchParam: _searchQuery,
             client: AppWrapperBase.of(context)!.customClient,
             onDone: () {
               context.dispatch(
-                UpdateSearchFiltersAction(isSearchingProducts: false),
+                UpdateSearchFiltersAction(isSearchingProductBooking: false),
               );
             },
           ),
         );
-        context.dispatch(UpdateSearchFiltersAction(isSearchingProducts: false));
+        context.dispatch(
+          UpdateSearchFiltersAction(isSearchingProductBooking: false),
+        );
       } else {
         return;
       }
@@ -76,12 +80,12 @@ class _SearchProductsInputState extends State<SearchProductsInput> {
     setState(() => _searchQuery = '');
     context.dispatch(
       UpdateSearchFiltersAction(
-        productSearchParam: '',
-        isSearchingProducts: false,
+        productBookingSearchParam: '',
+        isSearchingProductBooking: false,
       ),
     );
     context.dispatch(
-      FetchProductsAction(
+      FetchProductBookingsAction(
         client: AppWrapperBase.of(context)!.customClient,
       ),
     );
@@ -98,7 +102,7 @@ class _SearchProductsInputState extends State<SearchProductsInput> {
           spacing: 8,
           children: <Widget>[
             CustomTextInput(
-              hintText: searchProducts,
+              hintText: searchBookingsHint,
               controller: _controller,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               onChanged: _onSearchChanged,
@@ -108,9 +112,9 @@ class _SearchProductsInputState extends State<SearchProductsInput> {
                   _searchQuery.isNotEmpty ? HeroIcons.xCircle : null,
               suffixIconFunc: _clearSearch,
             ),
-            if (!vm.isSearchingProducts &&
-                vm.productSearchParam.isNotEmpty &&
-                vm.productSearchParam != UNKNOWN)
+            if (!vm.isSearchingProductBooking &&
+                vm.productBookingSearchParam.isNotEmpty &&
+                vm.productBookingSearchParam != UNKNOWN)
               Padding(
                 padding: const EdgeInsets.only(top: 8),
                 child: RichText(
@@ -119,7 +123,7 @@ class _SearchProductsInputState extends State<SearchProductsInput> {
                     children: <InlineSpan>[
                       TextSpan(text: showingResults),
                       TextSpan(
-                        text: vm.productSearchParam,
+                        text: vm.productBookingSearchParam,
                         style: Theme.of(context).textTheme.titleSmall,
                       ),
                     ],

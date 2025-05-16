@@ -16,6 +16,7 @@ import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:fullbooker/presentation/core/components/generic_zero_state.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/product_category_item.dart';
 import 'package:dartz/dartz.dart' as d;
+import 'package:fullbooker/presentation/shared/custom_bottom_nav_container.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
@@ -27,157 +28,154 @@ class ProductCategoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(
-        title: setupProductType,
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16),
-        child: StoreConnector<AppState, ProductSetupViewModel>(
-          converter: (Store<AppState> store) =>
-              ProductSetupViewModel.fromState(store.state),
-          builder: (BuildContext context, ProductSetupViewModel vm) {
-            final bool isEdit = vm.workflowState == WorkflowState.VIEW;
-
-            final bool isLoading =
-                context.isWaiting(FetchProductCategoriesAction);
-
-            if (isLoading) {
-              return SizedBox.shrink();
-            }
-
-            return Row(
-              spacing: 16,
-              children: <Widget>[
-                Flexible(
-                  child: SecondaryButton(
-                    addBorder: true,
-                    onPressed: () {
-                      isEdit
-                          ? context.router.popUntil(
-                              (Route<dynamic> route) =>
-                                  route.settings.name ==
-                                  ProductReviewAndSubmitRoute.name,
-                            )
-                          : context.router.maybePop();
-                    },
-                    child: d.right(isEdit ? backToPreview : cancelString),
-                    fillColor: Colors.transparent,
-                  ),
-                ),
-                Flexible(
-                  child: PrimaryButton(
-                    isLoading: isLoading,
-                    onPressed: () {
-                      if (vm.category?.id != UNKNOWN) {
-                        context.router.push(ProductSubCategoryRoute());
-                      } else {
-                        showAlertDialog(
-                          context: context,
-                          assetPath: productZeroStateSVGPath,
-                          description: selectCategoryPrompt,
-                        );
-                      }
-                    },
-                    child: d.right(continueString),
-                  ),
-                ),
-              ],
-            );
-          },
+    return SafeArea(
+      child: Scaffold(
+        appBar: CustomAppBar(
+          title: setupProductType,
         ),
-      ),
-      body: ListView(
-        padding: EdgeInsets.symmetric(horizontal: 16),
-        shrinkWrap: true,
-        physics: AlwaysScrollableScrollPhysics(),
-        children: <Widget>[
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 12,
-            children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: 8,
+        bottomNavigationBar: CustomBottomNavContainer(
+          child: StoreConnector<AppState, ProductSetupViewModel>(
+            converter: (Store<AppState> store) =>
+                ProductSetupViewModel.fromState(store.state),
+            builder: (BuildContext context, ProductSetupViewModel vm) {
+              final bool isEdit = vm.workflowState == WorkflowState.VIEW;
+
+              final bool isLoading =
+                  context.isWaiting(FetchProductCategoriesAction);
+
+              return Row(
+                spacing: 16,
                 children: <Widget>[
-                  Text(
-                    categoryStep1,
-                    style: Theme.of(context).textTheme.titleSmall,
+                  Flexible(
+                    child: SecondaryButton(
+                      disabled: isLoading,
+                      addBorder: true,
+                      onPressed: () {
+                        isEdit
+                            ? context.router.popUntil(
+                                (Route<dynamic> route) =>
+                                    route.settings.name ==
+                                    ProductReviewAndSubmitRoute.name,
+                              )
+                            : context.router.maybePop();
+                      },
+                      child: d.right(isEdit ? backToPreview : cancelString),
+                      fillColor: Colors.transparent,
+                    ),
                   ),
-                  Text(
-                    productType,
-                    style: Theme.of(context).textTheme.headlineSmall,
-                  ),
-                  Text(
-                    productTypeCopy,
-                    style: Theme.of(context).textTheme.bodyMedium,
+                  Flexible(
+                    child: PrimaryButton(
+                      isLoading: isLoading,
+                      onPressed: () {
+                        if (vm.category?.id != UNKNOWN) {
+                          context.router.push(ProductSubCategoryRoute());
+                        } else {
+                          showAlertDialog(
+                            context: context,
+                            assetPath: productZeroStateSVGPath,
+                            description: selectCategoryPrompt,
+                          );
+                        }
+                      },
+                      child: d.right(continueString),
+                    ),
                   ),
                 ],
-              ),
-              StoreConnector<AppState, ProductSetupViewModel>(
-                converter: (Store<AppState> store) =>
-                    ProductSetupViewModel.fromState(store.state),
-                onInit: (Store<AppState> store) {
-                  context.dispatch(
-                    FetchProductCategoriesAction(
-                      client: AppWrapperBase.of(context)!.customClient,
+              );
+            },
+          ),
+        ),
+        body: ListView(
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          shrinkWrap: true,
+          physics: AlwaysScrollableScrollPhysics(),
+          children: <Widget>[
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              spacing: 12,
+              children: <Widget>[
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  spacing: 8,
+                  children: <Widget>[
+                    Text(
+                      categoryStep1,
+                      style: Theme.of(context).textTheme.titleSmall,
                     ),
-                  );
-                },
-                builder: (BuildContext context, ProductSetupViewModel vm) {
-                  if (context.isWaiting(FetchProductCategoriesAction)) {
-                    return AppLoading();
-                  }
+                    Text(
+                      productType,
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    ),
+                    Text(
+                      productTypeCopy,
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ],
+                ),
+                StoreConnector<AppState, ProductSetupViewModel>(
+                  converter: (Store<AppState> store) =>
+                      ProductSetupViewModel.fromState(store.state),
+                  onInit: (Store<AppState> store) {
+                    context.dispatch(
+                      FetchProductCategoriesAction(
+                        client: AppWrapperBase.of(context)!.customClient,
+                      ),
+                    );
+                  },
+                  builder: (BuildContext context, ProductSetupViewModel vm) {
+                    if (context.isWaiting(FetchProductCategoriesAction)) {
+                      return AppLoading();
+                    }
 
-                  final List<ProductCategory>? categories =
-                      vm.productCategories;
+                    final List<ProductCategory>? categories =
+                        vm.productCategories;
 
-                  if (categories?.isEmpty ?? true) {
-                    return GenericZeroState(
-                      iconPath: setupZeroStateSVGPath,
-                      title: noCategoriesFound,
-                      description: noCategoriesFoundCopy,
-                      onCTATap: () {
-                        context.dispatch(
-                          FetchProductCategoriesAction(
-                            client: AppWrapperBase.of(context)!.customClient,
+                    if (categories?.isEmpty ?? true) {
+                      return GenericZeroState(
+                        iconPath: setupZeroStateSVGPath,
+                        title: noCategoriesFound,
+                        description: noCategoriesFoundCopy,
+                        onCTATap: () {
+                          context.dispatch(
+                            FetchProductCategoriesAction(
+                              client: AppWrapperBase.of(context)!.customClient,
+                            ),
+                          );
+                        },
+                        ctaText: tryAgain,
+                      );
+                    }
+
+                    return ListView.builder(
+                      itemCount: categories?.length,
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemBuilder: (BuildContext context, int index) {
+                        final ProductCategory current = categories![index];
+
+                        final bool selected = current.id == vm.category?.id;
+
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 12),
+                          child: ProductCategoryItem(
+                            category: current,
+                            isSelected: selected,
+                            onTap: () => context.dispatch(
+                              UpdateProductAction(
+                                selectedCategory: current,
+                                selectedSubCategory: ProductCategory.initial(),
+                              ),
+                            ),
                           ),
                         );
                       },
-                      ctaText: tryAgain,
                     );
-                  }
-
-                  return ListView.builder(
-                    itemCount: categories?.length,
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemBuilder: (BuildContext context, int index) {
-                      final ProductCategory current = categories![index];
-
-                      final bool selected = current.id == vm.category?.id;
-
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 12),
-                        child: ProductCategoryItem(
-                          category: current,
-                          isSelected: selected,
-                          onTap: () => context.dispatch(
-                            UpdateProductAction(
-                              selectedCategory: current,
-                              selectedSubCategory: ProductCategory.initial(),
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                },
-              ),
-            ],
-          ),
-        ],
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
