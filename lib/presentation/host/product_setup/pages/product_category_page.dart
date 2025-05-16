@@ -43,15 +43,12 @@ class ProductCategoryPage extends StatelessWidget {
               final bool isLoading =
                   context.isWaiting(FetchProductCategoriesAction);
 
-              if (isLoading) {
-                return SizedBox.shrink();
-              }
-
               return Row(
                 spacing: 16,
                 children: <Widget>[
                   Flexible(
                     child: SecondaryButton(
+                      disabled: isLoading,
                       addBorder: true,
                       onPressed: () {
                         isEdit

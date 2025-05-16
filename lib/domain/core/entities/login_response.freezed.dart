@@ -21,11 +21,11 @@ LoginResponse _$LoginResponseFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$LoginResponse {
   @JsonKey(name: 'access')
-  String get accessToken => throw _privateConstructorUsedError;
+  String? get accessToken => throw _privateConstructorUsedError;
   @JsonKey(name: 'refresh')
-  String get refreshToken => throw _privateConstructorUsedError;
+  String? get refreshToken => throw _privateConstructorUsedError;
   @JsonKey(name: 'expires_at')
-  String get expiresAt => throw _privateConstructorUsedError;
+  String? get expiresAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'user')
   UserState? get user => throw _privateConstructorUsedError;
 
@@ -46,9 +46,9 @@ abstract class $LoginResponseCopyWith<$Res> {
       _$LoginResponseCopyWithImpl<$Res, LoginResponse>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'access') String accessToken,
-      @JsonKey(name: 'refresh') String refreshToken,
-      @JsonKey(name: 'expires_at') String expiresAt,
+      {@JsonKey(name: 'access') String? accessToken,
+      @JsonKey(name: 'refresh') String? refreshToken,
+      @JsonKey(name: 'expires_at') String? expiresAt,
       @JsonKey(name: 'user') UserState? user});
 
   $UserStateCopyWith<$Res>? get user;
@@ -69,24 +69,24 @@ class _$LoginResponseCopyWithImpl<$Res, $Val extends LoginResponse>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? accessToken = null,
-    Object? refreshToken = null,
-    Object? expiresAt = null,
+    Object? accessToken = freezed,
+    Object? refreshToken = freezed,
+    Object? expiresAt = freezed,
     Object? user = freezed,
   }) {
     return _then(_value.copyWith(
-      accessToken: null == accessToken
+      accessToken: freezed == accessToken
           ? _value.accessToken
           : accessToken // ignore: cast_nullable_to_non_nullable
-              as String,
-      refreshToken: null == refreshToken
+              as String?,
+      refreshToken: freezed == refreshToken
           ? _value.refreshToken
           : refreshToken // ignore: cast_nullable_to_non_nullable
-              as String,
-      expiresAt: null == expiresAt
+              as String?,
+      expiresAt: freezed == expiresAt
           ? _value.expiresAt
           : expiresAt // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
@@ -118,9 +118,9 @@ abstract class _$$LoginResponseImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'access') String accessToken,
-      @JsonKey(name: 'refresh') String refreshToken,
-      @JsonKey(name: 'expires_at') String expiresAt,
+      {@JsonKey(name: 'access') String? accessToken,
+      @JsonKey(name: 'refresh') String? refreshToken,
+      @JsonKey(name: 'expires_at') String? expiresAt,
       @JsonKey(name: 'user') UserState? user});
 
   @override
@@ -140,24 +140,24 @@ class __$$LoginResponseImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? accessToken = null,
-    Object? refreshToken = null,
-    Object? expiresAt = null,
+    Object? accessToken = freezed,
+    Object? refreshToken = freezed,
+    Object? expiresAt = freezed,
     Object? user = freezed,
   }) {
     return _then(_$LoginResponseImpl(
-      accessToken: null == accessToken
+      accessToken: freezed == accessToken
           ? _value.accessToken
           : accessToken // ignore: cast_nullable_to_non_nullable
-              as String,
-      refreshToken: null == refreshToken
+              as String?,
+      refreshToken: freezed == refreshToken
           ? _value.refreshToken
           : refreshToken // ignore: cast_nullable_to_non_nullable
-              as String,
-      expiresAt: null == expiresAt
+              as String?,
+      expiresAt: freezed == expiresAt
           ? _value.expiresAt
           : expiresAt // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
@@ -181,13 +181,13 @@ class _$LoginResponseImpl implements _LoginResponse {
 
   @override
   @JsonKey(name: 'access')
-  final String accessToken;
+  final String? accessToken;
   @override
   @JsonKey(name: 'refresh')
-  final String refreshToken;
+  final String? refreshToken;
   @override
   @JsonKey(name: 'expires_at')
-  final String expiresAt;
+  final String? expiresAt;
   @override
   @JsonKey(name: 'user')
   final UserState? user;
@@ -234,9 +234,9 @@ class _$LoginResponseImpl implements _LoginResponse {
 
 abstract class _LoginResponse implements LoginResponse {
   factory _LoginResponse(
-      {@JsonKey(name: 'access') final String accessToken,
-      @JsonKey(name: 'refresh') final String refreshToken,
-      @JsonKey(name: 'expires_at') final String expiresAt,
+      {@JsonKey(name: 'access') final String? accessToken,
+      @JsonKey(name: 'refresh') final String? refreshToken,
+      @JsonKey(name: 'expires_at') final String? expiresAt,
       @JsonKey(name: 'user') final UserState? user}) = _$LoginResponseImpl;
 
   factory _LoginResponse.fromJson(Map<String, dynamic> json) =
@@ -244,13 +244,13 @@ abstract class _LoginResponse implements LoginResponse {
 
   @override
   @JsonKey(name: 'access')
-  String get accessToken;
+  String? get accessToken;
   @override
   @JsonKey(name: 'refresh')
-  String get refreshToken;
+  String? get refreshToken;
   @override
   @JsonKey(name: 'expires_at')
-  String get expiresAt;
+  String? get expiresAt;
   @override
   @JsonKey(name: 'user')
   UserState? get user;

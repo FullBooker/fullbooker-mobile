@@ -36,10 +36,6 @@ class ProductSubCategoryPage extends StatelessWidget {
             converter: (Store<AppState> store) =>
                 ProductSetupViewModel.fromState(store.state),
             builder: (BuildContext context, ProductSetupViewModel vm) {
-              if (context.isWaiting(UpdateProductCategoryAction)) {
-                return AppLoading();
-              }
-
               final bool isEdit = vm.workflowState == WorkflowState.VIEW;
 
               return Row(
@@ -63,6 +59,7 @@ class ProductSubCategoryPage extends StatelessWidget {
                   ),
                   Flexible(
                     child: PrimaryButton(
+                      isLoading: context.isWaiting(UpdateProductCategoryAction),
                       onPressed: () {
                         if (vm.subCategory?.id == UNKNOWN) {
                           showAlertDialog(

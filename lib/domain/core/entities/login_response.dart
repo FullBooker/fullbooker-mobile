@@ -9,9 +9,9 @@ part 'login_response.g.dart';
 class LoginResponse with _$LoginResponse {
   @JsonSerializable(explicitToJson: true)
   factory LoginResponse({
-    @Default(UNKNOWN) @JsonKey(name: 'access') String accessToken,
-    @Default(UNKNOWN) @JsonKey(name: 'refresh') String refreshToken,
-    @Default(UNKNOWN) @JsonKey(name: 'expires_at') String expiresAt,
+    @Default(UNKNOWN) @JsonKey(name: 'access') String? accessToken,
+    @Default(UNKNOWN) @JsonKey(name: 'refresh') String? refreshToken,
+    @Default(UNKNOWN) @JsonKey(name: 'expires_at') String? expiresAt,
     @JsonKey(name: 'user') UserState? user,
   }) = _LoginResponse;
 
