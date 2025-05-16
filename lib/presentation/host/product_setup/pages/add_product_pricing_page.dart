@@ -2,6 +2,7 @@ import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
+import 'package:fullbooker/application/redux/actions/clear_selected_price_action.dart';
 import 'package:fullbooker/application/redux/actions/fetch_currencies_action.dart';
 import 'package:fullbooker/application/redux/actions/save_product_pricing_action.dart';
 import 'package:fullbooker/application/redux/actions/update_host_state_action.dart';
@@ -48,11 +49,13 @@ class _AddProductPricingPageState extends State<AddProductPricingPage> {
         child: StoreConnector<AppState, ProductSetupViewModel>(
           converter: (Store<AppState> store) =>
               ProductSetupViewModel.fromState(store.state),
-          onInit: (Store<AppState> store) => context.dispatch(
+          onInit: (Store<AppState> store) =>
+              context.dispatchAll(<ReduxAction<AppState>>[
+            ClearSelectedPriceAction(),
             FetchCurrenciesAction(
               client: AppWrapperBase.of(context)!.customClient,
             ),
-          ),
+          ]),
           builder: (BuildContext context, ProductSetupViewModel vm) {
             final bool isLoading = context.isWaiting(SaveProductPricingAction);
 
