@@ -214,8 +214,7 @@ class _AddProductPricingPageState extends State<AddProductPricingPage> {
                                     hintText: priceHint,
                                     autovalidateMode:
                                         AutovalidateMode.onUnfocus,
-                                    validator: (String? email) =>
-                                        validateAmount(email),
+                                    validator: Validators.validateAmount,
                                     onChanged: (String value) {
                                       context.dispatch(
                                         UpdateSelectedPricingAction(
@@ -258,8 +257,7 @@ class _AddProductPricingPageState extends State<AddProductPricingPage> {
                             getTicketDisplayName(vm.selectedPricingTier),
                           )}*',
                           autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (String? email) =>
-                              validateMaxTickets(email),
+                          validator: Validators.validateMaxTickets,
                           onChanged: (String value) {
                             final int? parsed = int.tryParse(value);
                             if (parsed != null) {

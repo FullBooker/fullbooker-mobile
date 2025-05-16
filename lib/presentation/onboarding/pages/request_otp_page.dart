@@ -86,8 +86,7 @@ class RequestOTPPageState extends State<RequestOTPPage> {
                                 ],
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
-                                validator: (String? email) =>
-                                    validateEmail(email),
+                                validator: Validators.validateEmail,
                                 onChanged: (String email) {
                                   context.dispatch(
                                     UpdateOnboardingStateAction(

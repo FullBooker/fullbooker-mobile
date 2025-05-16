@@ -182,7 +182,7 @@ class _ProductBasicDetailsPageState extends State<ProductBasicDetailsPage> {
                             labelText: '$nameString*',
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
-                            validator: validateProductName,
+                            validator: Validators.validateProductName,
                             keyboardType: TextInputType.name,
                           ),
                           CustomTextInput(

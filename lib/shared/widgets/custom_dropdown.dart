@@ -9,12 +9,14 @@ class CustomDropdown extends StatelessWidget {
     required this.value,
     required this.onChanged,
     required this.options,
+    this.validator,
   });
 
+  final String? Function(String?)? validator;
   final String? labelText;
-  final String value;
-  final List<String> options;
   final ValueChanged<String?> onChanged;
+  final List<String> options;
+  final String value;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +31,7 @@ class CustomDropdown extends StatelessWidget {
           ),
         DropdownButtonFormField<String>(
           value: value,
+          validator: validator,
           icon: HeroIcon(
             HeroIcons.chevronDown,
             color: AppColors.bodyTextColor,

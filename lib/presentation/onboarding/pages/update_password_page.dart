@@ -116,8 +116,7 @@ class UpdatePasswordPageState extends State<UpdatePasswordPage> {
                           labelText: currentPasswordLabel,
                           hintText: currentPasswordHint,
                           autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (String? password) =>
-                              validatePassword(password),
+                          validator: Validators.validatePassword,
                           onChanged: (String v) {
                             context.dispatch(
                               UpdateOnboardingStateAction(
@@ -146,8 +145,7 @@ class UpdatePasswordPageState extends State<UpdatePasswordPage> {
                           labelText: newPasswordLabel,
                           hintText: newPasswordHint,
                           autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (String? password) =>
-                              validatePassword(password),
+                          validator: Validators.validatePassword,
                           onChanged: (String v) {
                             context.dispatch(
                               UpdateOnboardingStateAction(
@@ -177,7 +175,10 @@ class UpdatePasswordPageState extends State<UpdatePasswordPage> {
                           hintText: confirmNewPasswordHint,
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (String? confirm) =>
-                              validateConfirmPassword(confirm, confirm),
+                              Validators.validateConfirmPassword(
+                            confirm,
+                            confirm,
+                          ),
                           onChanged: (String v) {
                             context.dispatch(
                               UpdateOnboardingStateAction(

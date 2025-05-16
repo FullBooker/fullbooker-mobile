@@ -82,8 +82,7 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
                                 hintText: newPasswordHint,
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
-                                validator: (String? password) =>
-                                    validatePassword(password),
+                                validator: Validators.validatePassword,
                                 onChanged: (String v) {
                                   context.dispatch(
                                     UpdateOnboardingStateAction(
@@ -114,7 +113,10 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
                                 validator: (String? confirm) =>
-                                    validateConfirmPassword(confirm, confirm),
+                                    Validators.validateConfirmPassword(
+                                  confirm,
+                                  confirm,
+                                ),
                                 onChanged: (String v) {
                                   context.dispatch(
                                     UpdateOnboardingStateAction(

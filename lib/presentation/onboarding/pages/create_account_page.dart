@@ -86,7 +86,7 @@ class CreateAccountPageState extends State<CreateAccountPage> {
                         hintText: firstNameHint,
                         labelText: firstNameString,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: (String? value) => validateName(
+                        validator: (String? value) => Validators.validateName(
                           value,
                           fieldName: firstNameString.toLowerCase(),
                         ),
@@ -104,7 +104,7 @@ class CreateAccountPageState extends State<CreateAccountPage> {
                         hintText: lastNameHint,
                         labelText: lastNameString,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: (String? value) => validateName(
+                        validator: (String? value) => Validators.validateName(
                           value,
                           fieldName: lastNameString.toLowerCase(),
                         ),
@@ -122,7 +122,7 @@ class CreateAccountPageState extends State<CreateAccountPage> {
                         hintText: emailAddressHint,
                         labelText: emailAddressString,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: (String? email) => validateEmail(email),
+                        validator: Validators.validateEmail,
                         onChanged: (String email) {
                           context.dispatch(
                             UpdateOnboardingStateAction(newEmailAddress: email),
@@ -149,8 +149,7 @@ class CreateAccountPageState extends State<CreateAccountPage> {
                         labelText: passwordString,
                         hintText: passwordHint,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: (String? password) =>
-                            validatePassword(password),
+                        validator: Validators.validatePassword,
                         onChanged: (String v) {
                           context.dispatch(
                             UpdateOnboardingStateAction(newPassword: v.trim()),
@@ -178,7 +177,10 @@ class CreateAccountPageState extends State<CreateAccountPage> {
                         hintText: confirmPasswordHint,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (String? confirm) =>
-                            validateConfirmPassword(confirm, confirm),
+                            Validators.validateConfirmPassword(
+                          confirm,
+                          confirm,
+                        ),
                         onChanged: (String v) {
                           context.dispatch(
                             UpdateOnboardingStateAction(
