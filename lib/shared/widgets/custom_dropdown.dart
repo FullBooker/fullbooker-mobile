@@ -9,10 +9,14 @@ class CustomDropdown extends StatelessWidget {
     required this.value,
     required this.onChanged,
     required this.options,
+    this.autovalidateMode,
+    this.fieldKey,
     this.validator,
   });
 
   final String? Function(String?)? validator;
+  final AutovalidateMode? autovalidateMode;
+  final GlobalKey<FormFieldState<String>>? fieldKey;
   final String? labelText;
   final ValueChanged<String?> onChanged;
   final List<String> options;
@@ -30,6 +34,8 @@ class CustomDropdown extends StatelessWidget {
             style: Theme.of(context).textTheme.titleMedium,
           ),
         DropdownButtonFormField<String>(
+          key: fieldKey,
+          autovalidateMode: autovalidateMode,
           value: value,
           validator: validator,
           icon: HeroIcon(

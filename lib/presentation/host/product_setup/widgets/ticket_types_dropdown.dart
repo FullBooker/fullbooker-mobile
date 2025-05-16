@@ -14,7 +14,14 @@ import 'package:fullbooker/shared/widgets/custom_dropdown.dart';
 class TicketTypesDropdown extends StatelessWidget {
   const TicketTypesDropdown({
     super.key,
+    required this.fieldKey,
+    required this.autovalidateMode,
   });
+
+  final GlobalKey<FormFieldState<String>> fieldKey;
+  final AutovalidateMode? autovalidateMode;
+
+  static const String _placeholder = chooseTicketType;
 
   @override
   Widget build(BuildContext context) {
@@ -41,18 +48,24 @@ class TicketTypesDropdown extends StatelessWidget {
             .cast<TicketType>()
             .toList();
 
-        final List<String> options =
+        final List<String> names =
             validTypes.map((TicketType t) => t.name!).toList();
 
-        final String? selectedName = vm.selectedTicketType?.name;
+        final List<String> options = <String>[_placeholder, ...names];
 
-        final String value = options.contains(selectedName)
-            ? selectedName!
-            : (options.isNotEmpty ? options.first : '');
+        final String? selectedName = vm.selectedTicketType?.name;
+        final String value =
+            (selectedName != null && names.contains(selectedName))
+                ? selectedName
+                : _placeholder;
 
         return CustomDropdown(
           labelText: ticketTypeString,
           options: options,
+          fieldKey: fieldKey,
+          validator: (String? v) => (v == null || v == _placeholder)
+              ? selectValidTicketTypePrompt
+              : null,
           value: value,
           onChanged: (String? newName) {
             if (newName == null || newName.isEmpty) return;

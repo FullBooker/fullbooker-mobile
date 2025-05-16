@@ -35,6 +35,9 @@ class AddProductPricingPage extends StatefulWidget {
 class _AddProductPricingPageState extends State<AddProductPricingPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  final GlobalKey<FormFieldState<String>> _ticketFieldKey =
+      GlobalKey<FormFieldState<String>>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,7 +59,11 @@ class _AddProductPricingPageState extends State<AddProductPricingPage> {
             return PrimaryButton(
               isLoading: isLoading,
               onPressed: () {
-                if (_formKey.currentState?.validate() ?? false) {
+                final bool formValid =
+                    _formKey.currentState?.validate() ?? false;
+                final bool isTicketValid =
+                    _ticketFieldKey.currentState?.validate() ?? false;
+                if (formValid && isTicketValid) {
                   context.dispatch(
                     SaveProductPricingAction(
                       client: AppWrapperBase.of(context)!.customClient,
@@ -133,7 +140,10 @@ class _AddProductPricingPageState extends State<AddProductPricingPage> {
                           ],
                         ),
 
-                        TicketTypesDropdown(),
+                        TicketTypesDropdown(
+                          fieldKey: _ticketFieldKey,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                        ),
 
                         // Currency dropdown
                         Column(
