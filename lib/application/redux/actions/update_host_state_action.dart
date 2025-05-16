@@ -25,6 +25,7 @@ class UpdateHostStateAction extends ReduxAction<AppState> {
     this.selectedBookingTickets,
     this.productPricingOptions,
     this.ticketTypes,
+    this.selectedPricingOptionIds,
   });
 
   final Product? contextProduct;
@@ -39,6 +40,7 @@ class UpdateHostStateAction extends ReduxAction<AppState> {
   final List<ProductPricingOption?>? productPricingOptions;
   final List<Ticket?>? selectedBookingTickets;
   final List<TicketType?>? ticketTypes;
+  final List<String?>? selectedPricingOptionIds;
 
   @override
   AppState? reduce() {
@@ -71,6 +73,8 @@ class UpdateHostStateAction extends ReduxAction<AppState> {
       productPricingOptions:
           productPricingOptions ?? host.productPricingOptions,
       ticketTypes: ticketTypes ?? host.ticketTypes,
+      selectedPricingOptionIds:
+          selectedPricingOptionIds ?? host.selectedPricingOptionIds,
     );
   }
 }

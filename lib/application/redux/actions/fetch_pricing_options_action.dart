@@ -4,6 +4,7 @@ import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/core/services/i_custom_client.dart';
 import 'package:fullbooker/application/redux/actions/update_host_state_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
+import 'package:fullbooker/domain/core/entities/pricing_option.dart';
 import 'package:fullbooker/domain/core/entities/pricing_option_response.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
@@ -49,8 +50,15 @@ class FetchPricingOptionsAction extends ReduxAction<AppState> {
     final PricingOptionResponse pricingOptionResponse =
         PricingOptionResponse.fromJson(body);
 
+    final List<String?>? optionIDs = pricingOptionResponse.results
+        ?.map((PricingOption? o) => o?.id)
+        .toList();
+
     dispatch(
-      UpdateHostStateAction(pricingOptions: pricingOptionResponse.results),
+      UpdateHostStateAction(
+        pricingOptions: pricingOptionResponse.results,
+        selectedPricingOptionIds: optionIDs,
+      ),
     );
 
     return state;
