@@ -59,14 +59,14 @@ class FetchProductPricingOptionsAction extends ReduxAction<AppState> {
     final ProductPricingOptionResponse pricingOptionResponse =
         ProductPricingOptionResponse.fromJson(body);
 
-    final List<String?>? optionIDs = pricingOptionResponse.results
-        ?.map((ProductPricingOption? o) => o?.id)
+    final List<String?>? pricingOptionIds = pricingOptionResponse.results
+        ?.map((ProductPricingOption? o) => o?.pricingOptionID)
         .toList();
 
     dispatch(
       UpdateHostStateAction(
         productPricingOptions: pricingOptionResponse.results,
-        selectedPricingOptionIds: optionIDs,
+        selectedPricingOptionIds: pricingOptionIds,
       ),
     );
 

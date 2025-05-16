@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
 import 'package:fullbooker/application/redux/actions/fetch_product_pricing_options_action.dart';
 import 'package:fullbooker/application/redux/actions/select_product_pricing_option_action.dart';
-import 'package:fullbooker/application/redux/actions/set_product_pricing_options_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_setup_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
@@ -37,71 +36,68 @@ class ProductModeOfAccessPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: () => onRefresh(context),
-      child: SafeArea(
-        child: Scaffold(
-          appBar: CustomAppBar(title: setupEvent),
-          bottomNavigationBar: CustomBottomNavContainer(
-            child: StoreConnector<AppState, ProductSetupViewModel>(
-              converter: (Store<AppState> store) =>
-                  ProductSetupViewModel.fromState(store.state),
-              builder: (BuildContext context, ProductSetupViewModel vm) {
-                if (context.isWaiting(SetProductPricingOptionsAction)) {
-                  return AppLoading();
-                }
+    return SafeArea(
+      child: Scaffold(
+        appBar: CustomAppBar(title: setupEvent),
+        bottomNavigationBar: CustomBottomNavContainer(
+          child: StoreConnector<AppState, ProductSetupViewModel>(
+            converter: (Store<AppState> store) =>
+                ProductSetupViewModel.fromState(store.state),
+            builder: (BuildContext context, ProductSetupViewModel vm) {
+              final bool isEditing = vm.workflowState == WorkflowState.VIEW;
 
-                final bool isEditing = vm.workflowState == WorkflowState.VIEW;
-
-                return Row(
-                  spacing: 16,
-                  children: <Widget>[
-                    Flexible(
-                      child: SecondaryButton(
-                        addBorder: true,
-                        onPressed: () {
-                          isEditing
-                              ? context.router.popUntil(
-                                  (Route<dynamic> route) =>
-                                      route.settings.name ==
-                                      ProductReviewAndSubmitRoute.name,
-                                )
-                              : context.router.maybePop();
-                        },
-                        child: d.right(
-                          isEditing ? backToPreview : previousString,
-                        ),
-                        fillColor: Colors.white,
-                      ),
-                    ),
-                    Flexible(
-                      child: PrimaryButton(
-                        onPressed: () {
-                          if (isEditing) {
-                            context.router.popUntil(
-                              (Route<dynamic> route) =>
-                                  route.settings.name ==
-                                  ProductReviewAndSubmitRoute.name,
-                            );
-                          } else {
-                            context.router.push(ProductReviewAndSubmitRoute());
-                          }
-                        },
-                        child: d.right(continueString),
-                      ),
-                    ),
-                  ],
-                );
-              },
-            ),
-          ),
-          body: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-              child: Column(
-                spacing: 12,
-                crossAxisAlignment: CrossAxisAlignment.start,
+              return Row(
+                spacing: 16,
                 children: <Widget>[
+                  Flexible(
+                    child: SecondaryButton(
+                      addBorder: true,
+                      onPressed: () {
+                        isEditing
+                            ? context.router.popUntil(
+                                (Route<dynamic> r) =>
+                                    r.settings.name ==
+                                    ProductReviewAndSubmitRoute.name,
+                              )
+                            : context.router.maybePop();
+                      },
+                      child: d.right(
+                        isEditing ? backToPreview : previousString,
+                      ),
+                      fillColor: Colors.white,
+                    ),
+                  ),
+                  Flexible(
+                    child: PrimaryButton(
+                      onPressed: () {
+                        isEditing
+                            ? context.router.popUntil(
+                                (Route<dynamic> r) =>
+                                    r.settings.name ==
+                                    ProductReviewAndSubmitRoute.name,
+                              )
+                            : context.router
+                                .push(ProductReviewAndSubmitRoute());
+                      },
+                      child: d.right(continueString),
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
+        body: RefreshIndicator(
+          onRefresh: () => onRefresh(context),
+          child: ListView(
+            shrinkWrap: true,
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            physics: const AlwaysScrollableScrollPhysics(),
+            children: <Widget>[
+              Column(
+                spacing: 12,
+                children: <Widget>[
+                  // Header row
                   Row(
                     spacing: 16,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -125,27 +121,25 @@ class ProductModeOfAccessPage extends StatelessWidget {
                       ),
                       Flexible(
                         child: GestureDetector(
-                          onTap: () {
-                            showModalBottomSheet(
-                              context: context,
-                              isDismissible: false,
-                              backgroundColor: Colors.white,
-                              isScrollControlled: true,
-                              shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.vertical(
-                                  top: Radius.circular(16),
-                                ),
+                          onTap: () => showModalBottomSheet(
+                            context: context,
+                            isDismissible: false,
+                            backgroundColor: Colors.white,
+                            isScrollControlled: true,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(16),
                               ),
-                              builder: (_) => ModesOfAccessBottomSheet(),
-                            );
-                          },
+                            ),
+                            builder: (_) => ModesOfAccessBottomSheet(),
+                          ),
                           child: Container(
                             decoration: BoxDecoration(
                               color: Theme.of(context).primaryColor,
                               shape: BoxShape.circle,
                             ),
                             padding: const EdgeInsets.all(8),
-                            child: HeroIcon(
+                            child: const HeroIcon(
                               HeroIcons.plus,
                               color: Colors.white,
                               size: 28,
@@ -155,57 +149,50 @@ class ProductModeOfAccessPage extends StatelessWidget {
                       ),
                     ],
                   ),
+
                   StoreConnector<AppState, ProductSetupViewModel>(
                     converter: (Store<AppState> store) =>
                         ProductSetupViewModel.fromState(store.state),
-                    onInit: (Store<AppState> store) {
-                      context.dispatch(
-                        FetchProductPricingOptionsAction(
-                          client: AppWrapperBase.of(context)!.customClient,
-                        ),
-                      );
-                    },
+                    onInit: (Store<AppState> store) => context.dispatch(
+                      FetchProductPricingOptionsAction(
+                        client: AppWrapperBase.of(context)!.customClient,
+                      ),
+                    ),
                     builder: (BuildContext context, ProductSetupViewModel vm) {
                       if (context.isWaiting(FetchProductPricingOptionsAction)) {
-                        return AppLoading();
+                        return const AppLoading();
                       }
-
-                      final List<ProductPricingOption?>? productPricingOptions =
+                      final List<ProductPricingOption?>? options =
                           vm.productPricingOptions;
-
-                      if (productPricingOptions?.isEmpty ?? true) {
+                      if (options == null || options.isEmpty) {
                         return GenericZeroState(
                           iconPath: bookingTicketsZeroStateSVGPath,
                           title: setupModesOfAccess,
                           description: setupModesOfAccessCopy,
-                          onCTATap: () {
-                            showModalBottomSheet(
-                              context: context,
-                              isDismissible: false,
-                              backgroundColor: Colors.white,
-                              isScrollControlled: true,
-                              shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.vertical(
-                                  top: Radius.circular(16),
-                                ),
+                          onCTATap: () => showModalBottomSheet(
+                            context: context,
+                            isDismissible: false,
+                            backgroundColor: Colors.white,
+                            isScrollControlled: true,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(16),
                               ),
-                              builder: (_) => ModesOfAccessBottomSheet(),
-                            );
-                          },
+                            ),
+                            builder: (_) => ModesOfAccessBottomSheet(),
+                          ),
                           ctaText: addModeOfAccess,
                         );
                       }
 
                       return ListView.builder(
-                        itemCount: productPricingOptions?.length,
-                        physics: NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
+                        itemCount: options.length,
                         itemBuilder: (BuildContext context, int index) {
-                          final ProductPricingOption? current =
-                              productPricingOptions![index];
+                          final ProductPricingOption? current = options[index];
 
                           return Padding(
-                            padding: const EdgeInsets.only(bottom: 12),
+                            padding: EdgeInsets.only(bottom: 12),
                             child: ModeOfAccessItem(
                               option: current!,
                               onCTATap: () {
@@ -224,7 +211,7 @@ class ProductModeOfAccessPage extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
+            ],
           ),
         ),
       ),

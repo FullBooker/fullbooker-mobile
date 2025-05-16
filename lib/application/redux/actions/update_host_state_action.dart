@@ -47,12 +47,12 @@ class UpdateHostStateAction extends ReduxAction<AppState> {
     final HostState? host = state.hostState;
     if (host == null) return state;
 
-    final $HostStateCopyWith<AppState>? hostBuilder = state.copyWith.hostState;
-    if (hostBuilder == null) return state;
+    final $HostStateCopyWith<AppState>? stateBuilder = state.copyWith.hostState;
+    if (stateBuilder == null) return state;
 
     final bool isCreate = host.workflowState == WorkflowState.CREATE;
 
-    return hostBuilder.call(
+    return stateBuilder.call(
       currentProduct: isCreate
           ? (contextProduct ?? host.currentProduct)
           : host.currentProduct,

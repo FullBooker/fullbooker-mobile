@@ -549,8 +549,7 @@ String serviceFeeDisclaimer(double percentage) =>
 
 const String priceHint = 'Enter an amount';
 
-String maximumTickets(String ticketType) =>
-    'Maximum number of $ticketType tickets';
+String maximumTickets = 'Maximum number of tickets';
 const String maxTicketsHint = 'Enter max no of tickets';
 
 const String discountLabel = 'Discount(optional)';

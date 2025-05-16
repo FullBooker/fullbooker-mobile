@@ -34,7 +34,6 @@ class AddProductPricingPage extends StatefulWidget {
 
 class _AddProductPricingPageState extends State<AddProductPricingPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
   final GlobalKey<FormFieldState<String>> _ticketFieldKey =
       GlobalKey<FormFieldState<String>>();
 
@@ -259,9 +258,7 @@ class _AddProductPricingPageState extends State<AddProductPricingPage> {
 
                         CustomTextInput(
                           hintText: maxTicketsHint,
-                          labelText: '${maximumTickets(
-                            getTicketDisplayName(vm.selectedPricingTier),
-                          )}*',
+                          labelText: '$maximumTickets*',
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: Validators.validateMaxTickets,
                           onChanged: (String value) {

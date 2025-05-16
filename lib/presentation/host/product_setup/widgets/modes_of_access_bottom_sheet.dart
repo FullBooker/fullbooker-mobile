@@ -3,7 +3,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
-import 'package:fullbooker/application/redux/actions/clear_pricing_options_action.dart';
 import 'package:fullbooker/application/redux/actions/fetch_pricing_options_action.dart';
 import 'package:fullbooker/application/redux/actions/set_product_pricing_options_action.dart';
 import 'package:fullbooker/application/redux/actions/toggle_pricing_option_action.dart';
@@ -78,7 +77,6 @@ class ModesOfAccessBottomSheet extends StatelessWidget {
                 converter: (Store<AppState> store) =>
                     ProductSetupViewModel.fromState(store.state),
                 onInit: (Store<AppState> store) {
-                  context.dispatch(ClearPricingOptionsAction());
                   context.dispatch(
                     FetchPricingOptionsAction(
                       client: AppWrapperBase.of(context)!.customClient,
