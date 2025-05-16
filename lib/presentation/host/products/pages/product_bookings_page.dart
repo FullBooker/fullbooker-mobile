@@ -15,8 +15,8 @@ import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:fullbooker/presentation/core/components/generic_zero_state.dart';
 import 'package:fullbooker/presentation/host/products/widgets/booking_list_item_widget.dart';
+import 'package:fullbooker/presentation/host/products/widgets/search_product_bookings_input.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
-import 'package:fullbooker/shared/widgets/custom_text_input.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:heroicons/heroicons.dart';
 
@@ -146,13 +146,7 @@ class ProductBookingsPage extends StatelessWidget {
                       spacing: 16,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        CustomTextInput(
-                          hintText: searchBookingsHint,
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          onChanged: (String param) {},
-                          keyboardType: TextInputType.name,
-                          prefixIconData: HeroIcons.magnifyingGlass,
-                        ),
+                        SearchProductBookingsInput(),
                         ListView.builder(
                           itemCount: vm.bookings?.length,
                           physics: NeverScrollableScrollPhysics(),

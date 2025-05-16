@@ -7,7 +7,7 @@ import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
 import 'package:fullbooker/application/redux/actions/fetch_products_action.dart';
 import 'package:fullbooker/application/redux/actions/reset_current_product_action.dart';
 import 'package:fullbooker/application/redux/actions/set_workflow_state_action.dart';
-import 'package:fullbooker/application/redux/actions/update_product_search_action.dart';
+import 'package:fullbooker/application/redux/actions/update_search_filters_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/products_page_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
@@ -86,9 +86,9 @@ class ProductsPage extends StatelessWidget {
                       ProductsPageViewModel.fromState(store.state),
                   onInit: (Store<AppState> store) {
                     context.dispatch(
-                      UpdateProductSearchAction(
-                        isSearching: false,
-                        searchParam: UNKNOWN,
+                      UpdateSearchFiltersAction(
+                        isSearchingProducts: false,
+                        productSearchParam: UNKNOWN,
                       ),
                     );
                     context.dispatch(
@@ -107,23 +107,27 @@ class ProductsPage extends StatelessWidget {
 
                     final List<Product?>? products = vm.products;
 
+                    final bool hasSearched = !vm.isSearching &&
+                        vm.searchParam.isNotEmpty &&
+                        vm.searchParam != UNKNOWN;
+
                     if (products?.isEmpty ?? true) {
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 24),
                         child: GenericZeroState(
-                          iconPath: vm.isSearching
+                          iconPath: hasSearched
                               ? setupZeroStateSVGPath
                               : productZeroStateSVGPath,
-                          title: vm.isSearching ? noProductsFound : noProducts,
+                          title: hasSearched ? noProductsFound : noProducts,
                           description: vm.isSearching
                               ? noProductsFoundCopy
                               : noProductsCopy,
                           onCTATap: () {
-                            if (vm.isSearching) {
+                            if (hasSearched) {
                               context.dispatch(
-                                UpdateProductSearchAction(
-                                  isSearching: false,
-                                  searchParam: UNKNOWN,
+                                UpdateSearchFiltersAction(
+                                  isSearchingProducts: false,
+                                  productSearchParam: UNKNOWN,
                                 ),
                               );
                               context.dispatch(
@@ -136,7 +140,7 @@ class ProductsPage extends StatelessWidget {
                               context.router.push(ProductCategoryRoute());
                             }
                           },
-                          ctaText: vm.isSearching
+                          ctaText: hasSearched
                               ? browseAllProducts
                               : createProductString,
                         ),

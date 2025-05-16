@@ -46,9 +46,12 @@ mixin _$HostState {
   List<String?>? get selectedPricingOptionIds =>
       throw _privateConstructorUsedError;
   ProductPricingOption? get selectedProductPricingOption =>
-      throw _privateConstructorUsedError; // Search
-  bool? get isSearching => throw _privateConstructorUsedError;
-  String? get searchParam =>
+      throw _privateConstructorUsedError; // Search products
+  bool? get isSearchingProducts => throw _privateConstructorUsedError;
+  String? get productSearchParam =>
+      throw _privateConstructorUsedError; // Search product booking
+  bool? get isSearchingProductBooking => throw _privateConstructorUsedError;
+  String? get productBookingSearchParam =>
       throw _privateConstructorUsedError; // Filter chips on product details page
   ProductStatus? get selectedProductStatusFilter =>
       throw _privateConstructorUsedError; // Bookings page
@@ -94,8 +97,10 @@ abstract class $HostStateCopyWith<$Res> {
       List<ProductPricingOption?>? productPricingOptions,
       List<String?>? selectedPricingOptionIds,
       ProductPricingOption? selectedProductPricingOption,
-      bool? isSearching,
-      String? searchParam,
+      bool? isSearchingProducts,
+      String? productSearchParam,
+      bool? isSearchingProductBooking,
+      String? productBookingSearchParam,
       ProductStatus? selectedProductStatusFilter,
       Booking? selectedBooking,
       List<Ticket?>? selectedBookingTickets,
@@ -149,8 +154,10 @@ class _$HostStateCopyWithImpl<$Res, $Val extends HostState>
     Object? productPricingOptions = freezed,
     Object? selectedPricingOptionIds = freezed,
     Object? selectedProductPricingOption = freezed,
-    Object? isSearching = freezed,
-    Object? searchParam = freezed,
+    Object? isSearchingProducts = freezed,
+    Object? productSearchParam = freezed,
+    Object? isSearchingProductBooking = freezed,
+    Object? productBookingSearchParam = freezed,
     Object? selectedProductStatusFilter = freezed,
     Object? selectedBooking = freezed,
     Object? selectedBookingTickets = freezed,
@@ -231,13 +238,21 @@ class _$HostStateCopyWithImpl<$Res, $Val extends HostState>
           ? _value.selectedProductPricingOption
           : selectedProductPricingOption // ignore: cast_nullable_to_non_nullable
               as ProductPricingOption?,
-      isSearching: freezed == isSearching
-          ? _value.isSearching
-          : isSearching // ignore: cast_nullable_to_non_nullable
+      isSearchingProducts: freezed == isSearchingProducts
+          ? _value.isSearchingProducts
+          : isSearchingProducts // ignore: cast_nullable_to_non_nullable
               as bool?,
-      searchParam: freezed == searchParam
-          ? _value.searchParam
-          : searchParam // ignore: cast_nullable_to_non_nullable
+      productSearchParam: freezed == productSearchParam
+          ? _value.productSearchParam
+          : productSearchParam // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isSearchingProductBooking: freezed == isSearchingProductBooking
+          ? _value.isSearchingProductBooking
+          : isSearchingProductBooking // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      productBookingSearchParam: freezed == productBookingSearchParam
+          ? _value.productBookingSearchParam
+          : productBookingSearchParam // ignore: cast_nullable_to_non_nullable
               as String?,
       selectedProductStatusFilter: freezed == selectedProductStatusFilter
           ? _value.selectedProductStatusFilter
@@ -451,8 +466,10 @@ abstract class _$$HostStateImplCopyWith<$Res>
       List<ProductPricingOption?>? productPricingOptions,
       List<String?>? selectedPricingOptionIds,
       ProductPricingOption? selectedProductPricingOption,
-      bool? isSearching,
-      String? searchParam,
+      bool? isSearchingProducts,
+      String? productSearchParam,
+      bool? isSearchingProductBooking,
+      String? productBookingSearchParam,
       ProductStatus? selectedProductStatusFilter,
       Booking? selectedBooking,
       List<Ticket?>? selectedBookingTickets,
@@ -515,8 +532,10 @@ class __$$HostStateImplCopyWithImpl<$Res>
     Object? productPricingOptions = freezed,
     Object? selectedPricingOptionIds = freezed,
     Object? selectedProductPricingOption = freezed,
-    Object? isSearching = freezed,
-    Object? searchParam = freezed,
+    Object? isSearchingProducts = freezed,
+    Object? productSearchParam = freezed,
+    Object? isSearchingProductBooking = freezed,
+    Object? productBookingSearchParam = freezed,
     Object? selectedProductStatusFilter = freezed,
     Object? selectedBooking = freezed,
     Object? selectedBookingTickets = freezed,
@@ -597,13 +616,21 @@ class __$$HostStateImplCopyWithImpl<$Res>
           ? _value.selectedProductPricingOption
           : selectedProductPricingOption // ignore: cast_nullable_to_non_nullable
               as ProductPricingOption?,
-      isSearching: freezed == isSearching
-          ? _value.isSearching
-          : isSearching // ignore: cast_nullable_to_non_nullable
+      isSearchingProducts: freezed == isSearchingProducts
+          ? _value.isSearchingProducts
+          : isSearchingProducts // ignore: cast_nullable_to_non_nullable
               as bool?,
-      searchParam: freezed == searchParam
-          ? _value.searchParam
-          : searchParam // ignore: cast_nullable_to_non_nullable
+      productSearchParam: freezed == productSearchParam
+          ? _value.productSearchParam
+          : productSearchParam // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isSearchingProductBooking: freezed == isSearchingProductBooking
+          ? _value.isSearchingProductBooking
+          : isSearchingProductBooking // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      productBookingSearchParam: freezed == productBookingSearchParam
+          ? _value.productBookingSearchParam
+          : productBookingSearchParam // ignore: cast_nullable_to_non_nullable
               as String?,
       selectedProductStatusFilter: freezed == selectedProductStatusFilter
           ? _value.selectedProductStatusFilter
@@ -656,8 +683,10 @@ class _$HostStateImpl implements _HostState {
       this.productPricingOptions = const <ProductPricingOption>[],
       this.selectedPricingOptionIds = const <String>[],
       this.selectedProductPricingOption,
-      this.isSearching = false,
-      this.searchParam = UNKNOWN,
+      this.isSearchingProducts = false,
+      this.productSearchParam = UNKNOWN,
+      this.isSearchingProductBooking = false,
+      this.productBookingSearchParam = UNKNOWN,
       this.selectedProductStatusFilter = ProductStatus.all,
       this.selectedBooking,
       this.selectedBookingTickets = const <Ticket>[],
@@ -718,13 +747,20 @@ class _$HostStateImpl implements _HostState {
   final List<String?>? selectedPricingOptionIds;
   @override
   final ProductPricingOption? selectedProductPricingOption;
-// Search
+// Search products
   @override
   @JsonKey()
-  final bool? isSearching;
+  final bool? isSearchingProducts;
   @override
   @JsonKey()
-  final String? searchParam;
+  final String? productSearchParam;
+// Search product booking
+  @override
+  @JsonKey()
+  final bool? isSearchingProductBooking;
+  @override
+  @JsonKey()
+  final String? productBookingSearchParam;
 // Filter chips on product details page
   @override
   @JsonKey()
@@ -747,7 +783,7 @@ class _$HostStateImpl implements _HostState {
 
   @override
   String toString() {
-    return 'HostState(products: $products, currentProduct: $currentProduct, selectedProduct: $selectedProduct, productCategories: $productCategories, locationPerms: $locationPerms, selectedLocation: $selectedLocation, selectedSchedule: $selectedSchedule, currencies: $currencies, selectedCurrency: $selectedCurrency, selectedPricingTier: $selectedPricingTier, selectedProductPricing: $selectedProductPricing, currentScannedTicketID: $currentScannedTicketID, isValidTicket: $isValidTicket, workflowState: $workflowState, pricingOptions: $pricingOptions, productPricingOptions: $productPricingOptions, selectedPricingOptionIds: $selectedPricingOptionIds, selectedProductPricingOption: $selectedProductPricingOption, isSearching: $isSearching, searchParam: $searchParam, selectedProductStatusFilter: $selectedProductStatusFilter, selectedBooking: $selectedBooking, selectedBookingTickets: $selectedBookingTickets, pickedPricingOption: $pickedPricingOption, ticketTypes: $ticketTypes, selectedTicketType: $selectedTicketType)';
+    return 'HostState(products: $products, currentProduct: $currentProduct, selectedProduct: $selectedProduct, productCategories: $productCategories, locationPerms: $locationPerms, selectedLocation: $selectedLocation, selectedSchedule: $selectedSchedule, currencies: $currencies, selectedCurrency: $selectedCurrency, selectedPricingTier: $selectedPricingTier, selectedProductPricing: $selectedProductPricing, currentScannedTicketID: $currentScannedTicketID, isValidTicket: $isValidTicket, workflowState: $workflowState, pricingOptions: $pricingOptions, productPricingOptions: $productPricingOptions, selectedPricingOptionIds: $selectedPricingOptionIds, selectedProductPricingOption: $selectedProductPricingOption, isSearchingProducts: $isSearchingProducts, productSearchParam: $productSearchParam, isSearchingProductBooking: $isSearchingProductBooking, productBookingSearchParam: $productBookingSearchParam, selectedProductStatusFilter: $selectedProductStatusFilter, selectedBooking: $selectedBooking, selectedBookingTickets: $selectedBookingTickets, pickedPricingOption: $pickedPricingOption, ticketTypes: $ticketTypes, selectedTicketType: $selectedTicketType)';
   }
 
   @override
@@ -792,10 +828,14 @@ class _$HostStateImpl implements _HostState {
                     selectedProductPricingOption) ||
                 other.selectedProductPricingOption ==
                     selectedProductPricingOption) &&
-            (identical(other.isSearching, isSearching) ||
-                other.isSearching == isSearching) &&
-            (identical(other.searchParam, searchParam) ||
-                other.searchParam == searchParam) &&
+            (identical(other.isSearchingProducts, isSearchingProducts) ||
+                other.isSearchingProducts == isSearchingProducts) &&
+            (identical(other.productSearchParam, productSearchParam) ||
+                other.productSearchParam == productSearchParam) &&
+            (identical(other.isSearchingProductBooking, isSearchingProductBooking) ||
+                other.isSearchingProductBooking == isSearchingProductBooking) &&
+            (identical(other.productBookingSearchParam, productBookingSearchParam) ||
+                other.productBookingSearchParam == productBookingSearchParam) &&
             (identical(other.selectedProductStatusFilter,
                     selectedProductStatusFilter) ||
                 other.selectedProductStatusFilter ==
@@ -834,8 +874,10 @@ class _$HostStateImpl implements _HostState {
         const DeepCollectionEquality().hash(productPricingOptions),
         const DeepCollectionEquality().hash(selectedPricingOptionIds),
         selectedProductPricingOption,
-        isSearching,
-        searchParam,
+        isSearchingProducts,
+        productSearchParam,
+        isSearchingProductBooking,
+        productBookingSearchParam,
         selectedProductStatusFilter,
         selectedBooking,
         const DeepCollectionEquality().hash(selectedBookingTickets),
@@ -880,8 +922,10 @@ abstract class _HostState implements HostState {
       final List<ProductPricingOption?>? productPricingOptions,
       final List<String?>? selectedPricingOptionIds,
       final ProductPricingOption? selectedProductPricingOption,
-      final bool? isSearching,
-      final String? searchParam,
+      final bool? isSearchingProducts,
+      final String? productSearchParam,
+      final bool? isSearchingProductBooking,
+      final String? productBookingSearchParam,
       final ProductStatus? selectedProductStatusFilter,
       final Booking? selectedBooking,
       final List<Ticket?>? selectedBookingTickets,
@@ -927,11 +971,15 @@ abstract class _HostState implements HostState {
   @override
   List<String?>? get selectedPricingOptionIds;
   @override
-  ProductPricingOption? get selectedProductPricingOption; // Search
+  ProductPricingOption? get selectedProductPricingOption; // Search products
   @override
-  bool? get isSearching;
+  bool? get isSearchingProducts;
   @override
-  String? get searchParam; // Filter chips on product details page
+  String? get productSearchParam; // Search product booking
+  @override
+  bool? get isSearchingProductBooking;
+  @override
+  String? get productBookingSearchParam; // Filter chips on product details page
   @override
   ProductStatus? get selectedProductStatusFilter; // Bookings page
   @override

@@ -14,28 +14,33 @@ import 'package:http/http.dart';
 
 class FetchProductBookingsAction extends ReduxAction<AppState> {
   FetchProductBookingsAction({
-    this.onSuccess,
+    this.onDone,
     this.onError,
     required this.client,
+    this.searchParam,
   });
 
   final Function(String error)? onError;
-  final Function()? onSuccess;
+  final Function()? onDone;
   final ICustomClient client;
+  final String? searchParam;
 
   @override
   Future<AppState?> reduce() async {
     final String productID = state.hostState?.selectedProduct?.id ?? UNKNOWN;
 
-    final Map<String, dynamic> data = <String, dynamic>{
+    final bool isSearching = searchParam != null && searchParam != UNKNOWN;
+
+    final Map<String, dynamic> queryParams = <String, dynamic>{
       'product': productID,
       'status': BookingStatus.completed.name,
+      if (isSearching) 'search': searchParam,
     };
 
     final Response httpResponse = await client.callRESTAPI(
       endpoint: GetIt.I.get<AppConfig>().bookingsEndpoint,
       method: APIMethods.GET.name.toUpperCase(),
-      queryParams: data,
+      queryParams: queryParams,
     );
 
     final Map<String, dynamic> body =
@@ -56,6 +61,8 @@ class FetchProductBookingsAction extends ReduxAction<AppState> {
       UpdateSelectedProductAction(bookings: bookingsResponse.results),
     );
 
-    return state;
+    onDone?.call();
+
+    return null;
   }
 }

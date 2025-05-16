@@ -3,10 +3,10 @@ import 'dart:async';
 
 import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
-import 'package:fullbooker/application/redux/actions/fetch_products_action.dart';
-import 'package:fullbooker/application/redux/actions/update_product_search_action.dart';
+import 'package:fullbooker/application/redux/actions/fetch_product_bookings_action.dart';
+import 'package:fullbooker/application/redux/actions/update_search_filters_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
-import 'package:fullbooker/application/redux/view_models/products_page_view_model.dart';
+import 'package:fullbooker/application/redux/view_models/product_search_view_model.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/widgets/custom_text_input.dart';
@@ -22,11 +22,16 @@ class SearchProductBookingsInput extends StatefulWidget {
 
 class _SearchProductBookingsInputState
     extends State<SearchProductBookingsInput> {
-  late TextEditingController _controller;
-
-  late Timer _debounce = Timer(Duration.zero, () {});
-
+  late final TextEditingController _controller;
+  Timer? _debounce;
   String _searchQuery = '';
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    _debounce?.cancel();
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -34,89 +39,95 @@ class _SearchProductBookingsInputState
     _controller = TextEditingController();
   }
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    _debounce.cancel();
-    super.dispose();
-  }
-
   void _onSearchChanged(String query) {
-    setState(() {
-      _searchQuery = query;
-    });
+    _debounce?.cancel();
 
-    if (_debounce.isActive) {
-      _debounce.cancel();
-    }
+    setState(() => _searchQuery = query);
 
-    _debounce = Timer(const Duration(milliseconds: 1500), () {
-      if (_searchQuery.length >= 3) {
-        context.dispatch(
-          UpdateProductSearchAction(
-            searchParam: _searchQuery,
-            isSearching: true,
-          ),
-        );
+    context.dispatch(
+      UpdateSearchFiltersAction(
+        productBookingSearchParam: query,
+        isSearchingProductBooking: true,
+      ),
+    );
 
-        context.dispatch(
-          FetchProductsAction(
+    _debounce = Timer(const Duration(milliseconds: 1000), () async {
+      if (_searchQuery.length >= 2) {
+        await context.dispatch(
+          FetchProductBookingsAction(
             searchParam: _searchQuery,
             client: AppWrapperBase.of(context)!.customClient,
+            onDone: () {
+              context.dispatch(
+                UpdateSearchFiltersAction(isSearchingProductBooking: false),
+              );
+            },
           ),
         );
+        context.dispatch(
+          UpdateSearchFiltersAction(isSearchingProductBooking: false),
+        );
+      } else {
+        return;
       }
+      FocusScope.of(context).unfocus();
     });
+  }
+
+  void _clearSearch() {
+    _controller.clear();
+    _debounce?.cancel();
+    setState(() => _searchQuery = '');
+    context.dispatch(
+      UpdateSearchFiltersAction(
+        productBookingSearchParam: '',
+        isSearchingProductBooking: false,
+      ),
+    );
+    context.dispatch(
+      FetchProductBookingsAction(
+        client: AppWrapperBase.of(context)!.customClient,
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, ProductsPageViewModel>(
+    return StoreConnector<AppState, ProductSearchViewModel>(
       converter: (Store<AppState> store) =>
-          ProductsPageViewModel.fromState(store.state),
-      builder: (BuildContext context, ProductsPageViewModel vm) {
+          ProductSearchViewModel.fromState(store.state),
+      builder: (BuildContext context, ProductSearchViewModel vm) {
         return Column(
-          spacing: 8,
           crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 8,
           children: <Widget>[
             CustomTextInput(
-              hintText: searchProducts,
-              autovalidateMode: AutovalidateMode.onUserInteraction,
+              hintText: searchBookingsHint,
               controller: _controller,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
               onChanged: _onSearchChanged,
               keyboardType: TextInputType.text,
               prefixIconData: HeroIcons.magnifyingGlass,
               suffixIconData:
                   _searchQuery.isNotEmpty ? HeroIcons.xCircle : null,
-              suffixIconFunc: () {
-                _controller.clear();
-                context.dispatch(
-                  UpdateProductSearchAction(
-                    isSearching: false,
-                    searchParam: UNKNOWN,
-                  ),
-                );
-                context.dispatch(
-                  FetchProductsAction(
-                    client: AppWrapperBase.of(context)!.customClient,
-                  ),
-                );
-                setState(() {
-                  _searchQuery = '';
-                });
-              },
+              suffixIconFunc: _clearSearch,
             ),
-            if (vm.isSearching)
-              RichText(
-                text: TextSpan(
-                  style: Theme.of(context).textTheme.bodyMedium,
-                  children: <InlineSpan>[
-                    TextSpan(text: showingResults),
-                    TextSpan(
-                      text: vm.searchParam,
-                      style: Theme.of(context).textTheme.titleSmall,
-                    ),
-                  ],
+            if (!vm.isSearchingProductBooking &&
+                vm.productBookingSearchParam.isNotEmpty &&
+                vm.productBookingSearchParam != UNKNOWN)
+              Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: RichText(
+                  text: TextSpan(
+                    style: Theme.of(context).textTheme.bodyMedium,
+                    children: <InlineSpan>[
+                      TextSpan(text: showingResults),
+                      TextSpan(
+                        text: vm.productBookingSearchParam,
+                        style: Theme.of(context).textTheme.titleSmall,
+                      ),
+                    ],
+                  ),
                 ),
               ),
           ],

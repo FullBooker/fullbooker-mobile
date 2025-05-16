@@ -77,8 +77,12 @@ _$HostStateImpl _$$HostStateImplFromJson(Map<String, dynamic> json) =>
           ? null
           : ProductPricingOption.fromJson(
               json['selectedProductPricingOption'] as Map<String, dynamic>),
-      isSearching: json['isSearching'] as bool? ?? false,
-      searchParam: json['searchParam'] as String? ?? UNKNOWN,
+      isSearchingProducts: json['isSearchingProducts'] as bool? ?? false,
+      productSearchParam: json['productSearchParam'] as String? ?? UNKNOWN,
+      isSearchingProductBooking:
+          json['isSearchingProductBooking'] as bool? ?? false,
+      productBookingSearchParam:
+          json['productBookingSearchParam'] as String? ?? UNKNOWN,
       selectedProductStatusFilter: $enumDecodeNullable(
               _$ProductStatusEnumMap, json['selectedProductStatusFilter']) ??
           ProductStatus.all,
@@ -130,8 +134,10 @@ Map<String, dynamic> _$$HostStateImplToJson(_$HostStateImpl instance) =>
       'selectedPricingOptionIds': instance.selectedPricingOptionIds,
       'selectedProductPricingOption':
           instance.selectedProductPricingOption?.toJson(),
-      'isSearching': instance.isSearching,
-      'searchParam': instance.searchParam,
+      'isSearchingProducts': instance.isSearchingProducts,
+      'productSearchParam': instance.productSearchParam,
+      'isSearchingProductBooking': instance.isSearchingProductBooking,
+      'productBookingSearchParam': instance.productBookingSearchParam,
       'selectedProductStatusFilter':
           _$ProductStatusEnumMap[instance.selectedProductStatusFilter],
       'selectedBooking': instance.selectedBooking?.toJson(),

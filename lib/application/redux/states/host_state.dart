@@ -51,13 +51,16 @@ class HostState with _$HostState {
     @Default(<String>[]) List<String?>? selectedPricingOptionIds,
     ProductPricingOption? selectedProductPricingOption,
 
-    // Search
-    @Default(false) bool? isSearching,
-    @Default(UNKNOWN) String? searchParam,
+    // Search products
+    @Default(false) bool? isSearchingProducts,
+    @Default(UNKNOWN) String? productSearchParam,
+
+    // Search product booking
+    @Default(false) bool? isSearchingProductBooking,
+    @Default(UNKNOWN) String? productBookingSearchParam,
 
     // Filter chips on product details page
     @Default(ProductStatus.all) ProductStatus? selectedProductStatusFilter,
-
 
     // Bookings page
     Booking? selectedBooking,

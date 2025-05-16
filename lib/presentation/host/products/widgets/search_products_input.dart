@@ -4,9 +4,9 @@ import 'dart:async';
 import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
 import 'package:fullbooker/application/redux/actions/fetch_products_action.dart';
-import 'package:fullbooker/application/redux/actions/update_product_search_action.dart';
+import 'package:fullbooker/application/redux/actions/update_search_filters_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
-import 'package:fullbooker/application/redux/view_models/products_page_view_model.dart';
+import 'package:fullbooker/application/redux/view_models/product_search_view_model.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/widgets/custom_text_input.dart';
@@ -43,7 +43,10 @@ class _SearchProductsInputState extends State<SearchProductsInput> {
     setState(() => _searchQuery = query);
 
     context.dispatch(
-      UpdateProductSearchAction(searchParam: query, isSearching: true),
+      UpdateSearchFiltersAction(
+        productSearchParam: query,
+        isSearchingProducts: true,
+      ),
     );
 
     _debounce = Timer(const Duration(milliseconds: 1000), () async {
@@ -53,11 +56,13 @@ class _SearchProductsInputState extends State<SearchProductsInput> {
             searchParam: _searchQuery,
             client: AppWrapperBase.of(context)!.customClient,
             onDone: () {
-              context.dispatch(UpdateProductSearchAction(isSearching: false));
+              context.dispatch(
+                UpdateSearchFiltersAction(isSearchingProducts: false),
+              );
             },
           ),
         );
-        context.dispatch(UpdateProductSearchAction(isSearching: false));
+        context.dispatch(UpdateSearchFiltersAction(isSearchingProducts: false));
       } else {
         return;
       }
@@ -70,9 +75,9 @@ class _SearchProductsInputState extends State<SearchProductsInput> {
     _debounce?.cancel();
     setState(() => _searchQuery = '');
     context.dispatch(
-      UpdateProductSearchAction(
-        searchParam: '',
-        isSearching: false,
+      UpdateSearchFiltersAction(
+        productSearchParam: '',
+        isSearchingProducts: false,
       ),
     );
     context.dispatch(
@@ -84,10 +89,10 @@ class _SearchProductsInputState extends State<SearchProductsInput> {
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, ProductsPageViewModel>(
+    return StoreConnector<AppState, ProductSearchViewModel>(
       converter: (Store<AppState> store) =>
-          ProductsPageViewModel.fromState(store.state),
-      builder: (BuildContext context, ProductsPageViewModel vm) {
+          ProductSearchViewModel.fromState(store.state),
+      builder: (BuildContext context, ProductSearchViewModel vm) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 8,
@@ -103,9 +108,9 @@ class _SearchProductsInputState extends State<SearchProductsInput> {
                   _searchQuery.isNotEmpty ? HeroIcons.xCircle : null,
               suffixIconFunc: _clearSearch,
             ),
-            if (!vm.isSearching &&
-                vm.searchParam.isNotEmpty &&
-                vm.searchParam != UNKNOWN)
+            if (!vm.isSearchingProducts &&
+                vm.productSearchParam.isNotEmpty &&
+                vm.productSearchParam != UNKNOWN)
               Padding(
                 padding: const EdgeInsets.only(top: 8),
                 child: RichText(
@@ -114,7 +119,7 @@ class _SearchProductsInputState extends State<SearchProductsInput> {
                     children: <InlineSpan>[
                       TextSpan(text: showingResults),
                       TextSpan(
-                        text: vm.searchParam,
+                        text: vm.productSearchParam,
                         style: Theme.of(context).textTheme.titleSmall,
                       ),
                     ],
