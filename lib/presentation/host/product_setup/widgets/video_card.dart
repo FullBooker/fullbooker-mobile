@@ -73,7 +73,6 @@ class VideoCardState extends State<VideoCard> {
   Widget build(BuildContext context) {
     final bool isReadOnly = widget.readOnly;
 
-
     return GestureDetector(
       onTap: () => context.router.push(
         FullscreenVideoPlayerRoute(videoUrl: widget.videoUrl),
@@ -84,14 +83,9 @@ class VideoCardState extends State<VideoCard> {
           fit: StackFit.expand,
           children: <Widget>[
             if (_initialized)
-              FittedBox(
-                fit: BoxFit.cover,
-                clipBehavior: Clip.hardEdge,
-                child: SizedBox(
-                  width: _controller.value.size.width,
-                  height: _controller.value.size.height,
-                  child: VideoPlayer(_controller),
-                ),
+              AspectRatio(
+                aspectRatio: _controller.value.aspectRatio,
+                child: VideoPlayer(_controller),
               )
             else if (_thumbnailPath != null &&
                 File(_thumbnailPath!).existsSync())
