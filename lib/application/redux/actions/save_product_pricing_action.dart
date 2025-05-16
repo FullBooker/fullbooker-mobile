@@ -53,6 +53,7 @@ class SaveProductPricingAction extends ReduxAction<AppState> {
       'ticket_tier': chosenTicketType?.name?.toLowerCase(),
       'pricing_option': selectedPricingOption?.id,
       'maximum_number_of_tickets': selectedPricing?.maxTickets,
+      'buyer_to_pay_service_fee': selectedPricing?.buyerPaysFee,
     };
 
     final String endpoint = GetIt.I.get<AppConfig>().productPricingEndpoint;

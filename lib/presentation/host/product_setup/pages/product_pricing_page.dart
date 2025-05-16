@@ -60,137 +60,132 @@ class ProductPricingPage extends StatelessWidget {
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
-            child: RefreshIndicator(
-              onRefresh: () => onRefresh(context),
-              child: ListView(
-                shrinkWrap: true,
-                children: <Widget>[
-                  Column(
-                    spacing: 12,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      // Top banner
-                      Row(
-                        spacing: 16,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Flexible(
-                            flex: 5,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              spacing: 8,
-                              children: <Widget>[
-                                Text(
-                                  pricing,
-                                  style:
-                                      Theme.of(context).textTheme.headlineSmall,
-                                ),
-                                Text(
-                                  pricingCopy,
-                                  style: Theme.of(context).textTheme.bodyMedium,
-                                ),
-                              ],
-                            ),
+          child: RefreshIndicator(
+            onRefresh: () => onRefresh(context),
+            child: ListView(
+              physics: BouncingScrollPhysics(),
+              shrinkWrap: true,
+              children: <Widget>[
+                Column(
+                  spacing: 12,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    // Top banner
+                    Row(
+                      spacing: 16,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Flexible(
+                          flex: 5,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            spacing: 8,
+                            children: <Widget>[
+                              Text(
+                                pricing,
+                                style:
+                                    Theme.of(context).textTheme.headlineSmall,
+                              ),
+                              Text(
+                                pricingCopy,
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              ),
+                            ],
                           ),
-                          Flexible(
-                            child: GestureDetector(
-                              onTap: () {
-                                context.dispatch(
-                                  ClearSelectedTicketTypeOptionsAction(),
-                                );
-                                context.router.push(AddProductPricingRoute());
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Theme.of(context).primaryColor,
-                                  shape: BoxShape.circle,
-                                ),
-                                padding: const EdgeInsets.all(12),
-                                child: HeroIcon(
-                                  HeroIcons.plus,
-                                  color: Colors.white,
-                                  size: 32,
-                                ),
+                        ),
+                        Flexible(
+                          child: GestureDetector(
+                            onTap: () {
+                              context.dispatch(
+                                ClearSelectedTicketTypeOptionsAction(),
+                              );
+                              context.router.push(AddProductPricingRoute());
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).primaryColor,
+                                shape: BoxShape.circle,
+                              ),
+                              padding: const EdgeInsets.all(12),
+                              child: HeroIcon(
+                                HeroIcons.plus,
+                                color: Colors.white,
+                                size: 32,
                               ),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
+                    ),
 
-                      // Contents
-                      StoreConnector<AppState, ProductSetupViewModel>(
-                        converter: (Store<AppState> store) =>
-                            ProductSetupViewModel.fromState(store.state),
-                        onInit: (Store<AppState> store) {
-                          context.dispatch(
-                            FetchProductPricingAction(
-                              client: AppWrapperBase.of(context)!.customClient,
-                            ),
-                          );
-                        },
-                        builder: (
-                          BuildContext context,
-                          ProductSetupViewModel vm,
-                        ) {
-                          if (context.isWaiting(FetchProductPricingAction)) {
-                            return AppLoading();
-                          }
+                    // Contents
+                    StoreConnector<AppState, ProductSetupViewModel>(
+                      converter: (Store<AppState> store) =>
+                          ProductSetupViewModel.fromState(store.state),
+                      onInit: (Store<AppState> store) {
+                        context.dispatch(
+                          FetchProductPricingAction(
+                            client: AppWrapperBase.of(context)!.customClient,
+                          ),
+                        );
+                      },
+                      builder: (
+                        BuildContext context,
+                        ProductSetupViewModel vm,
+                      ) {
+                        if (context.isWaiting(FetchProductPricingAction)) {
+                          return AppLoading();
+                        }
 
-                          if (vm.pricing?.isEmpty ?? true) {
-                            return GenericZeroState(
-                              iconPath: productPricingZeroStateSVGPath,
-                              title: noPricingAdded,
-                              description: noPricingAddedCopy,
-                              onCTATap: () {
-                                context.dispatch(
-                                  ClearSelectedTicketTypeOptionsAction(),
-                                );
-                                context.router.push(AddProductPricingRoute());
-                              },
-                              ctaText: addPricingString,
-                            );
-                          }
-
-                          final Map<String, ProductPricing> pricingMap =
-                              <String, ProductPricing>{};
-
-                          for (final ProductPricing? p
-                              in vm.pricing ?? <ProductPricing>[]) {
-                            final String? tierKey =
-                                p?.ticketTier?.toLowerCase();
-                            if (tierKey != null) {
-                              pricingMap[tierKey] = p!;
-                            }
-                          }
-
-                          return ListView.builder(
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemCount: vm.pricing?.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              final ProductPricing? current =
-                                  vm.pricing![index];
-
-                              return Padding(
-                                padding: const EdgeInsets.only(bottom: 12),
-                                child: PricingCardWidget(
-                                  onAddOrEdit: () {
-                                    context.router
-                                        .push(AddProductPricingRoute());
-                                  },
-                                  pricing: current,
-                                ),
+                        if (vm.pricing?.isEmpty ?? true) {
+                          return GenericZeroState(
+                            iconPath: productPricingZeroStateSVGPath,
+                            title: noPricingAdded,
+                            description: noPricingAddedCopy,
+                            onCTATap: () {
+                              context.dispatch(
+                                ClearSelectedTicketTypeOptionsAction(),
                               );
+                              context.router.push(AddProductPricingRoute());
                             },
+                            ctaText: addPricingString,
                           );
-                        },
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                        }
+
+                        final Map<String, ProductPricing> pricingMap =
+                            <String, ProductPricing>{};
+
+                        for (final ProductPricing? p
+                            in vm.pricing ?? <ProductPricing>[]) {
+                          final String? tierKey = p?.ticketTier?.toLowerCase();
+                          if (tierKey != null) {
+                            pricingMap[tierKey] = p!;
+                          }
+                        }
+
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: vm.pricing?.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            final ProductPricing? current = vm.pricing![index];
+
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 12),
+                              child: PricingCardWidget(
+                                onAddOrEdit: () {
+                                  context.router.push(AddProductPricingRoute());
+                                },
+                                pricing: current,
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         ),

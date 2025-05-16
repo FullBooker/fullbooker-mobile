@@ -622,7 +622,7 @@ const String addDateTimeError =
 
 const String selectCurrencyHint = 'Choose currency';
 
-const String pricingBreakdown = 'Pricing breakdown';
+const String pricingBreakdownString = 'Pricing breakdown';
 
 String serviceFeeLabel({
   required String currency,

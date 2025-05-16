@@ -34,120 +34,126 @@ class _AddProductPricingPageState extends State<AddProductPricingPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(title: addTicketPrice),
-      bottomNavigationBar: Container(
-        padding: EdgeInsetsDirectional.all(16),
-        color: Colors.white,
-        child: StoreConnector<AppState, ProductSetupViewModel>(
-          converter: (Store<AppState> store) =>
-              ProductSetupViewModel.fromState(store.state),
-          builder: (BuildContext context, ProductSetupViewModel vm) {
-            final bool isLoading = context.isWaiting(SaveProductPricingAction);
+    return SafeArea(
+      child: Scaffold(
+        appBar: CustomAppBar(title: addTicketPrice),
+        bottomNavigationBar: Container(
+          padding: EdgeInsetsDirectional.all(16),
+          color: Colors.white,
+          child: StoreConnector<AppState, ProductSetupViewModel>(
+            converter: (Store<AppState> store) =>
+                ProductSetupViewModel.fromState(store.state),
+            builder: (BuildContext context, ProductSetupViewModel vm) {
+              final bool isLoading =
+                  context.isWaiting(SaveProductPricingAction);
 
-            return PrimaryButton(
-              isLoading: isLoading,
-              onPressed: () {
-                final bool formValid =
-                    _formKey.currentState?.validate() ?? false;
-                final bool isTicketValid =
-                    _ticketFieldKey.currentState?.validate() ?? false;
-                if (formValid && isTicketValid) {
-                  context.dispatch(
-                    SaveProductPricingAction(
-                      client: AppWrapperBase.of(context)!.customClient,
-                      onSuccess: () => context.router.maybePop(),
-                      onError: (String error) => showAlertDialog(
-                        context: context,
-                        assetPath: productZeroStateSVGPath,
-                        description: error,
+              return PrimaryButton(
+                isLoading: isLoading,
+                onPressed: () {
+                  final bool formValid =
+                      _formKey.currentState?.validate() ?? false;
+                  final bool isTicketValid =
+                      _ticketFieldKey.currentState?.validate() ?? false;
+                  if (formValid && isTicketValid) {
+                    context.dispatch(
+                      SaveProductPricingAction(
+                        client: AppWrapperBase.of(context)!.customClient,
+                        onSuccess: () => context.router.maybePop(),
+                        onError: (String error) => showAlertDialog(
+                          context: context,
+                          assetPath: productZeroStateSVGPath,
+                          description: error,
+                        ),
                       ),
-                    ),
-                  );
-                }
-              },
-              child: d.right(saveString),
-            );
-          },
+                    );
+                  }
+                },
+                child: d.right(saveString),
+              );
+            },
+          ),
         ),
-      ),
-      body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            spacing: 12,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              StoreConnector<AppState, ProductSetupViewModel>(
-                converter: (Store<AppState> store) =>
-                    ProductSetupViewModel.fromState(store.state),
-                onInit: (Store<AppState> store) {
-                  context.dispatch(
-                    FetchCurrenciesAction(
-                      client: AppWrapperBase.of(context)!.customClient,
-                    ),
-                  );
-                },
-                builder: (BuildContext context, ProductSetupViewModel vm) {
-                  return Form(
-                    key: _formKey,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      spacing: 16,
-                      children: <Widget>[
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          spacing: 8,
-                          children: <Widget>[
-                            Text(
-                              setupTickerPrice,
-                              style: Theme.of(context).textTheme.headlineSmall,
-                            ),
-                            Text(
-                              setupTickerPriceCopy,
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                          ],
-                        ),
+        body: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              spacing: 12,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                StoreConnector<AppState, ProductSetupViewModel>(
+                  converter: (Store<AppState> store) =>
+                      ProductSetupViewModel.fromState(store.state),
+                  onInit: (Store<AppState> store) {
+                    context.dispatch(
+                      FetchCurrenciesAction(
+                        client: AppWrapperBase.of(context)!.customClient,
+                      ),
+                    );
+                  },
+                  builder: (BuildContext context, ProductSetupViewModel vm) {
+                    return Form(
+                      key: _formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        spacing: 16,
+                        children: <Widget>[
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            spacing: 8,
+                            children: <Widget>[
+                              Text(
+                                setupTickerPrice,
+                                style:
+                                    Theme.of(context).textTheme.headlineSmall,
+                              ),
+                              Text(
+                                setupTickerPriceCopy,
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              ),
+                            ],
+                          ),
 
-                        TicketTypesDropdown(
-                          fieldKey: _ticketFieldKey,
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                        ),
+                          TicketTypesDropdown(
+                            fieldKey: _ticketFieldKey,
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                          ),
 
-                        // Currency dropdown
-                        PricingInput(),
+                          // Currency dropdown
+                          PricingInput(),
 
-                        CustomTextInput(
-                          hintText: maxTicketsHint,
-                          labelText: '$maximumTickets*',
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: Validators.validateMaxTickets,
-                          onChanged: (String value) {
-                            final int? parsed = int.tryParse(value);
-                            if (parsed != null) {
-                              context.dispatch(
-                                UpdateSelectedPricingAction(
-                                  maxTickets: parsed,
-                                ),
-                              );
-                            }
-                          },
-                          keyboardType: TextInputType.number,
-                        ),
-                        veryLargeVerticalSizedBox,
-                        veryLargeVerticalSizedBox,
-                        veryLargeVerticalSizedBox,
-                        veryLargeVerticalSizedBox,
-                        veryLargeVerticalSizedBox,
-                        veryLargeVerticalSizedBox,
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ],
+                          CustomTextInput(
+                            hintText: maxTicketsHint,
+                            labelText: '$maximumTickets*',
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            validator: Validators.validateMaxTickets,
+                            onChanged: (String value) {
+                              final int? parsed = int.tryParse(value);
+                              if (parsed != null) {
+                                context.dispatch(
+                                  UpdateSelectedPricingAction(
+                                    maxTickets: parsed,
+                                  ),
+                                );
+                              }
+                            },
+                            keyboardType: TextInputType.number,
+                          ),
+                          veryLargeVerticalSizedBox,
+                          veryLargeVerticalSizedBox,
+                          veryLargeVerticalSizedBox,
+                          veryLargeVerticalSizedBox,
+                          veryLargeVerticalSizedBox,
+                          veryLargeVerticalSizedBox,
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),

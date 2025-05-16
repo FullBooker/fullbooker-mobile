@@ -168,10 +168,7 @@ class _PricingInputState extends State<PricingInput> {
             if (!context.isWaiting(CalculatePriceAction) &&
                 vm.currentPricingBreakdown!.revenue > 0)
               PricingBreakDownWidget(
-                ticketPrice: double.tryParse(
-                      vm.selectedPricing?.cost ?? '0',
-                    ) ??
-                    0,
+               pricingBreakdown: vm.currentPricingBreakdown,
                 buyerPaysFee: vm.selectedPricing?.buyerPaysFee ?? false,
                 onToggleFeeResponsibility: () {
                   context.dispatch(
