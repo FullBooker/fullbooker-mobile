@@ -13,6 +13,7 @@ import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:fullbooker/presentation/core/components/generic_zero_state.dart';
 import 'package:fullbooker/presentation/host/products/widgets/booking_fan_widget.dart';
 import 'package:fullbooker/presentation/host/products/widgets/booking_ticket_item_widget.dart';
+import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 
 @RoutePage()
@@ -56,6 +57,7 @@ class ProductBookingDetailsPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       spacing: 12,
                       children: <Widget>[
+                        smallVerticalSizedBox,
                         Text(
                           vm.productName,
                           style: Theme.of(context).textTheme.titleMedium,
