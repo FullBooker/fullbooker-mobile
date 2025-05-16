@@ -19,6 +19,7 @@ import 'package:fullbooker/domain/core/value_objects/analytics_events.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
+import 'package:fullbooker/presentation/shared/custom_bottom_nav_container.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
@@ -76,209 +77,217 @@ class VerifyOTPPageState extends State<VerifyOTPPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: StoreConnector<AppState, ResetPasswordViewModel>(
+    return SafeArea(
+      child: Scaffold(
+        bottomNavigationBar: CustomBottomNavContainer(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            spacing: 12,
+            children: <Widget>[
+              StoreConnector<AppState, ResetPasswordViewModel>(
                 converter: ResetPasswordViewModel.fromStore,
-                builder: (BuildContext context, ResetPasswordViewModel vm) {
-                  final bool showDebugOTP =
-                      GetIt.I.get<AppConfig>().environment.toLowerCase() ==
-                              'dev' &&
-                          vm.resetPasswordDebugOTP != UNKNOWN;
-                  return ListView(
-                    children: <Widget>[
-                      largeVerticalSizedBox,
-                      SvgPicture.asset(appLogoFullSVGPath),
-                      smallVerticalSizedBox,
-                      Center(
-                        child: Column(
-                          spacing: 4,
-                          children: <Widget>[
-                            Text(
-                              resetYourPassword,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headlineSmall
-                                  ?.copyWith(
-                                    color: Theme.of(context).primaryColor,
-                                  ),
-                            ),
-                            Text(
-                              otpSentCopy(vm.resetEmailAddress),
-                              style: Theme.of(context).textTheme.bodyLarge,
-                            ),
-                          ],
-                        ),
-                      ),
-                      largeVerticalSizedBox,
-                      Form(
-                        key: _formKey,
-                        child: Column(
-                          spacing: 12,
-                          children: <Widget>[
-                            PINInputField(
-                              onDone: (String otp) {
-                                context.dispatch(
-                                  UpdateOnboardingStateAction(
-                                    resetPasswordOTP: otp,
-                                  ),
-                                );
-                              },
-                              onTextChanged: (String otp) {
-                                context.dispatch(
-                                  UpdateOnboardingStateAction(
-                                    resetPasswordOTP: otp,
-                                  ),
-                                );
-                              },
-                            ),
-                            if (counter > 0)
-                              RichText(
-                                text: TextSpan(
-                                  children: <InlineSpan>[
-                                    TextSpan(
-                                      text: resendCodeInString,
-                                      style:
-                                          Theme.of(context).textTheme.bodyLarge,
-                                    ),
-                                    TextSpan(
-                                      text: timerText(),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                          ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            else
-                              StoreConnector<AppState, ResetPasswordViewModel>(
-                                converter: ResetPasswordViewModel.fromStore,
-                                builder: (
-                                  BuildContext context,
-                                  ResetPasswordViewModel vm,
-                                ) {
-                                  if (context.isWaiting(RequestOtpAction)) {
-                                    return AppLoading();
-                                  }
+                builder: (
+                  BuildContext context,
+                  ResetPasswordViewModel vm,
+                ) {
+                  final bool loading = context.isWaiting(VerifyOTPAction);
 
-                                  return Column(
-                                    children: <Widget>[
-                                      SecondaryButton(
-                                        child: d.right(resentOTPString),
-                                        onPressed: () {
-                                          context.dispatch(
-                                            RequestOtpAction(
-                                              onError: (String error) {},
-                                              onSuccess: () async {
-                                                await AnalyticsService()
-                                                    .logEvent(
-                                                  name: resendOTPEvent,
-                                                  eventType: AnalyticsEventType
-                                                      .ONBOARDING,
-                                                );
-                                              },
-                                              client:
-                                                  AppWrapperBase.of(context)!
-                                                      .customClient,
-                                            ),
-                                          );
-                                        },
-                                        fillColor: Colors.transparent,
-                                      ),
-                                    ],
-                                  );
-                                },
+                  return PrimaryButton(
+                    isLoading: loading,
+                    onPressed: () {
+                      context.dispatch(
+                        VerifyOTPAction(
+                          onError: (String error) => showAlertDialog(
+                            context: context,
+                            assetPath: loginCredentialsSVGPath,
+                            description: error,
+                          ),
+                          onSuccess: () async {
+                            await AnalyticsService().logEvent(
+                              name: verifyOTPEvent,
+                              eventType: AnalyticsEventType.ONBOARDING,
+                            );
+                            context.dispatch(
+                              UpdateOnboardingStateAction(
+                                resetPasswordOTP: UNKNOWN,
+                                resetPasswordDebugOTP: UNKNOWN,
                               ),
-                            if (showDebugOTP)
+                            );
+                            context.router.push(ChangePasswordRoute());
+                          },
+                          client: AppWrapperBase.of(context)!.customClient,
+                        ),
+                      );
+                    },
+                    child: d.right(verifyOTPString),
+                  );
+                },
+              ),
+              RichText(
+                text: TextSpan(
+                  children: <InlineSpan>[
+                    TextSpan(
+                      text: alreadyHaveAnAccountString,
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    TextSpan(
+                      text: loginString,
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            color: Theme.of(context).primaryColor,
+                          ),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () => context.router.replace(LoginRoute()),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        backgroundColor: Colors.white,
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: <Widget>[
+              Expanded(
+                child: StoreConnector<AppState, ResetPasswordViewModel>(
+                  converter: ResetPasswordViewModel.fromStore,
+                  builder: (BuildContext context, ResetPasswordViewModel vm) {
+                    final bool showDebugOTP =
+                        GetIt.I.get<AppConfig>().environment.toLowerCase() ==
+                                'dev' &&
+                            vm.resetPasswordDebugOTP != UNKNOWN;
+                    return ListView(
+                      children: <Widget>[
+                        largeVerticalSizedBox,
+                        SvgPicture.asset(appLogoFullSVGPath),
+                        smallVerticalSizedBox,
+                        Center(
+                          child: Column(
+                            spacing: 4,
+                            children: <Widget>[
                               Text(
-                                debugOTPValue(vm.resetPasswordDebugOTP),
+                                resetYourPassword,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodySmall
+                                    .headlineSmall
                                     ?.copyWith(
                                       color: Theme.of(context).primaryColor,
                                     ),
                               ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  );
-                },
-              ),
-            ),
-            Column(
-              spacing: 12,
-              children: <Widget>[
-                StoreConnector<AppState, ResetPasswordViewModel>(
-                  converter: ResetPasswordViewModel.fromStore,
-                  builder: (
-                    BuildContext context,
-                    ResetPasswordViewModel vm,
-                  ) {
-                    final bool loading = context.isWaiting(VerifyOTPAction);
-
-                    return PrimaryButton(
-                      isLoading: loading,
-                      onPressed: () {
-                        context.dispatch(
-                          VerifyOTPAction(
-                            onError: (String error) => showAlertDialog(
-                              context: context,
-                              assetPath: loginCredentialsSVGPath,
-                              description: error,
-                            ),
-                            onSuccess: () async {
-                              await AnalyticsService().logEvent(
-                                name: verifyOTPEvent,
-                                eventType: AnalyticsEventType.ONBOARDING,
-                              );
-                              context.dispatch(
-                                UpdateOnboardingStateAction(
-                                  resetPasswordOTP: UNKNOWN,
-                                  resetPasswordDebugOTP: UNKNOWN,
-                                ),
-                              );
-                              context.router.push(ChangePasswordRoute());
-                            },
-                            client: AppWrapperBase.of(context)!.customClient,
+                              Text(
+                                otpSentCopy(vm.resetEmailAddress),
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
+                            ],
                           ),
-                        );
-                      },
-                      child: d.right(verifyOTPString),
+                        ),
+                        largeVerticalSizedBox,
+                        Form(
+                          key: _formKey,
+                          child: Column(
+                            spacing: 12,
+                            children: <Widget>[
+                              PINInputField(
+                                onDone: (String otp) {
+                                  context.dispatch(
+                                    UpdateOnboardingStateAction(
+                                      resetPasswordOTP: otp,
+                                    ),
+                                  );
+                                },
+                                onTextChanged: (String otp) {
+                                  context.dispatch(
+                                    UpdateOnboardingStateAction(
+                                      resetPasswordOTP: otp,
+                                    ),
+                                  );
+                                },
+                              ),
+                              if (counter > 0)
+                                RichText(
+                                  text: TextSpan(
+                                    children: <InlineSpan>[
+                                      TextSpan(
+                                        text: resendCodeInString,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge,
+                                      ),
+                                      TextSpan(
+                                        text: timerText(),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                            ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              else
+                                StoreConnector<AppState,
+                                    ResetPasswordViewModel>(
+                                  converter: ResetPasswordViewModel.fromStore,
+                                  builder: (
+                                    BuildContext context,
+                                    ResetPasswordViewModel vm,
+                                  ) {
+                                    if (context.isWaiting(RequestOtpAction)) {
+                                      return AppLoading();
+                                    }
+
+                                    return Column(
+                                      children: <Widget>[
+                                        SecondaryButton(
+                                          child: d.right(resentOTPString),
+                                          onPressed: () {
+                                            context.dispatch(
+                                              RequestOtpAction(
+                                                onError: (String error) {},
+                                                onSuccess: () async {
+                                                  await AnalyticsService()
+                                                      .logEvent(
+                                                    name: resendOTPEvent,
+                                                    eventType:
+                                                        AnalyticsEventType
+                                                            .ONBOARDING,
+                                                  );
+                                                },
+                                                client:
+                                                    AppWrapperBase.of(context)!
+                                                        .customClient,
+                                              ),
+                                            );
+                                          },
+                                          fillColor: Colors.transparent,
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                ),
+                              if (showDebugOTP)
+                                Text(
+                                  debugOTPValue(vm.resetPasswordDebugOTP),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodySmall
+                                      ?.copyWith(
+                                        color: Theme.of(context).primaryColor,
+                                      ),
+                                ),
+                            ],
+                          ),
+                        ),
+                      ],
                     );
                   },
                 ),
-                RichText(
-                  text: TextSpan(
-                    children: <InlineSpan>[
-                      TextSpan(
-                        text: alreadyHaveAnAccountString,
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                      TextSpan(
-                        text: loginString,
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                              color: Theme.of(context).primaryColor,
-                            ),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () => context.router.replace(LoginRoute()),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
       ),
     );

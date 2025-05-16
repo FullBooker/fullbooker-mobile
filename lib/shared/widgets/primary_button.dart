@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 
 class PrimaryButton extends StatelessWidget {
@@ -39,12 +40,17 @@ class PrimaryButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
 
+    void handleClick() {
+      SystemChannels.textInput.invokeListMethod('TextInput.hide');
+      onPressed?.call();
+    }
+
     return SizedBox(
       width: customWidth ?? size.width,
       height: customHeight ?? 48,
       child: RawMaterialButton(
         key: buttonKey,
-        onPressed: (disabled || isLoading) ? null : onPressed,
+        onPressed: (disabled || isLoading) ? null : handleClick,
         onLongPress: onLongPressed,
         fillColor: color ?? Theme.of(context).primaryColor,
         elevation: 0,

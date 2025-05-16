@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:dartz/dartz.dart';
+import 'package:flutter/services.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 
 class SecondaryButton extends StatelessWidget {
@@ -32,6 +33,11 @@ class SecondaryButton extends StatelessWidget {
   final bool disabled;
   final bool isLoading;
 
+  void handleClick() {
+    SystemChannels.textInput.invokeListMethod('TextInput.hide');
+    onPressed?.call();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -47,7 +53,7 @@ class SecondaryButton extends StatelessWidget {
       ),
       child: InkWell(
         key: buttonKey,
-        onTap: (disabled || isLoading) ? null : onPressed,
+        onTap: (disabled || isLoading) ? null : handleClick,
         highlightColor: Theme.of(context).primaryColor.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(8),
         child: DecoratedBox(

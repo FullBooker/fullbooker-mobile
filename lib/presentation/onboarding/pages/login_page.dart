@@ -102,6 +102,7 @@ class LoginPageState extends State<LoginPage> {
                                 },
                                 keyboardType: TextInputType.emailAddress,
                                 prefixIconData: HeroIcons.envelope,
+                                textInputAction: TextInputAction.next,
                                 autofillHints: const <String>[
                                   AutofillHints.email,
                                 ],
@@ -127,6 +128,7 @@ class LoginPageState extends State<LoginPage> {
                                 ],
                                 prefixIconData: HeroIcons.key,
                                 suffixIconData: HeroIcons.eyeSlash,
+                                textInputAction: TextInputAction.done,
                                 suffixIconFunc: () {
                                   context.dispatch(
                                     UpdateOnboardingStateAction(
