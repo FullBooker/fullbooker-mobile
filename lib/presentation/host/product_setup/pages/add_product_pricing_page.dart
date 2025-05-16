@@ -1,7 +1,6 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
 import 'package:fullbooker/application/redux/actions/fetch_currencies_action.dart';
 import 'package:fullbooker/application/redux/actions/save_product_pricing_action.dart';
@@ -12,20 +11,18 @@ import 'package:fullbooker/application/redux/view_models/product_setup_view_mode
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/utils/utils.dart';
 import 'package:fullbooker/domain/core/entities/currency.dart';
-import 'package:fullbooker/domain/core/entities/ticket_type.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:dartz/dartz.dart' as d;
 import 'package:fullbooker/presentation/host/product_setup/widgets/pricing_breakdown_widget.dart';
-import 'package:fullbooker/presentation/host/product_setup/widgets/ticket_types_bottom_sheet.dart';
+import 'package:fullbooker/presentation/host/product_setup/widgets/ticket_types_dropdown.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
 import 'package:fullbooker/shared/validators.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/custom_dropdown.dart';
 import 'package:fullbooker/shared/widgets/custom_text_input.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
-import 'package:fullbooker/shared/widgets/secondary_button.dart';
 
 @RoutePage()
 class AddProductPricingPage extends StatefulWidget {
@@ -97,10 +94,6 @@ class _AddProductPricingPageState extends State<AddProductPricingPage> {
                   );
                 },
                 builder: (BuildContext context, ProductSetupViewModel vm) {
-                  final TicketType? selectedTicketType = vm.selectedTicketType;
-                  final bool isTicketTypeSelected =
-                      selectedTicketType?.id != UNKNOWN;
-
                   final String selectedCurrencyCode =
                       vm.selectedCurrency?.code ?? UNKNOWN;
 
@@ -140,105 +133,7 @@ class _AddProductPricingPageState extends State<AddProductPricingPage> {
                           ],
                         ),
 
-                        if (isTicketTypeSelected)
-                          Container(
-                            padding: EdgeInsets.all(12),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                            child: Row(
-                              spacing: 12,
-                              children: <Widget>[
-                                Expanded(
-                                  flex: 3,
-                                  child: Row(
-                                    spacing: 12,
-                                    children: <Widget>[
-                                      SvgPicture.asset(
-                                        getTicketIconPath(
-                                          vm.selectedTicketType!.name ??
-                                              UNKNOWN,
-                                        ),
-                                      ),
-                                      Text(
-                                        vm.selectedTicketType!.name ?? UNKNOWN,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyLarge,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Expanded(
-                                  child: SecondaryButton(
-                                    child: d.right(changeString),
-                                    customHeight: 40,
-                                    onPressed: () {
-                                      showModalBottomSheet(
-                                        context: context,
-                                        isDismissible: false,
-                                        backgroundColor: Colors.white,
-                                        isScrollControlled: true,
-                                        shape: const RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.vertical(
-                                            top: Radius.circular(16),
-                                          ),
-                                        ),
-                                        builder: (_) =>
-                                            TicketTypesBottomSheet(),
-                                      );
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )
-                        else
-                          Container(
-                            padding: EdgeInsets.all(12),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(
-                                color: Theme.of(context).dividerColor,
-                              ),
-                            ),
-                            child: Row(
-                              children: <Widget>[
-                                Expanded(
-                                  flex: 3,
-                                  child: Text(
-                                    chooseTicketType,
-                                    style:
-                                        Theme.of(context).textTheme.bodyMedium,
-                                  ),
-                                ),
-                                Expanded(
-                                  child: SecondaryButton(
-                                    customHeight: 40,
-                                    child: d.right(addString),
-                                    onPressed: () {
-                                      showModalBottomSheet(
-                                        context: context,
-                                        isDismissible: false,
-                                        backgroundColor: Colors.white,
-                                        isScrollControlled: true,
-                                        shape: const RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.vertical(
-                                            top: Radius.circular(16),
-                                          ),
-                                        ),
-                                        builder: (_) =>
-                                            TicketTypesBottomSheet(),
-                                      );
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                        TicketTypesDropdown(),
 
                         // Currency dropdown
                         Column(

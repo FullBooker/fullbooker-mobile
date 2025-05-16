@@ -527,7 +527,7 @@ String getTicketDisplayName(String tier) {
     case kVVIPTier:
       return 'VVIP';
     default:
-      return 'Standard';
+      return '';
   }
 }
 
