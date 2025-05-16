@@ -192,7 +192,7 @@ class __$$PricingBreakdownImplCopyWithImpl<$Res>
 class _$PricingBreakdownImpl implements _PricingBreakdown {
   _$PricingBreakdownImpl(
       {this.amount = '0.00',
-      this.type = UNKNOWN,
+      this.type = kBookingPriceType,
       @JsonKey(name: 'buyers_pay_without_fees') this.buyersPayWithoutFees = 0,
       this.revenue = 0,
       @JsonKey(name: 'buyers_pay_with_fees') this.buyersPayWithFees = 0,

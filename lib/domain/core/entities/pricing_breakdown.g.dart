@@ -10,7 +10,7 @@ _$PricingBreakdownImpl _$$PricingBreakdownImplFromJson(
         Map<String, dynamic> json) =>
     _$PricingBreakdownImpl(
       amount: json['amount'] as String? ?? '0.00',
-      type: json['type'] as String? ?? UNKNOWN,
+      type: json['type'] as String? ?? kBookingPriceType,
       buyersPayWithoutFees:
           (json['buyers_pay_without_fees'] as num?)?.toDouble() ?? 0,
       revenue: (json['revenue'] as num?)?.toDouble() ?? 0,

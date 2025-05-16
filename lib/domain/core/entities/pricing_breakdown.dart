@@ -9,7 +9,7 @@ class PricingBreakdown with _$PricingBreakdown {
   @JsonSerializable(explicitToJson: true)
   factory PricingBreakdown({
     @Default('0.00') String amount,
-    @Default(UNKNOWN) String type,
+    @Default(kBookingPriceType) String type,
     @JsonKey(name: 'buyers_pay_without_fees')
     @Default(0)
     double buyersPayWithoutFees,

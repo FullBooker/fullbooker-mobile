@@ -24,9 +24,20 @@ class CalculatePriceAction extends ReduxAction<AppState> {
 
   @override
   Future<AppState?> reduce() async {
+    final double? amount =
+        double.tryParse(state.hostState?.selectedProductPricing?.cost ?? '0');
+
+    final String? type = state.hostState?.currentPricingBreakdown?.type;
+
+    final Map<String, dynamic> data = <String, dynamic>{
+      'type': type,
+      'amount': amount,
+    };
+
     final Response httpResponse = await client.callRESTAPI(
       endpoint: GetIt.I.get<AppConfig>().calculatePriceEndpoint,
-      method: APIMethods.GET.name.toUpperCase(),
+      method: APIMethods.POST.name.toUpperCase(),
+      variables: data,
     );
 
     final Map<String, dynamic> body =
@@ -44,6 +55,6 @@ class CalculatePriceAction extends ReduxAction<AppState> {
 
     dispatch(UpdateHostStateAction(currentPricingBreakdown: breakdown));
 
-    return state;
+    return null;
   }
 }
