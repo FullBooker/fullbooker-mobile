@@ -4,6 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/domain/core/entities/booking.dart';
 import 'package:fullbooker/domain/core/entities/currency.dart';
+import 'package:fullbooker/domain/core/entities/pricing_breakdown.dart';
 import 'package:fullbooker/domain/core/entities/pricing_option.dart';
 import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/entities/product_category.dart';
@@ -72,6 +73,7 @@ class HostState with _$HostState {
     // Pricing page
     @Default(<TicketType>[]) List<TicketType?>? ticketTypes,
     TicketType? selectedTicketType,
+    PricingBreakdown? currentPricingBreakdown,
   }) = _HostState;
 
   factory HostState.initial() => HostState(
@@ -85,6 +87,7 @@ class HostState with _$HostState {
         pickedPricingOption: PricingOption.initial(),
         selectedProductPricingOption: ProductPricingOption.initial(),
         selectedTicketType: TicketType(),
+        currentPricingBreakdown: PricingBreakdown(),
       );
 
   factory HostState.fromJson(Map<String, dynamic> json) =>

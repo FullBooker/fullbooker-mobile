@@ -2,6 +2,7 @@ import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/states/host_state.dart';
 import 'package:fullbooker/domain/core/entities/currency.dart';
+import 'package:fullbooker/domain/core/entities/pricing_breakdown.dart';
 import 'package:fullbooker/domain/core/entities/pricing_option.dart';
 import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/entities/product_location.dart';
@@ -26,6 +27,7 @@ class UpdateHostStateAction extends ReduxAction<AppState> {
     this.productPricingOptions,
     this.ticketTypes,
     this.selectedPricingOptionIds,
+    this.currentPricingBreakdown,
   });
 
   final Product? contextProduct;
@@ -41,6 +43,7 @@ class UpdateHostStateAction extends ReduxAction<AppState> {
   final List<Ticket?>? selectedBookingTickets;
   final List<TicketType?>? ticketTypes;
   final List<String?>? selectedPricingOptionIds;
+  final PricingBreakdown? currentPricingBreakdown;
 
   @override
   AppState? reduce() {
@@ -75,6 +78,8 @@ class UpdateHostStateAction extends ReduxAction<AppState> {
       ticketTypes: ticketTypes ?? host.ticketTypes,
       selectedPricingOptionIds:
           selectedPricingOptionIds ?? host.selectedPricingOptionIds,
+      currentPricingBreakdown:
+          currentPricingBreakdown ?? host.currentPricingBreakdown,
     );
   }
 }
