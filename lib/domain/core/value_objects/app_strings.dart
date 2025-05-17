@@ -771,3 +771,6 @@ const String noReasonProvided = 'No reason provided';
 const String userInitiatedString = 'User initiated';
 
 const String aboutProduct = 'About your product';
+
+const String startTimeWarning = 'Start time must come before end time';
+const String endTimeWarning = 'End time must come after start time';
