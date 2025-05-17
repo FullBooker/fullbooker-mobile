@@ -26,8 +26,6 @@ const String continueString = 'Continue';
 const String editString = 'Edit';
 const String nextString = 'Next';
 
-const String to = 'to';
-
 /// USER SIDE STRINGS
 
 // Login

@@ -207,7 +207,7 @@ class ProductSchedulePage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                starting,
+                                fromString,
                                 style: Theme.of(context).textTheme.titleMedium,
                               ),
                               InkWell(
@@ -347,7 +347,7 @@ class ProductSchedulePage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                ending,
+                                toString,
                                 style: Theme.of(context).textTheme.titleMedium,
                               ),
                               InkWell(
