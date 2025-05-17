@@ -31,12 +31,7 @@ class LocationHandler {
 
     final Uri url = Uri.parse(
       'https://maps.googleapis.com/maps/api/place/autocomplete/json'
-      '?input=$query'
-      '&components=country:ke'
-      '&location=-1.286389,36.817223'
-      '&radius=50000'
-      '&strictbounds=true'
-      '&key=$kMapsAPIKey',
+      '?input=$query&key=$kMapsAPIKey',
     );
 
     try {
