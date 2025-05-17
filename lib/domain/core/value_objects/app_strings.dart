@@ -773,4 +773,7 @@ const String userInitiatedString = 'User initiated';
 const String aboutProduct = 'About your product';
 
 const String startTimeWarning = 'Start time must come before end time';
+const String startDateTimeWarning = 'Start date and time must be in the future';
 const String endTimeWarning = 'End time must come after start time';
+const String endDateTimeWarning =
+    'End date and time must be before the start date';

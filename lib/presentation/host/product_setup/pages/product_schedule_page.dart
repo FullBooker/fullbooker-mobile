@@ -20,6 +20,7 @@ import 'package:fullbooker/presentation/host/product_setup/widgets/repeats_daily
 import 'package:fullbooker/presentation/host/product_setup/widgets/repeats_monthly_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/repeats_weekly_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/repeats_yearly_widget.dart';
+import 'package:fullbooker/presentation/host/products/widgets/product_alert_widget.dart';
 import 'package:fullbooker/presentation/shared/custom_bottom_nav_container.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
@@ -75,6 +76,23 @@ class ProductSchedulePage extends StatelessWidget {
                     child: PrimaryButton(
                       isLoading: isLoading,
                       onPressed: () {
+                        final String? warning = Utils.validateSchedule(
+                          startDate: vm.startDate,
+                          startTime: vm.startTime,
+                          endDate: vm.endDate,
+                          endTime: vm.endTime,
+                        );
+
+                        if (warning != null) {
+                          showAlertDialog(
+                            context: context,
+                            assetPath: productZeroStateSVGPath,
+                            description: warning,
+                          );
+
+                          return;
+                        }
+
                         if (isEditing) {
                           context.dispatch(
                             UpdateProductScheduleAction(
@@ -136,6 +154,13 @@ class ProductSchedulePage extends StatelessWidget {
 
               final bool repeats = vm.repeatType != kNoRepeatSchedule;
 
+              final String? warning = Utils.validateSchedule(
+                startDate: vm.startDate,
+                startTime: vm.startTime,
+                endDate: vm.endDate,
+                endTime: vm.endTime,
+              );
+
               return SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -155,6 +180,14 @@ class ProductSchedulePage extends StatelessWidget {
                         ),
                       ],
                     ),
+
+                    if (warning != null) ...<Widget>[
+                      ProductAlertWidget(
+                        title: warning,
+                        color: AppColors.redColor,
+                        iconData: HeroIcons.exclamationCircle,
+                      ),
+                    ],
 
                     // All day checkbox
                     InkWell(
