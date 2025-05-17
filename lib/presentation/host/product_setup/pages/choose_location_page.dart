@@ -38,6 +38,8 @@ class _ChooseLocationPageState extends State<ChooseLocationPage> {
 
   final TextEditingController _searchController = TextEditingController();
   final List<Map<String, dynamic>> _searchResults = <Map<String, dynamic>>[];
+  final Completer<GoogleMapController> _controllerCompleter =
+      Completer<GoogleMapController>();
 
   bool _showSearchResults = false;
   Timer? _debounceTimer;
@@ -45,12 +47,54 @@ class _ChooseLocationPageState extends State<ChooseLocationPage> {
   @override
   void initState() {
     super.initState();
-    _setUserLocation();
   }
 
   Future<void> _setUserLocation() async {
+    setState(() {
+      _isResolving = true;
+    });
+
     final LatLng location = await LocationHandler.getUserLocation();
-    setState(() => selectedLatLng = location);
+
+    final Map<String, dynamic>? geoResult =
+        await LocationHandler.reverseGeocode(location);
+
+    if (!mounted) return;
+
+    if (geoResult != null) {
+      final List<dynamic>? components = geoResult['address_components'];
+      final String address = geoResult['formatted_address'] ?? kUnknownAddress;
+
+      final String city = components?.firstWhere(
+            (dynamic comp) =>
+                (comp['types'] as List<dynamic>).contains('locality'),
+            orElse: () => null,
+          )?['long_name'] ??
+          'Unknown City';
+
+      context.dispatch(
+        SelectLocationAction(
+          lat: location.latitude.toString(),
+          long: location.longitude.toString(),
+          address: address,
+          city: city,
+          coordinates:
+              'SRID=4326;POINT (${location.longitude} ${location.latitude})',
+        ),
+      );
+
+      setState(() {
+        selectedLatLng = location;
+        selectedAddress = address;
+        selectedCity = city;
+        _showSearchResults = false;
+        _isResolving = false;
+      });
+
+      await _mapController.animateCamera(
+        CameraUpdate.newLatLngZoom(location, 15),
+      );
+    }
   }
 
   Future<void> _onSearchChanged(String query) async {
@@ -80,6 +124,8 @@ class _ChooseLocationPageState extends State<ChooseLocationPage> {
         _showSearchResults = results.isNotEmpty;
         _isSearching = false;
       });
+
+      FocusScope.of(context).unfocus();
     });
   }
 
@@ -326,8 +372,11 @@ class _ChooseLocationPageState extends State<ChooseLocationPage> {
                   zoom: 15,
                 ),
                 myLocationEnabled: true,
-                onMapCreated: (GoogleMapController controller) =>
-                    _mapController = controller,
+                onMapCreated: (GoogleMapController controller) {
+                  _mapController = controller;
+                  _controllerCompleter.complete(controller);
+                  _setUserLocation();
+                },
                 onTap: _onMapTap,
                 markers: <Marker>{
                   Marker(
