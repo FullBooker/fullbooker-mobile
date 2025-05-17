@@ -57,11 +57,26 @@ class Utils {
   }
 
   static DateTime? parseDateTime(String date, String time) {
+    if (date == UNKNOWN && time == UNKNOWN) return null;
+
     try {
-      return DateFormat('yyyy-MM-dd HH:mm').parse('$date $time');
+      if (date != UNKNOWN && time != UNKNOWN) {
+        return DateFormat('yyyy-MM-dd HH:mm').parseStrict('$date $time');
+      }
+
+      if (date != UNKNOWN) {
+        return DateFormat('yyyy-MM-dd').parseStrict(date);
+      }
+
+      if (time != UNKNOWN) {
+        final DateTime t = DateFormat('HH:mm').parseStrict(time);
+        return DateTime(1, 1, 1, t.hour, t.minute, t.second);
+      }
     } catch (_) {
-      return null;
+      // skip
     }
+
+    return null;
   }
 }
 

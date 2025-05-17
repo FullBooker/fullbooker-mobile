@@ -226,7 +226,9 @@ class _ChooseLocationPageState extends State<ChooseLocationPage> {
             spacing: 12,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              if (selectedAddress.isNotEmpty || selectedCity.isNotEmpty)
+              if (_isResolving)
+                AppLoading()
+              else if (selectedAddress.isNotEmpty || selectedCity.isNotEmpty)
                 Column(
                   spacing: 8,
                   crossAxisAlignment: CrossAxisAlignment.start,
