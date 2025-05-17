@@ -622,13 +622,7 @@ const String selectCurrencyHint = 'Choose currency';
 
 const String pricingBreakdownString = 'Pricing breakdown';
 
-String serviceFeeLabel({
-  required String currency,
-  required String baseFee,
-  required String serviceFeePercentage,
-}) {
-  return 'Service fee ($currency $baseFee + $serviceFeePercentage%)';
-}
+const String serviceFeeLabel = 'Service fee';
 
 const String yourBuyers = 'Your Buyers Pay';
 const String yourRevenueString = 'Your Revenue';

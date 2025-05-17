@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/theme/app_colors.dart';
 import 'package:fullbooker/domain/core/entities/pricing_breakdown.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
@@ -50,11 +49,7 @@ class PricingBreakDownWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(
-                serviceFeeLabel(
-                  baseFee: kBasePlatformFee.toStringAsFixed(0),
-                  currency: selectedCurrency,
-                  serviceFeePercentage: kPlatformServiceFee.toStringAsFixed(0),
-                ),
+                serviceFeeLabel,
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               Text(

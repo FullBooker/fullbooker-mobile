@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:auto_route/auto_route.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/utils/utils.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
@@ -104,14 +103,6 @@ class _ImageSelectionPageState extends State<ImageSelectionPage> {
         .createMedia(images, widget.product.id, 'image')
         .then((Map<String, Object?>? media) {
       setState(() => isLoading = false);
-      if (media != null) {
-        context.router.push(
-          VideoSelectionRoute(
-            product: widget.product,
-            type: widget.type,
-          ),
-        );
-      }
     });
   }
 
