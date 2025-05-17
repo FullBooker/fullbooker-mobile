@@ -161,6 +161,20 @@ class ProductSchedulePage extends StatelessWidget {
                 endTime: vm.endTime,
               );
 
+              final DateTime? startDT =
+                  Utils.parseDateTime(vm.startDate, vm.startTime);
+              final DateTime? endDT =
+                  Utils.parseDateTime(vm.endDate, vm.endTime);
+
+              final DateTime now = DateTime.now();
+
+              final bool startDateError = startDT != null &&
+                  (!startDT.isAfter(now) &&
+                      (endDT != null && startDT.isBefore(endDT)));
+
+              final bool endDateError =
+                  endDT != null && (startDT != null && !endDT.isAfter(startDT));
+
               return SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -262,7 +276,9 @@ class ProductSchedulePage extends StatelessWidget {
                                 child: Container(
                                   decoration: BoxDecoration(
                                     border: Border.all(
-                                      color: Theme.of(context).dividerColor,
+                                      color: startDateError
+                                          ? AppColors.redColor
+                                          : Theme.of(context).dividerColor,
                                     ),
                                     borderRadius: BorderRadius.circular(8),
                                   ),
@@ -273,7 +289,9 @@ class ProductSchedulePage extends StatelessWidget {
                                       HeroIcon(
                                         HeroIcons.calendar,
                                         size: 20,
-                                        color: AppColors.bodyTextColor,
+                                        color: startDateError
+                                            ? AppColors.redColor
+                                            : AppColors.bodyTextColor,
                                       ),
                                       if (vm.startDate != UNKNOWN)
                                         humanizeDate(
@@ -282,7 +300,9 @@ class ProductSchedulePage extends StatelessWidget {
                                               .textTheme
                                               .bodyMedium
                                               ?.copyWith(
-                                                color: AppColors.textBlackColor,
+                                                color: startDateError
+                                                    ? AppColors.redColor
+                                                    : AppColors.textBlackColor,
                                               ),
                                         )
                                       else
@@ -328,7 +348,9 @@ class ProductSchedulePage extends StatelessWidget {
                                   child: Container(
                                     decoration: BoxDecoration(
                                       border: Border.all(
-                                        color: Theme.of(context).dividerColor,
+                                        color: startDateError
+                                            ? AppColors.redColor
+                                            : Theme.of(context).dividerColor,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
@@ -339,7 +361,9 @@ class ProductSchedulePage extends StatelessWidget {
                                         HeroIcon(
                                           HeroIcons.clock,
                                           size: 20,
-                                          color: AppColors.bodyTextColor,
+                                          color: startDateError
+                                              ? AppColors.redColor
+                                              : AppColors.bodyTextColor,
                                         ),
                                         if (vm.startTime != UNKNOWN)
                                           formatTime(
@@ -348,8 +372,10 @@ class ProductSchedulePage extends StatelessWidget {
                                                 .textTheme
                                                 .bodyMedium
                                                 ?.copyWith(
-                                                  color:
-                                                      AppColors.textBlackColor,
+                                                  color: startDateError
+                                                      ? AppColors.redColor
+                                                      : AppColors
+                                                          .textBlackColor,
                                                 ),
                                           )
                                         else
@@ -401,7 +427,9 @@ class ProductSchedulePage extends StatelessWidget {
                                 child: Container(
                                   decoration: BoxDecoration(
                                     border: Border.all(
-                                      color: Theme.of(context).dividerColor,
+                                      color: endDateError
+                                          ? AppColors.redColor
+                                          : Theme.of(context).dividerColor,
                                     ),
                                     borderRadius: BorderRadius.circular(8),
                                   ),
@@ -412,7 +440,9 @@ class ProductSchedulePage extends StatelessWidget {
                                       HeroIcon(
                                         HeroIcons.calendar,
                                         size: 20,
-                                        color: AppColors.bodyTextColor,
+                                        color: endDateError
+                                            ? AppColors.redColor
+                                            : AppColors.bodyTextColor,
                                       ),
                                       if (vm.endDate != UNKNOWN)
                                         humanizeDate(
@@ -421,7 +451,9 @@ class ProductSchedulePage extends StatelessWidget {
                                               .textTheme
                                               .bodyMedium
                                               ?.copyWith(
-                                                color: AppColors.textBlackColor,
+                                                color: endDateError
+                                                    ? AppColors.redColor
+                                                    : AppColors.textBlackColor,
                                               ),
                                         )
                                       else
@@ -467,7 +499,9 @@ class ProductSchedulePage extends StatelessWidget {
                                   child: Container(
                                     decoration: BoxDecoration(
                                       border: Border.all(
-                                        color: Theme.of(context).dividerColor,
+                                        color: endDateError
+                                            ? AppColors.redColor
+                                            : Theme.of(context).dividerColor,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
@@ -478,7 +512,9 @@ class ProductSchedulePage extends StatelessWidget {
                                         HeroIcon(
                                           HeroIcons.clock,
                                           size: 20,
-                                          color: AppColors.bodyTextColor,
+                                          color: endDateError
+                                              ? AppColors.redColor
+                                              : AppColors.bodyTextColor,
                                         ),
                                         if (vm.endTime != UNKNOWN)
                                           formatTime(
@@ -487,8 +523,10 @@ class ProductSchedulePage extends StatelessWidget {
                                                 .textTheme
                                                 .bodyMedium
                                                 ?.copyWith(
-                                                  color:
-                                                      AppColors.textBlackColor,
+                                                  color: endDateError
+                                                      ? AppColors.redColor
+                                                      : AppColors
+                                                          .textBlackColor,
                                                 ),
                                           )
                                         else

@@ -55,6 +55,14 @@ class Utils {
     }
     return null;
   }
+
+  static DateTime? parseDateTime(String date, String time) {
+    try {
+      return DateFormat('yyyy-MM-dd HH:mm').parse('$date $time');
+    } catch (_) {
+      return null;
+    }
+  }
 }
 
 String getFileExtension(String fileName) {
