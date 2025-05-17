@@ -22,6 +22,18 @@ import 'package:intl/intl.dart';
 import 'package:map_location_picker/map_location_picker.dart';
 
 class Utils {
+  static DateTime? parseDT(String date, String time) {
+    if (date == UNKNOWN && time == UNKNOWN) return null;
+
+    if (date != UNKNOWN && time != UNKNOWN) {
+      return DateTime.tryParse('$date $time');
+    }
+    if (date != UNKNOWN) {
+      return DateTime.tryParse('$date 00:00:00');
+    }
+    return DateTime.tryParse('$date $time');
+  }
+
   static String? validateSchedule({
     required String startDate,
     required String startTime,
@@ -31,14 +43,6 @@ class Utils {
     if (<String>[startDate, startTime, endDate, endTime]
         .any((String s) => s == UNKNOWN || s.isEmpty)) {
       return null;
-    }
-
-    DateTime? parseDT(String date, String time) {
-      try {
-        return DateFormat('yyyy-MM-dd HH:mm').parse('$date $time');
-      } catch (_) {
-        return null;
-      }
     }
 
     final DateTime now = DateTime.now();
@@ -53,29 +57,6 @@ class Utils {
     if (!startDT.isBefore(endDT)) {
       return endDateTimeWarning;
     }
-    return null;
-  }
-
-  static DateTime? parseDateTime(String date, String time) {
-    if (date == UNKNOWN && time == UNKNOWN) return null;
-
-    try {
-      if (date != UNKNOWN && time != UNKNOWN) {
-        return DateFormat('yyyy-MM-dd HH:mm').parseStrict('$date $time');
-      }
-
-      if (date != UNKNOWN) {
-        return DateFormat('yyyy-MM-dd').parseStrict(date);
-      }
-
-      if (time != UNKNOWN) {
-        final DateTime t = DateFormat('HH:mm').parseStrict(time);
-        return DateTime(1, 1, 1, t.hour, t.minute, t.second);
-      }
-    } catch (_) {
-      // skip
-    }
-
     return null;
   }
 }
@@ -322,7 +303,7 @@ Widget humanizeDate({
   bool showYear = true,
   bool showMonthDate = true,
 }) {
-  if (loadedDate == UNKNOWN || loadedDate.isEmpty) {
+  if (loadedDate.isEmpty || loadedDate == UNKNOWN) {
     return const SizedBox();
   }
 

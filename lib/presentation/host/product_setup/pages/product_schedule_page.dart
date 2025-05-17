@@ -162,9 +162,8 @@ class ProductSchedulePage extends StatelessWidget {
               );
 
               final DateTime? startDT =
-                  Utils.parseDateTime(vm.startDate, vm.startTime);
-              final DateTime? endDT =
-                  Utils.parseDateTime(vm.endDate, vm.endTime);
+                  Utils.parseDT(vm.startDate, vm.startTime);
+              final DateTime? endDT = Utils.parseDT(vm.endDate, vm.endTime);
 
               final DateTime now = DateTime.now();
 
