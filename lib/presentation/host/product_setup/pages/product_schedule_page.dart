@@ -222,6 +222,7 @@ class ProductSchedulePage extends StatelessWidget {
                                   context.dispatch(
                                     UpdateCurrentScheduleAction(
                                       startDate: date,
+                                      endDate: date,
                                     ),
                                   );
                                 },
