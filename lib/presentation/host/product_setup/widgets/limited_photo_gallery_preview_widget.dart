@@ -10,6 +10,7 @@ import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/domain/core/entities/product_media.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
+import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/host/products/widgets/min_zero_state.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 
@@ -66,6 +67,14 @@ class LimitedPhotoGalleryPreviewWidget extends StatelessWidget {
                         width: photoSize,
                         height: photoSize,
                         fit: BoxFit.cover,
+                        errorWidget:
+                            (BuildContext context, String url, Object error) =>
+                                Image.asset(
+                          productImageZeroState,
+                          height: MediaQuery.of(context).size.height * .2,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        ),
                         progressIndicatorBuilder: (
                           BuildContext context,
                           String url,
@@ -96,6 +105,14 @@ class LimitedPhotoGalleryPreviewWidget extends StatelessWidget {
                         width: photoSize,
                         height: photoSize,
                         fit: BoxFit.cover,
+                        errorWidget:
+                            (BuildContext context, String url, Object error) =>
+                                Image.asset(
+                          productImageZeroState,
+                          height: MediaQuery.of(context).size.height * .2,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        ),
                         progressIndicatorBuilder: (
                           BuildContext context,
                           String url,

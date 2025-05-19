@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/utils/utils.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
+import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 
 class ProfileAvatar extends StatelessWidget {
@@ -31,6 +32,13 @@ class ProfileAvatar extends StatelessWidget {
           width: aviSize,
           fit: BoxFit.cover,
           imageUrl: avatarURI!,
+          errorWidget: (BuildContext context, String url, Object error) =>
+              Image.asset(
+            productImageZeroState,
+            height: MediaQuery.of(context).size.height * .2,
+            width: double.infinity,
+            fit: BoxFit.cover,
+          ),
           progressIndicatorBuilder: (
             BuildContext context,
             String url,
