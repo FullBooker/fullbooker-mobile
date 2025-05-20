@@ -34,9 +34,8 @@ class VideoCardState extends State<VideoCard> {
     _generateThumbnail();
     _controller = VideoPlayerController.networkUrl(Uri.parse(widget.videoUrl))
       ..initialize().then((_) {
-        if (mounted) {
-          setState(() => _initialized = true);
-        }
+        if (!mounted) return;
+        setState(() => _initialized = true);
       });
   }
 
@@ -47,12 +46,16 @@ class VideoCardState extends State<VideoCard> {
         quality: 75,
       );
 
+      if (!mounted) return;
+
       if (File(file.path).existsSync()) {
         setState(() => _thumbnailPath = file.path);
       } else {
         debugPrint('Thumbnail path was null or does not exist');
       }
     } catch (e) {
+      if (!mounted) return;
+
       debugPrint('Thumbnail generation failed: $e');
     }
   }

@@ -94,6 +94,14 @@ class _ImageCarouselWidgetState extends State<ImageCarouselWidget> {
                       imageUrl: imageUrl,
                       fit: BoxFit.cover,
                       width: double.infinity,
+                      errorWidget:
+                          (BuildContext context, String url, Object error) =>
+                              Image.asset(
+                        productImageZeroState,
+                        height: MediaQuery.of(context).size.height * .2,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
                       progressIndicatorBuilder: (
                         BuildContext context,
                         String url,

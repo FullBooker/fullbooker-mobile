@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/common/constants.dart';
+import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 
 @RoutePage()
@@ -73,6 +74,17 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
                         : CachedNetworkImage(
                             imageUrl: image,
                             fit: BoxFit.contain,
+                            errorWidget: (
+                              BuildContext context,
+                              String url,
+                              Object error,
+                            ) =>
+                                Image.asset(
+                              productImageZeroState,
+                              height: MediaQuery.of(context).size.height * .2,
+                              width: double.infinity,
+                              fit: BoxFit.cover,
+                            ),
                             progressIndicatorBuilder: (
                               BuildContext context,
                               String url,

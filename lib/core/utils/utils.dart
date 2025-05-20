@@ -21,6 +21,46 @@ import 'package:fullbooker/shared/widgets/secondary_button.dart';
 import 'package:intl/intl.dart';
 import 'package:map_location_picker/map_location_picker.dart';
 
+class Utils {
+  static DateTime? parseDT(String date, String time) {
+    if (date == UNKNOWN && time == UNKNOWN) return null;
+
+    if (date != UNKNOWN && time != UNKNOWN) {
+      return DateTime.tryParse('$date $time');
+    }
+    if (date != UNKNOWN) {
+      return DateTime.tryParse('$date 00:00:00');
+    }
+    return DateTime.tryParse('$date $time');
+  }
+
+  static String? validateSchedule({
+    required String startDate,
+    required String startTime,
+    required String endDate,
+    required String endTime,
+  }) {
+    if (<String>[startDate, startTime, endDate, endTime]
+        .any((String s) => s == UNKNOWN || s.isEmpty)) {
+      return null;
+    }
+
+    final DateTime now = DateTime.now();
+    final DateTime? startDT = parseDT(startDate, startTime);
+    final DateTime? endDT = parseDT(endDate, endTime);
+
+    if (startDT == null || endDT == null) return null;
+
+    if (startDT.isBefore(now)) {
+      return startDateTimeWarning;
+    }
+    if (!startDT.isBefore(endDT)) {
+      return endDateTimeWarning;
+    }
+    return null;
+  }
+}
+
 String getFileExtension(String fileName) {
   try {
     return fileName.split('.').last;
@@ -263,7 +303,7 @@ Widget humanizeDate({
   bool showYear = true,
   bool showMonthDate = true,
 }) {
-  if (loadedDate == UNKNOWN || loadedDate.isEmpty) {
+  if (loadedDate.isEmpty || loadedDate == UNKNOWN) {
     return const SizedBox();
   }
 

@@ -20,6 +20,7 @@ import 'package:fullbooker/presentation/host/product_setup/widgets/repeats_daily
 import 'package:fullbooker/presentation/host/product_setup/widgets/repeats_monthly_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/repeats_weekly_widget.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/repeats_yearly_widget.dart';
+import 'package:fullbooker/presentation/host/products/widgets/product_alert_widget.dart';
 import 'package:fullbooker/presentation/shared/custom_bottom_nav_container.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
@@ -75,6 +76,23 @@ class ProductSchedulePage extends StatelessWidget {
                     child: PrimaryButton(
                       isLoading: isLoading,
                       onPressed: () {
+                        final String? warning = Utils.validateSchedule(
+                          startDate: vm.startDate,
+                          startTime: vm.startTime,
+                          endDate: vm.endDate,
+                          endTime: vm.endTime,
+                        );
+
+                        if (warning != null) {
+                          showAlertDialog(
+                            context: context,
+                            assetPath: productZeroStateSVGPath,
+                            description: warning,
+                          );
+
+                          return;
+                        }
+
                         if (isEditing) {
                           context.dispatch(
                             UpdateProductScheduleAction(
@@ -136,6 +154,26 @@ class ProductSchedulePage extends StatelessWidget {
 
               final bool repeats = vm.repeatType != kNoRepeatSchedule;
 
+              final String? warning = Utils.validateSchedule(
+                startDate: vm.startDate,
+                startTime: vm.startTime,
+                endDate: vm.endDate,
+                endTime: vm.endTime,
+              );
+
+              final DateTime? startDT =
+                  Utils.parseDT(vm.startDate, vm.startTime);
+              final DateTime? endDT = Utils.parseDT(vm.endDate, vm.endTime);
+
+              final DateTime now = DateTime.now();
+
+              final bool startDateError = startDT != null &&
+                  (!startDT.isAfter(now) &&
+                      (endDT != null && startDT.isBefore(endDT)));
+
+              final bool endDateError =
+                  endDT != null && (startDT != null && !endDT.isAfter(startDT));
+
               return SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -155,6 +193,14 @@ class ProductSchedulePage extends StatelessWidget {
                         ),
                       ],
                     ),
+
+                    if (warning != null) ...<Widget>[
+                      ProductAlertWidget(
+                        title: warning,
+                        color: AppColors.redColor,
+                        iconData: HeroIcons.exclamationCircle,
+                      ),
+                    ],
 
                     // All day checkbox
                     InkWell(
@@ -207,7 +253,7 @@ class ProductSchedulePage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                starting,
+                                fromString,
                                 style: Theme.of(context).textTheme.titleMedium,
                               ),
                               InkWell(
@@ -222,13 +268,16 @@ class ProductSchedulePage extends StatelessWidget {
                                   context.dispatch(
                                     UpdateCurrentScheduleAction(
                                       startDate: date,
+                                      endDate: date,
                                     ),
                                   );
                                 },
                                 child: Container(
                                   decoration: BoxDecoration(
                                     border: Border.all(
-                                      color: Theme.of(context).dividerColor,
+                                      color: startDateError
+                                          ? AppColors.redColor
+                                          : Theme.of(context).dividerColor,
                                     ),
                                     borderRadius: BorderRadius.circular(8),
                                   ),
@@ -239,7 +288,9 @@ class ProductSchedulePage extends StatelessWidget {
                                       HeroIcon(
                                         HeroIcons.calendar,
                                         size: 20,
-                                        color: AppColors.bodyTextColor,
+                                        color: startDateError
+                                            ? AppColors.redColor
+                                            : AppColors.bodyTextColor,
                                       ),
                                       if (vm.startDate != UNKNOWN)
                                         humanizeDate(
@@ -248,7 +299,9 @@ class ProductSchedulePage extends StatelessWidget {
                                               .textTheme
                                               .bodyMedium
                                               ?.copyWith(
-                                                color: AppColors.textBlackColor,
+                                                color: startDateError
+                                                    ? AppColors.redColor
+                                                    : AppColors.textBlackColor,
                                               ),
                                         )
                                       else
@@ -294,7 +347,9 @@ class ProductSchedulePage extends StatelessWidget {
                                   child: Container(
                                     decoration: BoxDecoration(
                                       border: Border.all(
-                                        color: Theme.of(context).dividerColor,
+                                        color: startDateError
+                                            ? AppColors.redColor
+                                            : Theme.of(context).dividerColor,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
@@ -305,7 +360,9 @@ class ProductSchedulePage extends StatelessWidget {
                                         HeroIcon(
                                           HeroIcons.clock,
                                           size: 20,
-                                          color: AppColors.bodyTextColor,
+                                          color: startDateError
+                                              ? AppColors.redColor
+                                              : AppColors.bodyTextColor,
                                         ),
                                         if (vm.startTime != UNKNOWN)
                                           formatTime(
@@ -314,8 +371,10 @@ class ProductSchedulePage extends StatelessWidget {
                                                 .textTheme
                                                 .bodyMedium
                                                 ?.copyWith(
-                                                  color:
-                                                      AppColors.textBlackColor,
+                                                  color: startDateError
+                                                      ? AppColors.redColor
+                                                      : AppColors
+                                                          .textBlackColor,
                                                 ),
                                           )
                                         else
@@ -346,7 +405,7 @@ class ProductSchedulePage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                ending,
+                                toString,
                                 style: Theme.of(context).textTheme.titleMedium,
                               ),
                               InkWell(
@@ -367,7 +426,9 @@ class ProductSchedulePage extends StatelessWidget {
                                 child: Container(
                                   decoration: BoxDecoration(
                                     border: Border.all(
-                                      color: Theme.of(context).dividerColor,
+                                      color: endDateError
+                                          ? AppColors.redColor
+                                          : Theme.of(context).dividerColor,
                                     ),
                                     borderRadius: BorderRadius.circular(8),
                                   ),
@@ -378,7 +439,9 @@ class ProductSchedulePage extends StatelessWidget {
                                       HeroIcon(
                                         HeroIcons.calendar,
                                         size: 20,
-                                        color: AppColors.bodyTextColor,
+                                        color: endDateError
+                                            ? AppColors.redColor
+                                            : AppColors.bodyTextColor,
                                       ),
                                       if (vm.endDate != UNKNOWN)
                                         humanizeDate(
@@ -387,7 +450,9 @@ class ProductSchedulePage extends StatelessWidget {
                                               .textTheme
                                               .bodyMedium
                                               ?.copyWith(
-                                                color: AppColors.textBlackColor,
+                                                color: endDateError
+                                                    ? AppColors.redColor
+                                                    : AppColors.textBlackColor,
                                               ),
                                         )
                                       else
@@ -433,7 +498,9 @@ class ProductSchedulePage extends StatelessWidget {
                                   child: Container(
                                     decoration: BoxDecoration(
                                       border: Border.all(
-                                        color: Theme.of(context).dividerColor,
+                                        color: endDateError
+                                            ? AppColors.redColor
+                                            : Theme.of(context).dividerColor,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
@@ -444,7 +511,9 @@ class ProductSchedulePage extends StatelessWidget {
                                         HeroIcon(
                                           HeroIcons.clock,
                                           size: 20,
-                                          color: AppColors.bodyTextColor,
+                                          color: endDateError
+                                              ? AppColors.redColor
+                                              : AppColors.bodyTextColor,
                                         ),
                                         if (vm.endTime != UNKNOWN)
                                           formatTime(
@@ -453,8 +522,10 @@ class ProductSchedulePage extends StatelessWidget {
                                                 .textTheme
                                                 .bodyMedium
                                                 ?.copyWith(
-                                                  color:
-                                                      AppColors.textBlackColor,
+                                                  color: endDateError
+                                                      ? AppColors.redColor
+                                                      : AppColors
+                                                          .textBlackColor,
                                                 ),
                                           )
                                         else

@@ -70,7 +70,7 @@ class ProductScheduleWidget extends StatelessWidget {
                     dateTextStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   Text(
-                    to,
+                    toString,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   humanizeDate(
@@ -101,7 +101,7 @@ class ProductScheduleWidget extends StatelessWidget {
                     textStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   Text(
-                    to,
+                    toString,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   formatTime(

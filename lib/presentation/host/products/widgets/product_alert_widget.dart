@@ -6,15 +6,15 @@ class ProductAlertWidget extends StatelessWidget {
   const ProductAlertWidget({
     super.key,
     required this.title,
-    required this.description,
+    this.description,
     required this.iconData,
     this.color = AppColors.amberColor,
   });
 
-  final String title;
-  final String description;
-  final HeroIcons iconData;
   final Color color;
+  final String? description;
+  final HeroIcons iconData;
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class ProductAlertWidget extends StatelessWidget {
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        color: color.withValues(alpha: .2),
+        color: color.withValues(alpha: .1),
       ),
       child: Row(
         spacing: 12,
@@ -41,13 +41,14 @@ class ProductAlertWidget extends StatelessWidget {
                       .titleSmall
                       ?.copyWith(color: color),
                 ),
-                Text(
-                  description,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium
-                      ?.copyWith(color: color),
-                ),
+                if (description != null)
+                  Text(
+                    description ?? '',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(color: color),
+                  ),
               ],
             ),
           ),

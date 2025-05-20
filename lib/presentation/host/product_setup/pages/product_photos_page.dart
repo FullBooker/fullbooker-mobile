@@ -14,6 +14,7 @@ import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/utils/utils.dart';
 import 'package:fullbooker/domain/core/entities/product_media.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
+import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:dartz/dartz.dart' as d;
 import 'package:fullbooker/presentation/host/product_setup/widgets/upload_media_zero_state.dart';
@@ -170,6 +171,18 @@ class ProductPhotosPage extends StatelessWidget {
                                 child: CachedNetworkImage(
                                   imageUrl: item?.file ?? '',
                                   fit: BoxFit.cover,
+                                  errorWidget: (
+                                    BuildContext context,
+                                    String url,
+                                    Object error,
+                                  ) =>
+                                      Image.asset(
+                                    productImageZeroState,
+                                    height:
+                                        MediaQuery.of(context).size.height * .2,
+                                    width: double.infinity,
+                                    fit: BoxFit.cover,
+                                  ),
                                   progressIndicatorBuilder: (
                                     BuildContext context,
                                     String url,

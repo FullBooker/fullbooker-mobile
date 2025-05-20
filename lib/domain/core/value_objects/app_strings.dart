@@ -26,8 +26,6 @@ const String continueString = 'Continue';
 const String editString = 'Edit';
 const String nextString = 'Next';
 
-const String to = 'to';
-
 /// USER SIDE STRINGS
 
 // Login
@@ -624,13 +622,7 @@ const String selectCurrencyHint = 'Choose currency';
 
 const String pricingBreakdownString = 'Pricing breakdown';
 
-String serviceFeeLabel({
-  required String currency,
-  required String baseFee,
-  required String serviceFeePercentage,
-}) {
-  return 'Service fee ($currency $baseFee + $serviceFeePercentage%)';
-}
+const String serviceFeeLabel = 'Service fee';
 
 const String yourBuyers = 'Your Buyers Pay';
 const String yourRevenueString = 'Your Revenue';
@@ -773,3 +765,9 @@ const String noReasonProvided = 'No reason provided';
 const String userInitiatedString = 'User initiated';
 
 const String aboutProduct = 'About your product';
+
+const String startTimeWarning = 'Start time must come before end time';
+const String startDateTimeWarning = 'Start date and time must be in the future';
+const String endTimeWarning = 'End time must come after start time';
+const String endDateTimeWarning =
+    'End date and time must be after the start date';

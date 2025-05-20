@@ -96,6 +96,7 @@ class ProductModeOfAccessPage extends StatelessWidget {
             children: <Widget>[
               Column(
                 spacing: 12,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   // Header row
                   Row(
@@ -103,7 +104,7 @@ class ProductModeOfAccessPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Flexible(
-                        flex: 5,
+                        flex: 6,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           spacing: 8,
@@ -188,6 +189,7 @@ class ProductModeOfAccessPage extends StatelessWidget {
                       return ListView.builder(
                         shrinkWrap: true,
                         itemCount: options.length,
+                        physics: NeverScrollableScrollPhysics(),
                         itemBuilder: (BuildContext context, int index) {
                           final ProductPricingOption? current = options[index];
 

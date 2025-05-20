@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
+import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/features/consumer/widgets/event_title_widget.dart';
 import 'package:fullbooker/shared/entities/data_mocks.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
@@ -53,6 +54,17 @@ class ImageGalleryPageState extends State<ImageGalleryPage> {
                         child: CachedNetworkImage(
                           imageUrl: url,
                           fit: BoxFit.cover,
+                          errorWidget: (
+                            BuildContext context,
+                            String url,
+                            Object error,
+                          ) =>
+                              Image.asset(
+                            productImageZeroState,
+                            height: MediaQuery.of(context).size.height * .2,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                          ),
                           progressIndicatorBuilder: (
                             BuildContext context,
                             String url,

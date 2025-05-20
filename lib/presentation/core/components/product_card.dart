@@ -69,6 +69,14 @@ class ProductCard extends StatelessWidget {
                         DownloadProgress progress,
                       ) =>
                           Center(child: AppLoading()),
+                      errorWidget:
+                          (BuildContext context, String url, Object error) =>
+                              Image.asset(
+                        productImageZeroState,
+                        height: MediaQuery.of(context).size.height * .2,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   )
                 else
