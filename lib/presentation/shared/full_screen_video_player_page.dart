@@ -17,6 +17,7 @@ class FullscreenVideoPlayerPage extends StatefulWidget {
 
 class FullscreenVideoPlayerPageState extends State<FullscreenVideoPlayerPage> {
   late final VideoPlayerController controller;
+  late final VoidCallback _controllerListener;
 
   bool initialized = false;
   bool showControls = true;
@@ -28,17 +29,20 @@ class FullscreenVideoPlayerPageState extends State<FullscreenVideoPlayerPage> {
 
     controller = VideoPlayerController.networkUrl(Uri.parse(widget.videoUrl))
       ..initialize().then((_) {
+        if (!mounted) return;
         setState(() => initialized = true);
         controller.play();
       });
 
-    controller.addListener(() {
+    _controllerListener = () {
       if (mounted) setState(() {});
-    });
+    };
+    controller.addListener(_controllerListener);
   }
 
   @override
   void dispose() {
+    controller.removeListener(_controllerListener);
     controller.pause();
     controller.dispose();
     super.dispose();
@@ -60,9 +64,7 @@ class FullscreenVideoPlayerPageState extends State<FullscreenVideoPlayerPage> {
 
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-      ),
+      appBar: AppBar(backgroundColor: Colors.black),
       body: initialized
           ? GestureDetector(
               onTap: _toggleControls,
