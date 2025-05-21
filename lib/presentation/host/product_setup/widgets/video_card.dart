@@ -1,11 +1,8 @@
-import 'dart:io';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
-import 'package:fullbooker/shared/widgets/app_loading.dart';
-import 'package:get_thumbnail_video/video_thumbnail.dart';
+import 'package:fullbooker/presentation/host/product_setup/widgets/video_thumbnail.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:video_player/video_player.dart';
 
 class VideoCard extends StatefulWidget {
   const VideoCard({
@@ -24,45 +21,13 @@ class VideoCard extends StatefulWidget {
 }
 
 class VideoCardState extends State<VideoCard> {
-  late final VideoPlayerController _controller;
-  bool _initialized = false;
-  String? _thumbnailPath;
-
   @override
   void initState() {
     super.initState();
-    _generateThumbnail();
-    _controller = VideoPlayerController.networkUrl(Uri.parse(widget.videoUrl))
-      ..initialize().then((_) {
-        if (!mounted) return;
-        setState(() => _initialized = true);
-      });
-  }
-
-  Future<void> _generateThumbnail() async {
-    try {
-      final XFile file = await VideoThumbnail.thumbnailFile(
-        video: widget.videoUrl,
-        quality: 75,
-      );
-
-      if (!mounted) return;
-
-      if (File(file.path).existsSync()) {
-        setState(() => _thumbnailPath = file.path);
-      } else {
-        debugPrint('Thumbnail path was null or does not exist');
-      }
-    } catch (e) {
-      if (!mounted) return;
-
-      debugPrint('Thumbnail generation failed: $e');
-    }
   }
 
   @override
   void dispose() {
-    _controller.dispose();
     super.dispose();
   }
 
@@ -85,19 +50,11 @@ class VideoCardState extends State<VideoCard> {
         child: Stack(
           fit: StackFit.expand,
           children: <Widget>[
-            if (_initialized)
-              AspectRatio(
-                aspectRatio: _controller.value.aspectRatio,
-                child: VideoPlayer(_controller),
-              )
-            else if (_thumbnailPath != null &&
-                File(_thumbnailPath!).existsSync())
-              Image.file(
-                File(_thumbnailPath!),
-                fit: BoxFit.cover,
-              )
-            else
-              AppLoading(),
+            CustomVideoThumbnail(videoUrl: widget.videoUrl),
+            Container(
+              decoration:
+                  BoxDecoration(color: Colors.black.withValues(alpha: 0.3)),
+            ),
             if (!isReadOnly)
               Positioned(
                 top: 12,
@@ -118,43 +75,31 @@ class VideoCardState extends State<VideoCard> {
                   ),
                 ),
               ),
-            if (_initialized)
-              Positioned(
-                bottom: isReadOnly ? 0 : 8,
-                left: 0,
-                right: 0,
-                top: isReadOnly ? 0 : null,
-                child: Center(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.black.withValues(alpha: 0.6),
-                      borderRadius: BorderRadius.circular(100),
-                    ),
-                    padding: EdgeInsets.symmetric(
-                      vertical: isReadOnly ? 12 : 8,
-                      horizontal: 12,
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        const HeroIcon(
-                          HeroIcons.play,
-                          size: 24,
-                          color: Colors.white,
-                        ),
-                        if (!isReadOnly)
-                          Text(
-                            formatDuration(_controller.value.duration),
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall
-                                ?.copyWith(color: Colors.white),
-                          ),
-                      ],
-                    ),
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              top: 0,
+              child: Center(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.black.withValues(alpha: 0.6),
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                  padding: EdgeInsets.all(isReadOnly ? 12 : 16),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: const <Widget>[
+                      HeroIcon(
+                        HeroIcons.play,
+                        size: 32,
+                        color: Colors.white,
+                      ),
+                    ],
                   ),
                 ),
               ),
+            ),
           ],
         ),
       ),

@@ -8,7 +8,6 @@ import 'package:fullbooker/features/host/models/old_product.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
-import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/old_buttons.dart';
 import 'package:fullbooker/shared/widgets/card.dart';
 import 'package:fullbooker/shared/widgets/dropdown.dart';
@@ -105,7 +104,6 @@ class _EventCategoryPageState extends State<EventCategoryPage> {
     final double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: const ProductSetupNavBar(step: ProductSteps.Products),
-      bottomNavigationBar: const OldBottomNavBar(),
       body: Column(
         children: <Widget>[
           Expanded(

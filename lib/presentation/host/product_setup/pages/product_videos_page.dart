@@ -26,6 +26,14 @@ import 'package:fullbooker/shared/widgets/secondary_button.dart';
 class ProductVideosPage extends StatelessWidget {
   const ProductVideosPage({super.key});
 
+  Future<void> onRefresh(BuildContext context) async {
+    context.dispatch(
+      FetchProductMediaAction(
+        client: AppWrapperBase.of(context)!.customClient,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,109 +87,111 @@ class ProductVideosPage extends StatelessWidget {
           },
         ),
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          spacing: 12,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Expanded(
-              child: StoreConnector<AppState, ProductSetupViewModel>(
-                converter: (Store<AppState> store) =>
-                    ProductSetupViewModel.fromState(store.state),
-                onInit: (Store<AppState> store) => context.dispatch(
-                  FetchProductMediaAction(
-                    client: AppWrapperBase.of(context)!.customClient,
-                  ),
+      body: ListView(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: StoreConnector<AppState, ProductSetupViewModel>(
+              converter: (Store<AppState> store) =>
+                  ProductSetupViewModel.fromState(store.state),
+              onInit: (Store<AppState> store) => context.dispatch(
+                FetchProductMediaAction(
+                  client: AppWrapperBase.of(context)!.customClient,
                 ),
-                builder: (BuildContext context, ProductSetupViewModel vm) {
-                  final List<ProductMedia?> videos =
-                      vm.videos ?? <ProductMedia>[];
+              ),
+              builder: (BuildContext context, ProductSetupViewModel vm) {
+                if (context.isWaiting(FetchProductMediaAction)) {
+                  return AppLoading();
+                }
 
-                  return SingleChildScrollView(
-                    child: Column(
+                final List<ProductMedia?> videos =
+                    vm.videos ?? <ProductMedia>[];
+
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  spacing: 12,
+                  children: <Widget>[
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      spacing: 12,
+                      spacing: 8,
                       children: <Widget>[
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          spacing: 8,
-                          children: <Widget>[
-                            Text(
-                              videosString,
-                              style: Theme.of(context).textTheme.headlineSmall,
-                            ),
-                            Text(
-                              videosCopy,
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                          ],
+                        Text(
+                          videosString,
+                          style: Theme.of(context).textTheme.headlineSmall,
                         ),
-                        GridView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 8,
-                            mainAxisSpacing: 8,
-                          ),
-                          itemCount: videos.length + 1,
-                          itemBuilder: (BuildContext context, int index) {
-                            if (index == videos.length) {
-                              if (context.isWaiting(<Type>[
-                                UploadProductVideosAction,
-                                RemoveProductVideoAction,
-                              ])) {
-                                return AppLoading();
-                              }
-
-                              return UploadMediaZeroState(
-                                mediaType: UploadMediaType.VIDEO,
-                                onTap: () async {
-                                  final FilePickerResult? result =
-                                      await pickMediaFiles(
-                                    type: UploadMediaType.VIDEO,
-                                  );
-
-                                  if (result != null &&
-                                      result.files.isNotEmpty) {
-                                    context.dispatch(
-                                      UploadProductVideosAction(
-                                        pickedVideoFiles: result.files,
-                                        client: AppWrapperBase.of(context)!
-                                            .customClient,
-                                      ),
-                                    );
-                                  }
-                                },
-                              );
-                            }
-
-                            final ProductMedia? item = videos[index];
-
-                            return VideoCard(
-                              videoUrl: item?.file ?? '',
-                              onRemove: () {
-                                context.dispatch(
-                                  RemoveProductVideoAction(
-                                    video: item!,
-                                    client: AppWrapperBase.of(context)!
-                                        .customClient,
-                                  ),
-                                );
-                              },
-                            );
-                          },
+                        Text(
+                          videosCopy,
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ],
                     ),
-                  );
-                },
-              ),
+                    RefreshIndicator(
+                      onRefresh: () => onRefresh(context),
+                      child: GridView.builder(
+                        shrinkWrap: true,
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 8,
+                          mainAxisSpacing: 8,
+                        ),
+                        itemCount: videos.length + 1,
+                        itemBuilder: (BuildContext context, int index) {
+                          if (index == videos.length) {
+                            if (context.isWaiting(<Type>[
+                              UploadProductVideosAction,
+                              RemoveProductVideoAction,
+                            ])) {
+                              return AppLoading();
+                            }
+
+                            return UploadMediaZeroState(
+                              mediaType: UploadMediaType.VIDEO,
+                              onTap: () async {
+                                final FilePickerResult? result =
+                                    await pickMediaFiles(
+                                  type: UploadMediaType.VIDEO,
+                                );
+
+                                if (result != null && result.files.isNotEmpty) {
+                                  context.dispatch(
+                                    UploadProductVideosAction(
+                                      pickedVideoFiles: result.files,
+                                      client: AppWrapperBase.of(context)!
+                                          .customClient,
+                                    ),
+                                  );
+                                }
+                              },
+                            );
+                          }
+
+                          final ProductMedia? item = videos[index];
+
+                          return VideoCard(
+                            videoUrl: item?.file ?? '',
+                            onRemove: () {
+                              context.dispatch(
+                                RemoveProductVideoAction(
+                                  video: item!,
+                                  client:
+                                      AppWrapperBase.of(context)!.customClient,
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                );
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
