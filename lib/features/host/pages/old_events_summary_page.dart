@@ -10,7 +10,6 @@ import 'package:fullbooker/shared/entities/event_creation_model.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/event_creation_steps.dart';
 import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
-import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
 import 'package:fullbooker/shared/widgets/page_title.dart';
 
 @RoutePage()
@@ -52,7 +51,6 @@ class _EventsSummaryPageState extends State<EventsSummaryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const ProductSetupNavBar(),
-      bottomNavigationBar: const OldBottomNavBar(),
       body: hasLoaded
           ? Column(
               children: <Widget>[

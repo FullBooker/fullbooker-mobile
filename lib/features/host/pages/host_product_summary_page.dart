@@ -7,7 +7,6 @@ import 'package:fullbooker/shared/widgets/activities_table_widget.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:fullbooker/shared/widgets/product_setup_nav_bar.dart';
-import 'package:fullbooker/shared/widgets/bottom_nav_bar.dart';
 
 @RoutePage()
 class HostProductSummaryPage extends StatefulWidget {
@@ -61,7 +60,6 @@ class _HostProductSummaryPageState extends State<HostProductSummaryPage> {
     final double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: const ProductSetupNavBar(step: ProductSteps.Products),
-      bottomNavigationBar: const OldBottomNavBar(),
       body: Column(
         children: <Widget>[
           Expanded(

@@ -3,39 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:fullbooker/application/redux/actions/update_bottom_nav_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/bottom_nav_view_model.dart';
-import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/shared/entities/bottom_nav_item.dart';
-import 'package:fullbooker/shared/entities/spaces.dart';
-import 'package:fullbooker/shared/widgets/nav_item.dart';
 import 'package:async_redux/async_redux.dart';
 import 'package:heroicons/heroicons.dart';
-
-// TODO(abiud): delete this
-class OldBottomNavBar extends StatelessWidget {
-  const OldBottomNavBar({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Material(
-      elevation: 16,
-      shadowColor: Colors.black,
-      child: Padding(
-        padding: EdgeInsets.only(left: 15, right: 15, top: 10),
-        child: SizedBox(
-          height: 60,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              NavItemWidget(switchToHostingString, Icons.home),
-              NavItemWidget(searchString, Icons.search),
-              NavItemWidget(profileString, Icons.person),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
 
 class BottomNavBar extends StatelessWidget {
   const BottomNavBar({super.key});
@@ -69,16 +39,13 @@ class BottomNavBar extends StatelessWidget {
               return BottomNavigationBarItem(
                 key: Key(navItem.itemKey),
                 icon: Column(
+                  spacing: 8,
                   children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(2),
-                      child: HeroIcon(
-                        navItem.iconUrl,
-                        color: Theme.of(context).colorScheme.tertiary,
-                        size: 24,
-                      ),
+                    HeroIcon(
+                      navItem.iconUrl,
+                      color: Theme.of(context).colorScheme.tertiary,
+                      size: 24,
                     ),
-                    verySmallVerticalSizedBox,
                     Text(
                       navItem.title,
                       style: Theme.of(context).textTheme.bodySmall,
@@ -86,16 +53,13 @@ class BottomNavBar extends StatelessWidget {
                   ],
                 ),
                 activeIcon: Column(
+                  spacing: 8,
                   children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(2),
-                      child: HeroIcon(
-                        navItem.iconUrl,
-                        color: Theme.of(context).primaryColor,
-                        size: 24,
-                      ),
+                    HeroIcon(
+                      navItem.iconUrl,
+                      color: Theme.of(context).primaryColor,
+                      size: 24,
                     ),
-                    verySmallVerticalSizedBox,
                     Text(
                       navItem.title,
                       style: Theme.of(context)
@@ -111,6 +75,7 @@ class BottomNavBar extends StatelessWidget {
           ).toList(),
           currentIndex: currentIndex,
           type: BottomNavigationBarType.fixed,
+          elevation: 10,
         );
       },
     );
