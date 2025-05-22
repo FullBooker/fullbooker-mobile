@@ -71,7 +71,7 @@ class AppTheme {
         ),
         focusColor: AppColors.primaryColor.withValues(alpha: 0.4),
       ),
-      textTheme: GoogleFonts.openSansTextTheme().copyWith(
+      textTheme: GoogleFonts.senTextTheme().copyWith(
         displayLarge:
             TextStyle(fontSize: 57, fontWeight: FontWeight.bold, height: 1.12),
         displayMedium:
