@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:fullbooker/application/core/services/sentry_service.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:video_player/video_player.dart';
@@ -16,43 +17,64 @@ class FullscreenVideoPlayerPage extends StatefulWidget {
 }
 
 class FullscreenVideoPlayerPageState extends State<FullscreenVideoPlayerPage> {
-  late final VideoPlayerController controller;
+  late final VideoPlayerController _controller;
   late final VoidCallback _controllerListener;
 
-  bool initialized = false;
-  bool showControls = true;
-  bool isMuted = false;
+  bool _initialized = false;
+  bool _showControls = true;
+  bool _isMuted = false;
 
   @override
   void initState() {
     super.initState();
 
-    controller = VideoPlayerController.networkUrl(Uri.parse(widget.videoUrl))
-      ..initialize().then((_) {
-        if (!mounted) return;
-        setState(() => initialized = true);
-        controller.play();
-      });
+    _controller = VideoPlayerController.networkUrl(Uri.parse(widget.videoUrl))
+      ..initialize().then((_) => _ensureReady())
+      ..setLooping(false);
 
     _controllerListener = () {
+      final VideoPlayerValue v = _controller.value;
+      if (v.hasError) {
+        debugPrint('VideoPlayer error: ${v.errorDescription}');
+        SentryService().reportError(hint: v.errorDescription!);
+      }
       if (mounted) setState(() {});
     };
-    controller.addListener(_controllerListener);
+    _controller.addListener(_controllerListener);
   }
 
   @override
   void dispose() {
-    controller.removeListener(_controllerListener);
-    controller.pause();
-    controller.dispose();
+    _controller.removeListener(_controllerListener);
+    _controller.pause();
+    _controller.dispose();
     super.dispose();
   }
 
-  void _toggleControls() {
-    setState(() => showControls = !showControls);
+  void _ensureReady() {
+    if (!mounted) return;
+    if (_controller.value.size != Size.zero) {
+      _onReady();
+    } else {
+      Future<void>.delayed(const Duration(milliseconds: 200), () {
+        if (!mounted) return;
+        if (_controller.value.size != Size.zero) {
+          _onReady();
+        }
+      });
+    }
   }
 
-  String formatDuration(Duration position) {
+  void _onReady() {
+    setState(() => _initialized = true);
+    _controller.play();
+  }
+
+  void _toggleControls() {
+    setState(() => _showControls = !_showControls);
+  }
+
+  String _formatDuration(Duration position) {
     final int minutes = position.inMinutes;
     final int seconds = position.inSeconds.remainder(60);
     return '$minutes:${seconds.toString().padLeft(2, '0')}';
@@ -65,19 +87,21 @@ class FullscreenVideoPlayerPageState extends State<FullscreenVideoPlayerPage> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(backgroundColor: Colors.black),
-      body: initialized
+      body: _initialized
           ? GestureDetector(
               onTap: _toggleControls,
               child: Stack(
                 alignment: Alignment.center,
                 children: <Widget>[
-                  Center(
-                    child: AspectRatio(
-                      aspectRatio: controller.value.aspectRatio,
-                      child: VideoPlayer(controller),
+                  RepaintBoundary(
+                    child: Center(
+                      child: AspectRatio(
+                        aspectRatio: _controller.value.aspectRatio,
+                        child: VideoPlayer(_controller),
+                      ),
                     ),
                   ),
-                  if (showControls)
+                  if (_showControls)
                     Positioned(
                       bottom: 32,
                       left: 16,
@@ -102,8 +126,8 @@ class FullscreenVideoPlayerPageState extends State<FullscreenVideoPlayerPage> {
                                   spacing: 8,
                                   children: <Widget>[
                                     Text(
-                                      formatDuration(
-                                        controller.value.position,
+                                      _formatDuration(
+                                        _controller.value.position,
                                       ),
                                       style: Theme.of(context)
                                           .textTheme
@@ -113,7 +137,7 @@ class FullscreenVideoPlayerPageState extends State<FullscreenVideoPlayerPage> {
                                           ),
                                     ),
                                     Text(
-                                      ' / ${formatDuration(controller.value.duration)}',
+                                      ' / ${_formatDuration(_controller.value.duration)}',
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodySmall
@@ -135,9 +159,9 @@ class FullscreenVideoPlayerPageState extends State<FullscreenVideoPlayerPage> {
                                       ),
                                       onPressed: () {
                                         final Duration newPosition =
-                                            controller.value.position -
+                                            _controller.value.position -
                                                 const Duration(seconds: 10);
-                                        controller.seekTo(
+                                        _controller.seekTo(
                                           newPosition >= Duration.zero
                                               ? newPosition
                                               : Duration.zero,
@@ -147,13 +171,13 @@ class FullscreenVideoPlayerPageState extends State<FullscreenVideoPlayerPage> {
                                     IconButton(
                                       onPressed: () {
                                         setState(() {
-                                          controller.value.isPlaying
-                                              ? controller.pause()
-                                              : controller.play();
+                                          _controller.value.isPlaying
+                                              ? _controller.pause()
+                                              : _controller.play();
                                         });
                                       },
                                       icon: HeroIcon(
-                                        controller.value.isPlaying
+                                        _controller.value.isPlaying
                                             ? HeroIcons.pause
                                             : HeroIcons.play,
                                         color: Colors.white,
@@ -168,14 +192,14 @@ class FullscreenVideoPlayerPageState extends State<FullscreenVideoPlayerPage> {
                                       ),
                                       onPressed: () {
                                         final Duration newPosition =
-                                            controller.value.position +
+                                            _controller.value.position +
                                                 const Duration(seconds: 10);
-                                        controller.seekTo(newPosition);
+                                        _controller.seekTo(newPosition);
                                       },
                                     ),
                                     IconButton(
                                       icon: HeroIcon(
-                                        isMuted
+                                        _isMuted
                                             ? HeroIcons.speakerXMark
                                             : HeroIcons.speakerWave,
                                         color: Colors.white,
@@ -183,9 +207,9 @@ class FullscreenVideoPlayerPageState extends State<FullscreenVideoPlayerPage> {
                                       ),
                                       onPressed: () {
                                         setState(() {
-                                          isMuted = !isMuted;
-                                          controller.setVolume(
-                                            isMuted ? 0.0 : 1.0,
+                                          _isMuted = !_isMuted;
+                                          _controller.setVolume(
+                                            _isMuted ? 0.0 : 1.0,
                                           );
                                         });
                                       },
@@ -195,7 +219,7 @@ class FullscreenVideoPlayerPageState extends State<FullscreenVideoPlayerPage> {
                               ],
                             ),
                             VideoProgressIndicator(
-                              controller,
+                              _controller,
                               allowScrubbing: true,
                               padding: EdgeInsets.zero,
                               colors: VideoProgressColors(
