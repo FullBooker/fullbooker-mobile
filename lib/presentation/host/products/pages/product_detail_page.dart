@@ -165,10 +165,13 @@ class ProductDetailPage extends StatelessWidget {
                                     color: AppColors.greyTextColor,
                                     size: 20,
                                   ),
-                                  Text(
-                                    product.locations?.first.address ?? '',
-                                    style:
-                                        Theme.of(context).textTheme.bodyMedium,
+                                  Expanded(
+                                    child: Text(
+                                      product.locations?.first.address ?? '',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium,
+                                    ),
                                   ),
                                 ],
                               ),

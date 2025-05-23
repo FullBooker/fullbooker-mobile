@@ -22,6 +22,10 @@ class _ScanTicketsPageState extends State<ScanTicketsPage> {
   bool hasScanned = false;
   bool isValidating = false;
   final GlobalKey qrKey = GlobalKey();
+  final MobileScannerController scannerController = MobileScannerController(
+    detectionSpeed: DetectionSpeed.noDuplicates,
+    detectionTimeoutMs: 3000,
+  );
 
   void showValidationBottomSheet({
     required String code,
@@ -44,9 +48,54 @@ class _ScanTicketsPageState extends State<ScanTicketsPage> {
             hasScanned = false;
             isValidating = false;
           });
+
+          scannerController.start();
         },
       ),
     );
+  }
+
+  void onScanned(BarcodeCapture capture) {
+    if (hasScanned || isValidating) return;
+
+    scannerController.stop();
+
+    final String? code = capture.barcodes.first.rawValue;
+    if (code != null) {
+      setState(() {
+        hasScanned = true;
+        isValidating = true;
+      });
+
+      context.dispatch(
+        UpdateHostStateAction(currentScannedTicketID: code),
+      );
+
+      context.dispatch(
+        ValidateTicketAction(
+          client: AppWrapperBase.of(context)!.customClient,
+          onResult: (bool isValid, String msg) {
+            showValidationBottomSheet(
+              code: code,
+              isValid: isValid,
+              msg: msg,
+            );
+          },
+          onError: (String error) {
+            setState(() {
+              hasScanned = false;
+              isValidating = false;
+            });
+
+            showValidationBottomSheet(
+              code: code,
+              isValid: false,
+              msg: error,
+            );
+          },
+        ),
+      );
+    }
   }
 
   @override
@@ -56,45 +105,8 @@ class _ScanTicketsPageState extends State<ScanTicketsPage> {
       body: Stack(
         children: <Widget>[
           MobileScanner(
-            onDetect: (BarcodeCapture capture) {
-              if (hasScanned || isValidating) return;
-              final String? code = capture.barcodes.first.rawValue;
-              if (code != null) {
-                setState(() {
-                  hasScanned = true;
-                  isValidating = true;
-                });
-
-                context.dispatch(
-                  UpdateHostStateAction(currentScannedTicketID: code),
-                );
-
-                context.dispatch(
-                  ValidateTicketAction(
-                    client: AppWrapperBase.of(context)!.customClient,
-                    onResult: (bool isValid, String msg) {
-                      showValidationBottomSheet(
-                        code: code,
-                        isValid: isValid,
-                        msg: msg,
-                      );
-                    },
-                    onError: (String error) {
-                      setState(() {
-                        hasScanned = false;
-                        isValidating = false;
-                      });
-
-                      showValidationBottomSheet(
-                        code: code,
-                        isValid: false,
-                        msg: error,
-                      );
-                    },
-                  ),
-                );
-              }
-            },
+            controller: scannerController,
+            onDetect: onScanned,
           ),
           SafeArea(
             child: Column(

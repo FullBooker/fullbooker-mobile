@@ -27,7 +27,6 @@ class AppConfig {
     required this.currenciesEndpoint,
     required this.bookingsEndpoint,
     required this.ticketsEndpoint,
-    required this.validateTicketsEndpoint,
     required this.pricingOptionsEndpoint,
     required this.productPricingOptionsEndpoint,
     required this.productTransitionEndpoint,
@@ -72,7 +71,6 @@ class AppConfig {
   final String currenciesEndpoint;
   final String bookingsEndpoint;
   final String ticketsEndpoint;
-  final String validateTicketsEndpoint;
   final String pricingOptionsEndpoint;
   final String productPricingOptionsEndpoint;
   final String productTransitionEndpoint;
@@ -109,7 +107,6 @@ final AppConfig devAppConfig = AppConfig(
   currenciesEndpoint: kDevCurrenciesEndpoint,
   bookingsEndpoint: kDevBookingsEndpoint,
   ticketsEndpoint: kDevTicketsEndpoint,
-  validateTicketsEndpoint: kDevValidateTicketEndpoint,
   pricingOptionsEndpoint: kDevPricingOptionsEndpoint,
   productPricingOptionsEndpoint: kDevProductPricingOptionsEndpoint,
   productTransitionEndpoint: kDevProductTransitionEndpoint,
@@ -143,7 +140,6 @@ final AppConfig prodAppConfig = AppConfig(
   currenciesEndpoint: kProdCurrenciesEndpoint,
   bookingsEndpoint: kProdBookingsEndpoint,
   ticketsEndpoint: kProdTicketsEndpoint,
-  validateTicketsEndpoint: kProdValidateTicketEndpoint,
   pricingOptionsEndpoint: kProdPricingOptionsEndpoint,
   productPricingOptionsEndpoint: kProdProductPricingOptionsEndpoint,
   productTransitionEndpoint: kProdProductTransitionEndpoint,
@@ -177,7 +173,6 @@ final AppConfig testAppConfig = AppConfig(
   currenciesEndpoint: kTestCurrenciesEndpoint,
   bookingsEndpoint: kTestBookingsEndpoint,
   ticketsEndpoint: kTestTicketsEndpoint,
-  validateTicketsEndpoint: kTestValidateTicketEndpoint,
   pricingOptionsEndpoint: kTestPricingOptionsEndpoint,
   productPricingOptionsEndpoint: kTestProductPricingOptionsEndpoint,
   productTransitionEndpoint: kTestProductTransitionEndpoint,
