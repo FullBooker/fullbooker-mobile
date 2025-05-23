@@ -54,6 +54,8 @@ class UpdateProductAction extends ReduxAction<AppState> {
         locations: locations ?? state.hostState?.currentProduct?.locations,
         termsAccepted:
             termsAccepted ?? state.hostState?.currentProduct?.termsAccepted,
+        category:
+            selectedCategory?.id ?? state.hostState?.currentProduct?.category,
       );
     } else {
       return state.copyWith.hostState?.selectedProduct?.call(
@@ -71,6 +73,8 @@ class UpdateProductAction extends ReduxAction<AppState> {
         locations: locations ?? state.hostState?.selectedProduct?.locations,
         termsAccepted:
             termsAccepted ?? state.hostState?.selectedProduct?.termsAccepted,
+        category:
+            selectedCategory?.id ?? state.hostState?.selectedProduct?.category,
       );
     }
   }

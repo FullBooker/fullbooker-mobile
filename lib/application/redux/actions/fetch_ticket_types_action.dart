@@ -29,18 +29,10 @@ class FetchTicketTypesAction extends ReduxAction<AppState> {
       'page_size': 20,
     };
 
-    // final ProductPricingOption? selectedPricingOption =
-    //     state.hostState?.selectedProductPricingOption;
-
-    // final Map<String, String> params = <String, String>{
-    //   'pricing_option': selectedPricingOption?.id ?? '',
-    // };
-
     final Response httpResponse = await client.callRESTAPI(
       endpoint: GetIt.I.get<AppConfig>().ticketTypesEndpoint,
       method: APIMethods.GET.name.toUpperCase(),
       variables: data,
-      // queryParams: params,
     );
 
     final Map<String, dynamic> body =
