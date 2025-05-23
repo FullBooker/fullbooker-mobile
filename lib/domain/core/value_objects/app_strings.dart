@@ -447,7 +447,9 @@ const String previousString = 'Previous';
 const String categoryStep2 = '2 of 2';
 const String setupProductCategory = 'Setup Product Category';
 const String productCategory = 'Product category';
+const String productSubCategory = 'Product Subcategory';
 const String productCategoryCopy = 'Select the product\'s category';
+const String productSubCategoryCopy = 'Select the product\'s subcategory';
 const String searchProductCopy = 'Search product categories...';
 String showingResultsFor(String searchParam) =>
     'Showing results for “$searchParam”';

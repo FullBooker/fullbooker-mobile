@@ -25,6 +25,8 @@ mixin _$HostState {
   Product? get selectedProduct => throw _privateConstructorUsedError;
   List<ProductCategory>? get productCategories =>
       throw _privateConstructorUsedError;
+  List<ProductCategory>? get productSubCategories =>
+      throw _privateConstructorUsedError;
   LocationPermsResult? get locationPerms =>
       throw _privateConstructorUsedError; // Used during product setup
   ProductLocation? get selectedLocation => throw _privateConstructorUsedError;
@@ -85,6 +87,7 @@ abstract class $HostStateCopyWith<$Res> {
       Product? currentProduct,
       Product? selectedProduct,
       List<ProductCategory>? productCategories,
+      List<ProductCategory>? productSubCategories,
       LocationPermsResult? locationPerms,
       ProductLocation? selectedLocation,
       ProductSchedule? selectedSchedule,
@@ -144,6 +147,7 @@ class _$HostStateCopyWithImpl<$Res, $Val extends HostState>
     Object? currentProduct = freezed,
     Object? selectedProduct = freezed,
     Object? productCategories = freezed,
+    Object? productSubCategories = freezed,
     Object? locationPerms = freezed,
     Object? selectedLocation = freezed,
     Object? selectedSchedule = freezed,
@@ -186,6 +190,10 @@ class _$HostStateCopyWithImpl<$Res, $Val extends HostState>
       productCategories: freezed == productCategories
           ? _value.productCategories
           : productCategories // ignore: cast_nullable_to_non_nullable
+              as List<ProductCategory>?,
+      productSubCategories: freezed == productSubCategories
+          ? _value.productSubCategories
+          : productSubCategories // ignore: cast_nullable_to_non_nullable
               as List<ProductCategory>?,
       locationPerms: freezed == locationPerms
           ? _value.locationPerms
@@ -476,6 +484,7 @@ abstract class _$$HostStateImplCopyWith<$Res>
       Product? currentProduct,
       Product? selectedProduct,
       List<ProductCategory>? productCategories,
+      List<ProductCategory>? productSubCategories,
       LocationPermsResult? locationPerms,
       ProductLocation? selectedLocation,
       ProductSchedule? selectedSchedule,
@@ -545,6 +554,7 @@ class __$$HostStateImplCopyWithImpl<$Res>
     Object? currentProduct = freezed,
     Object? selectedProduct = freezed,
     Object? productCategories = freezed,
+    Object? productSubCategories = freezed,
     Object? locationPerms = freezed,
     Object? selectedLocation = freezed,
     Object? selectedSchedule = freezed,
@@ -587,6 +597,10 @@ class __$$HostStateImplCopyWithImpl<$Res>
       productCategories: freezed == productCategories
           ? _value.productCategories
           : productCategories // ignore: cast_nullable_to_non_nullable
+              as List<ProductCategory>?,
+      productSubCategories: freezed == productSubCategories
+          ? _value.productSubCategories
+          : productSubCategories // ignore: cast_nullable_to_non_nullable
               as List<ProductCategory>?,
       locationPerms: freezed == locationPerms
           ? _value.locationPerms
@@ -701,6 +715,7 @@ class _$HostStateImpl implements _HostState {
       this.currentProduct,
       this.selectedProduct,
       this.productCategories = const <ProductCategory>[],
+      this.productSubCategories = const <ProductCategory>[],
       this.locationPerms,
       this.selectedLocation,
       this.selectedSchedule,
@@ -740,6 +755,9 @@ class _$HostStateImpl implements _HostState {
   @override
   @JsonKey()
   final List<ProductCategory>? productCategories;
+  @override
+  @JsonKey()
+  final List<ProductCategory>? productSubCategories;
   @override
   final LocationPermsResult? locationPerms;
 // Used during product setup
@@ -818,7 +836,7 @@ class _$HostStateImpl implements _HostState {
 
   @override
   String toString() {
-    return 'HostState(products: $products, currentProduct: $currentProduct, selectedProduct: $selectedProduct, productCategories: $productCategories, locationPerms: $locationPerms, selectedLocation: $selectedLocation, selectedSchedule: $selectedSchedule, currencies: $currencies, selectedCurrency: $selectedCurrency, selectedPricingTier: $selectedPricingTier, selectedProductPricing: $selectedProductPricing, currentScannedTicketID: $currentScannedTicketID, isValidTicket: $isValidTicket, workflowState: $workflowState, pricingOptions: $pricingOptions, productPricingOptions: $productPricingOptions, selectedPricingOptionIds: $selectedPricingOptionIds, selectedProductPricingOption: $selectedProductPricingOption, isSearchingProducts: $isSearchingProducts, productSearchParam: $productSearchParam, isSearchingProductBooking: $isSearchingProductBooking, productBookingSearchParam: $productBookingSearchParam, selectedProductStatusFilter: $selectedProductStatusFilter, selectedBooking: $selectedBooking, selectedBookingTickets: $selectedBookingTickets, pickedPricingOption: $pickedPricingOption, ticketTypes: $ticketTypes, selectedTicketType: $selectedTicketType, currentPricingBreakdown: $currentPricingBreakdown)';
+    return 'HostState(products: $products, currentProduct: $currentProduct, selectedProduct: $selectedProduct, productCategories: $productCategories, productSubCategories: $productSubCategories, locationPerms: $locationPerms, selectedLocation: $selectedLocation, selectedSchedule: $selectedSchedule, currencies: $currencies, selectedCurrency: $selectedCurrency, selectedPricingTier: $selectedPricingTier, selectedProductPricing: $selectedProductPricing, currentScannedTicketID: $currentScannedTicketID, isValidTicket: $isValidTicket, workflowState: $workflowState, pricingOptions: $pricingOptions, productPricingOptions: $productPricingOptions, selectedPricingOptionIds: $selectedPricingOptionIds, selectedProductPricingOption: $selectedProductPricingOption, isSearchingProducts: $isSearchingProducts, productSearchParam: $productSearchParam, isSearchingProductBooking: $isSearchingProductBooking, productBookingSearchParam: $productBookingSearchParam, selectedProductStatusFilter: $selectedProductStatusFilter, selectedBooking: $selectedBooking, selectedBookingTickets: $selectedBookingTickets, pickedPricingOption: $pickedPricingOption, ticketTypes: $ticketTypes, selectedTicketType: $selectedTicketType, currentPricingBreakdown: $currentPricingBreakdown)';
   }
 
   @override
@@ -833,6 +851,8 @@ class _$HostStateImpl implements _HostState {
                 other.selectedProduct == selectedProduct) &&
             const DeepCollectionEquality()
                 .equals(other.productCategories, productCategories) &&
+            const DeepCollectionEquality()
+                .equals(other.productSubCategories, productSubCategories) &&
             (identical(other.locationPerms, locationPerms) ||
                 other.locationPerms == locationPerms) &&
             (identical(other.selectedLocation, selectedLocation) ||
@@ -871,8 +891,7 @@ class _$HostStateImpl implements _HostState {
                 other.isSearchingProductBooking == isSearchingProductBooking) &&
             (identical(other.productBookingSearchParam, productBookingSearchParam) ||
                 other.productBookingSearchParam == productBookingSearchParam) &&
-            (identical(other.selectedProductStatusFilter,
-                    selectedProductStatusFilter) ||
+            (identical(other.selectedProductStatusFilter, selectedProductStatusFilter) ||
                 other.selectedProductStatusFilter ==
                     selectedProductStatusFilter) &&
             (identical(other.selectedBooking, selectedBooking) ||
@@ -885,7 +904,8 @@ class _$HostStateImpl implements _HostState {
                 .equals(other.ticketTypes, ticketTypes) &&
             (identical(other.selectedTicketType, selectedTicketType) ||
                 other.selectedTicketType == selectedTicketType) &&
-            (identical(other.currentPricingBreakdown, currentPricingBreakdown) ||
+            (identical(
+                    other.currentPricingBreakdown, currentPricingBreakdown) ||
                 other.currentPricingBreakdown == currentPricingBreakdown));
   }
 
@@ -897,6 +917,7 @@ class _$HostStateImpl implements _HostState {
         currentProduct,
         selectedProduct,
         const DeepCollectionEquality().hash(productCategories),
+        const DeepCollectionEquality().hash(productSubCategories),
         locationPerms,
         selectedLocation,
         selectedSchedule,
@@ -946,6 +967,7 @@ abstract class _HostState implements HostState {
       final Product? currentProduct,
       final Product? selectedProduct,
       final List<ProductCategory>? productCategories,
+      final List<ProductCategory>? productSubCategories,
       final LocationPermsResult? locationPerms,
       final ProductLocation? selectedLocation,
       final ProductSchedule? selectedSchedule,
@@ -983,6 +1005,8 @@ abstract class _HostState implements HostState {
   Product? get selectedProduct;
   @override
   List<ProductCategory>? get productCategories;
+  @override
+  List<ProductCategory>? get productSubCategories;
   @override
   LocationPermsResult? get locationPerms; // Used during product setup
   @override

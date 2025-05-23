@@ -190,8 +190,8 @@ class ProductSetupViewModel extends Vm {
           baseProduct?.selectedProductCategory ?? ProductCategory.initial(),
       subCategory:
           baseProduct?.selectedProductSubCategory ?? ProductCategory.initial(),
-      subCategories: baseProduct?.selectedProductCategory?.subcategories ??
-          <ProductCategory?>[],
+      subCategories:
+          state.hostState?.productSubCategories ?? <ProductCategory?>[],
       subCategoryID: baseProduct?.subcategory ?? UNKNOWN,
       categoryID: baseProduct?.category ?? UNKNOWN,
       pricingOptions: state.hostState?.pricingOptions ?? <PricingOption?>[],
