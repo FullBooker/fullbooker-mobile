@@ -21,7 +21,6 @@ const String kDevHostsEndpoint = '$kDevAPIBaseURL/hosts/';
 const String kDevCurrenciesEndpoint = '$kDevAPIBaseURL/currencies/';
 const String kDevBookingsEndpoint = '$kDevAPIBaseURL/bookings/';
 const String kDevTicketsEndpoint = '$kDevAPIBaseURL/tickets/';
-const String kDevValidateTicketEndpoint = '$kDevAPIBaseURL/validate/';
 const String kDevPricingOptionsEndpoint = '$kDevAPIBaseURL/pricingoptions/';
 const String kDevProductPricingOptionsEndpoint =
     '$kDevAPIBaseURL/product-pricing-options/';
@@ -55,7 +54,6 @@ const String kProdPricingEndpoint = '$kProdAPIBaseURL/pricing/';
 const String kProdCurrenciesEndpoint = '$kProdAPIBaseURL/currencies/';
 const String kProdBookingsEndpoint = '$kProdAPIBaseURL/bookings/';
 const String kProdTicketsEndpoint = '$kProdAPIBaseURL/tickets/';
-const String kProdValidateTicketEndpoint = '$kProdAPIBaseURL/validate/';
 const String kProdPricingOptionsEndpoint = '$kProdAPIBaseURL/pricingoptions/';
 const String kProdProductPricingOptionsEndpoint =
     '$kProdAPIBaseURL/product-pricing-options/';
@@ -89,7 +87,6 @@ const String kTestPricingEndpoint = '$kTestAPIBaseURL/pricing/';
 const String kTestCurrenciesEndpoint = '$kTestAPIBaseURL/currencies/';
 const String kTestBookingsEndpoint = '$kTestAPIBaseURL/bookings/';
 const String kTestTicketsEndpoint = '$kTestAPIBaseURL/tickets/';
-const String kTestValidateTicketEndpoint = '$kTestAPIBaseURL/validate/';
 const String kTestPricingOptionsEndpoint = '$kTestAPIBaseURL/pricingoptions/';
 const String kTestProductPricingOptionsEndpoint =
     '$kTestAPIBaseURL/product-pricing-options/';
