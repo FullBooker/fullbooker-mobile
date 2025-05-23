@@ -153,7 +153,7 @@ class ProductCategoryPage extends StatelessWidget {
                       itemBuilder: (BuildContext context, int index) {
                         final ProductCategory current = categories![index];
 
-                        final bool selected = current.id == vm.category?.id;
+                        final bool selected = current.id == vm.categoryID;
 
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 12),
