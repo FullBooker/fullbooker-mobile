@@ -28,6 +28,7 @@ class HostState with _$HostState {
     Product? currentProduct,
     Product? selectedProduct,
     @Default(<ProductCategory>[]) List<ProductCategory>? productCategories,
+    @Default(<ProductCategory>[]) List<ProductCategory>? productSubCategories,
     LocationPermsResult? locationPerms,
 
     // Used during product setup
