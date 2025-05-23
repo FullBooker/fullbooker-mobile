@@ -4,6 +4,7 @@ import 'package:async_redux/async_redux.dart';
 import 'package:fullbooker/application/core/services/i_custom_client.dart';
 import 'package:fullbooker/application/redux/actions/update_host_state_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
+import 'package:fullbooker/domain/core/entities/product_pricing_option.dart';
 import 'package:fullbooker/domain/core/entities/ticket_type_response.dart';
 import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
@@ -28,6 +29,9 @@ class FetchTicketTypesAction extends ReduxAction<AppState> {
       'page': 1,
       'page_size': 20,
     };
+
+    final ProductPricingOption? selectedPricingOption =
+        state.hostState?.selectedProductPricingOption;
 
     final Response httpResponse = await client.callRESTAPI(
       endpoint: GetIt.I.get<AppConfig>().ticketTypesEndpoint,
