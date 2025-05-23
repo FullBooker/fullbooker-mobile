@@ -63,7 +63,7 @@ const String kProdProductTransitionEndpoint =
     '$kProdAPIBaseURL/products/transition/';
 const String kProdAcceptProductTermsEndpoint =
     '$kProdAPIBaseURL/product-terms-accepted/';
-const String kProdProductTicketTypesEndpoint = '$kDevAPIBaseURL/ticket-types/';
+const String kProdProductTicketTypesEndpoint = '$kProdAPIBaseURL/ticket-types/';
 const String kProdCalculatePriceEndpoint = '$kProdAPIBaseURL/calculate-fees/';
 
 ///---- TEST ENDPOINTS
