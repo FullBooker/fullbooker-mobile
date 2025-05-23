@@ -70,7 +70,7 @@ class UpdateProductAction extends ReduxAction<AppState> {
         schedule: schedule ?? state.hostState?.selectedProduct?.schedule,
         locations: locations ?? state.hostState?.selectedProduct?.locations,
         termsAccepted:
-            termsAccepted ?? state.hostState?.currentProduct?.termsAccepted,
+            termsAccepted ?? state.hostState?.selectedProduct?.termsAccepted,
       );
     }
   }
