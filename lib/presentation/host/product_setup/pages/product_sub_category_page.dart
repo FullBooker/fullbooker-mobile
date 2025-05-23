@@ -2,6 +2,7 @@ import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fullbooker/application/core/services/app_wrapper_base.dart';
+import 'package:fullbooker/application/redux/actions/fetch_product_sub_categories_action.dart';
 import 'package:fullbooker/application/redux/actions/update_product_action.dart';
 import 'package:fullbooker/application/redux/actions/update_product_category_action.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
@@ -106,11 +107,11 @@ class ProductSubCategoryPage extends StatelessWidget {
                       style: Theme.of(context).textTheme.titleSmall,
                     ),
                     Text(
-                      productCategory,
+                      productSubCategory,
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
                     Text(
-                      productCategoryCopy,
+                      productSubCategoryCopy,
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ],
@@ -118,8 +119,18 @@ class ProductSubCategoryPage extends StatelessWidget {
                 StoreConnector<AppState, ProductSetupViewModel>(
                   converter: (Store<AppState> store) =>
                       ProductSetupViewModel.fromState(store.state),
+                  onInit: (Store<AppState> store) {
+                    context.dispatch(
+                      FetchProductSubCategoriesAction(
+                        client: AppWrapperBase.of(context)!.customClient,
+                      ),
+                    );
+                  },
                   builder: (BuildContext context, ProductSetupViewModel vm) {
-                    if (context.isWaiting(UpdateProductCategoryAction)) {
+                    if (context.isWaiting(<Type>[
+                      UpdateProductCategoryAction,
+                      FetchProductSubCategoriesAction,
+                    ])) {
                       return AppLoading();
                     }
 
