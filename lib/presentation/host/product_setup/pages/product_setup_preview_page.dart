@@ -1,12 +1,10 @@
-import 'package:async_redux/async_redux.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:fullbooker/application/redux/states/app_state.dart';
-import 'package:fullbooker/application/redux/view_models/product_setup_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:dartz/dartz.dart' as d;
+import 'package:fullbooker/presentation/host/product_setup/widgets/selected_product_category_banner.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/setup_summary_item.dart';
 import 'package:fullbooker/presentation/shared/custom_bottom_nav_container.dart';
 import 'package:fullbooker/shared/entities/spaces.dart';
@@ -73,62 +71,7 @@ class ProductSetupPreviewPage extends StatelessWidget {
                     productCategoryAndType,
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
-                  // Selected product category and type
-                  StoreConnector<AppState, ProductSetupViewModel>(
-                    converter: (Store<AppState> store) =>
-                        ProductSetupViewModel.fromState(store.state),
-                    builder: (
-                      BuildContext context,
-                      ProductSetupViewModel vm,
-                    ) {
-                      final String selectedCategory =
-                          vm.currentProduct?.selectedProductCategory?.name ??
-                              '';
-                      final String selectedSubCategory =
-                          vm.currentProduct?.selectedProductSubCategory?.name ??
-                              '';
-
-                      return Container(
-                        padding: const EdgeInsets.all(12),
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        ),
-                        child: Column(
-                          spacing: 8,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              selectedCategory,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium
-                                  ?.copyWith(
-                                    color: Theme.of(context).primaryColor,
-                                  ),
-                              overflow: TextOverflow.visible,
-                            ),
-                            Text(
-                              selectedSubCategory,
-                              style: Theme.of(context).textTheme.bodyLarge,
-                              overflow: TextOverflow.visible,
-                            ),
-                            SecondaryButton(
-                              customWidth:
-                                  MediaQuery.of(context).size.width / 2,
-                              onPressed: () {
-                                context.router.push(ProductCategoryRoute());
-                              },
-                              child: d.right(changeString),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
+                  SelectedProductCategoryBanner(readOnly: false),
                 ],
               ),
               Text(

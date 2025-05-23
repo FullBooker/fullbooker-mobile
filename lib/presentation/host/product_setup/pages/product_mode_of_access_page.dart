@@ -15,6 +15,7 @@ import 'package:dartz/dartz.dart' as d;
 import 'package:fullbooker/presentation/core/components/generic_zero_state.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/mode_of_access_item.dart';
 import 'package:fullbooker/presentation/host/product_setup/widgets/modes_of_access_bottom_sheet.dart';
+import 'package:fullbooker/presentation/host/product_setup/widgets/selected_product_category_banner.dart';
 import 'package:fullbooker/presentation/shared/custom_bottom_nav_container.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/widgets/app_loading.dart';
@@ -150,6 +151,8 @@ class ProductModeOfAccessPage extends StatelessWidget {
                       ),
                     ],
                   ),
+
+                  SelectedProductCategoryBanner(),
 
                   StoreConnector<AppState, ProductSetupViewModel>(
                     converter: (Store<AppState> store) =>

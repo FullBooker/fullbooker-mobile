@@ -14,6 +14,7 @@ import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/presentation/core/components/custom_app_bar.dart';
 import 'package:dartz/dartz.dart' as d;
+import 'package:fullbooker/presentation/host/product_setup/widgets/selected_product_category_banner.dart';
 import 'package:fullbooker/presentation/shared/custom_bottom_nav_container.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
 import 'package:fullbooker/shared/validators.dart';
@@ -155,46 +156,42 @@ class _ProductBasicDetailsPageState extends State<ProductBasicDetailsPage> {
                   spacing: 12,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        spacing: 12,
-                        children: <Widget>[
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            spacing: 8,
-                            children: <Widget>[
-                              Text(
-                                productBasicDetails,
-                                style:
-                                    Theme.of(context).textTheme.headlineSmall,
-                              ),
-                              Text(
-                                productBasicDetailsCopy,
-                                style: Theme.of(context).textTheme.bodyMedium,
-                              ),
-                            ],
-                          ),
-                          CustomTextInput(
-                            hintText: nameYourProduct,
-                            controller: nameController,
-                            labelText: '$nameString*',
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            validator: Validators.validateProductName,
-                            keyboardType: TextInputType.name,
-                          ),
-                          CustomTextInput(
-                            hintText: productDescriptionCopy,
-                            labelText: productDescription,
-                            controller: descriptionController,
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            maxLines: 4,
-                            keyboardType: TextInputType.name,
-                          ),
-                        ],
-                      ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      spacing: 12,
+                      children: <Widget>[
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          spacing: 8,
+                          children: <Widget>[
+                            Text(
+                              productBasicDetails,
+                              style: Theme.of(context).textTheme.headlineSmall,
+                            ),
+                            Text(
+                              productBasicDetailsCopy,
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                          ],
+                        ),
+                        SelectedProductCategoryBanner(),
+                        CustomTextInput(
+                          hintText: nameYourProduct,
+                          controller: nameController,
+                          labelText: '$nameString*',
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          validator: Validators.validateProductName,
+                          keyboardType: TextInputType.name,
+                        ),
+                        CustomTextInput(
+                          hintText: productDescriptionCopy,
+                          labelText: productDescription,
+                          controller: descriptionController,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          maxLines: 4,
+                          keyboardType: TextInputType.name,
+                        ),
+                      ],
                     ),
                   ],
                 ),
