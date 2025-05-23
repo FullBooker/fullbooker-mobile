@@ -5,7 +5,11 @@ import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
   static ThemeData getAppTheme() {
+    final String? senFamily = GoogleFonts.sen().fontFamily;
+    final TextTheme baseSenTextTheme = GoogleFonts.senTextTheme();
+
     return ThemeData(
+      fontFamily: senFamily,
       brightness: Brightness.light,
       scaffoldBackgroundColor: AppColors.pageBgColor,
       cardColor: Colors.white,
@@ -71,7 +75,7 @@ class AppTheme {
         ),
         focusColor: AppColors.primaryColor.withValues(alpha: 0.4),
       ),
-      textTheme: GoogleFonts.senTextTheme().copyWith(
+      textTheme: baseSenTextTheme.copyWith(
         displayLarge:
             TextStyle(fontSize: 57, fontWeight: FontWeight.bold, height: 1.12),
         displayMedium:
