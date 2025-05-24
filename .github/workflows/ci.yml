@@ -5,11 +5,12 @@ on:
     branches:
       - main
       - prod
+      - feat/split-dev-and-prod-builds
 
 jobs:
   deploy_to_app_tester:
     name: Deploy APK to AppTester
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/feat/split-dev-and-prod-builds'
     timeout-minutes: 20
     runs-on: ubuntu-latest
 
@@ -42,6 +43,7 @@ jobs:
         run: |
           flutter build apk \
             --release \
+            --flavor dev \
             --obfuscate \
             --split-debug-info=dump/ \
             --build-number=${{ github.run_number }} \
@@ -52,7 +54,7 @@ jobs:
       - name: Upload APK to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
-          appId: ${{ secrets.FIREBASE_APP_ID }}
+          appId: ${{ secrets.DEV_FIREBASE_APP_ID }}
           serviceCredentialsFileContent: ${{ secrets.FIREBASE_AUTH_SERVICE_ACCOUNT }}
           groups: dev-testers
           file: build/app/outputs/flutter-apk/app-release.apk
