@@ -42,6 +42,10 @@ class UpdateProductAction extends ReduxAction<AppState> {
       return state.copyWith.hostState?.currentProduct?.call(
         selectedProductCategory: selectedCategory ??
             state.hostState?.currentProduct?.selectedProductCategory,
+        categoryName: selectedCategory?.name ??
+            state.hostState?.currentProduct?.categoryName,
+        subcategoryName: selectedSubCategory?.name ??
+            state.hostState?.currentProduct?.subcategoryName,
         selectedProductSubCategory: selectedSubCategory ??
             state.hostState?.currentProduct?.selectedProductSubCategory,
         name: name ?? state.hostState?.currentProduct?.name,
@@ -63,6 +67,10 @@ class UpdateProductAction extends ReduxAction<AppState> {
             state.hostState?.selectedProduct?.selectedProductCategory,
         selectedProductSubCategory: selectedSubCategory ??
             state.hostState?.selectedProduct?.selectedProductSubCategory,
+        categoryName: selectedCategory?.name ??
+            state.hostState?.selectedProduct?.categoryName,
+        subcategoryName: selectedSubCategory?.name ??
+            state.hostState?.selectedProduct?.subcategoryName,
         name: name ?? state.hostState?.selectedProduct?.name,
         description:
             description ?? state.hostState?.selectedProduct?.description,
