@@ -15,6 +15,7 @@ import 'package:fullbooker/core/common/app_router.gr.dart';
 import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/core/utils/utils.dart';
 import 'package:fullbooker/domain/core/value_objects/analytics_events.dart';
+import 'package:fullbooker/domain/core/value_objects/app_config.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:fullbooker/domain/core/value_objects/asset_paths.dart';
 import 'package:fullbooker/shared/entities/enums.dart';
@@ -24,6 +25,7 @@ import 'package:fullbooker/shared/widgets/custom_text_input.dart';
 import 'package:fullbooker/shared/widgets/divider_with_text.dart';
 import 'package:fullbooker/shared/widgets/primary_button.dart';
 import 'package:fullbooker/shared/widgets/secondary_button.dart';
+import 'package:get_it/get_it.dart';
 import 'package:heroicons/heroicons.dart';
 
 @RoutePage()
@@ -42,6 +44,9 @@ class LoginPageState extends State<LoginPage> {
     defaultValue: kDevBuild,
   );
 
+  final bool isDev =
+      GetIt.I.get<AppConfig>().environment.toLowerCase() == 'dev';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,7 +62,9 @@ class LoginPageState extends State<LoginPage> {
                   return ListView(
                     children: <Widget>[
                       largeVerticalSizedBox,
-                      SvgPicture.asset(appLogoFullSVGPath),
+                      SvgPicture.asset(
+                        isDev ? devAppLogoFullSVGPath : prodAppLogoFullSVGPath,
+                      ),
                       smallVerticalSizedBox,
                       Center(
                         child: Column(
@@ -67,7 +74,7 @@ class LoginPageState extends State<LoginPage> {
                               welcomeString,
                               style: Theme.of(context)
                                   .textTheme
-                                  .headlineSmall
+                                  .titleLarge
                                   ?.copyWith(
                                     color: Theme.of(context).primaryColor,
                                   ),
