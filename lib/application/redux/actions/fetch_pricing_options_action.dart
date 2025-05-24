@@ -24,15 +24,15 @@ class FetchPricingOptionsAction extends ReduxAction<AppState> {
 
   @override
   Future<AppState?> reduce() async {
-    final Map<String, dynamic> data = <String, dynamic>{
-      'page': 1,
-      'page_size': 20,
+    final Map<String, dynamic> params = <String, dynamic>{
+      'page': '1',
+      'page_size': '30',
     };
 
     final Response httpResponse = await client.callRESTAPI(
       endpoint: GetIt.I.get<AppConfig>().pricingOptionsEndpoint,
       method: APIMethods.GET.name.toUpperCase(),
-      variables: data,
+      queryParams: params,
     );
 
     final Map<String, dynamic> body =

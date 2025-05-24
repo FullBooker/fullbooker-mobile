@@ -35,14 +35,14 @@ class FetchProductPricingOptionsAction extends ReduxAction<AppState> {
         ? hostState?.selectedProduct?.id
         : hostState?.currentProduct?.id;
 
-    final Map<String, dynamic> data = <String, dynamic>{
+    final Map<String, dynamic> params = <String, dynamic>{
       'product': ctxProductID,
     };
 
     final Response httpResponse = await client.callRESTAPI(
       endpoint: GetIt.I.get<AppConfig>().productPricingOptionsEndpoint,
       method: APIMethods.GET.name.toUpperCase(),
-      queryParams: data,
+      queryParams: params,
     );
 
     final Map<String, dynamic> body =
