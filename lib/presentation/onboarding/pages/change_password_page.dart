@@ -103,7 +103,7 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
                     child: ListView(
                       children: <Widget>[
                         largeVerticalSizedBox,
-                        SvgPicture.asset(appLogoFullSVGPath),
+                        SvgPicture.asset(prodAppLogoFullSVGPath),
                         smallVerticalSizedBox,
                         Center(
                           child: Column(

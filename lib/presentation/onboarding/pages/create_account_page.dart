@@ -112,7 +112,7 @@ class CreateAccountPageState extends State<CreateAccountPage> {
                 physics: AlwaysScrollableScrollPhysics(),
                 children: <Widget>[
                   largeVerticalSizedBox,
-                  SvgPicture.asset(appLogoFullSVGPath),
+                  SvgPicture.asset(prodAppLogoFullSVGPath),
                   smallVerticalSizedBox,
                   Center(
                     child: Column(

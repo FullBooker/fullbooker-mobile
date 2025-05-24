@@ -96,7 +96,7 @@ class RequestOTPPageState extends State<RequestOTPPage> {
                     return ListView(
                       children: <Widget>[
                         largeVerticalSizedBox,
-                        SvgPicture.asset(appLogoFullSVGPath),
+                        SvgPicture.asset(prodAppLogoFullSVGPath),
                         smallVerticalSizedBox,
                         Center(
                           child: Column(

@@ -66,6 +66,30 @@ android {
         }
     }
 
+     flavorDimensions "default"
+
+      productFlavors {
+        dev {
+            dimension "default"
+            applicationId "com.fullbooker.fullbooker.dev"
+            manifestPlaceholders = [
+                appName: "Fullbooker Dev",
+                themeName: "Theme.Dev", 
+                splash_screen: "splash_screen_dev"
+                ]
+        }
+        
+        prod {
+            dimension "default"
+            applicationId "com.fullbooker.fullbooker"
+            manifestPlaceholders = [
+                appName: "Fullbooker", 
+                themeName: "Theme.Prod", 
+                splash_screen: "splash_screen_prod"
+                ]
+        }
+    }
+
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
