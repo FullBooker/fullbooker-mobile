@@ -44,6 +44,7 @@ abstract class ICustomClient extends BaseClient {
     bool authenticated = true,
   }) async {
     Uri uri = fromUriOrString(endpoint);
+    
     if (queryParams != null) {
       uri = uri.replace(queryParameters: queryParams);
     }
