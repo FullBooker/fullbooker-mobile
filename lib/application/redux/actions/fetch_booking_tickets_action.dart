@@ -27,14 +27,14 @@ class FetchBookingTicketsAction extends ReduxAction<AppState> {
   Future<AppState?> reduce() async {
     final String bookingID = state.hostState?.selectedBooking?.id ?? UNKNOWN;
 
-    final Map<String, dynamic> data = <String, dynamic>{
+    final Map<String, dynamic> params = <String, dynamic>{
       'booking': bookingID,
     };
 
     final Response httpResponse = await client.callRESTAPI(
       endpoint: GetIt.I.get<AppConfig>().ticketsEndpoint,
       method: APIMethods.GET.name.toUpperCase(),
-      queryParams: data,
+      queryParams: params,
     );
 
     final Map<String, dynamic> body =

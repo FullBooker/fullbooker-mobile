@@ -36,14 +36,14 @@ class FetchProductPricingAction extends ReduxAction<AppState> {
 
     final bool isCreate = workflowState == WorkflowState.CREATE;
 
-    final Map<String, dynamic> data = <String, dynamic>{
+    final Map<String, dynamic> params = <String, dynamic>{
       'product': isCreate ? currentProductID : selectProductID,
     };
 
     final Response httpResponse = await client.callRESTAPI(
       endpoint: GetIt.I.get<AppConfig>().productPricingEndpoint,
       method: APIMethods.GET.name.toUpperCase(),
-      queryParams: data,
+      queryParams: params,
     );
 
     final Map<String, dynamic> body =

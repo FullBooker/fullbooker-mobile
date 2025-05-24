@@ -31,14 +31,11 @@ class FetchProductsAction extends ReduxAction<AppState> {
 
   @override
   Future<AppState?> reduce() async {
-    final Map<String, dynamic> data = <String, dynamic>{
-      'page': 1,
-      'page_size': 20,
-    };
-
     final bool isSearching = searchParam != null && searchParam != UNKNOWN;
 
     final Map<String, String?> queryParams = <String, String?>{
+      'page': '1',
+      'page_size': '30',
       if (isSearching) 'search': searchParam,
       if (productStatus != null) 'status': productStatus?.apiValue,
     };
@@ -46,7 +43,6 @@ class FetchProductsAction extends ReduxAction<AppState> {
     final Response httpResponse = await client.callRESTAPI(
       endpoint: GetIt.I.get<AppConfig>().getProductsEndpoint,
       method: APIMethods.GET.name.toUpperCase(),
-      variables: data,
       queryParams: queryParams,
     );
 

@@ -34,7 +34,7 @@ class FetchProductSubCategoriesAction extends ReduxAction<AppState> {
         ? product?.category ?? ''
         : product?.selectedProductCategory?.id ?? '';
 
-    final Map<String, dynamic> data = <String, dynamic>{
+    final Map<String, dynamic> params = <String, dynamic>{
       'page_size': '1000',
       'category': selectedCategory,
     };
@@ -45,7 +45,7 @@ class FetchProductSubCategoriesAction extends ReduxAction<AppState> {
     final Response httpResponse = await client.callRESTAPI(
       endpoint: endpoint,
       method: APIMethods.GET.name.toUpperCase(),
-      queryParams: data,
+      queryParams: params,
     );
 
     final Map<String, dynamic> body =
