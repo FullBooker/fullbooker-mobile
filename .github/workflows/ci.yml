@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - prod
+      - distribution
 
 jobs:
   deploy_to_app_tester:
@@ -18,8 +19,8 @@ jobs:
 
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.27.4"
-          channel: "stable"
+          flutter-version: '3.27.4'
+          channel: 'stable'
 
       - name: Set up Android credentials
         run: |
@@ -59,7 +60,7 @@ jobs:
 
   deploy_to_play_store:
     name: Build AAB and Deploy to Google Play Store
-    if: github.ref == 'refs/heads/prod'
+    if: github.ref == 'refs/heads/distribution'
     timeout-minutes: 20
     runs-on: ubuntu-latest
 
@@ -68,8 +69,8 @@ jobs:
 
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.27.4"
-          channel: "stable"
+          flutter-version: '3.27.4'
+          channel: 'stable'
 
       - name: Set up Android credentials
         run: |
@@ -104,7 +105,6 @@ jobs:
         uses: r0adkll/upload-google-play@v1
         with:
           serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
-          changesNotSentForReview: true
           packageName: com.fullbooker.fullbooker
           releaseFiles: build/app/outputs/bundle/release/app-release.aab
           track: production
