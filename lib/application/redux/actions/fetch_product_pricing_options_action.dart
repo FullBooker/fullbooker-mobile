@@ -70,6 +70,6 @@ class FetchProductPricingOptionsAction extends ReduxAction<AppState> {
       ),
     );
 
-    return state;
+    return null;
   }
 }
