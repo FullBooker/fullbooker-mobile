@@ -60,10 +60,15 @@ class FetchSingleProductAction extends ReduxAction<AppState> {
 
     final Product product = Product.fromJson(body);
 
+    final ProductLocation selectedLocation =
+        (product.locations?.isNotEmpty ?? false)
+            ? product.locations!.first
+            : ProductLocation.initial();
+
     dispatch(
       UpdateHostStateAction(
         contextProduct: product,
-        selectedLocation: product.locations?.first ?? ProductLocation.initial(),
+        selectedLocation: selectedLocation,
       ),
     );
 

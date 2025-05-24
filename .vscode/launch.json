@@ -2,18 +2,18 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Dev",
+      "name": "Dev Debug",
       "request": "launch",
       "type": "dart",
       "program": "lib/main.dart",
       "args": ["--dart-define=ENV=DEV"]
     },
     {
-      "name": "Prod",
+      "name": "Prod Debug",
       "request": "launch",
       "type": "dart",
       "program": "lib/main.dart",
-      "args": ["--dart-define=ENV=PROD", "--release"]
+      "args": ["--dart-define=ENV=PROD"]
     }
   ]
 }

@@ -1,6 +1,6 @@
 # TODOs
 
-## Other updates
+## General TODO logs
 
 - [x] Update the app logo
 - [x] Extract colors
@@ -13,13 +13,11 @@
 - [x] change logic in build methods for all widgets
 - [x] Change app splash screen to have the full logo
 - [x] Add cleanups for most onboarding workflows after success e.g removing state values
+- [x] Remove reviews page
+- [x] Handle currency formatting on the app
+- [x] Fix showAlertDialog across all pages
+- [x] Fetch the most recent version of the product on each step of the setup process
 
-## Page changes (can be done later)
+## Current log
 
-- [ ] Remove reviews page
-
-## New changes
-
-- [ ] Handle currency formatting on the app
-- [ ] Fix showAlertDialog across all pages
-- [ ] Fetch the most recent version of the product on each step of the setup process
+- [ ] Setup 2 different apk names and logos for the app

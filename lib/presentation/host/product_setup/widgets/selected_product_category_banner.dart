@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fullbooker/application/redux/states/app_state.dart';
 import 'package:fullbooker/application/redux/view_models/product_setup_view_model.dart';
 import 'package:fullbooker/core/common/app_router.gr.dart';
+import 'package:fullbooker/core/common/constants.dart';
 import 'package:fullbooker/domain/core/entities/product.dart';
 import 'package:fullbooker/domain/core/value_objects/app_strings.dart';
 import 'package:dartz/dartz.dart' as d;
@@ -31,13 +32,13 @@ class SelectedProductCategoryBanner extends StatelessWidget {
         final Product? product =
             isEdit ? vm.selectedProduct : vm.currentProduct;
 
-        final String selectedCategory = isEdit
-            ? product?.categoryName ?? ''
-            : product?.selectedProductCategory?.name ?? '';
+        final String selectedCategory = product?.categoryName ?? UNKNOWN;
 
-        final String selectedSubCategory = isEdit
-            ? product?.subcategoryName ?? ''
-            : product?.selectedProductSubCategory?.name ?? '';
+        final String selectedSubCategory = product?.subcategoryName ?? UNKNOWN;
+
+        if (selectedCategory == UNKNOWN || selectedSubCategory == UNKNOWN) {
+          return SizedBox.shrink();
+        }
 
         return Container(
           padding: const EdgeInsets.all(12),
@@ -48,29 +49,41 @@ class SelectedProductCategoryBanner extends StatelessWidget {
               color: Theme.of(context).primaryColor,
             ),
           ),
-          child: Column(
-            spacing: 8,
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Row(
+            spacing: 12,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text(
-                selectedCategory,
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                      color: Theme.of(context).primaryColor,
+              Flexible(
+                flex: 7,
+                child: Column(
+                  spacing: 4,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      selectedCategory,
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                            color: Theme.of(context).primaryColor,
+                          ),
+                      overflow: TextOverflow.visible,
                     ),
-                overflow: TextOverflow.visible,
-              ),
-              Text(
-                selectedSubCategory,
-                style: Theme.of(context).textTheme.bodySmall,
-                overflow: TextOverflow.visible,
+                    Text(
+                      selectedSubCategory,
+                      style: Theme.of(context).textTheme.bodySmall,
+                      overflow: TextOverflow.visible,
+                    ),
+                  ],
+                ),
               ),
               if (!readOnly)
-                SecondaryButton(
-                  customWidth: MediaQuery.of(context).size.width / 2,
-                  onPressed: () {
-                    context.router.push(ProductCategoryRoute());
-                  },
-                  child: d.right(changeString),
+                Flexible(
+                  flex: 3,
+                  child: SecondaryButton(
+                    customWidth: MediaQuery.of(context).size.width / 2,
+                    onPressed: () {
+                      context.router.push(ProductCategoryRoute());
+                    },
+                    child: d.right(changeString),
+                  ),
                 ),
             ],
           ),
