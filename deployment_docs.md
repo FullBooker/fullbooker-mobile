@@ -28,3 +28,11 @@ storeFile=<store-file-path>
 ```sh
 keytool -list -v -keystore "my_release_keystore.jks" -alias "release_key" -storepass "my_store_password" -keypass "my_key_password"
 ```
+
+## Creating Github secrets
+
+Most of the secrets on GitHub are base64 encoded. Encode your env variables using this (on MacOS)
+
+```sh
+base64 -i android/app/src/dev/google-services.json | tr -d '\n' | pbcopy
+```

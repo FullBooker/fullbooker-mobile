@@ -10,7 +10,7 @@ on:
 jobs:
   deploy_to_app_tester:
     name: Deploy APK to AppTester
-    if: github.ref == 'refs/heads/feat/split-dev-and-prod-builds'
+    if: github.ref == 'refs/heads/main'
     timeout-minutes: 20
     runs-on: ubuntu-latest
 
@@ -24,7 +24,7 @@ jobs:
 
       - name: Set up Android credentials
         run: |
-          echo "${{ secrets.GOOGLE_SERVICES_JSON }}" | base64 --decode > android/app/google-services.json
+          echo "${{ secrets.DEV_GOOGLE_SERVICES_JSON }}" | base64 --decode > android/app/src/dev/google-services.json
           echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/upload-keystore.jks
 
       - name: Create key.properties file
@@ -57,7 +57,7 @@ jobs:
           appId: ${{ secrets.DEV_FIREBASE_APP_ID }}
           serviceCredentialsFileContent: ${{ secrets.FIREBASE_AUTH_SERVICE_ACCOUNT }}
           groups: dev-testers
-          file: build/app/outputs/flutter-apk/app-release.apk
+          file: build/app/outputs/flutter-apk/app-dev-release.apk
 
   deploy_to_play_store:
     name: Build AAB and Deploy to Google Play Store
@@ -76,7 +76,7 @@ jobs:
       - name: Set up Android credentials
         run: |
           mkdir -p android/app
-          echo "${{ secrets.GOOGLE_SERVICES_JSON }}" | base64 --decode > android/app/google-services.json
+          echo "${{ secrets.GOOGLE_SERVICES_JSON }}" | base64 --decode > android/app/src/prod/google-services.json
           echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/upload-keystore.jks
 
       - name: Create key.properties file
@@ -94,6 +94,7 @@ jobs:
       - name: Build release AAB
         run: |
           flutter build appbundle \
+            --flavor prod \
             --release \
             --obfuscate \
             --split-debug-info=dump/ \
@@ -107,7 +108,7 @@ jobs:
         with:
           serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
           packageName: com.fullbooker.fullbooker
-          releaseFiles: build/app/outputs/bundle/release/app-release.aab
+          releaseFiles: build/app/outputs/bundle/prodRelease/app-prod-release.aab
           track: production
           status: completed
           releaseName: 1.0.${{ github.run_number }}-prod
